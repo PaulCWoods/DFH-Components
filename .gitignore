@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs & Storybook static files
+dist/
+storybook-static/
+
+# Environment and local IDE configs
+.DS_Store
+.env
+.env.local
+.vscode/
+.idea/
+
+# Figma sync temporary files
+*.tmp
