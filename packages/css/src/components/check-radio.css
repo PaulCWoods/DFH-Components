@@ -1,0 +1,43 @@
+/**
+ * Checkbox & Radio Component Primitive
+ * Design For Humans Component Library
+ * 
+ * Accessible native checkboxes and radio buttons utilizing browser-native
+ * accessibility mechanics, enhanced with accent-color and high-contrast focus rings.
+ * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
+ * - 2.5.5 Target Size & 2.5.8 Target Size
+ * - 2.4.7 Focus Visible & 2.4.13 Focus Appearance
+ * - 1.4.3 Contrast
+ */
+
+/* ==========================================================================
+   Checkbox and Radio Primitives
+   ========================================================================== */
+
+:where(
+  .checkbox-input,
+  .radio-input,
+  input:is([type="checkbox"], [type="radio"])
+) {
+  all: revert;
+  box-sizing: border-box;
+  block-size: var(--form-check-size, 1.25rem);
+  inline-size: var(--form-check-size, 1.25rem);
+  margin: 0;
+  accent-color: var(--foreground-accent);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-outline-offset);
+  }
+
+  &:where(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+}
+
+:where(.checkbox-input, input[type="checkbox"]) {
+  border-radius: 0;
+}

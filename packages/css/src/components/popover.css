@@ -1,0 +1,101 @@
+/**
+ * Popover Primitive Component (Native HTML [popover] + CSS Anchor Positioning)
+ * Design For Humans Component Library
+ * 
+ * Complies with modern web standards:
+ * - Native Popover API (light-dismiss, top-layer rendering)
+ * - CSS Anchor Positioning (position-anchor, position-area, anchor() fallback)
+ * - Top-layer transitions using @starting-style and allow-discrete
+ * - Zero-JS declarative triggers via popovertarget or commandfor
+ */
+
+:where([popover].popover, [popover]) {
+  /* Box model & reset defaults */
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--popover-padding);
+  max-inline-size: min(24rem, calc(100dvw - var(--spacing-2)));
+  
+  /* Surfaces & typography */
+  background-color: var(--popover-bg, var(--surface-card));
+  border: var(--popover-border, var(--border-quiet));
+  border-radius: var(--popover-radius, var(--radius-2, 4px));
+  box-shadow: var(--popover-shadow, var(--shadow-md));
+  color: var(--foreground-base);
+  font-family: var(--typography-font-family-sans);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+
+  /* Top-layer transitions */
+  opacity: 0;
+  transform: translateY(-0.25rem) scale(0.98);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: var(--popover-transition);
+  transition-timing-function: var(--popover-timefunc);
+  transition-behavior: allow-discrete;
+}
+
+/* Open state in top layer */
+:where([popover].popover, [popover]):popover-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-0.25rem) scale(0.98);
+  }
+}
+
+/* ==========================================================================
+   CSS Anchor Positioning Utilities
+   ========================================================================== */
+
+/* Modern CSS position-area (supported in modern Chromium, Safari 26+, Firefox Nightly) */
+@supports (position-area: bottom) {
+  :where([popover].popover--anchored, [popover][data-anchor]) {
+    position: fixed;
+    inset: auto;
+    position-area: bottom span-right;
+    margin-block-start: var(--popover-offset);
+  }
+
+  :where([popover].popover--top) {
+    position-area: top span-right;
+    margin-block-end: var(--popover-offset);
+  }
+
+  :where([popover].popover--start) {
+    position-area: left span-bottom;
+    margin-inline-end: var(--popover-offset);
+  }
+
+  :where([popover].popover--end) {
+    position-area: right span-bottom;
+    margin-inline-start: var(--popover-offset);
+  }
+}
+
+/* Fallback anchor() function positioning */
+@supports not (position-area: bottom) {
+  @supports (top: anchor(bottom)) {
+    :where([popover].popover--anchored, [popover][data-anchor]) {
+      position: fixed;
+      inset: auto;
+      top: calc(anchor(bottom) + var(--popover-offset));
+      left: anchor(left);
+    }
+  }
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  :where([popover].popover, [popover]),
+  :where([popover].popover, [popover]):popover-open {
+    transform: none;
+    transition-duration: var(--duration-0);
+
+    @starting-style {
+      transform: none;
+    }
+  }
+}

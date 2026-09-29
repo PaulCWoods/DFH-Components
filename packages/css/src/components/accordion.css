@@ -1,0 +1,159 @@
+/**
+ * Accordion Primitive Component (Native HTML <details> / <summary>)
+ * Design For Humans Component Library
+ * 
+ * Complies with modern web standards:
+ * - Native <details> / <summary> disclosure
+ * - Native ::details-content pseudo-element
+ * - interpolate-size: allow-keywords for smooth height transition
+ * - Native name="..." attribute for exclusive accordion groups without JavaScript
+ * - High-contrast focus visible indicator
+ * - Full reduced-motion accessibility support
+ */
+
+:where(details.accordion) {
+  box-sizing: border-box;
+  border: var(--accordion-border, var(--border-subtle));
+  border-radius: var(--accordion-radius, var(--radius-2, 4px));
+  overflow: hidden;
+  padding-block-end: 0;
+  background-color: transparent;
+
+  transition-property: background-color, border-color, border-style, padding-block-end;
+  transition-duration: var(--accordion-transition, var(--duration-sm));
+  transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+}
+
+:where(details.accordion:has(summary:focus-visible)) {
+  outline: var(--focus-ring-outline);
+  outline-offset: var(--focus-ring-outline-offset);
+}
+
+@media (hover: hover) {
+  :where(details.accordion:has(summary:hover)) {
+    border-color: var(--accordion-hover-border, var(--border-accent));
+    border-style: solid;
+  }
+}
+
+:where(details.accordion[open]) {
+  background-color: var(--accordion-open-bg, var(--surface-card));
+  padding-block-end: var(--accordion-padding, var(--spacing-unit));
+}
+
+/* ==========================================================================
+   Summary Element
+   ========================================================================== */
+:where(details.accordion summary) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--accordion-padding);
+  list-style: none;
+  font-family: var(--typography-font-family-sans);
+  font-size: var(--body-font-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--body-line-height);
+  color: var(--foreground-base);
+  padding: var(--accordion-padding);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  text-box: trim-both cap alphabetic;
+
+  transition: color var(--accordion-transition) var(--accordion-timefunc);
+}
+
+:where(details.accordion summary::-webkit-details-marker) {
+  display: none;
+}
+
+:where(details.accordion summary:focus) {
+  outline: none;
+}
+
+:where(details.accordion summary:focus-visible) {
+  outline: none;
+  /* Container receives focus ring via :has(summary:focus-visible) */
+}
+
+@media (hover: hover) {
+  :where(details.accordion summary:hover) {
+    color: var(--foreground-accent-hover);
+  }
+}
+
+:where(details.accordion summary span) {
+  text-box: trim-both cap alphabetic;
+}
+
+/* ==========================================================================
+   Details Content (Smooth Animation with interpolate-size)
+   ========================================================================== */
+:where(details.accordion::details-content) {
+  padding-inline: var(--accordion-padding);
+  font-family: var(--typography-font-family-sans);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+  color: var(--foreground-muted);
+}
+
+@supports (interpolate-size: allow-keywords) {
+  :where(details.accordion::details-content) {
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size, content-visibility;
+    transition-duration: var(--accordion-transition);
+    transition-timing-function: var(--accordion-timefunc);
+    transition-behavior: allow-discrete;
+  }
+
+  :where(details.accordion[open]::details-content) {
+    block-size: auto;
+    overflow: visible;
+  }
+}
+
+/* ==========================================================================
+   Indicator / Plus-Minus Chevron Icon
+   ========================================================================== */
+.accordion__icon {
+  --icon-size: 0.875rem;
+  --icon-stroke: var(--border-width);
+  inline-size: var(--icon-size);
+  block-size: var(--icon-size);
+  flex-shrink: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.accordion__icon::before,
+.accordion__icon::after {
+  content: '';
+  position: absolute;
+  inline-size: 100%;
+  block-size: var(--icon-stroke);
+  background-color: currentColor;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+}
+
+.accordion__icon::after {
+  transform: translateY(-50%) rotate(-90deg);
+  opacity: 1;
+  transition-property: transform, opacity;
+  transition-duration: var(--accordion-transition);
+  transition-timing-function: var(--accordion-timefunc);
+}
+
+:where(details.accordion[open]) .accordion__icon::after {
+  transform: translateY(-50%) rotate(0deg);
+  opacity: 0;
+}
+
+/* Grouped accordions */
+.accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-0-5);
+}

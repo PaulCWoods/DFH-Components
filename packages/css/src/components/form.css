@@ -1,0 +1,75 @@
+/**
+ * Form Component Primitive
+ * Design For Humans Component Library
+ * 
+ * Top-level form layout container and accessible action submission bar.
+ * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
+ * - Modern Web Guidance: Container style queries for responsive alignment
+ * - 3.2.2 On Input
+ */
+
+/* ==========================================================================
+   Form Container Primitive
+   ========================================================================== */
+
+:where(.form, form) {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap, var(--spacing-1));
+  inline-size: 100%;
+}
+
+/* ==========================================================================
+   Form Submission Action Bar Primitive
+   ========================================================================== */
+
+:where(.form__submission) {
+  margin-block-start: var(--form-submission-gap, var(--spacing-1));
+  inline-size: 100%;
+
+  &:not(.button) {
+    display: flex;
+    gap: var(--form-submission-inner-gap, var(--spacing-1));
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* Alignment via Container Style Queries */
+  @container style(--form-submission-align: right) {
+    &:not(.button) {
+      justify-content: flex-end;
+    }
+
+    &.button {
+      margin-inline-start: auto;
+    }
+  }
+
+  @container style(--form-submission-align: left) {
+    &:not(.button) {
+      justify-content: flex-start;
+    }
+
+    &.button {
+      margin-inline-end: auto;
+    }
+  }
+
+  /* Utility Modifier Fallbacks */
+  &.form__submission--right {
+    justify-content: flex-end;
+
+    &.button {
+      margin-inline-start: auto;
+    }
+  }
+
+  &.form__submission--left {
+    justify-content: flex-start;
+
+    &.button {
+      margin-inline-end: auto;
+    }
+  }
+}

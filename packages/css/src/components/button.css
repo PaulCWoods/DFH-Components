@@ -1,0 +1,227 @@
+/**
+ * Button Primitive Component
+ * Design For Humans Component Library
+ * 
+ * Complies with WCAG 2.2 AA/AAA:
+ * - 2.5.5 Target Size (Enhanced: 44x44px minimum via --button-min-size: 3rem / 48px)
+ * - 2.5.8 Target Size (Minimum: 24x24px for compact size)
+ * - 1.4.3 Contrast (Minimum 4.5:1 for text)
+ * - 1.4.11 Non-text Contrast (3:1 for borders and focus rings)
+ * - 2.4.7 Focus Visible & 2.4.13 Focus Appearance (high-contrast outline with offset)
+ */
+
+/* ==========================================================================
+   Base Button Primitive (Default / Outline Variant)
+   ========================================================================== */
+
+:where(.button, a.button) {
+  /* Layout & Alignment */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: var(--button-inner-gap);
+  position: relative;
+
+  /* Sizing & Spacing (Default: Medium / 48px Touch Target) */
+  min-block-size: var(--button-min-size);
+  min-inline-size: var(--button-min-size);
+  padding-block: var(--button-padding-block);
+  padding-inline: var(--button-padding-inline);
+  box-sizing: border-box;
+
+  /* Typography */
+  font-family: var(--button-font-family, var(--typography-font-family-sans));
+  font-size: var(--button-font-size, var(--typography-font-size-0));
+  font-weight: var(--button-font-weight, var(--font-weight-bold));
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
+
+  /* Borders & Surfaces (Default Outline State) */
+  border-radius: var(--button-radius);
+  border: var(--button-border, var(--button-border-width) solid var(--border-muted));
+  background-color: var(--button-bg, transparent);
+  color: var(--button-text, var(--foreground-base));
+
+  /* Interaction & Cursors */
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Transitions */
+  transition-property: background-color, border-color, color, box-shadow, opacity, transform;
+  transition-duration: var(--button-transition);
+  transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
+
+  /* ------------------------------------------------------------------------
+     Disabled State Handling (Native :disabled & aria-disabled="true")
+     ------------------------------------------------------------------------ */
+  &:where(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  /* ------------------------------------------------------------------------
+     Focus Visible (WCAG 2.4.7 & 2.4.13 High Contrast Focus Appearance)
+     ------------------------------------------------------------------------ */
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-outline-offset);
+  }
+
+  /* ------------------------------------------------------------------------
+     Hover State (Default Variant)
+     ------------------------------------------------------------------------ */
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: var(--button-hover-bg, var(--foreground-base));
+      border-color: var(--button-hover-bg, var(--foreground-base));
+      color: var(--button-hover-text, var(--surface-base));
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     Active / Pressed State (Default Variant)
+     ------------------------------------------------------------------------ */
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--foreground-accent-pressed);
+    border-color: var(--foreground-accent-pressed);
+    color: var(--surface-base);
+  }
+
+  /* ------------------------------------------------------------------------
+     Typographic Bounding Box Alignment
+     ------------------------------------------------------------------------ */
+  span {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+/* ==========================================================================
+   Variants
+   ========================================================================== */
+
+/* Primary Variant (High-emphasis filled action) */
+:where(.button--primary) {
+  background-color: var(--button-primary-bg, var(--foreground-accent));
+  border-color: var(--button-primary-bg, var(--foreground-accent));
+  color: var(--button-primary-text, var(--surface-base));
+
+  &:focus-visible {
+    outline-color: var(--button-primary-bg, var(--foreground-accent));
+  }
+
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: var(--button-primary-hover-bg, var(--foreground-accent-hover));
+      border-color: var(--button-primary-hover-bg, var(--foreground-accent-hover));
+      color: var(--button-primary-text, var(--surface-base));
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--button-primary-active-bg, var(--foreground-accent-pressed));
+    border-color: var(--button-primary-active-bg, var(--foreground-accent-pressed));
+    color: var(--button-primary-text, var(--surface-base));
+  }
+}
+
+/* Subtle / Ghost Variant (Low-emphasis borderless action) */
+:where(.button--subtle, .button--ghost) {
+  background-color: var(--button-subtle-bg, transparent);
+  border-color: transparent;
+  color: var(--button-subtle-text, var(--foreground-base));
+
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: var(--button-subtle-hover-bg, var(--surface-fade));
+      border-color: transparent;
+      color: var(--button-subtle-hover-text, var(--foreground-accent-hover));
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--button-subtle-active-bg, var(--surface-fade));
+    border-color: transparent;
+    color: var(--button-subtle-active-text, var(--foreground-accent-pressed));
+  }
+}
+
+/* Destructive Variant (Danger / Warning action) */
+:where(.button--destructive) {
+  background-color: var(--button-destructive-bg, var(--foreground-danger));
+  border-color: var(--button-destructive-bg, var(--foreground-danger));
+  color: var(--button-destructive-text, var(--color-white));
+
+
+  &:focus-visible {
+    outline-color: var(--button-destructive-bg, var(--foreground-danger));
+  }
+
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: var(--button-destructive-hover-bg, var(--foreground-danger-hover));
+      border-color: var(--button-destructive-hover-bg, var(--foreground-danger-hover));
+      color: var(--button-destructive-text, var(--color-white));
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--button-destructive-active-bg, var(--foreground-danger-pressed));
+    border-color: var(--button-destructive-active-bg, var(--foreground-danger-pressed));
+    color: var(--button-destructive-text, var(--color-white));
+  }
+}
+
+/* ==========================================================================
+   Sizes
+   ========================================================================== */
+
+/* Tight Sizing (Zero padding for compact toolbars) */
+:where(.button--tight) {
+  --button-padding-block: 0;
+  --button-padding-inline: 0;
+}
+
+/* Small Variant (Minimum 32px height, 24px WCAG 2.5.8 compliant) */
+:where(.button--sm, .button.\+sm) {
+  --button-min-size: var(--button-sm-min-size);
+  --button-padding-block: var(--button-sm-padding-block);
+  --button-padding-inline: var(--button-sm-padding-inline);
+  --button-font-size: var(--button-sm-font-size);
+}
+
+/* Large Variant (56px touch target) */
+:where(.button--lg, .button.\+lg) {
+  --button-font-size: var(--button-lg-font-size);
+  --button-min-size: var(--button-lg-min-size);
+  --button-padding-block: var(--button-lg-padding-block);
+  --button-padding-inline: var(--button-lg-padding-inline);
+}
+
+/* Icon-Only Button (Square aspect ratio for standalone icons) */
+:where(.button--icon) {
+  padding-inline: var(--button-padding-block);
+  aspect-ratio: 1 / 1;
+}
+
+/* ==========================================================================
+   Link-Specific Resets
+   ========================================================================== */
+:where(a.button) {
+  text-decoration: none;
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+}

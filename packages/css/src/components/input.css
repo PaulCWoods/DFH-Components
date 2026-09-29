@@ -1,0 +1,198 @@
+/**
+ * Input Component Primitive
+ * Design For Humans Component Library
+ * 
+ * Styles text-like inputs, color inputs, and file inputs, plus validity states.
+ * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
+ * - 2.5.5 Target Size (48px default touch target)
+ * - 2.5.8 Target Size (Minimum 24x24px for small controls)
+ * - 1.4.3 Contrast (Minimum 4.5:1 text, 3:1 borders and focus rings)
+ * - 2.4.7 Focus Visible & 2.4.13 Focus Appearance
+ * - Modern Web Guidance: Interaction-based validation (:user-invalid / :user-valid)
+ */
+
+/* ==========================================================================
+   Text-Like Inputs
+   ========================================================================== */
+
+:where(.input, input:is(
+  [type="email"],
+  [type="password"],
+  [type="number"],
+  [type="tel"],
+  [type="text"],
+  [type="url"],
+  [type="search"]
+)) {
+  --_input-min-size: var(--input-min-size);
+  --_input-padding-block: var(--input-padding-block);
+  --_input-padding-inline: var(--input-padding-inline);
+
+  /* Layout & Box Model */
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: var(--_input-min-size);
+  min-inline-size: var(--_input-min-size);
+  padding-block: var(--_input-padding-block);
+  padding-inline: var(--_input-padding-inline);
+
+  /* Typography */
+  font-family: var(--body-font-family);
+  font-size: var(--input-font-size, var(--typography-font-size-0));
+  line-height: var(--input-line-height, var(--control-line-height));
+  color: var(--foreground-base);
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* Surface & Border */
+  border-radius: var(--input-radius, var(--ui-radius));
+  border: var(--input-border);
+  background-color: var(--input-background-color);
+
+  /* Transitions */
+  transition-property: border-color, background-color, color, box-shadow, outline-color;
+  transition-duration: var(--input-transition, var(--duration-sm));
+  transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
+
+  /* ------------------------------------------------------------------------
+     Placeholder Styling
+     ------------------------------------------------------------------------ */
+  &::placeholder {
+    color: var(--foreground-muted);
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------------------------------
+     Hover & Interactive States
+     ------------------------------------------------------------------------ */
+  @media (hover: hover) {
+    &:hover:not(:disabled, [readonly], [aria-disabled="true"]) {
+      border-color: var(--border-accent, var(--foreground-accent));
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     Focus Visible (High Contrast 3:1 Ring with Offset)
+     ------------------------------------------------------------------------ */
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-outline-offset);
+    border-color: var(--border-accent, var(--foreground-accent));
+  }
+
+  /* ------------------------------------------------------------------------
+     Modern Validation States (:user-invalid / :user-valid)
+     Applies validation cues only after interaction/blur.
+     ------------------------------------------------------------------------ */
+  &:user-invalid {
+    border-color: var(--input-border-color-invalid, var(--border-danger));
+
+    &:focus-visible {
+      outline-color: var(--input-border-color-invalid, var(--border-danger));
+    }
+  }
+
+  &:user-valid:not(:placeholder-shown) {
+    border-color: var(--input-border-color-valid, var(--border-success));
+  }
+
+  /* ------------------------------------------------------------------------
+     Disabled & Readonly States
+     ------------------------------------------------------------------------ */
+  &:where(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    background-color: var(--surface-fade);
+    border-color: var(--border-quiet, var(--border-muted));
+  }
+
+  &:read-only:not(:disabled, [aria-disabled="true"]) {
+    cursor: default;
+    background-color: var(--surface-fade);
+    border-style: dashed;
+  }
+
+  /* ------------------------------------------------------------------------
+     Size Modifiers (.input--sm, .input--lg)
+     ------------------------------------------------------------------------ */
+  &.input--sm {
+    --_input-min-size: var(--input-sm-min-size);
+    --_input-padding-block: var(--input-sm-padding-block);
+    --_input-padding-inline: var(--input-sm-padding-inline);
+
+    font-size: var(--input-sm-font-size);
+  }
+
+  &.input--lg {
+    --_input-min-size: var(--input-lg-min-size);
+    --_input-padding-block: var(--input-lg-padding-block);
+    --_input-padding-inline: var(--input-lg-padding-inline);
+
+    font-size: var(--input-lg-font-size);
+  }
+}
+
+/* ==========================================================================
+   Color Input Primitive
+   ========================================================================== */
+
+:where(.color-input, input[type="color"]) {
+  --_color-input-inline-size: 100%;
+  --_color-input-block-size: var(--input-min-size);
+
+  box-sizing: border-box;
+  background-color: ButtonFace;
+  inline-size: var(--_color-input-inline-size);
+  block-size: var(--_color-input-block-size);
+  border-radius: var(--input-radius, var(--ui-radius));
+  border: var(--input-border);
+  cursor: pointer;
+  padding: 0;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-color-swatch {
+    border: 0;
+    border-radius: calc(var(--input-radius, var(--ui-radius)) - 1px);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-outline-offset);
+  }
+
+  &.color-input--square {
+    inline-size: var(--_color-input-block-size);
+  }
+
+  &.color-input--sm {
+    --_color-input-block-size: var(--input-sm-min-size);
+  }
+
+  &.color-input--lg {
+    --_color-input-block-size: var(--input-lg-min-size);
+  }
+}
+
+/* ==========================================================================
+   File Input Primitive
+   ========================================================================== */
+
+:where(.file-input, input[type="file"]) {
+  box-sizing: border-box;
+  inline-size: 100%;
+  font-family: var(--body-font-family);
+  font-size: var(--input-font-size, var(--typography-font-size-0));
+  color: var(--foreground-base);
+
+  &:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-outline-offset);
+  }
+}

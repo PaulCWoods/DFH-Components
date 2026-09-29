@@ -1,0 +1,223 @@
+/**
+ * Select Component Primitive
+ * Design For Humans Component Library
+ * 
+ * Styles native <select> controls and modern customizable select elements
+ * using the CSS Customizable Select API (appearance: base-select).
+ * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
+ * - 2.5.5 Target Size (48px default touch target)
+ * - 2.5.8 Target Size (Minimum 24x24px for small controls)
+ * - 1.4.3 Contrast (Minimum 4.5:1 text, 3:1 borders and focus rings)
+ * - 2.4.7 Focus Visible & 2.4.13 Focus Appearance
+ * - Modern Web Guidance: Customizable select (appearance: base-select, ::picker(select))
+ */
+
+/* ==========================================================================
+   Native Select Element Primitive
+   ========================================================================== */
+
+:where(select, .select) {
+  --_select-min-size: var(--input-min-size);
+  --_select-padding-block: var(--input-padding-block);
+  --_select-padding-inline: var(--input-padding-inline);
+
+  /* Layout & Box Model */
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  inline-size: 100%;
+  block-size: var(--_select-min-size);
+  min-inline-size: var(--_select-min-size);
+  padding-block: var(--_select-padding-block);
+  padding-inline: var(--_select-padding-inline);
+  padding-inline-end: calc(var(--select-padding-inline) * 2 + var(--select-icon-size));
+
+  /* Typography */
+  font-family: var(--body-font-family);
+  font-size: var(--select-font-size, var(--typography-font-size-0));
+  line-height: var(--select-line-height, var(--control-line-height));
+  color: var(--foreground-base);
+
+  /* Surface & Border */
+  border-radius: var(--select-radius, var(--ui-radius));
+  border: var(--select-border);
+  background-color: var(--select-background-color);
+  background-image: var(--select-icon);
+  background-repeat: no-repeat;
+  background-position: var(--select-icon-pos) center;
+  background-size: var(--select-icon-size);
+  cursor: pointer;
+
+  /* Transitions */
+  transition-property: border-color, background-color, color, box-shadow, outline-color;
+  transition-duration: var(--select-transition, var(--duration-sm));
+  transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
+
+  /* ------------------------------------------------------------------------
+     Hover & Interactive States
+     ------------------------------------------------------------------------ */
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      border-color: var(--foreground-accent-hover);
+    }
+  }
+
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    border-color: var(--foreground-accent-pressed);
+  }
+
+  /* ------------------------------------------------------------------------
+     Focus Visible (High Contrast 3:1 Ring with Offset)
+     ------------------------------------------------------------------------ */
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-outline);
+    outline-offset: var(--focus-ring-outline-offset);
+    border-color: var(--border-accent, var(--foreground-accent));
+  }
+
+  /* ------------------------------------------------------------------------
+     Validation States (:user-invalid / :user-valid)
+     ------------------------------------------------------------------------ */
+  &:user-invalid {
+    border-color: var(--select-border-color-invalid, var(--border-danger));
+
+    &:focus-visible {
+      outline-color: var(--select-border-color-invalid, var(--border-danger));
+    }
+  }
+
+  &:user-valid {
+    border-color: var(--select-border-color-valid, var(--border-success));
+  }
+
+  /* ------------------------------------------------------------------------
+     Disabled State
+     ------------------------------------------------------------------------ */
+  &:where(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    background-color: var(--surface-fade);
+    border-color: var(--border-quiet, var(--border-muted));
+  }
+
+  /* ------------------------------------------------------------------------
+     Size Modifiers (.select--sm, .select--lg)
+     ------------------------------------------------------------------------ */
+  &.select--sm {
+    --_select-min-size: var(--select-sm-min-size);
+    --_select-padding-block: var(--select-sm-padding-block);
+    --_select-padding-inline: var(--select-sm-padding-inline);
+
+    font-size: var(--select-sm-font-size);
+  }
+
+  &.select--lg {
+    --_select-min-size: var(--select-lg-min-size);
+    --_select-padding-block: var(--select-lg-padding-block);
+    --_select-padding-inline: var(--select-lg-padding-inline);
+
+    font-size: var(--select-lg-font-size);
+  }
+
+  /* ------------------------------------------------------------------------
+     Custom Select Modifier (.select--custom or .custom)
+     ------------------------------------------------------------------------ */
+  &.custom,
+  &.select--custom {
+    background-image: none;
+    padding-inline: var(--select-padding-inline);
+  }
+}
+
+/* ==========================================================================
+   Modern Customizable Select API (appearance: base-select)
+   ========================================================================== */
+
+select.select--custom {
+
+  &,
+  &::picker(select) {
+    appearance: base-select;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Picker Popover (Custom Select Dropdown Surface)
+   -------------------------------------------------------------------------- */
+::picker(select) {
+  --picker-padding: calc(var(--select-padding-inline) / 2);
+
+  box-sizing: border-box;
+  inline-size: var(--anchor-width);
+  padding: var(--picker-padding);
+  margin-block: calc(var(--spacing-unit) / 4);
+  border-radius: var(--ui-radius);
+  border: 1px solid var(--border-muted);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lg, var(--shadow-md));
+  opacity: 1;
+  transition:
+    box-shadow var(--select-transition),
+    opacity var(--select-transition);
+
+  @starting-style {
+    box-shadow: none;
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Option Item Styling
+   -------------------------------------------------------------------------- */
+:where(option) {
+  --option-padding-inline: calc(var(--select-padding-inline) - var(--picker-padding));
+
+  display: flex;
+  align-items: center;
+  gap: var(--select-inner-gap);
+  padding: var(--select-padding-block) var(--option-padding-inline);
+  border-radius: var(--radius-1, 2px);
+  cursor: pointer;
+  color: var(--foreground-base);
+  transition: background-color var(--select-transition);
+
+  &:is(:hover, :focus-visible) {
+    background-color: var(--surface-fade);
+    outline: none;
+  }
+
+  &::checkmark {
+    content: "✓";
+    font-weight: var(--font-weight-bold);
+    color: var(--foreground-accent);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Selected Content Mirroring Inside Button
+   -------------------------------------------------------------------------- */
+:where(selectedcontent) {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  gap: var(--select-inner-gap);
+
+  small {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   RTL Bidirectional Support
+   ========================================================================== */
+
+.translated-rtl select,
+[dir="rtl"] select,
+select[dir="rtl"] {
+  --select-icon-pos: left 1em;
+}

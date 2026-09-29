@@ -1,0 +1,48 @@
+/**
+ * Accessibility Utilities
+ * Design For Humans Component Library
+ * 
+ * Complies with WCAG 2.2:
+ * - 1.3.1 Info and Relationships (Ensures content is available in DOM / accessibility tree)
+ * - 2.4.1 Bypass Blocks (Enables visible "Skip to content" links when focused)
+ * - 4.1.2 Name, Role, Value (Provides translatable, voice-control friendly labels)
+ */
+
+/* ==========================================================================
+   Visually Hidden Utility
+   Hides content visually while keeping it fully exposed to assistive tech,
+   screen readers, voice control software, and automated browser translators.
+   ========================================================================== */
+
+:where(.visually-hidden, .sr-only) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Focusable Visually Hidden Utility
+   Allows visually hidden items (e.g. "Skip to main content" links) to become
+   fully visible and interactable when focused via keyboard navigation.
+   ========================================================================== */
+
+:where(.visually-hidden--focusable, .sr-only--focusable) {
+  &:is(:focus, :focus-within) {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    padding: initial;
+    margin: initial;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+}

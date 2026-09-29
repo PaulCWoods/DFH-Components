@@ -7,9 +7,12 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "build:tokens": "node packages/figma-sync/compile-tokens.js",
+    "export:figma": "node packages/figma-sync/export-figma-tokens.js"
   },
   "devDependencies": {
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "@storybook/html-vite": "^8.0.0"
   }
 }

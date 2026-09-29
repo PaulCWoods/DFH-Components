@@ -1,0 +1,793 @@
+{
+  "$description": "Design For Humans - Tier 2 Semantic UI Design Tokens (W3C DTCG Standard)",
+  "color": {
+    "$type": "color",
+    "muted": {
+      "$value": "color-mix(in srgb, currentColor 50%, transparent)",
+      "$description": "Semi-transparent muted tint based on current text color"
+    },
+    "focus": {
+      "$value": "currentColor",
+      "$description": "High-contrast focus ring stroke color (WCAG 2.4.7 & 2.4.13 >= 3:1)"
+    },
+    "quiet": {
+      "$value": "color-mix(in srgb, currentColor 20%, transparent)",
+      "$description": "Low-contrast subtle tint for dividers and hair-lines"
+    },
+    "backdrop": {
+      "$value": "hsl(from {color.neutral.900} h s l / {opacity.50})",
+      "$description": "Overlay scrim background for modal dialogs"
+    },
+    "overlay": {
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.100}, transparent 33%), color-mix(in srgb, {color.neutral.900}, transparent 33%))",
+      "$description": "Translucent surface layer for sticky navigation and floating panels"
+    }
+  },
+  "surface": {
+    "$type": "color",
+    "$description": "Surface and container background fills",
+    "base": {
+      "$value": "light-dark({color.neutral.100}, {color.neutral.900})",
+      "$description": "Default canvas / page viewport background"
+    },
+    "inverted": {
+      "$value": "light-dark({color.neutral.800}, {color.neutral.100})",
+      "$description": "Inverted contrast background for tooltips and contrast banners"
+    },
+    "card": {
+      "$value": "light-dark({color.white}, {color.neutral.1000})",
+      "$description": "Elevated card, dialog, popover, and panel background"
+    },
+    "dark": {
+      "$value": "light-dark({color.neutral.800}, {color.neutral.1000})",
+      "$description": "Dark container background for footer and media asides"
+    },
+    "darker": {
+      "$value": "{color.neutral.1000}",
+      "$description": "Maximum depth background for deep containers"
+    },
+    "accent": {
+      "$value": "light-dark({color.aqua.200}, {color.aqua.700})",
+      "$description": "Light tint accent surface for badges and highlighted areas"
+    },
+    "accent-dark": {
+      "$value": "{color.aqua.800}",
+      "$description": "Deep accent surface"
+    },
+    "accent-muted": {
+      "$value": "light-dark({color.aqua.100}, {color.aqua.900})",
+      "$description": "Very soft tint accent surface for hovered selections"
+    },
+    "accent-strong": {
+      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$description": "High-contrast accent surface for primary interactive elements"
+    },
+    "fade": {
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent 94%), color-mix(in srgb, {color.neutral.100}, transparent 90%))",
+      "$description": "Gentle hover tint on interactive surfaces"
+    },
+    "danger": {
+      "$value": "light-dark({color.util.red.200}, {color.util.red.700})",
+      "$description": "Destructive or error alert banner background"
+    },
+    "warning": {
+      "$value": "light-dark({color.util.amber.100}, {color.util.amber.800})",
+      "$description": "Cautionary or pending review alert banner background"
+    },
+    "success": {
+      "$value": "light-dark({color.util.green.100}, {color.util.green.800})",
+      "$description": "Positive feedback or completed status banner background"
+    }
+  },
+  "foreground": {
+    "$type": "color",
+    "$description": "Text, typography, and icon color fills",
+    "base": {
+      "$value": "light-dark({color.neutral.800}, {color.neutral.100})",
+      "$description": "High-contrast primary body copy and headings (WCAG AAA >= 7:1)"
+    },
+    "inverted": {
+      "$value": "light-dark({color.neutral.100}, {color.neutral.800})",
+      "$description": "Text on inverted backgrounds"
+    },
+    "on-dark": {
+      "$value": "{color.neutral.100}",
+      "$description": "White/cream text on dark hero sections"
+    },
+    "muted": {
+      "$value": "light-dark({color.neutral.700}, {color.neutral.300})",
+      "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
+    },
+    "danger": {
+      "$value": "light-dark({color.util.red.600}, {color.util.red.400})",
+      "$description": "Destructive button text, form error messages"
+    },
+    "danger-hover": {
+      "$value": "light-dark({color.util.red.500}, {color.util.red.300})",
+      "$description": "Destructive button text, form error messages"
+    },
+    "danger-pressed": {
+      "$value": "light-dark({color.util.red.700}, {color.util.red.500})",
+      "$description": "Destructive button text, form error messages"
+    },
+    "warning": {
+      "$value": "light-dark({color.util.amber.700}, {color.util.amber.300})",
+      "$description": "Warning callout text and pending status icons"
+    },
+    "success": {
+      "$value": "light-dark({color.util.green.700}, {color.util.green.300})",
+      "$description": "Success checkmark icons and completed status text"
+    },
+    "accent": {
+      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$description": "Brand links, active navigation items, focus states"
+    },
+    "accent-hover": {
+      "$value": "light-dark({color.aqua.600}, {color.aqua.400})",
+      "$description": "Hover state for links and accent buttons"
+    },
+    "accent-pressed": {
+      "$value": "light-dark({color.aqua.800}, {color.aqua.200})",
+      "$description": "Active / pressed state for links and accent buttons"
+    }
+  },
+  "border": {
+    "width": {
+      "$value": "{border-width.2}",
+      "$type": "dimension",
+      "$description": "Standard border stroke thickness"
+    },
+    "base": {
+      "$value": "{border.width} solid",
+      "$type": "border"
+    },
+    "muted": {
+      "$value": "{border.width} solid {color.muted}",
+      "$type": "border",
+      "$description": "Standard border stroke color"
+    },
+    "quiet": {
+      "$value": "{border.width} solid {color.quiet}",
+      "$type": "border",
+      "$description": "Low-contrast subtle border"
+    },
+    "subtle": {
+      "$value": "{border-width.1} dashed color-mix(in srgb, currentColor, transparent 70%)",
+      "$type": "border",
+      "$description": "Dashed disclosure border"
+    },
+    "accent": {
+      "$value": "light-dark({color.aqua.400}, {color.aqua.600})",
+      "$type": "color",
+      "$description": "Active interactive border color"
+    },
+    "accent-strong": {
+      "$value": "light-dark({color.aqua.600}, {color.aqua.400})",
+      "$type": "color",
+      "$description": "High-contrast accent border"
+    },
+    "danger": {
+      "$value": "light-dark({color.util.red.600}, {color.util.red.400})",
+      "$type": "color",
+      "$description": "Invalid input field border"
+    },
+    "success": {
+      "$value": "light-dark({color.util.green.600}, {color.util.green.400})",
+      "$type": "color",
+      "$description": "Valid input field border"
+    }
+  },
+  "opacity": {
+    "$type": "number",
+    "muted": {
+      "$value": "{opacity.80}"
+    },
+    "disabled": {
+      "$value": "{opacity.70}"
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "unit": {
+      "$value": "{spacing.1}",
+      "$description": "Standard 1rem layout spacing baseline"
+    },
+    "target": {
+      "$value": "{spacing.3}",
+      "$description": "Accessible interactive touch target size (48px / 3rem, WCAG 2.5.5 AAA)"
+    },
+    "target-sm": {
+      "$value": "{spacing.2}",
+      "$description": "Small interactive touch target size (24px / 1.5rem, WCAG 2.5.8 AA)"
+    },
+    "target-lg": {
+      "$value": "{spacing.4}",
+      "$description": "Large interactive touch target size (56px-64px / 4rem)"
+    },
+    "breathe": {
+      "$value": "fluid({spacing.1}, {spacing.2})",
+      "$description": "Fluid breathing space between major container sections"
+    },
+    "cushion": {
+      "$value": "fluid({spacing.2}, {spacing.3})",
+      "$description": "Double fluid cushion space for outer page and hero margins"
+    },
+    "scroll-margin": {
+      "$value": "1em",
+      "$description": "Clearance above anchored heading targets"
+    }
+  },
+  "font-weight": {
+    "$type": "fontWeight",
+    "regular": {
+      "$value": "{typography.font-weight.400}",
+      "$description": "Standard regular body copy weight"
+    },
+    "medium": {
+      "$value": "{typography.font-weight.500}",
+      "$description": "Medium emphasis weight"
+    },
+    "semibold": {
+      "$value": "{typography.font-weight.600}",
+      "$description": "Semi-bold emphasis weight"
+    },
+    "bold": {
+      "$value": "{typography.font-weight.700}",
+      "$description": "Bold heading and action weight"
+    }
+  },
+  "body": {
+    "font-family": {
+      "$value": "{typography.font-family.sans}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{fluid.typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+    },
+    "font-weight": {
+      "$value": "{font-weight.regular}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.5}",
+      "$type": "number"
+    }
+  },
+  "body-alt": {
+    "font-family": {
+      "$value": "{typography.font-family.serif}",
+      "$type": "fontFamilies"
+    }
+  },
+  "body-strong": {
+    "font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight"
+    }
+  },
+  "body-small": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.4}",
+      "$type": "number"
+    }
+  },
+  "body-large": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    }
+  },
+  "micro-text": {
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{font-weight.regular}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.4}",
+      "$type": "number"
+    }
+  },
+  "label": {
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.0}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.4}",
+      "$type": "number"
+    }
+  },
+  "heading": {
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{fluid.typography.font-size.3}",
+      "$type": "dimension",
+      "$description": "Section title and major heading typography size (fluid step 2: 23px Mobile to 38px Desktop)"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.2}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{typography.spacing.normal}",
+      "$type": "dimension"
+    }
+  },
+  "subheading": {
+    "font-family": {
+      "$value": "{heading.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{fluid.typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Subsection subtitle typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    },
+    "font-weight": {
+      "$value": "{heading.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{heading.line-height}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{heading.letter-spacing}",
+      "$type": "dimension"
+    }
+  },
+  "small-heading": {
+    "font-family": {
+      "$value": "{heading.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{body.font-size}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{heading.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{heading.line-height}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{heading.letter-spacing}",
+      "$type": "dimension"
+    },
+    "text-transform": {
+      "$value": "none",
+      "$type": "other"
+    }
+  },
+  "micro-heading": {
+    "font-family": {
+      "$value": "{small-heading.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{small-heading.line-height}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{heading.letter-spacing}",
+      "$type": "dimension"
+    },
+    "text-transform": {
+      "$value": "uppercase",
+      "$type": "other"
+    }
+  },
+  "title": {
+    "font-family": {
+      "$value": "{typography.font-family.display}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{fluid.typography.font-size.6}",
+      "$type": "dimension",
+      "$description": "Title typography size (fluid step 5: 40px Mobile to 73px Desktop)"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.1}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{typography.spacing.tight}",
+      "$type": "dimension"
+    },
+    "text-transform": {
+      "$value": "uppercase",
+      "$type": "other"
+    }
+  },
+  "display-title": {
+    "font-family": {
+      "$value": "{title.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{fluid.typography.font-size.8}",
+      "$type": "dimension",
+      "$description": "Hero display title typography size (fluid step 7: 57px Mobile to 114px Desktop)"
+    },
+    "font-weight": {
+      "$value": "{title.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{title.line-height}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{typography.spacing.xtight}",
+      "$type": "dimension"
+    },
+    "text-transform": {
+      "$value": "{title.text-transform}",
+      "$type": "other"
+    }
+  },
+  "figure": {
+    "font-family": {
+      "$value": "{typography.font-family.sans}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{body-small.font-size}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{body.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{body-small.line-height}",
+      "$type": "number"
+    },
+    "opacity": {
+      "$value": "1",
+      "$type": "number"
+    }
+  },
+  "pullquote": {
+    "font-family": {
+      "$value": "{typography.font-family.serif}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{fluid.typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Pullquote typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    },
+    "line-height": {
+      "$value": "{heading.line-height}",
+      "$type": "number"
+    }
+  },
+  "control": {
+    "font-size": {
+      "$value": "{typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Standard font size for interactive control elements like buttons and inputs"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.1}",
+      "$type": "number",
+      "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+    },
+    "sm": {
+      "font-size": {
+        "$value": "{typography.font-size.minus-1}",
+        "$type": "dimension",
+        "$description": "Small control typography font size"
+      }
+    },
+    "lg": {
+      "font-size": {
+        "$value": "{typography.font-size.2}",
+        "$type": "dimension",
+        "$description": "Large control typography font size"
+      }
+    }
+  },
+  "ui": {
+    "radius": {
+      "$value": "{radius.2}",
+      "$type": "dimension",
+      "$description": "Standard border radius for UI components and interactive controls"
+    }
+  },
+  "underline": {
+    "offset": {
+      "$value": "{border-width.4}",
+      "$type": "dimension"
+    },
+    "thickness": {
+      "$value": "{border-width.1}",
+      "$type": "dimension"
+    },
+    "color": {
+      "$value": "{color.muted}",
+      "$type": "color"
+    }
+  },
+  "code": {
+    "font-family": {
+      "$value": "{typography.font-family.mono}",
+      "$type": "fontFamilies"
+    },
+    "font-weight": {
+      "$value": "{body.font-weight}",
+      "$type": "fontWeight"
+    }
+  },
+  "script": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension"
+    }
+  },
+  "focus-ring": {
+    "width": {
+      "$value": "{border-width.2}",
+      "$type": "dimension"
+    },
+    "outline": {
+      "$value": "{focus-ring.width} solid {color.focus}",
+      "$type": "border",
+      "$description": "Mandatory high-contrast focus ring outline (WCAG 2.4.7 & 2.4.13)"
+    },
+    "outline-offset": {
+      "$value": "{border-width.2}",
+      "$type": "dimension"
+    },
+    "clearance": {
+      "$value": "calc({focus-ring.width} + {border-width.2})",
+      "$type": "dimension"
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "none": {
+      "$value": "{duration.0}"
+    },
+    "sm": {
+      "$value": "{duration.02}"
+    },
+    "md": {
+      "$value": "{duration.05}"
+    },
+    "lg": {
+      "$value": "{duration.1}"
+    },
+    "xl": {
+      "$value": "{duration.2}"
+    }
+  },
+  "timefunc": {
+    "$type": "other",
+    "ease-in-out": {
+      "$value": "ease-in-out"
+    },
+    "ease-in": {
+      "$value": "ease-in"
+    },
+    "ease-out": {
+      "$value": "ease-out"
+    },
+    "linear": {
+      "$value": "linear"
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "color": {
+      "$value": "light-dark(rgba(54, 51, 45, 0.12), rgba(0, 0, 0, 0.40))",
+      "$type": "color",
+      "$description": "Elevation shadow color tint"
+    },
+    "none": {
+      "$value": "0 0 0 0 transparent",
+      "$description": "No shadow elevation"
+    },
+    "sm": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "1px",
+        "blur": "2px",
+        "spread": "0",
+        "color": "{shadow.color}"
+      },
+      "$description": "Subtle card & interactive elevation"
+    },
+    "md": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "4px",
+        "blur": "8px",
+        "spread": "-1px",
+        "color": "{shadow.color}"
+      },
+      "$description": "Medium elevation for popovers and dropdowns"
+    },
+    "lg": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "12px",
+        "blur": "24px",
+        "spread": "-4px",
+        "color": "{shadow.color}"
+      },
+      "$description": "High elevation for modal dialogs and sheets"
+    },
+    "xl": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "20px",
+        "blur": "32px",
+        "spread": "-6px",
+        "color": "{shadow.color}"
+      },
+      "$description": "Deep elevation for banners and floating overlays"
+    },
+    "inner": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "2px",
+        "blur": "4px",
+        "spread": "0",
+        "color": "{shadow.color}",
+        "type": "innerShadow"
+      },
+      "$description": "Inset shadow for wells and pressed states"
+    }
+  },
+  "z-index": {
+    "$type": "number",
+    "deep": {
+      "$value": "{z-index.minus-1}"
+    },
+    "base": {
+      "$value": "{z-index.0}"
+    },
+    "sticky": {
+      "$value": "{z-index.100}"
+    },
+    "overlay": {
+      "$value": "{z-index.300}"
+    },
+    "dialog": {
+      "$value": "{z-index.400}"
+    },
+    "popover": {
+      "$value": "{z-index.500}"
+    },
+    "toast": {
+      "$value": "{z-index.600}"
+    },
+    "tooltip": {
+      "$value": "{z-index.700}"
+    }
+  },
+  "$media": {
+    "(prefers-contrast: more)": {
+      "surface": {
+        "dark": {
+          "$value": "light-dark({color.neutral.900}, {color.neutral.1000})"
+        },
+        "base": {
+          "$value": "light-dark({color.white}, {color.neutral.1000})"
+        },
+        "inverted": {
+          "$value": "light-dark({color.neutral.900}, {color.white})"
+        }
+      },
+      "foreground": {
+        "base": {
+          "$value": "light-dark({color.neutral.900}, {color.white})"
+        },
+        "inverted": {
+          "$value": "light-dark({color.white}, {color.neutral.900})"
+        },
+        "on-dark": {
+          "$value": "{color.white}"
+        },
+        "muted": {
+          "$value": "light-dark({color.neutral.800}, {color.neutral.200})"
+        },
+        "accent-hover": {
+          "$value": "light-dark({color.aqua.700}, {color.aqua.300})"
+        }
+      },
+      "border": {
+        "accent": {
+          "$value": "{color.aqua.500}"
+        },
+        "accent-strong": {
+          "$value": "{color.aqua.500}"
+        },
+        "muted": {
+          "$value": "{border.width} solid"
+        },
+        "quiet": {
+          "$value": "{border.width} solid {color.quiet}"
+        },
+        "subtle": {
+          "$value": "{border-width.1} dashed"
+        }
+      },
+      "opacity": {
+        "muted": {
+          "$value": "{opacity.90}"
+        }
+      }
+    },
+    "(prefers-reduced-motion: reduce)": {
+      "duration": {
+        "sm": {
+          "$value": "{duration.0}"
+        },
+        "md": {
+          "$value": "{duration.0}"
+        },
+        "lg": {
+          "$value": "{duration.0}"
+        },
+        "xl": {
+          "$value": "{duration.0}"
+        }
+      }
+    }
+  }
+}

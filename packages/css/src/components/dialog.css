@@ -1,0 +1,124 @@
+/**
+ * Dialog Primitive Component (Native HTML <dialog>)
+ * Design For Humans Component Library
+ * 
+ * Complies with modern web standards:
+ * - Top-layer transitions using @starting-style
+ * - transition-behavior: allow-discrete for display & overlay
+ * - Native ::backdrop with smooth fade and backdrop blur
+ * - Declarative invoker support (commandfor / command="show-modal")
+ * - WCAG 2.2 focus trapping, high contrast, and prefers-reduced-motion
+ */
+
+:where(dialog.dialog, dialog) {
+  /* Box model & positioning */
+  box-sizing: border-box;
+  margin: auto;
+  position: fixed;
+  inset: 0;
+  max-inline-size: var(--dialog-max-width);
+  max-block-size: var(--dialog-max-height);
+  padding: var(--dialog-padding);
+
+  /* Styling & surfaces */
+  background-color: var(--dialog-bg, var(--surface-card));
+  border: var(--dialog-border, none);
+  border-radius: var(--dialog-radius, var(--radius-3, 8px));
+  box-shadow: var(--dialog-shadow, var(--shadow-xl));
+  color: var(--foreground-base);
+  font-family: var(--typography-font-family-sans);
+
+  /* Closed state & discrete transition setup */
+  display: none;
+  opacity: 0;
+  transform: scale(0.96) translateY(0.5rem);
+  pointer-events: none;
+
+  transition-property: opacity, transform, box-shadow, display, overlay;
+  transition-duration: var(--dialog-transition);
+  transition-timing-function: var(--dialog-timefunc);
+  transition-behavior: allow-discrete;
+}
+
+/* Native Backdrop */
+:where(dialog.dialog, dialog)::backdrop {
+  background-color: var(--dialog-backdrop-color, var(--color-backdrop));
+  backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
+  opacity: 0;
+
+  transition-property: opacity, backdrop-filter, display, overlay;
+  transition-duration: var(--dialog-transition);
+  transition-timing-function: var(--dialog-timefunc);
+  transition-behavior: allow-discrete;
+}
+
+/* Open state */
+:where(dialog.dialog, dialog)[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+
+  &::backdrop {
+    opacity: 1;
+  }
+
+  /* Entry transition starting state */
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.96) translateY(0.5rem);
+    box-shadow: var(--shadow-none);
+
+    &::backdrop {
+      opacity: 0;
+      backdrop-filter: none;
+    }
+  }
+}
+
+/* Dialog Header / Footer / Body layout helpers */
+.dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-1);
+}
+
+.dialog__title {
+  margin: 0;
+  font-size: var(--heading-font-size);
+  font-weight: var(--heading-font-weight);
+  line-height: var(--heading-line-height);
+  color: var(--foreground-base);
+}
+
+.dialog__body {
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+  color: var(--foreground-muted);
+  overflow-y: auto;
+  margin: 0;
+}
+
+.dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-0-5);
+  margin-block-start: var(--spacing-1);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+
+  :where(dialog.dialog, dialog),
+  :where(dialog.dialog, dialog)[open] {
+    transform: none;
+    transition-duration: var(--duration-0);
+
+    @starting-style {
+      transform: none;
+    }
+  }
+}

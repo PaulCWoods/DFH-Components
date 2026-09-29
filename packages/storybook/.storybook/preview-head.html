@@ -1,0 +1,103 @@
+<style>
+  /* 1. Base Preview Canvas & Iframe */
+  html, body {
+    background-color: var(--surface-base);
+    color: var(--foreground-base);
+    font-family: var(--body-font-family, 'Inter', system-ui, -apple-system, sans-serif);
+    margin: 0;
+    transition: background-color var(--duration-sm, 0.2s) ease, color var(--duration-sm, 0.2s) ease;
+  }
+
+  /* 2. Storybook Docs Page Wrapper & Body */
+  .sbdocs.sbdocs-wrapper {
+    background-color: var(--surface-base) !important;
+    color: var(--foreground-base) !important;
+    transition: background-color var(--duration-sm, 0.2s) ease, color var(--duration-sm, 0.2s) ease;
+  }
+
+  .sbdocs.sbdocs-content {
+    color: var(--foreground-base) !important;
+  }
+
+  .sbdocs-title,
+  .sbdocs-subtitle,
+  .sbdocs h1, .sbdocs h2, .sbdocs h3, .sbdocs h4, .sbdocs h5, .sbdocs h6 {
+    color: var(--foreground-base) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  .sbdocs p, .sbdocs li, .sbdocs strong, .sbdocs em {
+    color: var(--foreground-base) !important;
+  }
+
+  /* 3. Story Preview Canvas Card in Docs View */
+  .docs-story,
+  .sb-story,
+  .sbdocs-preview,
+  .innerZoomElementWrapper {
+    background-color: var(--surface-card) !important;
+    color: var(--foreground-base) !important;
+  }
+
+  /* Outer border container wrapping the preview story block */
+  div:has(> .docs-story),
+  div:has(> .innerZoomElementWrapper),
+  div:has(> div > .docs-story) {
+    background-color: var(--surface-card) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  /* 4. Controls / ArgsTable */
+  .docblock-argstable {
+    color: var(--foreground-base) !important;
+    background-color: var(--surface-card) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  .docblock-argstable-head th {
+    color: var(--foreground-base) !important;
+    background-color: var(--surface-card) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  .docblock-argstable-body tr {
+    background-color: var(--surface-card) !important;
+    border-color: var(--border-muted) !important;
+    color: var(--foreground-base) !important;
+  }
+
+  .docblock-argstable-body tr:nth-of-type(2n) {
+    background-color: var(--surface-fade) !important;
+  }
+
+  .docblock-argstable-body td {
+    color: var(--foreground-base) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  .docblock-argstable-body td span,
+  .docblock-argstable-body td code {
+    color: var(--foreground-base) !important;
+  }
+
+  /* Table inputs and control fields */
+  .docblock-argstable input,
+  .docblock-argstable select,
+  .docblock-argstable textarea {
+    color: var(--foreground-base) !important;
+    background-color: var(--surface-base) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  /* Show code toggle button */
+  .docblock-code-toggle {
+    background-color: var(--surface-card) !important;
+    color: var(--foreground-base) !important;
+    border-color: var(--border-muted) !important;
+  }
+
+  /* Code snippet block in docs */
+  .docblock-source {
+    border-color: var(--border-muted) !important;
+  }
+</style>

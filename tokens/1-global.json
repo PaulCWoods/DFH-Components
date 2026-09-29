@@ -1,0 +1,578 @@
+{
+  "$description": "Design For Humans - Tier 1 Global Design Tokens (W3C DTCG Standard)",
+  "color": {
+    "$type": "color",
+    "transparent": {
+      "$value": "transparent"
+    },
+    "black": {
+      "$value": "#111111"
+    },
+    "white": {
+      "$value": "#ffffff"
+    },
+    "neutral": {
+      "100": {
+        "$value": "#f7f5f0"
+      },
+      "200": {
+        "$value": "#e6e4df"
+      },
+      "300": {
+        "$value": "#cfcdc7"
+      },
+      "400": {
+        "$value": "#b3b1ac"
+      },
+      "500": {
+        "$value": "#96948f"
+      },
+      "600": {
+        "$value": "#82807b"
+      },
+      "700": {
+        "$value": "#65645f"
+      },
+      "800": {
+        "$value": "#464440"
+      },
+      "900": {
+        "$value": "#36332d"
+      },
+      "1000": {
+        "$value": "#252420"
+      }
+    },
+    "aqua": {
+      "100": {
+        "$value": "#d4fff5"
+      },
+      "200": {
+        "$value": "#a0ffeb"
+      },
+      "300": {
+        "$value": "#84ecd5"
+      },
+      "400": {
+        "$value": "#5fcfb8"
+      },
+      "500": {
+        "$value": "#30aa94"
+      },
+      "600": {
+        "$value": "#00836f"
+      },
+      "700": {
+        "$value": "#006758"
+      },
+      "800": {
+        "$value": "#004334"
+      },
+      "900": {
+        "$value": "#003126"
+      }
+    },
+    "util": {
+      "amber": {
+        "100": {
+          "$value": "#fff3e1"
+        },
+        "200": {
+          "$value": "#ffe6c3"
+        },
+        "300": {
+          "$value": "#ffd494"
+        },
+        "400": {
+          "$value": "#ffbd4e"
+        },
+        "500": {
+          "$value": "#ffa300"
+        },
+        "600": {
+          "$value": "#e28b00"
+        },
+        "700": {
+          "$value": "#ac6900"
+        },
+        "800": {
+          "$value": "#714300"
+        },
+        "900": {
+          "$value": "#361e00"
+        }
+      },
+      "green": {
+        "100": {
+          "$value": "#e3ffd2"
+        },
+        "200": {
+          "$value": "#a9ff6a"
+        },
+        "300": {
+          "$value": "#90e74e"
+        },
+        "400": {
+          "$value": "#74c928"
+        },
+        "500": {
+          "$value": "#56a900"
+        },
+        "600": {
+          "$value": "#439400"
+        },
+        "700": {
+          "$value": "#215100"
+        },
+        "800": {
+          "$value": "#0f2c00"
+        },
+        "900": {
+          "$value": "#0f2c00"
+        }
+      },
+      "red": {
+        "100": {
+          "$value": "#fff1ee"
+        },
+        "200": {
+          "$value": "#fff1ee"
+        },
+        "300": {
+          "$value": "#ffb2a4"
+        },
+        "400": {
+          "$value": "#ff7d6b"
+        },
+        "500": {
+          "$value": "#ff2e25"
+        },
+        "600": {
+          "$value": "#f20000"
+        },
+        "700": {
+          "$value": "#c60000"
+        },
+        "800": {
+          "$value": "#8b0000"
+        },
+        "900": {
+          "$value": "#4f0000"
+        }
+      }
+    }
+  },
+  "opacity": {
+    "$type": "number",
+    "0": {
+      "$value": "0"
+    },
+    "10": {
+      "$value": "0.1"
+    },
+    "20": {
+      "$value": "0.2"
+    },
+    "30": {
+      "$value": "0.3"
+    },
+    "40": {
+      "$value": "0.4"
+    },
+    "50": {
+      "$value": "0.5"
+    },
+    "60": {
+      "$value": "0.6"
+    },
+    "70": {
+      "$value": "0.7"
+    },
+    "80": {
+      "$value": "0.8"
+    },
+    "90": {
+      "$value": "0.9"
+    },
+    "100": {
+      "$value": "1"
+    }
+  },
+  "sizing": {
+    "$type": "number",
+    "ratio": {
+      "$value": "1.618"
+    }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "0": {
+      "$value": "0"
+    },
+    "px": {
+      "$value": "0.0625rem"
+    },
+    "0-125": {
+      "$value": "0.125rem"
+    },
+    "0-25": {
+      "$value": "0.25rem"
+    },
+    "0-5": {
+      "$value": "0.5rem"
+    },
+    "0-75": {
+      "$value": "0.75rem"
+    },
+    "1": {
+      "$value": "1rem"
+    },
+    "1-5": {
+      "$value": "1.5rem"
+    },
+    "2": {
+      "$value": "2rem"
+    },
+    "3": {
+      "$value": "3rem"
+    },
+    "4": {
+      "$value": "4rem"
+    },
+    "8": {
+      "$value": "8rem"
+    },
+    "12": {
+      "$value": "12rem"
+    },
+    "16": {
+      "$value": "16rem"
+    },
+    "20": {
+      "$value": "20rem"
+    },
+    "24": {
+      "$value": "24rem"
+    },
+    "28": {
+      "$value": "28rem"
+    },
+    "32": {
+      "$value": "32rem"
+    },
+    "36": {
+      "$value": "36rem"
+    },
+    "40": {
+      "$value": "40rem"
+    },
+    "48": {
+      "$value": "48rem"
+    },
+    "56": {
+      "$value": "56rem"
+    },
+    "64": {
+      "$value": "64rem"
+    },
+    "80": {
+      "$value": "80rem"
+    }
+  },
+  "typography": {
+    "font-family": {
+      "$type": "fontFamilies",
+      "inter": {
+        "$value": "\"Inter\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+      },
+      "georgia": {
+        "$value": "\"Georgia\", Cambria, \"Times New Roman\", Times, serif"
+      },
+      "jetbrains-mono": {
+        "$value": "\"JetBrains Mono\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+      },
+      "plus-jakarta-sans": {
+        "$value": "\"Plus Jakarta Sans\", \"Inter\", system-ui, -apple-system, sans-serif"
+      },
+      "sans": {
+        "$value": "{typography.font-family.inter}"
+      },
+      "serif": {
+        "$value": "{typography.font-family.georgia}"
+      },
+      "mono": {
+        "$value": "{typography.font-family.jetbrains-mono}"
+      },
+      "display": {
+        "$value": "{typography.font-family.plus-jakarta-sans}"
+      }
+    },
+    "font-size": {
+      "$type": "dimension",
+      "minus-2": {
+        "$value": "0.64rem"
+      },
+      "minus-1": {
+        "$value": "0.8rem"
+      },
+      "0": {
+        "$value": "1rem"
+      },
+      "1": {
+        "$value": "1.25rem"
+      },
+      "2": {
+        "$value": "1.5625rem"
+      },
+      "3": {
+        "$value": "1.953rem"
+      },
+      "4": {
+        "$value": "2.441rem"
+      },
+      "5": {
+        "$value": "3.052rem"
+      },
+      "6": {
+        "$value": "3.815rem"
+      },
+      "7": {
+        "$value": "4.768rem"
+      },
+      "8": {
+        "$value": "5.96rem"
+      }
+    },
+    "font-weight": {
+      "$type": "fontWeight",
+      "100": {
+        "$value": 100,
+        "$description": "Thin / Hairline"
+      },
+      "200": {
+        "$value": 200,
+        "$description": "Extra Light / Ultra Light"
+      },
+      "300": {
+        "$value": 300,
+        "$description": "Light"
+      },
+      "400": {
+        "$value": 400,
+        "$description": "Regular / Normal"
+      },
+      "500": {
+        "$value": 500,
+        "$description": "Medium"
+      },
+      "600": {
+        "$value": 600,
+        "$description": "Semi Bold / Demi Bold"
+      },
+      "700": {
+        "$value": 700,
+        "$description": "Bold"
+      },
+      "800": {
+        "$value": 800,
+        "$description": "Extra Bold / Ultra Bold"
+      },
+      "900": {
+        "$value": 900,
+        "$description": "Black / Heavy"
+      }
+    },
+    "line-height": {
+      "$type": "number",
+      "0": {
+        "$value": "calc(1.6 * pow(1.125, -5))"
+      },
+      "1": {
+        "$value": "calc(1.6 * pow(1.125, -4))"
+      },
+      "2": {
+        "$value": "calc(1.6 * pow(1.125, -3))"
+      },
+      "3": {
+        "$value": "calc(1.6 * pow(1.125, -2))"
+      },
+      "4": {
+        "$value": "calc(1.6 * pow(1.125, -1))"
+      },
+      "5": {
+        "$value": "1.6"
+      },
+      "6": {
+        "$value": "calc(1.6 * 1.125)"
+      }
+    },
+    "spacing": {
+      "$type": "dimension",
+      "xtight": {
+        "$value": "-0.05em"
+      },
+      "tight": {
+        "$value": "-0.0375em"
+      },
+      "compact": {
+        "$value": "-0.025em"
+      },
+      "normal": {
+        "$value": "0em"
+      },
+      "loose": {
+        "$value": "0.05em"
+      },
+      "wide": {
+        "$value": "0.125em"
+      }
+    }
+  },
+  "border-width": {
+    "$type": "dimension",
+    "0": {
+      "$value": "0"
+    },
+    "1": {
+      "$value": "1px"
+    },
+    "2": {
+      "$value": "2px"
+    },
+    "4": {
+      "$value": "4px"
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "0": {
+      "$value": "0"
+    },
+    "1": {
+      "$value": "2px"
+    },
+    "2": {
+      "$value": "4px"
+    },
+    "3": {
+      "$value": "8px"
+    },
+    "4": {
+      "$value": "12px"
+    },
+    "full": {
+      "$value": "9999px"
+    }
+  },
+  "duration": {
+    "$type": "other",
+    "0": {
+      "$value": "0s"
+    },
+    "02": {
+      "$value": "0.2s"
+    },
+    "05": {
+      "$value": "0.5s"
+    },
+    "1": {
+      "$value": "1s"
+    },
+    "2": {
+      "$value": "2s"
+    }
+  },
+  "z-index": {
+    "$type": "number",
+    "minus-1": {
+      "$value": -1
+    },
+    "0": {
+      "$value": 0
+    },
+    "100": {
+      "$value": 100
+    },
+    "300": {
+      "$value": 300
+    },
+    "400": {
+      "$value": 400
+    },
+    "500": {
+      "$value": 500
+    },
+    "600": {
+      "$value": 600
+    },
+    "700": {
+      "$value": 700
+    }
+  },
+  "fluid": {
+    "spacing": {
+      "$type": "dimension",
+      "1": {
+        "$value": "fluid({spacing.1}, {spacing.2})",
+        "$description": "Standard fluid base spacing (1rem Mobile to 2rem Desktop)"
+      },
+      "2": {
+        "$value": "fluid({spacing.2}, {spacing.3})",
+        "$description": "Double fluid spacing (2rem Mobile to 3rem Desktop)"
+      },
+      "3": {
+        "$value": "fluid({spacing.3}, {spacing.4})",
+        "$description": "Triple fluid spacing (3rem Mobile to 4rem Desktop)"
+      }
+    },
+    "typography": {
+      "font-size": {
+        "$type": "dimension",
+        "minus-2": {
+          "$value": "fluid(0.6944rem, 0.96rem)",
+          "$description": "Fluid font size step -2 (0.6944rem / 11px Mobile to 0.96rem / 15px Desktop)"
+        },
+        "minus-1": {
+          "$value": "fluid(0.8333rem, 1.2rem)",
+          "$description": "Fluid font size step -1 (0.8333rem / 13px Mobile to 1.2rem / 19px Desktop)"
+        },
+        "0": {
+          "$value": "fluid(1rem, 1.5rem)",
+          "$description": "Fluid base font size step 0 (1rem / 16px Mobile to 1.5rem / 24px Desktop)"
+        },
+        "1": {
+          "$value": "fluid(1.2rem, 1.875rem)",
+          "$description": "Fluid font size step 1 (1.2rem / 19px Mobile to 1.875rem / 30px Desktop)"
+        },
+        "2": {
+          "$value": "fluid(1.44rem, 2.3438rem)",
+          "$description": "Fluid font size step 2 (1.44rem / 23px Mobile to 2.3438rem / 37.5px Desktop)"
+        },
+        "3": {
+          "$value": "fluid(1.728rem, 2.9297rem)",
+          "$description": "Fluid font size step 3 (1.728rem / 28px Mobile to 2.9297rem / 47px Desktop)"
+        },
+        "4": {
+          "$value": "fluid(2.0736rem, 3.6621rem)",
+          "$description": "Fluid font size step 4 (2.0736rem / 33px Mobile to 3.6621rem / 59px Desktop)"
+        },
+        "5": {
+          "$value": "fluid(2.4883rem, 4.5776rem)",
+          "$description": "Fluid font size step 5 (2.4883rem / 40px Mobile to 4.5776rem / 73px Desktop)"
+        },
+        "6": {
+          "$value": "fluid(2.986rem, 5.722rem)",
+          "$description": "Fluid font size step 6 (2.986rem / 48px Mobile to 5.722rem / 92px Desktop)"
+        },
+        "7": {
+          "$value": "fluid(3.5832rem, 7.1526rem)",
+          "$description": "Fluid font size step 7 (3.5832rem / 57px Mobile to 7.1526rem / 114px Desktop)"
+        },
+        "8": {
+          "$value": "fluid(4.2998rem, 8.9407rem)",
+          "$description": "Fluid font size step 8 (4.2998rem / 69px Mobile to 8.9407rem / 143px Desktop)"
+        }
+      }
+    }
+  }
+}

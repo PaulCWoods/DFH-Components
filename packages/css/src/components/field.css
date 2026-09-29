@@ -1,0 +1,68 @@
+/**
+ * Field Component Primitive
+ * Design For Humans Component Library
+ * 
+ * Accessible form field wrapper uniting labels, hints, controls, and validation errors.
+ * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
+ * - 3.3.2 Labels or Instructions
+ * - 3.3.1 Error Identification
+ * - Modern Web Guidance: Clear '(Required)' text rather than ambiguous asterisks
+ */
+
+/* ==========================================================================
+   Field Wrapper Primitive
+   ========================================================================== */
+
+:where(.field) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--field-inner-gap, var(--spacing-0-5));
+  inline-size: 100%;
+
+  /* Container opacity on disabled state */
+  &:has(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled);
+  }
+
+  /* Automatically show accessible required text on label when control has :required */
+  &:has(:required) .field__label::after {
+    content: " (Required)";
+    font-weight: var(--font-weight-regular, 400);
+    margin-inline-start: var(--spacing-0-5);
+    font-size: var(--micro-text-font-size, 0.875em);
+    color: var(--foreground-muted);
+  }
+}
+
+/* ==========================================================================
+   Field Sub-Elements (Label, Hint, Errors)
+   ========================================================================== */
+
+:where(.field__label) {
+  font-family: var(--label-font-family, var(--body-font-family));
+  font-size: var(--label-font-size, var(--typography-font-size-0));
+  font-weight: var(--label-font-weight, var(--font-weight-bold));
+  line-height: var(--label-line-height, var(--typography-line-height-4));
+  color: var(--foreground-base);
+  cursor: pointer;
+}
+
+:where(.field__hint) {
+  color: var(--field-hint-color, var(--foreground-muted));
+  font-family: var(--micro-text-font-family, var(--body-font-family));
+  font-size: var(--micro-text-font-size, var(--typography-font-size-minus-1));
+  font-weight: var(--micro-text-font-weight, var(--font-weight-regular));
+  line-height: var(--micro-text-line-height, var(--typography-line-height-4));
+  margin: 0;
+}
+
+:where(.field__errors, .field__error) {
+  color: var(--field-error-color, var(--foreground-danger));
+  font-family: var(--micro-text-font-family, var(--body-font-family));
+  font-size: var(--micro-text-font-size, var(--typography-font-size-minus-1));
+  font-weight: var(--micro-text-font-weight, var(--font-weight-regular));
+  line-height: var(--micro-text-line-height, var(--typography-line-height-4));
+  margin: 0;
+  padding-inline-start: 1.5em;
+}

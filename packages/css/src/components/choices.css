@@ -1,0 +1,45 @@
+/**
+ * Choices Component Primitive
+ * Design For Humans Component Library
+ * 
+ * Container and wrapper patterns for grouped interactive choices (checkboxes and radios).
+ * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
+ * - 2.5.5 / 2.5.8 Target Size
+ * - 1.4.3 Contrast
+ */
+
+/* ==========================================================================
+   Choices Container Primitive
+   ========================================================================== */
+
+:where(.choices) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-choices-gap, var(--spacing-0-5));
+
+  &.choices--horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-1);
+  }
+}
+
+/* ==========================================================================
+   Choice Item Primitive (Label + Control Wrapper)
+   ========================================================================== */
+
+:where(.choice) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--form-choice-inner-gap, var(--spacing-0-5));
+  font-family: var(--body-font-family);
+  font-size: var(--input-font-size, var(--typography-font-size-0));
+  color: var(--foreground-base);
+  cursor: pointer;
+  user-select: none;
+
+  &:has(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+}
