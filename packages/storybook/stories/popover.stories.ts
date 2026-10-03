@@ -42,7 +42,7 @@ export const AnchoredPopover: Story = {
           style="position-anchor: ${anchorName};"
         >
           <div style="display: flex; flex-direction: column; gap: var(--spacing-0-5); min-inline-size: 14rem;">
-            <p style="margin: 0; font-weight: var(--body-strong-font-weight); color: var(--foreground-base); font-size: var(--typography-font-size-0);">
+            <p style="margin: 0; font-weight: var(--body-strong-font-weight); color: var(--foreground); font-size: var(--typography-font-size-0);">
               Quick Actions
             </p>
             <p style="margin: 0; font-size: var(--body-small-font-size); color: var(--foreground-muted);">

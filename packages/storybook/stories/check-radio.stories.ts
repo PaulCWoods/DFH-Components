@@ -69,7 +69,7 @@ export const HorizontalChoices: Story = {
   render: () => `
     <fieldset class="fieldset">
       <legend class="legend">Notification Frequency</legend>
-      <div class="choices choices--horizontal">
+      <div class="choices choices--inline">
         <label class="choice" for="freq-realtime">
           <input type="radio" id="freq-realtime" name="freq" class="radio-input" checked />
           <span>Real-time</span>

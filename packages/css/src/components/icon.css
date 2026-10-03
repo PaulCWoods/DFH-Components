@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Icon Primitive
+   --------------------------------------------------------------------------
+   Accessible inline SVG icon component that scales proportionally with surrounding
+   typography (1em x 1em) and mirrors directional indicators in RTL contexts.
+
+   Usage:
+   <svg class="icon icon--dir" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+     <line x1="5" y1="12" x2="19" y2="12"></line>
+     <polyline points="12 5 19 12 12 19"></polyline>
+   </svg>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Icon Primitive (:where(.icon))
+   ========================================================================== */
+:where(.icon) {
+  /* Layout & Sizing (Fixed glyph dimensions relative to font-size) */
+  display: inline-block;
+  inline-size: 1em;
+  block-size: 1em;
+  vertical-align: middle;
+  flex-shrink: 0;
+
+  /* Surface & Fill */
+  fill: currentColor;
+
+  /* ------------------------------------------------------------------------
+     Directional Mirroring in RTL contexts ([dir="rtl"])
+     ------------------------------------------------------------------------ */
+  :where([dir="rtl"]) &:where(.icon--dir, .dir),
+  &:where([dir="rtl"]):where(.icon--dir, .dir) {
+    scale: -1 1;
+  }
+}

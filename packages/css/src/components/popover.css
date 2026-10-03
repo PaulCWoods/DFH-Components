@@ -1,41 +1,56 @@
-/**
- * Popover Primitive Component (Native HTML [popover] + CSS Anchor Positioning)
- * Design For Humans Component Library
- * 
- * Complies with modern web standards:
- * - Native Popover API (light-dismiss, top-layer rendering)
- * - CSS Anchor Positioning (position-anchor, position-area, anchor() fallback)
- * - Top-layer transitions using @starting-style and allow-discrete
- * - Zero-JS declarative triggers via popovertarget or commandfor
- */
+/* ==========================================================================
+   Popover Primitive
+   --------------------------------------------------------------------------
+   Accessible floating overlay utilizing the native HTML [popover] attribute
+   and CSS Anchor Positioning (position-anchor / position-area) with top-layer
+   transitions and light-dismiss behavior.
 
+   Usage:
+   <button type="button" class="button" popovertarget="my-popover" style="anchor-name: --anchor-btn;">
+     <span>Actions</span>
+   </button>
+   <div id="my-popover" popover class="popover popover--anchored" style="position-anchor: --anchor-btn;">
+     <p>Popover content.</p>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Popover Primitive (:where([popover].popover, [popover]))
+   ========================================================================== */
 :where([popover].popover, [popover]) {
-  /* Box model & reset defaults */
+  /* Layout & Sizing */
   box-sizing: border-box;
+  max-inline-size: min(24rem, calc(100dvw - var(--spacing-2, 2rem)));
+
+  /* Spacing */
   margin: 0;
-  padding: var(--popover-padding);
-  max-inline-size: min(24rem, calc(100dvw - var(--spacing-2)));
-  
-  /* Surfaces & typography */
-  background-color: var(--popover-bg, var(--surface-card));
-  border: var(--popover-border, var(--border-quiet));
-  border-radius: var(--popover-radius, var(--radius-2, 4px));
-  box-shadow: var(--popover-shadow, var(--shadow-md));
-  color: var(--foreground-base);
-  font-family: var(--typography-font-family-sans);
-  font-size: var(--body-font-size);
-  line-height: var(--body-line-height);
+  padding: var(--popover-padding, var(--spacing-1, 1rem));
+
+  /* Typography */
+  font-family: var(--popover-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--popover-font-size, var(--body-font-size, 1rem));
+  line-height: var(--popover-line-height, var(--body-line-height, 1.5));
+  color: var(--popover-color, var(--foreground, currentColor));
+
+  /* Surface, Border & Shape */
+  background-color: var(--popover-bg, var(--surface-card, #ffffff));
+  border: var(--popover-border, var(--border-width, 1px) solid var(--border-quiet, var(--border-color, transparent)));
+  border-radius: var(--popover-radius, var(--radius-2, var(--radius, 0.25rem)));
+  box-shadow: var(--popover-shadow, var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1)));
 
   /* Top-layer transitions */
   opacity: 0;
   transform: translateY(-0.25rem) scale(0.98);
+
   transition-property: opacity, transform, display, overlay;
-  transition-duration: var(--popover-transition);
-  transition-timing-function: var(--popover-timefunc);
+  transition-duration: var(--popover-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--popover-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   transition-behavior: allow-discrete;
 }
 
-/* Open state in top layer */
+/* ==========================================================================
+   Open Popover State in Top Layer
+   ========================================================================== */
 :where([popover].popover, [popover]):popover-open {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -50,28 +65,28 @@
    CSS Anchor Positioning Utilities
    ========================================================================== */
 
-/* Modern CSS position-area (supported in modern Chromium, Safari 26+, Firefox Nightly) */
+/* Modern CSS position-area (supported in modern Chromium, Safari 26+, Firefox) */
 @supports (position-area: bottom) {
   :where([popover].popover--anchored, [popover][data-anchor]) {
     position: fixed;
     inset: auto;
     position-area: bottom span-right;
-    margin-block-start: var(--popover-offset);
+    margin-block-start: var(--popover-offset, var(--spacing-0-5, 0.5rem));
   }
 
   :where([popover].popover--top) {
     position-area: top span-right;
-    margin-block-end: var(--popover-offset);
+    margin-block-end: var(--popover-offset, var(--spacing-0-5, 0.5rem));
   }
 
   :where([popover].popover--start) {
     position-area: left span-bottom;
-    margin-inline-end: var(--popover-offset);
+    margin-inline-end: var(--popover-offset, var(--spacing-0-5, 0.5rem));
   }
 
   :where([popover].popover--end) {
     position-area: right span-bottom;
-    margin-inline-start: var(--popover-offset);
+    margin-inline-start: var(--popover-offset, var(--spacing-0-5, 0.5rem));
   }
 }
 
@@ -81,21 +96,31 @@
     :where([popover].popover--anchored, [popover][data-anchor]) {
       position: fixed;
       inset: auto;
-      top: calc(anchor(bottom) + var(--popover-offset));
+      top: calc(anchor(bottom) + var(--popover-offset, var(--spacing-0-5, 0.5rem)));
       left: anchor(left);
     }
   }
 }
 
-/* Reduced Motion Override */
+/* ==========================================================================
+   Accessibility & Media Queries
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
+
   :where([popover].popover, [popover]),
   :where([popover].popover, [popover]):popover-open {
     transform: none;
-    transition-duration: var(--duration-0);
+    transition-duration: var(--duration-0, 0s);
 
     @starting-style {
       transform: none;
     }
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where([popover].popover, [popover]) {
+    border-width: calc(var(--popover-border-width, var(--border-width, 1px)) * 2);
+    border-color: currentColor;
   }
 }

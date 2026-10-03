@@ -1,0 +1,167 @@
+/* ==========================================================================
+   Design For Humans: Banner Primitive
+   Inline status messages, actions, and semantic notification callouts
+   Parity with Design For Humans Blog (_banner.scss & _component-library.twig)
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Banner Container (:where(.banner))
+   ========================================================================== */
+:where(.banner) {
+  --banner-outer-padding: calc(var(--banner-padding, var(--spacing, 1rem)) / 2);
+  --banner-inner-padding-block: calc(var(--banner-padding, var(--spacing, 1rem)) / 4);
+  --banner-inner-padding-inline: calc(var(--banner-padding, var(--spacing, 1rem)) / 2);
+
+  /* Layout & Sizing */
+  align-items: center;
+  display: flex;
+  max-inline-size: none;
+  padding: var(--banner-outer-padding, calc(var(--spacing, 1rem) / 2));
+
+  /* Spacing */
+  gap: var(--banner-gap, var(--spacing, 1rem));
+
+  /* Surface, Border & Backdrop */
+  background-color: color-mix(in srgb,
+      var(--banner-bg, var(--surface-card, transparent)),
+      transparent var(--banner-transparency, 0%));
+  border: var(--banner-border-width, 1px) solid var(--banner-border-color, currentColor);
+  border-radius: var(--banner-radius, var(--radius, 0.25rem));
+  box-shadow: var(--banner-shadow, none);
+  backdrop-filter: var(--banner-filter, none);
+}
+
+/* ==========================================================================
+   Banner Inner Content Container (:where(.banner__inner))
+   ========================================================================== */
+:where(.banner__inner) {
+  /* Layout */
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+
+  /* Spacing & Content Padding */
+  gap: var(--banner-inner-gap, var(--banner-gap, var(--spacing, 1rem)));
+  padding-block: var(--banner-inner-padding-block, calc(var(--spacing, 1rem) / 4));
+  padding-inline: var(--banner-inner-padding-inline, calc(var(--spacing, 1rem) / 2));
+
+  /* Reset default child paragraph & heading margins to respect banner gap */
+  :where(> *) {
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   Banner Action Container / Trigger (:where(.banner__action))
+   ========================================================================== */
+:where(.banner__action) {
+  /* Positioning */
+  align-self: flex-start;
+
+  &.banner__action--align-center,
+  &:where(.banner__action--align-center) {
+    align-self: center;
+  }
+}
+
+/* ==========================================================================
+   Semantic Variants
+   ========================================================================== */
+
+/* Success Variant */
+:where(.banner--success) {
+  --button-primary-bg: var(--foreground-success, currentColor);
+  --button-primary-hover-bg: var(--foreground-success-hover, currentColor);
+  --button-primary-pressed-bg: var(--foreground-success-pressed, currentColor);
+  --link-color: var(--foreground-success, currentColor);
+  --link-hover-color: var(--foreground-success-hover, currentColor);
+  --link-pressed-color: var(--foreground-success-pressed, currentColor);
+
+  --banner-bg: var(--surface-success, transparent);
+  --banner-border-color: var(--foreground-success, currentColor);
+}
+
+/* Error / Danger Variant */
+:where(.banner--error),
+:where(.banner--danger) {
+  --button-primary-bg: var(--foreground-danger, currentColor);
+  --button-primary-hover-bg: var(--foreground-danger-hover, currentColor);
+  --button-primary-pressed-bg: var(--foreground-danger-pressed, currentColor);
+  --link-color: var(--foreground-danger, currentColor);
+  --link-hover-color: var(--foreground-danger-hover, currentColor);
+  --link-pressed-color: var(--foreground-danger-pressed, currentColor);
+
+  --banner-bg: var(--surface-danger, transparent);
+  --banner-border-color: var(--foreground-danger, currentColor);
+}
+
+/* Warning Variant */
+:where(.banner--warning) {
+  --button-primary-bg: var(--foreground-warning, currentColor);
+  --button-primary-hover-bg: var(--foreground-warning-hover, currentColor);
+  --button-primary-pressed-bg: var(--foreground-warning-pressed, currentColor);
+  --link-color: var(--foreground-warning, currentColor);
+  --link-hover-color: var(--foreground-warning-hover, currentColor);
+  --link-pressed-color: var(--foreground-warning-pressed, currentColor);
+
+  --banner-bg: var(--surface-warning, transparent);
+  --banner-border-color: var(--foreground-warning, currentColor);
+}
+
+/* Info Variant */
+:where(.banner--info) {
+  --banner-bg: var(--surface-accent-muted, transparent);
+  --banner-border-color: var(--border-color-accent, currentColor);
+}
+
+/* ==========================================================================
+   Dynamic Concentric Corners Modifier (:where(.banner--dynamic-corners))
+   Calculates outer curvature to perfectly align with nested button radius.
+   ========================================================================== */
+:where(.banner--dynamic-corners) {
+  --banner-radius: calc(min(var(--button-radius, var(--radius, 0.25rem)), var(--button-min-size, var(--spacing-target, 2.75rem)) / 2) + var(--banner-outer-padding, calc(var(--banner-padding, var(--spacing, 1rem)) / 2)) + var(--banner-border-width, var(--border-width, 1px)));
+  --banner-inner-padding-inline: calc(var(--banner-padding, var(--spacing, 1rem)) / 2 * 2);
+}
+
+/* ==========================================================================
+   Banner Alerts: Responsive layout overrides
+   ========================================================================== */
+
+:where(.alert .banner) {
+  display: inline-flex;
+}
+
+:where(.alert:not(.alert--floating)>.banner) {
+  border-radius: 0;
+  border-inline: none;
+  inline-size: 100%;
+}
+
+:where(.alert--top:not(.alert--floating)>.banner,
+  .alert--sticky:not(.alert--floating)>.banner,
+  .alert--fixed-top:not(.alert--floating)>.banner) {
+  border-block-start: none;
+}
+
+:where(.alert--bottom:not(.alert--floating)>.banner,
+  .alert--fixed-bottom:not(.alert--floating)>.banner) {
+  border-block-end: none;
+}
+
+/* When Banner is nested inside .wrapper within .alert */
+:where(.alert .wrapper>.banner) {
+  inline-size: 100%;
+}
+
+/* ==========================================================================
+   Banner High Contrast Modifier
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  :where(.banner) {
+    --banner-transparency: 0%;
+    --banner-border-width: var(--border-width-md, 1px);
+  }
+}

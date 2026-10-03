@@ -9,7 +9,9 @@
   "scripts": {
     "prepare": "husky || true",
     "build:tokens": "node packages/figma-sync/compile-tokens.js",
-    "export:figma": "node packages/figma-sync/export-figma-tokens.js"
+    "export:figma": "node packages/figma-sync/export-figma-tokens.js",
+    "storybook": "npm run storybook --workspace=@design-for-humans/storybook",
+    "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook"
   },
   "devDependencies": {
     "prettier": "^3.0.0",

@@ -105,7 +105,7 @@ export const CompleteAccessibleForm: Story = {
         </label>
       </fieldset>
 
-      <div class="form__submission form__submission--right" style="display: flex; gap: var(--spacing-0-5); inline-size: 100%; justify-content: flex-end;">
+      <div class="form__submission form__submission--right">
         <button type="reset" class="button button--subtle">
           <span>Cancel</span>
         </button>

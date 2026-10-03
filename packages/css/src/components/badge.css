@@ -1,77 +1,90 @@
-/**
- * Badge & Chip Primitive Component
- * Design For Humans Component Library
- * 
- * Complies with WCAG 2.2 AA/AAA:
- * - 1.4.3 Contrast (Minimum 4.5:1 text on background)
- * - 1.4.11 Non-text Contrast (Borders in high-contrast mode)
- */
+/* ==========================================================================
+   Badge & Chip Primitives
+   --------------------------------------------------------------------------
+   Accessible status indicators, tags, and metadata chips conforming to
+   WCAG 2.2 AA / AAA contrast standards.
 
+   Usage:
+   <span class="badge badge--success"><span>Completed</span></span>
+   <span class="chip">Lesson 04</span>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Badge Primitive (:where(.badge))
+   ========================================================================== */
 :where(.badge) {
-  /* Layout & Alignment */
+  /* Layout & Display */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;
   vertical-align: middle;
-  line-height: 1;
-  text-box: trim-both cap alphabetic;
+  white-space: nowrap;
   box-sizing: border-box;
-
-  /* Typography */
-  font-family: var(--typography-font-family-sans, sans-serif);
-  font-size: var(--badge-font-size, var(--typography-font-size--1));
-  font-weight: var(--badge-font-weight, var(--body-strong-font-weight));
-  text-transform: uppercase;
-  letter-spacing: var(--badge-letter-spacing, 0px);
 
   /* Sizing & Spacing */
   padding: var(--badge-padding, 0.5em);
-  border-radius: var(--badge-radius, var(--radius-1, 2px));
-  border: var(--border-width-1, 1px) solid transparent;
+  border-radius: var(--badge-radius, var(--ui-radius, var(--radius, 0.25rem)));
+  border: var(--badge-border-width, var(--border-width-1, 1px)) solid transparent;
+
+  /* Typography */
+  font-family: var(--badge-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--badge-font-size, var(--typography-font-size--1, 0.875rem));
+  font-weight: var(--badge-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
+  line-height: 1;
+  text-transform: var(--badge-text-transform, uppercase);
+  letter-spacing: var(--badge-letter-spacing, 0px);
+  text-box: trim-both cap alphabetic;
 
   /* Colors & Surfaces */
-  background-color: var(--badge-bg, var(--foreground-base));
-  color: var(--badge-text, var(--surface-base));
+  background-color: var(--badge-default-bg, var(--badge-bg, var(--foreground, currentColor)));
+  color: var(--badge-default-text, var(--badge-text, var(--surface, #ffffff)));
 
-  /* High contrast mode */
+  span {
+    text-box: trim-both cap alphabetic;
+  }
+
+  @supports not (text-box: trim-both cap alphabetic) {
+    padding-block: var(--badge-padding-block, 0.25em);
+  }
+
+  /* High Contrast Mode */
   @media (prefers-contrast: more) {
     border-color: currentColor;
+    border-width: calc(var(--badge-border-width, var(--border-width, 1px)) * 2);
   }
 }
 
-/* Trim leading/trailing whitespace inside text */
-:where(.badge) span {
-  text-box: trim-both cap alphabetic;
-}
+/* ==========================================================================
+   Badge Modifiers & Variants
+   ========================================================================== */
 
-/* Pill shape modifier */
+/* Pill Shape Modifier */
 :where(.badge--pill) {
-  border-radius: var(--badge-pill-radius, var(--radius-full, 9999px));
+  border-radius: var(--badge-pill-radius, var(--radius-full, var(--radius-pill, 9999px)));
   padding-inline: calc(var(--badge-padding, 0.5em) * 1.5);
 }
 
 /* Accent Variant */
 :where(.badge--accent) {
-  background-color: var(--badge-accent-bg, var(--foreground-accent));
-  color: var(--badge-accent-text, var(--surface-base));
+  background-color: var(--badge-accent-bg, var(--foreground-accent, #008076));
+  color: var(--badge-accent-text, var(--surface, #ffffff));
 }
 
 /* Success Variant */
 :where(.badge--success) {
-  background-color: var(--badge-success-bg, var(--foreground-success));
-  color: var(--badge-success-text, var(--surface-base));
+  background-color: var(--badge-success-bg, var(--foreground-success, #00875a));
+  color: var(--badge-success-text, var(--surface, #ffffff));
 }
 
 /* Warning Variant */
 :where(.badge--warning) {
-  background-color: var(--badge-warning-bg, var(--foreground-warning));
-  color: var(--badge-warning-text, var(--surface-base));
+  background-color: var(--badge-warning-bg, var(--foreground-warning, #b06000));
+  color: var(--badge-warning-text, var(--surface, #ffffff));
 }
 
 /* Danger / Destructive Variant */
 :where(.badge--danger) {
-  background-color: var(--badge-danger-bg, var(--foreground-danger));
+  background-color: var(--badge-danger-bg, var(--foreground-danger, #d32f2f));
   color: var(--badge-danger-text, var(--color-white, #ffffff));
 }
 
@@ -79,19 +92,25 @@
 :where(.badge--subtle) {
   background-color: transparent;
   border-color: currentColor;
-  color: var(--foreground-base);
+  color: var(--badge-subtle-text, var(--foreground, currentColor));
 }
 
-/* Chip Primitive */
+/* ==========================================================================
+   Chip Primitive (:where(.chip))
+   ========================================================================== */
 :where(.chip) {
+  /* Layout & Display */
   display: inline-flex;
   align-items: center;
-  font-family: var(--typography-font-family-sans, sans-serif);
-  font-size: var(--chip-font-size, var(--typography-font-size--2));
-  font-weight: var(--chip-font-weight, var(--body-strong-font-weight));
-  text-transform: uppercase;
-  opacity: var(--chip-opacity, var(--opacity-muted, 0.8));
-  line-height: 1;
-  text-box: trim-both cap alphabetic;
   white-space: nowrap;
+
+  /* Typography */
+  font-family: var(--chip-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--chip-font-size, var(--typography-font-size--2, 0.75rem));
+  font-weight: var(--chip-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
+  line-height: 1;
+  text-transform: var(--chip-text-transform, uppercase);
+  text-box: trim-both cap alphabetic;
+  color: var(--chip-color, var(--foreground-muted, currentColor));
+  opacity: var(--chip-opacity, var(--opacity-muted, 0.8));
 }

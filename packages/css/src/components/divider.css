@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Divider Primitive
+   --------------------------------------------------------------------------
+   Semantic horizontal/vertical separator adapting automatically to container
+   direction via modern container style queries (@container style(--direction: row)).
+
+   Usage:
+   <hr class="divider">
+   ========================================================================== */
+
+hr:where(.divider) {
+  border: none;
+  border-block-start: var(--divider-width, var(--border-width, 1px)) solid var(--divider-color, var(--border-color-quiet, currentColor));
+  margin: 0;
+  inline-size: 100%;
+
+  @container style(--direction: row) {
+    align-self: stretch;
+    border-block-start: 0;
+    border-inline-start: var(--divider-width, var(--border-width, 1px)) solid var(--divider-color, var(--border-color-quiet, currentColor));
+    inline-size: 0;
+    block-size: auto;
+  }
+}

@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Breadcrumb Primitive
+   --------------------------------------------------------------------------
+   Accessible navigational breadcrumb trails with modern speech-alternative
+   slash separators (content: "/" / "") adhering to WCAG 2.2 Level AA / AAA.
+
+   Usage:
+   <nav class="breadcrumb" aria-label="Breadcrumb">
+     <ol>
+       <li><a class="link" href="/topics">Topics</a></li>
+       <li><a class="link" href="/topics/typography">Typography</a></li>
+       <li aria-current="page">Modular Scale</li>
+     </ol>
+   </nav>
+   ========================================================================== */
+
+:where(.breadcrumb) {
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--breadcrumb-gap, var(--spacing-0-5, 0.5rem));
+    row-gap: var(--spacing-0-25, 0.25rem);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--breadcrumb-font-family, var(--body-font-family, inherit));
+    font-size: var(--breadcrumb-font-size, var(--typography-font-size-minus-1, 0.875rem));
+    color: var(--breadcrumb-color, var(--foreground-muted, currentColor));
+
+    li {
+      display: inline-flex;
+      align-items: center;
+
+      &:not(:last-child)::after {
+        content: "/" / "";
+        margin-inline-start: var(--breadcrumb-gap, var(--spacing-0-5, 0.5rem));
+        color: var(--breadcrumb-separator-color, var(--foreground-muted, currentColor));
+        user-select: none;
+      }
+
+      &[aria-current="page"] {
+        font-weight: var(--breadcrumb-current-font-weight, var(--font-weight-bold, 700));
+        color: var(--breadcrumb-current-color, var(--foreground-strong, var(--foreground, currentColor)));
+      }
+    }
+  }
+}

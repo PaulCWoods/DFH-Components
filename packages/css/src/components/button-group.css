@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Button Group Primitive
+   --------------------------------------------------------------------------
+   Layout container for grouping related buttons, segmented controls,
+   and action clusters with horizontal, vertical, and full-width layouts.
+
+   Usage:
+   <div class="button-group">
+     <button type="button" class="button">Option 1</button>
+     <button type="button" class="button">Option 2</button>
+     <hr class="divider">
+     <button type="button" class="button button--primary">Confirm</button>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Button Group (:where(.button-group))
+   ========================================================================== */
+:where(.button-group) {
+  --direction: row;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--button-group-gap, var(--spacing, 1rem));
+}
+
+/* Fill Variant (Stretches across available width) */
+:where(.button-group--stretch) {
+  display: flex;
+  inline-size: stretch;
+}
+
+/* Stacked Variant (Vertical column orientation) */
+:where(.button-group--stacked) {
+  --direction: column;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Text Element inside Button Group */
+:where(.button-group__text) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--button-group-text-padding-inline, var(--spacing-1, 1rem));
+  font-family: var(--button-group-text-font-family, var(--typography-font-family-sans, inherit));
+  font-size: var(--button-group-text-font-size, var(--typography-font-size-0, 1rem));
+  font-weight: var(--button-group-text-font-weight, var(--font-weight-regular, 400));
+  color: var(--button-group-text-color, currentColor);
+}
+
+/* End Alignment (Pushes trailing actions to opposite edge) */
+:where(.button-group__end) {
+  margin-inline-start: auto;
+}

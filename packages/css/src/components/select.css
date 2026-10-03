@@ -1,143 +1,133 @@
-/**
- * Select Component Primitive
- * Design For Humans Component Library
- * 
- * Styles native <select> controls and modern customizable select elements
- * using the CSS Customizable Select API (appearance: base-select).
- * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
- * - 2.5.5 Target Size (48px default touch target)
- * - 2.5.8 Target Size (Minimum 24x24px for small controls)
- * - 1.4.3 Contrast (Minimum 4.5:1 text, 3:1 borders and focus rings)
- * - 2.4.7 Focus Visible & 2.4.13 Focus Appearance
- * - Modern Web Guidance: Customizable select (appearance: base-select, ::picker(select))
- */
-
 /* ==========================================================================
-   Native Select Element Primitive
+   Select Primitive
+   --------------------------------------------------------------------------
+   Accessible dropdown selection control supporting native HTML <select> and
+   the modern CSS Customizable Select API (appearance: base-select) with WCAG
+   2.2 AA / AAA compliance.
+
+   Usage:
+   <select class="select">
+     <option value="1">First Option</option>
+     <option value="2">Second Option</option>
+   </select>
    ========================================================================== */
 
+/* ==========================================================================
+   Native Select Element Primitive (:where(select, .select))
+   ========================================================================== */
 :where(select, .select) {
-  --_select-min-size: var(--input-min-size);
-  --_select-padding-block: var(--input-padding-block);
-  --_select-padding-inline: var(--input-padding-inline);
+  --_select-min-size: var(--input-min-size, var(--spacing-target, 3rem));
+  --_select-padding-block: var(--input-padding-block, var(--spacing-0-5, 0.5rem));
+  --_select-padding-inline: var(--input-padding-inline, var(--spacing-1, 1rem));
 
-  /* Layout & Box Model */
-  appearance: none;
+  /* Layout & Sizing */
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   inline-size: 100%;
   block-size: var(--_select-min-size);
   min-inline-size: var(--_select-min-size);
+  appearance: none;
+  cursor: pointer;
+
+  /* Spacing */
   padding-block: var(--_select-padding-block);
   padding-inline: var(--_select-padding-inline);
-  padding-inline-end: calc(var(--select-padding-inline) * 2 + var(--select-icon-size));
+  padding-inline-end: calc(var(--select-padding-inline, 1rem) * 2 + var(--select-icon-size, 1rem));
 
   /* Typography */
-  font-family: var(--body-font-family);
-  font-size: var(--select-font-size, var(--typography-font-size-0));
-  line-height: var(--select-line-height, var(--control-line-height));
-  color: var(--foreground-base);
+  font-family: var(--select-font-family, var(--body-font-family, inherit));
+  font-size: var(--select-font-size, var(--typography-font-size-0, 1rem));
+  line-height: var(--select-line-height, var(--control-line-height, 1.25));
+  color: var(--select-color, var(--foreground, currentColor));
 
-  /* Surface & Border */
-  border-radius: var(--select-radius, var(--ui-radius));
-  border: var(--select-border);
-  background-color: var(--select-background-color);
-  background-image: var(--select-icon);
+  /* Surface, Border & Shape */
+  background-color: var(--select-background-color, var(--surface, #ffffff));
+  background-image: var(--select-icon, none);
   background-repeat: no-repeat;
-  background-position: var(--select-icon-pos) center;
-  background-size: var(--select-icon-size);
-  cursor: pointer;
+  background-position: var(--select-icon-pos, right 1em) center;
+  background-size: var(--select-icon-size, 1rem);
+  border-radius: var(--select-radius, var(--ui-radius, var(--radius, 0.25rem)));
+  border: var(--select-border-width, 1px) solid var(--select-border-color, currentColor);
 
   /* Transitions */
   transition-property: border-color, background-color, color, box-shadow, outline-color;
-  transition-duration: var(--select-transition, var(--duration-sm));
-  transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
+  transition-duration: var(--select-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--select-timefunc, var(--timefunc-ease-in-out, ease-in-out));
 
-  /* ------------------------------------------------------------------------
-     Hover & Interactive States
-     ------------------------------------------------------------------------ */
+  /* Hover & Interactive States */
   @media (hover: hover) {
     &:hover:not(:disabled, [aria-disabled="true"]) {
-      border-color: var(--foreground-accent-hover);
+      border-color: var(--select-hover-border, var(--foreground-accent-hover, currentColor));
     }
   }
 
   &:active:not(:disabled, [aria-disabled="true"]) {
-    border-color: var(--foreground-accent-pressed);
+    border-color: var(--select-active-border, var(--foreground-accent-pressed, currentColor));
   }
 
-  /* ------------------------------------------------------------------------
-     Focus Visible (High Contrast 3:1 Ring with Offset)
-     ------------------------------------------------------------------------ */
+  /* Focus Visible (High Contrast 3:1 Ring with Offset) */
   &:focus {
     outline: none;
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-outline);
-    outline-offset: var(--focus-ring-outline-offset);
-    border-color: var(--border-accent, var(--foreground-accent));
+    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline-offset: var(--focus-ring-outline-offset, 2px);
+    border-color: var(--border-color-accent, var(--border-accent, var(--foreground-accent, currentColor)));
   }
 
-  /* ------------------------------------------------------------------------
-     Validation States (:user-invalid / :user-valid)
-     ------------------------------------------------------------------------ */
+  /* Validation States (:user-invalid / :user-valid) */
   &:user-invalid {
-    border-color: var(--select-border-color-invalid, var(--border-danger));
+    border-color: var(--select-border-color-invalid, var(--border-color-danger, var(--border-danger, #d32f2f)));
 
     &:focus-visible {
-      outline-color: var(--select-border-color-invalid, var(--border-danger));
+      outline-color: var(--select-border-color-invalid, var(--border-color-danger, var(--border-danger, #d32f2f)));
     }
   }
 
   &:user-valid {
-    border-color: var(--select-border-color-valid, var(--border-success));
+    border-color: var(--select-border-color-valid, var(--border-color-success, var(--border-success, #00875a)));
   }
 
-  /* ------------------------------------------------------------------------
-     Disabled State
-     ------------------------------------------------------------------------ */
+  /* Disabled State */
   &:where(:disabled, [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled);
+    opacity: var(--opacity-disabled, 0.4);
     cursor: not-allowed;
-    background-color: var(--surface-fade);
-    border-color: var(--border-quiet, var(--border-muted));
+    background-color: var(--surface-fade, rgba(0, 0, 0, 0.05));
+    border-color: var(--border-quiet, var(--border-muted, currentColor));
   }
 
-  /* ------------------------------------------------------------------------
-     Size Modifiers (.select--sm, .select--lg)
-     ------------------------------------------------------------------------ */
+  /* Size Modifiers (.select--sm, .select--lg) */
   &.select--sm {
-    --_select-min-size: var(--select-sm-min-size);
-    --_select-padding-block: var(--select-sm-padding-block);
-    --_select-padding-inline: var(--select-sm-padding-inline);
-
-    font-size: var(--select-sm-font-size);
+    --_select-min-size: var(--select-sm-min-size, var(--spacing-target-sm, 2rem));
+    --_select-padding-block: var(--select-sm-padding-block, var(--spacing-0-25, 0.25rem));
+    --_select-padding-inline: var(--select-sm-padding-inline, var(--spacing-0-75, 0.75rem));
+    font-size: var(--select-sm-font-size, var(--typography-font-size--1, 0.875rem));
   }
 
   &.select--lg {
-    --_select-min-size: var(--select-lg-min-size);
-    --_select-padding-block: var(--select-lg-padding-block);
-    --_select-padding-inline: var(--select-lg-padding-inline);
-
-    font-size: var(--select-lg-font-size);
+    --_select-min-size: var(--select-lg-min-size, var(--spacing-target-lg, 3.5rem));
+    --_select-padding-block: var(--select-lg-padding-block, var(--spacing-0-75, 0.75rem));
+    --_select-padding-inline: var(--select-lg-padding-inline, var(--spacing-1-5, 1.5rem));
+    font-size: var(--select-lg-font-size, var(--typography-font-size-1, 1.125rem));
   }
 
-  /* ------------------------------------------------------------------------
-     Custom Select Modifier (.select--custom or .custom)
-     ------------------------------------------------------------------------ */
+  /* Custom Select Modifier (.select--custom or .custom) */
   &.custom,
   &.select--custom {
     background-image: none;
-    padding-inline: var(--select-padding-inline);
+    padding-inline: var(--select-padding-inline, var(--spacing-1, 1rem));
+  }
+
+  :where(.inline-form, .inline-field) & {
+    inline-size: auto;
   }
 }
 
 /* ==========================================================================
    Modern Customizable Select API (appearance: base-select)
    ========================================================================== */
-
 select.select--custom {
 
   &,
@@ -146,24 +136,23 @@ select.select--custom {
   }
 }
 
-/* --------------------------------------------------------------------------
-   Picker Popover (Custom Select Dropdown Surface)
-   -------------------------------------------------------------------------- */
+/* Picker Popover (Custom Select Dropdown Surface) */
 ::picker(select) {
-  --picker-padding: calc(var(--select-padding-inline) / 2);
+  --picker-padding: calc(var(--select-padding-inline, 1rem) / 2);
 
   box-sizing: border-box;
-  inline-size: var(--anchor-width);
+  inline-size: var(--anchor-width, auto);
   padding: var(--picker-padding);
-  margin-block: calc(var(--spacing-unit) / 4);
-  border-radius: var(--ui-radius);
-  border: 1px solid var(--border-muted);
-  background: var(--surface-card);
-  box-shadow: var(--shadow-lg, var(--shadow-md));
+  margin-block: calc(var(--spacing, 1rem) / 4);
+  border-radius: var(--ui-radius, var(--radius, 0.25rem));
+  border: 1px solid var(--border-color-muted, currentColor);
+  background: var(--surface-card, #ffffff);
+  box-shadow: var(--shadow-lg, var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1)));
   opacity: 1;
+
   transition:
-    box-shadow var(--select-transition),
-    opacity var(--select-transition);
+    box-shadow var(--select-transition, var(--duration-sm, 150ms)),
+    opacity var(--select-transition, var(--duration-sm, 150ms));
 
   @starting-style {
     box-shadow: none;
@@ -171,41 +160,37 @@ select.select--custom {
   }
 }
 
-/* --------------------------------------------------------------------------
-   Option Item Styling
-   -------------------------------------------------------------------------- */
+/* Option Item Styling */
 :where(option) {
-  --option-padding-inline: calc(var(--select-padding-inline) - var(--picker-padding));
+  --option-padding-inline: calc(var(--select-padding-inline, 1rem) - var(--picker-padding, 0.5rem));
 
   display: flex;
   align-items: center;
-  gap: var(--select-inner-gap);
-  padding: var(--select-padding-block) var(--option-padding-inline);
+  gap: var(--select-inner-gap, var(--spacing-0-5, 0.5rem));
+  padding: var(--select-padding-block, var(--spacing-0-5, 0.5rem)) var(--option-padding-inline);
   border-radius: var(--radius-1, 2px);
   cursor: pointer;
-  color: var(--foreground-base);
-  transition: background-color var(--select-transition);
+  color: var(--foreground, currentColor);
+  transition: background-color var(--select-transition, var(--duration-sm, 150ms));
 
   &:is(:hover, :focus-visible) {
-    background-color: var(--surface-fade);
+    background-color: var(--surface-fade, rgba(0, 0, 0, 0.05));
     outline: none;
   }
 
   &::checkmark {
     content: "✓";
-    font-weight: var(--font-weight-bold);
-    color: var(--foreground-accent);
+    font-weight: var(--font-weight-bold, 700);
+    color: var(--foreground-accent, #008076);
   }
 }
 
-/* --------------------------------------------------------------------------
-   Selected Content Mirroring Inside Button
-   -------------------------------------------------------------------------- */
+/* Selected Content Mirroring Inside Button */
 :where(selectedcontent) {
   display: flex;
   align-items: center;
   flex-grow: 1;
-  gap: var(--select-inner-gap);
+  gap: var(--select-inner-gap, var(--spacing-0-5, 0.5rem));
 
   small {
     display: none;
@@ -215,9 +200,26 @@ select.select--custom {
 /* ==========================================================================
    RTL Bidirectional Support
    ========================================================================== */
-
 .translated-rtl select,
 [dir="rtl"] select,
 select[dir="rtl"] {
   --select-icon-pos: left 1em;
+}
+
+/* ==========================================================================
+   Accessibility & Media Queries
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+  :where(select, .select),
+  ::picker(select),
+  :where(option) {
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(select, .select) {
+    border-width: calc(var(--select-border-width, var(--border-width, 1px)) * 2);
+  }
 }

@@ -67,7 +67,7 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 #### Surfaces
 | Token JSON Path | CSS Custom Property | Intended Use |
 | :--- | :--- | :--- |
-| `surface.base` | `--surface-base` | Main canvas / body background |
+| `surface.base` | `--surface` | Main canvas / body background |
 | `surface.card` | `--surface-card` | Cards, modals, dialogs, popovers, elevated containers |
 | `surface.fade` | `--surface-fade` | Hover highlight tint / quiet container fill |
 | `surface.inverted` | `--surface-inverted` | High-contrast reverse background (tooltips, inverted cards) |
@@ -84,7 +84,7 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 #### Foregrounds (Text & Icons)
 | Token JSON Path | CSS Custom Property | Intended Use |
 | :--- | :--- | :--- |
-| `foreground.base` | `--foreground-base` | Primary text and default icon fill |
+| `foreground.base` | `--foreground` | Primary text and default icon fill |
 | `foreground.muted` | `--foreground-muted` | Secondary text, captions, metadata |
 | `foreground.subtle` | `--foreground-subtle` | Tertiary text, placeholder text |
 | `foreground.accent` | `--foreground-accent` | Brand teal text, primary links |
@@ -97,7 +97,7 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 | Token JSON Path | CSS Custom Property | Intended Use |
 | :--- | :--- | :--- |
 | `border.width` | `--border-width` | Standard 2px border width |
-| `border.base` | `--border-base` | Default prominent border |
+| `border.base` | `--border` | Default prominent border |
 | `border.muted` | `--border-muted` | Subtle container border (currentColor with alpha) |
 | `border.quiet` | `--border-quiet` | Light 20% border for dividers and cards |
 | `border.subtle` | `--border-subtle` | 1px dashed or ultra-light border |
@@ -124,9 +124,9 @@ Design For Humans supports fluid spacing and responsive typography across both W
   - **Option A (Free Tier Single-Mode):** `dfh-unified.json` (Collection: `Design For Humans`, Mode: `Value`). Light theme + Desktop scale with 100% internal variable alias pills for $0 Figma accounts.
   - **Option B (Multi-Mode Modular Collections, Zero Mode Pollution):**
     - `01-color.json` (Collection: `Color`, Modes: `Light` & `Dark`): Primitive palettes + semantic surfaces, foregrounds, borders, shadows, and focus rings. Semantic colors internally alias primitives.
-    - `02-viewport.json` (Collection: `Viewport`, Modes: `Mobile` & `Desktop`): Responsive fluid spacing (`breathe`, `cushion`) and fluid typography font sizes (Mobile and Desktop pixel numbers, e.g. Step 0: 16px Mobile / 24px Desktop, with zero CSS web math pollution).
+    - `02-container.json` (Collection: `Container`, Modes: `Small` & `Large`): Responsive fluid spacing (`breathe`, `cushion`) and semantic typography font sizes/line heights (Small and Large container pixel numbers, e.g. Step 0: 16px Small / 24px Large, matching container query workflows).
     - `03-structure.json` (Collection: `Structure`, Mode: `Value`): Static spacing, radii, border stroke widths, focus ring metrics, typography font metrics, durations, and component specs.
-  - Designers can switch Theme (Light/Dark) and Viewport (Mobile/Desktop) independently on any Figma frame without mode conflicts or mode pollution on numbers.
+  - Designers can switch Theme (Light/Dark) and Container (Small/Large) independently on any Figma frame, screen, or nested component without mode conflicts or mode pollution on numbers.
 
 #### Fluid Token Usage Patterns in Semantic & Component Tokens
 - **Single Fluid Token Reference (Recommended Default):** Reference any global fluid step directly by name, e.g. `"$value": "{fluid.typography.font-size.5}"`. The mobile min and desktop max are mathematically implied without needing a second token.
@@ -155,7 +155,7 @@ Component tokens scope styles directly to specific UI components (`button`, `dia
 - **Mandatory Fallback Rule in CSS:** Always fall back to the semantic token:
   ```css
   background-color: var(--button-primary-bg, var(--foreground-accent));
-  color: var(--button-primary-fg, var(--surface-base));
+  color: var(--button-primary-fg, var(--surface));
   border-radius: var(--button-radius, var(--radius-md));
   font-size: var(--input-font-size, var(--control-font-size));
   ```
@@ -206,7 +206,7 @@ Always use native CSS nesting with an **explicit parent selector (`&`)** for pse
   ```css
   @media (hover: hover) {
     &:hover:not(:disabled, [aria-disabled="true"]) {
-      background-color: var(--component-hover-bg, var(--foreground-base));
+      background-color: var(--component-hover-bg, var(--foreground));
     }
   }
   ```

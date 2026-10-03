@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Design For Humans: Toast Primitive
+   --------------------------------------------------------------------------
+   Non-modal status notifications, live announcements, and floating alert
+   stacks composed using the banner primitive with modern top-layer popover
+   support, viewport pinning, and smooth entry/exit animations.
+
+   Usage (Stacked in Viewport):
+   <aside class="toast-stack toast-stack--bottom-end" aria-label="Notifications">
+     <div class="toast" role="status" aria-live="polite">
+       <div class="banner banner--success banner--dynamic-corners" role="none">
+         <div class="banner__inner">
+           <p><strong>Success</strong></p>
+           <p>Your settings have been saved.</p>
+         </div>
+         <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss notification">
+           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+             <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+           </svg>
+         </button>
+       </div>
+     </div>
+   </aside>
+   ========================================================================== */
+
+/* ==========================================================================
+   Toast Stack Container (:where(.toast-stack))
+   Fixed viewport anchor for grouping and stacking multiple toast messages.
+   ========================================================================== */
+:where(.toast-stack) {
+  /* Positioning */
+  position: fixed;
+  z-index: var(--toast-z-index, 1000);
+  box-sizing: border-box;
+
+  /* Layout & Stacking */
+  display: flex;
+  flex-direction: column;
+  gap: var(--toast-gap, var(--spacing-0-75, 0.75rem));
+  inline-size: 100%;
+  max-inline-size: min(var(--toast-max-width, 28rem), calc(100% - calc(var(--toast-offset, var(--spacing-1, 1rem)) * 2)));
+
+  /* Transparent Pass-Through */
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  /* Default Placement: Bottom End (Bottom-Right in LTR) */
+  inset-block-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-bottom, 0px));
+  inset-inline-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-right, 0px));
+  align-items: flex-end;
+}
+
+/* ==========================================================================
+   Toast Stack Placement Modifiers
+   ========================================================================== */
+
+/* Bottom End (Default) */
+:where(.toast-stack--bottom-end) {
+  inset-block-start: auto;
+  inset-block-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-bottom, 0px));
+  inset-inline-start: auto;
+  inset-inline-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-right, 0px));
+  align-items: flex-end;
+}
+
+/* Bottom Start (Bottom-Left in LTR) */
+:where(.toast-stack--bottom-start) {
+  inset-block-start: auto;
+  inset-block-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-bottom, 0px));
+  inset-inline-start: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-left, 0px));
+  inset-inline-end: auto;
+  align-items: flex-start;
+}
+
+/* Bottom Center */
+:where(.toast-stack--bottom-center) {
+  inset-block-start: auto;
+  inset-block-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-bottom, 0px));
+  inset-inline: 0;
+  margin-inline: auto;
+  align-items: center;
+}
+
+/* Top End (Top-Right in LTR) */
+:where(.toast-stack--top-end) {
+  inset-block-start: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-top, 0px));
+  inset-block-end: auto;
+  inset-inline-start: auto;
+  inset-inline-end: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-right, 0px));
+  align-items: flex-end;
+}
+
+/* Top Start (Top-Left in LTR) */
+:where(.toast-stack--top-start) {
+  inset-block-start: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-top, 0px));
+  inset-block-end: auto;
+  inset-inline-start: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-left, 0px));
+  inset-inline-end: auto;
+  align-items: flex-start;
+}
+
+/* Top Center */
+:where(.toast-stack--top-center) {
+  inset-block-start: calc(var(--toast-offset, var(--spacing-1, 1rem)) + env(safe-area-inset-top, 0px));
+  inset-block-end: auto;
+  inset-inline: 0;
+  margin-inline: auto;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Toast Item (:where(.toast))
+   Individual toast wrapper providing interactive pointer events, elevation,
+   and dynamic entry transitions.
+   ========================================================================== */
+:where(.toast) {
+  /* Layout & Sizing */
+  --banner-shadow: var(--toast-shadow, var(--shadow-md, none));
+  box-sizing: border-box;
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  pointer-events: auto;
+
+  /* Animation */
+  animation: toast-slide-in var(--toast-transition, var(--duration-sm, 150ms)) var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out)) forwards;
+}
+
+/* Dismissing state */
+:where(.toast--dismissing) {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity var(--toast-transition, var(--duration-sm, 150ms)) var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out)),
+    transform var(--toast-transition, var(--duration-sm, 150ms)) var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+}
+
+/* ==========================================================================
+   Native Popover Top-Layer Support (:where([popover].toast, [popover="manual"].toast))
+   ========================================================================== */
+:where([popover].toast) {
+  /* Reset browser native popover styling */
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+
+  /* Top-layer transitions */
+  opacity: 0;
+  transform: translateY(0.5rem) scale(0.96);
+
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: var(--toast-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  transition-behavior: allow-discrete;
+}
+
+:where([popover].toast):popover-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.96);
+  }
+}
+
+/* ==========================================================================
+   Keyframes for DOM-injected Toasts
+   ========================================================================== */
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   Accessibility & Media Queries
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :where(.toast) {
+    animation: none;
+  }
+
+  :where([popover].toast),
+  :where([popover].toast):popover-open {
+    transform: none;
+    transition-duration: var(--duration-0, 0s);
+
+    @starting-style {
+      transform: none;
+    }
+  }
+
+  :where(.toast--dismissing) {
+    transform: none;
+    transition-duration: var(--duration-0, 0s);
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.toast) {
+    outline: var(--border-width, 1px) solid currentColor;
+  }
+}

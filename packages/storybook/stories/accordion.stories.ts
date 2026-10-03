@@ -30,7 +30,7 @@ export const Default: Story = {
 export const ExclusiveAccordionGroup: Story = {
   render: () => `
     <div style="max-inline-size: 38rem; margin-inline: auto;">
-      <h3 style="font-family: var(--typography-font-family-sans); font-size: var(--heading-font-size); margin-block-end: var(--spacing-1); color: var(--foreground-base);">
+      <h3 style="font-family: var(--typography-font-family-sans); font-size: var(--heading-font-size); margin-block-end: var(--spacing-1); color: var(--foreground);">
         Frequently Asked Questions (Native Exclusive Group)
       </h3>
       <div class="accordion-group">

@@ -1,38 +1,55 @@
-/**
- * Form Component Primitive
- * Design For Humans Component Library
- * 
- * Top-level form layout container and accessible action submission bar.
- * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
- * - Modern Web Guidance: Container style queries for responsive alignment
- * - 3.2.2 On Input
- */
-
 /* ==========================================================================
-   Form Container Primitive
+   Form Primitive
+   --------------------------------------------------------------------------
+   Top-level form layout container and accessible action submission bar.
+
+   Usage:
+   <form class="form">
+     <div class="field">...</div>
+     <div class="form__submission form__submission--right">
+       <button type="submit" class="button button--primary"><span>Submit</span></button>
+     </div>
+   </form>
    ========================================================================== */
 
-:where(.form, form) {
-  align-items: flex-start;
+/* ==========================================================================
+   Base Form Container (:where(.form, form))
+   ========================================================================== */
+:where(.form) {
+  /* Layout & Display */
   display: flex;
   flex-direction: column;
-  gap: var(--field-gap, var(--spacing-1));
+  align-items: flex-start;
   inline-size: 100%;
+
+  /* Spacing */
+  gap: var(--field-gap, var(--spacing-1, 1rem));
 }
 
 /* ==========================================================================
-   Form Submission Action Bar Primitive
+   Inline Form Container (:where(.inline-form))
    ========================================================================== */
+:where(.inline-form) {
+  --direction: row;
+  display: var(--inline-form-display, inline-flex);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--form-inline-gap, var(--spacing-1, 1rem));
+}
 
+/* ==========================================================================
+   Form Submission Action Bar Primitive (:where(.form__submission))
+   ========================================================================== */
 :where(.form__submission) {
-  margin-block-start: var(--form-submission-gap, var(--spacing-1));
+  /* Layout & Sizing */
   inline-size: 100%;
+  margin-block-start: var(--form-submission-gap, var(--spacing-1, 1rem));
 
   &:not(.button) {
     display: flex;
-    gap: var(--form-submission-inner-gap, var(--spacing-1));
     flex-wrap: wrap;
     align-items: center;
+    gap: var(--form-submission-inner-gap, var(--spacing-1, 1rem));
   }
 
   /* Alignment via Container Style Queries */

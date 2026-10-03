@@ -185,3 +185,54 @@ export const DisabledAndAriaDisabled: Story = {
     </div>
   `,
 };
+
+
+export const Round: Story = {
+  render: () => `
+    <div style="display: flex; gap: var(--spacing-1); align-items: center; flex-wrap: wrap;">
+      <button type="button" class="button button--round">
+        <span>Rounded</span>
+      </button>
+      <button type="button" class="button button--primary button--round">
+        <span>Rounded Primary</span>
+      </button>
+      <button type="button" class="button button--icon button--round">
+        <span class="visually-hidden">Search site</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </button>
+    </div>
+  `,
+};
+
+export const SubtleDestructive: Story = {
+  render: () => `
+    <div style="display: flex; gap: var(--spacing-1); align-items: center; flex-wrap: wrap;">
+      <button type="button" class="button button--subtle button--subtle-destructive">
+        <span>Delete Account</span>
+      </button>
+      <button type="button" class="button button--subtle button--subtle-destructive button--sm">
+        <span>Remove</span>
+      </button>
+    </div>
+  `,
+};
+
+export const Selected: Story = {
+  render: () => `
+    <div style="display: flex; gap: var(--spacing-1); align-items: center; flex-wrap: wrap;">
+      <button type="button" class="button button--selected">
+        <span>Selected Filter</span>
+      </button>
+      <span class="button button--selected" aria-current="page">
+        <span>Page 1 (Active)</span>
+      </span>
+      <button type="button" class="button button--round button--selected">
+        <span>Selected Pill</span>
+      </button>
+    </div>
+  `,
+};
+

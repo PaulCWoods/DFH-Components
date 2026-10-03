@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Design For Humans: Stack, Inline & Cluster Layout Primitives
+   --------------------------------------------------------------------------
+   Provides 1-dimensional vertical (stack) and horizontal (inline, cluster)
+   layout flows with consistent gap spacing and optional modifier flags.
+   Parity with Design For Humans Blog (_stack.scss)
+
+   Usage:
+   <!-- Vertical Stack -->
+   <div class="stack">
+     <div>Item 1</div>
+     <div>Item 2</div>
+   </div>
+
+   <!-- Horizontal Inline Flow -->
+   <div class="inline">
+     <div>Tag 1</div>
+     <div>Tag 2</div>
+   </div>
+
+   <!-- Inline-Flex Cluster -->
+   <div class="cluster">
+     <button class="button">Action</button>
+     <span class="badge">Status</span>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Flow Containers (:where(.stack, .inline))
+   ========================================================================== */
+:where(.stack, .inline) {
+  display: var(--display, flex);
+  gap: var(--gap, var(--spacing, 1rem));
+
+  &:where(ul, ol) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Vertical Stack Flow */
+:where(.stack) {
+  --direction: column;
+  align-items: var(--align-items, stretch);
+  flex-direction: column;
+  flex-wrap: var(--flex-wrap, nowrap);
+}
+
+/* Horizontal Inline Flow */
+:where(.inline, .stack--inline) {
+  --direction: row;
+  align-items: var(--align-items, center);
+  flex-direction: row;
+  flex-wrap: var(--flex-wrap, wrap);
+}
+
+/* Tight Modifier (Zero Gap) */
+:where(.inline--tight, .stack--tight) {
+  gap: 0;
+}
+
+/* No-Wrap Modifier */
+:where(.inline--nowrap, .stack--nowrap) {
+  flex-wrap: nowrap;
+}
+
+/* ==========================================================================
+   Cluster Primitive (:where(.cluster))
+   Inline-flex container for tight groupings of inline components.
+   ========================================================================== */
+:where(.cluster) {
+  align-items: var(--align-items, stretch);
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--gap, var(--spacing, 1rem));
+
+  &:where(ul, ol) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}

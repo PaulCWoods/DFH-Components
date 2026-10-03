@@ -1,39 +1,40 @@
-/**
- * Checkbox & Radio Component Primitive
- * Design For Humans Component Library
- * 
- * Accessible native checkboxes and radio buttons utilizing browser-native
- * accessibility mechanics, enhanced with accent-color and high-contrast focus rings.
- * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
- * - 2.5.5 Target Size & 2.5.8 Target Size
- * - 2.4.7 Focus Visible & 2.4.13 Focus Appearance
- * - 1.4.3 Contrast
- */
-
 /* ==========================================================================
-   Checkbox and Radio Primitives
+   Checkbox & Radio Primitives
+   --------------------------------------------------------------------------
+   Accessible native checkboxes and radio buttons utilizing browser-native
+   accessibility mechanics, enhanced with accent-color and high-contrast focus rings.
+
+   Usage:
+   <input type="checkbox" class="checkbox-input" id="opt-1" />
+   <input type="radio" class="radio-input" name="grp" id="rad-1" />
    ========================================================================== */
 
-:where(
-  .checkbox-input,
+/* ==========================================================================
+   Base Checkbox and Radio Primitives (:where(...))
+   ========================================================================== */
+:where(.checkbox-input,
   .radio-input,
-  input:is([type="checkbox"], [type="radio"])
-) {
+  input:is([type="checkbox"], [type="radio"])) {
+  /* Layout & Sizing */
   all: revert;
   box-sizing: border-box;
-  block-size: var(--form-check-size, 1.25rem);
   inline-size: var(--form-check-size, 1.25rem);
+  block-size: var(--form-check-size, 1.25rem);
   margin: 0;
-  accent-color: var(--foreground-accent);
   cursor: pointer;
 
+  /* Color & Accent */
+  accent-color: var(--form-check-accent, var(--foreground-accent, #008076));
+
+  /* Focus Visible (High Contrast 3:1 Ring with Offset) */
   &:focus-visible {
-    outline: var(--focus-ring-outline);
-    outline-offset: var(--focus-ring-outline-offset);
+    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline-offset: var(--focus-ring-outline-offset, 2px);
   }
 
+  /* Disabled State */
   &:where(:disabled, [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled);
+    opacity: var(--opacity-disabled, 0.4);
     cursor: not-allowed;
   }
 }

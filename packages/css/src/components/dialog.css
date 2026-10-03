@@ -1,62 +1,95 @@
-/**
- * Dialog Primitive Component (Native HTML <dialog>)
- * Design For Humans Component Library
- * 
- * Complies with modern web standards:
- * - Top-layer transitions using @starting-style
- * - transition-behavior: allow-discrete for display & overlay
- * - Native ::backdrop with smooth fade and backdrop blur
- * - Declarative invoker support (commandfor / command="show-modal")
- * - WCAG 2.2 focus trapping, high contrast, and prefers-reduced-motion
- */
+/* ==========================================================================
+   Dialog Primitive
+   --------------------------------------------------------------------------
+   Accessible modal dialog container leveraging native HTML <dialog> for
+   top-layer positioning, viewport constraints, backdrop dimming, and focus
+   trapping. Content surfaces and layout are composed using the Card primitive.
 
+   Usage:
+   <dialog id="my-dialog" class="dialog" aria-labelledby="dialog-title">
+     <div class="card">
+       <article class="card__content">
+         <header class="card__header">
+           <h2 id="dialog-title" class="card__title">Dialog Title</h2>
+           <button type="button" class="button button--subtle button--icon" commandfor="my-dialog" command="close">
+             <span class="visually-hidden">Close dialog</span>
+             <svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+           </button>
+         </header>
+         <div class="card__body">
+           <p>Dialog body copy.</p>
+         </div>
+         <footer class="card__footer">
+           <button type="button" class="button button--primary" commandfor="my-dialog" command="close">
+             <span>Confirm</span>
+           </button>
+         </footer>
+       </article>
+     </div>
+   </dialog>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Dialog Container (:where(dialog.dialog, dialog))
+   ========================================================================== */
 :where(dialog.dialog, dialog) {
-  /* Box model & positioning */
+  /* Layout & Sizing */
   box-sizing: border-box;
+  display: none;
+  inline-size: min(var(--dialog-max-width, 36rem), calc(100vi - var(--spacing-2, 2rem)));
+  max-block-size: min(var(--dialog-max-height, 90vb), calc(100vb - var(--spacing-2, 2rem)));
+  overflow: visible;
+  overscroll-behavior: contain;
+
+  /* Spacing */
   margin: auto;
+  padding: 0;
+
+  /* Surface & Border Reset (Deferred to internal Card) */
+  background: transparent;
+  border: none;
+  color: inherit;
+
+  /* Positioning */
   position: fixed;
   inset: 0;
-  max-inline-size: var(--dialog-max-width);
-  max-block-size: var(--dialog-max-height);
-  padding: var(--dialog-padding);
 
-  /* Styling & surfaces */
-  background-color: var(--dialog-bg, var(--surface-card));
-  border: var(--dialog-border, none);
-  border-radius: var(--dialog-radius, var(--radius-3, 8px));
-  box-shadow: var(--dialog-shadow, var(--shadow-xl));
-  color: var(--foreground-base);
-  font-family: var(--typography-font-family-sans);
-
-  /* Closed state & discrete transition setup */
-  display: none;
+  /* Closed State & Discrete Transitions */
   opacity: 0;
   transform: scale(0.96) translateY(0.5rem);
   pointer-events: none;
 
-  transition-property: opacity, transform, box-shadow, display, overlay;
-  transition-duration: var(--dialog-transition);
-  transition-timing-function: var(--dialog-timefunc);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: var(--dialog-transition, var(--duration-md, 250ms));
+  transition-timing-function: var(--dialog-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   transition-behavior: allow-discrete;
+
+  /* Ensure nested card expands to full available width and clips cleanly */
+  >.card {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
 }
 
-/* Native Backdrop */
+/* ==========================================================================
+   Native Backdrop (::backdrop)
+   ========================================================================== */
 :where(dialog.dialog, dialog)::backdrop {
-  background-color: var(--dialog-backdrop-color, var(--color-backdrop));
+  background-color: var(--dialog-backdrop-color, var(--color-backdrop, rgba(0, 0, 0, 0.5)));
   backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
   opacity: 0;
 
   transition-property: opacity, backdrop-filter, display, overlay;
-  transition-duration: var(--dialog-transition);
-  transition-timing-function: var(--dialog-timefunc);
+  transition-duration: var(--dialog-transition, var(--duration-md, 250ms));
+  transition-timing-function: var(--dialog-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   transition-behavior: allow-discrete;
 }
 
-/* Open state */
+/* ==========================================================================
+   Open Dialog State
+   ========================================================================== */
 :where(dialog.dialog, dialog)[open] {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-1);
+  display: block;
   opacity: 1;
   transform: scale(1) translateY(0);
   pointer-events: auto;
@@ -69,7 +102,6 @@
   @starting-style {
     opacity: 0;
     transform: scale(0.96) translateY(0.5rem);
-    box-shadow: var(--shadow-none);
 
     &::backdrop {
       opacity: 0;
@@ -78,44 +110,48 @@
   }
 }
 
-/* Dialog Header / Footer / Body layout helpers */
-.dialog__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-1);
-}
-
-.dialog__title {
+/* ==========================================================================
+   Drawer Modifier (.dialog--drawer)
+   Slides in from the end of the viewport as a slide-out panel.
+   ========================================================================== */
+:where(dialog.dialog--drawer) {
   margin: 0;
-  font-size: var(--heading-font-size);
-  font-weight: var(--heading-font-weight);
-  line-height: var(--heading-line-height);
-  color: var(--foreground-base);
+  margin-inline-start: auto;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  inset-block: 0;
+  max-inline-size: min(var(--dialog-drawer-max-width, 28rem), 100vi);
+  max-block-size: 100vb;
+  block-size: 100vb;
+  transform: translateX(100%);
+
+  >.card {
+    block-size: 100%;
+    border-radius: 0;
+    border-inline-end: none;
+    border-block: none;
+  }
+
+  &[open] {
+    transform: translateX(0);
+
+    @starting-style {
+      transform: translateX(100%);
+    }
+  }
 }
 
-.dialog__body {
-  font-size: var(--body-font-size);
-  line-height: var(--body-line-height);
-  color: var(--foreground-muted);
-  overflow-y: auto;
-  margin: 0;
-}
-
-.dialog__footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--spacing-0-5);
-  margin-block-start: var(--spacing-1);
-}
-
-/* Reduced Motion Override */
+/* ==========================================================================
+   Accessibility & Media Queries
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
 
   :where(dialog.dialog, dialog),
-  :where(dialog.dialog, dialog)[open] {
+  :where(dialog.dialog, dialog)[open],
+  :where(dialog.dialog--drawer),
+  :where(dialog.dialog--drawer)[open] {
     transform: none;
-    transition-duration: var(--duration-0);
+    transition-duration: var(--duration-0, 0s);
 
     @starting-style {
       transform: none;

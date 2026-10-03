@@ -1,5 +1,281 @@
 {
   "$description": "Design For Humans - Tier 3 Component Design Tokens (W3C DTCG Standard)",
+  "accordion": {
+    "border": {
+      "$value": "{border.subtle}",
+      "$type": "border"
+    },
+    "hover-border": {
+      "$value": "{border.color.accent}",
+      "$type": "color"
+    },
+    "open-bg": {
+      "$value": "{surface.card}",
+      "$type": "color"
+    },
+    "radius": {
+      "$value": "{radius.md}",
+      "$type": "dimension"
+    },
+    "padding": {
+      "$value": "{spacing}",
+      "$type": "dimension"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration"
+    },
+    "timefunc": {
+      "$value": "{timefunc.ease-in-out}",
+      "$type": "other"
+    }
+  },
+  "alert": {
+    "$type": "component",
+    "$description": "Site-wide announcement and page-level alert bar tokens",
+    "z-index": {
+      "$value": "{z-index.sticky}",
+      "$type": "other",
+      "$description": "Z-index layer for sticky or fixed page alert bars"
+    },
+    "padding-block": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Vertical padding for alert container"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Transition duration for dismiss/collapse animations"
+    }
+  },
+  "badge": {
+    "font-family": {
+      "$value": "{typography.font-family.sans}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight"
+    },
+    "letter-spacing": {
+      "$value": "0px",
+      "$type": "dimension"
+    },
+    "text-transform": {
+      "$value": "uppercase",
+      "$type": "other"
+    },
+    "padding": {
+      "$value": "0.5em",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension"
+    },
+    "pill-radius": {
+      "$value": "{radius.pill}",
+      "$type": "dimension"
+    },
+    "default-bg": {
+      "$value": "{foreground}",
+      "$type": "color"
+    },
+    "default-text": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color"
+    },
+    "accent-bg": {
+      "$value": "{foreground.accent}",
+      "$type": "color"
+    },
+    "accent-text": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color"
+    },
+    "success-bg": {
+      "$value": "{foreground.success}",
+      "$type": "color"
+    },
+    "success-text": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color"
+    },
+    "warning-bg": {
+      "$value": "{foreground.warning}",
+      "$type": "color"
+    },
+    "warning-text": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color"
+    },
+    "danger-bg": {
+      "$value": "{foreground.danger}",
+      "$type": "color"
+    },
+    "danger-text": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color"
+    }
+  },
+  "banner": {
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Banner background surface color"
+    },
+    "transparency": {
+      "$value": "{transparency.10}",
+      "$type": "other",
+      "$description": "Banner background transparency for color-mix"
+    },
+    "filter": {
+      "$value": "{filter.blur}",
+      "$type": "other",
+      "$description": "Backdrop filter blur for banner"
+    },
+    "padding": {
+      "$value": "{spacing}",
+      "$type": "dimension",
+      "$description": "Base padding unit for banner spacing calculations"
+    },
+    "border-color": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "Default border color for banner"
+    },
+    "border-width": {
+      "$value": "{border-width.1}",
+      "$type": "dimension",
+      "$description": "Default border width for banner"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Banner container corner radius"
+    },
+    "gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Gap between banner content and action elements"
+    },
+    "inner-gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Gap between inner elements in the banner"
+    }
+  },
+  "block-link": {
+    "background-color": {
+      "$value": "transparent",
+      "$type": "color",
+      "$description": "Resting background color for block link card"
+    },
+    "border": {
+      "$value": "{border.default}",
+      "$type": "border",
+      "$description": "Resting border shorthand for block link"
+    },
+    "border-color": {
+      "$value": "{border.color}",
+      "$type": "color",
+      "$description": "Resting border color for block link"
+    },
+    "color": {
+      "$value": "{foreground.accent}",
+      "$type": "color",
+      "$description": "Resting text color for block link"
+    },
+    "hover-background-color": {
+      "$value": "{surface.accent-strong}",
+      "$type": "color",
+      "$description": "Hover background fill for block link"
+    },
+    "hover-color": {
+      "$value": "{foreground.inverted}",
+      "$type": "color",
+      "$description": "Hover text color for block link"
+    },
+    "hover-border": {
+      "$value": "{surface.accent-strong}",
+      "$type": "color",
+      "$description": "Hover border stroke color for block link"
+    },
+    "active-background-color": {
+      "$value": "{surface.inverted}",
+      "$type": "color",
+      "$description": "Active pressed background fill for block link"
+    },
+    "active-color": {
+      "$value": "{foreground.inverted}",
+      "$type": "color",
+      "$description": "Active pressed text color for block link"
+    },
+    "active-border": {
+      "$value": "{surface.inverted}",
+      "$type": "color",
+      "$description": "Active pressed border stroke color for block link"
+    },
+    "padding-inline": {
+      "$value": "{spacing}",
+      "$type": "dimension",
+      "$description": "Horizontal inline padding for block link"
+    },
+    "padding-block": {
+      "$value": "{spacing}",
+      "$type": "dimension",
+      "$description": "Vertical block padding for block link"
+    },
+    "font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Typographic weight for block link"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.3}",
+      "$type": "number",
+      "$description": "Line height for block link"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Border radius for block link container"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Smooth transition duration for surface and color changes"
+    }
+  },
+  "breadcrumb": {
+    "$type": "component",
+    "$description": "Breadcrumb navigation tokens",
+    "gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Spacing between breadcrumb items and separators"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Breadcrumb text font size"
+    },
+    "color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Default text and separator color"
+    },
+    "current-color": {
+      "$value": "{foreground.strong}",
+      "$type": "color",
+      "$description": "Active current page breadcrumb item text color"
+    }
+  },
   "button": {
     "border-width": {
       "$value": "{border.width}",
@@ -38,7 +314,7 @@
       "$type": "duration"
     },
     "radius": {
-      "$value": "{ui.radius}",
+      "$value": "{radius}",
       "$type": "dimension"
     },
     "default": {
@@ -47,15 +323,15 @@
         "$type": "color"
       },
       "text": {
-        "$value": "{foreground.base}",
+        "$value": "{foreground}",
         "$type": "color"
       },
       "hover-bg": {
-        "$value": "{foreground.base}",
+        "$value": "{foreground}",
         "$type": "color"
       },
       "hover-text": {
-        "$value": "{surface.base}",
+        "$value": "{surface}",
         "$type": "color"
       },
       "border": {
@@ -69,7 +345,7 @@
         "$type": "color"
       },
       "text": {
-        "$value": "{surface.base}",
+        "$value": "{surface}",
         "$type": "color"
       },
       "hover-bg": {
@@ -105,7 +381,7 @@
         "$type": "color"
       },
       "text": {
-        "$value": "{foreground.base}",
+        "$value": "{foreground}",
         "$type": "color"
       },
       "hover-bg": {
@@ -122,6 +398,30 @@
       },
       "active-text": {
         "$value": "{foreground.accent-pressed}",
+        "$type": "color"
+      }
+    },
+    "subtle-destructive": {
+      "text": {
+        "$value": "{foreground.danger}",
+        "$type": "color"
+      },
+      "hover-text": {
+        "$value": "{foreground.danger-hover}",
+        "$type": "color"
+      },
+      "active-text": {
+        "$value": "{foreground.danger-pressed}",
+        "$type": "color"
+      }
+    },
+    "selected": {
+      "bg": {
+        "$value": "{foreground}",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "{surface}",
         "$type": "color"
       }
     },
@@ -162,6 +462,169 @@
       }
     }
   },
+  "button-group": {
+    "$type": "component",
+    "$description": "Button group layout tokens",
+    "gap": {
+      "$value": "{spacing}",
+      "$type": "dimension",
+      "$description": "Gap between items in a button group"
+    }
+  },
+  "card": {
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Card background surface color"
+    },
+    "border-color": {
+      "$value": "{border.quiet}",
+      "$type": "border",
+      "$description": "Card container border"
+    },
+    "border-width": {
+      "$value": "{border.width.0}",
+      "$type": "dimension",
+      "$description": "Card container border width"
+    },
+    "inner-border-width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension",
+      "$description": "Card inner border"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Corner radius for card container"
+    },
+    "padding": {
+      "$value": "{spacing.breathe}",
+      "$type": "dimension",
+      "$description": "Card content internal padding (container-fluid cqi)"
+    },
+    "gap": {
+      "$value": "{spacing.0-75}",
+      "$type": "dimension",
+      "$description": "Gap between card content sections"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Card elevation transition duration"
+    },
+    "title-font-family": {
+      "$value": "{heading.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Card title typography font family"
+    },
+    "title-font-size": {
+      "$value": "{heading-cq.font-size}",
+      "$type": "dimension",
+      "$description": "Card title typography font size (container-fluid cqi)"
+    },
+    "title-font-weight": {
+      "$value": "{heading.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Card title typography weight"
+    },
+    "title-line-height": {
+      "$value": "{heading.line-height}",
+      "$type": "number",
+      "$description": "Card title line height"
+    },
+    "title-letter-spacing": {
+      "$value": "{heading.letter-spacing}",
+      "$type": "dimension",
+      "$description": "Card title letter spacing"
+    },
+    "title-text-transform": {
+      "$value": "{heading.text-transform}",
+      "$type": "other",
+      "$description": "Card title text transform"
+    },
+    "title-word-spacing": {
+      "$value": "{heading.word-spacing}",
+      "$type": "other",
+      "$description": "Card title word spacing"
+    },
+    "subtitle-font-size": {
+      "$value": "{small-heading-cq.font-size}",
+      "$type": "dimension",
+      "$description": "Card subtitle typography font size (container-fluid cqi step 0)"
+    },
+    "subtitle-font-weight": {
+      "$value": "{small-heading.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Card subtitle typography weight"
+    },
+    "subtitle-line-height": {
+      "$value": "{small-heading.line-height}",
+      "$type": "number",
+      "$description": "Card subtitle line height"
+    },
+    "subtitle-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Card subtitle text color"
+    },
+    "body-font-size": {
+      "$value": "{typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Card body typography font size (standard 1rem base)"
+    },
+    "body-line-height": {
+      "$value": "{body.line-height}",
+      "$type": "number",
+      "$description": "Card body line height"
+    },
+    "foot-font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Card footer typography font size"
+    },
+    "layer-background-color": {
+      "$value": "{card.bg}",
+      "$type": "color",
+      "$description": "Frosted glass background color for sticky header and footer layers"
+    },
+    "layer-transparency": {
+      "$value": "{transparency.10}",
+      "$type": "other",
+      "$description": "Frosted glass background color for sticky header and footer layers"
+    },
+    "layer-filter": {
+      "$value": "{filter.blur}",
+      "$type": "other",
+      "$description": "Backdrop filter blur for sticky header and footer layers"
+    },
+    "layer-shadow": {
+      "$value": "{shadow.md}",
+      "$type": "shadow",
+      "$description": "Elevation shadow when card content scrolls under sticky header or footer"
+    }
+  },
+  "chip": {
+    "font-family": {
+      "$value": "{typography.font-family.sans}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight"
+    },
+    "text-transform": {
+      "$value": "uppercase",
+      "$type": "other"
+    },
+    "opacity": {
+      "$value": "{opacity.muted}",
+      "$type": "number"
+    }
+  },
   "dialog": {
     "transition": {
       "$value": "{duration.md}",
@@ -180,7 +643,7 @@
       "$type": "border"
     },
     "shadow": {
-      "$value": "{shadow.xl}",
+      "$value": "{shadow.lg}",
       "$type": "shadow"
     },
     "padding": {
@@ -188,7 +651,7 @@
       "$type": "dimension"
     },
     "radius": {
-      "$value": "{radius.3}",
+      "$value": "{radius.lg}",
       "$type": "dimension"
     },
     "max-height": {
@@ -208,148 +671,72 @@
       "$type": "other"
     }
   },
-  "popover": {
-    "transition": {
-      "$value": "{duration.sm}",
-      "$type": "duration"
+  "divider": {
+    "$type": "component",
+    "$description": "Divider rule and separator tokens",
+    "width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension",
+      "$description": "Divider line stroke thickness"
     },
-    "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
-      "$type": "other"
-    },
-    "bg": {
-      "$value": "{surface.card}",
-      "$type": "color"
-    },
-    "border": {
-      "$value": "{border.quiet}",
-      "$type": "border"
-    },
-    "shadow": {
-      "$value": "{shadow.md}",
-      "$type": "shadow"
-    },
-    "padding": {
-      "$value": "{spacing.unit}",
+    "color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color",
+      "$description": "Divider stroke color"
+    }
+  },
+  "field": {
+    "gap": {
+      "$value": "{spacing.breathe}",
       "$type": "dimension"
     },
-    "radius": {
-      "$value": "{radius.2}",
-      "$type": "dimension"
-    },
-    "offset": {
+    "inner-gap": {
       "$value": "{spacing.0-5}",
       "$type": "dimension"
-    }
-  },
-  "accordion": {
-    "border": {
-      "$value": "{border.subtle}",
-      "$type": "border"
     },
-    "hover-border": {
-      "$value": "{border.accent}",
+    "hint-color": {
+      "$value": "{foreground.muted}",
       "$type": "color"
     },
-    "open-bg": {
-      "$value": "{surface.card}",
-      "$type": "color"
-    },
-    "radius": {
-      "$value": "{radius.2}",
-      "$type": "dimension"
-    },
-    "padding": {
-      "$value": "{spacing.unit}",
-      "$type": "dimension"
-    },
-    "transition": {
-      "$value": "{duration.sm}",
-      "$type": "duration"
-    },
-    "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
-      "$type": "other"
-    }
-  },
-  "badge": {
-    "font-size": {
-      "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension"
-    },
-    "font-weight": {
-      "$value": "{body-strong.font-weight}",
-      "$type": "fontWeight"
-    },
-    "letter-spacing": {
-      "$value": "0px",
-      "$type": "dimension"
-    },
-    "padding": {
-      "$value": "0.5em",
-      "$type": "dimension"
-    },
-    "radius": {
-      "$value": "{radius.1}",
-      "$type": "dimension"
-    },
-    "pill-radius": {
-      "$value": "{radius.full}",
-      "$type": "dimension"
-    },
-    "default-bg": {
-      "$value": "{foreground.base}",
-      "$type": "color"
-    },
-    "default-text": {
-      "$value": "{surface.base}",
-      "$type": "color"
-    },
-    "accent-bg": {
-      "$value": "{foreground.accent}",
-      "$type": "color"
-    },
-    "accent-text": {
-      "$value": "{surface.base}",
-      "$type": "color"
-    },
-    "success-bg": {
-      "$value": "{foreground.success}",
-      "$type": "color"
-    },
-    "success-text": {
-      "$value": "{surface.base}",
-      "$type": "color"
-    },
-    "warning-bg": {
-      "$value": "{foreground.warning}",
-      "$type": "color"
-    },
-    "warning-text": {
-      "$value": "{surface.base}",
-      "$type": "color"
-    },
-    "danger-bg": {
+    "error-color": {
       "$value": "{foreground.danger}",
       "$type": "color"
-    },
-    "danger-text": {
-      "$value": "{color.white}",
-      "$type": "color"
     }
   },
-  "chip": {
-    "font-size": {
-      "$value": "{typography.font-size.minus-2}",
+  "fieldset": {
+    "inner-gap": {
+      "$value": "{spacing.1}",
+      "$type": "dimension"
+    }
+  },
+  "form": {
+    "submission-gap": {
+      "$value": "{spacing.breathe}",
       "$type": "dimension"
     },
-    "font-weight": {
-      "$value": "{body-strong.font-weight}",
-      "$type": "fontWeight"
+    "submission-inner-gap": {
+      "$value": "{spacing.1}",
+      "$type": "dimension"
     },
-    "opacity": {
-      "$value": "{opacity.muted}",
-      "$type": "number"
+    "submission-align": {
+      "$value": "right",
+      "$type": "other"
+    },
+    "choice-inner-gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension"
+    },
+    "choices-gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension"
+    },
+    "choices-col-gap": {
+      "$value": "{spacing.1}",
+      "$type": "dimension"
+    },
+    "check-size": {
+      "$value": "1.25rem",
+      "$type": "dimension"
     }
   },
   "input": {
@@ -357,17 +744,21 @@
       "$value": "{surface.card}",
       "$type": "color"
     },
-    "border": {
-      "$value": "{border.muted}",
+    "border-color": {
+      "$value": "{border.color.muted}",
       "$type": "border"
     },
     "border-color-invalid": {
-      "$value": "{border.danger}",
-      "$type": "color"
+      "$value": "{border.color.danger}",
+      "$type": "border"
     },
     "border-color-valid": {
-      "$value": "{border.success}",
-      "$type": "color"
+      "$value": "{border.color.success}",
+      "$type": "border"
+    },
+    "border-width": {
+      "$value": "{border.width}",
+      "$type": "dimension"
     },
     "font-size": {
       "$value": "{control.font-size}",
@@ -394,7 +785,7 @@
       "$type": "dimension"
     },
     "radius": {
-      "$value": "{ui.radius}",
+      "$value": "{radius}",
       "$type": "dimension"
     },
     "transition": {
@@ -435,6 +826,640 @@
       "padding-inline": {
         "$value": "calc({input.lg.min-size} / {input.min-size} * {input.padding-inline})",
         "$type": "dimension"
+      }
+    }
+  },
+  "link": {
+    "color": {
+      "$value": "{foreground.accent}",
+      "$type": "color",
+      "$description": "Standard link foreground text color"
+    },
+    "hover-color": {
+      "$value": "{foreground.accent-hover}",
+      "$type": "color",
+      "$description": "Link foreground color on hover"
+    },
+    "active-color": {
+      "$value": "{foreground.accent-pressed}",
+      "$type": "color",
+      "$description": "Link foreground color when clicked / active"
+    },
+    "inverted-color": {
+      "$value": "{foreground.accent-inverted}",
+      "$type": "color",
+      "$description": "Link foreground color on inverted containers"
+    },
+    "inverted-hover-color": {
+      "$value": "{foreground.accent-inverted-hover}",
+      "$type": "color",
+      "$description": "Link foreground hover color on inverted containers"
+    },
+    "inverted-active-color": {
+      "$value": "{foreground.accent-inverted-pressed}",
+      "$type": "color",
+      "$description": "Link foreground active color on inverted containers"
+    },
+    "on-dark-color": {
+      "$value": "{foreground.accent-on-dark}",
+      "$type": "color",
+      "$description": "Link foreground color on dark surfaces"
+    },
+    "on-dark-hover-color": {
+      "$value": "{foreground.accent-on-dark-hover}",
+      "$type": "color",
+      "$description": "Link foreground hover color on dark surfaces"
+    },
+    "on-dark-active-color": {
+      "$value": "{foreground.accent-on-dark-pressed}",
+      "$type": "color",
+      "$description": "Link foreground active color on dark surfaces"
+    },
+    "underline-color": {
+      "$value": "{underline.color}",
+      "$type": "color",
+      "$description": "Default text underline decoration color"
+    },
+    "underline-thickness": {
+      "$value": "{underline.thickness}",
+      "$type": "dimension",
+      "$description": "Text underline stroke thickness"
+    },
+    "underline-offset": {
+      "$value": "{underline.offset}",
+      "$type": "dimension",
+      "$description": "Text underline typographic clearance offset"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Transition duration for link color states"
+    }
+  },
+  "pagination": {
+    "$type": "component",
+    "$description": "Pagination and page-count tokens",
+    "gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Gap between pagination items"
+    }
+  },
+  "popover": {
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration"
+    },
+    "timefunc": {
+      "$value": "{timefunc.ease-in-out}",
+      "$type": "other"
+    },
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color"
+    },
+    "border": {
+      "$value": "{border.quiet}",
+      "$type": "border"
+    },
+    "shadow": {
+      "$value": "{shadow.md}",
+      "$type": "shadow"
+    },
+    "padding": {
+      "$value": "{spacing}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius.md}",
+      "$type": "dimension"
+    },
+    "offset": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension"
+    }
+  },
+  "prose": {
+    "vert-space": {
+      "$value": "calc({spacing.breathe} * 1.25)",
+      "$type": "dimension",
+      "$description": "Vertical rhythm space between block elements in prose content"
+    },
+    "vert-space-cq": {
+      "$value": "calc({spacing.cq-breathe} * 1.25)",
+      "$type": "dimension",
+      "$description": "Vertical rhythm space between block elements in prose content"
+    },
+    "inset-space": {
+      "$value": "calc({spacing.breathe} * 1.5)",
+      "$type": "dimension",
+      "$description": "Indentation spacing for lists and blockquotes"
+    },
+    "inset-space-cq": {
+      "$value": "calc({spacing.cq-breathe} * 1.5)",
+      "$type": "dimension",
+      "$description": "Indentation spacing for lists and blockquotes"
+    },
+    "inset-space-fixed": {
+      "$value": "calc({spacing} * 1.5)",
+      "$type": "dimension",
+      "$description": "Indentation spacing for lists and blockquotes"
+    },
+    "body-font-family": {
+      "$value": "inherit",
+      "$type": "fontFamilies",
+      "$description": "Body font family for prose text"
+    },
+    "body-hyphens": {
+      "$value": "none",
+      "$type": "other",
+      "$description": "Hyphenation rules for prose body text"
+    },
+    "body-line-length": {
+      "$value": "66ch",
+      "$type": "dimension",
+      "$description": "Max optimal line length for readable prose body text"
+    },
+    "body-text-wrap": {
+      "$value": "none",
+      "$type": "other",
+      "$description": "Text wrapping mode for prose body text on wider screens"
+    },
+    "block-width": {
+      "$value": "calc(var(--site-width, 75rem) * 0.75)",
+      "$type": "dimension",
+      "$description": "Maximum block inline size for prose content"
+    },
+    "blockquote-border-width": {
+      "$value": "{border-width.4}",
+      "$type": "dimension",
+      "$description": "Border thickness for blockquotes"
+    },
+    "blockquote-border": {
+      "$value": "{prose.blockquote-border-width} solid",
+      "$type": "border",
+      "$description": "Leading border stroke for blockquotes"
+    },
+    "figcaption-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Text color for figure captions"
+    },
+    "figcaption-text-wrap": {
+      "$value": "balance",
+      "$type": "other",
+      "$description": "Text wrapping for figure captions"
+    },
+    "figcaption-margin-bottom": {
+      "$value": "calc({spacing.cushion} * 2)",
+      "$type": "dimension",
+      "$description": "Bottom margin following figure captions"
+    },
+    "underline-offset": {
+      "$value": "{underline.offset}",
+      "$type": "dimension",
+      "$description": "Text underline offset for inline semantics in prose"
+    },
+    "underline-thickness": {
+      "$value": "{underline.thickness}",
+      "$type": "dimension",
+      "$description": "Text underline thickness for inline semantics in prose"
+    },
+    "underline-color": {
+      "$value": "{underline.color}",
+      "$type": "color",
+      "$description": "Text underline color for inline semantics in prose"
+    },
+    "link-color": {
+      "$value": "inherit",
+      "$type": "color",
+      "$description": "Link color in prose body"
+    },
+    "link-font-weight": {
+      "$value": "inherit",
+      "$type": "fontWeight",
+      "$description": "Link font weight in prose body"
+    },
+    "link-hover-color": {
+      "$value": "{foreground.accent-hover}",
+      "$type": "color",
+      "$description": "Link hover text color in prose"
+    },
+    "link-active-color": {
+      "$value": "{foreground.accent-pressed}",
+      "$type": "color",
+      "$description": "Link active text color in prose"
+    },
+    "link-underline": {
+      "$value": "underline",
+      "$type": "other",
+      "$description": "Link underline style in prose"
+    },
+    "link-underline-offset": {
+      "$value": "{underline.offset}",
+      "$type": "dimension",
+      "$description": "Link underline offset in prose"
+    },
+    "link-underline-thickness": {
+      "$value": "{underline.thickness}",
+      "$type": "dimension",
+      "$description": "Link underline thickness in prose"
+    },
+    "link-underline-color": {
+      "$value": "{foreground.accent}",
+      "$type": "color",
+      "$description": "Link underline color in prose"
+    },
+    "small-font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Font size for small text in prose"
+    },
+    "scroll-margin": {
+      "$value": "calc(var(--site-header-height, 0px) + {spacing.scroll-margin})",
+      "$type": "dimension",
+      "$description": "Scroll margin clearance for anchored headings in prose"
+    }
+  },
+  "select": {
+    "background-color": {
+      "$value": "{surface.card}",
+      "$type": "color"
+    },
+    "border-color": {
+      "$value": "{border.color.muted}",
+      "$type": "border"
+    },
+    "border-color-invalid": {
+      "$value": "{border.color.danger}",
+      "$type": "border"
+    },
+    "border-color-valid": {
+      "$value": "{border.color.success}",
+      "$type": "border"
+    },
+    "border-width": {
+      "$value": "{border.width}",
+      "$type": "dimension"
+    },
+    "font-size": {
+      "$value": "{control.font-size}",
+      "$type": "dimension"
+    },
+    "inner-gap": {
+      "$value": "{spacing.0-75}",
+      "$type": "dimension"
+    },
+    "min-size": {
+      "$value": "{spacing.target}",
+      "$type": "dimension"
+    },
+    "line-height": {
+      "$value": "{control.line-height}",
+      "$type": "number"
+    },
+    "padding-block": {
+      "$value": "{spacing.0-25}",
+      "$type": "dimension"
+    },
+    "padding-inline": {
+      "$value": "{spacing.1}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration"
+    },
+    "icon": {
+      "$value": "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0, 0 32, 0 16, 24' style='fill: rgba(150, 150, 150, 0.8)'></polygon></svg>\")",
+      "$type": "other"
+    },
+    "icon-pos": {
+      "$value": "right 1em",
+      "$type": "other"
+    },
+    "icon-size": {
+      "$value": "0.66em",
+      "$type": "dimension"
+    },
+    "sm": {
+      "font-size": {
+        "$value": "{control.sm.font-size}",
+        "$type": "dimension"
+      },
+      "min-size": {
+        "$value": "{spacing.target-sm}",
+        "$type": "dimension"
+      },
+      "padding-block": {
+        "$value": "calc({select.sm.min-size} / {select.min-size} * {select.padding-block})",
+        "$type": "dimension"
+      },
+      "padding-inline": {
+        "$value": "calc({select.sm.min-size} / {select.min-size} * {select.padding-inline})",
+        "$type": "dimension"
+      }
+    },
+    "lg": {
+      "font-size": {
+        "$value": "{control.lg.font-size}",
+        "$type": "dimension"
+      },
+      "min-size": {
+        "$value": "{spacing.target-lg}",
+        "$type": "dimension"
+      },
+      "padding-block": {
+        "$value": "calc({select.lg.min-size} / {select.min-size} * {select.padding-block})",
+        "$type": "dimension"
+      },
+      "padding-inline": {
+        "$value": "calc({select.lg.min-size} / {select.min-size} * {select.padding-inline})",
+        "$type": "dimension"
+      }
+    }
+  },
+  "skip-link": {
+    "background-color": {
+      "$value": "{surface.accent-strong}",
+      "$type": "color",
+      "$description": "High-contrast accent surface for skip link banner"
+    },
+    "text": {
+      "$value": "{foreground.inverted}",
+      "$type": "color",
+      "$description": "Inverted foreground text color on accent surface"
+    },
+    "underline-color": {
+      "$value": "{foreground.inverted}",
+      "$type": "color",
+      "$description": "Underline stroke color on hover and active"
+    },
+    "underline-thickness": {
+      "$value": "{underline.thickness}",
+      "$type": "dimension",
+      "$description": "Underline stroke width"
+    },
+    "underline-offset": {
+      "$value": "{underline.offset}",
+      "$type": "dimension",
+      "$description": "Typographic clearance for link underline"
+    },
+    "font-size": {
+      "$value": "{control.font-size}",
+      "$type": "dimension",
+      "$description": "Typography font size for skip link"
+    },
+    "font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Typography font weight for skip link"
+    },
+    "min-size": {
+      "$value": "{spacing.target}",
+      "$type": "dimension",
+      "$description": "Minimum touch and click target size meeting WCAG 2.5.5 AAA"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Smooth expansion transition duration when focused"
+    }
+  },
+  "table": {
+    "font-size": {
+      "$value": "{body-fixed.font-size}",
+      "$type": "dimension",
+      "$description": "Base font size for table cells"
+    },
+    "line-height": {
+      "$value": "{body.line-height}",
+      "$type": "number",
+      "$description": "Line height for table text"
+    },
+    "cell-padding-block": {
+      "$value": "{spacing.0-75}",
+      "$type": "dimension",
+      "$description": "Vertical cell padding"
+    },
+    "cell-padding-inline": {
+      "$value": "{spacing.1}",
+      "$type": "dimension",
+      "$description": "Horizontal cell padding"
+    },
+    "cell-padding-block-compact": {
+      "$value": "{spacing.0-25}",
+      "$type": "dimension",
+      "$description": "Compact vertical cell padding"
+    },
+    "cell-padding-inline-compact": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Compact horizontal cell padding"
+    },
+    "cell-sticky-bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Background color for sticky table cells"
+    },
+    "cell-sticky-filter": {
+      "$value": "{filter.blur}",
+      "$type": "other",
+      "$description": "Filter for sticky table cells"
+    },
+    "header-font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight",
+      "$description": "Font weight for table header cells"
+    },
+    "header-bg": {
+      "$value": "{surface.fade}",
+      "$type": "color",
+      "$description": "Background color for table header cells"
+    },
+    "header-color": {
+      "$value": "{foreground.strong}",
+      "$type": "color",
+      "$description": "Text color for table headers"
+    },
+    "border-color": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "Border color for table dividers"
+    },
+    "border-width": {
+      "$value": "{border.width}",
+      "$type": "dimension",
+      "$description": "Border width for table dividers"
+    },
+    "inner-border-width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension",
+      "$description": "Border width for inner table dividers"
+    },
+    "inner-shadow": {
+      "$value": "{shadow.md}",
+      "$type": "other",
+      "$description": "Shadow for sticky table cells"
+    },
+    "row-hover-bg": {
+      "$value": "{surface.hover}",
+      "$type": "color",
+      "$description": "Hover background color for table rows"
+    },
+    "row-stripe-bg": {
+      "$value": "{surface.fade}",
+      "$type": "color",
+      "$description": "Alternating background color for striped table rows"
+    },
+    "caption-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Text color for table captions"
+    },
+    "caption-font-size": {
+      "$value": "{body-small.font-size}",
+      "$type": "dimension",
+      "$description": "Font size for table captions"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Outer corner radius for card/contained tables"
+    }
+  },
+  "tabs": {
+    "$type": "component",
+    "$description": "Accessible tablist and navigation tab tokens",
+    "block-gap": {
+      "$value": "{spacing.default}",
+      "$type": "dimension",
+      "$description": "Gap between tablist and tab panels"
+    },
+    "list-gap": {
+      "$value": "{spacing.breathe}",
+      "$type": "dimension",
+      "$description": "Gap between tab items in the tablist"
+    },
+    "list-border-width": {
+      "$value": "{border.width.0}",
+      "$type": "dimension",
+      "$description": "Tablist container border width"
+    },
+    "list-border-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color",
+      "$description": "Tablist container border stroke color"
+    },
+    "list-border-end-width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension",
+      "$description": "Tablist inset box-shadow baseline border width"
+    },
+    "indicator-width": {
+      "$value": "{border-width.2}",
+      "$type": "dimension",
+      "$description": "Active indicator border stroke width"
+    },
+    "indicator-color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "Active tab indicator highlight color"
+    },
+    "font-size": {
+      "$value": "{control.font-size}",
+      "$type": "dimension",
+      "$description": "Tab label typography font size"
+    },
+    "font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Tab label typography font weight"
+    },
+    "selected-font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight",
+      "$description": "Active tab typography font weight"
+    },
+    "line-height": {
+      "$value": "{control.line-height}",
+      "$type": "number",
+      "$description": "Tab label line height"
+    },
+    "padding-block": {
+      "$value": "{button.padding-block}",
+      "$type": "dimension",
+      "$description": "Tab item vertical padding"
+    },
+    "padding-inline": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "Tab item horizontal padding"
+    },
+    "inner-gap": {
+      "$value": "{spacing.0-5}",
+      "$type": "dimension",
+      "$description": "Inner gap between tab text and badges"
+    },
+    "color": {
+      "$value": "{foreground.default}",
+      "$type": "color",
+      "$description": "Resting tab label text color"
+    },
+    "hover-color": {
+      "$value": "{foreground.accent-hover}",
+      "$type": "color",
+      "$description": "Hover tab label text color"
+    },
+    "selected-color": {
+      "$value": "{foreground.default}",
+      "$type": "color",
+      "$description": "Selected tab label text color"
+    },
+    "button-radius": {
+      "$value": "{button.radius}",
+      "$type": "dimension",
+      "$description": "Corner radius for button style tabs"
+    },
+    "round-radius": {
+      "$value": "{radius.pill}",
+      "$type": "dimension",
+      "$description": "Pill corner radius for round button tabs"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Transition duration for tab state changes"
+    },
+    "sm": {
+      "list-gap": {
+        "$value": "{spacing.1}",
+        "$type": "dimension",
+        "$description": "Compact tablist gap"
+      },
+      "font-size": {
+        "$value": "{typography.font-size.minus-1}",
+        "$type": "dimension",
+        "$description": "Compact tab font size"
+      },
+      "padding-block": {
+        "$value": "{button.sm.padding-block}",
+        "$type": "dimension",
+        "$description": "Compact tab vertical padding"
+      },
+      "padding-inline": {
+        "$value": "0px",
+        "$type": "dimension",
+        "$description": "Compact tab horizontal padding"
+      },
+      "min-size": {
+        "$value": "2rem",
+        "$type": "dimension",
+        "$description": "Compact tab minimum target size"
       }
     }
   },
@@ -500,190 +1525,116 @@
       }
     }
   },
-  "select": {
-    "background-color": {
-      "$value": "{surface.card}",
-      "$type": "color"
+  "toast": {
+    "$type": "component",
+    "$description": "Toast notification stack and overlay tokens",
+    "shadow": {
+      "$value": "{shadow.md}",
+      "$type": "shadow",
+      "$description": "Floating elevation shadow for toast items"
     },
-    "border": {
-      "$value": "{border.muted}",
-      "$type": "border"
+    "max-width": {
+      "$value": "28rem",
+      "$type": "dimension",
+      "$description": "Maximum inline size of a toast item"
     },
-    "border-color-invalid": {
-      "$value": "{border.danger}",
-      "$type": "color"
-    },
-    "border-color-valid": {
-      "$value": "{border.success}",
-      "$type": "color"
-    },
-    "font-size": {
-      "$value": "{control.font-size}",
-      "$type": "dimension"
-    },
-    "inner-gap": {
+    "gap": {
       "$value": "{spacing.0-75}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Spacing between stacked toast items"
     },
-    "min-size": {
-      "$value": "{spacing.target}",
-      "$type": "dimension"
-    },
-    "line-height": {
-      "$value": "{control.line-height}",
-      "$type": "number"
-    },
-    "padding-block": {
-      "$value": "{spacing.0-25}",
-      "$type": "dimension"
-    },
-    "padding-inline": {
+    "offset": {
       "$value": "{spacing.1}",
-      "$type": "dimension"
-    },
-    "radius": {
-      "$value": "{ui.radius}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Viewport edge offset distance for toast stack"
     },
     "transition": {
       "$value": "{duration.sm}",
-      "$type": "duration"
+      "$type": "duration",
+      "$description": "Transition duration for toast entry and exit"
     },
-    "icon": {
-      "$value": "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0, 0 32, 0 16, 24' style='fill: rgba(150, 150, 150, 0.8)'></polygon></svg>\")",
-      "$type": "other"
-    },
-    "icon-pos": {
-      "$value": "right 1em",
-      "$type": "other"
-    },
-    "icon-size": {
-      "$value": "0.66em",
-      "$type": "dimension"
-    },
-    "sm": {
-      "font-size": {
-        "$value": "{control.sm.font-size}",
-        "$type": "dimension"
-      },
-      "min-size": {
-        "$value": "{spacing.target-sm}",
-        "$type": "dimension"
-      },
-      "padding-block": {
-        "$value": "calc({select.sm.min-size} / {select.min-size} * {select.padding-block})",
-        "$type": "dimension"
-      },
-      "padding-inline": {
-        "$value": "calc({select.sm.min-size} / {select.min-size} * {select.padding-inline})",
-        "$type": "dimension"
-      }
-    },
-    "lg": {
-      "font-size": {
-        "$value": "{control.lg.font-size}",
-        "$type": "dimension"
-      },
-      "min-size": {
-        "$value": "{spacing.target-lg}",
-        "$type": "dimension"
-      },
-      "padding-block": {
-        "$value": "calc({select.lg.min-size} / {select.min-size} * {select.padding-block})",
-        "$type": "dimension"
-      },
-      "padding-inline": {
-        "$value": "calc({select.lg.min-size} / {select.min-size} * {select.padding-inline})",
-        "$type": "dimension"
-      }
+    "timefunc": {
+      "$value": "{timefunc.ease-in-out}",
+      "$type": "other",
+      "$description": "Timing function for toast animations"
     }
   },
-  "field": {
-    "gap": {
-      "$value": "{spacing.breathe}",
-      "$type": "dimension"
+  "tooltip": {
+    "$type": "component",
+    "$description": "Compact contextual tooltip tokens",
+    "bg": {
+      "$value": "{surface.inverted}",
+      "$type": "color",
+      "$description": "Tooltip background surface"
     },
-    "inner-gap": {
+    "color": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color",
+      "$description": "Tooltip text color"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Tooltip text font size"
+    },
+    "font-weight": {
+      "$value": "{font-weight.medium}",
+      "$type": "fontWeight",
+      "$description": "Tooltip text font weight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.1}",
+      "$type": "number",
+      "$description": "Tooltip line height"
+    },
+    "padding-block": {
+      "$value": "{spacing.0-25}",
+      "$type": "dimension",
+      "$description": "Tooltip vertical padding"
+    },
+    "padding-inline": {
       "$value": "{spacing.0-5}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Tooltip horizontal padding"
     },
-    "label-weight": {
-      "$value": "{font-weight.bold}",
-      "$type": "fontWeight"
+    "radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension",
+      "$description": "Tooltip corner radius"
     },
-    "hint-color": {
-      "$value": "{foreground.muted}",
-      "$type": "color"
+    "shadow": {
+      "$value": "{shadow.sm}",
+      "$type": "shadow",
+      "$description": "Tooltip elevation shadow"
     },
-    "error-color": {
-      "$value": "{foreground.danger}",
-      "$type": "color"
+    "offset": {
+      "$value": "{spacing.0-25}",
+      "$type": "dimension",
+      "$description": "Anchor offset gap between trigger and tooltip"
+    },
+    "max-width": {
+      "$value": "18rem",
+      "$type": "dimension",
+      "$description": "Maximum inline size of tooltip"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Transition duration for tooltip entry and exit"
+    },
+    "timefunc": {
+      "$value": "{timefunc.ease-in-out}",
+      "$type": "other",
+      "$description": "Timing function for tooltip animations"
     }
   },
-  "fieldset": {
-    "inner-gap": {
-      "$value": "{spacing.0-5}",
-      "$type": "dimension"
-    }
-  },
-  "form": {
-    "submission-gap": {
-      "$value": "{spacing.breathe}",
-      "$type": "dimension"
-    },
-    "submission-inner-gap": {
-      "$value": "{spacing.1}",
-      "$type": "dimension"
-    },
-    "submission-align": {
-      "$value": "right",
-      "$type": "other"
-    },
-    "choice-inner-gap": {
-      "$value": "{spacing.0-5}",
-      "$type": "dimension"
-    },
-    "choices-gap": {
-      "$value": "{spacing.0-5}",
-      "$type": "dimension"
-    },
-    "check-size": {
-      "$value": "1.25rem",
-      "$type": "dimension"
-    }
-  },
-  "$media": {
-    "(prefers-reduced-motion: reduce)": {
-      "button": {
-        "transition": {
-          "$value": "{duration.0}"
-        }
-      },
-      "dialog": {
-        "transition": {
-          "$value": "{duration.0}"
-        }
-      },
-      "popover": {
-        "transition": {
-          "$value": "{duration.0}"
-        }
-      },
-      "accordion": {
-        "transition": {
-          "$value": "{duration.0}"
-        }
-      },
-      "input": {
-        "transition": {
-          "$value": "{duration.0}"
-        }
-      },
-      "select": {
-        "transition": {
-          "$value": "{duration.0}"
-        }
-      }
+  "wrapper": {
+    "$type": "component",
+    "$description": "Page and section content constraint wrapper tokens",
+    "max-width": {
+      "$value": "{site-width}",
+      "$type": "dimension",
+      "$description": "Default max width for wrapper content"
     }
   }
 }

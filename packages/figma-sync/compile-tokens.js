@@ -7,7 +7,7 @@ const OUTPUT_FILE = path.join(__dirname, '../css/src/variables.css');
 
 /**
  * Resolves token references inside any string expression.
- * E.g., "{color.neutral.100}" -> "var(--color-neutral-100)"
+ * E.g., "{color.neutral.000}" -> "var(--color-neutral-100)"
  * Or "light-dark({color.muted.100}, {color.muted.900})" -> "light-dark(var(--color-muted-100), var(--color-muted-900))"
  */
 function resolveReferences(val) {
@@ -159,6 +159,19 @@ function flattenTokens(obj, prefix = '', globalTokens = null) {
       let tokenVal = rawVal;
       if (typeof rawVal === 'string' && rawVal.trim().startsWith('fluid(') && rawVal.trim().endsWith(')')) {
         tokenVal = compileFluidValue(rawVal, globalTokens);
+      } else if (Array.isArray(rawVal) && rawVal.length > 0 && typeof rawVal[0] === 'object') {
+        const formatShadowLayer = (layer) => {
+          if (typeof layer === 'string') return resolveReferences(layer);
+          if (!layer || typeof layer !== 'object') return '';
+          const isInset = layer.type === 'innerShadow' || layer.inset;
+          const x = layer.x || '0';
+          const y = layer.y || '0';
+          const blur = layer.blur || '0';
+          const spread = layer.spread || '0';
+          const col = resolveReferences(layer.color || '{shadow.color}');
+          return `${isInset ? 'inset ' : ''}${x} ${y} ${blur} ${spread} ${col}`.trim();
+        };
+        tokenVal = '\n    ' + rawVal.map(formatShadowLayer).join(',\n    ');
       } else if (rawVal && typeof rawVal === 'object' && ('x' in rawVal || 'y' in rawVal || 'blur' in rawVal)) {
         const isInset = rawVal.type === 'innerShadow' || rawVal.inset;
         const x = rawVal.x || '0';
@@ -229,18 +242,63 @@ function generateFluidSystem(globalTokens) {
   const maxVpRem = maxVp / 16; // 80rem
   const vpDiffRem = maxVpRem - minVpRem; // 55rem
 
-  function calculateClamp(minRem, maxRem) {
+  function calculateClamp(minRem, maxRem, unit = 'vi') {
     const slope = (maxRem - minRem) / vpDiffRem;
-    const viSlope = +(slope * 100).toFixed(2);
+    const slopeUnit = +(slope * 100).toFixed(2);
     const intersection = +(minRem - minVpRem * slope).toFixed(2);
-    return `clamp(${minRem}rem, ${intersection}rem + ${viSlope}vi, ${maxRem}rem)`;
+    return `clamp(${minRem}rem, ${intersection}rem + ${slopeUnit}${unit}, ${maxRem}rem)`;
   }
 
-  // Spacing fluid scale: step N to step N+1
+  // Spacing scale parameters matching blog site (space-scale: 1.333333 / 4/3):
+  const spaceRatio = 4 / 3;
+  const baseSpacingRem = 1.0;
+
   const spacingDefs = [
-    { name: 'spacing-fluid', min: 1, max: 2, baseVar: 'var(--spacing-1)', targetVar: 'var(--spacing-2)' },
-    { name: 'spacing-fluid-x2', min: 2, max: 3, baseVar: 'var(--spacing-2)', targetVar: 'var(--spacing-3)' },
-    { name: 'spacing-fluid-x3', min: 3, max: 4, baseVar: 'var(--spacing-3)', targetVar: 'var(--spacing-4)' },
+    {
+      name: 'spacing-fluid',
+      factor: 1,
+      min: baseSpacingRem,
+      max: +(baseSpacingRem * Math.pow(spaceRatio, 1)).toFixed(4),
+      baseVar: 'var(--spacing-1)'
+    },
+    {
+      name: 'spacing-fluid-x2',
+      factor: 2,
+      min: baseSpacingRem,
+      max: +(baseSpacingRem * Math.pow(spaceRatio, 2)).toFixed(4),
+      baseVar: 'var(--spacing-1)'
+    },
+    {
+      name: 'spacing-fluid-x3',
+      factor: 3,
+      min: baseSpacingRem,
+      max: +(baseSpacingRem * Math.pow(spaceRatio, 3)).toFixed(4),
+      baseVar: 'var(--spacing-1)'
+    },
+  ];
+
+  const spacingCqDefs = [
+    {
+      name: 'spacing-cq',
+      factor: 1,
+      min: baseSpacingRem,
+      max: +(baseSpacingRem * Math.pow(spaceRatio, 1)).toFixed(4),
+      baseVar: 'var(--spacing-1)'
+    },
+    {
+      name: 'spacing-cq-x2',
+      factor: 2,
+      min: baseSpacingRem,
+      max: +(baseSpacingRem * Math.pow(spaceRatio, 2)).toFixed(4),
+      baseVar: 'var(--spacing-1)'
+    },
+    {
+      name: 'spacing-cq-x3',
+      factor: 3,
+      min: baseSpacingRem,
+      max: +(baseSpacingRem * Math.pow(spaceRatio, 3)).toFixed(4),
+      baseVar: 'var(--spacing-1)'
+    },
   ];
 
   // Fluid typography scale parameters:
@@ -259,31 +317,52 @@ function generateFluidSystem(globalTokens) {
     return {
       step: stepStr,
       name: `typography-font-size-fluid-${stepStr}`,
+      nameCq: `typography-font-size-cq-${stepStr}`,
       minRem,
       maxRem,
-      clamp: calculateClamp(minRem, maxRem)
+      clampVi: calculateClamp(minRem, maxRem, 'vi'),
+      clampCq: calculateClamp(minRem, maxRem, 'cqi')
     };
   });
 
   const fallbackVars = [
-    '  /* Fluid Spacing (Standard clamp fallbacks) */',
-    ...spacingDefs.map(s => `  --${s.name}: ${calculateClamp(s.min, s.max)};`),
+    '  /* Fluid Spacing (Standard clamp fallbacks: vi units) */',
+    ...spacingDefs.map(s => `  --${s.name}: ${calculateClamp(s.min, s.max, 'vi')};`),
     '',
-    '  /* Fluid Typography (Standard clamp fallbacks: Minor Third mobile, Major Third desktop) */',
-    ...fontDefs.map(f => `  --${f.name}: ${f.clamp};`)
+    '  /* Container Fluid Spacing (Container Query: cqi units) */',
+    ...spacingCqDefs.map(s => `  --${s.name}: ${calculateClamp(s.min, s.max, 'cqi')};`),
+    '',
+    '  /* Fluid Typography (Viewport: vi units) */',
+    ...fontDefs.map(f => `  --${f.name}: ${f.clampVi};`),
+    '',
+    '  /* Container Fluid Typography (Container Query: cqi units) */',
+    ...fontDefs.map(f => `  --${f.nameCq}: ${f.clampCq};`)
   ];
 
   const progressiveVars = [
-    '    /* Fluid Spacing using progress() and round() */',
-    ...spacingDefs.map(s => `    --${s.name}: round(${s.baseVar} + var(--_pg) * (${s.targetVar} - ${s.baseVar}), 1px);`),
+    '    /* Fluid Spacing using progress(), pow(), and round() */',
+    ...spacingDefs.map(s => `    --${s.name}: round(${s.baseVar} + var(--_progress) * (${s.baseVar} * pow(var(--_space-ratio), ${s.factor}) - ${s.baseVar}), var(--_interval));`),
+    '',
+    '    /* Container Fluid Spacing using progress(), pow(), and round() */',
+    ...spacingCqDefs.map(s => `    --${s.name}: round(${s.baseVar} + var(--_progress-cq) * (${s.baseVar} * pow(var(--_space-ratio), ${s.factor}) - ${s.baseVar}), var(--_interval));`),
     '',
     '    /* Fluid Typography using progress() and round() (Option A precomputed) */',
-    ...fontDefs.map(f => `    --${f.name}: round(${f.minRem}rem + var(--_pg) * (${f.maxRem}rem - ${f.minRem}rem), 1px);`)
+    ...fontDefs.map(f => `    --${f.name}: round(${f.minRem}rem + var(--_progress) * (${f.maxRem}rem - ${f.minRem}rem), var(--_interval));`),
+    '',
+    '    /* Container Fluid Typography using progress() and round() */',
+    ...fontDefs.map(f => `    --${f.nameCq}: round(${f.minRem}rem + var(--_progress-cq) * (${f.maxRem}rem - ${f.minRem}rem), var(--_interval));`)
   ];
 
   const progressiveBlock = `@supports (opacity: progress(1px, 0px, 1px)) {
   :root {
-    --_pg: progress(100 * var(--_pgunit, 1vi), var(--fluid-min-viewport, ${minVp}px), var(--fluid-max-viewport, ${maxVp}px));
+    --_min-viewport: ${minVp}px;
+    --_max-viewport: ${maxVp}px;
+    --_interval: 1px;
+    --_progress: progress(100 * var(--_progressunit, 1vi), var(--_min-viewport), var(--_max-viewport));
+    --_progress-cq: progress(100 * var(--_progressunit, 1cqi), var(--_min-viewport), var(--_max-viewport));
+    --_pg: var(--_progress);
+    --_pgcq: var(--_progress-cq);
+    --_space-ratio: 1.333333;
 
 ${progressiveVars.join('\n')}
   }
@@ -314,7 +393,7 @@ function compileTokens() {
 
         const flattened = flattenTokens(json, '', globalJson);
         const conditionals = extractConditionals(json);
-        
+
         allCssLines.push(`  /* Source: ${file} */`);
         allCssLines = allCssLines.concat(flattened);
 
@@ -379,7 +458,7 @@ ${conditionalBlocks.length > 0 ? '\n' + conditionalBlocks.join('\n\n') + '\n' : 
 
     // Ensure output directory exists
     fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
-    
+
     // Write file
     fs.writeFileSync(OUTPUT_FILE, cssOutput, 'utf8');
     console.log(`✅ Successfully compiled tokens to ${path.relative(process.cwd(), OUTPUT_FILE)}`);

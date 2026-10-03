@@ -1,0 +1,505 @@
+/* ==========================================================================
+   Table Component
+   --------------------------------------------------------------------------
+   Styles responsive tables, semantic variants, accessible interactions,
+   and sticky positioning with scroll-state indicators (WCAG 2.2 AA / AAA).
+
+   Usage:
+   <div class="table-container" tabindex="0" role="region" aria-label="Quarterly Revenue">
+     <table class="table table--striped table--hover">
+       <caption class="table__caption">Quarterly Revenue Summary</caption>
+       <thead>
+         <tr>
+           <th scope="col">Category</th>
+           <th scope="col" class="table__cell--numeric">Total</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr>
+           <th scope="row">Revenue</th>
+           <td class="table__cell--numeric">$120,000</td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Responsive Scroll Container (WCAG 2.1.1 Keyboard & 1.4.10 Reflow)
+   ========================================================================== */
+
+:where(.table-container) {
+  /* Layout & Sizing */
+  container-type: scroll-state;
+  container-name: table-container;
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  overflow: auto;
+  overscroll-behavior: var(--table-overscroll-behavior, auto);
+  -webkit-overflow-scrolling: touch;
+
+  /* Focus Indicator */
+  &:focus-visible {
+    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline-offset: var(--focus-ring-outline-offset, 2px);
+    border-radius: var(--table-radius, var(--radius, 0.25rem));
+  }
+
+  &:has(:where(.table--bordered)) {
+    border: var(--table-border-width, var(--border-width, 2px)) solid var(--table-border-color, var(--border, currentColor));
+  }
+}
+
+/* ==========================================================================
+   2. Base Table Primitive
+   ========================================================================== */
+:where(.table) {
+  --_table-cell-sticky-bg: color-mix(in srgb,
+      var(--table-cell-sticky-bg, var(--surface-card, Canvas)),
+      transparent var(--table-cell-sticky-transparency, 10%));
+
+  &:where( :not(.table--bordered,
+      .table--striped,
+      .table--sticky-first-column,
+      .table--sticky-1st-column,
+      .table--sticky-last-column)) {
+    --_table-flush-cell-padding: var(--table-flush-cell-padding, var(--table-cell-padding-inline, var(--spacing-1, 1rem)));
+  }
+
+  :where(.card__body--table) & {
+    --_table-flush-cell-padding: var(--card-padding, var(--table-cell-padding-inline, var(--spacing-1, 1rem)))
+  }
+
+  /* Layout & Sizing */
+  inline-size: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  /* Typography */
+  font-family: var(--table-font-family, inherit);
+  font-size: var(--table-font-size, var(--body-font-size, 1rem));
+  line-height: var(--table-line-height, var(--body-line-height, normal));
+  color: var(--table-foreground, var(--foreground, currentColor));
+  text-align: start;
+
+  /* ========================================================================
+     Caption (WCAG 1.3.1 Info and Relationships)
+     ======================================================================== */
+  :where(caption, .table__caption) {
+    caption-side: top;
+    position: sticky;
+    inset-inline-start: 0;
+    inline-size: fit-content;
+    text-align: start;
+    font-size: var(--table-caption-font-size, var(--body-small-font-size, 0.875rem));
+    line-height: var(--table-caption-line-height, var(--body-small-line-height, 1.25));
+    font-weight: var(--table-caption-font-weight, var(--font-weight-bold, 700));
+    color: var(--table-caption-color, var(--foreground-muted, currentColor));
+    padding-block-end: var(--spacing-0-5, 0.5rem);
+  }
+
+  /* ========================================================================
+     Cells (th, td)
+     ======================================================================== */
+  :where(th, td) {
+    padding-block: var(--table-cell-padding-block,
+        var(--spacing-0-75, 0.75rem));
+    padding-inline: var(--table-cell-padding-inline, var(--spacing-1, 1rem));
+    vertical-align: middle;
+    border-block-end: var(--table-inner-border-width,
+        var(--table-border-width, 1px)) solid var(--table-border-color, currentColor);
+
+    &:first-child {
+      padding-inline-start:
+        var(--_table-flush-cell-padding,
+          var(--table-cell-padding-inline,
+            var(--spacing-1, 1rem)));
+
+      :where(.table__sort-button) {
+        padding-inline-start:
+          var(--_table-flush-cell-padding,
+            var(--table-cell-padding-inline,
+              var(--spacing-1, 1rem)));
+        margin-inline-start: calc(var(--_table-flush-cell-padding,
+              var(--table-cell-padding-inline,
+                var(--spacing-1, 1rem))) * -1);
+      }
+    }
+
+    &:last-child {
+      padding-inline-end:
+        var(--_table-flush-cell-padding,
+          var(--table-cell-padding-inline,
+            var(--spacing-1, 1rem)));
+
+      :where(.table__sort-button) {
+        padding-inline-end:
+          var(--_table-flush-cell-padding,
+            var(--table-cell-padding-inline,
+              var(--spacing-1, 1rem)));
+        margin-inline-end: calc(var(--_table-flush-cell-padding,
+              var(--table-cell-padding-inline,
+                var(--spacing-1, 1rem))) * -1);
+      }
+    }
+  }
+
+  :where(th) {
+    font-weight: var(--table-header-font-weight, var(--font-weight-bold, 700));
+    color: var(--table-header-color, var(--foreground-strong, currentColor));
+    text-align: start;
+  }
+
+  /* Table Header */
+  :where(thead th) {
+    background-color: var(--table-header-bg, var(--surface-subtle, transparent));
+    border-block-end: var(--table-header-border-width, var(--table-border-width, 2px)) solid var(--table-border-color, currentColor);
+  }
+
+  /* Table Footer */
+  :where(tfoot th, tfoot td) {
+    font-weight: var(--table-header-font-weight, var(--font-weight-bold, 700));
+    color: var(--table-header-color, var(--foreground-strong, currentColor));
+    background-color: var(--table-header-bg, var(--surface-subtle, transparent));
+    border-block-start: var(--table-header-border-width, var(--table-border-width, 2px)) solid var(--table-border-color, currentColor);
+    border-block-end: none;
+  }
+}
+
+/* ==========================================================================
+   3. Alignment & Cell Utilities
+   ========================================================================== */
+
+/* Numeric Tabular Alignment */
+:where(.table__cell--numeric, [data-numeric]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+/* Centered Cell */
+:where(.table__cell--center, [data-center]) {
+  text-align: center;
+}
+
+/* Fit Content (Shrink-wraps column to exact content width) */
+:where(.table__cell--fit, [data-fit]) {
+  inline-size: 1px;
+  inline-size: min-content;
+  white-space: nowrap;
+}
+
+/* Long / No-Wrap Cell Content */
+:where(.table--head-cells-long thead th, .table__cell--long, [data-nowrap]) {
+  white-space: nowrap;
+}
+
+/* Truncated Cell Content */
+:where(.table__cell--truncate) {
+  max-inline-size: 16rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Bottom Caption */
+:where(.table__caption--bottom) {
+  caption-side: bottom;
+  padding-block-start: var(--spacing-0-5, 0.5rem);
+  padding-block-end: 0;
+}
+
+/* ==========================================================================
+   4. Table Variants & Modifiers
+   ========================================================================== */
+
+/* Alternating Striped Rows */
+:where(.table--striped, .table--zebra) {
+  :where(tbody tr:nth-child(even)) {
+    background-color: var(--table-row-stripe-bg, var(--surface-subtle, transparent));
+  }
+}
+
+/* Interactive Hoverable Rows */
+:where(.table--hover) {
+  :where(tbody tr) {
+    transition: background-color var(--table-transition, var(--duration-sm, 150ms)) ease;
+
+    &:is(:hover, :focus-within) {
+      background-color: var(--table-row-hover-bg, var(--surface-hover, transparent));
+    }
+  }
+}
+
+/* Compact Density */
+:where(.table--compact, .table--sm) {
+  --table-cell-padding-block: var(--table-cell-padding-block-compact, var(--spacing-0-5, 0.5rem));
+  --table-cell-padding-inline: var(--table-cell-padding-inline-compact, var(--spacing-0-75, 0.75rem));
+
+  font-size: var(--table-font-size, var(--body-small-font-size, 0.875rem));
+}
+
+/* Bordered Grid */
+:where(.table--bordered) {
+  &:has(:is(caption, .table__caption):not(.visually-hidden)) {
+    border-block-start: var(--table-border-width, var(--border-width, 2px)) solid var(--table-border-color, var(--border, currentColor));
+  }
+
+  :where(caption, .table__caption) {
+    padding-block: var(--table-cell-padding-block, var(--spacing-1, 1rem));
+    padding-inline: var(--table-cell-padding-inline, var(--spacing-1, 1rem));
+  }
+
+  :where(th, td) {
+    border-inline-end: var(--table-inner-border-width, var(--border-width, 1px)) solid var(--table-border-color, var(--border, currentColor));
+
+    &:last-child {
+      border-inline-end: none;
+    }
+  }
+}
+
+:where(.table--bordered.table--compact) :where(caption, .table__caption) {
+  padding-block: var(--table-cell-padding-block-compact, var(--spacing-1, 1rem));
+  padding-inline: var(--table-cell-padding-inline-compact, var(--spacing-1, 1rem));
+}
+
+/* ==========================================================================
+   5. Simple Table
+   ========================================================================== */
+
+:where(.table--simple) {
+  --_table-flush-cell-padding: 0px;
+  --table-header-bg: transparent;
+  --table-border-width: 0px;
+  --table-inner-border-width: 0px;
+
+  :where(.card__body--table) & {
+    --_table-flush-cell-padding: var(--card-padding, var(--table-cell-padding-inline, var(--spacing-1, 1rem)))
+  }
+}
+
+/* ==========================================================================
+   6. Sticky Modifiers (Header, Footer, and Columns with Scroll Indicators)
+   ========================================================================== */
+
+/* Sticky Header */
+:where(.table--sticky-header) {
+  border-collapse: separate;
+
+  :where(thead) {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    background-color: var(--_table-cell-sticky-bg, Canvas);
+    backdrop-filter: var(--table-cell-sticky-filter, var(--filter-blur, none));
+    box-shadow: var(--shadow-none, none);
+    transition: box-shadow var(--table-transition, var(--duration-sm, 150ms)) ease;
+
+    @supports (container-type: scroll-state) {
+      background-color: transparent;
+    }
+
+    @container table-container scroll-state(scrollable: block-start) {
+      background-color: var(--_table-cell-sticky-bg, Canvas);
+      box-shadow: var(--table-inner-shadow, var(--shadow-md, none));
+    }
+  }
+}
+
+/* Sticky Footer */
+:where(.table--sticky-footer) {
+  border-collapse: separate;
+
+  :where(tfoot) {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: 2;
+    background-color: var(--_table-cell-sticky-bg, Canvas);
+    backdrop-filter: var(--table-cell-sticky-filter, var(--filter-blur, none));
+    box-shadow: var(--shadow-none, none);
+    transition: box-shadow var(--table-transition, var(--duration-sm, 150ms)) ease;
+
+    @supports (container-type: scroll-state) {
+      background-color: transparent;
+    }
+
+    @container table-container scroll-state(scrollable: block-end) {
+      background-color: var(--_table-cell-sticky-bg, Canvas);
+      box-shadow: var(--table-inner-shadow, var(--shadow-md, none));
+    }
+  }
+}
+
+/* Sticky First and Last Columns */
+
+:where(.table--sticky-1st-column, .table--sticky-first-column) :where(th:first-child:not([colspan]), td:first-child:not([colspan])),
+:where(.table--sticky-last-column) :where(th:last-child:not([colspan]), td:last-child:not([colspan])) {
+  position: sticky;
+  z-index: 1;
+  background-color: var(--_table-cell-sticky-bg, Canvas);
+  backdrop-filter: var(--table-cell-sticky-filter, var(--filter-blur, none));
+  box-shadow: var(--shadow-none, none);
+  container-type: scroll-state;
+  container-name: cell-container;
+  transition: box-shadow var(--table-transition, var(--duration-sm, 150ms)) ease;
+}
+
+:where(.table--sticky-last-column),
+:where(.table--sticky-1st-column, .table--sticky-first-column) {
+  :where(tbody) :where(th:first-child:not([colspan]), td:first-child:not([colspan])) {
+    @supports (container-type: scroll-state) {
+      background-color: transparent;
+    }
+  }
+
+  :where(thead, tfoot) :where(th:first-child:not([colspan]), td:first-child:not([colspan])) {
+    @supports (container-type: scroll-state) {
+      background-color: var(--table-header-bg, var(--surface-subtle, transparent));
+      ;
+    }
+  }
+}
+
+:where(.table--sticky-1st-column, .table--sticky-first-column) :where(th:first-child:not([colspan]), td:first-child:not([colspan])) {
+  inset-inline-start: 0;
+
+  @container table-container scroll-state(scrollable: inline-start) {
+    background-color: var(--_table-cell-sticky-bg, Canvas);
+    box-shadow: var(--table-inner-shadow, var(--shadow-md, none));
+  }
+}
+
+:where(.table--sticky-1st-column, .table--sticky-first-column) :where(thead, tfoot) :where(th:first-child:not([colspan]), td:first-child:not([colspan])) {
+  @container table-container scroll-state(scrollable: inline-start) {
+    background-image: linear-gradient(var(--table-header-bg, var(--surface-subtle, transparent)));
+  }
+}
+
+:where(.table--sticky-last-column) :where(th:last-child:not([colspan]), td:last-child:not([colspan])) {
+  inset-inline-end: 0;
+
+  @container table-container scroll-state(scrollable: inline-end) {
+    background-color: var(--_table-cell-sticky-bg, Canvas);
+    box-shadow: var(--table-inner-shadow, var(--shadow-md, none));
+  }
+}
+
+:where(.table--sticky-last-column.table--bordered) :where(thead, tfoot) :where(th:last-child:not([colspan]), td:last-child:not([colspan])) {
+  @container table-container scroll-state(scrollable: inline-end) {
+    background-image: linear-gradient(var(--table-header-bg, var(--surface-subtle, transparent)));
+  }
+}
+
+:where(.table--sticky-last-column.table--bordered) :where(th, td):last-child {
+  border-inline-start: var(--table-inner-border-width, 1px) solid var(--table-border-color, currentColor);
+}
+
+table:is(.table--sticky-header,
+  .table--sticky-footer,
+  .table--sticky-first-column,
+  .table--sticky-1st-column,
+  .table--sticky-last-column) {
+  border-collapse: separate;
+}
+
+/* ==========================================================================
+   7. Sort Button Interaction
+   ========================================================================== */
+:where(.table__sort-button) {
+  /* Layout and sizing. */
+  display: flex;
+  align-items: flex-end;
+  inline-size: stretch;
+  min-block-size: stretch;
+  flex-direction: row;
+
+  /* Spacing and typography. */
+  gap: var(--spacing-0-5, 0.5rem);
+  padding-block: var(--table-cell-padding-block, var(--spacing-0-75, 0.75rem));
+  padding-inline: var(--table-cell-padding-inline, var(--spacing-1, 1rem));
+  margin-block: calc(var(--table-cell-padding-block, var(--spacing-0-75, 0.75rem)) * -1);
+  margin-inline: calc(var(--table-cell-padding-inline, var(--spacing-1, 1rem)) * -1);
+  text-align: inherit;
+  color: var(--link-color, LinkText);
+
+  /* Interaction cursor. */
+  cursor: pointer;
+
+
+  /* Focus Treatment */
+  &:focus-visible {
+    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline-offset: calc(var(--focus-ring-outline-offset, 2px) * -1);
+
+    :where(.icon) {
+      opacity: 1;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: var(--link-hover-color, var(--foreground-accent-hover, LinkText));
+
+      :where(.icon) {
+        opacity: 1;
+      }
+    }
+  }
+
+  :where(.icon) {
+    align-self: center;
+    font-size: var(--table-sort-icon-size, 0.75em);
+    opacity: 0;
+    vertical-align: middle;
+    transition: opacity var(--table-transition, var(--duration-sm, 150ms)) ease, scale var(--table-transition, var(--duration-sm, 150ms)) ease;
+  }
+
+  &[aria-sort="ascending"] :where(.icon) {
+    opacity: 1;
+    scale: 1 -1;
+  }
+
+  &[aria-sort="descending"] :where(.icon) {
+    opacity: 1;
+    scale: 1 1;
+  }
+
+  :where(.table__cell--numeric) & {
+    flex-direction: row-reverse;
+  }
+}
+
+
+:where(.card__body.card__body--table):not(:has(.table--bordered, .table--flush)) {
+  padding-inline: 0;
+
+  :where(th, td):first-child {
+    padding-inline-start: var(--card-padding, var(--table-cell-padding-inline, var(--spacing-1, 1rem)));
+  }
+
+  :where(th, td):last-child {
+    padding-inline-end: var(--card-padding, var(--table-cell-padding-inline, var(--spacing-1, 1rem)));
+  }
+}
+
+/* ==========================================================================
+   7. Accessibility & Media Queries
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :where(.table) {
+    --table-transition: var(--duration-none, 0s);
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.table) {
+    --table-cell-sticky-transparency: 0%;
+    --table-row-transparency: 0%;
+    --table-inner-border-width: var(--border-width-md, var(--border-width, 1px));
+    --table-inner-shadow: none;
+    --table-row-stripe-bg: transparent;
+  }
+}

@@ -1,130 +1,144 @@
-/**
- * Accordion Primitive Component (Native HTML <details> / <summary>)
- * Design For Humans Component Library
- * 
- * Complies with modern web standards:
- * - Native <details> / <summary> disclosure
- * - Native ::details-content pseudo-element
- * - interpolate-size: allow-keywords for smooth height transition
- * - Native name="..." attribute for exclusive accordion groups without JavaScript
- * - High-contrast focus visible indicator
- * - Full reduced-motion accessibility support
- */
+/* ==========================================================================
+   Accordion Primitive
+   --------------------------------------------------------------------------
+   Accessible disclosure and expandable content sections using native HTML
+   <details> and <summary> elements with smooth interpolate-size animation
+   and exclusive group support.
 
-:where(details.accordion) {
-  box-sizing: border-box;
-  border: var(--accordion-border, var(--border-subtle));
-  border-radius: var(--accordion-radius, var(--radius-2, 4px));
-  overflow: hidden;
-  padding-block-end: 0;
-  background-color: transparent;
-
-  transition-property: background-color, border-color, border-style, padding-block-end;
-  transition-duration: var(--accordion-transition, var(--duration-sm));
-  transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-}
-
-:where(details.accordion:has(summary:focus-visible)) {
-  outline: var(--focus-ring-outline);
-  outline-offset: var(--focus-ring-outline-offset);
-}
-
-@media (hover: hover) {
-  :where(details.accordion:has(summary:hover)) {
-    border-color: var(--accordion-hover-border, var(--border-accent));
-    border-style: solid;
-  }
-}
-
-:where(details.accordion[open]) {
-  background-color: var(--accordion-open-bg, var(--surface-card));
-  padding-block-end: var(--accordion-padding, var(--spacing-unit));
-}
+   Usage:
+   <details class="accordion">
+     <summary>
+       <span>Section Title</span>
+       <span class="accordion__icon" aria-hidden="true"></span>
+     </summary>
+     <p>Collapsible body content.</p>
+   </details>
+   ========================================================================== */
 
 /* ==========================================================================
-   Summary Element
+   Base Accordion Container (:where(details.accordion))
    ========================================================================== */
-:where(details.accordion summary) {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--accordion-padding);
-  list-style: none;
-  font-family: var(--typography-font-family-sans);
-  font-size: var(--body-font-size);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--body-line-height);
-  color: var(--foreground-base);
-  padding: var(--accordion-padding);
-  cursor: pointer;
-  user-select: none;
-  touch-action: manipulation;
-  text-box: trim-both cap alphabetic;
+:where(details.accordion) {
+  /* Layout & Sizing */
+  box-sizing: border-box;
+  inline-size: 100%;
+  overflow: hidden;
 
-  transition: color var(--accordion-transition) var(--accordion-timefunc);
-}
+  /* Spacing */
+  padding-block-end: 0;
 
-:where(details.accordion summary::-webkit-details-marker) {
-  display: none;
-}
+  /* Surface, Border & Shape */
+  background-color: transparent;
+  border: var(--accordion-border, var(--border-subtle, 1px solid var(--border-color, currentColor)));
+  border-radius: var(--accordion-radius, var(--radius-2, var(--radius, 0.25rem)));
 
-:where(details.accordion summary:focus) {
-  outline: none;
-}
+  /* Transition */
+  transition-property: background-color, border-color, border-style, padding-block-end;
+  transition-duration: var(--accordion-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
 
-:where(details.accordion summary:focus-visible) {
-  outline: none;
-  /* Container receives focus ring via :has(summary:focus-visible) */
-}
-
-@media (hover: hover) {
-  :where(details.accordion summary:hover) {
-    color: var(--foreground-accent-hover);
+  &[open] {
+    background-color: var(--accordion-open-bg, var(--surface-card, transparent));
+    padding-block-end: var(--accordion-padding, var(--spacing, 1rem));
   }
-}
 
-:where(details.accordion summary span) {
-  text-box: trim-both cap alphabetic;
+  &:has(summary:focus-visible) {
+    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline-offset: var(--focus-ring-outline-offset, 2px);
+  }
+
+  @media (hover: hover) {
+    &:has(summary:hover) {
+      border-color: var(--accordion-hover-border, var(--border-color-accent, var(--border-accent, var(--foreground-accent, currentColor))));
+      border-style: solid;
+    }
+  }
+
+  /* ========================================================================
+     Summary Element (:where(summary))
+     ======================================================================== */
+  summary {
+    /* Layout & Display */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    cursor: pointer;
+
+    /* Sizing & Spacing */
+    gap: var(--accordion-summary-gap, var(--spacing, 1rem));
+    padding: var(--accordion-padding, var(--spacing, 1rem));
+    list-style: none;
+
+    /* Typography */
+    font-family: var(--accordion-summary-font-family, var(--typography-font-family-sans, sans-serif));
+    font-size: var(--accordion-summary-font-size, var(--typography-font-size-0, 1rem));
+    font-weight: var(--accordion-summary-font-weight, var(--font-weight-bold, 700));
+    color: var(--accordion-summary-color, var(--foreground, currentColor));
+    text-box: trim-both cap alphabetic;
+
+    /* Transition */
+    transition: color var(--accordion-transition, var(--duration-sm, 150ms)) var(--accordion-timefunc, var(--timefunc-both, ease-in-out));
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Container receives focus ring via :has(summary:focus-visible) */
+    &:is(:focus, :focus-visible) {
+      outline: none;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--foreground-accent-hover, currentColor);
+      }
+    }
+
+    span {
+      text-box: trim-both cap alphabetic;
+    }
+  }
 }
 
 /* ==========================================================================
    Details Content (Smooth Animation with interpolate-size)
    ========================================================================== */
-:where(details.accordion::details-content) {
-  padding-inline: var(--accordion-padding);
-  font-family: var(--typography-font-family-sans);
-  font-size: var(--body-font-size);
-  line-height: var(--body-line-height);
-  color: var(--foreground-muted);
+details.accordion::details-content {
+  padding-inline: var(--accordion-padding, var(--spacing, 1rem));
 }
 
 @supports (interpolate-size: allow-keywords) {
-  :where(details.accordion::details-content) {
-    block-size: 0;
-    overflow: hidden;
-    transition-property: block-size, content-visibility;
-    transition-duration: var(--accordion-transition);
-    transition-timing-function: var(--accordion-timefunc);
-    transition-behavior: allow-discrete;
-  }
+  details.accordion {
+    &::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition-property: block-size, content-visibility;
+      transition-duration: var(--accordion-transition, var(--duration-sm, 150ms));
+      transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+      transition-behavior: allow-discrete;
+    }
 
-  :where(details.accordion[open]::details-content) {
-    block-size: auto;
-    overflow: visible;
+    &[open]::details-content {
+      block-size: auto;
+      overflow: visible;
+    }
   }
 }
 
 /* ==========================================================================
-   Indicator / Plus-Minus Chevron Icon
+   Indicator / Plus-Minus Chevron Icon (.accordion__icon)
    ========================================================================== */
 .accordion__icon {
   --icon-size: 0.875rem;
-  --icon-stroke: var(--border-width);
+  --icon-stroke: var(--border-width, 1px);
+
+  /* Layout & Sizing */
+  display: inline-block;
   inline-size: var(--icon-size);
   block-size: var(--icon-size);
   flex-shrink: 0;
   position: relative;
-  display: inline-block;
 }
 
 .accordion__icon::before,
@@ -132,7 +146,7 @@
   content: '';
   position: absolute;
   inline-size: 100%;
-  block-size: var(--icon-stroke);
+  block-size: var(--icon-stroke, var(--border-width, 1px));
   background-color: currentColor;
   inset-block-start: 50%;
   transform: translateY(-50%);
@@ -142,8 +156,8 @@
   transform: translateY(-50%) rotate(-90deg);
   opacity: 1;
   transition-property: transform, opacity;
-  transition-duration: var(--accordion-transition);
-  transition-timing-function: var(--accordion-timefunc);
+  transition-duration: var(--accordion-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
 }
 
 :where(details.accordion[open]) .accordion__icon::after {
@@ -151,9 +165,30 @@
   opacity: 0;
 }
 
-/* Grouped accordions */
+/* ==========================================================================
+   Grouped Accordion Container (.accordion-group)
+   ========================================================================== */
 .accordion-group {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-0-5);
+  gap: var(--spacing-0-5, 0.5rem);
+}
+
+/* ==========================================================================
+   Accessibility & Media Queries
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+  :where(details.accordion),
+  :where(details.accordion) summary,
+  :where(details.accordion)::details-content,
+  .accordion__icon::after {
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(details.accordion) {
+    border-width: calc(var(--accordion-border-width, var(--border-width, 1px)) * 2);
+  }
 }

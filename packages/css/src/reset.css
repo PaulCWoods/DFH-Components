@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Design For Humans: Modern CSS Reset
+   Zero-Specificity (:where()) Foundation
+   Parity with Design For Humans Blog (_reset.scss)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Core Reset: Unset default UA styles without specificity overhead
+   -------------------------------------------------------------------------- */
+*:where(:not(audio, iframe, canvas, dialog, img, svg, video):not(svg *):not(symbol *)) {
+  all: unset;
+  cursor: revert;
+  display: revert;
+  list-style: revert;
+  outline: revert;
+}
+
+/* --------------------------------------------------------------------------
+   2. Modern Browser Root Settings
+   -------------------------------------------------------------------------- */
+:root {
+  interpolate-size: allow-keywords;
+  font-feature-settings: "case" off, "sinf" off;
+}
+
+/* --------------------------------------------------------------------------
+   3. Box Model & Text Sizing
+   -------------------------------------------------------------------------- */
+html {
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after,
+*::details-content {
+  box-sizing: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   4. Typography and Text Rendering
+   -------------------------------------------------------------------------- */
+html {
+  font-family: var(--body-font-family);
+
+  @media (hover: none) and (pointer: coarse) {
+    font-size: 1em;
+    font: -apple-system-body;
+    font-family: var(--body-font-family);
+  }
+
+  &.translated-rtl {
+    direction: rtl;
+  }
+}
+
+body {
+  line-height: var(--body-line-height);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable both-edges;
+  -webkit-text-size-adjust: none;
+
+  @media screen {
+    background-color: var(--surface);
+    color: var(--foreground);
+  }
+
+  @supports not (scrollbar-gutter: stable both-edges) {
+    overflow-x: hidden;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Links
+   -------------------------------------------------------------------------- */
+a {
+  text-decoration: none;
+
+  @media screen {
+
+    &:focus,
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Lists
+   -------------------------------------------------------------------------- */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. Media
+   -------------------------------------------------------------------------- */
+img,
+video {
+  &:not([style]) {
+    block-size: auto;
+  }
+}
+
+img,
+iframe,
+video {
+  max-inline-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   8. Tables
+   -------------------------------------------------------------------------- */
+table {
+  border-collapse: collapse;
+}
+
+/* --------------------------------------------------------------------------
+   9. Forms
+   -------------------------------------------------------------------------- */
+textarea {
+  white-space: revert;
+}
+
+meter {
+  -webkit-appearance: revert;
+  appearance: revert;
+}
+
+/* --------------------------------------------------------------------------
+   10. Focus Management (WCAG 2.4.7 / 2.4.13)
+   -------------------------------------------------------------------------- */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-outline);
+  outline-offset: var(--focus-ring-outline-offset);
+}
+
+/* --------------------------------------------------------------------------
+   11. Accessibility & Interactive State
+   -------------------------------------------------------------------------- */
+:where([hidden]) {
+  display: none !important;
+}
+
+[aria-disabled="true" i],
+[disabled] {
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   12. Browser-Specific Fixes
+   -------------------------------------------------------------------------- */
+:where([contenteditable]) {
+  -moz-user-modify: read-write;
+  -webkit-user-modify: read-write;
+  overflow-wrap: break-word;
+  -webkit-line-break: after-white-space;
+  line-break: after-white-space;
+}
+
+:where([draggable="true"]) {
+  -webkit-user-drag: element;
+}
+
+iframe,
+audio,
+video {
+  @media print {
+    display: none;
+  }
+}
+
+bdi {
+  unicode-bidi: isolate;
+}
+
+/* --------------------------------------------------------------------------
+   13. Container Query Support Utility
+   -------------------------------------------------------------------------- */
+.\@container {
+  container-type: inline-size;
+}

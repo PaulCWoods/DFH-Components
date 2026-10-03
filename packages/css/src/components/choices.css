@@ -1,45 +1,58 @@
-/**
- * Choices Component Primitive
- * Design For Humans Component Library
- * 
- * Container and wrapper patterns for grouped interactive choices (checkboxes and radios).
- * Follows WCAG 2.2 AA/AAA & Modern Web Standards:
- * - 2.5.5 / 2.5.8 Target Size
- * - 1.4.3 Contrast
- */
-
 /* ==========================================================================
-   Choices Container Primitive
+   Choices Primitive
+   --------------------------------------------------------------------------
+   Container and wrapper patterns for grouped interactive choices (checkboxes and radios).
+
+   Usage:
+   <div class="choices">
+     <label class="choice" for="opt-1">
+       <input type="checkbox" id="opt-1" class="checkbox-input" />
+       <span>Option One</span>
+     </label>
+   </div>
    ========================================================================== */
 
+/* ==========================================================================
+   Choices Container Primitive (:where(.choices))
+   ========================================================================== */
 :where(.choices) {
+  /* Layout & Display */
   display: flex;
   flex-direction: column;
-  gap: var(--form-choices-gap, var(--spacing-0-5));
 
-  &.choices--horizontal {
+  /* Spacing */
+  gap: var(--form-choices-gap, var(--spacing-0-5, 0.5rem)) var(--form-choices-col-gap, var(--spacing-1, 1rem));
+
+  &.choices--inline {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--spacing-1);
   }
 }
 
 /* ==========================================================================
-   Choice Item Primitive (Label + Control Wrapper)
+   Choice Item Primitive (:where(.choice))
    ========================================================================== */
-
 :where(.choice) {
+  /* Layout & Display */
   display: inline-flex;
-  align-items: center;
-  gap: var(--form-choice-inner-gap, var(--spacing-0-5));
-  font-family: var(--body-font-family);
-  font-size: var(--input-font-size, var(--typography-font-size-0));
-  color: var(--foreground-base);
-  cursor: pointer;
+  align-items: start;
   user-select: none;
+  cursor: pointer;
+
+  /* Spacing */
+  gap: var(--form-choice-inner-gap, var(--spacing-0-5, 0.5rem));
+
+  /* Typography */
+  font-family: var(--form-choice-font-family, var(--body-font-family, inherit));
+  font-size: var(--form-choice-font-size, var(--input-font-size, var(--typography-font-size-0, 1rem)));
+  color: var(--form-choice-color, var(--foreground, currentColor));
+
+  > :where(input:is([type="checkbox"], [type="radio"])) {
+    flex-shrink: 0;
+  }
 
   &:has(:disabled, [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled);
+    opacity: var(--opacity-disabled, 0.4);
     cursor: not-allowed;
   }
 }
