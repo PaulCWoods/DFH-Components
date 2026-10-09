@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Design For Humans: Responsive Visibility Helpers
+   --------------------------------------------------------------------------
+   Viewport media query and container query visibility toggles (.hide, .hide--*).
+   Uses zero-specificity (:where()) for composability.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Unconditional Hide
+   -------------------------------------------------------------------------- */
+
+:where(.hide) {
+    display: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. Viewport-Based Visibility Modifiers (@media)
+   -------------------------------------------------------------------------- */
+
+/* Hide Above Breakpoint (Viewport) */
+@media (width > 20em) {
+    :where(.hide--above-2xs, .hide--2xs) {
+        display: none;
+    }
+}
+
+@media (width > 30em) {
+    :where(.hide--above-xs, .hide--xs) {
+        display: none;
+    }
+}
+
+@media (width > 40em) {
+    :where(.hide--above-sm, .hide--sm) {
+        display: none;
+    }
+}
+
+@media (width > 48em) {
+    :where(.hide--above-md, .hide--md) {
+        display: none;
+    }
+}
+
+@media (width > 60em) {
+    :where(.hide--above-lg, .hide--lg) {
+        display: none;
+    }
+}
+
+@media (width > 80em) {
+    :where(.hide--above-xl, .hide--xl) {
+        display: none;
+    }
+}
+
+@media (width > 96em) {
+    :where(.hide--above-2xl, .hide--2xl) {
+        display: none;
+    }
+}
+
+/* Hide Below / At Breakpoint (Viewport) */
+@media (width <=20em) {
+    :where(.hide--below-2xs) {
+        display: none;
+    }
+}
+
+@media (width <=30em) {
+    :where(.hide--below-xs) {
+        display: none;
+    }
+}
+
+@media (width <=40em) {
+    :where(.hide--below-sm) {
+        display: none;
+    }
+}
+
+@media (width <=48em) {
+    :where(.hide--below-md) {
+        display: none;
+    }
+}
+
+@media (width <=60em) {
+    :where(.hide--below-lg) {
+        display: none;
+    }
+}
+
+@media (width <=80em) {
+    :where(.hide--below-xl) {
+        display: none;
+    }
+}
+
+@media (width <=96em) {
+    :where(.hide--below-2xl) {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Container-Based Visibility Modifiers (@container)
+   Hides elements above or below specific container inline-size thresholds.
+   Requires an ancestor with `container-type: inline-size` or `container-type: normal`.
+   -------------------------------------------------------------------------- */
+
+/* Hide In Container Above Threshold */
+@container (inline-size > 20em) {
+    :where(.hide--in-container-above-2xs) {
+        display: none;
+    }
+}
+
+@container (inline-size > 30em) {
+    :where(.hide--in-container-above-xs) {
+        display: none;
+    }
+}
+
+@container (inline-size > 40em) {
+    :where(.hide--in-container-above-sm) {
+        display: none;
+    }
+}
+
+@container (inline-size > 48em) {
+    :where(.hide--in-container-above-md) {
+        display: none;
+    }
+}
+
+@container (inline-size > 60em) {
+    :where(.hide--in-container-above-lg) {
+        display: none;
+    }
+}
+
+@container (inline-size > 80em) {
+    :where(.hide--in-container-above-xl) {
+        display: none;
+    }
+}
+
+@container (inline-size > 96em) {
+    :where(.hide--in-container-above-2xl) {
+        display: none;
+    }
+}
+
+/* Hide In Container Below Threshold */
+@container (inline-size <=20em) {
+    :where(.hide--in-container-below-2xs) {
+        display: none;
+    }
+}
+
+@container (inline-size <=30em) {
+    :where(.hide--in-container-below-xs) {
+        display: none;
+    }
+}
+
+@container (inline-size <=40em) {
+    :where(.hide--in-container-below-sm) {
+        display: none;
+    }
+}
+
+@container (inline-size <=48em) {
+    :where(.hide--in-container-below-md) {
+        display: none;
+    }
+}
+
+@container (inline-size <=60em) {
+    :where(.hide--in-container-below-lg) {
+        display: none;
+    }
+}
+
+@container (inline-size <=80em) {
+    :where(.hide--in-container-below-xl) {
+        display: none;
+    }
+}
+
+@container (inline-size <=96em) {
+    :where(.hide--in-container-below-2xl) {
+        display: none;
+    }
+}

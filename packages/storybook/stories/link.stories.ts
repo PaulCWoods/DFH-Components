@@ -43,8 +43,8 @@ export const Default: Story = {
     href: '#',
   },
   render: (args) => `
-    <div style="font-family: var(--body-font-family); max-inline-size: 65ch; line-height: var(--body-line-height);">
-      <p style="margin: 0;">
+    <div class="wrapper wrapper--lg">
+      <p class="text" style="margin: 0;">
         Building an accessible digital ecosystem begins with foundational standards. Explore our 
         <a href="${args.href}" class="link"><span>${args.text}</span></a> 
         to learn how to meet Level AA and Level AAA compliance across your components.
@@ -59,27 +59,27 @@ export const Default: Story = {
  */
 export const ColorSchemes: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); font-family: var(--body-font-family);">
+    <div class="stack">
       <!-- Default Scheme on Standard Card -->
-      <div style="padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border); border-radius: var(--ui-radius);">
-        <span style="font-size: var(--body-small-font-size); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-0-5);">Default Surface & Scheme</span>
-        <p style="margin: 0;">
+      <div class="card" style="padding: var(--spacing-16);">
+        <span class="small-text" style="color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">Default Surface & Scheme</span>
+        <p class="text" style="margin: 0;">
           Read our latest article on <a href="#" class="link">modern token architecture</a> for scalable cross-platform UI.
         </p>
       </div>
 
       <!-- Inverted Context Scheme -->
-      <div style="padding: var(--spacing-1); background-color: var(--surface-inverted); color: var(--foreground-inverted); border-radius: var(--ui-radius);">
-        <span style="font-size: var(--body-small-font-size); opacity: 0.8; display: block; margin-block-end: var(--spacing-0-5);">Inverted Container (.link--inverted)</span>
-        <p style="margin: 0;">
+      <div class="card color-palette-inverted" style="padding: var(--spacing-16);">
+        <span class="small-text" style="opacity: 0.8; display: block; margin-block-end: var(--spacing-8);">Inverted Container (.link--inverted)</span>
+        <p class="text" style="margin: 0;">
           Contrast notice: Review the <a href="#" class="link link--inverted">accessibility conformance report</a> in full detail.
         </p>
       </div>
 
       <!-- Dark Container Scheme -->
-      <div style="padding: var(--spacing-1); background-color: var(--surface-dark); color: var(--foreground-on-dark); border-radius: var(--ui-radius);">
-        <span style="font-size: var(--body-small-font-size); opacity: 0.8; display: block; margin-block-end: var(--spacing-0-5);">Dark Container (.link--on-dark)</span>
-        <p style="margin: 0;">
+      <div class="card color-palette-dark" style="padding: var(--spacing-16);">
+        <span class="small-text" style="opacity: 0.8; display: block; margin-block-end: var(--spacing-8);">Dark Container (.link--on-dark)</span>
+        <p class="text" style="margin: 0;">
           Deep theme footer: Access the <a href="#" class="link link--on-dark">component source repository</a> on GitHub.
         </p>
       </div>
@@ -93,8 +93,8 @@ export const ColorSchemes: Story = {
  */
 export const ExternalLink: Story = {
   render: () => `
-    <div style="font-family: var(--body-font-family); max-inline-size: 65ch; line-height: var(--body-line-height);">
-      <p style="margin: 0;">
+    <div class="wrapper wrapper--lg">
+      <p class="text" style="margin: 0;">
         For comprehensive W3C recommendations, visit the official 
         <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer" class="link">
           <span>W3C Web Accessibility Initiative</span>
@@ -115,8 +115,8 @@ export const ExternalLink: Story = {
  */
 export const SubtleLink: Story = {
   render: () => `
-    <div style="font-family: var(--body-font-family); display: flex; gap: var(--spacing-1); align-items: center;">
-      <span style="color: var(--foreground-muted);">Published in:</span>
+    <div class="inline">
+      <span class="small-text" style="color: var(--foreground-muted);">Published in:</span>
       <a href="#" class="link link--subtle">Design Systems</a>
       <span style="color: var(--foreground-muted);">•</span>
       <a href="#" class="link link--subtle">Accessibility</a>
@@ -132,7 +132,7 @@ export const SubtleLink: Story = {
  */
 export const BlockLink: Story = {
   render: () => `
-    <div style="max-inline-size: 480px; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--lg">
       <a href="#" class="block-link">
         <span class="block-link__text">Go to accessibility case study</span>
         <svg class="block-link__arrow icon icon--dir" width="32" height="32" aria-hidden="true" focusable="false">
@@ -149,11 +149,11 @@ export const BlockLink: Story = {
  */
 export const BlockLinkDirectory: Story = {
   render: () => `
-    <div style="max-inline-size: 540px; font-family: var(--body-font-family);">
-      <h3 style="margin-block-start: 0; margin-block-end: var(--spacing-0-75); font-size: var(--typography-font-size-1);">
+    <div class="wrapper wrapper--lg">
+      <h3 class="heading" style="margin-block-start: 0; margin-block-end: var(--spacing-12);">
         Recommended Articles
       </h3>
-      <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-0-5);">
+      <ul class="stack gap-sm" style="list-style: none; margin: 0; padding: 0;">
         <li>
           <a href="#" class="block-link">
             <span class="block-link__text">Color Contrast Beyond 4.5:1</span>

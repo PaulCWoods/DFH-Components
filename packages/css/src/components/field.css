@@ -18,11 +18,11 @@
   /* Layout & Display */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   inline-size: 100%;
 
   /* Spacing */
-  gap: var(--field-inner-gap, var(--spacing-0-5, 0.5rem));
+  gap: var(--field-inner-gap, var(--spacing-8, 0.5rem));
 
   /* Container opacity on disabled state */
   &:has(:disabled, [aria-disabled="true"]) {
@@ -33,7 +33,7 @@
   &:has(:required) .field__label::after {
     content: " (Required)";
     font-weight: var(--font-weight-regular, 400);
-    margin-inline-start: var(--spacing-0-5, 0.5rem);
+    margin-inline-start: var(--spacing-8, 0.5rem);
     font-size: var(--micro-text-font-size, 0.875em);
     color: var(--foreground-muted, currentColor);
   }
@@ -47,12 +47,20 @@
   display: var(--inline-field-display, inline-flex);
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--field-inline-gap, var(--spacing-0-75, 0.75rem));
+  gap: var(--field-inline-gap, var(--spacing-12, 0.75rem));
 }
 
 /* ==========================================================================
-   Field Sub-Elements (Label, Hint, Errors)
+   Field Sub-Elements (Header, Label, Hint, Output, Errors)
    ========================================================================== */
+:where(.field__header) {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  inline-size: 100%;
+  gap: var(--field-header-gap, var(--spacing-8, 0.5rem));
+}
+
 :where(.field__label) {
   font-family: var(--label-font-family, var(--body-font-family, inherit));
   font-size: var(--label-font-size, var(--typography-font-size-0, 1rem));
@@ -69,6 +77,14 @@
   font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
   line-height: var(--micro-text-line-height, var(--typography-line-height-4, 1.4));
   color: var(--field-hint-color, var(--foreground-muted, currentColor));
+}
+
+:where(.field__output, .field__result) {
+  margin: 0;
+  font-family: var(--output-font-family, var(--micro-text-font-family, inherit));
+  font-size: var(--output-font-size, var(--micro-text-font-size, 0.875em));
+  font-weight: var(--output-font-weight, var(--micro-text-font-weight, inherit));
+  line-height: var(--output-line-height, var(--micro-text-line-height, normal));
 }
 
 :where(.field__errors, .field__error) {

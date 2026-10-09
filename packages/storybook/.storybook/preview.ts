@@ -44,6 +44,8 @@ const preview: Preview = {
     options: {
       storySort: {
         method: 'alphabetical',
+        order: ['Components', 'Layout Utilities', 'Utilities', 'Recipes', '*'],
+        locales: 'en-US',
       },
     },
     actions: { argTypesRegex: '^on[A-Z].*' },

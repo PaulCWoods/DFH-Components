@@ -18,9 +18,11 @@ DFH-Components/
 │   ├── css/
 │   │   ├── src/
 │   │   │   ├── variables.css  # Auto-compiled CSS custom properties (DO NOT edit directly)
-│   │   │   ├── index.css      # Core entrypoint importing variables & component styles
-│   │   │   ├── utilities/     # Utility classes (accessibility.css: .visually-hidden, .sr-only)
-│   │   │   └── components/    # CSS primitive files (button.css, dialog.css, popover.css, accordion.css)
+│   │   │   ├── index.css      # Core entrypoint importing layout, components & utilities
+│   │   │   ├── layout/        # 1D/2D layout primitives (cluster.css, grid.css, inline.css, split.css, stack.css, wrapper.css)
+│   │   │   ├── components/    # CSS primitive files (button.css, dialog.css, popover.css, accordion.css, etc.)
+│   │   │   ├── utilities/     # Utility classes (spacing.css, border.css, typography.css, accessibility.css, responsive-helpers.css)
+│   │   │   └── overrides.css  # Custom extension layer for project-specific overrides
 │   ├── figma-sync/
 │   │   ├── compile-tokens.js      # Node token compiler (W3C DTCG -> CSS variables)
 │   │   ├── export-figma-tokens.js # Figma exporter (Tokens Studio & Honza Toman Variables)
@@ -34,7 +36,9 @@ DFH-Components/
     └── skills/
         ├── modern-web-guidance/   # Chrome web standard best practices
         ├── tokens/SKILL.md        # Detailed token system specification & naming conventions
-        └── accessibility/SKILL.md # WCAG 2.2 compliance & auditing rules
+        ├── accessibility/SKILL.md # WCAG 2.2 compliance & auditing rules
+        ├── recipe-composition/    # Decision-making heuristics & composite pattern guide
+        └── css-commenting/        # CSS maintenance and block (/* */) commenting guide
 ```
 
 ---
@@ -64,21 +68,53 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   <span>Delete Item</span>
 </button>
 
+<!-- Placeholder / Dashed Outline Button -->
+<button type="button" class="button button--placeholder">
+  <span>+ Add Item</span>
+</button>
+
 <!-- With Icon (Trailing) -->
 <button type="button" class="button button--primary">
   <span>Get Started</span>
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-    <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+  <svg class="icon icon--dir" aria-hidden="true" focusable="false">
+    <use href="#ArrowRight"/>
   </svg>
 </button>
 
 <!-- Icon-Only Button (MANDATORY: use .visually-hidden text for translation & voice control) -->
 <button type="button" class="button button--icon">
   <span class="visually-hidden">Search site</span>
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-    <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
+  <svg class="icon" aria-hidden="true" focusable="false">
+    <use href="#Search"/>
   </svg>
 </button>
+
+<!-- Avatar Button -->
+<button type="button" class="button button--avatar button--round" aria-label="Alex Morgan profile">
+  <img src="https://example.com/avatar.jpg" alt="" width="40" height="40" style="object-fit: cover; border-radius: inherit;" />
+</button>
+
+<!-- Button-Like Checkbox Toggle Switch (Zero-JS state management) -->
+<label class="button">
+  <input type="checkbox" class="visually-hidden" />
+  <svg class="icon icon--off" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+  <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  <span>Switch</span>
+</label>
+
+<!-- Button-Like Radio Group Choices -->
+<div class="cluster">
+  <label class="button">
+    <input type="radio" name="choice-demo" class="visually-hidden" checked />
+    <span>Choice 1</span>
+    <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  </label>
+  <label class="button">
+    <input type="radio" name="choice-demo" class="visually-hidden" />
+    <span>Choice 2</span>
+    <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  </label>
+</div>
 
 <!-- Link Styled as Button (MANDATORY: role="button") -->
 <a href="/login" class="button button--primary" role="button">
@@ -119,7 +155,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
       </div>
 
       <footer class="card__footer" style="justify-content: flex-end;">
-        <form method="dialog" style="display: flex; gap: var(--spacing-0-5);">
+        <form method="dialog" style="display: flex; gap: var(--spacing-8);">
           <button type="submit" class="button button--secondary" commandfor="my-dialog" command="close">
             <span>Cancel</span>
           </button>
@@ -133,7 +169,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </dialog>
 ```
 
-### 3. Popover Primitive (Native `popover` + CSS Anchor Positioning)
+### 3. Popover Primitive (Native `popover` + CSS Anchor Positioning composed with `.card` or `.banner`)
 ```html
 <!-- Trigger Button with anchor-name and popovertarget -->
 <button 
@@ -144,69 +180,183 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   aria-haspopup="dialog"
 >
   <span>Actions</span>
+  <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false">
+    <use href="#ChevronDown"/>
+  </svg>
 </button>
 
-<!-- Popover Content tethered with position-anchor -->
+<!-- Popover Wrapper tethered with position-anchor (Composed with Ruled Translucent Card & Stacked Button Group) -->
 <div 
   id="my-popover" 
   popover 
   class="popover popover--anchored"
-  style="position-anchor: --my-anchor;"
+  style="position-anchor: --my-anchor; min-inline-size: 16rem;"
 >
-  <p style="margin: 0; font-weight: var(--body-strong-font-weight);">Quick Actions</p>
+  <div class="card card--compact card--bordered card--translucent card--ruled">
+    <article class="card__content">
+      <header class="card__header">
+        <h3 class="card__title">Quick Actions</h3>
+      </header>
+      <div class="card__body card__body--flush">
+        <div class="button-group button-group--tight button-group--stacked s-button:subtle">
+          <button type="button" class="button">
+            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
+            <span>Duplicate</span>
+          </button>
+          <button type="button" class="button">
+            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+            <span>Export JSON</span>
+          </button>
+          <hr class="divider">
+          <button type="button" class="button button--subtle-destructive">
+            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+            <span>Delete Item</span>
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
 </div>
 ```
 
 ### 4. Accordion Primitive (Native `<details>` / `<summary>`)
 ```html
-<!-- Standalone Disclosure -->
+<!-- Standalone Disclosure (Indicator generated automatically via ::before and ::after pseudo-elements) -->
 <details class="accordion">
-  <summary>
-    <span>Accordion Header</span>
-    <span class="accordion__icon" aria-hidden="true"></span>
-  </summary>
+  <summary>Accordion Header</summary>
   <p>Accordion body content.</p>
+</details>
+
+<!-- Plain, Flush & Transparent Disclosures -->
+<details class="accordion accordion--plain">
+  <summary>Plain Accordion (No Border)</summary>
+  <p>Borderless disclosure content.</p>
+</details>
+
+<details class="accordion accordion--flush">
+  <summary>Flush Accordion (Edge to Edge)</summary>
+  <p>Flush disclosure content.</p>
+</details>
+
+<details class="accordion accordion--transparent">
+  <summary>Transparent Accordion</summary>
+  <p>Transparent disclosure content.</p>
+</details>
+
+<!-- Opt-Out: Accordion Without Indicator Icon -->
+<details class="accordion accordion--no-icon">
+  <summary>Accordion Without Indicator Icon</summary>
+  <p>Content without plus/minus icon.</p>
 </details>
 
 <!-- Native Exclusive Group (only one open at a time without JavaScript) -->
 <div class="accordion-group">
   <details class="accordion" name="faq-group" open>
-    <summary>
-      <span>First Question</span>
-      <span class="accordion__icon" aria-hidden="true"></span>
-    </summary>
+    <summary>First Question</summary>
     <p>Answer to the first question.</p>
   </details>
 
   <details class="accordion" name="faq-group">
-    <summary>
-      <span>Second Question</span>
-      <span class="accordion__icon" aria-hidden="true"></span>
-    </summary>
+    <summary>Second Question</summary>
     <p>Answer to the second question.</p>
+  </details>
+</div>
+
+<!-- Group Opt-Out: No Indicator Icons on any child disclosures -->
+<div class="accordion-group accordion-group--no-icons">
+  <details class="accordion" name="faq-clean">
+    <summary>Item Without Icon</summary>
+    <p>Clean disclosure content.</p>
   </details>
 </div>
 ```
 
-### 5. Badge & Chip Primitives
+### 5. Badge & Chip Primitives & Status Indicators
 ```html
 <!-- Default Badge -->
 <span class="badge"><span>Standard</span></span>
 
-<!-- Semantic Status Badges -->
+<!-- Semantic Status Badges (via class or data-status) -->
 <span class="badge badge--accent"><span>Enrolled</span></span>
-<span class="badge badge--success"><span>Completed</span></span>
-<span class="badge badge--warning"><span>Pending Review</span></span>
-<span class="badge badge--danger"><span>Suspended</span></span>
+<span class="badge badge--success" data-status="online"><span>Online</span></span>
+<span class="badge badge--warning" data-status="away"><span>Pending</span></span>
+<span class="badge badge--danger" data-status="busy"><span>Busy</span></span>
 
-<!-- Pill Badge (Rounded) -->
-<span class="badge badge--accent badge--pill"><span>New Release</span></span>
+<!-- Round & Small Badges -->
+<span class="badge badge--accent badge--round"><span>New Release</span></span>
+<span class="badge badge--danger badge--sm badge--round"><span>3</span></span>
+
+<!-- Corner Notification Badges (Anchored to relative buttons or action containers) -->
+<!-- NOTE: Do NOT place corner badges inside .avatar (which uses overflow: hidden). For avatars, use [data-status] color rings -->
+<button type="button" class="button button--icon" style="position: relative;" aria-label="Notifications (1 unread)">
+  <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#BellFilled"/></svg>
+  <span class="badge badge--danger badge--sm badge--round badge--top-right-corner">
+    <span>1</span>
+  </span>
+</button>
+
+<!-- Live Status Indicators (with zero-JS indicator dot) -->
+<span class="status" data-status="online">Online</span>
+<span class="status" data-status="away">Away</span>
+<span class="status" data-status="busy">Do Not Disturb</span>
+<span class="status" data-status="offline">Offline</span>
 
 <!-- Metadata Chip -->
 <span class="chip">Lesson 04</span>
+<span class="chip chip--status" data-status="online">Online</span>
 ```
 
-### 6. Input & Form Control Primitives
+### 6. Avatar Primitive & Avatar Groups
+```html
+<!-- Initials Avatar with Live Status Indicator Ring -->
+<div class="avatar" data-status="online" aria-label="Alex Bennett (online)">
+  <span>AB</span>
+</div>
+
+<!-- Photo Image Avatar -->
+<div class="avatar" data-status="away">
+  <img src="https://example.com/avatar.jpg" alt="User profile photo" loading="lazy" />
+</div>
+
+<!-- Avatar Button (Interactive) -->
+<button type="button" class="button button--avatar button--round" data-status="online" aria-label="Jordan Lee profile">
+  <img src="https://example.com/avatar.jpg" alt="" width="40" height="40" style="object-fit: cover; border-radius: inherit;" />
+</button>
+
+<!-- Icon Fallback Avatar -->
+<div class="avatar" aria-label="User profile">
+  <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+</div>
+
+<!-- Placeholder / Add User Avatar -->
+<div class="avatar avatar--placeholder" aria-label="Add team member">
+  <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+</div>
+
+<!-- Custom Colored Avatar via inline tokens -->
+<div class="avatar" style="--avatar-bg: #e50914; --avatar-text: #ffffff;" aria-label="Alex Bennett">
+  <span>AB</span>
+</div>
+
+<!-- Inline Avatar Group with Counter -->
+<div class="avatar-group" aria-label="Project team">
+  <div class="avatar" aria-label="Alex Bennett"><span>AB</span></div>
+  <div class="avatar" aria-label="Taylor Smith"><span>TS</span></div>
+  <div class="avatar" aria-label="Jordan Lee"><span>JL</span></div>
+  <div class="avatar" aria-label="5 additional team members"><span>+5</span></div>
+</div>
+
+<!-- Stacked Crescent Avatar Group (Layered pile with counter on top) -->
+<div class="avatar-group avatar-group--stacked avatar-group--crescent" aria-label="5 active members">
+  <div class="avatar" aria-hidden="true"></div>
+  <div class="avatar" aria-hidden="true"></div>
+  <div class="avatar" aria-hidden="true"></div>
+  <div class="avatar" aria-hidden="true"></div>
+  <div class="avatar" aria-label="5 members"><span>5</span></div>
+</div>
+```
+
+### 7. Input & Form Control Primitives
 
 #### A. Text, Color, and File Inputs
 ```html
@@ -329,7 +479,71 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </div>
 ```
 
-#### E. Complete Form Layout & Submission Bar
+#### E. Segmented Toggle Switch Primitive (`role="switch"`)
+```html
+<!-- Default Switch (Zero-JS state management via CSS :has(:checked)) -->
+<label class="switch">
+  <span class="switch__label">Notifications</span>
+  <input type="checkbox" role="switch" class="visually-hidden" />
+  <span class="switch__control" aria-hidden="true">
+    <span class="switch__option switch__option--off">Off</span>
+    <span class="switch__option switch__option--on">On</span>
+  </span>
+</label>
+
+<!-- Active / Checked Switch -->
+<label class="switch">
+  <span class="switch__label">Dark Mode</span>
+  <input type="checkbox" role="switch" class="visually-hidden" checked />
+  <span class="switch__control" aria-hidden="true">
+    <span class="switch__option switch__option--off">Off</span>
+    <span class="switch__option switch__option--on">On</span>
+  </span>
+</label>
+
+<!-- Compact Switch -->
+<label class="switch switch--sm">
+  <span class="switch__label">Compact Filter</span>
+  <input type="checkbox" role="switch" class="visually-hidden" checked />
+  <span class="switch__control" aria-hidden="true">
+    <span class="switch__option switch__option--off">Off</span>
+    <span class="switch__option switch__option--on">On</span>
+  </span>
+</label>
+```
+
+#### F. Range Slider Input Primitive (`<input type="range">`)
+```html
+<!-- Interactive Range Slider with Output Readout -->
+<div class="field">
+  <div class="field__header">
+    <label for="volume-control" class="field__label">Volume Level</label>
+    <output for="volume-control" class="field__output" id="vol-readout">65%</output>
+  </div>
+  <input 
+    id="volume-control" 
+    type="range" 
+    class="range" 
+    min="0" 
+    max="100" 
+    value="65" 
+    style="--value: 65%;"
+    aria-describedby="vol-readout"
+  />
+</div>
+
+<!-- Range Sizing (.range--sm: 4px/16px, .range--lg: 12px/32px) -->
+<input type="range" class="range range--sm" value="30" min="0" max="100" style="--value: 30%;" />
+<input type="range" class="range" value="50" min="0" max="100" style="--value: 50%;" />
+<input type="range" class="range range--lg" value="75" min="0" max="100" style="--value: 75%;" />
+
+<!-- Semantic Color Range Sliders -->
+<input type="range" class="range range--success" value="85" min="0" max="100" style="--value: 85%;" />
+<input type="range" class="range range--warning" value="45" min="0" max="100" style="--value: 45%;" />
+<input type="range" class="range range--danger" value="20" min="0" max="100" style="--value: 20%;" />
+```
+
+#### G. Complete Form Layout & Submission Bar
 ```html
 <form class="form">
   <div class="field">
@@ -355,7 +569,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   <span>Skip to main content</span>
 </a>
 
-<!-- Floating Pill Skip Link Variant -->
+<!-- Floating Round Skip Link Variant -->
 <a href="#main" class="skip-link skip-link--floating">
   <span>Skip to main content</span>
 </a>
@@ -430,7 +644,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </a>
 
 <!-- Category / Resource List of Block Links -->
-<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-0-5);">
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-8);">
   <li>
     <a href="/topics/wcag" class="block-link">
       <span class="block-link__text">WCAG 2.2 Guidelines</span>
@@ -459,7 +673,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 
 ### 10. Card Primitive
 
-#### A. Full Composable Card with Media
+#### A. Full Composable Card with Media (Full-Card Link via `.card__link`)
 ```html
 <div class="card">
   <div class="card__thumb">
@@ -473,7 +687,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
     <header class="card__header">
       <hgroup class="card__hgroup">
         <h3 class="card__title">
-          <a href="/articles/my-post">Article Headline</a>
+          <a href="/articles/my-post" class="card__link">Article Headline</a>
         </h3>
         <p class="card__subtitle">Supporting Subtitle</p>
       </hgroup>
@@ -495,7 +709,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
     <header class="card__header">
       <hgroup class="card__hgroup">
         <h3 class="card__title">
-          <a href="/settings/security">Security Settings</a>
+          <a href="/settings/security" class="card__link">Security Settings</a>
         </h3>
         <p class="card__subtitle">Two-Factor Authentication</p>
       </hgroup>
@@ -516,14 +730,14 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 
 #### C. Card Composition in CSS Grid
 ```html
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: var(--spacing-1);">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: var(--spacing-16);">
   <div class="card">
     <div class="card__thumb">
       <img src="https://example.com/thumb.jpg" alt="" loading="lazy" />
     </div>
     <article class="card__content">
       <header class="card__header">
-        <h3 class="card__title"><a href="/post-1">Card Title</a></h3>
+        <h3 class="card__title"><a href="/post-1" class="card__link">Card Title</a></h3>
       </header>
       <div class="card__body">
         <p>Card body copy.</p>
@@ -538,13 +752,13 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 ```html
 <!-- Outer card radius aligns mathematically with nested button curvature:
      --card-radius: calc(min(var(--button-radius), var(--button-min-size)/2) + var(--card-padding) + var(--card-border-width)) -->
-<div class="card card--dynamic-corners" style="--button-radius: var(--radius-pill);">
+<div class="card card--dynamic-corners" style="--button-radius: var(--radius-round);">
   <article class="card__content">
     <header class="card__header">
       <h3 class="card__title"><a href="/plan">Concentric Plan</a></h3>
     </header>
     <div class="card__body">
-      <p>Card outer boundary curves harmoniously with the pill action button below.</p>
+      <p>Card outer boundary curves harmoniously with the round action button below.</p>
     </div>
     <footer class="card__footer">
       <button type="button" class="button button--primary">
@@ -614,7 +828,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   <div class="banner__inner">
     <h3 class="subheading">Subheading</h3>
     <p>This is more verbose banner message.</p>
-    <div style="display: flex; gap: var(--spacing-0-5);">
+    <div style="display: flex; gap: var(--spacing-8);">
       <button type="button" class="button">
         <span>Cancel</span>
       </button>
@@ -628,7 +842,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 
 #### D. Dynamic Concentric Corners Banner (`.banner--dynamic-corners`)
 ```html
-<!-- Outer curvature scales concentrically with nested pill action button:
+<!-- Outer curvature scales concentrically with nested round action button:
      --banner-radius: calc(min(var(--button-radius), var(--button-min-size)/2) + var(--banner-outer-padding) + var(--banner-border-width)) -->
 <div class="banner banner--dynamic-corners s-button:round" role="region" aria-label="Confirmation">
   <div class="banner__inner">
@@ -807,7 +1021,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 #### D. Full Sticky Matrix Table (.table--sticky-*)
 ```html
 <div class="table-container" tabindex="0" role="region" aria-label="Audit Matrix" style="max-block-size: 20rem; overflow: auto;">
-  <table class="table table--sticky-header table--sticky-footer table--sticky-first-column table--sticky-last-column table--striped">
+  <table class="table table--sticky-head table--sticky-footer table--sticky-first-column table--sticky-last-column table--striped">
     <caption class="table__caption">WCAG 2.2 Conformance Audit Results</caption>
     <thead>
       <tr>
@@ -863,11 +1077,11 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 
 ### 14. Button Group Primitive
 
-#### A. Standard Button Group with Divider
+#### A. Standard Button Group with Divider & Text Content
 ```html
 <div class="button-group">
   <a href="/prev" class="button"><span>Previous</span></a>
-  <span class="button"><span>Current</span></span>
+  <span class="button-group__content button-group__fill">Step 2 of 4</span>
   <hr class="divider">
   <button type="button" class="button button--primary"><span>Next</span></button>
 </div>
@@ -882,12 +1096,24 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   <button type="button" class="button button-group__end button--primary"><span>Create</span></button>
 </div>
 
-<!-- Stacked (Vertical column layout) -->
-<div class="button-group button-group--stacked">
-  <button type="button" class="button"><span>Option A</span></button>
-  <button type="button" class="button"><span>Option B</span></button>
-  <hr class="divider">
-  <button type="button" class="button button--destructive"><span>Delete</span></button>
+<!-- Stacked & Ruled (Vertical column listbox / menu with section headings & auto-pushed trailing badges) -->
+<div class="button-group button-group--stacked button-group--ruled s-button:subtle-tint" role="listbox" aria-label="Action Menu">
+  <h3 class="button-group__content micro-heading text-muted">Primary Actions</h3>
+  <button type="button" class="button" role="option">
+    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+    <span class="button__text">Share Document</span>
+    <span class="badge badge--sm"><span>New</span></span>
+  </button>
+  <button type="button" class="button" role="option">
+    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Duplicate"/></svg>
+    <span class="button__text">Duplicate</span>
+    <kbd class="kbd">⌘D</kbd>
+  </button>
+  <h3 class="button-group__content micro-heading text-muted">Danger Zone</h3>
+  <button type="button" class="button button--destructive" role="option">
+    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
+    <span class="button__text">Delete Permanently</span>
+  </button>
 </div>
 ```
 
@@ -943,7 +1169,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
     <span class="visually-hidden">Previous page</span>
   </span>
   <hr class="divider">
-  <span class="button-group__text">Page 1 of 10</span>
+  <span class="button-group__content">Page 1 of 10</span>
   <hr class="divider">
   <a class="button" href="/page/2">
     <svg class="icon icon--dir" width="24" height="24" aria-hidden="true" focusable="false">
@@ -1045,21 +1271,44 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </div>
 ```
 
-#### B. Proportional Fractions & Alignments
+#### B. Size Scale & Alignments
 ```html
-<!-- 2/3 Column Width Constraint -->
-<div class="wrapper wrapper--2/3">
+<!-- Large Block Width Constraint (40rem) -->
+<div class="wrapper wrapper--lg">
   <article>Constrained editorial article content.</article>
 </div>
 
-<!-- Half Width Aligned to Start -->
-<div class="wrapper wrapper--1/2 wrapper--start">
-  <p>Left-aligned half-width content.</p>
+<!-- BrandMedium Block Width Aligned to Start (30rem) -->
+<div class="wrapper wrapper--md wrapper--start">
+  <p>Left-aligned medium-width content.</p>
 </div>
 
 <!-- Vertically Centered Grid Wrapper -->
 <div class="wrapper wrapper--middle">
   <div class="card">Vertically and horizontally centered card.</div>
+</div>
+```
+
+#### C. Split / Sidebar Layout Primitive (`.split`)
+```html
+<!-- 2-Column Responsive Layout: Sidebar on start, main content auto-expanding on end -->
+<div class="split split--sm">
+  <aside class="card">
+    <h3>Sidebar Filters</h3>
+  </aside>
+  <main class="stack">
+    <h2>Main Content Area</h2>
+  </main>
+</div>
+
+<!-- Reverse Split: Main content on start, inspector sidebar on end -->
+<div class="split split--sm split--end">
+  <main class="stack">
+    <h2>Main Editor</h2>
+  </main>
+  <aside class="card">
+    <h3>Inspector Panel</h3>
+  </aside>
 </div>
 ```
 
@@ -1142,7 +1391,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
       <div class="banner__inner">
         <p>We use cookies to ensure optimal site functionality.</p>
       </div>
-      <div style="display: flex; gap: var(--spacing-0-5); align-self: center;">
+      <div style="display: flex; gap: var(--spacing-8); align-self: center;">
         <button type="button" class="button button--subtle"><span>Manage</span></button>
         <button type="button" class="button button--primary"><span>Accept All</span></button>
       </div>
@@ -1259,7 +1508,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
     </button>
     <button type="button" role="tab" id="tab-2" class="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
       <span class="tab__text">Security</span>
-      <span class="badge badge--pill badge--accent"><span>2</span></span>
+      <span class="badge badge--round badge--accent"><span>2</span></span>
     </button>
   </div>
 
@@ -1283,7 +1532,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </nav>
 ```
 
-#### C. Button / Segmented & Round Pill Tabs (.tabs--buttons, .tabs--round)
+#### C. Button / Segmented & Round Round Tabs (.tabs--buttons, .tabs--round)
 ```html
 <!-- Button / Segmented Tabs -->
 <nav class="tabs tabs--buttons" aria-label="Button tabs">
@@ -1293,8 +1542,8 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   </ul>
 </nav>
 
-<!-- Round Pill Button Tabs -->
-<nav class="tabs tabs--buttons tabs--round" aria-label="Pill tabs">
+<!-- Round Round Button Tabs -->
+<nav class="tabs tabs--buttons tabs--round" aria-label="Round tabs">
   <ul class="tabs__list">
     <li><a href="/monthly" class="tab" aria-current="page"><span class="tab__text">Monthly</span></a></li>
     <li><a href="/annual" class="tab"><span class="tab__text">Annual</span></a></li>
@@ -1321,6 +1570,339 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
     <p>Passkeys and security controls.</p>
   </div>
 </div>
+```
+
+### 25. Progress & Meter Primitives
+
+#### A. Progress Primitive (Task Completion Indicator)
+```html
+<!-- Determinate Progress in Field Wrapper with Label and Readout -->
+<div class="field">
+  <div class="field__header">
+    <label for="upload-progress" class="field__label">Uploading asset...</label>
+    <span class="field__result" id="upload-val">68%</span>
+  </div>
+  <progress 
+    id="upload-progress" 
+    class="progress" 
+    value="68" 
+    max="100" 
+    aria-describedby="upload-val"
+  >
+    68%
+  </progress>
+</div>
+
+<!-- Small / Compact Progress -->
+<progress class="progress progress--sm" value="45" max="100">45%</progress>
+
+<!-- Large Progress -->
+<progress class="progress progress--lg" value="85" max="100">85%</progress>
+
+<!-- Indeterminate Animated Progress (Background Task / Live Region) -->
+<div class="field">
+  <label for="sync-progress" class="field__label">Syncing data with cloud...</label>
+  <progress id="sync-progress" class="progress" aria-busy="true">Syncing...</progress>
+</div>
+
+<!-- Semantic Status Variants -->
+<progress class="progress progress--success" value="100" max="100">100%</progress>
+<progress class="progress progress--warning" value="40" max="100">40%</progress>
+<progress class="progress progress--danger" value="20" max="100">20%</progress>
+```
+
+#### B. Meter Primitive (Scalar Range & Gauge Measurement)
+```html
+<!-- Storage Quota Gauge (Native Optimum / Safe Range) -->
+<div class="field">
+  <div class="field__header">
+    <label for="disk-meter" class="field__label">Server Disk Usage</label>
+    <span class="field__result" id="disk-val">25 GB of 100 GB</span>
+  </div>
+  <meter 
+    id="disk-meter" 
+    class="meter" 
+    value="25" 
+    min="0" 
+    max="100" 
+    low="60" 
+    high="85" 
+    optimum="20"
+    aria-describedby="disk-val"
+  >
+    25 GB
+  </meter>
+</div>
+
+<!-- Sub-Optimum Warning Range (Automatic color calculation) -->
+<meter class="meter" value="72" min="0" max="100" low="60" high="85" optimum="20">72 GB</meter>
+
+<!-- Critical Danger Range (Automatic color calculation) -->
+<meter class="meter" value="94" min="0" max="100" low="60" high="85" optimum="20">94 GB</meter>
+
+<!-- Password Strength Meter -->
+<div class="field">
+  <label for="pwd-field" class="field__label">Password</label>
+  <input id="pwd-field" type="password" class="input" value="SuperSecure#Pass2026!" />
+  <div style="inline-size: 100%; margin-block-start: var(--spacing-4);">
+    <span class="field__hint" id="pwd-strength">Strength: Strong</span>
+    <meter id="pwd-meter" class="meter meter--sm" value="4" min="0" max="4" low="2" high="3" optimum="4" aria-labelledby="pwd-strength">4 of 4</meter>
+  </div>
+</div>
+```
+
+### 13. Component Recipes & Composed Patterns
+When building complex UI features (menus, settings panels, user cards, notifications), AI agents MUST compose primitive components instead of introducing custom inline styles or bespoke wrappers.
+
+#### A. Anchored Context Menu Recipe
+Composes `.popover.popover--anchored` + `.card.card--compact.card--bordered.card--translucent.card--ruled` + `.card__body.card__body--flush` + `.button-group.button-group--tight.button-group--stacked.s-button:subtle`:
+```html
+<button 
+  type="button" 
+  class="button button--secondary" 
+  popovertarget="menu-popover" 
+  style="anchor-name: --menu-anchor;"
+  aria-haspopup="dialog"
+>
+  <span>Actions</span>
+  <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#ChevronDown"/></svg>
+</button>
+
+<div id="menu-popover" popover class="popover popover--anchored" style="position-anchor: --menu-anchor; min-inline-size: 16rem;">
+  <div class="card card--compact card--bordered card--translucent card--ruled">
+    <article class="card__content">
+      <header class="card__header">
+        <h3 class="card__title">Document Options</h3>
+      </header>
+      <div class="card__body card__body--flush">
+        <div class="button-group button-group--tight button-group--stacked s-button:subtle">
+          <button type="button" class="button">
+            <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Duplicate"/></svg>
+            <span>Duplicate</span>
+          </button>
+          <button type="button" class="button">
+            <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Download"/></svg>
+            <span>Export JSON</span>
+          </button>
+          <hr class="divider">
+          <button type="button" class="button button--subtle-destructive">
+            <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Delete"/></svg>
+            <span>Delete File</span>
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+```
+
+#### B. User Profile Card & Status Flyout Recipe
+Composes `.avatar` with `data-status`, `.badge`, `.status`, and `.button-group--space-between`:
+```html
+<div class="card card--compact card--bordered card--translucent">
+  <article class="card__content">
+    <header class="card__header">
+      <div class="avatar" data-status="online" aria-label="Jordan Lee (online)">
+        <span aria-hidden="true">JL</span>
+      </div>
+      <hgroup class="card__hgroup">
+        <h3 class="card__title">Jordan Lee</h3>
+        <p class="card__subtitle">jordan.lee@dfh.design</p>
+      </hgroup>
+    </header>
+    <div class="card__body">
+      <div class="stack">
+        <div class="cluster">
+          <span class="badge badge--subtle"><span>Design Lead</span></span>
+          <span class="status" data-status="online">Online</span>
+        </div>
+        <p class="micro-text">
+          Lead accessibility auditor for WCAG 2.2 Level AA / AAA design systems.
+        </p>
+      </div>
+    </div>
+    <footer class="card__footer">
+      <div class="button-group button-group--space-between">
+        <button type="button" class="button button--primary s-button:sm"><span>View Profile</span></button>
+        <button type="button" class="button button--subtle s-button:sm"><span>Sign Out</span></button>
+      </div>
+    </footer>
+  </article>
+</div>
+```
+
+#### C. Settings / Preferences Flyout Recipe
+Composes `.switch.switch--sm`, `.range.range--sm`, `.field`, and `.button-group--fill-items`:
+```html
+<div class="card card--compact card--bordered card--translucent card--ruled" style="min-inline-size: 20rem;">
+  <article class="card__content">
+    <header class="card__header">
+      <h3 class="card__title">Preferences</h3>
+    </header>
+    <div class="card__body">
+      <div class="stack">
+        <label class="switch switch--sm" style="inline-size: 100%;">
+          <span class="switch__label micro-text">High Contrast Mode</span>
+          <input type="checkbox" role="switch" class="visually-hidden" />
+          <span class="switch__control" aria-hidden="true">
+            <span class="switch__option switch__option--off">Off</span>
+            <span class="switch__option switch__option--on">On</span>
+          </span>
+        </label>
+        <div class="field">
+          <div class="field__header">
+            <label for="font-scale-slider" class="field__label">UI Scale</label>
+            <output for="font-scale-slider" class="field__output">100%</output>
+          </div>
+          <input id="font-scale-slider" type="range" class="range range--sm" value="50" min="0" max="100" style="--value: 50%;" />
+        </div>
+      </div>
+    </div>
+    <footer class="card__footer card__footer--flush">
+      <div class="button-group button-group--fill-items">
+        <button type="button" class="button button--subtle"><span>Done</span></button>
+      </div>
+    </footer>
+  </article>
+</div>
+```
+
+#### D. Application Header & Global Navigation Landmark Recipe
+Composes `.skip-link` + `.header.header--sticky.header--translucent` + `.flex.justify-content-between.align-items-center` + `.cluster` + `.button--subtle` (`aria-current="page"`) + `.badge--top-right-corner` + `button.button--avatar` (`[data-status]`) + anchored `.popover`:
+```html
+<!-- In-Flow Landmark Skip Link -->
+<a href="#main" class="skip-link"><span>Skip to main content</span></a>
+
+<!-- Global Header Landmark -->
+<header class="header header--sticky header--translucent padding-block-sm">
+  <div class="wrapper flex align-items-center justify-content-between">
+    <!-- Brand -->
+    <a href="/" class="link link--subtle flex align-items-center gap-sm font-weight-bold font-size-lg" style="text-decoration: none; color: inherit;">
+      <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Share"/></svg>
+      <span>Design For Humans</span>
+    </a>
+
+    <!-- Primary Nav -->
+    <nav aria-label="Primary navigation" class="cluster gap-sm">
+      <ul class="cluster gap-sm">
+        <li><a href="#dashboard" class="button button--subtle" aria-current="page"><span>Dashboard</span></a></li>
+        <li><a href="#components" class="button button--subtle"><span>Components</span></a></li>
+        <li><a href="#audit" class="button button--subtle"><span>Audit</span></a></li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="cluster align-items-center gap-sm">
+      <!-- Search Trigger -->
+      <button type="button" class="button button--subtle flex align-items-center gap-sm" aria-label="Search documentation (Press Cmd+K)">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
+        <span class="font-size-sm text-color-muted">Search...</span>
+        <span class="chip chip--sm">⌘K</span>
+      </button>
+
+      <!-- Notifications -->
+      <button type="button" class="button button--icon button--subtle" style="position: relative;" aria-label="Notifications (3 unread)">
+        <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#BellFilled"/></svg>
+        <span class="badge badge--danger badge--sm badge--round badge--top-right-corner"><span>3</span></span>
+      </button>
+
+      <!-- User Avatar Trigger & Anchored Popover -->
+      <button type="button" class="button avatar button--avatar button--round" popovertarget="header-user-popover" style="anchor-name: --header-user-anchor;" data-status="online" aria-haspopup="dialog" aria-label="Account menu (online)">
+        <span>AB</span>
+      </button>
+
+      <div id="header-user-popover" popover class="popover popover--anchored" style="position-anchor: --header-user-anchor; min-inline-size: 18rem;">
+        <div class="card card--compact card--bordered card--translucent card--ruled">
+          <article class="card__content">
+            <header class="card__header">
+              <div class="avatar" data-status="online"><span>AB</span></div>
+              <hgroup class="card__hgroup">
+                <h3 class="card__title">Alex Bennett</h3>
+                <p class="card__subtitle">alex.bennett@dfh.design</p>
+              </hgroup>
+            </header>
+            <div class="card__body card__body--flush">
+              <div class="button-group button-group--tight button-group--stacked s-button:subtle">
+                <button type="button" class="button"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#User"/></svg><span>Profile</span></button>
+                <button type="button" class="button"><svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg><span>Settings</span></button>
+              </div>
+            </div>
+            <footer class="card__footer card__footer--flush">
+              <div class="button-group button-group--tight button-group--stacked s-button:subtle">
+                <button type="button" class="button button--subtle-destructive"><span>Sign Out</span></button>
+              </div>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+```
+
+#### E. Command Palette / Search Modal
+Composes `.dialog` + `.card.card--flush` + `.card__header.focus-within` + `.input--flush.focus-none` + `.button-group.button-group--stacked.button-group--ruled.s-button:subtle-tint`:
+```html
+<dialog id="cmd-palette" class="dialog" aria-labelledby="cmd-title">
+  <div class="card card--flush bg-card max-w-2xl">
+    <article class="card__content">
+      
+      <!-- Search Bar Header with Focus Delegation -->
+      <header class="card__header inline gap-sm focus-within">
+        <h2 id="cmd-title" class="visually-hidden">Search components</h2>
+        <span class="icon-box">
+          <svg class="icon text-muted" width="24" height="24" aria-hidden="true"><use href="#Search"/></svg>
+        </span>
+        <input 
+          type="search" 
+          class="input input--flush focus-none flex-grow" 
+          placeholder="Search components, tokens, documentation..."
+          aria-label="Search"
+        />
+        <button type="button" class="button button--subtle button--icon" commandfor="cmd-palette" command="close">
+          <span class="visually-hidden">Close</span>
+          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Close"/></svg>
+        </button>
+      </header>
+
+      <!-- Filtered Suggestion Stack with Ruled Button Group -->
+      <div class="card__body card__body--flush overflow-y-auto" style="max-block-size: 24rem;">
+        <div class="button-group button-group--stacked button-group--ruled s-button:subtle-tint" role="listbox" aria-label="Navigation suggestions">
+          
+          <h3 class="button-group__content micro-heading text-muted">UI Components</h3>
+          <a href="#button" class="button button--subtle" role="option">
+            <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+            <span class="button__text">Button Primitive</span>
+            <span class="badge badge--sm"><span>Component</span></span>
+          </a>
+          <a href="#switch" class="button button--subtle" role="option">
+            <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Check"/></svg>
+            <span class="button__text">Switch Toggle</span>
+            <span class="badge badge--sm"><span>Component</span></span>
+          </a>
+
+          <h3 class="button-group__content micro-heading text-muted">Design Tokens</h3>
+          <a href="#colors" class="button button--subtle" role="option">
+            <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
+            <span class="button__text">Color Palettes & Semantic Schemes</span>
+            <span class="chip">Tier 2</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Action Footer with Keyboard Shortcuts -->
+      <footer class="card__footer split bg-subtle text-muted font-size--1">
+        <div class="cluster gap-sm">
+          <span class="inline gap-xs"><kbd class="kbd">↑</kbd><kbd class="kbd">↓</kbd> Navigate</span>
+          <span class="inline gap-xs"><kbd class="kbd">↵</kbd> Select</span>
+          <span class="inline gap-xs"><kbd class="kbd">ESC</kbd> Close</span>
+        </div>
+        <span>Design For Humans v2.2</span>
+      </footer>
+
+    </article>
+  </div>
+</dialog>
 ```
 
 ---
@@ -1364,10 +1946,15 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 - **Automated Axe Audits:** Every Storybook story must pass `@storybook/addon-a11y` without contrast, labeling, or keyboard violations.
 - Consult `.agents/skills/accessibility/SKILL.md` for specific ARIA patterns.
 
+### 5. Local Private Variables Manifest (`--_<component>-*`)
+- In component stylesheets, define all local fallback ladders at the top of the base `:where(.<component>)` selector using the private `--_<component>-*` prefix.
+- Modifiers (`.<component>--flush`, `.<component>--plain`, etc.) should re-assign private variables rather than repeating complex selector declarations or nested resets.
+- Child elements and pseudo-elements must consume `var(--_<component>-*)` directly.
+
 ---
 
 ## Agent Workflow for Creating Components
 1. **Check Tokens:** Verify required tokens exist in `tokens/3-component.json`. If missing, add them and run `npm run build:tokens`.
-2. **Author CSS:** Create `packages/css/src/components/<component>.css` using `:where()` for low specificity, native CSS nesting with explicit `&` for states and pseudo-classes (`&:hover`, `&:active`, `&:focus-visible`), logical properties (`inline-size`, `block-size`, `padding-inline`, `padding-block`), and standardized section comments. Consult `.agents/skills/tokens/SKILL.md` (Section 4) for full nesting and commenting guidelines.
+2. **Author CSS:** Create `packages/css/src/components/<component>.css` using `:where()` for low specificity, local private variables manifest (`--_<component>-*`), native CSS nesting with explicit `&` for states and pseudo-classes (`&:hover`, `&:active`, `&:focus-visible`), logical properties (`inline-size`, `block-size`, `padding-inline`, `padding-block`), and standardized section comments. Consult `.agents/skills/tokens/SKILL.md` (Section 4) and `.agents/skills/css-commenting/SKILL.md` for full guidelines.
 3. **Register in Entrypoint:** Add `@import './components/<component>.css';` to `packages/css/src/index.css`.
 4. **Author Storybook Stories:** Create `packages/storybook/stories/<component>.stories.ts` covering all variants, sizes, states (`hover`, `active`, `disabled`, `aria-disabled`), and verify with `npm run build-storybook --workspace=@design-for-humans/storybook`.

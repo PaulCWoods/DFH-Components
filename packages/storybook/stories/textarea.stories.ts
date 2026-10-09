@@ -47,27 +47,29 @@ const meta: Meta<TextareaArgs> = {
     ].filter(Boolean).join(' ') || undefined;
 
     return `
-      <div class="field" style="max-inline-size: 28rem;">
-        <label for="${textareaId}" class="field__label">
-          ${args.label}
-        </label>
-        ${args.hint ? `<p id="${hintId}" class="field__hint">${args.hint}</p>` : ''}
-        <textarea 
-          id="${textareaId}"
-          class="${textareaClasses}"
-          rows="${args.rows || 3}"
-          placeholder="${args.placeholder || ''}"
-          ${args.required ? 'required' : ''}
-          ${args.disabled ? 'disabled' : ''}
-          ${args.readonly ? 'readonly' : ''}
-          ${describedBy ? `aria-describedby="${describedBy}"` : ''}
-          ${args.error ? 'aria-invalid="true"' : ''}
-        ></textarea>
-        ${args.error ? `
-          <p id="${errorId}" class="field__error" role="alert">
-            <span>${args.error}</span>
-          </p>
-        ` : ''}
+      <div class="wrapper wrapper--lg">
+        <div class="field">
+          <label for="${textareaId}" class="field__label">
+            ${args.label}
+          </label>
+          ${args.hint ? `<p id="${hintId}" class="field__hint">${args.hint}</p>` : ''}
+          <textarea 
+            id="${textareaId}"
+            class="${textareaClasses}"
+            rows="${args.rows || 3}"
+            placeholder="${args.placeholder || ''}"
+            ${args.required ? 'required' : ''}
+            ${args.disabled ? 'disabled' : ''}
+            ${args.readonly ? 'readonly' : ''}
+            ${describedBy ? `aria-describedby="${describedBy}"` : ''}
+            ${args.error ? 'aria-invalid="true"' : ''}
+          ></textarea>
+          ${args.error ? `
+            <p id="${errorId}" class="field__error" role="alert">
+              <span>${args.error}</span>
+            </p>
+          ` : ''}
+        </div>
       </div>
     `;
   },
@@ -105,20 +107,22 @@ export const WithHintAndRequired: Story = {
 
 export const Sizes: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); max-inline-size: 28rem;">
-      <div class="field">
-        <label for="textarea-sm" class="field__label">Small Textarea (.textarea--sm)</label>
-        <textarea id="textarea-sm" class="textarea textarea--sm" placeholder="Compact annotations..."></textarea>
-      </div>
+    <div class="wrapper wrapper--lg">
+      <div class="stack">
+        <div class="field">
+          <label for="textarea-sm" class="field__label">Small Textarea (.textarea--sm)</label>
+          <textarea id="textarea-sm" class="textarea textarea--sm" placeholder="Compact annotations..."></textarea>
+        </div>
 
-      <div class="field">
-        <label for="textarea-md" class="field__label">Default Textarea</label>
-        <textarea id="textarea-md" class="textarea" placeholder="Standard responsive comment..."></textarea>
-      </div>
+        <div class="field">
+          <label for="textarea-md" class="field__label">Default Textarea</label>
+          <textarea id="textarea-md" class="textarea" placeholder="Standard responsive comment..."></textarea>
+        </div>
 
-      <div class="field">
-        <label for="textarea-lg" class="field__label">Large Textarea (.textarea--lg)</label>
-        <textarea id="textarea-lg" class="textarea textarea--lg" placeholder="Editorial content copy..."></textarea>
+        <div class="field">
+          <label for="textarea-lg" class="field__label">Large Textarea (.textarea--lg)</label>
+          <textarea id="textarea-lg" class="textarea textarea--lg" placeholder="Editorial content copy..."></textarea>
+        </div>
       </div>
     </div>
   `,
@@ -126,15 +130,17 @@ export const Sizes: Story = {
 
 export const DisabledAndReadonly: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); max-inline-size: 28rem;">
-      <div class="field">
-        <label for="textarea-disabled" class="field__label">Archived Log Message</label>
-        <textarea id="textarea-disabled" class="textarea" disabled>Service deployment completed at 2026-09-29T21:00:00Z without errors.</textarea>
-      </div>
+    <div class="wrapper wrapper--lg">
+      <div class="stack">
+        <div class="field">
+          <label for="textarea-disabled" class="field__label">Archived Log Message</label>
+          <textarea id="textarea-disabled" class="textarea" disabled>Service deployment completed at 2026-09-29T21:00:00Z without errors.</textarea>
+        </div>
 
-      <div class="field">
-        <label for="textarea-readonly" class="field__label">System Notice</label>
-        <textarea id="textarea-readonly" class="textarea" readonly>This workspace is restricted to read-only accessibility audits.</textarea>
+        <div class="field">
+          <label for="textarea-readonly" class="field__label">System Notice</label>
+          <textarea id="textarea-readonly" class="textarea" readonly>This workspace is restricted to read-only accessibility audits.</textarea>
+        </div>
       </div>
     </div>
   `,

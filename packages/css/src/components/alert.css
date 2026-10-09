@@ -29,6 +29,7 @@
    Base Alert Container (:where(.alert))
    ========================================================================== */
 :where(.alert) {
+  --banner-action-align: var(--alert-action-align, center);
   /* Layout & Sizing */
   box-sizing: border-box;
   display: block;
@@ -74,8 +75,8 @@
 
 /* Floating Alert (Centered floating bar with padding) */
 :where(.alert--floating) {
-  padding-block: var(--alert-padding-block, var(--spacing-0-5, 0.5rem));
-  padding-inline: var(--spacing-1, 1rem);
+  padding-block: var(--alert-padding-block, var(--spacing-8, 0.5rem));
+  padding-inline: var(--spacing-16, 1rem);
   pointer-events: none;
 
   >* {

@@ -18,7 +18,7 @@ const meta: Meta = {
   <article class="card__content">
     <header class="card__header">
       <hgroup class="card__hgroup">
-        <h3 class="card__title"><a href="...">Card Title</a></h3>
+        <h3 class="card__title"><a href="..." class="card__link">Card Title</a></h3>
         <p class="card__subtitle">Card Subtitle</p>
       </hgroup>
       <button type="button" class="button button--sm button--subtle">
@@ -43,11 +43,12 @@ const meta: Meta = {
 - **Sticky Header & Footer Capabilities:**
   - \`.card__header\` and \`.card__footer\` bleed flush to content boundaries via calculated negative margins.
   - Ready for \`position: sticky\` headers and footers for scrollable panels and modal dialogs.
-- **Accessible Stretched Link:**
-  - Semantic title link (\`.card__title a\`) expands via \`::after { inset: 0; }\`.
-  - Secondary buttons and links in \`.card__header\` and \`.card__footer\` stay above the link layer (\`z-index: 2\`).
+- **Explicit Full-Card Stretched Link (\`.card__link\`):**
+  - Applying \`.card__link\` to an anchor (\`<a href="..." class="card__link">\`) expands its clickable area across the entire card boundary via \`::after { inset: 0; }\`.
+  - Elevation hover/active shadow transitions and outer perimeter focus rings (\`&:has(.card__link:focus-visible)\`) apply automatically.
+  - Secondary buttons, inputs, and controls inside the card remain elevated above the link layer (\`z-index: 2\`).
 - **High-Contrast Focus Visible (WCAG 2.4.7 / 2.4.13):**
-  - \`&:has(a:focus-visible)\` renders the perimeter focus indicator around the entire card.
+  - \`&:has(.card__link:focus-visible)\` renders the perimeter focus indicator around the entire card when navigating via keyboard.
 - **Reduced Motion Safe Loading State:**
   - \`.card.is-loading\` displays an accessible spinner in default mode and a static \`"Loading"\` label under \`prefers-reduced-motion: reduce\` (WCAG 2.3.3).
 - **Dynamic Concentric Radius (\`.card--dynamic-corners\`):**
@@ -68,7 +69,7 @@ type Story = StoryObj;
  */
 export const Default: Story = {
   render: () => `
-    <div style="max-inline-size: 24rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--sm">
       <div class="card">
         <div class="card__thumb">
           <img 
@@ -81,7 +82,7 @@ export const Default: Story = {
           <header class="card__header">
             <hgroup class="card__hgroup">
               <h3 class="card__title">
-                <a href="#">Designing Accessible Design Systems</a>
+                <a href="#" class="card__link">Designing Accessible Design Systems</a>
               </h3>
               <p class="card__subtitle">Web Standards & Token Architecture</p>
             </hgroup>
@@ -107,7 +108,7 @@ export const Default: Story = {
  */
 export const BlogComponentLibraryExample: Story = {
   render: () => `
-    <div style="max-inline-size: 24rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--sm">
       <div class="card">
         <div class="card__thumb">
           <img 
@@ -119,7 +120,7 @@ export const BlogComponentLibraryExample: Story = {
         <div class="card__content">
           <header class="card__header">
             <hgroup class="card__hgroup">
-              <h3 class="card__title"><a href="#">Card Title</a></h3>
+              <h3 class="card__title"><a href="#" class="card__link">Card Title</a></h3>
               <p class="card__subtitle">Card Subtitle</p>
             </hgroup>
             <button type="button" class="button button--sm button--subtle">
@@ -148,7 +149,7 @@ export const BlogComponentLibraryExample: Story = {
  */
 export const LoadingState: Story = {
   render: () => `
-    <div style="max-inline-size: 24rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--sm">
       <div class="card is-loading">
         <div class="card__thumb">
           <img 
@@ -160,7 +161,7 @@ export const LoadingState: Story = {
         <article class="card__content">
           <header class="card__header">
             <hgroup class="card__hgroup">
-              <h3 class="card__title"><a href="#">Updating Post</a></h3>
+              <h3 class="card__title"><a href="#" class="card__link">Updating Post</a></h3>
               <p class="card__subtitle">Synchronizing Content</p>
             </hgroup>
           </header>
@@ -183,18 +184,18 @@ export const LoadingState: Story = {
  */
 export const FluidTypographyComparison: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-2); font-family: var(--body-font-family);">
+    <div class="stack">
       <!-- Compact Container (18rem) -->
       <div>
-        <span style="font-size: var(--body-small-font-size); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-0-5);">
+        <span class="small-text" style="color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
           Compact Slot (max-inline-size: 18rem) — Title scales down smoothly via cqi
         </span>
-        <div style="max-inline-size: 18rem;">
+        <div class="wrapper wrapper--xs">
           <div class="card">
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
-                  <h3 class="card__title"><a href="#">Fluid Typography with cqi Units</a></h3>
+                  <h3 class="card__title"><a href="#" class="card__link">Fluid Typography with cqi Units</a></h3>
                   <p class="card__subtitle">Dynamic scale</p>
                 </hgroup>
               </header>
@@ -211,7 +212,7 @@ export const FluidTypographyComparison: Story = {
 
       <!-- Standard Container (28rem) -->
       <div>
-        <span style="font-size: var(--body-small-font-size); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-0-5);">
+        <span style="font-size: var(--body-sm-font-size); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
           Standard Slot (max-inline-size: 28rem) — Title interpolates to medium scale
         </span>
         <div style="max-inline-size: 28rem;">
@@ -219,7 +220,7 @@ export const FluidTypographyComparison: Story = {
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
-                  <h3 class="card__title"><a href="#">Fluid Typography with cqi Units</a></h3>
+                  <h3 class="card__title"><a href="#" class="card__link">Fluid Typography with cqi Units</a></h3>
                   <p class="card__subtitle">Dynamic scale</p>
                 </hgroup>
               </header>
@@ -236,7 +237,7 @@ export const FluidTypographyComparison: Story = {
 
       <!-- Wide Container (42rem) -->
       <div>
-        <span style="font-size: var(--body-small-font-size); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-0-5);">
+        <span style="font-size: var(--body-sm-font-size); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
           Wide Slot (max-inline-size: 42rem) — Title scales up to full prominent heading
         </span>
         <div style="max-inline-size: 42rem;">
@@ -244,7 +245,7 @@ export const FluidTypographyComparison: Story = {
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
-                  <h3 class="card__title"><a href="#">Fluid Typography with cqi Units</a></h3>
+                  <h3 class="card__title"><a href="#" class="card__link">Fluid Typography with cqi Units</a></h3>
                   <p class="card__subtitle">Dynamic scale</p>
                 </hgroup>
               </header>
@@ -268,7 +269,7 @@ export const FluidTypographyComparison: Story = {
  */
 export const WithBadgeAndAction: Story = {
   render: () => `
-    <div style="max-inline-size: 26rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--sm">
       <div class="card">
         <article class="card__content">
           <header class="card__header">
@@ -303,7 +304,7 @@ export const WithBadgeAndAction: Story = {
  */
 export const StickyPanelPreview: Story = {
   render: () => `
-    <div style="max-inline-size: 26rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--sm">
       <div class="card card--scrollable card--sticky-header card--sticky-footer" style="max-block-size: 30rem">
         <article class="card__content" tabindex="0" aria-label="Scrollable panel content">
           <header class="card__header">
@@ -346,14 +347,14 @@ export const StickyPanelPreview: Story = {
  */
 export const DynamicRadius: Story = {
   args: {
-    buttonRadius: 'var(--radius-pill)',
+    buttonRadius: 'var(--radius-round)',
   },
   argTypes: {
     buttonRadius: {
       name: 'Button Radius',
       control: { type: 'select' },
       options: [
-        'var(--radius-pill)',
+        'var(--radius-round)',
         'var(--radius-xl)',
         'var(--radius-lg)',
         'var(--radius-md)',
@@ -364,18 +365,19 @@ export const DynamicRadius: Story = {
     },
   },
   render: (args) => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-2); font-family: var(--body-font-family); max-inline-size: 60rem;">
-      <section>
-        <p style="margin-block-end: var(--spacing-0-75); color: var(--foreground-muted); font-size: var(--typography-font-size--1);">
-          <strong>Interactive Showcase:</strong> Select a radius token in the Storybook controls above to see the card dynamically adapt its outer curvature to match the nested button's geometry.
-        </p>
-        <div style="max-inline-size: 26rem;">
-          <div class="card card--dynamic-corners" style="--button-radius: ${args.buttonRadius || 'var(--radius-pill)'}; --card-border-width: var(--border-width-1);">
+    <div class="wrapper wrapper--xl">
+      <div class="stack">
+        <section>
+          <p class="small-text" style="margin-block-end: var(--spacing-12); color: var(--foreground-muted);">
+            <strong class="strong-text">Interactive Showcase:</strong> Select a radius token in the Storybook controls above to see the card dynamically adapt its outer curvature to match the nested button's geometry.
+          </p>
+          <div class="wrapper wrapper--lg">
+            <div class="card card--dynamic-corners" style="--button-radius: ${args.buttonRadius || 'var(--radius-round)'}; --card-border-width: var(--border-width-1);">
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
                   <h3 class="card__title">
-                    <a href="#">Concentric Alignment</a>
+                    <a href="#" class="card__link">Concentric Alignment</a>
                   </h3>
                   <p class="card__subtitle">Dynamic Formula Driven</p>
                 </hgroup>
@@ -386,7 +388,7 @@ export const DynamicRadius: Story = {
                 </p>
               </div>
               <footer class="card__footer">
-                <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted);">${args.buttonRadius || 'var(--radius-pill)'}</span>
+                <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted);">${args.buttonRadius || 'var(--radius-round)'}</span>
                 <button type="button" class="button button--primary">
                   <span>Action</span>
                 </button>
@@ -397,20 +399,20 @@ export const DynamicRadius: Story = {
       </section>
 
       <section>
-        <h4 style="margin-block-end: var(--spacing-1); font-size: var(--typography-font-size-1);">
+        <h4 style="margin-block-end: var(--spacing-16); font-size: var(--typography-font-size-1);">
           Concentric Radius Variations
         </h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); gap: var(--spacing-1);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); gap: var(--spacing-16);">
           
-          <!-- Pill Variant -->
-          <div class="card card--dynamic-corners" style="--button-radius: var(--radius-pill); --card-border-width: var(--border-width-1);">
+          <!-- Round Variant -->
+          <div class="card card--dynamic-corners" style="--button-radius: var(--radius-round); --card-border-width: var(--border-width-1);">
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
-                  <h3 class="card__title"><a href="#">Pill Button</a></h3>
+                  <h3 class="card__title"><a href="#" class="card__link">Round Button</a></h3>
                   <p class="card__subtitle">Capsule Curvature</p>
                 </hgroup>
-                <span class="badge badge--pill badge--accent"><span>Pill</span></span>
+                <span class="badge badge--round badge--accent"><span>Round</span></span>
               </header>
               <div class="card__body">
                 <p>Caps at half the touch target size + padding for an organic, fully rounded card boundary.</p>
@@ -428,7 +430,7 @@ export const DynamicRadius: Story = {
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
-                  <h3 class="card__title"><a href="#">Rounded Button</a></h3>
+                  <h3 class="card__title"><a href="#" class="card__link">Rounded Button</a></h3>
                   <p class="card__subtitle">Standard Curvature</p>
                 </hgroup>
                 <span class="badge badge--success"><span>Rounded</span></span>
@@ -449,7 +451,7 @@ export const DynamicRadius: Story = {
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
-                  <h3 class="card__title"><a href="#">Sharp Button</a></h3>
+                  <h3 class="card__title"><a href="#" class="card__link">Sharp Button</a></h3>
                   <p class="card__subtitle">Technical Curvature</p>
                 </hgroup>
                 <span class="badge"><span>Sharp</span></span>
@@ -477,14 +479,14 @@ export const DynamicRadius: Story = {
  */
 export const InGrid: Story = {
   render: () => `
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: var(--spacing-1); font-family: var(--body-font-family); max-inline-size: 60rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr)); gap: var(--spacing-16); font-family: var(--body-font-family); max-inline-size: 60rem;">
       <div class="card">
         <div class="card__thumb">
           <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Code editor" />
         </div>
         <article class="card__content">
           <header class="card__header">
-            <h3 class="card__title"><a href="#">Native Primitives</a></h3>
+            <h3 class="card__title"><a href="#" class="card__link">Native Primitives</a></h3>
           </header>
           <div class="card__body">
             <p>Using native HTML elements to eliminate runtime JavaScript weight.</p>
@@ -501,7 +503,7 @@ export const InGrid: Story = {
         </div>
         <article class="card__content">
           <header class="card__header">
-            <h3 class="card__title"><a href="#">Token Architecture</a></h3>
+            <h3 class="card__title"><a href="#" class="card__link">Token Architecture</a></h3>
           </header>
           <div class="card__body">
             <p>Single-source-of-truth DTCG design tokens syncing to Figma.</p>
@@ -518,7 +520,7 @@ export const InGrid: Story = {
         </div>
         <article class="card__content">
           <header class="card__header">
-            <h3 class="card__title"><a href="#">Inclusive Workflows</a></h3>
+            <h3 class="card__title"><a href="#" class="card__link">Inclusive Workflows</a></h3>
           </header>
           <div class="card__body">
             <p>Empowering autonomous AI coding agents with WCAG 2.2 rules.</p>

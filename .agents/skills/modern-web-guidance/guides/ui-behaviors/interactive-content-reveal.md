@@ -29,7 +29,7 @@ Apply the `mask-image` to the element you want to reveal. Use a `radial-gradient
 ```css
 .reveal-layer {
   /* Only transition the size properties, NOT the position variables */
-  transition: --inner-size 0.2s ease-in-out, --outer-size 0.2s ease-in-out;  
+  transition: --inner-size 200ms ease-in-out, --outer-size 200ms ease-in-out;  
 
   /* The spotlight is defined by the transparent center of the mask */
   mask-image: radial-gradient(

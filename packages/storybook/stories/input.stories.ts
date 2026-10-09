@@ -48,27 +48,29 @@ const meta: Meta<InputArgs> = {
     ].filter(Boolean).join(' ') || undefined;
 
     return `
-      <div class="field" style="max-inline-size: 24rem;">
-        <label for="${inputId}" class="field__label">
-          ${args.label}
-        </label>
-        ${args.hint ? `<p id="${hintId}" class="field__hint">${args.hint}</p>` : ''}
-        <input 
-          id="${inputId}"
-          type="${args.type || 'text'}"
-          class="${inputClasses}"
-          placeholder="${args.placeholder || ''}"
-          ${args.required ? 'required' : ''}
-          ${args.disabled ? 'disabled' : ''}
-          ${args.readonly ? 'readonly' : ''}
-          ${describedBy ? `aria-describedby="${describedBy}"` : ''}
-          ${args.error ? 'aria-invalid="true"' : ''}
-        />
-        ${args.error ? `
-          <p id="${errorId}" class="field__error" role="alert">
-            <span>${args.error}</span>
-          </p>
-        ` : ''}
+      <div class="wrapper wrapper--lg">
+        <div class="field">
+          <label for="${inputId}" class="field__label">
+            ${args.label}
+          </label>
+          ${args.hint ? `<p id="${hintId}" class="field__hint">${args.hint}</p>` : ''}
+          <input 
+            id="${inputId}"
+            type="${args.type || 'text'}"
+            class="${inputClasses}"
+            placeholder="${args.placeholder || ''}"
+            ${args.required ? 'required' : ''}
+            ${args.disabled ? 'disabled' : ''}
+            ${args.readonly ? 'readonly' : ''}
+            ${describedBy ? `aria-describedby="${describedBy}"` : ''}
+            ${args.error ? 'aria-invalid="true"' : ''}
+          />
+          ${args.error ? `
+            <p id="${errorId}" class="field__error" role="alert">
+              <span>${args.error}</span>
+            </p>
+          ` : ''}
+        </div>
       </div>
     `;
   },
@@ -115,20 +117,22 @@ export const WithError: Story = {
 
 export const Sizes: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); max-inline-size: 24rem;">
-      <div class="field">
-        <label for="input-size-sm" class="field__label">Small Input (24px Touch Target - WCAG 2.5.8)</label>
-        <input id="input-size-sm" type="text" class="input input--sm" placeholder="Compact filter..." />
-      </div>
+    <div class="wrapper wrapper--lg">
+      <div class="stack">
+        <div class="field">
+          <label for="input-size-sm" class="field__label">Small Input (24px Touch Target - WCAG 2.5.8)</label>
+          <input id="input-size-sm" type="text" class="input input--sm" placeholder="Compact filter..." />
+        </div>
 
-      <div class="field">
-        <label for="input-size-md" class="field__label">Default Input (48px Touch Target - WCAG 2.5.5 AAA)</label>
-        <input id="input-size-md" type="text" class="input" placeholder="Standard size..." />
-      </div>
+        <div class="field">
+          <label for="input-size-md" class="field__label">Default Input (48px Touch Target - WCAG 2.5.5 AAA)</label>
+          <input id="input-size-md" type="text" class="input" placeholder="Standard size..." />
+        </div>
 
-      <div class="field">
-        <label for="input-size-lg" class="field__label">Large Input (56px Touch Target)</label>
-        <input id="input-size-lg" type="text" class="input input--lg" placeholder="Large prominent search..." />
+        <div class="field">
+          <label for="input-size-lg" class="field__label">Large Input (56px Touch Target)</label>
+          <input id="input-size-lg" type="text" class="input input--lg" placeholder="Large prominent search..." />
+        </div>
       </div>
     </div>
   `,
@@ -136,20 +140,22 @@ export const Sizes: Story = {
 
 export const ColorAndFileInputs: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); max-inline-size: 24rem;">
-      <div class="field">
-        <label for="color-picker-default" class="field__label">Theme Accent Color</label>
-        <input id="color-picker-default" type="color" class="color-input" value="#00d2c4" />
-      </div>
+    <div class="wrapper wrapper--lg">
+      <div class="stack">
+        <div class="field">
+          <label for="color-picker-default" class="field__label">Theme Accent Color</label>
+          <input id="color-picker-default" type="color" class="color-input" value="#00d2c4" />
+        </div>
 
-      <div class="field">
-        <label for="color-picker-square" class="field__label">Square Swatch</label>
-        <input id="color-picker-square" type="color" class="color-input color-input--square" value="#3b82f6" />
-      </div>
+        <div class="field">
+          <label for="color-picker-square" class="field__label">Square Swatch</label>
+          <input id="color-picker-square" type="color" class="color-input color-input--square" value="#3b82f6" />
+        </div>
 
-      <div class="field">
-        <label for="file-upload" class="field__label">Upload Documentation</label>
-        <input id="file-upload" type="file" class="file-input" />
+        <div class="field">
+          <label for="file-upload" class="field__label">Upload Documentation</label>
+          <input id="file-upload" type="file" class="file-input" />
+        </div>
       </div>
     </div>
   `,
@@ -157,15 +163,17 @@ export const ColorAndFileInputs: Story = {
 
 export const DisabledAndReadonly: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); max-inline-size: 24rem;">
-      <div class="field">
-        <label for="input-disabled" class="field__label">Disabled Account ID</label>
-        <input id="input-disabled" type="text" class="input" value="DFH-892147" disabled />
-      </div>
+    <div class="wrapper wrapper--lg">
+      <div class="stack">
+        <div class="field">
+          <label for="input-disabled" class="field__label">Disabled Account ID</label>
+          <input id="input-disabled" type="text" class="input" value="DFH-892147" disabled />
+        </div>
 
-      <div class="field">
-        <label for="input-readonly" class="field__label">Read-Only License Key</label>
-        <input id="input-readonly" type="text" class="input" value="MIT-2026-OPEN-WEB" readonly />
+        <div class="field">
+          <label for="input-readonly" class="field__label">Read-Only License Key</label>
+          <input id="input-readonly" type="text" class="input" value="MIT-2026-OPEN-WEB" readonly />
+        </div>
       </div>
     </div>
   `,

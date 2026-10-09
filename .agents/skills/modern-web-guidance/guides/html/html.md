@@ -404,6 +404,6 @@ See `forms` (via `npx -y modern-web-guidance@latest retrieve "forms"`) for more 
 ```css
 .loading-bar {
   accent-color: hsl(var(--brand-hue, 200) 80% 50%);
-  transition: accent-color 0.3s ease;
+  transition: accent-color 200ms ease;
 }
 ```

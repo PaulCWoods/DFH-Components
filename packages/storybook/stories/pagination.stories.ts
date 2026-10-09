@@ -11,7 +11,7 @@ const meta: Meta = {
 
 ### Patterns
 1. **Numeric Page Range**: Compact numbered buttons with active page indicator (\`.button--selected\` + \`aria-current="page"\`) and trailing ellipsis/divider.
-2. **Directional Arrow Cluster**: Prev/Next navigation with directional SVGs (\`.icon--dir\`) and textual step indicator (\`.button-group__text\`).
+2. **Directional Arrow Cluster**: Prev/Next navigation with directional SVGs (\`.icon--dir\`) and textual step indicator (\`.button-group__content\`).
 3. **Page Count & Jump Input**: Flexible form with number input for direct jumping.
 4. **Page Count & Jump Select**: Accessible drop-down selector for quick jumping.
 `,
@@ -25,7 +25,7 @@ type Story = StoryObj;
 
 export const NumericPagination: Story = {
   render: () => `
-    <div style="display: flex; justify-content: center; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--lg" style="display: flex; justify-content: center;">
       <nav class="pagination button-group s-button:subtle" aria-label="Pagination">
         <span class="button button--selected" aria-current="page"><span>1</span></span>
         <a class="button" href="#page-2"><span>2</span></a>
@@ -40,7 +40,7 @@ export const NumericPagination: Story = {
 
 export const DirectionalControls: Story = {
   render: () => `
-    <div style="display: flex; justify-content: center; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--lg" style="display: flex; justify-content: center;">
       <nav class="pagination button-group s-button:subtle" aria-label="Pagination">
         <span aria-disabled="true" class="button">
           <svg class="icon icon--dir" width="24" height="24" aria-hidden="true" focusable="false">
@@ -67,7 +67,7 @@ export const DirectionalControls: Story = {
           <span class="visually-hidden">Last page</span>
         </a>
         <hr class="divider">
-        <span class="button-group__text">Page 1 of 10</span>
+        <span class="button-group__content">Page 1 of 10</span>
       </nav>
     </div>
   `,
@@ -75,13 +75,13 @@ export const DirectionalControls: Story = {
 
 export const PageCountWithJumpInput: Story = {
   render: () => `
-    <div style="max-inline-size: 36rem; margin-inline: auto; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--lg">
       <div class="page-count">
         <p class="page-count__info">Page 2 of 10</p>
         <form class="page-count__jump inline-form" onsubmit="event.preventDefault();">
           <div class="inline-field">
-            <label for="page-box" class="field__label">Go to page</label>
-            <input class="input" type="number" id="page-box" name="page-box" min="1" max="10" value="2" style="inline-size: 5rem;">
+            <label for="page-box" class="field__label">Jump to page</label>
+            <input class="input" type="number" id="page-box" name="page-box" min="1" max="10" value="2">
           </div>
           <button class="button" type="submit"><span>Go</span></button>
         </form>
@@ -92,7 +92,7 @@ export const PageCountWithJumpInput: Story = {
 
 export const PageCountWithJumpSelect: Story = {
   render: () => `
-    <div style="max-inline-size: 36rem; margin-inline: auto; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--lg">
       <div class="page-count">
         <p class="page-count__info">Page 2 of 10</p>
         <form class="page-count__jump inline-form" onsubmit="event.preventDefault();">

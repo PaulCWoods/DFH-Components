@@ -20,18 +20,22 @@
     [type="number"],
     [type="tel"],
     [type="text"],
-    [type="url"],
-    [type="search"])) {
+    [type="time"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="week"],
+    [type="date"],
+    [type="url"])) {
   --_input-min-size: var(--input-min-size, var(--spacing-target, 3rem));
-  --_input-padding-block: var(--input-padding-block, var(--spacing-0-5, 0.5rem));
-  --_input-padding-inline: var(--input-padding-inline, var(--spacing-1, 1rem));
+  --_input-padding-block: var(--input-padding-block, var(--spacing-8, 0.5rem));
+  --_input-padding-inline: var(--input-padding-inline, var(--spacing-16, 1rem));
 
   /* Layout & Sizing */
   box-sizing: border-box;
-  inline-size: 100%;
+  flex: 1 1 auto;
   max-inline-size: 100%;
   min-block-size: var(--_input-min-size);
-  min-inline-size: calc(var(--input-padding-inline) * 2 + var(--input-border-width) * 2 + 5ch);
+  min-inline-size: 0;
 
   /* Spacing */
   padding-block: var(--_input-padding-block);
@@ -46,9 +50,9 @@
   appearance: none;
 
   /* Surface, Border & Shape */
-  background-color: var(--input-background-color, var(--surface, #ffffff));
+  background-color: var(--input-background-color, var(--surface-card, #ffffff));
   border-radius: var(--input-radius, var(--ui-radius, var(--radius, 0.25rem)));
-  border: var(--input-border-width, 1px) solid var(--input-border-color, currentColor);
+  border: var(--input-border-width, var(--border-width, 1px)) solid var(--input-border-color, var(--border-color-quiet, currentColor));
 
   /* Transitions */
   transition-property: border-color, background-color, color, box-shadow, outline-color;
@@ -74,7 +78,7 @@
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-offset: var(--focus-ring-outline-offset, 2px);
     border-color: var(--border-color-accent, var(--border-accent, var(--foreground-accent, currentColor)));
   }
@@ -96,33 +100,85 @@
   &:where(:disabled, [aria-disabled="true"]) {
     opacity: var(--opacity-disabled, 0.4);
     cursor: not-allowed;
-    background-color: var(--surface-fade, rgba(0, 0, 0, 0.05));
-    border-color: var(--border-quiet, var(--border-muted, currentColor));
+    background-color: var(--surface-translucent, rgba(0, 0, 0, 0.05));
+    border-color: var(--input-disabled-border-color, var(--border-color-quiet, currentColor));
   }
 
   &:read-only:not(:disabled, [aria-disabled="true"]) {
     cursor: default;
-    background-color: var(--surface-fade, rgba(0, 0, 0, 0.05));
+    background-color: var(--surface-translucent, rgba(0, 0, 0, 0.05));
     border-style: dashed;
   }
 
   /* Size Modifiers (.input--sm, .input--lg) */
   &.input--sm {
     --_input-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_input-padding-block: var(--input-sm-padding-block, var(--spacing-0-25, 0.25rem));
-    --_input-padding-inline: var(--input-sm-padding-inline, var(--spacing-0-75, 0.75rem));
+    --_input-padding-block: var(--input-sm-padding-block, var(--spacing-4, 0.25rem));
+    --_input-padding-inline: var(--input-sm-padding-inline, var(--spacing-12, 0.75rem));
     font-size: var(--input-sm-font-size, var(--typography-font-size--1, 0.875rem));
   }
 
   &.input--lg {
     --_input-min-size: var(--input-lg-min-size, var(--spacing-target-lg, 3.5rem));
-    --_input-padding-block: var(--input-lg-padding-block, var(--spacing-0-75, 0.75rem));
-    --_input-padding-inline: var(--input-lg-padding-inline, var(--spacing-1-5, 1.5rem));
+    --_input-padding-block: var(--input-lg-padding-block, var(--spacing-12, 0.75rem));
+    --_input-padding-inline: var(--input-lg-padding-inline, var(--spacing-24, 1.5rem));
     font-size: var(--input-lg-font-size, var(--typography-font-size-1, 1.125rem));
+  }
+
+  /* Plain / Flush Input Modifier (Borderless & transparent background) */
+  &:is(.input--plain,
+    .input--flush,
+    .input--ghost) {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+
+    &:is(:user-valid, :hover:not(:disabled, [readonly])) {
+      border-color: transparent;
+    }
+  }
+
+  &.input--flush {
+    padding-inline: 0;
   }
 
   :where(.inline-form, .inline-field) & {
     inline-size: auto;
+  }
+}
+
+/* Reset WebKit date/time value container height and alignment */
+:where(.input, input):is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
+  &::-webkit-date-and-time-value {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1lh;
+    text-align: start;
+    margin: 0;
+    padding: 0;
+  }
+
+  &::-webkit-datetime-edit {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+    align-self: center;
+  }
+
+  &::-webkit-date-and-time-value {
+    display: flex;
+    align-items: center;
+    min-block-size: 1lh;
+    text-align: start;
+  }
+
+  &::-webkit-datetime-edit {
+    padding-block: 0;
   }
 }
 
@@ -143,7 +199,7 @@
   /* Surface & Border */
   background-color: ButtonFace;
   border-radius: var(--input-radius, var(--ui-radius, var(--radius, 0.25rem)));
-  border: var(--input-border, var(--input-border-width, var(--border-width, 1px)) solid var(--border-muted, var(--border-color, currentColor)));
+  border: var(--input-border, var(--input-border-width, var(--border-width, 1px)) solid var(--border-color-muted, currentColor));
 
   &::-webkit-color-swatch-wrapper {
     padding: 0;
@@ -155,7 +211,7 @@
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-offset: var(--focus-ring-outline-offset, 2px);
   }
 
@@ -186,7 +242,7 @@
   color: var(--input-color, var(--foreground, currentColor));
 
   &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-offset: var(--focus-ring-outline-offset, 2px);
   }
 }

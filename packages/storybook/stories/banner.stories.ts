@@ -22,7 +22,7 @@ Directly aligned with the Design For Humans blog architecture (\`_banner.scss\` 
 ### Architectural Highlights & Accessibility Standards
 - **Token-Driven Surface & Spacing:** Built on DTCG component tokens (\`--banner-bg\`, \`--banner-padding\`, \`--banner-border\`, \`--banner-radius\`, \`--banner-gap\`).
 - **Semantic Color Cascading:** Semantic modifiers (\`.banner--success\`, \`.banner--warning\`, \`.banner--error\`, \`.banner--info\`) cascade background, border, text, and nested button tokens (\`--button-primary-bg\`, \`--link-color\`) automatically.
-- **Dynamic Concentric Corners (\`.banner--dynamic-corners\`):** Outer curvature automatically computes from nested button geometry (\`min(var(--button-radius), var(--button-min-size) / 2) + var(--banner-outer-padding) + var(--banner-border-width)\`) to eliminate corner pinch and create harmonious concentric pill containers.
+- **Dynamic Concentric Corners (\`.banner--dynamic-corners\`):** Outer curvature automatically computes from nested button geometry (\`min(var(--button-radius), var(--button-min-size) / 2) + var(--banner-outer-padding) + var(--banner-border-width)\`) to eliminate corner pinch and create harmonious concentric round containers.
 - **Accessible Action Controls:** Icon actions inside banners use \`<span class="visually-hidden">Action</span>\` or \`<span class="visually-hidden">Close</span>\` for full screen-reader and browser translation engine compatibility. Decorative SVGs have \`aria-hidden="true"\` and \`focusable="false"\`.
 - **High-Contrast Mode (WCAG 1.4.11 / 2.4.7):** Under \`@media (prefers-contrast: more)\`, borders scale to standard \`--border-width\` (2px).
 - **Reduced Motion (WCAG 2.3.3):** Under \`@media (prefers-reduced-motion: reduce)\`, any transitions are removed.
@@ -41,7 +41,7 @@ type Story = StoryObj;
  */
 export const Default: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner" role="region" aria-label="Announcement">
         <div class="banner__inner">
           <p>This is a standard banner message.</p>
@@ -57,7 +57,7 @@ export const Default: Story = {
  */
 export const Info: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner banner--info" role="alert">
         <div class="banner__inner">
           <p>This is an info banner message.</p>
@@ -79,7 +79,7 @@ export const Info: Story = {
  */
 export const Success: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner banner--success" role="status">
         <div class="banner__inner">
           <p>This is a success banner message.</p>
@@ -101,7 +101,7 @@ export const Success: Story = {
  */
 export const Warning: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner banner--warning" role="region" aria-label="Warning notification">
         <div class="banner__inner">
           <p>This is a warning banner message.</p>
@@ -123,7 +123,7 @@ export const Warning: Story = {
  */
 export const Error: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner banner--error" role="alert">
         <div class="banner__inner">
           <p>This is an error banner message.</p>
@@ -145,12 +145,12 @@ export const Error: Story = {
  */
 export const WithSubheadingAndActions: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner" role="region" aria-label="Action required">
         <div class="banner__inner">
-          <h3 style="margin: 0; font-family: var(--subheading-font-family, inherit); font-size: var(--subheading-font-size, 1.25rem); font-weight: var(--subheading-font-weight, var(--font-weight-bold)); line-height: var(--subheading-line-height, 1.3);">Subheading</h3>
+          <h3 class="subheading">Subheading</h3>
           <p>This is more verbose banner message.</p>
-          <div style="display: flex; gap: var(--spacing-0-5); margin-block-start: var(--spacing-0-25);">
+          <div class="button-group" style="margin-block-start: var(--spacing-4);">
             <button type="button" class="button">
               <span>Cancel</span>
             </button>
@@ -166,14 +166,14 @@ export const WithSubheadingAndActions: Story = {
 
 /**
  * 6. Dynamic Concentric Corners
- * Outer banner curvature adapts mathematically with the nested pill button geometry to maintain perfectly concentric curves.
+ * Outer banner curvature adapts mathematically with the nested round button geometry to maintain perfectly concentric curves.
  */
 export const DynamicCorners: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="banner banner--dynamic-corners s-button:round" role="region" aria-label="Confirmation">
         <div class="banner__inner">
-          <p style="margin: 0; font-size: var(--typography-font-size-1, 1.25rem); font-weight: var(--font-weight-bold);">Continue?</p>
+          <p class="heading" style="margin: 0;">Continue?</p>
         </div>
         <button type="button" class="button banner__action">
           <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
@@ -192,80 +192,82 @@ export const DynamicCorners: Story = {
  */
 export const AllVariants: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family); display: flex; flex-direction: column; gap: var(--spacing-1);">
-      <!-- 1. Standard -->
-      <div class="banner" role="region" aria-label="Notification">
-        <div class="banner__inner">
-          <p>This is a standard banner message.</p>
-        </div>
-      </div>
-
-      <!-- 2. Success -->
-      <div class="banner banner--success" role="status">
-        <div class="banner__inner">
-          <p>This is a success banner message.</p>
-        </div>
-        <button type="button" class="button button--subtle banner__action">
-          <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
-            <use href="#Check" />
-          </svg>
-          <span class="visually-hidden">Action</span>
-        </button>
-      </div>
-
-      <!-- 3. Warning -->
-      <div class="banner banner--warning" role="region" aria-label="Warning">
-        <div class="banner__inner">
-          <p>This is a warning banner message.</p>
-        </div>
-        <button type="button" class="button button--subtle banner__action">
-          <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
-            <use href="#Check" />
-          </svg>
-          <span class="visually-hidden">Action</span>
-        </button>
-      </div>
-
-      <!-- 4. Error -->
-      <div class="banner banner--error" role="alert">
-        <div class="banner__inner">
-          <p>This is an error banner message.</p>
-        </div>
-        <button type="button" class="button button--primary banner__action">
-          <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
-            <use href="#Close" />
-          </svg>
-          <span class="visually-hidden">Close</span>
-        </button>
-      </div>
-
-      <!-- 5. Verbose with Subheading & Buttons -->
-      <div class="banner" role="region" aria-label="Action required">
-        <div class="banner__inner">
-          <h3 style="margin: 0; font-family: var(--subheading-font-family, inherit); font-size: var(--subheading-font-size, 1.25rem); font-weight: var(--subheading-font-weight, var(--font-weight-bold)); line-height: var(--subheading-line-height, 1.3);">Subheading</h3>
-          <p>This is more verbose banner message.</p>
-          <div style="display: flex; gap: var(--spacing-0-5); margin-block-start: var(--spacing-0-25);">
-            <button type="button" class="button">
-              <span>Cancel</span>
-            </button>
-            <button type="button" class="button button--primary">
-              <span>OK</span>
-            </button>
+    <div class="wrapper wrapper--xl">
+      <div class="stack">
+        <!-- 1. Standard -->
+        <div class="banner" role="region" aria-label="Notification">
+          <div class="banner__inner">
+            <p>This is a standard banner message.</p>
           </div>
         </div>
-      </div>
 
-      <!-- 6. Dynamic Corners (Pill) -->
-      <div class="banner banner--dynamic-corners s-button:round" role="region" aria-label="Confirmation">
-        <div class="banner__inner">
-          <p style="margin: 0; font-size: var(--typography-font-size-1, 1.25rem); font-weight: var(--font-weight-bold);">Continue?</p>
+        <!-- 2. Success -->
+        <div class="banner banner--success" role="status">
+          <div class="banner__inner">
+            <p>This is a success banner message.</p>
+          </div>
+          <button type="button" class="button button--subtle banner__action">
+            <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+              <use href="#Check" />
+            </svg>
+            <span class="visually-hidden">Action</span>
+          </button>
         </div>
-        <button type="button" class="button banner__action">
-          <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
-            <use href="#Check" />
-          </svg>
-          <span class="visually-hidden">Action</span>
-        </button>
+
+        <!-- 3. Warning -->
+        <div class="banner banner--warning" role="region" aria-label="Warning">
+          <div class="banner__inner">
+            <p>This is a warning banner message.</p>
+          </div>
+          <button type="button" class="button button--subtle banner__action">
+            <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+              <use href="#Check" />
+            </svg>
+            <span class="visually-hidden">Action</span>
+          </button>
+        </div>
+
+        <!-- 4. Error -->
+        <div class="banner banner--error" role="alert">
+          <div class="banner__inner">
+            <p>This is an error banner message.</p>
+          </div>
+          <button type="button" class="button button--primary banner__action">
+            <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+              <use href="#Close" />
+            </svg>
+            <span class="visually-hidden">Close</span>
+          </button>
+        </div>
+
+        <!-- 5. Verbose with Subheading & Buttons -->
+        <div class="banner" role="region" aria-label="Action required">
+          <div class="banner__inner">
+            <h3 class="subheading">Subheading</h3>
+            <p>This is more verbose banner message.</p>
+            <div class="button-group" style="margin-block-start: var(--spacing-4);">
+              <button type="button" class="button">
+                <span>Cancel</span>
+              </button>
+              <button type="button" class="button button--primary">
+                <span>OK</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Dynamic Corners (Round) -->
+        <div class="banner banner--dynamic-corners s-button:round" role="region" aria-label="Confirmation">
+          <div class="banner__inner">
+            <p class="title" style="margin: 0;">Continue?</p>
+          </div>
+          <button type="button" class="button banner__action">
+            <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+              <use href="#Check" />
+            </svg>
+            <span class="visually-hidden">Action</span>
+          </button>
+        </div>
       </div>
     </div>
   `,

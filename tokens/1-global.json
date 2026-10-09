@@ -16,7 +16,7 @@
         "$value": "#f7f5f0"
       },
       "100": {
-        "$value": "#E0DFD9"
+        "$value": "#E6E4DF"
       },
       "200": {
         "$value": "#CAC8C3"
@@ -73,6 +73,64 @@
       },
       "900": {
         "$value": "#003126"
+      }
+    },
+    "purple": {
+      "100": {
+        "$value": "#f8f2ff"
+      },
+      "200": {
+        "$value": "#f1e5ff"
+      },
+      "300": {
+        "$value": "#e3c8ff"
+      },
+      "400": {
+        "$value": "#d09dff"
+      },
+      "500": {
+        "$value": "#ad77e1"
+      },
+      "600": {
+        "$value": "#a06bd4"
+      },
+      "700": {
+        "$value": "#8553b5"
+      },
+      "800": {
+        "$value": "#603388"
+      },
+      "900": {
+        "$value": "#33124e"
+      }
+    },
+    "olive": {
+      "100": {
+        "$value": "#f7fecf"
+      },
+      "200": {
+        "$value": "#ebf4b6"
+      },
+      "300": {
+        "$value": "#d2df8a"
+      },
+      "400": {
+        "$value": "#b5c169"
+      },
+      "500": {
+        "$value": "#919d43"
+      },
+      "600": {
+        "$value": "#859136"
+      },
+      "700": {
+        "$value": "#6d761c"
+      },
+      "800": {
+        "$value": "#4b5300"
+      },
+      "900": {
+        "$value": "#252a00"
       }
     },
     "amber": {
@@ -199,7 +257,7 @@
       "$value": "1"
     }
   },
-  "transparency": {
+  "translucency": {
     "10": {
       "$value": "10%"
     },
@@ -236,75 +294,75 @@
   "spacing": {
     "$type": "dimension",
     "0": {
-      "$value": "0px"
-    },
-    "px": {
-      "$value": "0.0625rem"
-    },
-    "0-125": {
-      "$value": "0.125rem"
-    },
-    "0-25": {
-      "$value": "0.25rem"
-    },
-    "0-5": {
-      "$value": "0.5rem"
-    },
-    "0-75": {
-      "$value": "0.75rem"
+      "$value": "0"
     },
     "1": {
-      "$value": "1rem"
-    },
-    "1-5": {
-      "$value": "1.5rem"
+      "$value": "0.0625rem"
     },
     "2": {
-      "$value": "2rem"
-    },
-    "3": {
-      "$value": "3rem"
+      "$value": "0.125rem"
     },
     "4": {
-      "$value": "4rem"
+      "$value": "0.25rem"
     },
     "8": {
-      "$value": "8rem"
+      "$value": "0.5rem"
     },
     "12": {
-      "$value": "12rem"
+      "$value": "0.75rem"
     },
     "16": {
-      "$value": "16rem"
-    },
-    "20": {
-      "$value": "20rem"
+      "$value": "1rem"
     },
     "24": {
-      "$value": "24rem"
-    },
-    "28": {
-      "$value": "28rem"
+      "$value": "1.5rem"
     },
     "32": {
-      "$value": "32rem"
-    },
-    "36": {
-      "$value": "36rem"
-    },
-    "40": {
-      "$value": "40rem"
+      "$value": "2rem"
     },
     "48": {
-      "$value": "48rem"
-    },
-    "56": {
-      "$value": "56rem"
+      "$value": "3rem"
     },
     "64": {
+      "$value": "4rem"
+    },
+    "128": {
+      "$value": "8rem"
+    },
+    "192": {
+      "$value": "12rem"
+    },
+    "256": {
+      "$value": "16rem"
+    },
+    "320": {
+      "$value": "20rem"
+    },
+    "384": {
+      "$value": "24rem"
+    },
+    "448": {
+      "$value": "28rem"
+    },
+    "512": {
+      "$value": "32rem"
+    },
+    "576": {
+      "$value": "36rem"
+    },
+    "640": {
+      "$value": "40rem"
+    },
+    "768": {
+      "$value": "48rem"
+    },
+    "896": {
+      "$value": "56rem"
+    },
+    "1024": {
       "$value": "64rem"
     },
-    "80": {
+    "1280": {
       "$value": "80rem"
     }
   },
@@ -392,7 +450,7 @@
       },
       "500": {
         "$value": 500,
-        "$description": "Medium"
+        "$description": "BrandMedium"
       },
       "600": {
         "$value": 600,
@@ -489,7 +547,7 @@
     "xl": {
       "$value": "12px"
     },
-    "pill": {
+    "round": {
       "$value": "9999px"
     },
     "full": {
@@ -545,15 +603,15 @@
     "spacing": {
       "$type": "dimension",
       "1": {
-        "$value": "fluid({spacing.1}, {spacing.2})",
+        "$value": "fluid({spacing.16}, {spacing.32})",
         "$description": "Standard fluid base spacing (1rem Mobile to 2rem Desktop)"
       },
       "2": {
-        "$value": "fluid({spacing.2}, {spacing.3})",
+        "$value": "fluid({spacing.32}, {spacing.48})",
         "$description": "Double fluid spacing (2rem Mobile to 3rem Desktop)"
       },
       "3": {
-        "$value": "fluid({spacing.3}, {spacing.4})",
+        "$value": "fluid({spacing.48}, {spacing.64})",
         "$description": "Triple fluid spacing (3rem Mobile to 4rem Desktop)"
       }
     },

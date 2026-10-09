@@ -30,7 +30,7 @@ To build a component that changes its styling based on a child's state:
   border: 1px solid var(--card-border-color);
 
   /* Use a transition for smooth state changes */
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 200ms, color 200ms;
 }
 
 /* 2. Apply styles when the child enters the specific state */

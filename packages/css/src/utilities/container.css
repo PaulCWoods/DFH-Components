@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Design For Humans: Container Type Utilities
+   --------------------------------------------------------------------------
+   Defines container context on parent elements for CSS Container Queries.
+   Direct parity with the Design For Humans blog architecture (_container-type.scss).
+   ========================================================================== */
+
+:where(.container-type-inline-size, .container-inline,
+  .cq-inline) {
+  container-type: inline-size;
+}
+
+:where(.container-type-size, .container-size,
+  .cq-size) {
+  container-type: size;
+}
+
+:where(.container-type-normal, .container-normal,
+  .cq-normal) {
+  container-type: normal;
+}

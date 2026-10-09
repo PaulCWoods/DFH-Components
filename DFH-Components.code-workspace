@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "DFH-Components",
+			"path": "."
+		},
+		{
+			"name": "designforhumans-blog",
+			"path": "../designforhumans-blog"
+		}
+	],
+	"settings": {}
+}

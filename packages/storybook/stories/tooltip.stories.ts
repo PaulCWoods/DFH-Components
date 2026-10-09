@@ -50,7 +50,7 @@ export const Default: Story = {
 
 export const DirectionalPositions: Story = {
   render: () => `
-    <div style="display: flex; gap: var(--spacing-2); padding: 4rem 2rem; align-items: center; justify-content: center; flex-wrap: wrap;">
+    <div class="cluster" style="padding: 4rem 2rem; justify-content: center; gap: var(--spacing-32);">
       <!-- Top (Default) -->
       <div>
         <button 
@@ -120,7 +120,7 @@ export const DirectionalPositions: Story = {
 
 export const OpenPreview: Story = {
   render: () => `
-    <div style="padding: 2rem; display: flex; flex-direction: column; gap: var(--spacing-1); align-items: center;">
+    <div class="stack" style="padding: 2rem; align-items: center;">
       <div 
         class="tooltip" 
         style="position: static; opacity: 1; transform: none; display: inline-block;"

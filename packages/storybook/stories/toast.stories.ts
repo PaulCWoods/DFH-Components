@@ -53,7 +53,7 @@ type Story = StoryObj;
  */
 export const Default: Story = {
   render: () => `
-    <div style="min-block-size: 16rem; position: relative; border: 1px dashed var(--border-color-quiet, #ccc); border-radius: var(--radius-2, 0.5rem); padding: var(--spacing-2, 2rem); overflow: hidden;">
+    <div style="min-block-size: 16rem; position: relative; border: 1px dashed var(--border-color-quiet, #ccc); border-radius: var(--radius-2, 0.5rem); padding: var(--spacing-32, 2rem); overflow: hidden;">
       <p style="color: var(--foreground-muted);">Page content area (click and scroll freely)...</p>
 
       <aside class="toast-stack toast-stack--bottom-end" style="position: absolute;" aria-label="Notifications">
@@ -81,7 +81,7 @@ export const Default: Story = {
  */
 export const SemanticVariantsStack: Story = {
   render: () => `
-    <div style="min-block-size: 28rem; position: relative; border: 1px dashed var(--border-color-quiet, #ccc); border-radius: var(--radius-2, 0.5rem); padding: var(--spacing-2, 2rem); overflow: hidden;">
+    <div style="min-block-size: 28rem; position: relative; border: 1px dashed var(--border-color-quiet, #ccc); border-radius: var(--radius-2, 0.5rem); padding: var(--spacing-32, 2rem); overflow: hidden;">
       <p style="color: var(--foreground-muted);">Page preview with stacked toast notifications:</p>
 
       <aside class="toast-stack toast-stack--bottom-end" style="position: absolute;" aria-label="Notifications">
@@ -140,7 +140,7 @@ export const SemanticVariantsStack: Story = {
  */
 export const TopCenter: Story = {
   render: () => `
-    <div style="min-block-size: 16rem; position: relative; border: 1px dashed var(--border-color-quiet, #ccc); border-radius: var(--radius-2, 0.5rem); padding: var(--spacing-2, 2rem); overflow: hidden;">
+    <div style="min-block-size: 16rem; position: relative; border: 1px dashed var(--border-color-quiet, #ccc); border-radius: var(--radius-2, 0.5rem); padding: var(--spacing-32, 2rem); overflow: hidden;">
       <aside class="toast-stack toast-stack--top-center" style="position: absolute;" aria-label="System announcements">
         <div class="toast" role="status" aria-live="polite">
           <div class="banner banner--info s-button:sm" role="none">
@@ -167,7 +167,7 @@ export const TopCenter: Story = {
 export const InteractiveTriggerDemo: Story = {
   render: () => `
     <div>
-      <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-0-5, 0.5rem); margin-block-end: var(--spacing-1, 1rem);">
+      <div class="button-group" style="margin-block-end: var(--spacing-16);">
         <button type="button" class="button button--primary" id="btn-trigger-success">
           <span>Trigger Success Toast</span>
         </button>
@@ -179,7 +179,7 @@ export const InteractiveTriggerDemo: Story = {
         </button>
       </div>
 
-      <p style="color: var(--foreground-muted); font-size: var(--body-small-font-size, 0.875rem);">
+      <p style="color: var(--foreground-muted); font-size: var(--body-sm-font-size, 0.875rem);">
         Click the buttons above to test dynamic toast creation, stacking, smooth entry animations, and manual/auto dismissal.
       </p>
 

@@ -36,8 +36,8 @@
   /* Layout & Sizing */
   box-sizing: border-box;
   display: none;
-  inline-size: min(var(--dialog-max-width, 36rem), calc(100vi - var(--spacing-2, 2rem)));
-  max-block-size: min(var(--dialog-max-height, 90vb), calc(100vb - var(--spacing-2, 2rem)));
+  inline-size: min(var(--dialog-width, var(--spacing-block, 36rem)), calc(100vi - var(--spacing-cushion, 2rem)));
+  max-block-size: min(var(--dialog-max-height, 90vb), calc(100vb - var(--spacing-cushion, 2rem)));
   overflow: visible;
   overscroll-behavior: contain;
 
@@ -66,6 +66,9 @@
 
   /* Ensure nested card expands to full available width and clips cleanly */
   >.card {
+    border-radius: var(--dialog-radius, var(--card-radius, none));
+    border: var(--dialog-border-width, var(--card-border-width, 0px) solid var(--dialog-border-color, var(--card-border-color, var(--border-color-quiet, currentColor))));
+    box-shadow: var(--dialog-shadow, var(--card-shadow, none));
     inline-size: 100%;
     max-inline-size: 100%;
   }

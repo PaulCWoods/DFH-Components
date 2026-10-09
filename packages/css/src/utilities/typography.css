@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Design For Humans: Typography & Text Utilities
+   --------------------------------------------------------------------------
+   Modular type scale, weights, alignments, text colors, and wrapping utilities.
+   Direct parity with the Design For Humans blog architecture.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Font Size Utilities (Type Scale -2 to 3)
+   -------------------------------------------------------------------------- */
+:where(.font-size-xs, .fs-xs) { font-size: var(--typography-font-size--2); }
+:where(.font-size-sm, .fs-sm) { font-size: var(--typography-font-size--1); }
+:where(.font-size-base, .fs-base) { font-size: var(--typography-font-size-0); }
+:where(.font-size-lg, .fs-lg) { font-size: var(--typography-font-size-1); }
+:where(.font-size-xl, .fs-xl) { font-size: var(--typography-font-size-2); }
+:where(.font-size-2xl, .fs-2xl) { font-size: var(--typography-font-size-3); }
+
+/* --------------------------------------------------------------------------
+   2. Font Weight Utilities
+   -------------------------------------------------------------------------- */
+:where(.font-weight-100, .fw-100) { font-weight: 100; }
+:where(.font-weight-200, .fw-200) { font-weight: 200; }
+:where(.font-weight-300, .fw-300) { font-weight: 300; }
+:where(.font-weight-400, .fw-400, .font-weight-regular, .regular) { font-weight: var(--font-weight-regular, 400); }
+:where(.font-weight-500, .fw-500) { font-weight: 500; }
+:where(.font-weight-600, .fw-600) { font-weight: 600; }
+:where(.font-weight-700, .fw-700, .font-weight-bold, .bold) { font-weight: var(--font-weight-bold, 700); }
+:where(.font-weight-800, .fw-800) { font-weight: 800; }
+:where(.font-weight-900, .fw-900) { font-weight: 900; }
+:where(.font-weight-bolder, .bolder) { font-weight: bolder; }
+
+/* --------------------------------------------------------------------------
+   3. Font Style Utilities
+   -------------------------------------------------------------------------- */
+:where(.font-style-italic, .italic) { font-style: italic; }
+:where(.font-style-normal, .roman) { font-style: normal; }
+
+/* --------------------------------------------------------------------------
+   4. Line Height Utilities
+   -------------------------------------------------------------------------- */
+:where(.line-height-xs) { line-height: var(--typography-line-height--2); }
+:where(.line-height-sm) { line-height: var(--typography-line-height--1); }
+:where(.line-height-base) { line-height: var(--typography-line-height-base, var(--body-line-height, 1.5)); }
+:where(.line-height-lg) { line-height: var(--typography-line-height-1); }
+:where(.line-height-xl) { line-height: var(--typography-line-height-2); }
+:where(.line-height-2xl) { line-height: var(--typography-line-height-3); }
+
+/* --------------------------------------------------------------------------
+   5. Text Alignment Utilities (Logical Bidirectional Start/End)
+   -------------------------------------------------------------------------- */
+:where(.text-align-left, .text-left) { text-align: start; }
+:where(.text-align-right, .text-right) { text-align: end; }
+:where(.text-align-center, .text-center) { text-align: center; }
+:where(.text-align-justify, .text-justify) { text-align: justify; }
+
+/* --------------------------------------------------------------------------
+   6. Text Transform Utilities
+   -------------------------------------------------------------------------- */
+:where(.text-transform-uppercase) {
+  font-variant-numeric: lining-nums;
+  text-transform: uppercase;
+}
+
+:where(.text-transform-lowercase) {
+  font-variant-numeric: oldstyle-nums;
+  text-transform: lowercase;
+}
+
+:where(.text-transform-capitalize) {
+  font-variant-numeric: lining-nums;
+  text-transform: capitalize;
+}
+
+/* --------------------------------------------------------------------------
+   7. Text Wrap & Overflow Utilities
+   -------------------------------------------------------------------------- */
+:where(.white-space-normal) { white-space: normal; }
+:where(.white-space-nowrap) { white-space: nowrap; }
+:where(.white-space-pre) { white-space: pre; }
+:where(.white-space-pre-line) { white-space: pre-line; }
+:where(.white-space-pre-wrap) { white-space: pre-wrap; }
+:where(.overflow-wrap-break-word) { word-wrap: break-word; }
+:where(.overflow-wrap-anywhere) { overflow-wrap: anywhere; }
+:where(.text-wrap-pretty) { text-wrap: pretty; }
+:where(.text-wrap-balance) { text-wrap: balance; }
+
+/* --------------------------------------------------------------------------
+   8. Text Color Utilities (Adaptive via Centralized Color Scheme)
+   -------------------------------------------------------------------------- */
+:where(.text-color-accent, .tc-accent) { color: var(--foreground-accent); }
+:where(.text-color-danger, .tc-danger) { color: var(--foreground-danger); }
+:where(.text-color-success, .tc-success) { color: var(--foreground-success); }
+:where(.text-color-warning, .tc-warning) { color: var(--foreground-warning); }
+:where(.text-color-muted, .tc-muted) { color: var(--foreground-muted); }
+:where(.text-color-default, .tc-default) { color: var(--foreground); }
+

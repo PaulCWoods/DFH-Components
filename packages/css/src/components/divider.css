@@ -8,16 +8,16 @@
    <hr class="divider">
    ========================================================================== */
 
-hr:where(.divider) {
+:where(.divider) {
   border: none;
-  border-block-start: var(--divider-width, var(--border-width, 1px)) solid var(--divider-color, var(--border-color-quiet, currentColor));
+  border-block-start: var(--divider-border-width, var(--rule-width, 1px)) var(--divider-border-style, var(--rule-style, solid)) var(--divider-border-color, var(--rule-color, currentColor));
   margin: 0;
   inline-size: 100%;
 
   @container style(--direction: row) {
     align-self: stretch;
     border-block-start: 0;
-    border-inline-start: var(--divider-width, var(--border-width, 1px)) solid var(--divider-color, var(--border-color-quiet, currentColor));
+    border-inline-start: var(--divider-border-width, var(--rule-width, 1px)) var(--divider-border-style, var(--rule-style, solid)) var(--divider-border-color, var(--rule-color, currentColor));
     inline-size: 0;
     block-size: auto;
   }

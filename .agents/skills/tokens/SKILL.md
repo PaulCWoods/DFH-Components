@@ -54,7 +54,7 @@ All tokens use standard DTCG keys (`$value`, `$type`, `$description`).
   - When compiled to CSS, the compiler automatically generates `--typography-font-size--1` and `--typography-font-size-fluid--1` (double hyphen for negative numbers).
 - **Typography Weights:** `typography.font-weight.regular`, `medium`, `semibold`, `bold`.
 - **Typography Line Heights:** `typography.line-height.0` through `6`.
-- **Spacing Scale:** `spacing.0`, `spacing.0-25` (0.25rem), `spacing.0-5` (0.5rem), `spacing.0-75` (0.75rem), `spacing.1` (1rem), `spacing.1-5` (1.5rem), `spacing.2` (2rem), `spacing.3` (3rem), `spacing.4` (4rem), `spacing.5` (5rem).
+- **Spacing Scale:** `spacing.0` (0), `spacing.1` (0.0625rem / 1px), `spacing.2` (0.125rem / 2px), `spacing.4` (0.25rem / 4px), `spacing.8` (0.5rem / 8px), `spacing.12` (0.75rem / 12px), `spacing.16` (1rem / 16px), `spacing.24` (1.5rem / 24px), `spacing.32` (2rem / 32px), `spacing.48` (3rem / 48px), `spacing.64` (4rem / 64px), up to `spacing.1280` (80rem / 1280px).
 - **Touch Target:** `spacing.target` (`3rem` / `48px` - meets WCAG 2.5.5 AAA).
 - **Border Radii:** `radius.none` (`0px`), `radius.sm` (`0.25rem`), `radius.md` (`0.5rem`), `radius.lg` (`0.75rem`), `radius.full` (`9999px`).
 - **Transitions:** `transition.duration.0`, `transition.duration.sm` (0.2s), `transition.duration.md` (0.5s), `transition.duration.lg` (0.8s).
@@ -69,7 +69,7 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 | :--- | :--- | :--- |
 | `surface.base` | `--surface` | Main canvas / body background |
 | `surface.card` | `--surface-card` | Cards, modals, dialogs, popovers, elevated containers |
-| `surface.fade` | `--surface-fade` | Hover highlight tint / quiet container fill |
+| `surface.translucent` | `--surface-translucent` | Hover highlight tint / quiet container fill |
 | `surface.inverted` | `--surface-inverted` | High-contrast reverse background (tooltips, inverted cards) |
 | `surface.dark` | `--surface-dark` | Deep dark surface fill |
 | `surface.darker` | `--surface-darker` | Darkest container backdrop fill |
@@ -96,7 +96,9 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 #### Borders & Outlines
 | Token JSON Path | CSS Custom Property | Intended Use |
 | :--- | :--- | :--- |
-| `border.width` | `--border-width` | Standard 2px border width |
+| `border.width.default` | `--border-width`, `--border-width-default` | Standard 2px border width |
+| `border.width.thin` | `--border-width-thin` | Hairline 1px stroke (rules, subtle cards) |
+| `border.width.thick` | `--border-width-thick` | Prominent 4px stroke |
 | `border.base` | `--border` | Default prominent border |
 | `border.muted` | `--border-muted` | Subtle container border (currentColor with alpha) |
 | `border.quiet` | `--border-quiet` | Light 20% border for dividers and cards |
@@ -135,8 +137,8 @@ Design For Humans supports fluid spacing and responsive typography across both W
 
 #### Semantic Typography Presets
 - `body`: `"{fluid.typography.font-size.0}"` (Mobile: 16px, Desktop: 24px)
-- `body-small`: `"{fluid.typography.font-size.minus-1}"` (Mobile: 13px, Desktop: 19px)
-- `body-large`: `"{fluid.typography.font-size.1}"` (Mobile: 19px, Desktop: 30px)
+- `body-sm`: `"{fluid.typography.font-size.minus-1}"` (Mobile: 13px, Desktop: 19px)
+- `body-lg`: `"{fluid.typography.font-size.1}"` (Mobile: 19px, Desktop: 30px)
 - `heading`: `"{fluid.typography.font-size.2}"` (Mobile: 23px, Desktop: 38px)
 - `subheading`: `"{fluid.typography.font-size.1}"` (Mobile: 19px, Desktop: 30px)
 - `small-heading`: `"{fluid.typography.font-size.minus-1}"` (Mobile: 13px, Desktop: 19px)
@@ -171,7 +173,7 @@ Design For Humans components use clean, standard semantic class names **without 
 - ✅ `.dialog`, `.dialog__header`, `.dialog__title`, `.dialog__body`, `.dialog__footer`
 - ✅ `.popover`, `.popover--anchored`
 - ✅ `.accordion`, `.accordion-group`, `.accordion__icon`
-- ✅ `.badge`, `.badge--accent`, `.badge--success`, `.badge--warning`, `.badge--danger`, `.badge--pill`
+- ✅ `.badge`, `.badge--accent`, `.badge--success`, `.badge--warning`, `.badge--danger`, `.badge--round`
 - ✅ `.chip`
 - ✅ Utilities: `.visually-hidden` (canonical) & `.sr-only` (alias), `.visually-hidden--focusable` (skip links)
 - ❌ Do NOT use `.dfh-button`, `.dfh-dialog`, or `.ui-` prefixes.

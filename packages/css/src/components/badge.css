@@ -12,11 +12,14 @@
 /* ==========================================================================
    Base Badge Primitive (:where(.badge))
    ========================================================================== */
-:where(.badge) {
+:where(.badge, .kbd) {
   /* Layout & Display */
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   justify-content: center;
+  min-block-size: calc(1lh + var(--badge-padding, 0.5em) * 2);
+  min-inline-size: calc(1lh + var(--badge-padding, 0.5em) * 2);
   vertical-align: middle;
   white-space: nowrap;
   box-sizing: border-box;
@@ -39,7 +42,7 @@
   background-color: var(--badge-default-bg, var(--badge-bg, var(--foreground, currentColor)));
   color: var(--badge-default-text, var(--badge-text, var(--surface, #ffffff)));
 
-  span {
+  :where(span, kbd, .badge__text, .kbd__text) {
     text-box: trim-both cap alphabetic;
   }
 
@@ -58,10 +61,13 @@
    Badge Modifiers & Variants
    ========================================================================== */
 
-/* Pill Shape Modifier */
-:where(.badge--pill) {
-  border-radius: var(--badge-pill-radius, var(--radius-full, var(--radius-pill, 9999px)));
-  padding-inline: calc(var(--badge-padding, 0.5em) * 1.5);
+/* Round Shape Modifier */
+:where(.s-badge\:round, .badge--round) {
+  border-radius: var(--badge-round-radius, var(--radius-round, 9999px));
+
+  span {
+    padding-inline: calc(var(--badge-padding, 0.5em) / 3);
+  }
 }
 
 /* Accent Variant */
@@ -71,46 +77,121 @@
 }
 
 /* Success Variant */
+:where(.badge):where([data-status="online"], [data-status="positive"]),
 :where(.badge--success) {
   background-color: var(--badge-success-bg, var(--foreground-success, #00875a));
   color: var(--badge-success-text, var(--surface, #ffffff));
 }
 
 /* Warning Variant */
+:where(.badge):where([data-status="away"], [data-status="warning"]),
 :where(.badge--warning) {
   background-color: var(--badge-warning-bg, var(--foreground-warning, #b06000));
   color: var(--badge-warning-text, var(--surface, #ffffff));
 }
 
 /* Danger / Destructive Variant */
+:where(.badge):where([data-status="busy"], [data-status="negative"]),
 :where(.badge--danger) {
   background-color: var(--badge-danger-bg, var(--foreground-danger, #d32f2f));
   color: var(--badge-danger-text, var(--color-white, #ffffff));
 }
 
 /* Subtle / Inverted Outline Variant */
-:where(.badge--subtle) {
+:where(.badge--subtle, .kbd) {
   background-color: transparent;
   border-color: currentColor;
   color: var(--badge-subtle-text, var(--foreground, currentColor));
 }
 
+/* Small badge */
+:where(.s-badge\:sm, .badge--sm) {
+  --badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2, 0.75em));
+  --badge-padding: var(--badge-sm-padding, 0.25em);
+}
+
+/* ==========================================================================
+   Badge Corner Placement
+   -------------------------------------------------------------------------- */
+
+:where(.badge--top-left-corner) {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  transform: translate(-50%, -50%);
+}
+
+:where(.badge--top-right-corner) {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  transform: translate(50%, -50%);
+}
+
+:where(.badge--bottom-right-corner) {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  transform: translate(50%, 50%);
+}
+
+:where(.badge--bottom-left-corner) {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  transform: translate(-50%, 50%);
+}
+
 /* ==========================================================================
    Chip Primitive (:where(.chip))
    ========================================================================== */
-:where(.chip) {
-  /* Layout & Display */
+:where(.chip, .status) {
   display: inline-flex;
   align-items: center;
-  white-space: nowrap;
-
-  /* Typography */
+  gap: var(--chip-gap, var(--spacing-4, 0.25rem));
   font-family: var(--chip-font-family, var(--typography-font-family-sans, sans-serif));
-  font-size: var(--chip-font-size, var(--typography-font-size--2, 0.75rem));
-  font-weight: var(--chip-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
-  line-height: 1;
+  font-size: var(--chip-font-size, var(--typography-font-size--2, 0.75em));
+  font-weight: var(--chip-font-weight, var(--body-strong-font-weight, 700));
   text-transform: var(--chip-text-transform, uppercase);
-  text-box: trim-both cap alphabetic;
-  color: var(--chip-color, var(--foreground-muted, currentColor));
   opacity: var(--chip-opacity, var(--opacity-muted, 0.8));
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
+  white-space: nowrap;
+}
+
+:where(.chip--status, .status):where([data-status="online"]),
+:where(.chip--color-success, .status--success) {
+  color: var(--chip-color-success, var(--foreground-success, currentColor));
+  opacity: 1;
+}
+
+:where(.chip--status, .status):where([data-status="away"]),
+:where(.chip--color-warning, .status--warning) {
+  color: var(--chip-color-warning, var(--foreground-warning, currentColor));
+  opacity: 1;
+}
+
+:where(.chip--status, .status):where([data-status="busy"]),
+:where(.chip--color-danger, .status--danger) {
+  color: var(--chip-color-danger, var(--foreground-danger, currentColor));
+  opacity: 1;
+}
+
+:where(.chip--status, .status):where([data-status]):before {
+  content: "";
+  inline-size: 1lh;
+  block-size: 1lh;
+  border-radius: var(--radius-round, 9999px);
+  background-color: currentColor;
+}
+
+/* ==========================================================================
+   Keyboard Badge
+   ========================================================================== */
+:where(.kbd) {
+  --badge-padding: var(--badge-sm-padding, 0.25em);
+  background-color: transparent;
+  border-color: currentColor;
+  color: var(--kbd-text, currentColor);
+  vertical-align: middle;
 }

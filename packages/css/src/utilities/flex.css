@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Design For Humans: Flex Layout Utilities
+   --------------------------------------------------------------------------
+   Low-specificity (:where()) utility classes for 1-dimensional flexbox layouts.
+   Direct parity with the Design For Humans blog architecture (_flex.scss).
+   ========================================================================== */
+
+/* Display */
+:where(.flex) {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+}
+
+:where(.inline-flex) {
+  display: inline-flex;
+}
+
+/* Direction */
+:where(.flex-direction-row) {
+  flex-direction: row;
+}
+
+:where(.flex-direction-row-reverse) {
+  flex-direction: row-reverse;
+}
+
+:where(.flex-direction-column) {
+  flex-direction: column;
+}
+
+:where(.flex-direction-column-reverse) {
+  flex-direction: column-reverse;
+}
+
+/* Wrap */
+:where(.flex-wrap) {
+  flex-wrap: wrap;
+}
+
+:where(.flex-nowrap) {
+  flex-wrap: nowrap;
+}
+
+/* Align Items (Cross Axis) */
+:where(.align-items-start) {
+  align-items: flex-start;
+}
+
+:where(.align-items-center) {
+  align-items: center;
+}
+
+:where(.align-items-end) {
+  align-items: flex-end;
+}
+
+:where(.align-items-stretch) {
+  align-items: stretch;
+}
+
+:where(.align-items-baseline) {
+  align-items: baseline;
+}
+
+/* Justify Content (Main Axis) */
+:where(.justify-content-start) {
+  justify-content: flex-start;
+}
+
+:where(.justify-content-center) {
+  justify-content: center;
+}
+
+:where(.justify-content-end) {
+  justify-content: flex-end;
+}
+
+:where(.justify-content-between) {
+  justify-content: space-between;
+}
+
+:where(.justify-content-around) {
+  justify-content: space-around;
+}
+
+:where(.justify-content-evenly) {
+  justify-content: space-evenly;
+}
+
+/* flex-grow */
+
+:where(.flex-grow-1) {
+  flex-grow: 1;
+}
+
+:where(.flex-grow-0) {
+  flex-grow: 0;
+}
+
+/* flex-shrink */
+
+:where(.flex-shrink-1) {
+  flex-shrink: 1;
+}
+
+:where(.flex-shrink-0) {
+  flex-shrink: 0;
+}
+
+/* flex shorthand */
+
+:where(.flex-1) {
+  flex: 1;
+}
+
+:where(.flex-0) {
+  flex: 0;
+}
+
+:where(.flex-auto) {
+  flex: auto;
+}

@@ -30,9 +30,9 @@ Place the element inside the container and style it. By default, it should be hi
   opacity: 0;
   translate: 0 20px;
   transition:
-    visibility 0.3s,
-    opacity 0.3s ease,
-    translate 0.3s ease;
+    visibility 200ms,
+    opacity 200ms ease,
+    translate 200ms ease;
 }
 ```
 

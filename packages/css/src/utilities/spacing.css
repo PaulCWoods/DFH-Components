@@ -1,0 +1,516 @@
+/* ==========================================================================
+   Design For Humans: Logical Spacing Utilities (Margin & Padding)
+   --------------------------------------------------------------------------
+   Low-specificity (:where()) margin and padding utilities supporting token-driven scales and
+   bidirectional layouts (LTR & RTL).
+   Direct parity with Design For Humans blog (_margin.scss & _padding.scss).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Margin Utilities
+   -------------------------------------------------------------------------- */
+
+/* All Sides */
+:where(.margin, .mg) {
+   margin: var(--spacing-16, 1rem);
+}
+
+:where(.margin-0, .mg-0) {
+   margin: 0;
+}
+
+:where(.margin-sm, .mg-sm) {
+   margin: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-lg, .mg-lg) {
+   margin: var(--spacing-32, 2rem);
+}
+
+:where(.margin-breathe, .mg-fl) {
+   margin: var(--spacing-breathe, 2rem);
+}
+
+:where(.margin-breathe-sm, .mg-sm-fl) {
+   margin: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.margin-breathe-lg, .mg-lg-fl) {
+   margin: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Margin Inline (Horizontal) */
+:where(.margin-inline, .mx) {
+   margin-inline: var(--spacing-16, 1rem);
+}
+
+:where(.margin-inline-0, .mx-0) {
+   margin-inline: 0;
+}
+
+:where(.margin-inline-sm, .mx-sm) {
+   margin-inline: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-inline-lg, .mx-lg) {
+   margin-inline: var(--spacing-32, 2rem);
+}
+
+:where(.margin-inline-breathe, .mx-fl) {
+   margin-inline: var(--spacing-breathe, 2rem);
+}
+
+:where(.margin-inline-breathe-sm, .mx-sm-fl) {
+   margin-inline: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.margin-inline-breathe-lg, .mx-lg-fl) {
+   margin-inline: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Margin Block (Vertical) */
+:where(.margin-block, .my) {
+   margin-block: var(--spacing-16, 1rem);
+}
+
+:where(.margin-block-0, .my-0) {
+   margin-block: 0;
+}
+
+:where(.margin-block-sm, .my-sm) {
+   margin-block: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-block-lg, .my-lg) {
+   margin-block: var(--spacing-32, 2rem);
+}
+
+:where(.margin-block-breathe, .my-fl) {
+   margin-block: var(--spacing-breathe, 2rem);
+}
+
+:where(.margin-block-breathe-sm, .my-sm-fl) {
+   margin-block: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.margin-block-breathe-lg, .my-lg-fl) {
+   margin-block: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Margin Block Start (Top) */
+:where(.margin-block-start, .margin-top, .mt) {
+   margin-block-start: var(--spacing-16, 1rem);
+}
+
+:where(.margin-block-start-0, .margin-top-0, .mt-0) {
+   margin-block-start: 0;
+}
+
+:where(.margin-block-start-sm, .margin-top-sm, .mt-sm) {
+   margin-block-start: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-block-start-md, .margin-top-md, .mt-md) {
+   margin-block-start: var(--spacing-16, 1rem);
+}
+
+:where(.margin-block-start-lg, .margin-top-lg, .mt-lg) {
+   margin-block-start: var(--spacing-32, 2rem);
+}
+
+:where(.margin-block-start-breathe, .margin-top-breathe, .mt-fl) {
+   margin-block-start: var(--spacing-breathe, 2rem);
+}
+
+:where(.margin-block-start-breathe-sm, .margin-top-breathe-sm, .mt-sm-fl) {
+   margin-block-start: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.margin-block-start-breathe-lg, .margin-top-breathe-lg, .mt-lg-fl) {
+   margin-block-start: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Margin Block End (Bottom) */
+:where(.margin-block-end, .margin-bottom, .mb) {
+   margin-block-end: var(--spacing-16, 1rem);
+}
+
+:where(.margin-block-end-0, .margin-bottom-0, .mb-0) {
+   margin-block-end: 0;
+}
+
+:where(.margin-block-end-sm, .margin-bottom-sm, .mb-sm) {
+   margin-block-end: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-block-end-md, .margin-bottom-md, .mb-md) {
+   margin-block-end: var(--spacing-16, 1rem);
+}
+
+:where(.margin-block-end-lg, .margin-bottom-lg, .mb-lg) {
+   margin-block-end: var(--spacing-32, 2rem);
+}
+
+:where(.margin-block-end-breathe, .margin-bottom-breathe, .mb-fl) {
+   margin-block-end: var(--spacing-breathe, 2rem);
+}
+
+:where(.margin-block-end-breathe-sm, .margin-bottom-breathe-sm, .mb-sm-fl) {
+   margin-block-end: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.margin-block-end-breathe-lg, .margin-bottom-breathe-lg, .mb-lg-fl) {
+   margin-block-end: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Margin Inline Start (Left in LTR) */
+:where(.margin-inline-start, .margin-left, .ml) {
+   margin-inline-start: var(--spacing-16, 1rem);
+}
+
+:where(.margin-inline-start-0, .margin-left-0, .ml-0) {
+   margin-inline-start: 0;
+}
+
+:where(.margin-inline-start-sm, .margin-left-sm, .ml-sm) {
+   margin-inline-start: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-inline-start-md, .margin-left-md, .ml-md) {
+   margin-inline-start: var(--spacing-16, 1rem);
+}
+
+:where(.margin-inline-start-lg, .margin-left-lg, .ml-lg) {
+   margin-inline-start: var(--spacing-32, 2rem);
+}
+
+:where(.margin-inline-start-breathe, .margin-left-breathe, .ml-fl) {
+   margin-inline-start: var(--spacing-breathe, 2rem);
+}
+
+/* Margin Inline End (Right in LTR) */
+:where(.margin-inline-end, .margin-right, .mr) {
+   margin-inline-end: var(--spacing-16, 1rem);
+}
+
+:where(.margin-inline-end-0, .margin-right-0, .mr-0) {
+   margin-inline-end: 0;
+}
+
+:where(.margin-inline-end-sm, .margin-right-sm, .mr-sm) {
+   margin-inline-end: var(--spacing-8, 0.5rem);
+}
+
+:where(.margin-inline-end-md, .margin-right-md, .mr-md) {
+   margin-inline-end: var(--spacing-16, 1rem);
+}
+
+:where(.margin-inline-end-lg, .margin-right-lg, .mr-lg) {
+   margin-inline-end: var(--spacing-32, 2rem);
+}
+
+:where(.margin-inline-end-breathe, .margin-right-breathe, .mr-fl) {
+   margin-inline-end: var(--spacing-breathe, 2rem);
+}
+
+/* --------------------------------------------------------------------------
+   2. Padding Utilities
+-------------------------------------------------------------------------- */
+
+/* All Sides */
+:where(.padding, .padding-md, .pd, .pd-md) {
+   padding: var(--spacing-16, 1rem);
+}
+
+:where(.padding-0, .pd-0) {
+   padding: 0;
+}
+
+:where(.padding-sm, .pd-sm) {
+   padding: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-lg, .pd-lg) {
+   padding: var(--spacing-32, 2rem);
+}
+
+:where(.padding-breathe, .pd-fl) {
+   padding: var(--spacing-breathe, 2rem);
+}
+
+:where(.padding-breathe-sm, .pd-fl-sm) {
+   padding: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-breathe-lg, .pd-fl-lg) {
+   padding: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-cushion, .pd-fl-x2) {
+   padding: var(--spacing-cushion, 4rem);
+}
+
+:where(.padding-cushion-sm, .pd-fl-x2sm) {
+   padding: calc(var(--spacing-cushion, 4rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-cushion-lg, .pd-fl-x2lg) {
+   padding: calc(var(--spacing-cushion, 4rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Padding Inline (Horizontal) */
+:where(.padding-inline, .px) {
+   padding-inline: var(--spacing-16, 1rem);
+}
+
+:where(.padding-inline-0, .px-0) {
+   padding-inline: 0;
+}
+
+:where(.padding-inline-sm, .px-sm) {
+   padding-inline: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-inline-lg, .px-lg) {
+   padding-inline: var(--spacing-32, 2rem);
+}
+
+:where(.padding-inline-breathe, .px-fl) {
+   padding-inline: var(--spacing-breathe, 2rem);
+}
+
+:where(.padding-inline-breathe-sm, .px-fl-sm) {
+   padding-inline: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-inline-breathe-lg, .px-fl-lg) {
+   padding-inline: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-inline-cushion, .px-fl-x2) {
+   padding-inline: var(--spacing-cushion, 4rem);
+}
+
+:where(.padding-inline-cushion-sm, .px-fl-x2sm) {
+   padding-inline: calc(var(--spacing-cushion, 4rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-inline-cushion-lg, .px-fl-x2lg) {
+   padding-inline: calc(var(--spacing-cushion, 4rem) * var(--sizing-ratio, 1.25));
+}
+
+/* Padding Block (Vertical) */
+:where(.padding-block, .py) {
+   padding-block: var(--spacing-16, 1rem);
+}
+
+:where(.padding-block-0, .py-0) {
+   padding-block: 0;
+}
+
+:where(.padding-block-sm, .py-sm) {
+   padding-block: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-block-lg, .py-lg) {
+   padding-block: var(--spacing-32, 2rem);
+}
+
+:where(.padding-block-breathe, .py-fl) {
+   padding-block: var(--spacing-breathe, 2rem);
+}
+
+:where(.padding-block-breathe-sm, .py-fl-sm) {
+   padding-block: calc(var(--spacing-breathe, 2rem) / var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-block-breathe-lg, .py-fl-lg) {
+   padding-block: calc(var(--spacing-breathe, 2rem) * var(--sizing-ratio, 1.25));
+}
+
+:where(.padding-block-cushion, .py-fl-x2) {
+   padding-block: var(--spacing-cushion, 4rem);
+}
+
+/* Padding Block Start (Top) */
+:where(.padding-block-start, .padding-top, .pt) {
+   padding-block-start: var(--spacing-16, 1rem);
+}
+
+:where(.padding-block-start-0, .padding-top-0, .pt-0) {
+   padding-block-start: 0;
+}
+
+:where(.padding-block-start-sm, .padding-top-sm, .pt-sm) {
+   padding-block-start: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-block-start-md, .padding-top-md, .pt-md) {
+   padding-block-start: var(--spacing-16, 1rem);
+}
+
+:where(.padding-block-start-lg, .padding-top-lg, .pt-lg) {
+   padding-block-start: var(--spacing-32, 2rem);
+}
+
+:where(.padding-block-start-breathe, .padding-top-breathe, .pt-fl) {
+   padding-block-start: var(--spacing-breathe, 2rem);
+}
+
+/* Padding Block End (Bottom) */
+:where(.padding-block-end, .padding-bottom, .pb) {
+   padding-block-end: var(--spacing-16, 1rem);
+}
+
+:where(.padding-block-end-0, .padding-bottom-0, .pb-0) {
+   padding-block-end: 0;
+}
+
+:where(.padding-block-end-sm, .padding-bottom-sm, .pb-sm) {
+   padding-block-end: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-block-end-md, .padding-bottom-md, .pb-md) {
+   padding-block-end: var(--spacing-16, 1rem);
+}
+
+:where(.padding-block-end-lg, .padding-bottom-lg, .pb-lg) {
+   padding-block-end: var(--spacing-32, 2rem);
+}
+
+:where(.padding-block-end-breathe, .padding-bottom-breathe, .pb-fl) {
+   padding-block-end: var(--spacing-breathe, 2rem);
+}
+
+/* Padding Inline Start (Left in LTR) */
+:where(.padding-inline-start, .padding-left, .pl) {
+   padding-inline-start: var(--spacing-16, 1rem);
+}
+
+:where(.padding-inline-start-0, .padding-left-0, .pl-0) {
+   padding-inline-start: 0;
+}
+
+:where(.padding-inline-start-sm, .padding-left-sm, .pl-sm) {
+   padding-inline-start: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-inline-start-md, .padding-left-md, .pl-md) {
+   padding-inline-start: var(--spacing-16, 1rem);
+}
+
+:where(.padding-inline-start-lg, .padding-left-lg, .pl-lg) {
+   padding-inline-start: var(--spacing-32, 2rem);
+}
+
+/* Padding Inline End (Right in LTR) */
+:where(.padding-inline-end, .padding-right, .pr) {
+   padding-inline-end: var(--spacing-16, 1rem);
+}
+
+:where(.padding-inline-end-0, .padding-right-0, .pr-0) {
+   padding-inline-end: 0;
+}
+
+:where(.padding-inline-end-sm, .padding-right-sm, .pr-sm) {
+   padding-inline-end: var(--spacing-8, 0.5rem);
+}
+
+:where(.padding-inline-end-md, .padding-right-md, .pr-md) {
+   padding-inline-end: var(--spacing-16, 1rem);
+}
+
+:where(.padding-inline-end-lg, .padding-right-lg, .pr-lg) {
+   padding-inline-end: var(--spacing-32, 2rem);
+}
+
+/* --------------------------------------------------------------------------
+   3. Gap Utilities
+   -------------------------------------------------------------------------- */
+
+/* All-Sides Gap */
+:where(.gap, .gap-md) {
+   gap: var(--spacing, 1rem);
+}
+
+:where(.gap-hairline, .gap-1px) {
+   gap: 1px;
+}
+
+:where(.gap-sm) {
+   gap: calc(var(--spacing, 1rem) / 2);
+}
+
+:where(.gap-lg) {
+   gap: calc(var(--spacing, 1rem) * 2);
+}
+
+:where(.gap-breathe) {
+   gap: var(--spacing-breathe, 2rem);
+}
+
+:where(.gap-cushion) {
+   gap: var(--spacing-cushion, 4rem);
+}
+
+:where(.gap-0, .gap-none) {
+   gap: 0;
+}
+
+/* Row Gap */
+:where(.row-gap, .row-gap-md) {
+   row-gap: var(--spacing, 1rem);
+}
+
+:where(.row-gap-hairline, .row-gap-1px) {
+   row-gap: 1px;
+}
+
+:where(.row-gap-sm) {
+   row-gap: calc(var(--spacing, 1rem) / 2);
+}
+
+:where(.row-gap-lg) {
+   row-gap: calc(var(--spacing, 1rem) * 2);
+}
+
+:where(.row-gap-breathe) {
+   row-gap: var(--spacing-breathe, 2rem);
+}
+
+:where(.row-gap-cushion) {
+   row-gap: var(--spacing-cushion, 4rem);
+}
+
+:where(.row-gap-0) {
+   row-gap: 0;
+}
+
+/* Column Gap */
+:where(.col-gap, .col-gap-md) {
+   column-gap: var(--spacing, 1rem);
+}
+
+:where(.col-gap-hairline, .col-gap-1px) {
+   column-gap: 1px;
+}
+
+:where(.col-gap-sm) {
+   column-gap: calc(var(--spacing, 1rem) / 2);
+}
+
+:where(.col-gap-lg) {
+   column-gap: calc(var(--spacing, 1rem) * 2);
+}
+
+:where(.col-gap-breathe) {
+   column-gap: var(--spacing-breathe, 2rem);
+}
+
+:where(.col-gap-cushion) {
+   column-gap: var(--spacing-cushion, 4rem);
+}
+
+:where(.col-gap-0) {
+   column-gap: 0;
+}

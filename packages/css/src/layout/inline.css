@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Design For Humans: Inline & Responsive Inline Layout Primitives
+   --------------------------------------------------------------------------
+   Horizontal 1D flow (.inline) and container-driven auto-directional inline
+   rows (.inline-responsive--*) that switch from stack to inline flow.
+   Uses zero-specificity (:where()) for composability.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base Inline & Responsive Container
+   -------------------------------------------------------------------------- */
+
+:where(.inline, .inline-responsive) {
+    display: var(--display, flex);
+    flex-wrap: var(--flex-wrap, nowrap);
+    gap: var(--gap, var(--spacing, 1rem));
+    justify-content: var(--justify-content, var(--justify, normal));
+}
+
+:where(.inline, .inline-responsive):where(ul, ol) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Vertical Stack Default for Responsive Flow */
+:where(.inline-responsive) {
+    --direction: column;
+    align-items: var(--align-items, stretch);
+    flex-direction: column;
+}
+
+/* Horizontal Inline Flow */
+:where(.inline) {
+    --direction: row;
+    align-items: var(--align-items, center);
+    flex-direction: row;
+}
+
+/* --------------------------------------------------------------------------
+   2. Modifiers
+   -------------------------------------------------------------------------- */
+
+/* Tight Modifier (Zero Gap) */
+:where(.inline--tight) {
+    gap: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Ruled Modifier
+   -------------------------------------------------------------------------- */
+
+:where(.inline--ruled) {
+    @supports (rule: 1px) {
+        gap: var(--rule-width, 1px);
+        rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive Inline Modifiers (@container)
+   Switches from vertical stack to horizontal row when container width exceeds breakpoint.
+   -------------------------------------------------------------------------- */
+
+@container (width > 20em) {
+    :where(.inline-responsive--2xs) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width > 30em) {
+    :where(.inline-responsive--xs) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width > 40em) {
+    :where(.inline-responsive--sm) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width > 48em) {
+    :where(.inline-responsive--md) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width > 60em) {
+    :where(.inline-responsive--lg) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width > 80em) {
+    :where(.inline-responsive--xl) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width > 96em) {
+    :where(.inline-responsive--2xl) {
+        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}

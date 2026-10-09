@@ -1,4 +1,11 @@
 <style>
+  /* ==========================================================================
+     Design For Humans - Storybook Canvas & Docs Token Bridge
+     --------------------------------------------------------------------------
+     Uses native CSS @scope donut scoping to isolate Storybook Docs chrome/tables
+     while strictly preventing style leaks into component demo canvases.
+     ========================================================================== */
+
   /* 1. Base Preview Canvas & Iframe */
   html,
   body {
@@ -6,7 +13,74 @@
     color: var(--foreground);
     font-family: var(--body-font-family, 'Inter', system-ui, -apple-system, sans-serif);
     margin: 0;
-    transition: background-color var(--duration-sm, 0.2s) ease, color var(--duration-sm, 0.2s) ease;
+    transition: background-color var(--duration-sm, 200ms) ease, color var(--duration-sm, 200ms) ease;
+  }
+
+  /* 2. Storybook Docs Page Typography (Donut Scoped: Excludes .docs-story & .sb-story) */
+  @scope (.sbdocs, #storybook-docs) to (.docs-story, .sb-story, .innerZoomElementWrapper) {
+
+    :scope,
+    .sbdocs-wrapper,
+    .sbdocs-content {
+      background-color: var(--surface) !important;
+      color: var(--foreground) !important;
+    }
+
+    /* Headings */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .sbdocs-title,
+    .sbdocs-h1,
+    .sbdocs-h2,
+    .sbdocs-h3,
+    .sbdocs-h4,
+    .sbdocs-h5,
+    .sbdocs-h6 {
+      color: var(--foreground) !important;
+      font-family: var(--heading-font-family, inherit);
+    }
+
+    /* Descriptions & Body Copy */
+    p,
+    li,
+    .sbdocs-p,
+    .sbdocs-desc,
+    .sbdocs-subtitle {
+      color: var(--foreground-muted) !important;
+    }
+
+    strong {
+      color: var(--foreground) !important;
+    }
+
+    /* Links */
+    a,
+    .sbdocs-a {
+      color: var(--foreground-accent) !important;
+    }
+
+    /* Dividers */
+    hr,
+    .sbdocs-hr {
+      border-color: var(--border-muted) !important;
+    }
+
+    /* Code Blocks outside demos */
+    code:not(pre code),
+    .sbdocs-code {
+      background-color: var(--surface-card) !important;
+      color: var(--foreground) !important;
+      border: 1px solid var(--border-muted) !important;
+    }
+
+    pre {
+      background-color: var(--surface-card) !important;
+      border: 1px solid var(--border-muted) !important;
+    }
   }
 
   /* 3. Story Preview Canvas Card in Docs View */
@@ -16,67 +90,101 @@
   .innerZoomElementWrapper {
     background-color: var(--surface-card);
     color: var(--foreground);
+
+    .prismjs {
+      background-color: var(--surface-darker, black) !important;
+    }
   }
 
   /* Outer border container wrapping the preview story block */
   div:has(> .docs-story),
   div:has(> .innerZoomElementWrapper),
   div:has(> div > .docs-story) {
-    background-color: var(--surface-card);
     border-color: var(--border-muted);
   }
 
-  /* 4. Controls / ArgsTable */
-  .docblock-argstable {
-    color: var(--foreground);
-    background-color: var(--surface-card);
-    border-color: var(--border-muted);
+  /* 4. Controls / ArgsTable (Scoped directly to the table container) */
+  @scope (.docblock-argstable) {
+
+    :scope,
+    table {
+      color: var(--foreground) !important;
+      background-color: var(--surface-card) !important;
+      border-color: var(--border-muted) !important;
+    }
+
+    /* Header Row */
+    thead,
+    th {
+      color: var(--foreground) !important;
+      background-color: var(--surface) !important;
+      border-color: var(--border-muted) !important;
+    }
+
+    th * {
+      color: var(--foreground) !important;
+      fill: currentColor !important;
+    }
+
+    /* Body & Rows */
+    tbody,
+    tr {
+      background-color: var(--surface-card) !important;
+      border-color: var(--border-muted) !important;
+      color: var(--foreground) !important;
+    }
+
+    tbody tr:nth-of-type(2n) {
+      background-color: var(--surface-translucent) !important;
+    }
+
+    /* Cells */
+    td {
+      color: var(--foreground) !important;
+      border-color: var(--border-muted) !important;
+      background-color: transparent !important;
+    }
+
+    td span,
+    td div,
+    td strong,
+    td p {
+      color: var(--foreground) !important;
+    }
+
+    /* Type badges (e.g. number, string, boolean) */
+    td code {
+      background-color: var(--surface) !important;
+      color: var(--foreground-accent) !important;
+      border: 1px solid var(--border-muted) !important;
+      padding: 2px 6px !important;
+      border-radius: var(--radius-sm, 4px) !important;
+    }
+
+    /* Inputs, Selects, Textareas */
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+      color: var(--foreground) !important;
+      background-color: var(--surface) !important;
+      border: 1px solid var(--border-muted) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+    }
+
+    button {
+      color: var(--foreground) !important;
+    }
   }
 
-  .docblock-argstable-head th {
-    color: var(--foreground);
-    background-color: var(--surface-card);
-    border-color: var(--border-muted);
-  }
-
-  .docblock-argstable-body tr {
-    background-color: var(--surface-card);
-    border-color: var(--border-muted);
-    color: var(--foreground);
-  }
-
-  .docblock-argstable-body tr:nth-of-type(2n) {
-    background-color: var(--surface-fade);
-  }
-
-  .docblock-argstable-body td {
-    color: var(--foreground);
-    border-color: var(--border-muted);
-  }
-
-  .docblock-argstable-body td span,
-  .docblock-argstable-body td code {
-    color: var(--foreground);
-  }
-
-  /* Table inputs and control fields */
-  .docblock-argstable input,
-  .docblock-argstable select,
-  .docblock-argstable textarea {
-    color: var(--foreground);
-    background-color: var(--surface);
-    border-color: var(--border-muted);
-  }
-
-  /* Show code toggle button */
+  /* 5. Docblock Code Toggle & Source Blocks */
   .docblock-code-toggle {
-    background-color: var(--surface-card);
-    color: var(--foreground);
-    border-color: var(--border-muted);
+    background-color: var(--surface-card) !important;
+    color: var(--foreground) !important;
+    border-color: var(--border-muted) !important;
   }
 
-  /* Code snippet block in docs */
   .docblock-source {
-    border-color: var(--border-muted);
+    background-color: var(--surface-card) !important;
+    border-color: var(--border-muted) !important;
   }
 </style>

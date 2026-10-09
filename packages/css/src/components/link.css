@@ -42,11 +42,6 @@
   transition-duration: var(--link-transition, var(--duration-sm, 150ms));
   transition-timing-function: var(--link-timefunc, var(--timefunc-ease-out, ease-out));
 
-  /* Inline Icon Spacing */
-  & :where(.icon, svg) {
-    margin-inline-start: 0.25em;
-  }
-
   /* Interactive Hover & Active States */
   @media (hover: hover) {
     &:hover {
@@ -64,7 +59,7 @@
 
   /* Focus Visible (WCAG 2.4.7 & 2.4.13) */
   &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-offset: var(--focus-ring-outline-offset, 2px);
     border-radius: var(--radius-xs, 2px);
   }
@@ -73,22 +68,6 @@
 /* ==========================================================================
    2. Inline Link Context Themes
    ========================================================================== */
-
-/* Inverted Context (for high-contrast banners and dark mode inverts) */
-:where(.link--inverted, a.link--inverted),
-:where(.colors-inverted, .s-link\:inverted) :where(.link, a.link) {
-  --_link-color: var(--link-inverted-color, var(--foreground-accent-inverted, #00d2c4));
-  --_link-hover-color: var(--link-inverted-hover-color, var(--foreground-accent-inverted-hover, #66e4da));
-  --_link-active-color: var(--link-inverted-active-color, var(--foreground-accent-inverted-pressed, #00a498));
-}
-
-/* On-Dark Context (for dark hero sections, cards, and footers) */
-:where(.link--on-dark, a.link--on-dark),
-:where(.colors-dark, .colors-darker, .s-link\:dark) :where(.link, a.link) {
-  --_link-color: var(--link-on-dark-color, var(--foreground-accent-on-dark, #00d2c4));
-  --_link-hover-color: var(--link-on-dark-hover-color, var(--foreground-accent-on-dark-hover, #66e4da));
-  --_link-active-color: var(--link-on-dark-active-color, var(--foreground-accent-on-dark-pressed, #00a498));
-}
 
 /* Subtle Link: inherits surrounding text color when resting */
 :where(.link--subtle, a.link--subtle):not(:hover, :active, :focus) {
@@ -105,7 +84,7 @@
 :where(.link--inline-flex, a.link--inline-flex) {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-0-25, 0.25rem);
+  gap: var(--spacing-4, 0.25rem);
 
   & :where(.icon, svg) {
     margin-inline-start: 0;
@@ -170,26 +149,39 @@
     flex-shrink: 0;
   }
 
-  /* Hover & Active States */
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--_block-link-hover-bg);
-      color: var(--_block-link-hover-color);
-      border-color: var(--_block-link-hover-border);
+  &:is(a) {
+    @media screen {
+      color: var(--block-link-color, var(--link-color, var(--foreground-accent)));
+
+      &:active {
+        background-color: var(--block-link-background-color, var(--surface-accent-strong));
+        color: var(--foreground-inverted);
+        border-color: var(--surface-accent-strong);
+        transition-timing-function: 0s;
+        text-decoration: none;
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--block-link-hover-background-color, var(--surface-accent-strong));
+          color: var(--block-link-hover-color, var(--foreground-inverted));
+          border-color: var(--block-link-hover-border, var(--surface-accent-strong));
+          text-decoration: none;
+        }
+
+        &:active {
+          background-color: var(--block-link-active-background-color, var(--surface-inverted));
+          color: var(--block-link-active-color, var(--foreground-inverted));
+          border-color: var(--block-link-active-border, var(--surface-inverted));
+        }
+      }
     }
-  }
 
-  &:active {
-    background-color: var(--_block-link-active-bg);
-    color: var(--_block-link-active-color);
-    border-color: var(--_block-link-active-border);
-    transition-timing-function: step-start;
-  }
-
-  /* Focus Visible */
-  &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
-    outline-offset: var(--focus-ring-outline-offset, 2px);
+    /* Focus Visible */
+    &:focus-visible {
+      outline: var(--focus-ring-outline, 2px solid AccentColor);
+      outline-offset: var(--focus-ring-outline-offset, 2px);
+    }
   }
 }
 

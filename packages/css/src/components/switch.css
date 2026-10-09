@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Switch Primitive Component
+   --------------------------------------------------------------------------
+   Accessible segmented binary toggle switch with sliding selection indicator,
+   high-contrast states, and zero-JS state management via :has(:checked).
+   Adheres to WCAG 2.2 AA / AAA standards:
+   - 4.1.2 Name, Role, Value (Native checkbox with role="switch")
+   - 2.5.5 / 2.5.8 Target Size (48px standard, 32px compact)
+   - 1.4.3 / 1.4.11 Contrast
+   - 2.4.7 Focus Visible
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Switch Container (:where(.switch))
+   ========================================================================== */
+:where(.switch) {
+  --_switch-radius: var(--switch-radius, var(--button-radius, var(--radius-md, 0.25rem)));
+  --_switch-border-width: var(--switch-border-width, var(--button-border-width, 1px));
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--switch-gap, var(--spacing-16, 1rem));
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+
+  /* Visually hide the native input while preserving accessibility and keyboard focus */
+  :where(input) {
+    position: absolute !important;
+    inline-size: 1px !important;
+    block-size: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border-width: 0 !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     2. Segmented Control Outer Frame
+     ------------------------------------------------------------------------ */
+  .switch__control {
+    --_switch-radius: var(--switch-radius, var(--radius, 0.25rem));
+    --_switch-border-width: var(--switch-border-width, var(--border-width, 1px));
+    --_switch-inactive-opacity: var(--switch-inactive-opacity, var(--opacity-disabled, 0.5));
+
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    isolation: isolate;
+    min-block-size: var(--switch-height, var(--button-min-size, var(--spacing-48, 3rem)));
+    border: var(--_switch-border-width) solid var(--switch-border-color, var(--border-color-muted, currentColor));
+    border-radius: var(--_switch-radius);
+    background-color: var(--switch-bg, transparent);
+    overflow: hidden;
+
+    /* Animated sliding indicator (half width minus slider inset) */
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: var(--switch-slider-inset, 0px);
+      inset-inline-start: var(--switch-slider-inset, 0px);
+      inline-size: calc(50% - var(--switch-slider-inset, 0px));
+      z-index: 0;
+      border-radius: var(--switch-slider-radius, calc(var(--_switch-radius, 0.25rem) - var(--_switch-border-width, 1px) * 2));
+      background-color: var(--_switch-indicator-bg, var(--surface-translucent, #E6E4DF));
+      translate: var(--_switch-translate, 0 0);
+      transition:
+        translate var(--switch-transition, var(--duration-sm, 200ms)) var(--timefunc-ease-in-out, ease-in-out),
+        background-color var(--switch-transition, var(--duration-sm, 200ms)) ease;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        --_switch-inactive-opacity: 1;
+        color: var(--switch-hover-text, var(--foreground-accent-hover, AccentColor));
+      }
+    }
+
+    &:active {
+      --_switch-inactive-opacity: 1;
+      color: var(--switch-pressed-text, var(--foreground-accent-pressed, AccentColor));
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3. Segment Options (Off / On)
+     ------------------------------------------------------------------------ */
+  .switch__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    flex: 1 1 50%;
+    min-inline-size: var(--switch-option-min-width, var(--spacing-48, 3rem));
+    padding-block: var(--button-padding-block, var(--spacing-4, 0.25rem));
+    padding-inline: var(--switch-padding-inline, var(--spacing-16, 1rem));
+    font-family: var(--switch-font-family, var(--typography-font-family-sans, sans-serif));
+    font-size: var(--switch-font-size, var(--control-font-size, 1rem));
+    font-weight: var(--switch-font-weight, var(--font-weight-bold, 700));
+    line-height: 1;
+    text-box: trim-both cap alphabetic;
+    transition: color var(--switch-transition, var(--duration-sm, 200ms)) ease;
+  }
+
+  /* ------------------------------------------------------------------------
+     4. State Management: Off vs On via :has(:checked)
+     ------------------------------------------------------------------------ */
+
+  &:not(:has(:checked)) {
+    --_switch-indicator-bg: var(--switch-off-bg, var(--surface-muted, #e6e4df));
+    --_switch-translate: 0 0;
+
+    :where(.switch__option--off) {
+      color: var(--switch-off-color, var(--foreground, currentColor));
+    }
+
+    :where(.switch__option--on) {
+      opacity: var(--_switch-inactive-opacity);
+    }
+  }
+
+  /* ON State (:has(:checked)) */
+  &:has(:checked) {
+    --_switch-indicator-bg: var(--switch-on-bg, var(--foreground-accent, #008076));
+    --_switch-translate: 100% 0;
+
+    :where(.switch__option--off) {
+      color: var(--switch-inactive-color, inherit);
+      opacity: var(--_switch-inactive-opacity);
+    }
+
+    :where(.switch__option--on) {
+      color: var(--switch-on-color, var(--foreground-inverted-strong, #ffffff));
+    }
+  }
+
+  /* RTL Support for Slide Direction */
+  &:where([dir="rtl"] *),
+  [dir="rtl"] & {
+    &:has(:checked) {
+      --_switch-translate: -100% 0;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     5. Focus Visible Ring
+     ------------------------------------------------------------------------ */
+  &:has(input:focus-visible) .switch__control {
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
+    outline-offset: var(--focus-ring-outline-offset, 2px);
+  }
+
+  /* ------------------------------------------------------------------------
+     6. Disabled State
+     ------------------------------------------------------------------------ */
+  &:has(:disabled, [disabled], [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled, 0.4);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* ==========================================================================
+   Switch Destructive Modifier
+   ========================================================================== */
+
+:where(.switch--destructive) {
+  --switch-on-bg: var(--switch-on-destructive-bg, var(--foreground-destructive, red));
+
+  &:not(:has(:checked)) {
+    --switch-hover-text: var(--switch-hover-destructive-text, var(--foreground-destructive-hover, red));
+    --switch-pressed-text: var(--switch-hover-destructive-text, var(--foreground-destructive-pressed, red));
+  }
+}
+
+
+/* ==========================================================================
+   Switch Sizes & Shape Modifiers
+   ========================================================================== */
+
+/* Small Variant (32px touch target) */
+:where(.switch--sm) {
+  --switch-height: var(--switch-sm-height, var(--spacing-32, 2rem));
+  --switch-font-size: var(--typography-font-size--1, 0.8rem);
+  --switch-padding-inline: var(--spacing-8, 0.5rem);
+  --switch-option-min-width: var(--spacing-32, 2rem);
+}
+
+/* Large Variant (56px touch target) */
+:where(.switch--lg) {
+  --switch-height: var(--switch-lg-height, var(--spacing-64, 3.5rem));
+  --switch-font-size: var(--typography-font-size-1, 1.25rem);
+  --switch-padding-inline: var(--spacing-24, 1.5rem);
+}
+
+/* Round / Rounded Variant */
+:where(.switch--round) {
+  --switch-radius: var(--radius-round, 9999px);
+}

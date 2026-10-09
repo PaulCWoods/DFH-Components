@@ -39,7 +39,7 @@ const meta: Meta = {
       </div>
 
       <footer class="card__footer">
-        <form method="dialog" class="form__submission" style="display: flex; gap: var(--spacing-0-5);">
+        <form method="dialog" class="form__submission" style="display: flex; gap: var(--spacing-8);">
           <button type="submit" class="button button--secondary" commandfor="my-dialog" command="close">
             <span>Cancel</span>
           </button>
@@ -106,13 +106,13 @@ export const ModalDialog: Story = {
                 <form method="dialog">
                   <button 
                     type="submit" 
-                    class="button button--subtle button--icon" 
+                    class="button button--subtle button--icon button--icon-lg button--sm" 
                     commandfor="${dialogId}"
                     command="close"
                   >
                     <span class="visually-hidden">Close dialog</span>
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                      <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                    <svg class="icon" width="32" height="32" aria-hidden="true">
+                        <use href="#Close"/>
                     </svg>
                   </button>
                 </form>
@@ -200,7 +200,7 @@ export const MediaFeaturedModal: Story = {
                   <h2 id="media-dialog-title" class="card__title">Design For Humans v2.0</h2>
                   <p class="card__subtitle">Full Web Standards & Native Figma Variables</p>
                 </hgroup>
-                <span class="badge badge--accent badge--pill"><span>New</span></span>
+                <span class="badge badge--accent badge--round"><span>New</span></span>
               </header>
 
               <div class="card__body">
@@ -239,7 +239,7 @@ export const MediaFeaturedModal: Story = {
 
 /**
  * 3. Dynamic Concentric Corners Modal
- * Card radius dynamically harmonizes with the pill action button using .card--dynamic-corners.
+ * Card radius dynamically harmonizes with the round action button using .card--dynamic-corners.
  */
 export const DynamicCornersModal: Story = {
   render: () => {
@@ -271,7 +271,7 @@ export const DynamicCornersModal: Story = {
           class="dialog" 
           aria-labelledby="concentric-title"
         >
-          <div class="card card--dynamic-corners" style="--button-radius: var(--radius-pill);">
+          <div class="card card--dynamic-corners" style="--button-radius: var(--radius-round);">
             <article class="card__content">
               <header class="card__header">
                 <hgroup class="card__hgroup">
@@ -282,7 +282,7 @@ export const DynamicCornersModal: Story = {
 
               <div class="card__body">
                 <p>
-                  The outer border radius of this modal is mathematically computed from the nested pill action button below.
+                  The outer border radius of this modal is mathematically computed from the nested round action button below.
                 </p>
               </div>
 
@@ -347,13 +347,13 @@ export const SlideOutDrawer: Story = {
                 <form method="dialog">
                   <button 
                     type="submit" 
-                    class="button button--subtle button--icon" 
+                    class="button button--subtle button--icon button--icon-lg button--sm" 
                     commandfor="${dialogId}"
                     command="close"
                   >
                     <span class="visually-hidden">Close drawer</span>
-                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                      <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+                    <svg class="icon" width="32" height="32" aria-hidden="true">
+                        <use href="#Close"/>
                     </svg>
                   </button>
                 </form>
@@ -361,7 +361,7 @@ export const SlideOutDrawer: Story = {
 
               <div class="card__body" style="flex-grow: 1;">
                 <p>Manage accessibility preferences, high contrast mode, and sound effects.</p>
-                <div class="field" style="margin-block-start: var(--spacing-1);">
+                <div class="field" style="margin-block-start: var(--spacing-16);">
                   <label class="choice" for="cb-high-contrast">
                     <input type="checkbox" id="cb-high-contrast" class="checkbox-input" />
                     <span>Force Enhanced Contrast</span>

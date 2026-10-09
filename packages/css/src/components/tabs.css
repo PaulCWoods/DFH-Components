@@ -2,7 +2,7 @@
    Design For Humans: Tabs Component
    --------------------------------------------------------------------------
    Styles horizontal and vertical tab lists with anchor-positioned selection
-   indicator transition, button tabs, pill curves, and compact sizes.
+   indicator transition, button tabs, round curves, and compact sizes.
    Parity with Design For Humans Blog (_tabs.scss)
 
    Usage:
@@ -114,7 +114,7 @@
   white-space: nowrap;
 
   /* Spacing and typography */
-  gap: var(--tab-inner-gap, var(--spacing-0-5, 0.5rem));
+  gap: var(--tab-inner-gap, var(--spacing-8, 0.5rem));
   padding-block: var(--tab-padding-block, var(--button-padding-block, 0.5rem));
   padding-inline: var(--tab-padding-inline, 0);
   line-height: 1;
@@ -127,40 +127,12 @@
   border: var(--tab-border-width, 0px) solid var(--tab-border-color, var(--border-color-quiet, currentColor));
   border-block-end: var(--tab-border-bottom-width, var(--border-width, 1px)) solid var(--tab-border-bottom-color, transparent);
 
-  /* Context colors */
-  :where(.colors-inverted) & {
-    color: var(--tab-text, var(--foreground-inverted, currentColor));
-  }
-
-  :where(.colors-dark, .colors-darker) & {
-    color: var(--tab-text, var(--foreground-on-dark, currentColor));
-  }
-
-  /* Focus Indicator */
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: var(--focus-ring-outline);
-    outline-offset: var(--focus-ring-outline-offset, 2px);
-    z-index: 2;
-  }
-
   /* Hover State */
   @media (hover: hover) {
     &:hover:not(:is([aria-selected="true"], [aria-current="page"])) {
       color: var(--tab-hover-color, var(--foreground-accent-hover, currentColor));
       border-color: var(--tab-hover-border-color, currentColor);
       text-decoration: none;
-
-      :where(.colors-inverted) & {
-        color: var(--tab-text, var(--foreground-accent-inverted-hover, currentColor));
-      }
-
-      :where(.colors-dark, .colors-darker) & {
-        color: var(--tab-text, var(--foreground-accent-on-dark-hover, currentColor));
-      }
     }
   }
 
@@ -195,7 +167,7 @@ a:where(.tab):focus {
 /* Vertical Tab Items */
 :where(.tabs--vertical .tab) {
   justify-content: space-between;
-  gap: var(--tab-vert-inner-gap, var(--spacing-1, 1rem));
+  gap: var(--tab-vert-inner-gap, var(--spacing-16, 1rem));
   min-block-size: var(--tab-vert-min-size, var(--button-sm-min-size, 1.5rem));
   padding-block: 0;
   padding-inline-end: var(--tab-padding-inline, var(--button-padding-inline, 0.5rem));
@@ -203,7 +175,7 @@ a:where(.tab):focus {
   border-inline-end: var(--tab-border-bottom-width, var(--border-width, 1px)) solid var(--tab-border-bottom-color, transparent);
 }
 
-:where(.s-tabs\:sm, .tabs--sm) :where(.tabs--vertical .tab) {
+:where(.s-tab\:sm, .tabs--sm) :where(.tabs--vertical .tab) {
   padding-inline-end: var(--tab-sm-padding-inline, var(--button-sm-padding-inline, 0.25rem));
 }
 
@@ -212,13 +184,13 @@ a:where(.tab):focus {
 }
 
 /* ==========================================================================
-   3. Small / Compact Sizing (.tabs--sm, .s-tabs:sm, .tab--sm)
+   3. Small / Compact Sizing (.tabs--sm, .s-tab:sm, .tab--sm)
    ========================================================================== */
-:where(.s-tabs\:sm, .tabs--sm) {
-  --tabs-list-gap: var(--tabs-sm-list-gap, var(--spacing-1, 1rem));
+:where(.s-tab\:sm, .tabs--sm) {
+  --tabs-list-gap: var(--tabs-sm-list-gap, var(--spacing-16, 1rem));
 }
 
-:where(.s-tabs\:sm, .tabs--sm, .tab--sm) {
+:where(.s-tab\:sm, .tabs--sm, .tab--sm) {
   --tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, 0.25rem));
   --tab-padding-inline: var(--tab-sm-padding-inline, 0);
   --tab-button-padding-inline: var(--tab-button-sm-padding-inline, var(--button-sm-padding-inline, 0.5rem));
@@ -227,16 +199,16 @@ a:where(.tab):focus {
 }
 
 /* ==========================================================================
-   4. Button Style Tabs (.tabs--buttons, .s-tabs:buttons)
+   4. Button Style Tabs (.tabs--buttons, .s-tab:button)
    ========================================================================== */
-:where(.s-tabs\:buttons, .tabs--buttons) {
-  &:where(.s-tabs\:round, .tabs--round) {
-    --tab-button-radius: var(--radius-pill, 9999px);
+:where(.s-tab\:button, .tabs--buttons) {
+  &:where(.s-tab\:round, .tabs--round) {
+    --tab-button-radius: var(--radius-round, 9999px);
   }
 
   :where(.tabs__list, .tab-list) {
     box-shadow: var(--tabs-list-shadow, 0 0 0 transparent);
-    gap: var(--tabs-button-list-gap, var(--spacing-0-5, 0.5rem));
+    gap: var(--tabs-button-list-gap, var(--spacing-8, 0.5rem));
 
     &::before {
       inset-block-start: anchor(start);
@@ -257,7 +229,7 @@ a:where(.tab):focus {
   }
 }
 
-:where(.s-tabs\:buttons, .tabs--buttons) :where(.tab),
+:where(.s-tab\:button, .tabs--buttons) :where(.tab),
 :where(.tab--button) {
   /* Sizing and spacing */
   min-block-size: var(--tab-min-size, var(--button-min-size, var(--spacing-target, 3rem)));
@@ -270,14 +242,6 @@ a:where(.tab):focus {
   border-radius: var(--tab-button-radius, var(--button-radius, 0.25rem));
   background-color: var(--tab-button-bg, transparent);
   color: var(--tab-button-text, var(--foreground, currentColor));
-
-  :where(.colors-inverted) & {
-    color: var(--tab-button-text, var(--foreground-inverted, currentColor));
-  }
-
-  :where(.colors-dark, .colors-darker) & {
-    color: var(--tab-button-text, var(--foreground-on-dark, currentColor));
-  }
 
   @media (hover: hover) {
     &:hover:not(:is([aria-selected="true"], [aria-current="page"])) {
@@ -295,7 +259,7 @@ a:where(.tab):focus {
   }
 
   &:where(.tab--round) {
-    --tab-button-radius: var(--radius-pill, 9999px);
+    --tab-button-radius: var(--radius-round, 9999px);
   }
 }
 
@@ -356,7 +320,7 @@ a:where(.tab):focus {
     text-underline-offset: 4px;
   }
 
-  :where(.s-tabs\:buttons, .tabs--buttons) :where(.tab):is([aria-selected="true"], [aria-current="page"]) {
+  :where(.s-tab\:button, .tabs--buttons) :where(.tab):is([aria-selected="true"], [aria-current="page"]) {
     border-width: calc(var(--tab-button-border-width, 1px) * 2);
     border-color: currentColor;
     text-decoration: none;

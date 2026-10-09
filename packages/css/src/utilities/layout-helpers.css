@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Design For Humans: Dimension, Position & Overflow Utilities
+   --------------------------------------------------------------------------
+   Comprehensive, zero-specificity (:where()) dimension, positioning, and
+   overflow helper classes.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Dimension Utilities (Width & Height)
+   -------------------------------------------------------------------------- */
+
+/* Full Viewport Height */
+:where(.min-h-screen, .min-block-screen) {
+    min-block-size: 100vh;
+    min-block-size: 100dvh;
+}
+
+/* Full Width & Height */
+:where(.w-full, .inline-full) {
+    inline-size: 100%;
+}
+
+:where(.h-full, .block-full) {
+    block-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   2. Positioning Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.position-relative) {
+    position: relative;
+}
+
+:where(.position-absolute) {
+    position: absolute;
+}
+
+:where(.position-sticky) {
+    position: sticky;
+}
+
+/* --------------------------------------------------------------------------
+   3. Overflow Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.overflow-hidden) {
+    overflow: hidden;
+}
+
+:where(.overflow-auto) {
+    overflow: auto;
+}
+
+:where(.overflow-x-auto) {
+    overflow-x: auto;
+}
+
+:where(.overflow-y-auto) {
+    overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------------
+   4. Isolation Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.isolate) {
+    isolation: isolate;
+}

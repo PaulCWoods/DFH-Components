@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Design For Humans: Focus Ring & Container Focus Utilities
+   --------------------------------------------------------------------------
+   Low-specificity (:where()) focus management utilities for moving focus rings
+   to parent containers (e.g. search boxes, compound form fields, composite cards)
+   while suppressing nested child double-rings.
+   Complies with WCAG 2.2 Success Criterion 2.4.7 (Focus Visible) & 2.4.13 (Focus Appearance).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Container Focus Ring Utilities (:where(.focus-within, .focus-container))
+   Transfers the active high-contrast focus ring to the outer container when
+   any nested interactive child receives keyboard focus (:focus-visible).
+   ========================================================================== */
+
+:where(.focus-within, .focus-container, .has-focus-ring) {
+
+    /* Container focus ring activates on nested :focus-visible */
+    &:has(:focus-visible) {
+        outline: var(--focus-ring-outline, 2px solid AccentColor);
+        outline-offset: var(--focus-ring-outline-offset, 2px);
+    }
+
+    /* Fallback for browsers without :has() support */
+    @supports not selector(:has(*)) {
+        &:focus-within {
+            outline: var(--focus-ring-outline, 2px solid AccentColor);
+            outline-offset: var(--focus-ring-outline-offset, 2px);
+        }
+    }
+
+    /* Suppress default nested child focus rings to prevent double indicators */
+    &:has(:focus-visible) :where(input, textarea, select, button, a, [tabindex], .focus-target):focus-visible {
+        outline: none !important;
+        box-shadow: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2. Target-Specific Container Focus (:where(.focus-within--input))
+   Only activates the container ring when form inputs (not auxiliary buttons) focus.
+   -------------------------------------------------------------------------- */
+
+:where(.focus-within--input, .focus-input-container) {
+    &:has(:where(input, textarea, select):focus-visible) {
+        outline: var(--focus-ring-outline, 2px solid AccentColor);
+        outline-offset: var(--focus-ring-outline-offset, 2px);
+    }
+
+    &:has(:where(input, textarea, select):focus-visible) :where(input, textarea, select):focus-visible {
+        outline: none !important;
+        box-shadow: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Container Focus Ring Positioning & Appearance Modifiers
+   -------------------------------------------------------------------------- */
+
+/* Inset Focus Ring (for flush, full-bleed, or edge-aligned containers) */
+:where(.focus-within--inset, .focus-ring-inset) {
+
+    &:has(:focus-visible),
+    &:focus-visible {
+        outline-offset: calc(var(--focus-ring-outline-offset, 2px) * -1);
+    }
+}
+
+/* Border Color Elevation (highlights border stroke alongside or in lieu of ring) */
+:where(.focus-within--border, .focus-border) {
+    &:has(:focus-visible) {
+        border-color: var(--color-focus, currentColor);
+    }
+}
+
+/* ==========================================================================
+   4. Standalone Direct Element Focus Ring Utilities
+   ========================================================================== */
+
+/* Explicit standard focus ring trigger */
+:where(.focus-ring):focus-visible {
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
+    outline-offset: var(--focus-ring-outline-offset, 2px);
+}
+
+/* Suppress default outline on standalone elements (use with custom indicators only) */
+:is(.focus-none, .focus-ring-none):focus-visible {
+    outline: none;
+}

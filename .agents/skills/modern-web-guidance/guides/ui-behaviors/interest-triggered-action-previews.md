@@ -42,7 +42,7 @@ The start and end delay for an interest invoker (i.e. the element with the `inte
 
 ```css
 [interestfor] {
-  interest-delay-start: 0.2s;
+  interest-delay-start: 200ms;
   interest-delay-end: 0.1s;
 }
 ```
@@ -73,7 +73,7 @@ When using the polyfill the CSS API changes slightly for the `:interest-source` 
 
 /* Adjust the start and end delay for interest invokers */
 [interestfor] {
-  --interest-delay-start: 0.2s;
+  --interest-delay-start: 200ms;
   interest-delay-start: var(--interest-delay-start);
   --interest-delay-end: 0.1s;
   interest-delay-end: var(--interest-delay-end);

@@ -36,10 +36,10 @@
 :where([popover="hint"], [popover].tooltip, .tooltip) {
   /* Layout & Sizing */
   box-sizing: border-box;
-  max-inline-size: min(var(--tooltip-max-width, 18rem), calc(100dvi - var(--spacing-1, 1rem)));
+  max-inline-size: min(var(--tooltip-max-width, 18rem), calc(100dvi - var(--spacing-16, 1rem)));
   margin: 0;
-  padding-block: var(--tooltip-padding-block, var(--spacing-0-25, 0.25rem));
-  padding-inline: var(--tooltip-padding-inline, var(--spacing-0-5, 0.5rem));
+  padding-block: var(--tooltip-padding-block, var(--spacing-4, 0.25rem));
+  padding-inline: var(--tooltip-padding-inline, var(--spacing-8, 0.5rem));
 
   /* Typography */
   font-family: var(--tooltip-font-family, var(--typography-font-family-sans, sans-serif));
@@ -94,7 +94,7 @@
     inset: auto;
     position-area: top center;
     position-try-fallbacks: flip-block, flip-inline;
-    margin-block-end: var(--tooltip-offset, var(--spacing-0-25, 0.25rem));
+    margin-block-end: var(--tooltip-offset, var(--spacing-4, 0.25rem));
     container-type: anchored;
   }
 
@@ -102,19 +102,19 @@
   :where(.tooltip--bottom) {
     position-area: bottom center;
     margin-block-end: 0;
-    margin-block-start: var(--tooltip-offset, var(--spacing-0-25, 0.25rem));
+    margin-block-start: var(--tooltip-offset, var(--spacing-4, 0.25rem));
   }
 
   :where(.tooltip--left, .tooltip--start) {
     position-area: left center;
     margin-block-end: 0;
-    margin-inline-end: var(--tooltip-offset, var(--spacing-0-25, 0.25rem));
+    margin-inline-end: var(--tooltip-offset, var(--spacing-4, 0.25rem));
   }
 
   :where(.tooltip--right, .tooltip--end) {
     position-area: right center;
     margin-block-end: 0;
-    margin-inline-start: var(--tooltip-offset, var(--spacing-0-25, 0.25rem));
+    margin-inline-start: var(--tooltip-offset, var(--spacing-4, 0.25rem));
   }
 }
 
@@ -124,7 +124,7 @@
     :where([popover="hint"], [popover].tooltip, .tooltip) {
       position: fixed;
       inset: auto;
-      bottom: calc(anchor(top) + var(--tooltip-offset, var(--spacing-0-25, 0.25rem)));
+      bottom: calc(anchor(top) + var(--tooltip-offset, var(--spacing-4, 0.25rem)));
       left: anchor(center);
       transform: translateX(-50%) translateY(0.15rem) scale(0.96);
     }
@@ -139,13 +139,13 @@
 
     :where(.tooltip--bottom) {
       bottom: auto;
-      top: calc(anchor(bottom) + var(--tooltip-offset, var(--spacing-0-25, 0.25rem)));
+      top: calc(anchor(bottom) + var(--tooltip-offset, var(--spacing-4, 0.25rem)));
     }
 
     :where(.tooltip--left, .tooltip--start) {
       bottom: auto;
       left: auto;
-      right: calc(anchor(left) + var(--tooltip-offset, var(--spacing-0-25, 0.25rem)));
+      right: calc(anchor(left) + var(--tooltip-offset, var(--spacing-4, 0.25rem)));
       top: anchor(center);
       transform: translateY(-50%) scale(0.96);
     }
@@ -156,7 +156,7 @@
 
     :where(.tooltip--right, .tooltip--end) {
       bottom: auto;
-      left: calc(anchor(right) + var(--tooltip-offset, var(--spacing-0-25, 0.25rem)));
+      left: calc(anchor(right) + var(--tooltip-offset, var(--spacing-4, 0.25rem)));
       top: anchor(center);
       transform: translateY(-50%) scale(0.96);
     }
@@ -191,7 +191,7 @@
 
 :where(.has-tooltip > .tooltip:not([popover])) {
   position: absolute;
-  inset-block-end: calc(100% + var(--tooltip-offset, var(--spacing-0-25, 0.25rem)));
+  inset-block-end: calc(100% + var(--tooltip-offset, var(--spacing-4, 0.25rem)));
   inset-inline-start: 50%;
   transform: translateX(-50%) translateY(0.15rem) scale(0.96);
   visibility: hidden;

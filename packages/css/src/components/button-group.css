@@ -18,10 +18,25 @@
    ========================================================================== */
 :where(.button-group) {
   --direction: row;
+  --divider-width: var(--button-group-divider-width, var(--border-width, 1px));
+  --divider-color: var(--button-group-divider-color, var(--border-color, currentColor));
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--button-group-gap, var(--spacing, 1rem));
+}
+
+
+:where(.card__body--flush > .button-group--stacked:only-child .button) {
+  --button-padding-inline: var(--card-padding);
+}
+
+:where(.button-group--tight) {
+  gap: 0;
+
+  :where(.button):focus-visible {
+    outline-offset: calc(var(--focus-ring-outline-offset, 2px) * -1);
+  }
 }
 
 /* Fill Variant (Stretches across available width) */
@@ -33,23 +48,91 @@
 /* Stacked Variant (Vertical column orientation) */
 :where(.button-group--stacked) {
   --direction: column;
+  --button-group-content-justify: start;
   flex-direction: column;
   align-items: stretch;
+  inline-size: stretch;
+
+  > :where(.button:has(.icon ~ :where(.button__text, span:not(.visually-hidden)))) {
+    justify-content: flex-start;
+  }
+
+  :where(.button > span:not(.icon, .chip, .badge)) {
+    flex-grow: 1;
+  }
+
+  :where(.button__text)+ :where(kbd, .kbd, .chip, .badge, .icon) {
+    margin-inline-start: auto;
+  }
+
+  :where(.button-group__content):where(h1, h2, h3, h4, h5, h5) {
+    padding-block: var(--button-group-content-padding-block, var(--spacing-16, 1rem));
+
+    &:not(:first-child) {
+      padding-block-start: calc(var(--button-group-content-padding-block, var(--spacing-16, 1rem)) + var(--button-group-heading-gap, var(--spacing-16, 1rem)));
+    }
+  }
+
+  &:where(.button-group--ruled) :where(.button) {
+    border-radius: 0;
+    border: 0;
+  }
+}
+
+/* Ruled Variant */
+:where(.button-group--ruled) {
+  @supports (rule: 1px) {
+    gap: var(--rule-width, 1px);
+    rule: var(--button-group-inner-border-width, var(--rule-width, 1px)) var(--button-group-border-style, var(--rule-style, solid)) var(--button-group-border-color, var(--rule-color, currentColor));
+  }
+}
+
+/* Justify buttons */
+:where(.button-group--justify-end) {
+  block-size: stretch;
+  inline-size: stretch;
+  justify-content: flex-end;
+}
+
+:where(.button-group--space-between) {
+  block-size: stretch;
+  inline-size: stretch;
+  justify-content: space-between;
+}
+
+/* Fill buttons */
+:where(.button-group--fill-items) {
+  block-size: stretch;
+  inline-size: stretch;
+
+  :where(.button, .button__text),
+  > :where(.button > span:not(.icon, .chip, .badge)) {
+    flex-grow: 1;
+  }
 }
 
 /* Text Element inside Button Group */
-:where(.button-group__text) {
+:where(.button-group__content) {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-inline: var(--button-group-text-padding-inline, var(--spacing-1, 1rem));
-  font-family: var(--button-group-text-font-family, var(--typography-font-family-sans, inherit));
-  font-size: var(--button-group-text-font-size, var(--typography-font-size-0, 1rem));
-  font-weight: var(--button-group-text-font-weight, var(--font-weight-regular, 400));
-  color: var(--button-group-text-color, currentColor);
+  justify-content: var(--button-group-content-justify, center);
+  padding-inline: var(--button-group-content-padding-inline, var(--spacing-16, 1rem));
+  font-family: var(--button-group-content-font-family, var(--typography-font-family-sans, inherit));
+  font-size: var(--button-group-content-font-size, var(--typography-font-size-0, 1rem));
+  font-weight: var(--button-group-content-font-weight, var(--font-weight-regular, 400));
+  color: var(--button-group-content-color, currentColor);
+  text-align: var(--button-group-content-justify, center);
 }
 
 /* End Alignment (Pushes trailing actions to opposite edge) */
+
+hr:where(.button-group__end),
 :where(.button-group__end) {
   margin-inline-start: auto;
+}
+
+/* Fill Variant (Stretches across available width) */
+
+:where(.button-group__fill) {
+  flex: 1 1 auto;
 }

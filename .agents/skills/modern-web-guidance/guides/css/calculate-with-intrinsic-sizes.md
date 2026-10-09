@@ -64,7 +64,7 @@ By default, browsers cannot interpolate between a length (e.g., `0px`) and an in
 
   .item {
     height: 0;
-    transition: height 0.3s ease;
+    transition: height 200ms ease;
   }
 
   .item.open {
@@ -81,7 +81,7 @@ By default, browsers cannot interpolate between a length (e.g., `0px`) and an in
   overflow: hidden;
   /* MANDATORY: Fallback value for closed state */
   block-size: 0;
-  transition: block-size 0.3s ease-out;
+  transition: block-size 200ms ease-out;
 }
 
 .accordion-content.open {
@@ -104,7 +104,7 @@ Animations that change the size of large layout areas can be particularly disrup
 ```css
 .accordion-content {
   opacity: 0;
-  transition: block-size 0.3s ease, opacity 0.3s ease;
+  transition: block-size 200ms ease, opacity 200ms ease;
 }
 
 .accordion-content.open {

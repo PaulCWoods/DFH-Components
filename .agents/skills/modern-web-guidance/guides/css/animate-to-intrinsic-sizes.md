@@ -42,7 +42,7 @@ You can apply this pattern to any container (like a "Show More" section or a nav
   inline-size: 40px;
   overflow: hidden;
   white-space: nowrap;
-  transition: inline-size 0.3s ease;
+  transition: inline-size 200ms ease;
 }
 
 .badge:hover {
@@ -123,6 +123,6 @@ Unsupported in: Firefox and Safari.
 .card {
   block-size: auto; /* Fallback for older browsers */
   block-size: calc-size(auto, size); /* Modern browsers use this */
-  transition: block-size 0.3s ease;
+  transition: block-size 200ms ease;
 }
 ```

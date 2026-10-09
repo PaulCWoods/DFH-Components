@@ -39,6 +39,14 @@
 
 :where(.prose h1, .title) {
   font-size: var(--title-font-size, var(--typography-font-size-fluid-5, 3.052rem));
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--title-fixed-font-size, var(--typography-font-size-5, 3.052rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--title-cq-font-size, var(--typography-font-size-cq-5, 3.052rem));
+  }
 }
 
 :where(.prose--cq h1, .title--cq) {
@@ -59,10 +67,19 @@
   line-height: var(--heading-line-height, var(--typography-line-height-2, 1.2));
   text-transform: var(--heading-text-transform, none);
   word-spacing: var(--heading-word-spacing, 0em);
+
 }
 
 :where(.prose h2, .heading) {
   font-size: var(--heading-font-size, var(--typography-font-size-fluid-3, 1.953rem));
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--heading-fixed-font-size, var(--typography-font-size-3, 1.953rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--heading-cq-font-size, var(--typography-font-size-cq-3, 1.953rem));
+  }
 }
 
 :where(.prose--cq h2, .heading--cq) {
@@ -87,6 +104,14 @@
 
 :where(.prose h3, .subheading) {
   font-size: var(--subheading-font-size, var(--typography-font-size-fluid-1, 1.25rem));
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--subheading-fixed-font-size, var(--typography-font-size-1, 1.25rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--subheading-cq-font-size, var(--typography-font-size-cq-1, 1.25rem));
+  }
 }
 
 :where(.prose--cq h3, .subheading--cq) {
@@ -113,6 +138,14 @@
 :where(.prose) :where(h4, h5, h6),
 :where(.small-heading) {
   font-size: var(--small-heading-font-size, var(--body-font-size, 1rem));
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--small-heading-fixed-font-size, var(--typography-font-size-0, 1rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--small-heading-cq-font-size, var(--typography-font-size-cq-0, 1rem));
+  }
 }
 
 :where(.prose--cq) :where(h4, h5, h6),
@@ -136,6 +169,14 @@
   line-height: var(--micro-heading-line-height, var(--small-heading-line-height, var(--typography-line-height-2, 1.2)));
   text-transform: var(--micro-heading-text-transform, uppercase);
   word-spacing: var(--micro-heading-word-spacing, 0em);
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--micro-heading-fixed-font-size, var(--typography-font-size--1, 0.8rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--micro-heading-cq-font-size, var(--typography-font-size-cq--1, 0.8rem));
+  }
 }
 
 /* ==========================================================================
@@ -151,6 +192,14 @@
 :where(.prose) :where(p, ul, ol, dl),
 :where(.text) {
   font-size: var(--body-font-size, var(--typography-font-size-fluid-0, 1rem));
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--body-fixed-font-size, var(--typography-font-size-0, 1rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--body-cq-font-size, var(--typography-font-size-cq-0, 1rem));
+  }
 }
 
 :where(.prose--cq) :where(p, ul, ol, dl),
@@ -170,23 +219,31 @@
 :where(.small-text, .small-text--cq, .small-text--fixed) {
   font-family: var(--small-text-font-family, var(--body-font-family, var(--typography-font-family-sans, sans-serif)));
   font-weight: var(--small-text-font-weight, var(--body-font-weight, var(--font-weight-regular, 400)));
-  line-height: var(--small-text-line-height, var(--body-small-line-height, var(--typography-line-height-4, 1.4)));
+  line-height: var(--small-text-line-height, var(--body-sm-line-height, var(--typography-line-height-4, 1.4)));
 }
 
 :where(.prose) :where(figcaption),
 :where(.small-text) {
-  font-size: var(--small-text-font-size, var(--body-small-font-size, var(--typography-font-size-fluid--1, 0.8rem)));
+  font-size: var(--small-text-font-size, var(--body-sm-font-size, var(--typography-font-size-fluid--1, 0.8rem)));
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--small-text-cq-font-size, var(--typography-font-size-cq--1, 0.8rem));
+  }
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--small-text-fixed-font-size, var(--typography-font-size--1, 0.8rem));
+  }
 }
 
 :where(.prose--cq) :where(figcaption),
 :where(.small-text--cq) {
-  font-size: var(--body-small-cq-font-size, var(--small-text-cq-font-size, var(--typography-font-size-cq--1, 0.8rem)));
+  font-size: var(--body-sm-cq-font-size, var(--small-text-cq-font-size, var(--typography-font-size-cq--1, 0.8rem)));
 }
 
 :where(.prose small),
 :where(.prose--fixed) :where(figcaption),
 :where(.small-text--fixed) {
-  font-size: var(--body-small-fixed-font-size, var(--small-text-fixed-font-size, var(--typography-font-size--1, 0.8rem)));
+  font-size: var(--body-sm-fixed-font-size, var(--small-text-fixed-font-size, var(--typography-font-size--1, 0.8rem)));
 }
 
 /* ==========================================================================
@@ -199,15 +256,23 @@
 }
 
 :where(.large-text) {
-  font-size: var(--large-text-font-size, var(--body-large-font-size, var(--typography-font-size-fluid-1, 1.25rem)));
+  font-size: var(--large-text-font-size, var(--body-lg-font-size, var(--typography-font-size-fluid-1, 1.25rem)));
+
+  @container style(--font-size-mode: fixed) {
+    font-size: var(--large-text-fixed-font-size, var(--typography-font-size-1, 1.25rem));
+  }
+
+  @container style(--font-size-mode: cq) {
+    font-size: var(--large-text-cq-font-size, var(--typography-font-size-cq-1, 1.25rem));
+  }
 }
 
 :where(.large-text--cq) {
-  font-size: var(--body-large-cq-font-size, var(--large-text-cq-font-size, var(--typography-font-size-cq-1, 1.25rem)));
+  font-size: var(--body-lg-cq-font-size, var(--large-text-cq-font-size, var(--typography-font-size-cq-1, 1.25rem)));
 }
 
 :where(.large-text--fixed) {
-  font-size: var(--body-large-fixed-font-size, var(--large-text-fixed-font-size, var(--typography-font-size-1, 1.25rem)));
+  font-size: var(--body-lg-fixed-font-size, var(--large-text-fixed-font-size, var(--typography-font-size-1, 1.25rem)));
 }
 
 /* ==========================================================================
@@ -233,7 +298,8 @@
 }
 
 :where(.prose) :where(code, pre, kbd),
-:where(.code-text) {
+:where(code, kbd),
+:where(.code-text, .code, .kbd) {
   font-family: var(--code-font-family, var(--typography-code-font-family, monospace));
   font-variant-numeric: slashed-zero diagonal-fractions;
 }
@@ -242,21 +308,43 @@
    12. Prose Content Foundation & Modifier Rules
    ========================================================================== */
 :where(.prose) {
+  --_prose-vert-space: var(--prose-vert-space, var(--spacing-breathe, 1rem));
   font-variant-numeric: lining-nums proportional-nums;
+
+  @container style(--prose-space-mode: fluid) {
+    --_prose-vert-space: var(--prose-vert-space, var(--spacing-breathe, 1rem));
+    --_prose-inset-space: calc(var(--spacing-cushion) * 1.5);
+  }
+
+  @container style(--prose-space-mode: cq) {
+    --_prose-vert-space: var(--prose-vert-space-cq, var(--spacing-cq-breathe, 1rem));
+    --_prose-inset-space: var(--prose-inset-space-cq, 1.5em);
+  }
+
+  @container style(--prose-space-mode: fixed) {
+    --_prose-vert-space: var(--spacing, 1rem);
+    --_prose-inset-space: var(--prose-inset-space-fixed, 1.5em);
+  }
+
+  @container style(--prose-space-mode: tight) {
+    --_prose-vert-space: calc(var(--spacing, 1rem) / 2);
+    --_prose-inset-space: var(--prose-inset-space-fixed, 1.5em);
+  }
 }
 
 :where(.prose--cq) {
-  --prose-vert-space: var(--prose-vert-space-cq, var(--spacing-cq-breathe, 1rem));
-  --prose-inset-space: var(--prose-inset-space-cq, 1.5em);
+  --_prose-vert-space: var(--prose-vert-space-cq, var(--spacing-cq-breathe, 1rem));
+  --_prose-inset-space: var(--prose-inset-space-cq, 1.5em);
 }
 
 :where(.prose--fixed) {
-  --prose-vert-space: var(--spacing, 1rem);
-  --prose-inset-space: var(--prose-inset-space-fixed, 1.5em);
+  --_prose-vert-space: var(--spacing, 1rem);
+  --_prose-inset-space: var(--prose-inset-space-fixed, 1.5em);
 }
 
 :where(.prose--tight) {
-  --prose-vert-space: calc(var(--spacing, 1rem) / 2);
+  --_prose-vert-space: calc(var(--spacing, 1rem) / 2);
+  --_prose-inset-space: var(--prose-inset-space-fixed, 1.5em);
 }
 
 /* Scroll margin for anchored elements within prose */
@@ -288,7 +376,7 @@
 
 /* Block rhythm: shared spacing keeps reading flow predictable */
 :where(.prose) :where(h1, h2, h3, h4, h5, h6, p, dl, ul, ol, blockquote, hr) {
-  margin-block-end: var(--prose-vert-space, var(--spacing-breathe, 1rem));
+  margin-block-end: var(--_prose-vert-space, var(--spacing-breathe, 1rem));
 
   &:last-child {
     margin-block-end: 0;
@@ -315,7 +403,7 @@
    13. Lists: Logical Indentation & Nested Marker Hierarchy
    ========================================================================== */
 :where(.prose) :where(ul, ol) {
-  padding-inline-start: var(--prose-inset-space, 1.5em);
+  padding-inline-start: var(--_prose-inset-space, 1.5em);
 
   :where(ul, ol) {
     font-size: 1em;
@@ -324,7 +412,7 @@
 
 :where(.prose) :where(li) {
   font-variant-numeric: lining-nums;
-  margin-block-end: calc(var(--prose-vert-space, var(--spacing-breathe, 1rem)) / 2);
+  margin-block-end: calc(var(--_prose-vert-space, var(--spacing-breathe, 1rem)) / 2);
 
   &::marker {
     font-variant-numeric: lining-nums;
@@ -335,7 +423,7 @@
   }
 
   :where(ol, ul) {
-    margin-block-start: calc(var(--prose-vert-space, var(--spacing-breathe, 1rem)) / 2);
+    margin-block-start: calc(var(--_prose-vert-space, var(--spacing-breathe, 1rem)) / 2);
   }
 
   :where(ol) {
@@ -392,14 +480,14 @@
 
 :where(.prose) :where(blockquote) {
   border-inline-start: var(--prose-blockquote-border-width, var(--border-width, 1px)) solid;
-  padding-inline-start: calc(var(--prose-inset-space, 1.5em) - var(--prose-blockquote-border-width, var(--border-width, 1px)));
+  padding-inline-start: calc(var(--_prose-inset-space, 1.5em) - var(--prose-blockquote-border-width, var(--border-width, 1px)));
 }
 
 /* ==========================================================================
    16. Media & Figures
    ========================================================================== */
 :where(.prose) :where(figure) {
-  margin-block: var(--prose-vert-space, var(--spacing-breathe, 1rem));
+  margin-block: var(--_prose-vert-space, var(--spacing-breathe, 1rem));
 
   + :where(h1, h2, h3, h4, h5) {
     margin-block-start: 0;
@@ -462,7 +550,7 @@
 :where(.prose) :where(pre:has(code)) {
   break-inside: avoid;
   font-size: 1rem;
-  margin-block: var(--prose-vert-space, var(--spacing-breathe, 1rem));
+  margin-block: var(--_prose-vert-space, var(--spacing-breathe, 1rem));
   max-inline-size: var(--prose-block-width, none);
 
   @media screen {

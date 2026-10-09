@@ -103,7 +103,7 @@ export const BottomFixedConsentBar: Story = {
             <div class="banner__inner">
               <p>We use essential cookies to ensure our website functions correctly.</p>
             </div>
-            <div style="display: flex; gap: var(--spacing-0-5); align-self: center;">
+            <div class="button-group banner__actions">
               <button type="button" class="button button--subtle" onclick="this.closest('.alert').classList.add('alert--dismissing')">
                 <span>Manage</span>
               </button>

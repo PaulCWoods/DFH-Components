@@ -1,6 +1,6 @@
 {
   "$description": "Design For Humans - Tier 2 Semantic UI Design Tokens (W3C DTCG Standard)",
-  "transparency": {
+  "translucency": {
     "default": {
       "$value": "50%"
     },
@@ -20,7 +20,7 @@
   "color": {
     "$type": "color",
     "muted": {
-      "$value": "color-mix(in srgb, currentColor, transparent {transparency.50})",
+      "$value": "color-mix(in srgb, currentColor, transparent {translucency.50})",
       "$description": "Semi-transparent muted tint based on current text color"
     },
     "focus": {
@@ -28,224 +28,393 @@
       "$description": "High-contrast focus ring stroke color (WCAG 2.4.7 & 2.4.13 >= 3:1)"
     },
     "quiet": {
-      "$value": "color-mix(in srgb, currentColor, transparent {transparency.70})",
+      "$value": "color-mix(in srgb, currentColor, transparent {translucency.70})",
       "$description": "Low-contrast subtle tint for dividers and hair-lines"
     },
     "backdrop": {
-      "$value": "color-mix(in srgb, {color.neutral.900}, transparent {transparency.50})",
+      "$value": "color-mix(in srgb, {color.neutral.900}, transparent {translucency.50})",
       "$description": "Overlay scrim background for modal dialogs"
     },
     "overlay": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.000}, transparent {transparency.33}), color-mix(in srgb, {color.neutral.900}, transparent {transparency.33}))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.000}, transparent {translucency.33}), color-mix(in srgb, {color.neutral.900}, transparent {translucency.33}))",
       "$description": "Translucent surface layer for sticky navigation and floating panels"
+    }
+  },
+  "surface-color": {
+    "$type": "color",
+    "$description": "Base surface color tones before light-dark() resolution",
+    "light": {
+      "$value": "{color.neutral.000}"
+    },
+    "light-muted": {
+      "$value": "{color.neutral.100}"
+    },
+    "lighter": {
+      "$value": "{color.white}"
+    },
+    "dark": {
+      "$value": "{color.neutral.900}"
+    },
+    "dark-muted": {
+      "$value": "{color.neutral.800}"
+    },
+    "darker": {
+      "$value": "{color.neutral.1000}"
+    },
+    "accent-light": {
+      "$value": "{color.purple.200}"
+    },
+    "accent-muted-light": {
+      "$value": "{color.purple.100}"
+    },
+    "accent-muted-dark": {
+      "$value": "{color.purple.900}"
+    },
+    "accent-strong-light": {
+      "$value": "{color.purple.700}"
+    },
+    "accent-strong-dark": {
+      "$value": "{color.purple.300}"
+    },
+    "accent-dark": {
+      "$value": "{color.purple.800}"
+    },
+    "danger-light": {
+      "$value": "{color.red.100}"
+    },
+    "danger-dark": {
+      "$value": "{color.red.800}"
+    },
+    "warning-light": {
+      "$value": "{color.amber.100}"
+    },
+    "warning-dark": {
+      "$value": "{color.amber.800}"
+    },
+    "success-light": {
+      "$value": "{color.green.100}"
+    },
+    "success-dark": {
+      "$value": "{color.green.800}"
     }
   },
   "surface": {
     "$type": "color",
     "$description": "Surface and container background fills",
     "default": {
-      "$value": "light-dark({color.neutral.000}, {color.neutral.900})",
+      "$value": "light-dark({surface-color.light}, {surface-color.dark})",
       "$description": "Default canvas / page viewport background"
     },
-    "subtle": {
-      "$value": "light-dark({color.neutral.100}, {color.neutral.800})",
-      "$description": "Default canvas / page viewport background"
+    "muted": {
+      "$value": "light-dark({surface-color.light-muted}, {surface-color.dark-muted})",
+      "$description": "Subtle surface background for page canvas"
     },
     "inverted": {
-      "$value": "light-dark({color.neutral.800}, {color.neutral.000})",
+      "$value": "light-dark({surface-color.dark}, {surface-color.light})",
       "$description": "Inverted contrast background for tooltips and contrast banners"
     },
     "card": {
-      "$value": "light-dark({color.white}, {color.neutral.1000})",
+      "$value": "light-dark({surface-color.lighter}, {surface-color.darker})",
       "$description": "Elevated card, dialog, popover, and panel background"
     },
+    "card-inverted": {
+      "$value": "light-dark({surface-color.darker}, {surface-color.lighter})",
+      "$description": "Inverted contrast card, dialog, popover, and panel background"
+    },
     "dark": {
-      "$value": "light-dark({color.neutral.800}, {color.neutral.1000})",
+      "$value": "light-dark({surface-color.dark}, {surface-color.darker})",
       "$description": "Dark container background for footer and media asides"
     },
     "darker": {
-      "$value": "{color.neutral.1000}",
+      "$value": "{surface-color.darker}",
       "$description": "Maximum depth background for deep containers"
     },
     "accent": {
-      "$value": "light-dark({color.aqua.200}, {color.aqua.700})",
+      "$value": "light-dark({surface-color.accent-light}, {surface-color.accent-dark})",
       "$description": "Light tint accent surface for badges and highlighted areas"
     },
     "accent-dark": {
-      "$value": "{color.aqua.800}",
+      "$value": "{surface-color.accent-dark}",
       "$description": "Deep accent surface"
     },
     "accent-muted": {
-      "$value": "light-dark({color.aqua.100}, {color.aqua.900})",
-      "$description": "Very soft tint accent surface for hovered selections"
+      "$value": "light-dark({surface-color.accent-muted-light}, {surface-color.accent-muted-dark})",
+      "$description": "Soft tint accent surface for hovered selections"
     },
     "accent-strong": {
-      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$value": "light-dark({surface-color.accent-strong-light}, {surface-color.accent-strong-dark})",
       "$description": "High-contrast accent surface for primary interactive elements"
     },
-    "fade": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent {transparency.95}), color-mix(in srgb, {color.neutral.000}, transparent {transparency.90}))",
+    "translucent": {
+      "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.95})",
       "$description": "Gentle hover tint on interactive surfaces"
     },
-    "hover": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent {transparency.90}), color-mix(in srgb, {color.neutral.000}, transparent {transparency.90}))",
-      "$description": "Gentle hover tint on interactive surfaces"
+    "translucent-strong": {
+      "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.90})",
+      "$description": "Stronger hover tint on interactive surfaces"
     },
     "danger": {
-      "$value": "light-dark({color.red.200}, {color.red.700})",
+      "$value": "light-dark({surface-color.danger-light}, {surface-color.danger-dark})",
       "$description": "Destructive or error alert banner background"
     },
     "warning": {
-      "$value": "light-dark({color.amber.100}, {color.amber.800})",
+      "$value": "light-dark({surface-color.warning-light}, {surface-color.warning-dark})",
       "$description": "Cautionary or pending review alert banner background"
     },
     "success": {
-      "$value": "light-dark({color.green.100}, {color.green.800})",
+      "$value": "light-dark({surface-color.success-light}, {surface-color.success-dark})",
       "$description": "Positive feedback or completed status banner background"
+    }
+  },
+  "foreground-color": {
+    "$type": "color",
+    "$description": "Base foreground color tones before light-dark() resolution",
+    "dark": {
+      "$value": "{color.neutral.800}"
+    },
+    "dark-muted": {
+      "$value": "{color.neutral.700}"
+    },
+    "darker": {
+      "$value": "{color.black}"
+    },
+    "light": {
+      "$value": "{color.neutral.000}"
+    },
+    "light-muted": {
+      "$value": "{color.neutral.300}"
+    },
+    "lighter": {
+      "$value": "{color.white}"
+    },
+    "accent-dark": {
+      "$value": "{color.purple.700}"
+    },
+    "accent-dark-hover": {
+      "$value": "{color.purple.600}"
+    },
+    "accent-dark-pressed": {
+      "$value": "{color.purple.800}"
+    },
+    "accent-light": {
+      "$value": "{color.purple.300}"
+    },
+    "accent-light-hover": {
+      "$value": "{color.purple.200}"
+    },
+    "accent-light-pressed": {
+      "$value": "{color.purple.400}"
+    },
+    "danger-dark": {
+      "$value": "{color.red.700}"
+    },
+    "danger-dark-hover": {
+      "$value": "{color.red.600}"
+    },
+    "danger-dark-pressed": {
+      "$value": "{color.red.800}"
+    },
+    "danger-light": {
+      "$value": "{color.red.300}"
+    },
+    "danger-light-hover": {
+      "$value": "{color.red.200}"
+    },
+    "danger-light-pressed": {
+      "$value": "{color.red.400}"
+    },
+    "warning-dark": {
+      "$value": "{color.amber.700}"
+    },
+    "warning-dark-hover": {
+      "$value": "{color.amber.600}"
+    },
+    "warning-dark-pressed": {
+      "$value": "{color.amber.800}"
+    },
+    "warning-light": {
+      "$value": "{color.amber.300}"
+    },
+    "warning-light-hover": {
+      "$value": "{color.amber.200}"
+    },
+    "warning-light-pressed": {
+      "$value": "{color.amber.400}"
+    },
+    "success-dark": {
+      "$value": "{color.green.700}"
+    },
+    "success-dark-hover": {
+      "$value": "{color.green.600}"
+    },
+    "success-dark-pressed": {
+      "$value": "{color.green.800}"
+    },
+    "success-light": {
+      "$value": "{color.green.300}"
+    },
+    "success-light-hover": {
+      "$value": "{color.green.200}"
+    },
+    "success-light-pressed": {
+      "$value": "{color.green.400}"
     }
   },
   "foreground": {
     "$type": "color",
     "$description": "Text, typography, and icon color fills",
     "default": {
-      "$value": "light-dark({color.neutral.800}, {color.neutral.000})",
+      "$value": "light-dark({foreground-color.dark}, {foreground-color.light})",
       "$description": "High-contrast primary body copy and headings (WCAG AAA >= 7:1)"
     },
     "strong": {
-      "$value": "light-dark({color.black}, {color.white})",
-      "$description": "High-contrast primary body copy and headings (WCAG AAA >= 7:1)"
+      "$value": "light-dark({foreground-color.darker}, {foreground-color.lighter})",
+      "$description": "High-contrast prominent copy"
     },
     "inverted": {
-      "$value": "light-dark({color.neutral.000}, {color.neutral.800})",
+      "$value": "light-dark({foreground-color.light}, {foreground-color.dark})",
       "$description": "Text on inverted backgrounds"
     },
     "inverted-strong": {
-      "$value": "light-dark({color.white}, {color.black})",
-      "$description": "Text on inverted backgrounds"
+      "$value": "light-dark({foreground-color.lighter}, {foreground-color.darker})",
+      "$description": "Strong text on inverted backgrounds"
     },
     "on-dark": {
-      "$value": "{color.neutral.000}",
-      "$description": "White/cream text on dark hero sections"
+      "$value": "{foreground-color.light}",
+      "$description": "Light text on dark hero sections"
     },
     "muted": {
-      "$value": "light-dark({color.neutral.700}, {color.neutral.300})",
+      "$value": "light-dark({foreground-color.dark-muted}, {foreground-color.light-muted})",
       "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
     },
-    "danger": {
-      "$value": "light-dark({color.red.700}, {color.red.400})",
-      "$description": "Destructive button text, form error messages"
-    },
-    "danger-hover": {
-      "$value": "light-dark({color.red.600}, {color.red.500})",
-      "$description": "Destructive button text, form error messages"
-    },
-    "danger-pressed": {
-      "$value": "light-dark({color.red.800}, {color.red.300})",
-      "$description": "Destructive button text, form error messages"
-    },
-    "warning": {
-      "$value": "light-dark({color.amber.700}, {color.amber.300})",
-      "$description": "Warning callout text and pending status icons"
-    },
-    "warning-hover": {
-      "$value": "light-dark({color.amber.600}, {color.amber.400})",
-      "$description": "Warning callout text and pending status icons"
-    },
-    "warning-pressed": {
-      "$value": "light-dark({color.amber.800}, {color.amber.200})",
-      "$description": "Warning callout text and pending status icons"
-    },
-    "success": {
-      "$value": "light-dark({color.green.700}, {color.green.300})",
-      "$description": "Success checkmark icons and completed status text"
-    },
-    "success-hover": {
-      "$value": "light-dark({color.green.600}, {color.green.400})",
-      "$description": "Success checkmark icons and completed status text"
-    },
-    "success-pressed": {
-      "$value": "light-dark({color.green.800}, {color.green.200})",
-      "$description": "Success checkmark icons and completed status text"
-    },
     "accent": {
-      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$value": "light-dark({foreground-color.accent-dark}, {foreground-color.accent-light})",
       "$description": "Brand links, active navigation items, focus states"
     },
     "accent-hover": {
-      "$value": "light-dark({color.aqua.600}, {color.aqua.400})",
+      "$value": "light-dark({foreground-color.accent-dark-hover}, {foreground-color.accent-light-hover})",
       "$description": "Hover state for links and accent buttons"
     },
     "accent-pressed": {
-      "$value": "light-dark({color.aqua.800}, {color.aqua.300})",
+      "$value": "light-dark({foreground-color.accent-dark-pressed}, {foreground-color.accent-light-pressed})",
       "$description": "Active / pressed state for links and accent buttons"
     },
-    "accent-inverted": {
-      "$value": "light-dark({color.aqua.300}, {color.aqua.700})",
-      "$description": "Accent link and interactive text on inverted background"
+    "danger": {
+      "$value": "light-dark({foreground-color.danger-dark}, {foreground-color.danger-light})",
+      "$description": "Destructive button text, form error messages"
     },
-    "accent-inverted-hover": {
-      "$value": "light-dark({color.aqua.400}, {color.aqua.600})",
-      "$description": "Accent link hover state on inverted background"
+    "danger-hover": {
+      "$value": "light-dark({foreground-color.danger-dark-hover}, {foreground-color.danger-light-hover})",
+      "$description": "Destructive button hover state"
     },
-    "accent-inverted-pressed": {
-      "$value": "light-dark({color.aqua.200}, {color.aqua.800})",
-      "$description": "Accent link active/pressed state on inverted background"
+    "danger-pressed": {
+      "$value": "light-dark({foreground-color.danger-dark-pressed}, {foreground-color.danger-light-pressed})",
+      "$description": "Destructive button pressed state"
     },
-    "accent-on-dark": {
-      "$value": "{color.aqua.300}",
-      "$description": "Accent link and interactive text on dark surfaces"
+    "success": {
+      "$value": "light-dark({foreground-color.success-dark}, {foreground-color.success-light})",
+      "$description": "Success checkmark icons and completed status text"
     },
-    "accent-on-dark-hover": {
-      "$value": "{color.aqua.400}",
-      "$description": "Accent link hover state on dark surfaces"
+    "success-hover": {
+      "$value": "light-dark({foreground-color.success-dark-hover}, {foreground-color.success-light-hover})",
+      "$description": "Success hover state"
     },
-    "accent-on-dark-pressed": {
-      "$value": "{color.aqua.200}",
-      "$description": "Accent link active/pressed state on dark surfaces"
+    "success-pressed": {
+      "$value": "light-dark({foreground-color.success-dark-pressed}, {foreground-color.success-light-pressed})",
+      "$description": "Success pressed state"
+    },
+    "warning": {
+      "$value": "light-dark({foreground-color.warning-dark}, {foreground-color.warning-light})",
+      "$description": "Warning callout text and pending status icons"
+    },
+    "warning-hover": {
+      "$value": "light-dark({foreground-color.warning-dark-hover}, {foreground-color.warning-light-hover})",
+      "$description": "Warning hover state"
+    },
+    "warning-pressed": {
+      "$value": "light-dark({foreground-color.warning-dark-pressed}, {foreground-color.warning-light-pressed})",
+      "$description": "Warning pressed state"
+    }
+  },
+  "border-color": {
+    "$type": "color",
+    "$description": "Base border color tones before light-dark() resolution",
+    "accent-dark": {
+      "$value": "{color.purple.700}"
+    },
+    "accent-light": {
+      "$value": "{color.purple.300}"
+    },
+    "danger-dark": {
+      "$value": "{color.red.700}"
+    },
+    "danger-light": {
+      "$value": "{color.red.300}"
+    },
+    "warning-dark": {
+      "$value": "{color.amber.700}"
+    },
+    "warning-light": {
+      "$value": "{color.amber.300}"
+    },
+    "success-dark": {
+      "$value": "{color.green.700}"
+    },
+    "success-light": {
+      "$value": "{color.green.300}"
     }
   },
   "border": {
     "color": {
+      "$type": "color",
+      "$description": "Border color strokes",
       "default": {
         "$value": "currentColor",
-        "$type": "color",
         "$description": "Standard border stroke color"
       },
       "muted": {
         "$value": "{color.muted}",
-        "$type": "color",
         "$description": "Muted border stroke color"
       },
       "quiet": {
         "$value": "{color.quiet}",
-        "$type": "color",
         "$description": "Quiet border stroke color"
       },
       "accent": {
-        "$value": "light-dark({color.aqua.400}, {color.aqua.600})",
-        "$type": "color",
+        "$value": "light-dark({border-color.accent-light}, {border-color.accent-dark})",
         "$description": "Active interactive border color"
       },
-      "accent-strong": {
-        "$value": "light-dark({color.aqua.600}, {color.aqua.400})",
-        "$type": "color",
-        "$description": "High-contrast accent border"
-      },
       "danger": {
-        "$value": "light-dark({color.red.600}, {color.red.400})",
-        "$type": "color",
+        "$value": "light-dark({border-color.danger-light}, {border-color.danger-dark})",
         "$description": "Invalid input field border"
       },
+      "warning": {
+        "$value": "light-dark({border-color.warning-light}, {border-color.warning-dark})",
+        "$description": "Warning field border"
+      },
       "success": {
-        "$value": "light-dark({color.green.600}, {color.green.400})",
-        "$type": "color",
+        "$value": "light-dark({border-color.success-light}, {border-color.success-dark})",
         "$description": "Valid input field border"
       }
     },
     "width": {
-      "$value": "{border-width.2}",
       "$type": "dimension",
-      "$description": "Standard border stroke thickness"
+      "$description": "Border stroke thicknesses",
+      "default": {
+        "$value": "{border.width.2}",
+        "$type": "dimension",
+        "$description": "Standard border stroke thickness"
+      },
+      "thin": {
+        "$value": "{border.width.1}",
+        "$type": "dimension",
+        "$description": "Thin border stroke thickness"
+      },
+      "thick": {
+        "$value": "{border.width.4}",
+        "$type": "dimension",
+        "$description": "Thick border stroke thickness"
+      }
     },
     "default": {
       "$value": "{border.width} solid {border.color}",
@@ -263,7 +432,7 @@
       "$description": "Quiet border"
     },
     "subtle": {
-      "$value": "{border-width.1} dashed {border.color.quiet}",
+      "$value": "{border.width.1} dashed {border.color.quiet}",
       "$type": "border",
       "$description": "Dashed disclosure border"
     }
@@ -274,7 +443,7 @@
       "$value": "{opacity.80}"
     },
     "disabled": {
-      "$value": "{opacity.70}"
+      "$value": "{opacity.50}"
     }
   },
   "filter": {
@@ -292,20 +461,48 @@
   "spacing": {
     "$type": "dimension",
     "default": {
-      "$value": "{spacing.1}",
+      "$value": "{spacing.16}",
       "$description": "Standard 1rem layout spacing baseline"
     },
     "target": {
-      "$value": "{spacing.3}",
+      "$value": "{spacing.48}",
       "$description": "Accessible interactive touch target size (48px / 3rem, WCAG 2.5.5 AAA)"
     },
     "target-sm": {
-      "$value": "{spacing.2}",
+      "$value": "{spacing.32}",
       "$description": "Small interactive touch target size (24px / 1.5rem, WCAG 2.5.8 AA)"
     },
     "target-lg": {
-      "$value": "{spacing.4}",
+      "$value": "{spacing.64}",
       "$description": "Large interactive touch target size (56px-64px / 4rem)"
+    },
+    "block-2xs": {
+      "$value": "{spacing.128}",
+      "$description": "Smallest block spacing"
+    },
+    "block-xs": {
+      "$value": "{spacing.256}",
+      "$description": "Small block spacing (e.g. Popovers)"
+    },
+    "block-sm": {
+      "$value": "{spacing.384}",
+      "$description": "BrandMedium block spacing (e.g. Sidebars)"
+    },
+    "block": {
+      "$value": "{spacing.576}",
+      "$description": "Standard block spacing (e.g. Dialogs)"
+    },
+    "block-lg": {
+      "$value": "{spacing.768}",
+      "$description": "Large block spacing (e.g. Layouts)"
+    },
+    "block-xl": {
+      "$value": "{spacing.1024}",
+      "$description": "Extra Large block spacing"
+    },
+    "block-2xl": {
+      "$value": "{spacing.1280}",
+      "$description": "Largest block spacing (e.g. Site width)"
     },
     "breathe": {
       "$value": "var(--spacing-fluid)",
@@ -336,7 +533,7 @@
     },
     "medium": {
       "$value": "{typography.font-weight.500}",
-      "$description": "Medium emphasis weight"
+      "$description": "BrandMedium emphasis weight"
     },
     "semibold": {
       "$value": "{typography.font-weight.600}",
@@ -378,7 +575,7 @@
       "$type": "fontWeight"
     }
   },
-  "body-small": {
+  "body-sm": {
     "font-size": {
       "$value": "{fluid.typography.font-size.minus-1}",
       "$type": "dimension",
@@ -389,7 +586,7 @@
       "$type": "number"
     }
   },
-  "body-large": {
+  "body-lg": {
     "font-size": {
       "$value": "{fluid.typography.font-size.1}",
       "$type": "dimension",
@@ -403,14 +600,14 @@
       "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
     }
   },
-  "body-small-cq": {
+  "body-sm-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.-1}",
       "$type": "dimension",
       "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
     }
   },
-  "body-large-cq": {
+  "body-lg-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.1}",
       "$type": "dimension",
@@ -424,14 +621,14 @@
       "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
     }
   },
-  "body-small-fixed": {
+  "body-sm-fixed": {
     "font-size": {
       "$value": "{typography.font-size.-1}",
       "$type": "dimension",
       "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
     }
   },
-  "body-large-fixed": {
+  "body-lg-fixed": {
     "font-size": {
       "$value": "{typography.font-size.1}",
       "$type": "dimension",
@@ -700,20 +897,63 @@
       "$value": "{typography.line-height.1}",
       "$type": "number",
       "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+    }
+  },
+  "control-sm": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Small control typography font size"
     },
-    "sm": {
-      "font-size": {
-        "$value": "{typography.font-size.minus-1}",
-        "$type": "dimension",
-        "$description": "Small control typography font size"
-      }
+    "line-height": {
+      "$value": "{typography.line-height.1}",
+      "$type": "number",
+      "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+    }
+  },
+  "control-lg": {
+    "font-size": {
+      "$value": "{typography.font-size.2}",
+      "$type": "dimension",
+      "$description": "Large control typography font size"
     },
-    "lg": {
-      "font-size": {
-        "$value": "{typography.font-size.2}",
-        "$type": "dimension",
-        "$description": "Large control typography font size"
-      }
+    "line-height": {
+      "$value": "{typography.line-height.1}",
+      "$type": "number",
+      "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+    }
+  },
+  "panel": {
+    "border-width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension"
+    },
+    "border-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color"
+    },
+    "border-style": {
+      "$value": "solid",
+      "$type": "strokeStyle"
+    },
+    "radius": {
+      "$value": "{radius.md}",
+      "$type": "dimension",
+      "$description": "Standard border radius for UI components and interactive controls"
+    }
+  },
+  "rule": {
+    "width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension"
+    },
+    "color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color"
+    },
+    "style": {
+      "$value": "solid",
+      "$type": "strokeStyle"
     }
   },
   "radius": {
@@ -725,11 +965,11 @@
   },
   "underline": {
     "offset": {
-      "$value": "{border-width.4}",
+      "$value": "{border.width.4}",
       "$type": "dimension"
     },
     "thickness": {
-      "$value": "{border-width.1}",
+      "$value": "{border.width.1}",
       "$type": "dimension"
     },
     "color": {
@@ -755,7 +995,7 @@
   },
   "focus-ring": {
     "width": {
-      "$value": "{border-width.2}",
+      "$value": "{border.width.2}",
       "$type": "dimension"
     },
     "outline": {
@@ -764,11 +1004,11 @@
       "$description": "Mandatory high-contrast focus ring outline (WCAG 2.4.7 & 2.4.13)"
     },
     "outline-offset": {
-      "$value": "{border-width.2}",
+      "$value": "{border.width.2}",
       "$type": "dimension"
     },
     "clearance": {
-      "$value": "calc({focus-ring.width} + {border-width.2})",
+      "$value": "calc({focus-ring.width} + {border.width.2})",
       "$type": "dimension"
     }
   },
@@ -868,7 +1108,7 @@
           "color": "{shadow.color}"
         }
       ],
-      "$description": "Medium stacked elevation for popovers and hover states"
+      "$description": "BrandMedium stacked elevation for popovers and hover states"
     },
     "lg": {
       "$type": "boxShadow",
@@ -998,16 +1238,16 @@
           "$value": "light-dark({color.neutral.800}, {color.neutral.100})"
         },
         "accent-hover": {
-          "$value": "light-dark({color.aqua.700}, {color.aqua.300})"
+          "$value": "light-dark({color.purple.700}, {color.purple.300})"
         }
       },
       "border": {
         "color": {
           "accent": {
-            "$value": "{color.aqua.500}"
+            "$value": "{color.purple.500}"
           },
           "accent-strong": {
-            "$value": "{color.aqua.500}"
+            "$value": "{color.purple.500}"
           },
           "muted": {
             "$value": "currentColor"

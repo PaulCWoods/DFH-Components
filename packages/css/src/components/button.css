@@ -16,7 +16,7 @@
 /* ==========================================================================
    Base Button Primitive (:where(.button, a.button))
    ========================================================================== */
-:where(.button, a.button) {
+:where(.button) {
   /* Layout & Display */
   display: inline-flex;
   align-items: center;
@@ -26,13 +26,14 @@
   box-sizing: border-box;
 
   /* Sizing */
+  max-inline-size: 100%;
   min-block-size: var(--button-min-size, var(--spacing-target, 3rem));
   min-inline-size: var(--button-min-size, var(--spacing-target, 3rem));
 
   /* Spacing */
-  gap: var(--button-inner-gap, var(--spacing-0-75, 0.75rem));
-  padding-block: var(--button-padding-block, var(--spacing-0-25, 0.25rem));
-  padding-inline: var(--button-padding-inline, var(--spacing-1, 1rem));
+  gap: var(--button-inner-gap, var(--spacing-12, 0.75rem));
+  padding-block: var(--button-padding-block, var(--spacing-4, 0.25rem));
+  padding-inline: var(--button-padding-inline, var(--spacing-16, 1rem));
 
   /* Typography */
   font-family: var(--button-font-family, var(--typography-font-family-sans, sans-serif));
@@ -46,7 +47,7 @@
   /* Surface, Border & Shape */
   background-color: var(--button-bg, transparent);
   border-radius: var(--button-radius, var(--radius, 0.25rem));
-  border: var(--button-border, var(--button-border-width, var(--border-width, 1px)) solid var(--border-muted, var(--border-color, currentColor)));
+  border: var(--button-border-width, var(--border-width, 1px)) solid var(--button-border-color, var(--border-color-muted, currentColor));
   color: var(--button-text, var(--foreground, currentColor));
 
   /* ------------------------------------------------------------------------
@@ -79,7 +80,7 @@
     }
 
     &:focus-visible {
-      outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+      outline: var(--focus-ring-outline, 2px solid AccentColor);
       outline-offset: var(--focus-ring-outline-offset, 2px);
     }
 
@@ -97,11 +98,10 @@
       color: var(--button-active-text, var(--surface, #ffffff));
     }
   }
+}
 
-  /* Typographic Bounding Box Alignment */
-  :where(span, .button__text) {
-    text-box: trim-both cap alphabetic;
-  }
+a:where(.button):is(:hover, :focus) {
+  text-decoration: none;
 }
 
 /* ==========================================================================
@@ -117,25 +117,28 @@
   &:focus-visible {
     outline-color: var(--button-primary-bg, var(--foreground-accent, #008076));
   }
+}
 
-  &:where(input, label, button, a, [role="button"]) {
-    @media (hover: hover) {
-      &:hover:not(:disabled, [disabled], [aria-disabled="true"]) {
-        background-color: var(--button-primary-hover-bg, var(--foreground-accent-hover, #00a498));
-        border-color: var(--button-primary-hover-bg, var(--foreground-accent-hover, #00a498));
-        color: var(--button-primary-text, var(--surface, #ffffff));
-      }
+:where(.button):where(label),
+:where(.button--selected):where(input, button, a, [role="button"]),
+:where(.button--primary):where(input, button, a, [role="button"]) {
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: var(--button-primary-hover-bg, var(--foreground-accent-hover, transparent));
+      border-color: var(--button-primary-hover-bg, var(--foreground-accent-hover, currentColor));
+      color: var(--button-primary-text, var(--surface, currentColor));
     }
+  }
 
-    &:active:not(:disabled, [disabled], [aria-disabled="true"]) {
-      background-color: var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57));
-      border-color: var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57));
-      color: var(--button-primary-text, var(--surface, #ffffff));
-    }
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--button-primary-active-bg, var(--foreground-accent-pressed, transparent));
+    border-color: var(--button-primary-active-bg, var(--foreground-accent-pressed, currentColor));
+    color: var(--button-primary-text, var(--surface, currentColor));
   }
 }
 
 /* Subtle / Ghost Variant (Low-emphasis borderless action) */
+:where(.s-button\:subtle .button, .s-button\:subtle-tint .button),
 :where(.button--subtle, .button--ghost) {
   background-color: var(--button-subtle-bg, transparent);
   border-color: transparent;
@@ -144,25 +147,51 @@
   &:where(input, label, button, a, [role="button"]) {
     @media (hover: hover) {
       &:hover:not(:disabled, [disabled], [aria-disabled="true"]) {
-        background-color: var(--button-subtle-hover-bg, var(--surface-fade, rgba(0, 0, 0, 0.05)));
+        background-color: var(--button-subtle-hover-bg, var(--surface-translucent, rgba(0, 0, 0, 0.05)));
         border-color: transparent;
         color: var(--button-subtle-hover-text, var(--foreground-accent-hover, currentColor));
       }
     }
 
     &:active:not(:disabled, [disabled], [aria-disabled="true"]) {
-      background-color: var(--button-subtle-active-bg, var(--surface-fade, rgba(0, 0, 0, 0.08)));
+      background-color: var(--button-subtle-active-bg, var(--surface-translucent-strong, rgba(0, 0, 0, 0.08)));
       border-color: transparent;
       color: var(--button-subtle-active-text, var(--foreground-accent-pressed, currentColor));
     }
   }
 
   /* Subtle Destructive Sub-Variant */
-  &:where(.button--subtle-destructive) {
-    --button-subtle-text: var(--foreground-danger, currentColor);
-    --button-subtle-hover-text: var(--foreground-danger-hover, currentColor);
-    --button-subtle-active-text: var(--foreground-danger-pressed, currentColor);
-    color: var(--button-subtle-text);
+  &:is(.button--destructive) {
+    background-color: var(--button-subtle-bg, transparent);
+    border-color: transparent;
+    color: var(--foreground-danger, currentColor);
+  }
+
+
+  /* Subtle Primary Sub-Variant */
+  &:is(.button--primary) {
+    background-color: var(--button-subtle-bg, transparent);
+    border-color: transparent;
+    color: var(--foreground-accent, currentColor);
+  }
+}
+
+/* Subtle Tint Sub-Variant */
+:where(.s-button\:subtle-tint .button),
+:where(.button--subtle, .button--ghost):where(.button--subtle-tint) {
+  --button-subtle-bg: var(--button-subtle-muted-bg, var(--surface-translucent, rgba(0, 0, 0, 0.05)));
+
+  &:where(input, label, button, a, [role="button"]) {
+    @media (hover: hover) {
+      &:hover:not(:disabled, [disabled], [aria-disabled="true"]) {
+        --button-subtle-hover-bg: var(--button-subtle-muted-hover-bg, var(--surface-translucent-strong, rgba(0, 0, 0, 0.05)));
+        --button-subtle-hover-text: var(--button-subtle-hover-text, var(--foreground-strong, currentColor))
+      }
+    }
+  }
+
+  &:active:not(:disabled, [disabled], [aria-disabled="true"]) {
+    color: var(--button-subtle-hover-text, var(--foreground-strong, currentColor));
   }
 }
 
@@ -194,21 +223,85 @@
 }
 
 /* Selected / Active Toggle Variant (Active pagination, segmented controls, active filter pills) */
+:where(.button:has(:checked)),
 :where(.button--selected) {
-  background-color: var(--button-selected-bg, var(--foreground, currentColor));
+  background-color: var(--button-selected-bg, var(--foreground, transparent));
   border-color: var(--button-selected-bg, var(--foreground, currentColor));
-  color: var(--button-selected-text, var(--surface, #ffffff));
+  border-style: solid;
+  color: var(--button-selected-text, var(--surface, currentColor));
+}
+
+:where(.button--placeholder):not(:hover, :active) {
+  border-color: var(--button-placeholder-border-color, var(--border-color-quiet, currentColor));
+  border-style: dashed;
+}
+
+:where(.button--avatar) {
+  --button-padding-inline: var(--button-padding-block, 0.5rem);
+  border-radius: var(--avatar-radius, var(--button-radius, var(--radius-md, 0.25rem)));
+  overflow: hidden;
+  position: relative;
+
+  &:where([data-status]) {
+    border-color: var(--avatar-status-color, var(--button-border-color, currentColor));
+  }
+}
+
+:where(.avatar-group--stackable:not(:hover)),
+:where(.avatar-group--stacked) {
+  :where(.button--avatar) {
+    background-color: var(--button-bg, var(--surface-card, Canvas));
+  }
+}
+
+:where(.button:has(input[type="checkbox"], input[type="radio"])) {
+  .icon--on {
+    display: none;
+  }
+}
+
+:where(.button:has(input[type="checkbox"]:checked, input[type="radio"]:checked)) {
+  .icon--on {
+    display: block;
+  }
+
+  .icon--off {
+    display: none;
+  }
+}
+
+:where(.button:not(:has(.icon--off))) .icon--on {
+  display: none;
+}
+
+:where(.button:not(:has(.icon--off)):has(:where(span.visually-hidden, span.sr-only, span.sr))) .icon--on {
+  opacity: 0;
+}
+
+:where(.button:not(:has(.icon--off)):has(input[type="checkbox"]:checked, input[type="radio"]:checked)) .icon--on {
+  display: inline;
+  scale: 1;
+  opacity: 1;
+  transition:
+    display var(--button-transition, var(--duration-sm, 200ms)) ease allow-discrete,
+    opacity var(--button-transition, var(--duration-sm, 200ms)) ease,
+    scale var(--button-transition, var(--duration-sm, 200ms)) ease;
+
+  @starting-style {
+    scale: 0;
+    opacity: 0;
+  }
 }
 
 /* ==========================================================================
    Button Shapes and Sizes
    ========================================================================== */
 
-/* Pill / Round Variant */
+/* Round / Round Variant */
 :where(.s-button\:round),
 :where(.s-button\:round) &,
 :where(.button--round) {
-  --button-radius: var(--radius-pill, 9999px);
+  --button-radius: var(--radius-round, 9999px);
 }
 
 /* Tight Sizing (Zero padding for compact toolbars) */
@@ -220,8 +313,8 @@
 /* Small Variant (Minimum 32px height, 24px WCAG 2.5.8 compliant) */
 :where(.s-button\:sm),
 :where(.button--sm) {
-  --button-padding-block: var(--button-sm-padding-block, var(--spacing-0-125, 0.125rem));
-  --button-padding-inline: var(--button-sm-padding-inline, var(--spacing-0-5, 0.5rem));
+  --button-padding-block: var(--button-sm-padding-block, var(--spacing-2, 0.125rem));
+  --button-padding-inline: var(--button-sm-padding-inline, var(--spacing-8, 0.5rem));
   --button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --button-font-size: var(--button-sm-font-size, var(--typography-font-size--1, 0.875rem));
 }
@@ -229,17 +322,69 @@
 /* Large Variant (56px touch target) */
 :where(.s-button\:lg) &,
 :where(.button--lg) {
-  --button-padding-block: var(--button-lg-padding-block, var(--spacing-0-5, 0.5rem));
-  --button-padding-inline: var(--button-lg-padding-inline, var(--spacing-1-5, 1.5rem));
+  --button-padding-block: var(--button-lg-padding-block, var(--spacing-8, 0.5rem));
+  --button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24, 1.5rem));
   --button-font-size: var(--button-lg-font-size, var(--typography-font-size-1, 1.125rem));
   --button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 3.5rem));
 }
 
-/* Icon-Only Button (Square aspect ratio for standalone icons) */
-:where(.button:has(:where(.visually-hidden, .sr-only, .sr))),
+/* ========================================================================== */
+/* Icon-Only Button (Square aspect ratio for standalone icons)                 */
+/* ========================================================================== */
+:where(.button:has(:where(span.visually-hidden, span.sr-only, span.sr))),
 :where(.button--icon) {
-  --button-padding-inline: var(--button-padding-block, var(--spacing-0-25, 0.25rem));
-  aspect-ratio: 1 / 1;
+  --button-padding-inline: var(--button-padding-block, var(--spacing-4, 0.25rem));
+}
+
+:where(.button--icon) {
+  .button__text {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  :is(kbd, .kbd, .chip, .badge) {
+    display: none;
+  }
+}
+
+/* ========================================================================== */
+/* Icon Size Modifiers */
+/* ========================================================================== */
+:where(.s-button\:icon-lg),
+:where(.button--icon-lg) {
+  --icon-size: var(--icon-size-lg, 1.5em);
+}
+
+/* ========================================================================== */
+/* Responsive / Container-Adaptive Button                                       */
+/* ========================================================================== */
+:where(.button--responsive) {
+  @container (inline-size < 30rem), style(--button-variant: icon) {
+    --button-padding-inline: var(--button-padding-block, var(--spacing-4, 0.25rem));
+
+    :where(.button__text) {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    :is(kbd, .kbd, .chip, .badge) {
+      display: none;
+    }
+  }
 }
 
 /* ==========================================================================
@@ -252,6 +397,23 @@
   &:active {
     text-decoration: none;
   }
+}
+
+/* ==========================================================================
+   Button Text  */
+/* ========================================================================== */
+
+:where(button span, .button__text) {
+  text-box: trim-both cap alphabetic;
+
+  &:only-child {
+    text-align: center;
+  }
+}
+
+:where(.button__text--placeholder) {
+  font-weight: var(--button-placeholder-font-weight, var(--body-font-weight, 400));
+  opacity: var(--opacity-muted, 0.7);
 }
 
 /* ==========================================================================

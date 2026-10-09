@@ -38,7 +38,7 @@ Set `container-type: scroll-state` on the `position: sticky` element, not on its
   /* Base styles for the header */
   background: #f0f0f0;
   padding: 20px;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 200ms, box-shadow 200ms;
 }
 ```
 

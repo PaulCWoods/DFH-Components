@@ -46,7 +46,7 @@ The primary benefit is the ability to define overlapping animations or transitio
   animation: float 3s infinite ease-in-out;
   
   /* Transition only the scale property for hover states */
-  transition: scale 0.3s ease;
+  transition: scale 200ms ease;
 
   /* Establish the base scale to prevent a sudden stacking context shift when transitioning on hover. */
   scale: 1;

@@ -33,44 +33,44 @@ type Story = StoryObj;
  */
 export const HeadingsHierarchy: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); font-family: var(--body-font-family);">
+    <div class="stack">
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.display-title</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.display-title</p>
         <h1 class="display-title" style="margin: 0;">Display Title</h1>
       </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+      <hr class="divider" />
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.title</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.title</p>
         <h2 class="title" style="margin: 0;">Editorial Title</h2>
       </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+      <hr class="divider" />
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.heading</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.heading</p>
         <h3 class="heading" style="margin: 0;">Section Heading</h3>
       </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+      <hr class="divider" />
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.subheading</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.subheading</p>
         <h4 class="subheading" style="margin: 0;">Article Subheading</h4>
       </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+      <hr class="divider" />
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.small-heading</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.small-heading</p>
         <h5 class="small-heading" style="margin: 0;">Small Card Heading</h5>
       </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+      <hr class="divider" />
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.micro-heading</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.micro-heading</p>
         <h6 class="micro-heading" style="margin: 0;">Category Eyebrow</h6>
       </div>
     </div>
@@ -83,48 +83,50 @@ export const HeadingsHierarchy: Story = {
  */
 export const BlockTextStyles: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); font-family: var(--body-font-family); max-inline-size: 48rem;">
-      <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.large-text (Lead / Intro)</p>
-        <p class="large-text" style="margin: 0;">
-          Large text provides high editorial emphasis for lead-in paragraphs, article intros, or hero descriptions.
-        </p>
-      </div>
+    <div class="wrapper wrapper--xl">
+      <div class="stack">
+        <div>
+          <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.large-text (Lead / Intro)</p>
+          <p class="large-text" style="margin: 0;">
+            Large text provides high editorial emphasis for lead-in paragraphs, article intros, or hero descriptions.
+          </p>
+        </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+        <hr class="divider" />
 
-      <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.text (Standard Body)</p>
-        <p class="text" style="margin: 0;">
-          Standard body copy styled with token-driven line-height and typographic scale for optimal reading comfort.
-        </p>
-      </div>
+        <div>
+          <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.text (Standard Body)</p>
+          <p class="text" style="margin: 0;">
+            Standard body copy styled with token-driven line-height and typographic scale for optimal reading comfort.
+          </p>
+        </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+        <hr class="divider" />
 
-      <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.strong-text</p>
-        <p class="strong-text text" style="margin: 0;">
-          Bold strong emphasis text matching the design system token weight.
-        </p>
-      </div>
+        <div>
+          <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.strong-text</p>
+          <p class="strong-text text" style="margin: 0;">
+            Bold strong emphasis text matching the design system token weight.
+          </p>
+        </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+        <hr class="divider" />
 
-      <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.small-text</p>
-        <p class="small-text" style="margin: 0;">
-          Secondary annotations, meta descriptions, and table captions.
-        </p>
-      </div>
+        <div>
+          <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.small-text</p>
+          <p class="small-text" style="margin: 0;">
+            Secondary annotations, meta descriptions, and table captions.
+          </p>
+        </div>
 
-      <hr style="border: 0; border-block-start: 1px solid var(--border-color-quiet, #ccc); margin: var(--spacing-0-5) 0;" />
+        <hr class="divider" />
 
-      <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">.micro-text</p>
-        <p class="micro-text" style="margin: 0;">
-          Compact fine-print, timestamps, and compact legal disclaimers.
-        </p>
+        <div>
+          <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">.micro-text</p>
+          <p class="micro-text" style="margin: 0;">
+            Compact fine-print, timestamps, and compact legal disclaimers.
+          </p>
+        </div>
       </div>
     </div>
   `,
@@ -136,19 +138,19 @@ export const BlockTextStyles: Story = {
  */
 export const ScalingVariants: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-1); font-family: var(--body-font-family);">
+    <div class="stack">
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">Fluid Viewport Scale (.heading)</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">Fluid Viewport Scale (.heading)</p>
         <h3 class="heading" style="margin: 0;">Fluid Heading (Adapts to viewport width)</h3>
       </div>
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">Container Query Scale (.heading--cq)</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">Container Query Scale (.heading--cq)</p>
         <h3 class="heading heading--cq" style="margin: 0;">Container Heading (Adapts to parent container width)</h3>
       </div>
 
       <div>
-        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-0-25) 0;">Fixed Scale (.heading--fixed)</p>
+        <p class="micro-heading" style="color: var(--foreground-muted); margin: 0 0 var(--spacing-4) 0;">Fixed Scale (.heading--fixed)</p>
         <h3 class="heading heading--fixed" style="margin: 0;">Fixed Heading (Locked non-fluid modular step)</h3>
       </div>
     </div>

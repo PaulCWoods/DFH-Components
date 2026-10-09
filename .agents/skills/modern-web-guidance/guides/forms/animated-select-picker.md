@@ -10,7 +10,7 @@ To implement an animated select picker:
 
 1. **Opt-in to customization:** Apply `appearance: base-select` to both the `<select>` element and the `::picker(select)` pseudo-element.
 2. **Enable auto-sizing transitions (Optional):** Define `interpolate-size: allow-keywords` (usually on `:root`) to allow the browser to transition between discrete metric values like `height: auto` and `height: 0`.
-3. **Animate the top-layer container:** Apply standard entry/exit styles to `::picker(select)`. To make sure the opacity transition works when moving between `display: none` and `display: block`, you must use `transition-behavior: allow-discrete` (often written inline as `transition: display 0.3s allow-discrete`).
+3. **Animate the top-layer container:** Apply standard entry/exit styles to `::picker(select)`. To make sure the opacity transition works when moving between `display: none` and `display: block`, you must use `transition-behavior: allow-discrete` (often written inline as `transition: display 200ms allow-discrete`).
 4. **Hook into the opening state with `@starting-style`:** Use `@starting-style` to define the baseline styles the browser should compute *before* the transition begins. For example, if you want it to fade in, set the opacity to `0` inside the `@starting-style` block.
 5. **Rotate the icon:** Use pseudo-element focus or active selectors like `:open::picker-icon` to apply transitions (such as rotation or translation) to the arrow indicator.
 
@@ -75,11 +75,11 @@ The following example demonstrates a custom select styled with standard page ani
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color 200ms ease;
 }
 
 .animated-select::picker-icon {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .animated-select:open::picker-icon {

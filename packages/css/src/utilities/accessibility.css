@@ -14,7 +14,8 @@
    screen readers, voice control software, and automated browser translators.
    ========================================================================== */
 
-:where(.visually-hidden, .sr-only) {
+.visually-hidden,
+.sr-only {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -33,7 +34,8 @@
    fully visible and interactable when focused via keyboard navigation.
    ========================================================================== */
 
-:where(.visually-hidden--focusable, .sr-only--focusable) {
+:is(.visually-hidden--focusable,
+  .sr-only--focusable) {
   &:is(:focus, :focus-within) {
     position: static;
     inline-size: auto;

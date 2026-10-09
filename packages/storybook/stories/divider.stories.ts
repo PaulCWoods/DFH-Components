@@ -23,10 +23,12 @@ type Story = StoryObj;
 
 export const Horizontal: Story = {
   render: () => `
-    <div style="max-inline-size: 28rem; display: flex; flex-direction: column; gap: var(--spacing-1); font-family: var(--body-font-family);">
-      <p style="margin: 0;">Top section paragraph describing content above the divider line.</p>
-      <hr class="divider">
-      <p style="margin: 0; color: var(--foreground-muted);">Bottom section paragraph following the separator rule.</p>
+    <div class="wrapper wrapper--lg">
+      <div class="stack">
+        <p class="text" style="margin: 0;">Top section paragraph describing content above the divider line.</p>
+        <hr class="divider">
+        <p class="text" style="margin: 0; color: var(--foreground-muted);">Bottom section paragraph following the separator rule.</p>
+      </div>
     </div>
   `,
 };

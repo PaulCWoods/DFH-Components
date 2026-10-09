@@ -44,7 +44,7 @@ dialog,
 
   /* MANDATORY: transition display and overlay for top-layer elements */
   transition-property: opacity, transform, display, overlay;
-  transition-duration: 0.3s;
+  transition-duration: 200ms;
   transition-timing-function: ease-out;
   /* Applies to discrete properties like display and overlay */
   transition-behavior: allow-discrete; /* Note: be sure to write this after the shorthand */
@@ -56,9 +56,9 @@ dialog::backdrop,
   background-color: rgba(0, 0, 0, 0);
   /* The transition shorthand can also be used with allow-discrete */
   transition:
-    display 0.3s allow-discrete,
-    overlay 0.3s allow-discrete,
-    background-color 0.3s ease-out;
+    display 200ms allow-discrete,
+    overlay 200ms allow-discrete,
+    background-color 200ms ease-out;
 }
 
 dialog[open]::backdrop,

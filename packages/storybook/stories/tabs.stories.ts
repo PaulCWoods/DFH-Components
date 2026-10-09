@@ -115,40 +115,42 @@ function createInteractiveTabs(html: string): HTMLElement {
 export const Default: Story = {
   render: () =>
     createInteractiveTabs(`
-    <div class="tabs" style="max-inline-size: 40rem;">
-      <div class="tabs__list" role="tablist" aria-label="Account Settings">
-        <button type="button" role="tab" id="tab-1" class="tab" aria-selected="true" aria-controls="panel-1" tabindex="0">
-          <span class="tab__text">Overview</span>
-        </button>
-        <button type="button" role="tab" id="tab-2" class="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
-          <span class="tab__text">Security</span>
-          <span class="badge badge--pill badge--accent"><span>2</span></span>
-        </button>
-        <button type="button" role="tab" id="tab-3" class="tab" aria-selected="false" aria-controls="panel-3" tabindex="-1">
-          <span class="tab__text">Notifications</span>
-          <span class="chip">3</span>
-        </button>
-      </div>
+    <div class="wrapper wrapper--xl">
+      <div class="tabs">
+        <div class="tabs__list" role="tablist" aria-label="Account Settings">
+          <button type="button" role="tab" id="tab-1" class="tab" aria-selected="true" aria-controls="panel-1" tabindex="0">
+            <span class="tab__text">Overview</span>
+          </button>
+          <button type="button" role="tab" id="tab-2" class="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
+            <span class="tab__text">Security</span>
+            <span class="badge badge--round badge--accent"><span>2</span></span>
+          </button>
+          <button type="button" role="tab" id="tab-3" class="tab" aria-selected="false" aria-controls="panel-3" tabindex="-1">
+            <span class="tab__text">Notifications</span>
+            <span class="chip">3</span>
+          </button>
+        </div>
 
-      <div id="panel-1" role="tabpanel" class="tabs__panel" aria-labelledby="tab-1" tabindex="0">
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">Component Overview</h3>
-        <p style="color: var(--foreground-muted);">
-          Design For Humans tabs provide keyboard-accessible tablist navigation with smooth anchor-positioned selection indicator transitions.
-        </p>
-      </div>
+        <div id="panel-1" role="tabpanel" class="tabs__panel" aria-labelledby="tab-1" tabindex="0">
+          <h3 class="heading" style="margin-block-start: 0;">Component Overview</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Design For Humans tabs provide keyboard-accessible tablist navigation with smooth anchor-positioned selection indicator transitions.
+          </p>
+        </div>
 
-      <div id="panel-2" role="tabpanel" class="tabs__panel" aria-labelledby="tab-2" tabindex="0" hidden>
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">Security & Authentication</h3>
-        <p style="color: var(--foreground-muted);">
-          Manage hardware security keys, WebAuthn passkeys, and two-factor authentication.
-        </p>
-      </div>
+        <div id="panel-2" role="tabpanel" class="tabs__panel" aria-labelledby="tab-2" tabindex="0" hidden>
+          <h3 class="heading" style="margin-block-start: 0;">Security & Authentication</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Manage hardware security keys, WebAuthn passkeys, and two-factor authentication.
+          </p>
+        </div>
 
-      <div id="panel-3" role="tabpanel" class="tabs__panel" aria-labelledby="tab-3" tabindex="0" hidden>
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">Notification Preferences</h3>
-        <p style="color: var(--foreground-muted);">
-          Configure email, SMS, and in-app alert digests.
-        </p>
+        <div id="panel-3" role="tabpanel" class="tabs__panel" aria-labelledby="tab-3" tabindex="0" hidden>
+          <h3 class="heading" style="margin-block-start: 0;">Notification Preferences</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Configure email, SMS, and in-app alert digests.
+          </p>
+        </div>
       </div>
     </div>
   `),
@@ -246,7 +248,7 @@ export const ButtonTabs: Story = {
 export const RoundButtonTabs: Story = {
   render: () =>
     createInteractiveTabs(`
-    <nav class="tabs tabs--buttons tabs--round" aria-label="Pill style tabs">
+    <nav class="tabs tabs--buttons tabs--round" aria-label="Round style tabs">
       <ul class="tabs__list">
         <li>
           <a href="/repo/code" class="tab" aria-current="page">
@@ -278,48 +280,50 @@ export const RoundButtonTabs: Story = {
 export const VerticalTabs: Story = {
   render: () =>
     createInteractiveTabs(`
-    <div class="tabs tabs--vertical" style="max-inline-size: 48rem;">
-      <div class="tabs__list" role="tablist" aria-label="Settings Categories">
-        <button type="button" role="tab" id="vtab-general" class="tab" aria-selected="true" aria-controls="vpanel-general" tabindex="0">
-          <span class="tab__text">General</span>
-        </button>
-        <button type="button" role="tab" id="vtab-security" class="tab" aria-selected="false" aria-controls="vpanel-security" tabindex="-1">
-          <span class="tab__text">Security & Keys</span>
-        </button>
-        <button type="button" role="tab" id="vtab-billing" class="tab" aria-selected="false" aria-controls="vpanel-billing" tabindex="-1">
-          <span class="tab__text">Billing & Plans</span>
-        </button>
-        <button type="button" role="tab" id="vtab-notifications" class="tab" aria-selected="false" aria-controls="vpanel-notifications" tabindex="-1">
-          <span class="tab__text">Notifications</span>
-        </button>
-      </div>
+    <div class="wrapper wrapper--xl">
+      <div class="tabs tabs--vertical">
+        <div class="tabs__list" role="tablist" aria-label="Settings Categories">
+          <button type="button" role="tab" id="vtab-general" class="tab" aria-selected="true" aria-controls="vpanel-general" tabindex="0">
+            <span class="tab__text">General</span>
+          </button>
+          <button type="button" role="tab" id="vtab-security" class="tab" aria-selected="false" aria-controls="vpanel-security" tabindex="-1">
+            <span class="tab__text">Security & Keys</span>
+          </button>
+          <button type="button" role="tab" id="vtab-billing" class="tab" aria-selected="false" aria-controls="vpanel-billing" tabindex="-1">
+            <span class="tab__text">Billing & Plans</span>
+          </button>
+          <button type="button" role="tab" id="vtab-notifications" class="tab" aria-selected="false" aria-controls="vpanel-notifications" tabindex="-1">
+            <span class="tab__text">Notifications</span>
+          </button>
+        </div>
 
-      <div id="vpanel-general" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-general" tabindex="0">
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">General Settings</h3>
-        <p style="color: var(--foreground-muted);">
-          Configure workspace name, primary language, time zone, and brand assets.
-        </p>
-      </div>
+        <div id="vpanel-general" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-general" tabindex="0">
+          <h3 class="heading" style="margin-block-start: 0;">General Settings</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Configure workspace name, primary language, time zone, and brand assets.
+          </p>
+        </div>
 
-      <div id="vpanel-security" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-security" tabindex="0" hidden>
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">Security Settings</h3>
-        <p style="color: var(--foreground-muted);">
-          Manage hardware security keys, WebAuthn passkeys, and two-factor authentication.
-        </p>
-      </div>
+        <div id="vpanel-security" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-security" tabindex="0" hidden>
+          <h3 class="heading" style="margin-block-start: 0;">Security Settings</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Manage hardware security keys, WebAuthn passkeys, and two-factor authentication.
+          </p>
+        </div>
 
-      <div id="vpanel-billing" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-billing" tabindex="0" hidden>
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">Billing & Plans</h3>
-        <p style="color: var(--foreground-muted);">
-          Manage subscriptions, invoices, and payment methods.
-        </p>
-      </div>
+        <div id="vpanel-billing" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-billing" tabindex="0" hidden>
+          <h3 class="heading" style="margin-block-start: 0;">Billing & Plans</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Manage subscriptions, invoices, and payment methods.
+          </p>
+        </div>
 
-      <div id="vpanel-notifications" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-notifications" tabindex="0" hidden>
-        <h3 style="margin-block-start: 0; font-size: var(--typography-font-size-1);">Notification Preferences</h3>
-        <p style="color: var(--foreground-muted);">
-          Configure alert thresholds, email frequency, and webhook endpoints.
-        </p>
+        <div id="vpanel-notifications" role="tabpanel" class="tabs__panel" aria-labelledby="vtab-notifications" tabindex="0" hidden>
+          <h3 class="heading" style="margin-block-start: 0;">Notification Preferences</h3>
+          <p class="text" style="color: var(--foreground-muted);">
+            Configure alert thresholds, email frequency, and webhook endpoints.
+          </p>
+        </div>
       </div>
     </div>
   `),

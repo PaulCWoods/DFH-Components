@@ -66,7 +66,7 @@ type Story = StoryObj;
  */
 export const Default: Story = {
   render: () => `
-    <div style="max-inline-size: 56rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--2xl">
       <div class="table-container" tabindex="0" role="region" aria-label="Web Accessibility Compliance Audit 2026">
         <table class="table">
           <caption class="table__caption">WCAG 2.2 Conformance Audit Results (Q3 2026)</caption>
@@ -127,7 +127,7 @@ export const Default: Story = {
  */
 export const InsideCard: Story = {
   render: () => `
-    <div style="max-inline-size: 56rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--2xl">
       <div class="card">
         <article class="card__content">
           <header class="card__header">
@@ -136,7 +136,7 @@ export const InsideCard: Story = {
               <p class="card__subtitle">Fluid calculations across mobile and desktop viewports</p>
             </hgroup>
           </header>
-          <div class="card__body card__body--table">
+          <div class="card__body card__body--flush">
             <div class="table-container" tabindex="0" role="region" aria-label="Design Token Scales" style="margin-block-end: 0;">
               <table class="table">
                 <thead>
@@ -186,7 +186,7 @@ export const InsideCard: Story = {
  */
 export const StripedRows: Story = {
   render: () => `
-    <div style="max-inline-size: 56rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--2xl">
       <div class="table-container" tabindex="0" role="region" aria-label="Subscriber Directory">
         <table class="table table--striped table--hover">
           <caption class="table__caption">Organization Subscriber Directory</caption>
@@ -243,7 +243,7 @@ export const StripedRows: Story = {
  */
 export const CompactDensity: Story = {
   render: () => `
-    <div style="max-inline-size: 56rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--2xl">
       <div class="table-container" tabindex="0" role="region" aria-label="Component Status Matrix">
         <table class="table table--compact table--hover">
           <caption class="table__caption">Design System Component Status Matrix</caption>
@@ -260,35 +260,35 @@ export const CompactDensity: Story = {
             <tr>
               <th scope="row">Button</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">8.6 kB</td>
             </tr>
             <tr>
               <th scope="row">Dialog</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">3.2 kB</td>
             </tr>
             <tr>
               <th scope="row">Card</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AA</td>
               <td class="table__cell--numeric">16.5 kB</td>
             </tr>
             <tr>
               <th scope="row">Banner</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AA</td>
               <td class="table__cell--numeric">5.5 kB</td>
             </tr>
             <tr>
               <th scope="row">Table</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--accent badge--pill"><span>Active</span></span></td>
+              <td><span class="badge badge--accent badge--round"><span>Active</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">4.2 kB</td>
             </tr>
@@ -323,35 +323,35 @@ export const SimpleTable: Story = {
             <tr>
               <th scope="row">Button</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">8.6 kB</td>
             </tr>
             <tr>
               <th scope="row">Dialog</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">3.2 kB</td>
             </tr>
             <tr>
               <th scope="row">Card</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AA</td>
               <td class="table__cell--numeric">16.5 kB</td>
             </tr>
             <tr>
               <th scope="row">Banner</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AA</td>
               <td class="table__cell--numeric">5.5 kB</td>
             </tr>
             <tr>
               <th scope="row">Table</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--accent badge--pill"><span>Active</span></span></td>
+              <td><span class="badge badge--accent badge--round"><span>Active</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">4.2 kB</td>
             </tr>
@@ -385,35 +385,35 @@ export const LongColumnNames: Story = {
             <tr>
               <th scope="row">Button</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">8.6 kB</td>
             </tr>
             <tr>
               <th scope="row">Dialog</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">3.2 kB</td>
             </tr>
             <tr>
               <th scope="row">Card</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AA</td>
               <td class="table__cell--numeric">16.5 kB</td>
             </tr>
             <tr>
               <th scope="row">Banner</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--success badge--pill"><span>Synced</span></span></td>
+              <td><span class="badge badge--success badge--round"><span>Synced</span></span></td>
               <td>Level AA</td>
               <td class="table__cell--numeric">5.5 kB</td>
             </tr>
             <tr>
               <th scope="row">Table</th>
               <td>Tier 3</td>
-              <td><span class="badge badge--accent badge--pill"><span>Active</span></span></td>
+              <td><span class="badge badge--accent badge--round"><span>Active</span></span></td>
               <td>Level AAA</td>
               <td class="table__cell--numeric">4.2 kB</td>
             </tr>
@@ -430,7 +430,7 @@ export const LongColumnNames: Story = {
  */
 export const BorderedGrid: Story = {
   render: () => `
-    <div style="max-inline-size: 56rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--2xl">
       <div class="table-container" tabindex="0" role="region" aria-label="Financial Matrix">
         <table class="table table--bordered">
           <caption class="table__caption">Fiscal Performance Matrix 2026</caption>
@@ -482,7 +482,7 @@ export const BorderedGrid: Story = {
  */
 export const SortableHeaders: Story = {
   render: () => `
-    <div style="max-inline-size: 56rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--2xl">
       <div class="table-container" tabindex="0" role="region" aria-label="Sortable Repository List">
         <table class="table table--hover">
           <caption class="table__caption">Sortable Design System Packages</caption>
@@ -555,13 +555,13 @@ export const SortableHeaders: Story = {
 
 /**
  * 8. Full Sticky Matrix (Header, Footer, First & Last Columns with Shadows)
- * Demonstrates simultaneous multi-axis pinning (.table--sticky-header, .table--sticky-footer, .table--sticky-first-column, .table--sticky-last-column)
+ * Demonstrates simultaneous multi-axis pinning (.table--sticky-head, .table--sticky-foot, .table--sticky-first-column, .table--sticky-last-column)
  * with .table__cell--fit and .table__cell--long.
  */
 export const FullStickyMatrix: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
-      <p style="margin-block-end: var(--spacing-0-5); font-size: var(--body-small-font-size); color: var(--foreground-muted);">
+    <div class="wrapper wrapper--xl">
+      <p class="small-text" style="margin-block-end: var(--spacing-8); color: var(--foreground-muted);">
         Scroll horizontally and vertically. Headers, footers, row labels, and action columns remain pinned with depth border shadows.
       </p>
       <div 
@@ -571,7 +571,7 @@ export const FullStickyMatrix: Story = {
         aria-label="Full Sticky Matrix Audit"
         style="max-block-size: 20rem; max-inline-size: 100%; overflow: auto;"
       >
-        <table class="table table--sticky-header table--sticky-footer table--sticky-first-column table--sticky-last-column table--striped table--hover">
+        <table class="table table--sticky-head table--sticky-foot table--sticky-first-column table--sticky-last-column table--striped table--hover">
           <caption class="table__caption">
             WCAG 2.2 Conformance Audit Results (Full Sticky Matrix)
           </caption>
@@ -665,8 +665,8 @@ export const FullStickyMatrix: Story = {
  */
 export const CombinedStyles: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
-      <p style="margin-block-end: var(--spacing-0-5); font-size: var(--body-small-font-size); color: var(--foreground-muted);">
+    <div class="wrapper wrapper--xl">
+      <p class="small-text" style="margin-block-end: var(--spacing-8); color: var(--foreground-muted);">
         Scroll horizontally and vertically. Headers, footers, row labels, and action columns remain pinned with depth border shadows.
       </p>
       <div 
@@ -676,7 +676,7 @@ export const CombinedStyles: Story = {
         aria-label="Full Sticky Matrix Audit"
         style="max-block-size: 20rem; max-inline-size: 100%; overflow: auto;"
       >
-        <table class="table table--sticky-header table--sticky-footer table--sticky-first-column table--sticky-last-column table--compact table--bordered table--striped table--hover">
+        <table class="table table--sticky-head table--sticky-foot table--sticky-first-column table--sticky-last-column table--compact table--bordered table--striped table--hover">
           <caption class="table__caption">
             WCAG 2.2 Conformance Audit Results (Full Sticky Matrix)
           </caption>

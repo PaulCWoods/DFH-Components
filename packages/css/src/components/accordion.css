@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Accordion Primitive
+   Design For Humans: Accordion Primitive
    --------------------------------------------------------------------------
    Accessible disclosure and expandable content sections using native HTML
    <details> and <summary> elements with smooth interpolate-size animation
@@ -16,9 +16,39 @@
    ========================================================================== */
 
 /* ==========================================================================
-   Base Accordion Container (:where(details.accordion))
+   1. Base Accordion Container (:where(details.accordion))
    ========================================================================== */
+
 :where(details.accordion) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_accordion-bg: var(--accordion-bg, transparent);
+  --_accordion-border-color: var(--accordion-border-color, var(--panel-border-color, currentColor));
+  --_accordion-border-style: var(--accordion-border-style, var(--panel-border-style, solid));
+  --_accordion-border-width: var(--accordion-border-width, var(--panel-border-width, 1px));
+  --_accordion-hover-border-color: var(--accordion-hover-border, var(--border-color-accent, currentColor));
+  --_accordion-icon-size: var(--accordion-icon-size, 0.875rem);
+  --_accordion-icon-stroke: var(--accordion-icon-stroke, var(--border-width, 1px));
+  --_accordion-inner-border-color: var(--accordion-inner-border-color, var(--rule-color, currentColor));
+  --_accordion-inner-border-style: var(--accordion-inner-border-style, var(--rule-style, solid));
+  --_accordion-inner-border-width: var(--accordion-inner-border-width, var(--rule-width, 1px));
+  --_accordion-open-bg: var(--accordion-open-bg, var(--surface-card, transparent));
+  --_accordion-padding-block: var(--accordion-padding, var(--spacing, 1rem));
+  --_accordion-padding-inline: var(--accordion-padding, var(--spacing, 1rem));
+  --_accordion-radius: var(--accordion-radius, var(--panel-radius, 0.25rem));
+  --_accordion-summary-color: var(--accordion-summary-color, var(--foreground, currentColor));
+  --_accordion-summary-font-family: var(--accordion-summary-font-family, var(--typography-font-family-sans, sans-serif));
+  --_accordion-summary-font-size: var(--accordion-summary-font-size, var(--typography-font-size-0, 1rem));
+  --_accordion-summary-font-weight: var(--accordion-summary-font-weight, var(--font-weight-bold, 700));
+  --_accordion-summary-gap: var(--accordion-summary-gap, var(--spacing, 1rem));
+  --_accordion-timefunc: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_accordion-transition: var(--accordion-transition, var(--duration-sm, 150ms));
+
+  /* Font size mode */
+  --font-size-mode: fixed;
+  --prose-space-mode: fixed;
+
   /* Layout & Sizing */
   box-sizing: border-box;
   inline-size: 100%;
@@ -28,115 +58,172 @@
   padding-block-end: 0;
 
   /* Surface, Border & Shape */
-  background-color: transparent;
-  border: var(--accordion-border, var(--border-subtle, 1px solid var(--border-color, currentColor)));
-  border-radius: var(--accordion-radius, var(--radius-2, var(--radius, 0.25rem)));
+  background-color: var(--_accordion-bg);
+  border: var(--_accordion-border-width) var(--_accordion-border-style) var(--_accordion-border-color);
+  border-radius: var(--_accordion-radius);
 
-  /* Transition */
-  transition-property: background-color, border-color, border-style, padding-block-end;
-  transition-duration: var(--accordion-transition, var(--duration-sm, 150ms));
-  transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  /* Transitions */
+  transition-property: background-color, border-color, padding-block-end;
+  transition-duration: var(--_accordion-transition);
+  transition-timing-function: var(--_accordion-timefunc);
 
   &[open] {
-    background-color: var(--accordion-open-bg, var(--surface-card, transparent));
-    padding-block-end: var(--accordion-padding, var(--spacing, 1rem));
+    background-color: var(--_accordion-open-bg);
+    padding-block-end: var(--_accordion-padding-block);
   }
 
   &:has(summary:focus-visible) {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-offset: var(--focus-ring-outline-offset, 2px);
   }
 
   @media (hover: hover) {
-    &:has(summary:hover) {
-      border-color: var(--accordion-hover-border, var(--border-color-accent, var(--border-accent, var(--foreground-accent, currentColor))));
-      border-style: solid;
-    }
-  }
+    &:has(>summary:hover) {
+      border-color: var(--_accordion-hover-border-color);
+      border-style: var(--_accordion-hover-border-style, solid);
 
-  /* ========================================================================
-     Summary Element (:where(summary))
-     ======================================================================== */
-  summary {
-    /* Layout & Display */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    user-select: none;
-    cursor: pointer;
-
-    /* Sizing & Spacing */
-    gap: var(--accordion-summary-gap, var(--spacing, 1rem));
-    padding: var(--accordion-padding, var(--spacing, 1rem));
-    list-style: none;
-
-    /* Typography */
-    font-family: var(--accordion-summary-font-family, var(--typography-font-family-sans, sans-serif));
-    font-size: var(--accordion-summary-font-size, var(--typography-font-size-0, 1rem));
-    font-weight: var(--accordion-summary-font-weight, var(--font-weight-bold, 700));
-    color: var(--accordion-summary-color, var(--foreground, currentColor));
-    text-box: trim-both cap alphabetic;
-
-    /* Transition */
-    transition: color var(--accordion-transition, var(--duration-sm, 150ms)) var(--accordion-timefunc, var(--timefunc-both, ease-in-out));
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    /* Container receives focus ring via :has(summary:focus-visible) */
-    &:is(:focus, :focus-visible) {
-      outline: none;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        color: var(--foreground-accent-hover, currentColor);
+      >summary {
+        color: var(--_accordion-hover-summary-text, var(--foreground-accent, LinkText));
       }
-    }
-
-    span {
-      text-box: trim-both cap alphabetic;
     }
   }
 }
 
 /* ==========================================================================
-   Details Content (Smooth Animation with interpolate-size)
+   2. Modifiers (.accordion--plain, .accordion--flush, .accordion--ruled)
    ========================================================================== */
-details.accordion::details-content {
-  padding-inline: var(--accordion-padding, var(--spacing, 1rem));
+
+:where(details.accordion--plain) {
+  --_accordion-border-width: 0;
+  --_accordion-radius: 0;
+  --_accordion-bg: transparent;
+  --_accordion-open-bg: transparent;
+  border: 0;
+}
+
+:where(details.accordion--flush) {
+  --_accordion-padding-inline: 0;
+  --_accordion-radius: 0;
+  --_accordion-bg: transparent;
+  --_accordion-open-bg: transparent;
+  border-inline: 0;
+}
+
+:where(details.accordion--transparent) {
+  --_accordion-bg: transparent;
+  --_accordion-open-bg: transparent;
+}
+
+:where(details.accordion--ruled[open])::details-content {
+  border-block-start: var(--_accordion-inner-border-width) var(--_accordion-inner-border-style) var(--_accordion-inner-border-color);
+}
+
+/* ==========================================================================
+   3. Summary Header (:where(summary))
+   ========================================================================== */
+
+:where(details.accordion > summary) {
+  /* Layout & Display */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  cursor: pointer;
+
+  /* Sizing & Spacing */
+  gap: var(--_accordion-summary-gap);
+  list-style: none;
+  padding-block: var(--_accordion-padding-block);
+  padding-inline: var(--_accordion-padding-inline);
+
+  /* Typography */
+  font-family: var(--_accordion-summary-font-family);
+  font-size: var(--_accordion-summary-font-size);
+  font-weight: var(--_accordion-summary-font-weight);
+  color: var(--_accordion-summary-color);
+  text-box: trim-both cap alphabetic;
+
+  /* Transition */
+  transition: color var(--_accordion-transition) var(--_accordion-timefunc);
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Container receives focus ring via :has(summary:focus-visible) */
+  &:is(:focus, :focus-visible) {
+    outline: none;
+  }
+}
+
+/* ==========================================================================
+   4. Icon
+   Note: using an orthogonal pseudo-element so it's not subject to the same font
+   Note: only applied when the accordion doesn't have the class `.accordion--no-icon`
+*/
+
+:where(:not(.accordion-group--no-icons) > details.accordion:not(.accordion--no-icon)>summary) {
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inline-size: var(--_accordion-icon-size);
+    block-size: var(--_accordion-icon-stroke);
+    background-color: currentColor;
+    inset-block-start: 50%;
+    inset-inline-end: var(--_accordion-padding-inline);
+    transform: translateY(-50%);
+  }
+
+  &::after {
+    transform: translateY(-50%) rotate(90deg) scale(1);
+    opacity: 1;
+    transition-property: transform, opacity;
+    transition-duration: var(--_accordion-transition);
+    transition-timing-function: var(--_accordion-timefunc);
+  }
+}
+
+:where(:not(.accordion-group--no-icons) > details.accordion[open]:not(.accordion--no-icon)>summary)::after {
+  transform: translateY(-50%) rotate(90deg) scale(0);
+  opacity: 0;
+}
+
+/* ==========================================================================
+   5. Details Content (Smooth Animation with interpolate-size)
+   ========================================================================== */
+
+:where(details.accordion)::details-content {
+  padding-inline: var(--_accordion-padding-inline);
 }
 
 @supports (interpolate-size: allow-keywords) {
-  details.accordion {
-    &::details-content {
-      block-size: 0;
-      overflow: hidden;
-      transition-property: block-size, content-visibility;
-      transition-duration: var(--accordion-transition, var(--duration-sm, 150ms));
-      transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-      transition-behavior: allow-discrete;
-    }
+  :where(details.accordion)::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size, content-visibility;
+    transition-duration: var(--_accordion-transition);
+    transition-timing-function: var(--_accordion-timefunc);
+    transition-behavior: allow-discrete;
+  }
 
-    &[open]::details-content {
-      block-size: auto;
-      overflow: visible;
-    }
+  :where(details.accordion[open])::details-content {
+    block-size: auto;
+    overflow: visible;
   }
 }
 
 /* ==========================================================================
-   Indicator / Plus-Minus Chevron Icon (.accordion__icon)
+   6. Indicator / Plus-Minus Chevron Icon (.accordion__icon)
    ========================================================================== */
+
 .accordion__icon {
-  --icon-size: 0.875rem;
-  --icon-stroke: var(--border-width, 1px);
 
   /* Layout & Sizing */
   display: inline-block;
-  inline-size: var(--icon-size);
-  block-size: var(--icon-size);
+  inline-size: var(--_accordion-icon-size);
+  block-size: var(--_accordion-icon-size);
   flex-shrink: 0;
   position: relative;
 }
@@ -146,37 +233,40 @@ details.accordion::details-content {
   content: '';
   position: absolute;
   inline-size: 100%;
-  block-size: var(--icon-stroke, var(--border-width, 1px));
+  block-size: var(--_accordion-icon-stroke);
   background-color: currentColor;
   inset-block-start: 50%;
   transform: translateY(-50%);
 }
 
 .accordion__icon::after {
-  transform: translateY(-50%) rotate(-90deg);
+  transform: translateY(-50%) rotate(90deg) scale(1);
   opacity: 1;
   transition-property: transform, opacity;
-  transition-duration: var(--accordion-transition, var(--duration-sm, 150ms));
-  transition-timing-function: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  transition-duration: var(--_accordion-transition);
+  transition-timing-function: var(--_accordion-timefunc);
 }
 
-:where(details.accordion[open]) .accordion__icon::after {
-  transform: translateY(-50%) rotate(0deg);
+:where(details.accordion[open])>summary .accordion__icon::after,
+details[open]>summary.accordion__header .accordion__icon::after {
+  transform: translateY(-50%) rotate(90deg) scale(0);
   opacity: 0;
 }
 
 /* ==========================================================================
-   Grouped Accordion Container (.accordion-group)
+   7. Grouped Accordion Container (.accordion-group)
    ========================================================================== */
+
 .accordion-group {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-0-5, 0.5rem);
+  gap: var(--accordion-group-gap, var(--spacing-8, 0.5rem));
 }
 
 /* ==========================================================================
-   Accessibility & Media Queries
+   8. Accessibility & Media Queries
    ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
 
   :where(details.accordion),
@@ -189,6 +279,6 @@ details.accordion::details-content {
 
 @media (prefers-contrast: more) {
   :where(details.accordion) {
-    border-width: calc(var(--accordion-border-width, var(--border-width, 1px)) * 2);
+    --_accordion-border-width: calc(var(--accordion-border-width, var(--border-width, 1px)) * 2);
   }
 }

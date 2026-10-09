@@ -8,25 +8,27 @@
    Base Banner Container (:where(.banner))
    ========================================================================== */
 :where(.banner) {
-  --banner-outer-padding: calc(var(--banner-padding, var(--spacing, 1rem)) / 2);
-  --banner-inner-padding-block: calc(var(--banner-padding, var(--spacing, 1rem)) / 4);
-  --banner-inner-padding-inline: calc(var(--banner-padding, var(--spacing, 1rem)) / 2);
+  --font-size-mode: fixed;
+  --prose-space-mode: tight;
+  --_banner-outer-padding: var(--banner-outer-padding, var(--spacing-8, 0.5rem));
+  --_banner-inner-padding-block: var(--banner-inner-padding, var(--spacing-8, 0.5rem));
+  --_banner-inner-padding-inline: var(--banner-inner-padding, var(--spacing-8, 0.5rem));
 
   /* Layout & Sizing */
   align-items: center;
   display: flex;
   max-inline-size: none;
-  padding: var(--banner-outer-padding, calc(var(--spacing, 1rem) / 2));
+  padding: var(--_banner-outer-padding);
 
   /* Spacing */
-  gap: var(--banner-gap, var(--spacing, 1rem));
+  gap: var(--_banner-gap, var(--banner-gap, var(--spacing, 1rem)));
 
   /* Surface, Border & Backdrop */
   background-color: color-mix(in srgb,
       var(--banner-bg, var(--surface-card, transparent)),
-      transparent var(--banner-transparency, 0%));
-  border: var(--banner-border-width, 1px) solid var(--banner-border-color, currentColor);
-  border-radius: var(--banner-radius, var(--radius, 0.25rem));
+      transparent var(--banner-translucency, 0%));
+  border: var(--banner-border-width, var(--panel-border-width, 1px)) var(--banner-border-style, var(--panel-border-style, solid)) var(--banner-border-color, var(--panel-border-color, currentColor));
+  border-radius: var(--banner-radius, var(--panel-radius, 0.25rem));
   box-shadow: var(--banner-shadow, none);
   backdrop-filter: var(--banner-filter, none);
 }
@@ -43,9 +45,9 @@
   justify-content: center;
 
   /* Spacing & Content Padding */
-  gap: var(--banner-inner-gap, var(--banner-gap, var(--spacing, 1rem)));
-  padding-block: var(--banner-inner-padding-block, calc(var(--spacing, 1rem) / 4));
-  padding-inline: var(--banner-inner-padding-inline, calc(var(--spacing, 1rem) / 2));
+  gap: var(--_banner-gap, var(--banner-gap, var(--spacing, 1rem)));
+  padding-block: var(--_banner-inner-padding-block);
+  padding-inline: var(--_banner-inner-padding-inline);
 
   /* Reset default child paragraph & heading margins to respect banner gap */
   :where(> *) {
@@ -58,12 +60,7 @@
    ========================================================================== */
 :where(.banner__action) {
   /* Positioning */
-  align-self: flex-start;
-
-  &.banner__action--align-center,
-  &:where(.banner__action--align-center) {
-    align-self: center;
-  }
+  align-self: var(--banner-action-align, flex-start);
 }
 
 /* ==========================================================================
@@ -72,46 +69,59 @@
 
 /* Success Variant */
 :where(.banner--success) {
+  --button-border-color: var(--border-color-success, currentColor);
+  --button-text: var(--foreground-success, currentColor);
+  --button-subtle-text: var(--foreground-success, currentColor);
   --button-primary-bg: var(--foreground-success, currentColor);
   --button-primary-hover-bg: var(--foreground-success-hover, currentColor);
   --button-primary-pressed-bg: var(--foreground-success-pressed, currentColor);
   --link-color: var(--foreground-success, currentColor);
   --link-hover-color: var(--foreground-success-hover, currentColor);
   --link-pressed-color: var(--foreground-success-pressed, currentColor);
-
+  --icon-color: var(--foreground-success, currentColor);
   --banner-bg: var(--surface-success, transparent);
-  --banner-border-color: var(--foreground-success, currentColor);
+  --banner-border-color: var(--border-color-success, currentColor);
 }
 
 /* Error / Danger Variant */
 :where(.banner--error),
 :where(.banner--danger) {
+  --button-border-color: var(--border-color-danger, currentColor);
+  --button-text: var(--foreground-danger, currentColor);
+  --button-subtle-text: var(--foreground-danger, currentColor);
   --button-primary-bg: var(--foreground-danger, currentColor);
   --button-primary-hover-bg: var(--foreground-danger-hover, currentColor);
   --button-primary-pressed-bg: var(--foreground-danger-pressed, currentColor);
   --link-color: var(--foreground-danger, currentColor);
   --link-hover-color: var(--foreground-danger-hover, currentColor);
   --link-pressed-color: var(--foreground-danger-pressed, currentColor);
-
+  --icon-color: var(--foreground-danger, currentColor);
   --banner-bg: var(--surface-danger, transparent);
-  --banner-border-color: var(--foreground-danger, currentColor);
+  --banner-border-color: var(--border-color-danger, currentColor);
 }
 
 /* Warning Variant */
 :where(.banner--warning) {
+  --button-border-color: var(--border-color-warning, currentColor);
+  --button-text: var(--foreground-warning, currentColor);
+  --button-subtle-text: var(--foreground-warning, currentColor);
   --button-primary-bg: var(--foreground-warning, currentColor);
   --button-primary-hover-bg: var(--foreground-warning-hover, currentColor);
   --button-primary-pressed-bg: var(--foreground-warning-pressed, currentColor);
   --link-color: var(--foreground-warning, currentColor);
   --link-hover-color: var(--foreground-warning-hover, currentColor);
   --link-pressed-color: var(--foreground-warning-pressed, currentColor);
-
+  --icon-color: var(--foreground-warning, currentColor);
   --banner-bg: var(--surface-warning, transparent);
-  --banner-border-color: var(--foreground-warning, currentColor);
+  --banner-border-color: var(--border-color-warning, currentColor);
 }
 
 /* Info Variant */
 :where(.banner--info) {
+  --button-border-color: var(--border-color-accent, currentColor);
+  --button-text: var(--foreground-accent, currentColor);
+  --button-subtle-text: var(--foreground-accent, currentColor);
+  --icon-color: var(--foreground-accent, currentColor);
   --banner-bg: var(--surface-accent-muted, transparent);
   --banner-border-color: var(--border-color-accent, currentColor);
 }
@@ -121,8 +131,24 @@
    Calculates outer curvature to perfectly align with nested button radius.
    ========================================================================== */
 :where(.banner--dynamic-corners) {
-  --banner-radius: calc(min(var(--button-radius, var(--radius, 0.25rem)), var(--button-min-size, var(--spacing-target, 2.75rem)) / 2) + var(--banner-outer-padding, calc(var(--banner-padding, var(--spacing, 1rem)) / 2)) + var(--banner-border-width, var(--border-width, 1px)));
-  --banner-inner-padding-inline: calc(var(--banner-padding, var(--spacing, 1rem)) / 2 * 2);
+  --banner-radius: calc(min(var(--button-radius, var(--radius, 0.25rem)), var(--button-min-size, var(--spacing-target, 3rem)) / 2) + var(--_banner-outer-padding) + var(--banner-border-width, var(--border-width, 1px)));
+  --_banner-inner-padding-inline: calc(var(--banner-inner-padding) * 2);
+}
+
+:where(.banner--round) {
+  --banner-radius: var(--radius-round, 9999px);
+  --_banner-inner-padding-inline: calc(var(--banner-inner-padding) * 2);
+}
+
+:where(.banner--ruled) {
+  @supports (rule: 1px) {
+    rule: var(--banner-inner-border-width, var(--rule-width, 1px)) var(--banner-inner-border-style, var(--rule-style, solid)) var(--banner-inner-border-color, var(--banner-border-color, var(--rule-color, currentColor)));
+  }
+}
+
+:where(.s-banner-action-align\:center .banner),
+:where(.banner--action-align-center) {
+  --banner-action-align: center;
 }
 
 /* ==========================================================================
@@ -161,7 +187,7 @@
 
 @media (prefers-contrast: more) {
   :where(.banner) {
-    --banner-transparency: 0%;
+    --banner-translucency: 0%;
     --banner-border-width: var(--border-width-md, 1px);
   }
 }

@@ -139,10 +139,53 @@ function compileFluidValue(val, globalTokens = null) {
 }
 
 /**
+ * Helper to identify Tier 3 component tokens that reference Tier 2 color/border tokens.
+ * These should NOT be emitted into variables.css at :root so that components can directly
+ * inherit dynamically inverted color-scheme palettes via fallback values.
+ */
+function isTier3ColorToken(value, rawVal, name) {
+  const type = value.$type || value.type;
+  if (type === 'color') return true;
+
+  if (typeof rawVal === 'string') {
+    const trimmed = rawVal.trim();
+    if (
+      trimmed.includes('{surface') ||
+      trimmed.includes('{foreground') ||
+      trimmed.includes('{border.color') ||
+      trimmed.includes('{border.default}') ||
+      trimmed.includes('{border.muted}') ||
+      trimmed.includes('{border.subtle}') ||
+      trimmed.includes('{border.quiet}') ||
+      trimmed.includes('{color.') ||
+      trimmed === 'transparent' ||
+      trimmed.startsWith('#') ||
+      trimmed.startsWith('rgb') ||
+      trimmed.startsWith('hsl') ||
+      trimmed.startsWith('light-dark(')
+    ) {
+      if (
+        type === 'border' ||
+        name.includes('-bg') ||
+        name.includes('-text') ||
+        name.includes('-color') ||
+        name.includes('-border') ||
+        name.endsWith('-bg') ||
+        name.endsWith('-text') ||
+        name.endsWith('-border')
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
  * Recursively flattens nested token objects into CSS variable paths.
  * E.g., { color: { surface: { value: '#ffffff' } } } -> --color-surface: #ffffff;
  */
-function flattenTokens(obj, prefix = '', globalTokens = null) {
+function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false) {
   let cssVariables = [];
 
   for (const [key, value] of Object.entries(obj)) {
@@ -156,6 +199,12 @@ function flattenTokens(obj, prefix = '', globalTokens = null) {
     if (value && typeof value === 'object' && ('$value' in value || 'value' in value)) {
       // This is a token leaf node (supports W3C DTCG $value and legacy value)
       const rawVal = value.$value !== undefined ? value.$value : value.value;
+
+      // Filter out Tier 3 color tokens so they don't block container palette cascading
+      if (isTier3 && isTier3ColorToken(value, rawVal, name)) {
+        continue;
+      }
+
       let tokenVal = rawVal;
       if (typeof rawVal === 'string' && rawVal.trim().startsWith('fluid(') && rawVal.trim().endsWith(')')) {
         tokenVal = compileFluidValue(rawVal, globalTokens);
@@ -196,7 +245,7 @@ function flattenTokens(obj, prefix = '', globalTokens = null) {
       }
     } else if (value && typeof value === 'object') {
       // Recurse deeper into nested categories
-      cssVariables = cssVariables.concat(flattenTokens(value, name, globalTokens));
+      cssVariables = cssVariables.concat(flattenTokens(value, name, globalTokens, isTier3));
     }
   }
 
@@ -259,21 +308,21 @@ function generateFluidSystem(globalTokens) {
       factor: 1,
       min: baseSpacingRem,
       max: +(baseSpacingRem * Math.pow(spaceRatio, 1)).toFixed(4),
-      baseVar: 'var(--spacing-1)'
+      baseVar: 'var(--spacing-16)'
     },
     {
       name: 'spacing-fluid-x2',
       factor: 2,
       min: baseSpacingRem,
       max: +(baseSpacingRem * Math.pow(spaceRatio, 2)).toFixed(4),
-      baseVar: 'var(--spacing-1)'
+      baseVar: 'var(--spacing-16)'
     },
     {
       name: 'spacing-fluid-x3',
       factor: 3,
       min: baseSpacingRem,
       max: +(baseSpacingRem * Math.pow(spaceRatio, 3)).toFixed(4),
-      baseVar: 'var(--spacing-1)'
+      baseVar: 'var(--spacing-16)'
     },
   ];
 
@@ -283,21 +332,21 @@ function generateFluidSystem(globalTokens) {
       factor: 1,
       min: baseSpacingRem,
       max: +(baseSpacingRem * Math.pow(spaceRatio, 1)).toFixed(4),
-      baseVar: 'var(--spacing-1)'
+      baseVar: 'var(--spacing-16)'
     },
     {
       name: 'spacing-cq-x2',
       factor: 2,
       min: baseSpacingRem,
       max: +(baseSpacingRem * Math.pow(spaceRatio, 2)).toFixed(4),
-      baseVar: 'var(--spacing-1)'
+      baseVar: 'var(--spacing-16)'
     },
     {
       name: 'spacing-cq-x3',
       factor: 3,
       min: baseSpacingRem,
       max: +(baseSpacingRem * Math.pow(spaceRatio, 3)).toFixed(4),
-      baseVar: 'var(--spacing-1)'
+      baseVar: 'var(--spacing-16)'
     },
   ];
 
@@ -391,7 +440,8 @@ function compileTokens() {
         const rawData = fs.readFileSync(filePath, 'utf8').trim();
         const json = rawData ? JSON.parse(rawData) : {};
 
-        const flattened = flattenTokens(json, '', globalJson);
+        const isTier3 = file === '3-component.json';
+        const flattened = flattenTokens(json, '', globalJson, isTier3);
         const conditionals = extractConditionals(json);
 
         allCssLines.push(`  /* Source: ${file} */`);

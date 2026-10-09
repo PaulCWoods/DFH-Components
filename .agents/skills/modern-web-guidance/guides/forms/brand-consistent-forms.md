@@ -128,7 +128,7 @@ Apply custom styles within a `@supports not` block:
     background: white;
     border-radius: 4px;
     box-sizing: border-box;
-    transition: all 0.2s ease;
+    transition: all 200ms ease;
   }
 
   /* Ensure custom checkbox shows focus for keyboard users */

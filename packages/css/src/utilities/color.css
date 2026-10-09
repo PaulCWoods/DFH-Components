@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Design For Humans: Color Utilities
+   --------------------------------------------------------------------------
+   Direct parity with Design For Humans blog architecture (_color.scss).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Background Color Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.bg-color, .bg) {
+    background-color: var(--surface, Canvas);
+}
+
+:where(.bg-color-card, .bg-card) {
+    background-color: var(--surface-card, Canvas);
+}
+
+:where(.bg-color-subtle, .bg-subtle) {
+    background-color: var(--surface-muted, Canvas);
+}
+
+:where(.bg-color-translucent, .bg-translucent) {
+    background-color: var(--surface-translucent, Canvas);
+}
+
+:where(.bg-color-inverted, .bg-inverted) {
+    background-color: var(--surface-inverted, Canvas);
+}
+
+:where(.bg-color-dark, .bg-dark) {
+    background-color: var(--surface-dark, Canvas);
+}
+
+:where(.bg-color-darker, .bg-darker) {
+    background-color: var(--surface-darker, Canvas);
+}
+
+:where(.bg-color-accent, .bg-accent) {
+    background-color: var(--surface-accent, Highlight);
+}
+
+:where(.bg-color-accent-strong, .bg-accent-strong) {
+    background-color: var(--surface-accent-strong, Highlight);
+}
+
+:where(.bg-color-accent-muted, .bg-accent-muted) {
+    background-color: var(--surface-accent-muted, Highlight);
+}
+
+:where(.bg-color-accent-dark, .bg-accent-dark) {
+    background-color: var(--surface-accent-dark, Highlight);
+}
+
+:where(.bg-color-success, .bg-success) {
+    background-color: var(--surface-success, Highlight);
+}
+
+:where(.bg-color-warning, .bg-warning) {
+    background-color: var(--surface-warning, Highlight);
+}
+
+:where(.bg-color-danger, .bg-danger) {
+    background-color: var(--surface-danger, Highlight);
+}
+
+:where(.bg-effect-translucent) {
+    background-color: color-mix(in srgb,
+            var(--bg-color, var(--bg-surface-card, Canvas)),
+            transparent var(--translucency-10));
+}
+
+:where(.bg-effect-translucent-33) {
+    background-color: color-mix(in srgb,
+            var(--bg-color, var(--bg-surface-card, Canvas)),
+            transparent var(--translucency-33));
+}
+
+:where(.bg-effect-translucent-50) {
+    background-color: color-mix(in srgb,
+            var(--bg-color, var(--bg-surface-card, Canvas)),
+            transparent var(--translucency-50));
+}
+
+:where(.bg-effect-translucent-90) {
+    background-color: color-mix(in srgb,
+            var(--bg-color, var(--bg-surface-card, Canvas)),
+            transparent var(--translucency-80));
+}
+
+:where(.bg-effect-blurred, .bg-blurred) {
+    backdrop-filter: var(--filter-blur);
+}
+
+/* --------------------------------------------------------------------------
+   Text Color Utilities
+   -------------------------------------------------------------------------- */
+:where(.text-color, .text) {
+    color: var(--foreground, CanvasText);
+}
+
+:where(.text-color-accent, .text-accent, .color-accent) {
+    color: var(--foreground-accent, LinkText);
+}
+
+:where(.text-color-danger, .text-danger, .color-danger) {
+    color: var(--foreground-danger, Red);
+}
+
+:where(.text-color-success, .text-success, .color-success) {
+    color: var(--foreground-success, Green);
+}
+
+:where(.text-color-warning, .text-warning, .color-warning) {
+    color: var(--foreground-warning, Yellow);
+}
+
+:where(.text-color-muted, .text-muted, .color-muted) {
+    color: var(--foreground-muted, GrayText);
+}

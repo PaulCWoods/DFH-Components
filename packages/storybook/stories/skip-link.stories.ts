@@ -44,36 +44,38 @@ export const Default: Story = {
     targetId: 'main',
   },
   render: (args) => `
-    <div style="font-family: var(--body-font-family); border: var(--border); border-radius: var(--ui-radius); overflow: hidden; background-color: var(--surface);">
+    <div class="card" style="overflow: hidden; padding: 0;">
       <!-- In-Flow Top Banner Skip Link -->
       <a href="#${args.targetId}" class="skip-link">
         <span>${args.label}</span>
       </a>
 
       <!-- Site Wrapper -->
-      <div style="padding: var(--spacing-1);">
+      <div style="padding: var(--spacing-16);">
         <!-- Instructions for Reviewers -->
-        <div style="padding: var(--spacing-0-75) var(--spacing-1); background-color: var(--surface-fade); border: var(--border); border-radius: var(--ui-radius); margin-block-end: var(--spacing-1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--spacing-0-5);">
-          <span>⌨️ Press <kbd style="background: var(--surface-card); border: var(--border); padding: 2px 6px; border-radius: 4px;">Tab</kbd> to focus the Skip Link</span>
-          <button type="button" class="button button--subtle" style="min-block-size: 32px; padding: 4px 10px;" onclick="document.querySelector('.skip-link')?.focus()">
-            <span>Focus Skip Link</span>
-          </button>
+        <div class="card" style="margin-block-end: var(--spacing-16); background-color: var(--surface-translucent);">
+          <div class="inline" style="justify-content: space-between; width: 100%;">
+            <span class="small-text">⌨️ Press <kbd style="background: var(--surface-card); border: var(--border); padding: 2px 6px; border-radius: 4px;">Tab</kbd> to focus the Skip Link</span>
+            <button type="button" class="button button--subtle button--sm" onclick="document.querySelector('.skip-link')?.focus()">
+              <span>Focus Skip Link</span>
+            </button>
+          </div>
         </div>
 
         <!-- Repetitive Header & Navigation -->
-        <header style="padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border); border-radius: var(--ui-radius); margin-block-end: var(--spacing-1);">
-          <nav aria-label="Main Navigation" style="display: flex; gap: var(--spacing-1); align-items: center; flex-wrap: wrap;">
-            <strong style="font-size: var(--typography-font-size-1);">Design For Humans</strong>
-            <a href="#" class="button button--subtle" style="min-block-size: 32px; padding: 4px 8px;">Articles</a>
-            <a href="#" class="button button--subtle" style="min-block-size: 32px; padding: 4px 8px;">Guides</a>
-            <a href="#" class="button button--subtle" style="min-block-size: 32px; padding: 4px 8px;">About</a>
+        <header class="card" style="margin-block-end: var(--spacing-16);">
+          <nav aria-label="Main Navigation" class="inline">
+            <strong class="title">Design For Humans</strong>
+            <a href="#" class="button button--subtle button--sm">Articles</a>
+            <a href="#" class="button button--subtle button--sm">Guides</a>
+            <a href="#" class="button button--subtle button--sm">About</a>
           </nav>
         </header>
 
         <!-- Main Content Landmark -->
-        <main id="${args.targetId}" tabindex="-1" style="padding: var(--spacing-1-5); background-color: var(--surface-card); border: var(--border-muted); border-radius: var(--ui-radius); outline: none;">
-          <h2 style="margin-block-start: 0; font-size: var(--typography-font-size-2);">Main Landmark (#${args.targetId})</h2>
-          <p style="color: var(--foreground-muted); margin-block-end: 0;">
+        <main id="${args.targetId}" tabindex="-1" class="card" style="outline: none;">
+          <h2 class="heading" style="margin-block-start: 0;">Main Landmark (#${args.targetId})</h2>
+          <p class="text" style="color: var(--foreground-muted); margin-block-end: 0;">
             Activating the Skip Link bypasses the header navigation and directs keyboard focus directly to this main article container.
           </p>
         </main>
@@ -88,13 +90,13 @@ export const Default: Story = {
  */
 export const BannerVisiblePreview: Story = {
   render: () => `
-    <div style="font-family: var(--body-font-family); border: var(--border); border-radius: var(--ui-radius); overflow: hidden; background-color: var(--surface);">
+    <div class="card" style="overflow: hidden; padding: 0;">
       <a href="#main" class="skip-link" style="block-size: auto; min-block-size: var(--spacing-target);">
         <span>Skip to main content</span>
       </a>
 
-      <div style="padding: var(--spacing-1-5);">
-        <p style="color: var(--foreground-muted); margin: 0;">
+      <div style="padding: var(--spacing-24);">
+        <p class="text" style="color: var(--foreground-muted); margin: 0;">
           This banner uses <code>--surface-accent-strong</code> for high visibility and <code>--foreground-inverted</code> for WCAG AAA contrast.
         </p>
       </div>
@@ -103,27 +105,27 @@ export const BannerVisiblePreview: Story = {
 };
 
 /**
- * Floating / Anchored Pill Modifier (.skip-link--floating).
+ * Floating / Anchored Round Modifier (.skip-link--floating).
  * For layouts preferring a corner card overlay rather than an in-flow full-width banner.
  */
 export const FloatingPill: Story = {
   render: () => `
-    <div style="font-family: var(--body-font-family); min-block-size: 260px; position: relative; padding: var(--spacing-1); border: var(--border); border-radius: var(--ui-radius); background-color: var(--surface);">
+    <div class="card" style="min-block-size: 260px; position: relative;">
       <!-- Floating Skip Link -->
       <a href="#main-floating" class="skip-link skip-link--floating">
         <span>Skip to main content</span>
       </a>
 
-      <div style="margin-block-end: var(--spacing-1);">
-        <button type="button" class="button button--subtle" onclick="document.querySelector('.skip-link--floating')?.focus()">
+      <div style="margin-block-end: var(--spacing-16);">
+        <button type="button" class="button button--subtle button--sm" onclick="document.querySelector('.skip-link--floating')?.focus()">
           <span>Focus Floating Skip Link</span>
         </button>
       </div>
 
-      <main id="main-floating" tabindex="-1" style="padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border-muted); border-radius: var(--ui-radius); outline: none;">
-        <h3 style="margin-block-start: 0;">Main Landmark</h3>
-        <p style="margin-block-end: 0; color: var(--foreground-muted);">
-          Floating pill slides down from the top-start corner when focused.
+      <main id="main-floating" tabindex="-1" class="card" style="outline: none;">
+        <h3 class="heading" style="margin-block-start: 0;">Main Landmark</h3>
+        <p class="text" style="margin-block-end: 0; color: var(--foreground-muted);">
+          Floating round slides down from the top-start corner when focused.
         </p>
       </main>
     </div>
@@ -136,7 +138,7 @@ export const FloatingPill: Story = {
  */
 export const MultipleDestinations: Story = {
   render: () => `
-    <div style="font-family: var(--body-font-family); border: var(--border); border-radius: var(--ui-radius); overflow: hidden; background-color: var(--surface);">
+    <div class="card" style="overflow: hidden; padding: 0;">
       <!-- Grouped Skip Links Container (Semantic Nav & List) -->
       <nav class="skip-links" aria-label="Skip links">
         <ul>
@@ -158,23 +160,23 @@ export const MultipleDestinations: Story = {
         </ul>
       </nav>
 
-      <div style="padding: var(--spacing-1);">
-        <div style="margin-block-end: var(--spacing-1);">
-          <button type="button" class="button button--subtle" onclick="document.querySelector('.skip-links .skip-link')?.focus()">
+      <div style="padding: var(--spacing-16);">
+        <div style="margin-block-end: var(--spacing-16);">
+          <button type="button" class="button button--subtle button--sm" onclick="document.querySelector('.skip-links .skip-link')?.focus()">
             <span>Focus First Landmark Link</span>
           </button>
         </div>
 
-        <nav id="dest-nav" tabindex="-1" style="padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border); border-radius: var(--ui-radius); margin-block-end: var(--spacing-1); outline: none;">
+        <nav id="dest-nav" tabindex="-1" class="card" style="margin-block-end: var(--spacing-16); outline: none;">
           <strong>Navigation Landmark (#dest-nav)</strong>
         </nav>
 
-        <main id="dest-main" tabindex="-1" style="padding: var(--spacing-1-5); background-color: var(--surface-card); border: var(--border); border-radius: var(--ui-radius); margin-block-end: var(--spacing-1); outline: none;">
-          <h3 style="margin-block-start: 0;">Main Content (#dest-main)</h3>
-          <p style="color: var(--foreground-muted); margin-block-end: 0;">Primary article content.</p>
+        <main id="dest-main" tabindex="-1" class="card" style="margin-block-end: var(--spacing-16); outline: none;">
+          <h3 class="heading" style="margin-block-start: 0;">Main Content (#dest-main)</h3>
+          <p class="text" style="color: var(--foreground-muted); margin-block-end: 0;">Primary article content.</p>
         </main>
 
-        <footer id="dest-footer" tabindex="-1" style="padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border); border-radius: var(--ui-radius); outline: none;">
+        <footer id="dest-footer" tabindex="-1" class="card" style="outline: none;">
           <strong>Footer Landmark (#dest-footer)</strong>
         </footer>
       </div>

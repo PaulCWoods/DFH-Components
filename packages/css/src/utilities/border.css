@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Design For Humans: Border & Radius Utilities
+   --------------------------------------------------------------------------
+   Comprehensive, zero-specificity (:where()) border and corner radius helpers
+   using shared design tokens and CSS logical properties.
+   Direct parity with Design For Humans blog architecture (_border.scss).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base Border Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.border, .bd) {
+    border: var(--border-width, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-muted) {
+    border: var(--border-width, 1px) solid var(--border-color-muted, currentColor);
+}
+
+:where(.border-quiet) {
+    border: var(--border-width, 1px) solid var(--border-color-quiet, currentColor);
+}
+
+:where(.border-subtle, .bd-subtle) {
+    border: var(--border-width-thin, 1px) dashed var(--border-color-quiet, currentColor);
+}
+
+:where(.border-none, .bd-0) {
+    border: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. Border Size & Directional Utilities
+   Uses CSS logical properties (border-block-*, border-inline-*) for LTR/RTL safety.
+   -------------------------------------------------------------------------- */
+
+/* All Sides Sizes */
+:where(.border-sm, .bd-sm) {
+    border: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-md, .bd-md) {
+    border: var(--border-width-md, 2px) solid var(--border-color, currentColor);
+}
+
+:where(.border-lg, .bd-lg) {
+    border: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
+}
+
+/* Block Start (Top) */
+:where(.border-top, .bt) {
+    border-block-start: var(--border-width, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-top-sm, .bt-sm) {
+    border-block-start: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-top-md, .bt-md) {
+    border-block-start: var(--border-width-md, 2px) solid var(--border-color, currentColor);
+}
+
+:where(.border-top-lg, .bt-lg) {
+    border-block-start: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
+}
+
+/* Block End (Bottom) */
+:where(.border-bottom, .bb) {
+    border-block-end: var(--border-width, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-bottom-sm, .bb-sm) {
+    border-block-end: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-bottom-md, .bb-md) {
+    border-block-end: var(--border-width-md, 2px) solid var(--border-color, currentColor);
+}
+
+:where(.border-bottom-lg, .bb-lg) {
+    border-block-end: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
+}
+
+/* Inline Start (Left in LTR) */
+:where(.border-left, .bl) {
+    border-inline-start: var(--border-width, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-left-sm, .bl-sm) {
+    border-inline-start: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-left-md, .bl-md) {
+    border-inline-start: var(--border-width-md, 2px) solid var(--border-color, currentColor);
+}
+
+:where(.border-left-lg, .bl-lg) {
+    border-inline-start: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
+}
+
+/* Inline End (Right in LTR) */
+:where(.border-right, .br) {
+    border-inline-end: var(--border-width, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-right-sm, .br-sm) {
+    border-inline-end: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+}
+
+:where(.border-right-md, .br-md) {
+    border-inline-end: var(--border-width-md, 2px) solid var(--border-color, currentColor);
+}
+
+:where(.border-right-lg, .br-lg) {
+    border-inline-end: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
+}
+
+/* --------------------------------------------------------------------------
+   3. Border Style Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.border-dashed, .bd-dashed) {
+    border-style: dashed;
+}
+
+:where(.border-top-dashed, .bt-dashed) {
+    border-block-start-style: dashed;
+}
+
+:where(.border-bottom-dashed, .bb-dashed) {
+    border-block-end-style: dashed;
+}
+
+:where(.border-left-dashed, .bl-dashed) {
+    border-inline-start-style: dashed;
+}
+
+:where(.border-right-dashed, .br-dashed) {
+    border-inline-end-style: dashed;
+}
+
+:where(.border-dotted, .bd-dotted) {
+    border-style: dotted;
+}
+
+:where(.border-top-dotted, .bt-dotted) {
+    border-block-start-style: dotted;
+}
+
+:where(.border-bottom-dotted, .bb-dotted) {
+    border-block-end-style: dotted;
+}
+
+:where(.border-left-dotted, .bl-dotted) {
+    border-inline-start-style: dotted;
+}
+
+:where(.border-right-dotted, .br-dotted) {
+    border-inline-end-style: dotted;
+}
+
+:where(.border-double, .bd-double) {
+    border-style: double;
+}
+
+:where(.border-top-double, .bt-double) {
+    border-block-start-style: double;
+}
+
+:where(.border-bottom-double, .bb-double) {
+    border-block-end-style: double;
+}
+
+:where(.border-left-double, .bl-double) {
+    border-inline-start-style: double;
+}
+
+:where(.border-right-double, .br-double) {
+    border-inline-end-style: double;
+}
+
+:where(.border-solid, .bd-solid) {
+    border-style: solid;
+}
+
+/* --------------------------------------------------------------------------
+   4. Border Color Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.border-color-muted, .bd-muted) {
+    border-color: var(--border-color-muted, currentColor);
+}
+
+:where(.border-color-quiet, .bd-quiet) {
+    border-color: var(--border-color-quiet, currentColor);
+}
+
+:where(.border-color-accent, .bd-accent) {
+    border-color: var(--border-color-accent, currentColor);
+}
+
+:where(.border-color-success, .bd-success) {
+    border-color: var(--border-color-success, currentColor);
+}
+
+:where(.border-color-warning, .bd-warning) {
+    border-color: var(--border-color-warning, currentColor);
+}
+
+:where(.border-color-danger, .bd-danger) {
+    border-color: var(--border-color-danger, currentColor);
+}
+
+/* --------------------------------------------------------------------------
+   5. Corner Radius Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.radius, .rounded, .rd) {
+    border-radius: var(--radius, 4px);
+}
+
+:where(.radius-none, .rounded-none, .squared, .rd-0) {
+    border-radius: 0;
+}
+
+:where(.radius-sm, .rounded-sm, .rd-sm) {
+    border-radius: var(--radius-sm, 2px);
+}
+
+:where(.radius-md, .rounded-md, .rd-md) {
+    border-radius: var(--radius-md, 4px);
+}
+
+:where(.radius-lg, .rounded-lg, .rd-lg) {
+    border-radius: var(--radius-lg, 8px);
+}
+
+:where(.radius-round, .radius-full, .rounded-full, .round, .pill-shape, .rd-full) {
+    border-radius: var(--radius-round, 9999px);
+}
+
+/* --------------------------------------------------------------------------
+   6. Rule Utilities
+   Note: Not supported in Safari and Firefox. Use for progressive enhancement only
+   -------------------------------------------------------------------------- */
+
+:where(.ruled) {
+    @supports (rule: 1px) {
+        rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}

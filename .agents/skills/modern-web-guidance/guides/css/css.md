@@ -468,7 +468,7 @@ Rendering performance is critical for smooth user experiences, especially in hea
 
 .popover-reveal {
   /* Allow discrete animations for display transitions */
-  transition: display 0.2s allow-discrete;
+  transition: display 200ms allow-discrete;
 }
 ```
 

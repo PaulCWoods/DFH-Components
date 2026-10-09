@@ -28,8 +28,8 @@
   white-space: nowrap;
 
   /* Spacing & Safe Area Insets */
-  padding-inline-start: calc(var(--site-block-padding, var(--spacing-1, 1rem)) + env(safe-area-inset-left, 0px));
-  padding-inline-end: calc(var(--site-block-padding, var(--spacing-1, 1rem)) + env(safe-area-inset-right, 0px));
+  padding-inline-start: calc(var(--site-block-padding, var(--spacing-16, 1rem)) + env(safe-area-inset-left, 0px));
+  padding-inline-end: calc(var(--site-block-padding, var(--spacing-16, 1rem)) + env(safe-area-inset-right, 0px));
 
   /* Typography */
   font-family: var(--skip-link-font-family, var(--body-font-family, inherit));
@@ -71,7 +71,7 @@
 
   /* Focus Visible (Inset 3:1 Focus Ring) */
   &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-offset: calc(var(--focus-ring-outline-offset, 2px) * -2);
   }
 
@@ -82,27 +82,27 @@
 }
 
 /* ==========================================================================
-   Floating Pill Skip Link Modifier (:where(.skip-link--floating))
+   Floating Round Skip Link Modifier (:where(.skip-link--floating))
    ========================================================================== */
 :where(.skip-link--floating) {
   /* Layout & Positioning */
   inline-size: auto;
   position: fixed;
-  inset-block-start: var(--spacing-1, 1rem);
-  inset-inline-start: var(--spacing-1, 1rem);
+  inset-block-start: var(--spacing-16, 1rem);
+  inset-inline-start: var(--spacing-16, 1rem);
   z-index: var(--z-index-tooltip, 1000);
   pointer-events: none;
 
   /* Sizing & Spacing */
-  padding-block: var(--spacing-0-5, 0.5rem);
-  padding-inline: var(--spacing-1, 1rem);
+  padding-block: var(--spacing-8, 0.5rem);
+  padding-inline: var(--spacing-16, 1rem);
 
   /* Surface, Border & Shape */
   border-radius: var(--ui-radius, var(--radius, 0.25rem));
   box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.15));
 
   /* Hidden Transformation */
-  transform: translateY(calc(-100% - var(--spacing-1, 1rem) - 1.5rem));
+  transform: translateY(calc(-100% - var(--spacing-16, 1rem) - 1.5rem));
   opacity: 0;
 
   transition-property: transform, opacity;
@@ -118,7 +118,7 @@
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-outline, 2px solid var(--border-focus, #00d2c4));
+    outline: var(--focus-ring-outline, 2px solid AccentColor);
     outline-color: var(--_skip-link-background-color);
     outline-offset: var(--focus-ring-outline-offset, 2px);
   }

@@ -163,9 +163,9 @@ The placement, sizing, and motion below are a **starting suggestion**, not a req
 
   /* Smooth transitions for the icon's visual states: the activate-point
      pop (`scale`, see `.is-activating` below) and the removal fade
-     (`scale` + `opacity`, see `.is-removing` below). 0.2s is an example
+     (`scale` + `opacity`, see `.is-removing` below). 200ms is an example
      duration. */
-  transition: scale 0.2s ease, opacity 0.2s ease;
+  transition: scale 200ms ease, opacity 200ms ease;
 
   background: var(--action-icon) center / contain no-repeat;
 }

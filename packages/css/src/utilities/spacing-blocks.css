@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Design For Humans: Spacing Block Utilities
+   --------------------------------------------------------------------------
+   Direct parity with Design For Humans blog architecture (_spacing-blocks.scss).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Square Block Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.block-unit) {
+    inline-size: var(--spacing);
+    block-size: var(--spacing);
+}
+
+:where(.block-target) {
+    inline-size: var(--spacing-target);
+    block-size: var(--spacing-target);
+}
+
+:where(.block-2xs) {
+    inline-size: var(--spacing-block-2xs);
+    block-size: var(--spacing-block-2xs);
+}
+
+:where(.block-xs) {
+    inline-size: var(--spacing-block-xs);
+    block-size: var(--spacing-block-xs);
+}
+
+:where(.block-sm) {
+    inline-size: var(--spacing-block-sm);
+    block-size: var(--spacing-block-sm);
+}
+
+:where(.block-md, .block) {
+    inline-size: var(--spacing-block);
+    block-size: var(--spacing-block);
+}
+
+:where(.block-lg) {
+    inline-size: var(--spacing-block-lg);
+    block-size: var(--spacing-block-lg);
+}
+
+:where(.block-xl) {
+    inline-size: var(--spacing-block-xl);
+    block-size: var(--spacing-block-xl);
+}
+
+:where(.block-2xl) {
+    inline-size: var(--spacing-block-2xl);
+    block-size: var(--spacing-block-2xl);
+}
+
+:where(.block-fill) {
+    inline-size: 100%;
+    block-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   2. Width Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.width-unit) {
+    inline-size: var(--spacing);
+}
+
+:where(.width-2xs) {
+    inline-size: var(--spacing-block-2xs);
+}
+
+:where(.width-xs, .width-popover) {
+    inline-size: var(--spacing-block-xs);
+}
+
+:where(.width-sm, .width-sidebar) {
+    inline-size: var(--spacing-block-sm);
+}
+
+:where(.width-md, .width-dialog) {
+    inline-size: var(--spacing-block);
+}
+
+:where(.width-lg, .width-prose) {
+    inline-size: var(--spacing-block-lg);
+}
+
+:where(.width-xl, .width-wide) {
+    inline-size: var(--spacing-block-xl);
+}
+
+:where(.width-2xl, .width-shell) {
+    inline-size: var(--spacing-block-2xl);
+}
+
+:where(.width-fill) {
+    inline-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   3. Minimum Width Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.min-width-sm) {
+    min-inline-size: min(var(--spacing-block-sm), 100%);
+}
+
+:where(.min-width-md) {
+    min-inline-size: min(var(--spacing-block), 100%);
+}
+
+:where(.min-width-lg) {
+    min-inline-size: min(var(--spacing-block-lg), 100%);
+}
+
+/* --------------------------------------------------------------------------
+   4. Maximum Width Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.max-width-sm) {
+    max-inline-size: min(var(--spacing-block-sm));
+}
+
+:where(.max-width-md) {
+    max-inline-size: min(var(--spacing-block));
+}
+
+:where(.max-width-lg) {
+    max-inline-size: min(var(--spacing-block-lg));
+}
+
+:where(.max-width-full) {
+    max-inline-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   5. Height Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.height-unit) {
+    block-size: var(--spacing);
+}
+
+:where(.height-2xs) {
+    block-size: var(--spacing-block-2xs);
+}
+
+:where(.height-xs) {
+    block-size: var(--spacing-block-xs);
+}
+
+:where(.height-sm) {
+    block-size: var(--spacing-block-sm);
+}
+
+:where(.height-md, .height) {
+    block-size: var(--spacing-block);
+}
+
+:where(.height-lg) {
+    block-size: var(--spacing-block-lg);
+}
+
+:where(.height-xl) {
+    block-size: var(--spacing-block-xl);
+}
+
+:where(.height-fill) {
+    block-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   6. Minimum Height Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.min-height-sm) {
+    min-block-size: min(var(--spacing-block-sm));
+}
+
+:where(.min-height-md) {
+    min-block-size: min(var(--spacing-block));
+}
+
+:where(.min-height-lg) {
+    min-block-size: min(var(--spacing-block-lg));
+}
+
+/* --------------------------------------------------------------------------
+   7. Maximum Height Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.max-height-sm) {
+    max-block-size: min(var(--spacing-block-sm));
+}
+
+:where(.max-height-md) {
+    max-block-size: min(var(--spacing-block));
+}
+
+:where(.max-height-lg) {
+    max-block-size: min(var(--spacing-block-lg));
+}
+
+:where(.max-height-full) {
+    max-block-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   8. Flex Growth Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.size-grow) {
+    flex-grow: 1;
+}

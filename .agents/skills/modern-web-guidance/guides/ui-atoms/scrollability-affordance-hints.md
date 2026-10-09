@@ -30,7 +30,7 @@ Place the indicator elements (like shadows, gradients, or arrows) inside the con
   right: 0;
   height: 20px;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 200ms;
   pointer-events: none; /* Let clicks pass through */
 }
 

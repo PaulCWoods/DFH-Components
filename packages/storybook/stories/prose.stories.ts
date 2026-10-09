@@ -46,7 +46,7 @@ type Story = StoryObj;
  */
 export const Default: Story = {
   render: () => `
-    <div style="max-inline-size: 52rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <article class="prose">
         <h1>Designing for Humans in the Age of Agents</h1>
         <p>
@@ -109,7 +109,7 @@ export const Default: Story = {
  */
 export const HeadingsAndHierarchy: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="prose">
         <h1>Heading Level 1 (Title)</h1>
         <p>Introductory paragraph describing the primary page subject.</p>
@@ -139,7 +139,7 @@ export const HeadingsAndHierarchy: Story = {
  */
 export const ListsAndMarkers: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="prose">
         <h2>Unordered Lists</h2>
         <ul>
@@ -181,7 +181,7 @@ export const ListsAndMarkers: Story = {
  */
 export const QuotesAndFigures: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="prose">
         <blockquote>
           <p>
@@ -211,7 +211,7 @@ export const QuotesAndFigures: Story = {
  */
 export const CodeAndSemantics: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="prose">
         <p>
           Press <kbd>Cmd</kbd> + <kbd>K</kbd> to open the command palette. You can use <code>light-dark(#fff, #000)</code> for seamless color scheme switching.
@@ -236,7 +236,7 @@ console.log('Compiled', cssOutput.length, 'tokens');</code></pre>
  */
 export const EmojiUtilities: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <div class="prose">
         <p class="emoji check">Audit completed with 100% WCAG 2.2 AA conformance.</p>
         <p class="emoji idea">Tip: Use CSS container queries for component-level responsiveness.</p>
@@ -253,7 +253,7 @@ export const EmojiUtilities: Story = {
  */
 export const RightToLeft: Story = {
   render: () => `
-    <div dir="rtl" style="max-inline-size: 48rem; font-family: var(--body-font-family); text-align: right;">
+    <div dir="rtl" class="wrapper wrapper--xl" style="text-align: right;">
       <article class="prose">
         <h1>تصميم للإنسان: المعايير القياسية للويب</h1>
         <p>
@@ -276,10 +276,10 @@ export const RightToLeft: Story = {
  */
 export const ContainerQueryAdaptive: Story = {
   render: () => `
-    <div style="display: grid; gap: var(--spacing-2);">
+    <div class="stack">
       <!-- Narrow Sidebar / Card Context -->
-      <div style="container-type: inline-size; padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border-quiet); border-radius: var(--radius); max-width: 24rem;">
-        <h4 style="margin-block-end: var(--spacing-0-5); font-size: var(--body-small-font-size); color: var(--foreground-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+      <div class="card" style="container-type: inline-size; padding: var(--spacing-16); max-width: 24rem;">
+        <h4 class="small-heading" style="margin-block-end: var(--spacing-8); color: var(--foreground-muted); text-transform: uppercase; letter-spacing: 0.05em;">
           Narrow Container Context (Sidebar / Card)
         </h4>
         <div class="prose prose--cq">
@@ -295,8 +295,8 @@ export const ContainerQueryAdaptive: Story = {
       </div>
 
       <!-- Wider Column Context -->
-      <div style="container-type: inline-size; padding: var(--spacing-1); background-color: var(--surface-card); border: var(--border-quiet); border-radius: var(--radius);">
-        <h4 style="margin-block-end: var(--spacing-0-5); font-size: var(--body-small-font-size); color: var(--foreground-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+      <div class="card" style="container-type: inline-size; padding: var(--spacing-16);">
+        <h4 class="small-heading" style="margin-block-end: var(--spacing-8); color: var(--foreground-muted); text-transform: uppercase; letter-spacing: 0.05em;">
           Wider Container Context (Column)
         </h4>
         <div class="prose prose--cq">
@@ -321,7 +321,7 @@ export const ContainerQueryAdaptive: Story = {
  */
 export const FixedTypography: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem; font-family: var(--body-font-family);">
+    <div class="wrapper wrapper--xl">
       <article class="prose prose--fixed">
         <h1>Fixed Typography Article (Size 3)</h1>
         <p>

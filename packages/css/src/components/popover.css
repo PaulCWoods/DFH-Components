@@ -1,92 +1,145 @@
 /* ==========================================================================
    Popover Primitive
    --------------------------------------------------------------------------
-   Accessible floating overlay utilizing the native HTML [popover] attribute
+   Accessible floating overlay leveraging the native HTML [popover] attribute
    and CSS Anchor Positioning (position-anchor / position-area) with top-layer
    transitions and light-dismiss behavior.
 
-   Usage:
-   <button type="button" class="button" popovertarget="my-popover" style="anchor-name: --anchor-btn;">
+   Like <dialog>, Popover acts as a transparent, top-layer positioning wrapper
+   designed to contain composable primitives (Card, Banner, Menu lists).
+
+   Usage with Card:
+   <button type="button" class="button button--secondary" popovertarget="actions-popover" style="anchor-name: --action-anchor;">
      <span>Actions</span>
    </button>
-   <div id="my-popover" popover class="popover popover--anchored" style="position-anchor: --anchor-btn;">
-     <p>Popover content.</p>
+
+   <div id="actions-popover" popover class="popover popover--anchored" style="position-anchor: --action-anchor;">
+     <div class="card card--compact">
+       <article class="card__content">
+         <header class="card__header">
+           <h3 class="card__title">Quick Actions</h3>
+         </header>
+         <div class="card__body">
+           <div class="stack stack--tight s-button:subtle s-button:sm">
+             <button type="button" class="button"><span>Duplicate Item</span></button>
+             <button type="button" class="button"><span>Export Data</span></button>
+             <button type="button" class="button button--destructive"><span>Delete</span></button>
+           </div>
+         </div>
+       </article>
+     </div>
    </div>
    ========================================================================== */
 
 /* ==========================================================================
-   Base Popover Primitive (:where([popover].popover, [popover]))
+   1. Base Popover Wrapper Primitive (:where([popover].popover, [popover]))
    ========================================================================== */
 :where([popover].popover, [popover]) {
   /* Layout & Sizing */
   box-sizing: border-box;
-  max-inline-size: min(24rem, calc(100dvw - var(--spacing-2, 2rem)));
+  inline-size: min(var(--popover-max-width, var(--spacing-block-xs, 16rem)), calc(100vi - var(--spacing-cushion, 2rem)));
+  max-block-size: min(var(--popover-max-height, 90vb), calc(100vb - var(--spacing-cushion, 2rem)));
+  overflow: visible;
+  overscroll-behavior: contain;
 
   /* Spacing */
   margin: 0;
-  padding: var(--popover-padding, var(--spacing-1, 1rem));
+  padding: 0;
 
-  /* Typography */
-  font-family: var(--popover-font-family, var(--typography-font-family-sans, sans-serif));
-  font-size: var(--popover-font-size, var(--body-font-size, 1rem));
-  line-height: var(--popover-line-height, var(--body-line-height, 1.5));
-  color: var(--popover-color, var(--foreground, currentColor));
+  /* Surface & Border Reset (Deferred to nested Card / Banner) */
+  background: transparent;
+  border: none;
+  color: inherit;
+  box-shadow: none;
 
-  /* Surface, Border & Shape */
-  background-color: var(--popover-bg, var(--surface-card, #ffffff));
-  border: var(--popover-border, var(--border-width, 1px) solid var(--border-quiet, var(--border-color, transparent)));
-  border-radius: var(--popover-radius, var(--radius-2, var(--radius, 0.25rem)));
-  box-shadow: var(--popover-shadow, var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1)));
-
-  /* Top-layer transitions */
+  /* Top-layer discrete transitions & closed state */
   opacity: 0;
-  transform: translateY(-0.25rem) scale(0.98);
+  transform: scale(0.96) translateY(-0.25rem);
+  pointer-events: none;
 
   transition-property: opacity, transform, display, overlay;
   transition-duration: var(--popover-transition, var(--duration-sm, 150ms));
   transition-timing-function: var(--popover-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   transition-behavior: allow-discrete;
+
+  /* Ensure nested card or banner expands to full available width */
+  > :where(.card, .banner) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  /* Standalone Popover Fallback (when not wrapping a Card or Banner) */
+  &:not(:has(.card, .banner)) {
+    background-color: var(--popover-bg, var(--surface-card, #ffffff));
+    color: var(--popover-color, var(--foreground, currentColor));
+    padding: var(--popover-padding, var(--spacing-16, 1rem));
+    border: var(--popover-border, var(--border-width, 1px) solid var(--border-quiet, var(--border-color, transparent)));
+    border-radius: var(--popover-radius, var(--radius, 0.25rem));
+    box-shadow: var(--popover-shadow, var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.1)));
+    font-family: var(--popover-font-family, var(--typography-font-family-sans, sans-serif));
+    font-size: var(--popover-font-size, var(--body-font-size, 1rem));
+    line-height: var(--popover-line-height, var(--body-line-height, 1.5));
+  }
+}
+
+:where(.popover--lg) {
+  inline-size: min(var(--popover-lg-max-width, var(--spacing-block-sm, 24rem)), calc(100vi - var(--spacing-cushion, 2rem)));
+}
+
+:where(.popover--xl) {
+  inline-size: min(var(--popover-xl-max-width, var(--spacing-block, 36rem)), calc(100vi - var(--spacing-cushion, 2rem)));
 }
 
 /* ==========================================================================
-   Open Popover State in Top Layer
+   2. Open Popover State in Top Layer
    ========================================================================== */
 :where([popover].popover, [popover]):popover-open {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
 
   @starting-style {
     opacity: 0;
-    transform: translateY(-0.25rem) scale(0.98);
+    transform: scale(0.96) translateY(-0.25rem);
   }
 }
 
 /* ==========================================================================
-   CSS Anchor Positioning Utilities
+   3. CSS Anchor Positioning
    ========================================================================== */
 
-/* Modern CSS position-area (supported in modern Chromium, Safari 26+, Firefox) */
+/* Modern CSS position-area (Baseline standard) */
 @supports (position-area: bottom) {
   :where([popover].popover--anchored, [popover][data-anchor]) {
     position: fixed;
     inset: auto;
     position-area: bottom span-right;
-    margin-block-start: var(--popover-offset, var(--spacing-0-5, 0.5rem));
+    position-try-fallbacks: flip-block, flip-inline;
+    margin-block-start: var(--popover-offset, var(--spacing-8, 0.5rem));
   }
 
   :where([popover].popover--top) {
+    position: fixed;
+    inset: auto;
     position-area: top span-right;
-    margin-block-end: var(--popover-offset, var(--spacing-0-5, 0.5rem));
+    position-try-fallbacks: flip-block, flip-inline;
+    margin-block-end: var(--popover-offset, var(--spacing-8, 0.5rem));
   }
 
-  :where([popover].popover--start) {
+  :where([popover].popover--start, [popover].popover--left) {
+    position: fixed;
+    inset: auto;
     position-area: left span-bottom;
-    margin-inline-end: var(--popover-offset, var(--spacing-0-5, 0.5rem));
+    position-try-fallbacks: flip-block, flip-inline;
+    margin-inline-end: var(--popover-offset, var(--spacing-8, 0.5rem));
   }
 
-  :where([popover].popover--end) {
+  :where([popover].popover--end, [popover].popover--right) {
+    position: fixed;
+    inset: auto;
     position-area: right span-bottom;
-    margin-inline-start: var(--popover-offset, var(--spacing-0-5, 0.5rem));
+    position-try-fallbacks: flip-block, flip-inline;
+    margin-inline-start: var(--popover-offset, var(--spacing-8, 0.5rem));
   }
 }
 
@@ -96,14 +149,14 @@
     :where([popover].popover--anchored, [popover][data-anchor]) {
       position: fixed;
       inset: auto;
-      top: calc(anchor(bottom) + var(--popover-offset, var(--spacing-0-5, 0.5rem)));
+      top: calc(anchor(bottom) + var(--popover-offset, var(--spacing-8, 0.5rem)));
       left: anchor(left);
     }
   }
 }
 
 /* ==========================================================================
-   Accessibility & Media Queries
+   4. Accessibility & Media Overrides
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
 
@@ -119,8 +172,8 @@
 }
 
 @media (prefers-contrast: more) {
-  :where([popover].popover, [popover]) {
-    border-width: calc(var(--popover-border-width, var(--border-width, 1px)) * 2);
-    border-color: currentColor;
+  :where([popover].popover, [popover]):not(:has(.card, .banner)) {
+    outline: 2px solid var(--border-color, currentColor);
+    outline-offset: 1px;
   }
 }

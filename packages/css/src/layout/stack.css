@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Design For Humans: Stack Layout Primitive
+   --------------------------------------------------------------------------
+   1-dimensional vertical flow container with token-driven gap spacing.
+   Uses zero-specificity (:where()) for composability.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base Stack Container
+   -------------------------------------------------------------------------- */
+
+:where(.stack) {
+    --direction: column;
+    align-items: var(--align-items, stretch);
+    display: var(--display, flex);
+    flex-direction: column;
+    flex-wrap: var(--flex-wrap, nowrap);
+    gap: var(--gap, var(--spacing, 1rem));
+    justify-content: var(--justify-content, var(--justify, normal));
+}
+
+:where(.stack):where(ul, ol) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Modifiers
+   -------------------------------------------------------------------------- */
+
+/* Tight Modifier (Zero Gap) */
+:where(.stack--tight) {
+    gap: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Stack Ruled
+   -------------------------------------------------------------------------- */
+
+:where(.stack--ruled) {
+    @supports (rule: 1px) {
+        gap: var(--rule-width, 1px);
+        rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}

@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Design For Humans: Split Layout Primitive
+   --------------------------------------------------------------------------
+   2-column responsive layout with a preferred-width sidebar and an
+   auto-expanding main pane. Uses zero-specificity (:where()) for composability.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base Split Container
+   -------------------------------------------------------------------------- */
+
+:where(.split) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap, var(--spacing-cushion, 1.5rem));
+    align-items: var(--align-items, flex-start);
+    justify-content: var(--justify-content, var(--justify, normal));
+
+    /* Default: First child is sidebar, last child is main expanding pane */
+    & > :first-child {
+        flex-basis: var(--split-sidebar-width, var(--spacing-block-xs, 20rem));
+        flex-grow: 1;
+    }
+
+    & > :last-child {
+        flex-basis: 0;
+        flex-grow: 999;
+        min-inline-size: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
+    }
+
+    /* ----------------------------------------------------------------------
+       2. Direction & Placement Modifiers
+       ---------------------------------------------------------------------- */
+
+    /* Reverse variant: First child is main, last child is sidebar */
+    &:where(.split--end, .split--reverse) {
+        & > :first-child {
+            flex-basis: 0;
+            flex-grow: 999;
+            min-inline-size: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
+        }
+
+        & > :last-child {
+            flex-basis: var(--split-sidebar-width, var(--spacing-block-xs, 20rem));
+            flex-grow: 1;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       3. Sidebar Width Modifiers (Spacing Block Scale)
+       ---------------------------------------------------------------------- */
+
+    &:where(.split--2xs) {
+        --split-sidebar-width: var(--spacing-block-2xs, 16rem);
+    }
+
+    &:where(.split--xs) {
+        --split-sidebar-width: var(--spacing-block-xs, 20rem);
+    }
+
+    &:where(.split--sm) {
+        --split-sidebar-width: var(--spacing-block-sm, 24rem);
+    }
+
+    &:where(.split--md) {
+        --split-sidebar-width: var(--spacing-block, 28rem);
+    }
+
+    &:where(.split--lg) {
+        --split-sidebar-width: var(--spacing-block-lg, 32rem);
+    }
+}

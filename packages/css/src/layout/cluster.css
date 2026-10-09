@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Design For Humans: Cluster Layout Primitive
+   --------------------------------------------------------------------------
+   Inline-flex container with automatic wrapping for grouped tags, buttons,
+   and badges. Uses zero-specificity (:where()) for composability.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base Cluster Container
+   -------------------------------------------------------------------------- */
+
+:where(.cluster) {
+    align-items: var(--align-items, stretch);
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--gap, var(--spacing, 1rem));
+    justify-content: var(--justify-content, var(--justify, normal));
+}
+
+:where(.cluster):where(ul, ol) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Modifiers
+   -------------------------------------------------------------------------- */
+
+/* Tight Modifier (Zero Gap) */
+:where(.cluster--tight) {
+    gap: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Cluster Ruled
+   -------------------------------------------------------------------------- */
+
+:where(.cluster--ruled) {
+    @supports (rule: 1px) {
+        gap: var(--rule-width, 1px);
+        rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}

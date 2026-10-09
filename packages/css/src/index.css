@@ -1,12 +1,21 @@
 /**
  * Design For Humans - Core Component Stylesheet
  */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 @import './variables.css';
 @import './reset.css';
-@import './utilities/accessibility.css';
+
+@import './layout/cluster.css';
+@import './layout/grid.css';
+@import './layout/inline.css';
+@import './layout/split.css';
+@import './layout/stack.css';
+@import './layout/wrapper.css';
+
 @import './components/accordion.css';
 @import './components/alert.css';
+@import './components/avatar.css';
 @import './components/badge.css';
 @import './components/banner.css';
 @import './components/breadcrumb.css';
@@ -20,19 +29,36 @@
 @import './components/field.css';
 @import './components/fieldset.css';
 @import './components/form.css';
+@import './components/header.css';
 @import './components/icon.css';
 @import './components/input.css';
 @import './components/link.css';
 @import './components/pagination.css';
 @import './components/popover.css';
+@import './components/progress.css';
+@import './components/range.css';
 @import './components/select.css';
 @import './components/skip-link.css';
-@import './components/stack.css';
+@import './components/switch.css';
 @import './components/table.css';
 @import './components/tabs.css';
 @import './components/text.css';
 @import './components/textarea.css';
 @import './components/toast.css';
 @import './components/tooltip.css';
-@import './components/wrapper.css';
 
+@import './utilities/accessibility.css';
+@import './utilities/border.css';
+@import './utilities/color-scheme.css';
+@import './utilities/color-palette.css';
+@import './utilities/color.css';
+@import './utilities/container.css';
+@import './utilities/flex.css';
+@import './utilities/focus-helpers.css';
+@import './utilities/font-size-mode.css';
+@import './utilities/layout-helpers.css';
+@import './utilities/responsive-helpers.css';
+@import './utilities/spacing.css';
+@import './utilities/typography.css';
+
+@import './overrides.css';

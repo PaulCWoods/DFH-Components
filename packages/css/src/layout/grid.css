@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Design For Humans: Grid Layout Primitive
+   --------------------------------------------------------------------------
+   Fluid autofill responsive CSS Grid primitive with spacing block tokens.
+   Uses zero-specificity (:where()) for composability.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Base Grid Container
+   -------------------------------------------------------------------------- */
+
+:where(.grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--item-width, 28rem), 100%), 1fr));
+    gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+}
+
+:where(.grid):where(ol, ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Column Min-Width Modifiers
+   -------------------------------------------------------------------------- */
+
+:where(.grid--2xs) {
+    --item-width: var(--spacing-block-2xs, 16rem);
+}
+
+:where(.grid--xs) {
+    --item-width: var(--spacing-block-xs, 20rem);
+}
+
+:where(.grid--sm) {
+    --item-width: var(--spacing-block-sm, 24rem);
+}
+
+:where(.grid--md) {
+    --item-width: var(--spacing-block-md, var(--spacing-block, 28rem));
+}
+
+:where(.grid--lg) {
+    --item-width: var(--spacing-block-lg, 32rem);
+}
+
+:where(.grid--xl) {
+    --item-width: var(--spacing-block-xl, 36rem);
+}
+
+:where(.grid--2xl) {
+    --item-width: var(--spacing-block-2xl, 40rem);
+}
+
+/* --------------------------------------------------------------------------
+   3. Grid Ruled
+   -------------------------------------------------------------------------- */
+
+:where(.grid--ruled) {
+    @supports (rule: 1px) {
+        gap: var(--rule-width, 1px);
+        rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}

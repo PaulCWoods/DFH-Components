@@ -31,11 +31,11 @@
    Base Pagination Container (:where(.pagination))
    ========================================================================== */
 :where(.pagination) {
-  --button-padding-inline: var(--button-padding-block, var(--spacing-0-25, 0.25rem));
+  --button-padding-inline: var(--button-padding-block, var(--spacing-4, 0.25rem));
   --button-group-gap: calc(var(--spacing, 1rem) / 2);
-  --divider-width: var(--border-width-sm, var(--border-width-1, 1px));
+  --divider-width: var(--border-width-1, 1px);
   --divider-color: var(--border-color-quiet, currentColor);
-  justify-content: center;
+  justify-content: var(--pagination-justify-content, flex-start);
 }
 
 /* ==========================================================================
