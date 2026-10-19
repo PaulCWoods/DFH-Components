@@ -1,0 +1,364 @@
+/* ==========================================================================
+   Design For Humans: Skeleton Primitive
+   --------------------------------------------------------------------------
+   Accessible content placeholder foundation designed to eliminate Cumulative
+   Layout Shift (CLS) and provide immediate visual feedback during asynchronous
+   data fetching.
+   Functions as both a standalone placeholder primitive and a companion state
+   modifier onto existing primitives (Avatar, Button, Badge, Card).
+   Complies with WCAG 2.2 AA / AAA (1.4.3 Contrast, 2.3.3 Reduced Motion,
+   Forced Colors mode).
+   Parity with Design For Humans Blog (_skeleton.scss & _component-library.twig).
+
+   Usage:
+   <!-- Standalone Text & Heading Placeholders -->
+   <span class="skeleton skeleton--heading"></span>
+   <span class="skeleton skeleton--text"></span>
+   <span class="skeleton skeleton--text skeleton--w-75"></span>
+
+   <!-- Shape Modifiers -->
+   <div class="skeleton skeleton--avatar"></div>
+   <div class="skeleton skeleton--button"></div>
+   <div class="skeleton skeleton--media"></div>
+
+   <!-- Companion Modifier on Existing Primitives -->
+   <div class="avatar skeleton" aria-hidden="true"></div>
+   <button type="button" class="button skeleton" aria-hidden="true" disabled>
+     <span>Loading</span>
+   </button>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Skeleton Container (:where(.skeleton))
+   ========================================================================== */
+:where(.skeleton) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_skeleton-bg: var(--skeleton-bg, var(--surface-muted, color-mix(in srgb, currentColor 10%, transparent)));
+  --_skeleton-shimmer: var(--skeleton-shimmer, light-dark(color-mix(in srgb, var(--color-white, #ffffff) 75%, transparent), color-mix(in srgb, var(--color-white, #ffffff) 12%, transparent)));
+  --_skeleton-radius: var(--skeleton-radius, var(--radius-sm, 0.25rem));
+  --_skeleton-duration: var(--skeleton-duration, 1.6s);
+  --_skeleton-block-size: auto;
+  --_skeleton-inline-size: 100%;
+  --_skeleton-aspect-ratio: auto;
+
+  /* --------------------------------------------------------------------------
+     Layout, Display & Geometry
+     -------------------------------------------------------------------------- */
+  display: block;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  inline-size: var(--_skeleton-inline-size);
+  block-size: var(--_skeleton-block-size);
+  aspect-ratio: var(--_skeleton-aspect-ratio);
+  background-color: var(--_skeleton-bg);
+  border-radius: var(--_skeleton-radius);
+
+  /* User Interaction Lock */
+  user-select: none;
+  pointer-events: none;
+  cursor: wait;
+
+  /* --------------------------------------------------------------------------
+     Shimmer Wave Animation (Hardware-Accelerated)
+     -------------------------------------------------------------------------- */
+  background-image: linear-gradient(90deg,
+      transparent 0%,
+      var(--_skeleton-shimmer) 50%,
+      transparent 100%);
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--_skeleton-duration) ease-in-out infinite;
+
+  /* --------------------------------------------------------------------------
+     Content Masking (Zero-CLS fallback for elements with placeholder text)
+     -------------------------------------------------------------------------- */
+  color: transparent !important;
+  border-color: transparent !important;
+
+  &>* {
+    visibility: hidden !important;
+  }
+}
+
+/* ==========================================================================
+   2. Geometric & Semantic Shape Modifiers
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Inline Text Placeholder (for inline spans and baseline text flow)
+   -------------------------------------------------------------------------- */
+:where(.skeleton--inline, span.skeleton:not([class*="skeleton--"])) {
+  display: inline-block;
+  vertical-align: baseline;
+  min-block-size: 0.875em;
+  inline-size: 6ch;
+}
+
+/* --------------------------------------------------------------------------
+   Text Line Modifiers (Body copy lines)
+   -------------------------------------------------------------------------- */
+:where(.skeleton--text) {
+  display: block;
+  min-block-size: 0.875em;
+  block-size: 0.875em;
+  margin-block: 0.35em;
+  border-radius: var(--_skeleton-radius);
+}
+
+/* --------------------------------------------------------------------------
+   Heading & Title Modifiers (Prominent title bars)
+   -------------------------------------------------------------------------- */
+:where(.skeleton--heading, .skeleton--title) {
+  display: block;
+  min-block-size: 1.35em;
+  block-size: 1.35em;
+  margin-block: 0.45em;
+  max-inline-size: 80%;
+  border-radius: var(--_skeleton-radius);
+}
+
+/* --------------------------------------------------------------------------
+   Width Scale Modifiers (for natural multiline paragraph variation)
+   -------------------------------------------------------------------------- */
+:where(.skeleton--w-25, .skeleton--sm) {
+  max-inline-size: 25%;
+}
+
+:where(.skeleton--w-33) {
+  max-inline-size: 33.333%;
+}
+
+:where(.skeleton--w-40) {
+  max-inline-size: 40%;
+}
+
+:where(.skeleton--w-50, .skeleton--md) {
+  max-inline-size: 50%;
+}
+
+:where(.skeleton--w-60) {
+  max-inline-size: 60%;
+}
+
+:where(.skeleton--w-66) {
+  max-inline-size: 66.666%;
+}
+
+:where(.skeleton--w-75, .skeleton--lg) {
+  max-inline-size: 75%;
+}
+
+:where(.skeleton--w-90) {
+  max-inline-size: 90%;
+}
+
+/* --------------------------------------------------------------------------
+   Avatar / Circular Shape Modifiers
+   -------------------------------------------------------------------------- */
+:where(.skeleton--avatar, .skeleton--circle, .skeleton--round) {
+  --_skeleton-radius: var(--skeleton-radius-round, var(--radius-round, 9999px));
+  --_skeleton-aspect-ratio: 1 / 1;
+  --_skeleton-inline-size: var(--avatar-size, var(--spacing-40, 2.5rem));
+  --_skeleton-block-size: var(--avatar-size, var(--spacing-40, 2.5rem));
+  border-radius: var(--_skeleton-radius);
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Button Placeholder Modifier
+   -------------------------------------------------------------------------- */
+:where(.skeleton--button) {
+  --_skeleton-block-size: var(--button-min-size, var(--spacing-target, 3rem));
+  --_skeleton-inline-size: var(--skeleton-button-width, 8rem);
+  --_skeleton-radius: var(--button-radius, var(--radius, 0.375rem));
+  border-radius: var(--_skeleton-radius);
+}
+
+/* --------------------------------------------------------------------------
+   Input & Form Control Placeholder Modifier
+   -------------------------------------------------------------------------- */
+:where(.skeleton--input) {
+  --_skeleton-block-size: var(--input-min-size, var(--spacing-target, 3rem));
+  --_skeleton-inline-size: 100%;
+  --_skeleton-radius: var(--input-radius, var(--radius, 0.375rem));
+  border-radius: var(--_skeleton-radius);
+}
+
+/* --------------------------------------------------------------------------
+   Badge & Chip Placeholder Modifier
+   -------------------------------------------------------------------------- */
+:where(.skeleton--badge, .skeleton--chip) {
+  --_skeleton-block-size: var(--spacing-24, 1.5rem);
+  --_skeleton-inline-size: 4.5rem;
+  --_skeleton-radius: var(--skeleton-radius-round, var(--radius-round, 9999px));
+  border-radius: var(--_skeleton-radius);
+}
+
+/* --------------------------------------------------------------------------
+   Media / Card Image Rectangle Modifier
+   -------------------------------------------------------------------------- */
+:where(.skeleton--media, .skeleton--rect) {
+  --_skeleton-aspect-ratio: 16 / 9;
+  --_skeleton-inline-size: 100%;
+  --_skeleton-block-size: auto;
+  --_skeleton-radius: var(--card-radius, var(--radius, 0.375rem));
+  border-radius: var(--_skeleton-radius);
+}
+
+/* ==========================================================================
+   3. Companion Integration with Existing Primitives
+   ========================================================================== */
+
+/* Avatar Primitive Integration */
+:where(.avatar.skeleton) {
+  background-color: var(--_skeleton-bg);
+  border-radius: var(--avatar-radius, var(--radius-full, 9999px));
+  overflow: hidden;
+
+  &>* {
+    visibility: hidden !important;
+  }
+}
+
+/* Button Primitive Integration */
+:where(.button.skeleton) {
+  background-color: var(--_skeleton-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  cursor: wait !important;
+  pointer-events: none !important;
+
+  &>* {
+    visibility: hidden !important;
+  }
+}
+
+/* Form Controls Integration (Input, Textarea, Select) */
+:where(.input.skeleton, .textarea.skeleton, .select.skeleton) {
+  background-color: var(--_skeleton-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  cursor: wait !important;
+  pointer-events: none !important;
+
+  &::placeholder {
+    color: transparent !important;
+  }
+}
+
+/* Badge Primitive Integration */
+:where(.badge.skeleton, .chip.skeleton) {
+  background-color: var(--_skeleton-bg) !important;
+  border-color: transparent !important;
+  color: transparent !important;
+
+  &>* {
+    visibility: hidden !important;
+  }
+}
+
+/* Card Primitive Integration */
+:where(.card.skeleton, .card--skeleton) {
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* ==========================================================================
+   4. Animation Modes (Shimmer vs. Pulse vs. Static)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Pulse Animation Mode (Subtle opacity fade without linear sweep)
+   -------------------------------------------------------------------------- */
+:where(.skeleton--pulse) {
+  background-image: none;
+  animation: skeleton-pulse var(--_skeleton-duration) ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Static Mode (No motion, constant placeholder fill)
+   -------------------------------------------------------------------------- */
+:where(.skeleton--static) {
+  background-image: none;
+  animation: none;
+}
+
+/* --------------------------------------------------------------------------
+   Keyframe Definitions
+   -------------------------------------------------------------------------- */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes skeleton-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* ==========================================================================
+   5. Container Style Queries (@container style(...))
+   ========================================================================== */
+
+@container style(--skeleton-animation: pulse) {
+  :where(.skeleton:not(.skeleton--static)) {
+    background-image: none;
+    animation: skeleton-pulse var(--_skeleton-duration) ease-in-out infinite;
+  }
+}
+
+@container style(--skeleton-animation: static) {
+  :where(.skeleton) {
+    background-image: none;
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   6. Accessibility & Web Standards Compliance
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   WCAG 2.3.3 Reduced Motion (Mandatory Zero-Motion Fallback)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :where(.skeleton, .skeleton--pulse, [class*="skeleton--"]) {
+    animation: none !important;
+    background-image: none !important;
+    opacity: 0.85;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   High Contrast / Forced Colors Mode (WCAG 1.4.3 / 1.4.11)
+   -------------------------------------------------------------------------- */
+@media (forced-colors: active) {
+  :where(.skeleton, [class*="skeleton--"]) {
+    forced-color-adjust: none;
+    outline: 1px solid ButtonBorder;
+    background-color: Canvas;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.skeleton, [class*="skeleton--"]) {
+    border: var(--border-width-thin, 1px) solid var(--border-color-quiet, currentColor);
+  }
+}

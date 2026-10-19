@@ -63,6 +63,21 @@
       "$type": "dimension",
       "$description": "Vertical padding for alert container"
     },
+    "padding-inline": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Horizontal padding for alert container"
+    },
+    "sm-padding-block": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Compact vertical padding for alert container"
+    },
+    "sm-padding-inline": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Compact horizontal padding for alert container"
+    },
     "transition": {
       "$value": "{duration.sm}",
       "$type": "duration",
@@ -77,10 +92,35 @@
       "$type": "dimension",
       "$description": "Default avatar diameter (3rem / 48px meets WCAG 2.5.5 target size)"
     },
+    "xs-size": {
+      "$value": "{spacing.24}",
+      "$type": "dimension",
+      "$description": "Extra small avatar diameter (1.5rem / 24px)"
+    },
+    "sm-size": {
+      "$value": "{spacing.32}",
+      "$type": "dimension",
+      "$description": "Small avatar diameter (2rem / 32px meets WCAG 2.5.8 target size)"
+    },
+    "lg-size": {
+      "$value": "{spacing.64}",
+      "$type": "dimension",
+      "$description": "Large avatar diameter (4rem / 64px)"
+    },
+    "xl-size": {
+      "$value": "{spacing.96}",
+      "$type": "dimension",
+      "$description": "Extra large avatar diameter (6rem / 96px)"
+    },
     "radius": {
       "$value": "{radius.round}",
       "$type": "dimension",
       "$description": "Default circular radius for avatars"
+    },
+    "square-radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Corner radius for squircle / square avatars"
     },
     "border-width": {
       "$value": "{border.width}",
@@ -160,45 +200,57 @@
       "$value": "{radius.round}",
       "$type": "dimension"
     },
-    "default-bg": {
+    "border-color": {
+      "$value": "{border.color.muted}",
+      "$type": "color"
+    },
+    "bg-color": {
+      "$value": "{surface.subtle}",
+      "$type": "color"
+    },
+    "color": {
       "$value": "{foreground}",
       "$type": "color"
     },
-    "default-text": {
+    "strong-text": {
       "$value": "{foreground.inverted-strong}",
       "$type": "color"
     },
-    "accent-bg": {
+    "accent-bg-color": {
+      "$value": "{surface.accent}",
+      "$type": "color"
+    },
+    "accent-color": {
       "$value": "{foreground.accent}",
       "$type": "color"
     },
-    "accent-text": {
-      "$value": "{foreground.inverted-strong}",
+    "success-bg-color": {
+      "$value": "{surface.success}",
       "$type": "color"
     },
-    "success-bg": {
+    "success-color": {
       "$value": "{foreground.success}",
       "$type": "color"
     },
-    "success-text": {
-      "$value": "{foreground.inverted-strong}",
+    "warning-bg-color": {
+      "$value": "{surface.warning}",
       "$type": "color"
     },
-    "warning-bg": {
+    "warning-color": {
       "$value": "{foreground.warning}",
       "$type": "color"
     },
-    "warning-text": {
-      "$value": "{foreground.inverted-strong}",
+    "danger-bg-color": {
+      "$value": "{surface.danger}",
       "$type": "color"
     },
-    "danger-bg": {
+    "danger-color": {
       "$value": "{foreground.danger}",
       "$type": "color"
     },
-    "danger-text": {
-      "$value": "{foreground.inverted-strong}",
-      "$type": "color"
+    "translucency": {
+      "$value": "{translucency.quiet}",
+      "$type": "other"
     }
   },
   "banner": {
@@ -207,13 +259,18 @@
       "$type": "color",
       "$description": "Banner background surface color"
     },
+    "subtle-bg": {
+      "$value": "{surface.subtle}",
+      "$type": "color",
+      "$description": "Subtle banner background surface color"
+    },
     "translucency": {
-      "$value": "{translucency.quiet}",
+      "$value": "{translucency.subtle}",
       "$type": "other",
       "$description": "Banner background transparency for color-mix"
     },
     "filter": {
-      "$value": "{filter.blur}",
+      "$value": "{surface-layer.filter}",
       "$type": "other",
       "$description": "Backdrop filter blur for banner"
     },
@@ -243,9 +300,73 @@
       "$description": "Banner container corner radius"
     },
     "gap": {
-      "$value": "{spacing}",
+      "$value": "{spacing.8}",
       "$type": "dimension",
       "$description": "Gap between banner content and action elements"
+    }
+  },
+  "batch-actions": {
+    "$type": "component",
+    "$description": "Batch operation floating or docked toolbar tokens",
+    "bg": {
+      "$value": "{surface.layer}",
+      "$type": "color",
+      "$description": "Default background surface for floating batch actions bar"
+    },
+    "docked-bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Docked or sticky batch actions background surface"
+    },
+    "border-color": {
+      "$value": "{panel.border-color}",
+      "$type": "color",
+      "$description": "Border stroke color for batch actions container"
+    },
+    "border-width": {
+      "$value": "{panel.border-width}",
+      "$type": "dimension",
+      "$description": "Border stroke width for batch actions container"
+    },
+    "border-style": {
+      "$value": "solid",
+      "$type": "strokeStyle",
+      "$description": "Border stroke style for batch actions container"
+    },
+    "filter": {
+      "$value": "{surface-layer.filter}",
+      "$type": "other",
+      "$description": "Backdrop filter for floating batch actions bar"
+    },
+    "shadow": {
+      "$value": "{shadow.lg}",
+      "$type": "shadow",
+      "$description": "Floating elevation drop shadow for batch actions bar"
+    },
+    "padding": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Inner padding for batch actions container"
+    },
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Gap between summary, actions, and dismiss hooks"
+    },
+    "offset": {
+      "$value": "{spacing.24}",
+      "$type": "dimension",
+      "$description": "Bottom viewport offset distance for floating batch actions"
+    },
+    "max-width": {
+      "$value": "46rem",
+      "$type": "dimension",
+      "$description": "Maximum inline size of batch actions toolbar"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Entry and exit transition duration"
     }
   },
   "block-link": {
@@ -435,27 +556,121 @@
         "$type": "color"
       }
     },
-    "destructive": {
+    "accent": {
+      "border-color": {
+        "$value": "{foreground.accent}",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "{foreground.accent}",
+        "$type": "color"
+      },
+      "hover-bg": {
+        "$value": "{foreground.accent}",
+        "$type": "color"
+      },
+      "hover-text": {
+        "$value": "{surface}",
+        "$type": "color"
+      },
+      "active-bg": {
+        "$value": "{foreground.accent-pressed}",
+        "$type": "color"
+      },
+      "active-text": {
+        "$value": "{surface}",
+        "$type": "color"
+      }
+    },
+    "strong": {
       "bg": {
+        "$value": "{foreground}",
+        "$type": "color"
+      },
+      "border-color": {
+        "$value": "{foreground}",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "{surface}",
+        "$type": "color"
+      },
+      "hover-bg": {
+        "$value": "{foreground.accent-hover}",
+        "$type": "color"
+      },
+      "hover-text": {
+        "$value": "{surface}",
+        "$type": "color"
+      },
+      "active-bg": {
+        "$value": "{foreground.accent-pressed}",
+        "$type": "color"
+      },
+      "active-text": {
+        "$value": "{surface}",
+        "$type": "color"
+      }
+    },
+    "destructive": {
+      "border-color": {
         "$value": "{foreground.danger}",
         "$type": "color"
       },
       "text": {
-        "$value": "{color.white}",
+        "$value": "{foreground.danger}",
+        "$type": "color"
+      },
+      "hover-bg": {
+        "$value": "{foreground.danger}",
+        "$type": "color"
+      },
+      "hover-text": {
+        "$value": "{foreground.inverted-strong}",
+        "$type": "color"
+      },
+      "active-bg": {
+        "$value": "{foreground.danger-pressed}",
+        "$type": "color"
+      },
+      "active-text": {
+        "$value": "{foreground.inverted-strong}",
+        "$type": "color"
+      }
+    },
+    "strong-destructive": {
+      "bg": {
+        "$value": "{foreground.danger}",
+        "$type": "color"
+      },
+      "border-color": {
+        "$value": "{foreground.danger}",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "{foreground.inverted-strong}",
         "$type": "color"
       },
       "hover-bg": {
         "$value": "{foreground.danger-hover}",
         "$type": "color"
       },
+      "hover-text": {
+        "$value": "{foreground.inverted-strong}",
+        "$type": "color"
+      },
       "active-bg": {
         "$value": "{foreground.danger-pressed}",
+        "$type": "color"
+      },
+      "active-text": {
+        "$value": "{foreground.inverted-strong}",
         "$type": "color"
       }
     },
     "subtle": {
       "bg": {
-        "$value": "transparent",
+        "$value": "{surface.translucent}",
         "$type": "color"
       },
       "text": {
@@ -463,7 +678,7 @@
         "$type": "color"
       },
       "hover-bg": {
-        "$value": "{surface.translucent}",
+        "$value": "{surface.translucent-strong}",
         "$type": "color"
       },
       "hover-text": {
@@ -615,69 +830,19 @@
       "$description": "Corner radius for card container"
     },
     "padding": {
-      "$value": "{spacing.breathe}",
+      "$value": "{spacing.cushion}",
       "$type": "dimension",
       "$description": "Card content internal padding (container-fluid cqi)"
     },
-    "gap": {
-      "$value": "{spacing.12}",
+    "inner-padding": {
+      "$value": "{spacing.breathe}",
       "$type": "dimension",
-      "$description": "Gap between card content sections"
+      "$description": "Card content internal padding (container-fluid cqi)"
     },
     "transition": {
       "$value": "{duration.sm}",
       "$type": "duration",
       "$description": "Card elevation transition duration"
-    },
-    "title-font-family": {
-      "$value": "{heading.font-family}",
-      "$type": "fontFamilies",
-      "$description": "Card title typography font family"
-    },
-    "title-font-size": {
-      "$value": "{heading-cq.font-size}",
-      "$type": "dimension",
-      "$description": "Card title typography font size (container-fluid cqi)"
-    },
-    "title-font-weight": {
-      "$value": "{heading.font-weight}",
-      "$type": "fontWeight",
-      "$description": "Card title typography weight"
-    },
-    "title-line-height": {
-      "$value": "{heading.line-height}",
-      "$type": "number",
-      "$description": "Card title line height"
-    },
-    "title-letter-spacing": {
-      "$value": "{heading.letter-spacing}",
-      "$type": "dimension",
-      "$description": "Card title letter spacing"
-    },
-    "title-text-transform": {
-      "$value": "{heading.text-transform}",
-      "$type": "other",
-      "$description": "Card title text transform"
-    },
-    "title-word-spacing": {
-      "$value": "{heading.word-spacing}",
-      "$type": "other",
-      "$description": "Card title word spacing"
-    },
-    "subtitle-font-size": {
-      "$value": "{small-heading-cq.font-size}",
-      "$type": "dimension",
-      "$description": "Card subtitle typography font size (container-fluid cqi step 0)"
-    },
-    "subtitle-font-weight": {
-      "$value": "{small-heading.font-weight}",
-      "$type": "fontWeight",
-      "$description": "Card subtitle typography weight"
-    },
-    "subtitle-line-height": {
-      "$value": "{small-heading.line-height}",
-      "$type": "number",
-      "$description": "Card subtitle line height"
     },
     "subtitle-color": {
       "$value": "{foreground.muted}",
@@ -705,7 +870,7 @@
       "$description": "Frosted glass background color for sticky header and footer layers"
     },
     "filter": {
-      "$value": "{filter.blur}",
+      "$value": "{surface-layer.filter}",
       "$type": "other",
       "$description": "Backdrop filter blur for sticky header and footer layers"
     },
@@ -720,7 +885,7 @@
       "$description": "Frosted glass background color for sticky header and footer layers"
     },
     "layer-filter": {
-      "$value": "{filter.blur}",
+      "$value": "{surface-layer.filter}",
       "$type": "other",
       "$description": "Backdrop filter blur for sticky header and footer layers"
     },
@@ -731,6 +896,11 @@
     },
     "compact": {
       "padding": {
+        "$value": "{spacing}",
+        "$type": "dimension",
+        "$description": "Compact card internal padding"
+      },
+      "inner-padding": {
         "$value": "{spacing}",
         "$type": "dimension",
         "$description": "Compact card internal padding"
@@ -792,6 +962,10 @@
     }
   },
   "chip": {
+    "bg": {
+      "$value": "{surface.translucent}",
+      "$type": "color"
+    },
     "font-family": {
       "$value": "{typography.font-family.sans}",
       "$type": "fontFamilies"
@@ -807,10 +981,70 @@
     "text-transform": {
       "$value": "uppercase",
       "$type": "other"
+    }
+  },
+  "deck": {
+    "$type": "component",
+    "$description": "Media and audio playback deck container tokens",
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Deck container background surface"
     },
-    "opacity": {
-      "$value": "{opacity.muted}",
-      "$type": "number"
+    "border-width": {
+      "$value": "{panel.border-width}",
+      "$type": "dimension",
+      "$description": "Deck perimeter border stroke width"
+    },
+    "border-color": {
+      "$value": "{panel.border-color}",
+      "$type": "border",
+      "$description": "Deck perimeter border color"
+    },
+    "border-style": {
+      "$value": "{panel.border-style}",
+      "$type": "strokeStyle",
+      "$description": "Deck perimeter border stroke style"
+    },
+    "radius": {
+      "$value": "{panel.radius}",
+      "$type": "dimension",
+      "$description": "Deck container corner rounding"
+    },
+    "padding": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Deck container interior padding"
+    },
+    "gap": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Deck section gap"
+    },
+    "art-size": {
+      "$value": "{spacing.80}",
+      "$type": "dimension",
+      "$description": "Album or media art thumbnail dimensions"
+    },
+    "art-radius": {
+      "$value": "{radius.md}",
+      "$type": "dimension",
+      "$description": "Album or media art corner rounding"
+    },
+    "play-size": {
+      "$value": "{spacing.48}",
+      "$type": "dimension",
+      "$description": "Primary play/pause button touch target diameter"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "State transition timing"
+    },
+    "on-air-border": {
+      "$value": "{foreground.accent}",
+      "$type": "color",
+      "$description": "Active broadcast on-air perimeter highlight color"
     }
   },
   "dialog": {
@@ -855,7 +1089,7 @@
       "$type": "color"
     },
     "backdrop-filter": {
-      "$value": "var(--filter-blur)",
+      "$value": "var(--surface-layer-filter)",
       "$type": "other"
     }
   },
@@ -871,6 +1105,95 @@
       "$value": "{border.color.quiet}",
       "$type": "color",
       "$description": "Divider stroke color"
+    }
+  },
+  "empty-state": {
+    "$type": "component",
+    "$description": "Zero-data views, search misses, and onboarding layout tokens",
+    "padding-block": {
+      "$value": "{spacing.48}",
+      "$type": "dimension",
+      "$description": "Empty state container vertical padding"
+    },
+    "padding-inline": {
+      "$value": "{spacing.24}",
+      "$type": "dimension",
+      "$description": "Empty state container horizontal padding"
+    },
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Vertical gap between visual well, copy, and action buttons"
+    },
+    "max-width": {
+      "$value": "28rem",
+      "$type": "dimension",
+      "$description": "Max reading width for empty state content"
+    },
+    "icon-well-size": {
+      "$value": "4.5rem",
+      "$type": "dimension",
+      "$description": "Diameter of circular visual container"
+    },
+    "icon-well-bg": {
+      "$value": "{surface.muted}",
+      "$type": "color",
+      "$description": "Background surface fill for the visual container"
+    },
+    "icon-well-radius": {
+      "$value": "{radius.round}",
+      "$type": "dimension",
+      "$description": "Corner radius for the visual container"
+    },
+    "icon-scale": {
+      "$value": "1.5",
+      "$type": "number",
+      "$description": "Dimensions of the empty state icon"
+    },
+    "icon-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Icon stroke and fill color"
+    },
+    "title-color": {
+      "$value": "{foreground.default}",
+      "$type": "color",
+      "$description": "Heading text color for the empty state title"
+    },
+    "description-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Description copy text color"
+    },
+    "icon-well-success-bg": {
+      "$value": "{surface.success}",
+      "$type": "color",
+      "$description": "Background surface fill for success state icon well"
+    },
+    "icon-success-color": {
+      "$value": "{foreground.success}",
+      "$type": "color",
+      "$description": "Icon color for success state"
+    },
+    "icon-well-warning-bg": {
+      "$value": "{surface.warning}",
+      "$type": "color",
+      "$description": "Background surface fill for warning state icon well"
+    },
+    "icon-warning-color": {
+      "$value": "{foreground.warning}",
+      "$type": "color",
+      "$description": "Icon color for warning state"
+    },
+    "icon-well-error-bg": {
+      "$value": "{surface.danger}",
+      "$type": "color",
+      "$description": "Background surface fill for error state icon well"
+    },
+    "icon-error-color": {
+      "$value": "{foreground.danger}",
+      "$type": "color",
+      "$description": "Icon color for error state"
     }
   },
   "field": {
@@ -911,20 +1234,71 @@
       "$type": "other"
     },
     "choice-inner-gap": {
-      "$value": "{spacing.8}",
+      "$value": "{spacing.16}",
       "$type": "dimension"
     },
-    "choices-gap": {
-      "$value": "{spacing.8}",
+    "choices-row-gap": {
+      "$value": "{spacing.16}",
       "$type": "dimension"
     },
     "choices-col-gap": {
-      "$value": "{spacing.16}",
+      "$value": "{spacing.24}",
       "$type": "dimension"
     },
     "check-size": {
       "$value": "1.25rem",
       "$type": "dimension"
+    }
+  },
+  "header": {
+    "border-width": {
+      "$value": "{app.border-width}",
+      "$type": "dimension",
+      "$description": "Standard border stroke thickness for application header landmark"
+    },
+    "border-color": {
+      "$value": "{app.border-color}",
+      "$type": "color",
+      "$description": "Standard border stroke color for application header landmark"
+    },
+    "border-style": {
+      "$value": "{app.border-style}",
+      "$type": "strokeStyle",
+      "$description": "Standard border stroke style for application header landmark"
+    }
+  },
+  "sidebar": {
+    "border-width": {
+      "$value": "{app.border-width}",
+      "$type": "dimension",
+      "$description": "Standard border stroke thickness for application sidebar layout primitive"
+    },
+    "border-color": {
+      "$value": "{app.border-color}",
+      "$type": "color",
+      "$description": "Standard border stroke color for application sidebar layout primitive"
+    },
+    "border-style": {
+      "$value": "{app.border-style}",
+      "$type": "strokeStyle",
+      "$description": "Standard border stroke style for application sidebar layout primitive"
+    }
+  },
+  "footer": {
+    "border-width": {
+      "$value": "{app.border-width}",
+      "$type": "dimension",
+      "$description": "Standard border stroke thickness for application footer landmark"
+    },
+    "border-color": {
+      "$value": "{app.border-color}",
+      "$type": "color",
+      "$description": "Standard border stroke color for application footer landmark"
+    },
+    "border-style": {
+      "$value": "{app.border-style}",
+      "$type": "strokeStyle",
+      "$description": "Standard border stroke style for application footer landmark"
     }
   },
   "input": {
@@ -933,19 +1307,19 @@
       "$type": "color"
     },
     "border-color": {
-      "$value": "{border.color.muted}",
-      "$type": "border"
+      "$value": "{control.border-color}",
+      "$type": "color"
     },
     "border-color-invalid": {
       "$value": "{border.color.danger}",
-      "$type": "border"
+      "$type": "color"
     },
     "border-color-valid": {
       "$value": "{border.color.success}",
-      "$type": "border"
+      "$type": "color"
     },
     "border-width": {
-      "$value": "{border.width}",
+      "$value": "{control.border-width}",
       "$type": "dimension"
     },
     "font-size": {
@@ -1395,19 +1769,19 @@
       "$type": "color"
     },
     "border-color": {
-      "$value": "{border.color.muted}",
-      "$type": "border"
+      "$value": "{control.border-color}",
+      "$type": "color"
     },
     "border-color-invalid": {
       "$value": "{border.color.danger}",
-      "$type": "border"
+      "$type": "color"
     },
     "border-color-valid": {
       "$value": "{border.color.success}",
-      "$type": "border"
+      "$type": "color"
     },
     "border-width": {
-      "$value": "{border.width}",
+      "$value": "{control.border-width}",
       "$type": "dimension"
     },
     "font-size": {
@@ -1443,7 +1817,7 @@
       "$type": "duration"
     },
     "picker-icon": {
-      "$value": "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0, 0 32, 0 16, 24' style='fill: rgba(150, 150, 150, 0.8)'></polygon></svg>\")",
+      "$value": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23757575' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E\")",
       "$type": "other"
     },
     "picker-icon-pos": {
@@ -1582,12 +1956,12 @@
       "$type": "dimension",
       "$description": "Horizontal cell padding"
     },
-    "cell-padding-block-compact": {
+    "compact-cell-padding-block": {
       "$value": "{spacing.4}",
       "$type": "dimension",
       "$description": "Compact vertical cell padding"
     },
-    "cell-padding-inline-compact": {
+    "compact-cell-padding-inline": {
       "$value": "{spacing.8}",
       "$type": "dimension",
       "$description": "Compact horizontal cell padding"
@@ -1598,8 +1972,7 @@
       "$description": "Background color for sticky table cells"
     },
     "cell-sticky-filter": {
-      "$value": "{filter.blur}",
-      "$type": "other",
+      "$value": "{surface-layer.filter}",
       "$description": "Filter for sticky table cells"
     },
     "header-cell-font-weight": {
@@ -1753,8 +2126,13 @@
     },
     "transition": {
       "$value": "{duration.sm}",
-      "$type": "duration",
+      "$type": "other",
       "$description": "Transition speed for toggle state changes"
+    },
+    "timefunc": {
+      "$value": "{ease.bounce}",
+      "$type": "other",
+      "$description": "Time function for switch"
     }
   },
   "tabs": {
@@ -1801,7 +2179,7 @@
       "$description": "Tab label typography font size"
     },
     "font-weight": {
-      "$value": "{body-strong.font-weight}",
+      "$value": "{body.font-weight}",
       "$type": "fontWeight",
       "$description": "Tab label typography font weight"
     },
@@ -1836,7 +2214,7 @@
       "$description": "Resting tab label text color"
     },
     "hover-color": {
-      "$value": "{foreground.accent-hover}",
+      "$value": "{foreground.accent}",
       "$type": "color",
       "$description": "Hover tab label text color"
     },
@@ -1854,6 +2232,18 @@
       "$value": "{radius.round}",
       "$type": "dimension",
       "$description": "Round corner radius for round button tabs"
+    },
+    "floating": {
+      "border-width": {
+        "$value": "{panel.border-width}",
+        "$type": "dimension",
+        "$description": "Floating tab border width"
+      },
+      "border-color": {
+        "$value": "{panel.border-color}",
+        "$type": "border",
+        "$description": "Floating tab border color"
+      }
     },
     "transition": {
       "$value": "{duration.sm}",
@@ -1886,6 +2276,150 @@
         "$type": "dimension",
         "$description": "Compact tab minimum target size"
       }
+    }
+  },
+  "telemetry": {
+    "$type": "component",
+    "$description": "Telemetry stat pill, metric badge, and dashboard telemetry strip tokens",
+    "bg": {
+      "$value": "{surface.layer}",
+      "$type": "color",
+      "$description": "Default background fill for telemetry stat pill"
+    },
+    "border-width": {
+      "$value": "{border.width.thin}",
+      "$type": "dimension",
+      "$description": "Border stroke width for telemetry container"
+    },
+    "border-color": {
+      "$value": "{panel.border-color}",
+      "$type": "color",
+      "$description": "Border stroke color for telemetry container"
+    },
+    "border-style": {
+      "$value": "{panel.border-style}",
+      "$type": "strokeStyle",
+      "$description": "Border stroke style for telemetry container"
+    },
+    "radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension",
+      "$description": "Corner radius for telemetry container"
+    },
+    "padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Vertical padding for telemetry container"
+    },
+    "padding-inline": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Horizontal padding for telemetry container"
+    },
+    "gap": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Gap between telemetry icon and content"
+    },
+    "inner-gap": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Gap between telemetry label and value"
+    },
+    "label-font-family": {
+      "$value": "{nano-heading.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Telemetry metric label font family"
+    },
+    "label-font-size": {
+      "$value": "{nano-heading.font-size}",
+      "$type": "dimension",
+      "$description": "Telemetry metric label font size (Step -2: 0.64rem / 10px)"
+    },
+    "label-font-weight": {
+      "$value": "{nano-heading.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Telemetry metric label font weight"
+    },
+    "label-line-height": {
+      "$value": "1",
+      "$type": "number",
+      "$description": "Telemetry metric label line height"
+    },
+    "label-letter-spacing": {
+      "$value": "{nano-heading.letter-spacing}",
+      "$type": "dimension",
+      "$description": "Telemetry metric label letter spacing"
+    },
+    "label-text-transform": {
+      "$value": "{nano-heading.text-transform}",
+      "$type": "other",
+      "$description": "Telemetry metric label text transform"
+    },
+    "label-color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "Telemetry metric label text color"
+    },
+    "value-font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Telemetry value font family"
+    },
+    "value-font-size": {
+      "$value": "{body-fixed.font-size}",
+      "$type": "dimension",
+      "$description": "Telemetry value font size (Step 0: 1rem / 16px)"
+    },
+    "value-font-weight": {
+      "$value": "{body-strong.font-weight}",
+      "$type": "fontWeight",
+      "$description": "Telemetry value font weight"
+    },
+    "value-line-height": {
+      "$value": "1",
+      "$type": "number",
+      "$description": "Telemetry value line height"
+    },
+    "value-color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "Telemetry value text color"
+    },
+    "icon-size": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Telemetry leading icon dimensions"
+    },
+    "icon-color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "Telemetry leading icon color"
+    },
+    "compact-padding-block": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Compact telemetry vertical padding"
+    },
+    "compact-padding-inline": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Compact telemetry horizontal padding"
+    },
+    "compact-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Compact telemetry content gap"
+    },
+    "card-padding": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Telemetry card variant interior padding"
+    },
+    "card-value-font-size": {
+      "$value": "{typography.font-size.2}",
+      "$type": "dimension",
+      "$description": "Large telemetry card value font size (Step 2: 1.5625rem)"
     }
   },
   "textarea": {
@@ -2008,7 +2542,7 @@
       "$description": "Tooltip text font weight"
     },
     "line-height": {
-      "$value": "{typography.line-height.1}",
+      "$value": "{typography.line-height.minus-1}",
       "$type": "number",
       "$description": "Tooltip line height"
     },
@@ -2051,6 +2585,248 @@
       "$value": "{timefunc.ease-in-out}",
       "$type": "other",
       "$description": "Timing function for tooltip animations"
+    }
+  },
+  "menu": {
+    "$type": "component",
+    "$description": "Dropdown and context menu primitive tokens (companion to card & button-group)",
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Menu container surface background"
+    },
+    "border-color": {
+      "$value": "{panel.border-color}",
+      "$type": "border",
+      "$description": "Menu container border color"
+    },
+    "border-width": {
+      "$value": "{panel.border-width}",
+      "$type": "dimension",
+      "$description": "Menu container border width"
+    },
+    "border-style": {
+      "$value": "{panel.border-style}",
+      "$type": "strokeStyle",
+      "$description": "Menu container border style"
+    },
+    "radius": {
+      "$value": "{panel.radius}",
+      "$type": "dimension",
+      "$description": "Menu container corner radius"
+    },
+    "shadow": {
+      "$value": "{shadow.md}",
+      "$type": "shadow",
+      "$description": "Menu floating elevation shadow"
+    },
+    "padding": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Menu container internal padding"
+    },
+    "gap": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Gap between items in menu list"
+    },
+    "min-width": {
+      "$value": "14rem",
+      "$type": "dimension",
+      "$description": "Minimum inline size of menu container"
+    },
+    "max-width": {
+      "$value": "24rem",
+      "$type": "dimension",
+      "$description": "Maximum inline size of menu container"
+    },
+    "divider-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "border",
+      "$description": "Menu hairline separator color"
+    },
+    "divider-width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension",
+      "$description": "Menu separator thickness"
+    },
+    "item-padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Menu item vertical padding"
+    },
+    "item-padding-inline": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Menu item horizontal padding"
+    },
+    "item-radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension",
+      "$description": "Menu item corner radius"
+    },
+    "item-font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Menu item typography font size"
+    },
+    "header-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Menu group header label color"
+    }
+  },
+  "skeleton": {
+    "$type": "component",
+    "$description": "Loading skeleton placeholder tokens for layout shift reduction (CLS)",
+    "bg": {
+      "$value": "{surface.muted}",
+      "$type": "color",
+      "$description": "Skeleton base surface fill"
+    },
+    "shimmer": {
+      "$value": "light-dark(color-mix(in srgb, {color.white} 75%, transparent), color-mix(in srgb, {color.white} 12%, transparent))",
+      "$type": "color",
+      "$description": "Skeleton moving highlight shimmer tone"
+    },
+    "radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension",
+      "$description": "Skeleton default corner radius"
+    },
+    "radius-round": {
+      "$value": "{radius.round}",
+      "$type": "dimension",
+      "$description": "Skeleton circular radius for avatars, badges, and icons"
+    },
+    "duration": {
+      "$value": "1.6s",
+      "$type": "duration",
+      "$description": "Skeleton shimmer animation cycle duration"
+    }
+  },
+  "combobox": {
+    "$type": "component",
+    "$description": "Searchable combobox and popup listbox primitive tokens",
+    "min-height": {
+      "$value": "{spacing.target}",
+      "$type": "dimension",
+      "$description": "Combobox input control minimum block size (WCAG 2.5.5 touch target)"
+    },
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Combobox input control surface fill"
+    },
+    "border-color": {
+      "$value": "{panel.border-color}",
+      "$type": "border",
+      "$description": "Combobox resting border stroke color"
+    },
+    "border-width": {
+      "$value": "{panel.border-width}",
+      "$type": "dimension",
+      "$description": "Combobox border thickness"
+    },
+    "radius": {
+      "$value": "{panel.radius}",
+      "$type": "dimension",
+      "$description": "Combobox input container corner radius"
+    },
+    "padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Combobox input control vertical inner clearance"
+    },
+    "padding-inline": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Combobox input control horizontal inner clearance"
+    },
+    "gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Gap between chips, input, and actions inside control"
+    },
+    "color": {
+      "$value": "{foreground.default}",
+      "$type": "color",
+      "$description": "Combobox input and option text color"
+    },
+    "placeholder-color": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "Combobox placeholder text color"
+    },
+    "listbox-bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Combobox listbox dropdown background"
+    },
+    "listbox-border-color": {
+      "$value": "{panel.border-color}",
+      "$type": "border",
+      "$description": "Combobox listbox border color"
+    },
+    "listbox-border-width": {
+      "$value": "{panel.border-width}",
+      "$type": "dimension",
+      "$description": "Combobox listbox border width"
+    },
+    "listbox-radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Combobox listbox corner radius"
+    },
+    "listbox-shadow": {
+      "$value": "{shadow.md}",
+      "$type": "shadow",
+      "$description": "Combobox listbox floating elevation shadow"
+    },
+    "listbox-max-height": {
+      "$value": "18rem",
+      "$type": "dimension",
+      "$description": "Combobox listbox maximum scrollable height"
+    },
+    "listbox-padding": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Combobox listbox container internal padding"
+    },
+    "listbox-gap": {
+      "$value": "2px",
+      "$type": "dimension",
+      "$description": "Gap between options in listbox"
+    },
+    "option-padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Combobox option vertical padding"
+    },
+    "option-padding-inline": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Combobox option horizontal padding"
+    },
+    "option-radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension",
+      "$description": "Combobox option corner radius"
+    },
+    "option-hover-bg": {
+      "$value": "{surface.translucent}",
+      "$type": "color",
+      "$description": "Combobox option hover background fill"
+    },
+    "option-selected-bg": {
+      "$value": "{surface.translucent}",
+      "$type": "color",
+      "$description": "Combobox option selected state background fill"
+    },
+    "option-selected-color": {
+      "$value": "{foreground.accent}",
+      "$type": "color",
+      "$description": "Combobox option selected state text color"
     }
   },
   "wrapper": {

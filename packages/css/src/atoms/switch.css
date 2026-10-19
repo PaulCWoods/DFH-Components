@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Switch Primitive Component
+   --------------------------------------------------------------------------
+   Accessible segmented binary toggle switch with sliding selection indicator,
+   high-contrast states, and zero-JS state management via :has(:checked).
+   Adheres to WCAG 2.2 AA / AAA standards:
+   - 4.1.2 Name, Role, Value (Native checkbox with role="switch")
+   - 2.5.5 / 2.5.8 Target Size (48px standard AAA, 32px compact)
+   - 1.4.3 / 1.4.11 Contrast (>= 3:1 graphical boundaries & indicators)
+   - 2.4.7 / 2.4.13 Focus Visible (3:1 contrast focus ring with 2px offset)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Switch Container (:where(.switch))
+   ========================================================================== */
+:where(.switch) {
+  /* ------------------------------------------------------------------------
+     Private Variable Manifest (Single Source of Truth)
+     ------------------------------------------------------------------------ */
+  --_switch-radius: var(--switch-radius, var(--radius-md, 0.5rem));
+  --_switch-border-width: var(--switch-border-width, var(--border-width, 2px));
+  --_switch-border-color: var(--switch-border-color, var(--border-color, currentColor));
+  --_switch-height: var(--switch-height, var(--button-min-size, var(--spacing-48, 3rem)));
+  --_switch-gap: var(--switch-gap, var(--spacing-16, 1rem));
+  --_switch-bg: var(--switch-bg, transparent);
+  --_switch-font-family: var(--switch-font-family, var(--typography-font-family-sans, sans-serif));
+  --_switch-font-size: var(--switch-font-size, var(--control-font-size, 1rem));
+  --_switch-font-weight: var(--switch-font-weight, var(--font-weight-bold, 700));
+  --_switch-padding-block: var(--switch-padding-block, var(--control-padding-block, var(--spacing-4, 0.25rem)));
+  --_switch-padding-inline: var(--switch-padding-inline, var(--spacing-16, 1rem));
+  --_switch-option-min-width: var(--switch-option-min-width, var(--spacing-48, 3rem));
+  --_switch-inactive-opacity: var(--switch-inactive-opacity, var(--opacity-disabled, 0.5));
+  --_switch-off-bg: var(--switch-off-bg, var(--surface-muted, #e6e4df));
+  --_switch-off-color: var(--switch-off-color, var(--foreground, currentColor));
+  --_switch-on-bg: var(--switch-on-bg, var(--foreground-accent, #008076));
+  --_switch-on-color: var(--switch-on-color, var(--foreground-inverted-strong, #ffffff));
+  --_switch-transition: var(--switch-transition, var(--duration-sm, 200ms));
+  --_switch-timefunc: var(--switch-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  /* ------------------------------------------------------------------------
+     Contextual Style Container Queries (@container style(...))
+     Enables zero-class parent orchestration across forms and toolbars:
+     e.g., .settings-panel { --switch-corners: round; --switch-size: sm; }
+     ------------------------------------------------------------------------ */
+
+  /* Spatial Density & Size */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--switch-size: sm) or style(--control-density: dense) {
+    --_switch-height: var(--switch-sm-height, var(--spacing-32, 2rem));
+    --_switch-padding-inline: var(--switch-sm-padding-inline, var(--spacing-8, 0.5rem));
+    --_switch-option-min-width: var(--switch-sm-option-min-width, var(--spacing-32, 2rem));
+  }
+
+  /* Typographic Scaling */
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--switch-size: sm) or style(--control-density: dense) {
+    --_switch-font-size: var(--switch-sm-font-size, var(--typography-font-size--1, 0.8rem));
+  }
+
+  @container style(--switch-size: lg) {
+    --_switch-height: var(--switch-lg-height, var(--spacing-64, 3.5rem));
+    --_switch-font-size: var(--switch-lg-font-size, var(--typography-font-size-1, 1.25rem));
+    --_switch-padding-inline: var(--switch-lg-padding-inline, var(--spacing-24, 1.5rem));
+  }
+
+  /* Corner Shape */
+  @container style(--switch-corners: round) or style(--switch-shape: round) {
+    --_switch-radius: var(--radius-round, 9999px);
+  }
+
+  /* Variation Orchestration */
+  @container style(--switch-variation: destructive) or style(--switch-intent: destructive) or style(--switch-variation: danger) or style(--switch-intent: danger) {
+    --_switch-on-bg: var(--switch-on-destructive-bg, var(--foreground-danger, #d32f2f));
+  }
+
+  /* Layout & Geometry */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--_switch-gap);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+
+  /* Visually hide the native input while preserving accessibility and keyboard focus */
+  :where(input) {
+    position: absolute !important;
+    inline-size: 1px !important;
+    block-size: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border-width: 0 !important;
+  }
+
+  :where(.switch__label) {
+    --_switch-label-font-family: var(--label-font-family, var(--body-font-family, inherit));
+    --_switch-label-font-size: var(--label-font-size, var(--typography-font-size-0, 1rem));
+    --_switch-label-font-weight: var(--label-font-weight, var(--font-weight-bold, 700));
+    --_switch-label-line-height: var(--label-line-height, var(--typography-line-height--1, 1.4));
+    --_switch-label-inner-gap: var(--spacing-4, 0.25rem);
+    --_switch-hint-font-family: var(--micro-text-font-family, var(--body-font-family, inherit));
+    --_switch-hint-font-size: var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem));
+    --_switch-hint-font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
+    --_switch-hint-line-height: var(--micro-text-line-height, var(--typography-line-height-4, 1.4));
+    font-family: var(--_switch-label-font-family);
+    font-size: var(--_switch-label-font-size);
+    font-weight: var(--_switch-label-font-weight);
+    line-height: var(--_switch-label-line-height);
+    color: var(--switch-label-color, var(--foreground, currentColor));
+    display: flex;
+    flex-direction: column;
+    gap: var(--_switch-label-inner-gap);
+    cursor: pointer;
+
+    /* Spatial Gap */
+    @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+      --_switch-label-inner-gap: var(--spacing-2, 0.125rem);
+    }
+
+    /* Typographic Scaling */
+    @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+      --_switch-label-font-size: var(--label-compact-font-size, var(--typography-font-size--1, 0.875rem));
+      --_switch-label-font-weight: var(--label-compact-font-weight, var(--font-weight-medium, 500));
+      --_switch-label-line-height: var(--label-compact-line-height, var(--typography-line-height--1, 1.4));
+      --_switch-hint-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+    }
+
+    small {
+      font-family: var(--_switch-hint-font-family);
+      font-size: var(--_switch-hint-font-size);
+      font-weight: var(--_switch-hint-font-weight);
+      line-height: var(--_switch-hint-line-height);
+      color: var(--_switch-hint-color, var(--foreground-muted, currentColor));
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     2. Segmented Control Outer Frame
+     ------------------------------------------------------------------------ */
+  .switch__control {
+    display: inline-flex;
+    align-items: stretch;
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    isolation: isolate;
+    min-block-size: var(--_switch-height);
+    border: var(--_switch-border-width) solid var(--_switch-border-color);
+    border-radius: var(--_switch-radius);
+    background-color: var(--_switch-bg);
+    overflow: hidden;
+
+    /* Animated sliding indicator */
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: var(--switch-slider-inset, 0px);
+      inset-inline-start: var(--switch-slider-inset, 0px);
+      inline-size: calc(50% - var(--switch-slider-inset, 0px));
+      z-index: 0;
+      border-radius: var(--switch-slider-radius, calc(var(--_switch-radius) - var(--_switch-border-width)));
+      background-color: var(--_switch-indicator-bg, var(--_switch-off-bg));
+      translate: var(--_switch-translate, 0 0);
+      transition:
+        translate var(--_switch-transition) var(--_switch-timefunc),
+        background-color var(--_switch-transition) ease;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        --_switch-inactive-opacity: 1;
+        color: var(--switch-hover-text, var(--foreground-accent-hover, AccentColor));
+      }
+    }
+
+    &:active {
+      --_switch-inactive-opacity: 1;
+      color: var(--switch-pressed-text, var(--foreground-accent-pressed, AccentColor));
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     3. Segment Options (Off / On)
+     ------------------------------------------------------------------------ */
+  .switch__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    flex: 1 1 50%;
+    min-inline-size: var(--_switch-option-min-width);
+    padding-block: var(--_switch-padding-block);
+    padding-inline: var(--_switch-padding-inline);
+    font-family: var(--_switch-font-family);
+    font-size: var(--_switch-font-size);
+    font-weight: var(--_switch-font-weight);
+    line-height: 1;
+    text-box: trim-both cap alphabetic;
+    transition: color var(--_switch-transition) ease;
+  }
+
+  /* ------------------------------------------------------------------------
+     4. State Management: Off vs On via :has(:checked)
+     ------------------------------------------------------------------------ */
+
+  /* OFF State */
+  &:not(:has(:checked)) {
+    --_switch-indicator-bg: var(--_switch-off-bg);
+    --_switch-translate: 0 0;
+
+    :where(.switch__option--off) {
+      color: var(--_switch-off-color);
+    }
+
+    :where(.switch__option--on) {
+      opacity: var(--_switch-inactive-opacity);
+    }
+  }
+
+  /* ON State */
+  &:has(:checked) {
+    --_switch-indicator-bg: var(--_switch-on-bg);
+    --_switch-translate: 100% 0;
+
+    :where(.switch__option--off) {
+      color: var(--switch-inactive-color, inherit);
+      opacity: var(--_switch-inactive-opacity);
+    }
+
+    :where(.switch__option--on) {
+      color: var(--_switch-on-color);
+    }
+  }
+
+  /* RTL Support for Slide Direction */
+  &:where([dir="rtl"] *),
+  [dir="rtl"] & {
+    &:has(:checked) {
+      --_switch-translate: -100% 0;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     5. Focus Visible Ring (WCAG 2.4.7 & 2.4.13 >= 3:1)
+     ------------------------------------------------------------------------ */
+  &:has(input:focus-visible) .switch__control {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
+  /* ------------------------------------------------------------------------
+     6. Disabled State
+     ------------------------------------------------------------------------ */
+  &:has(:disabled, [disabled], [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled, 0.4);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* ==========================================================================
+   Switch Destructive / Danger Modifier
+   ========================================================================== */
+:where(.switch--destructive, .switch--danger) {
+  --_switch-on-bg: var(--switch-on-destructive-bg, var(--foreground-danger, #d32f2f));
+
+  &:not(:has(:checked)) {
+    --switch-hover-text: var(--switch-hover-destructive-text, var(--foreground-danger-hover, #b71c1c));
+    --switch-pressed-text: var(--switch-hover-destructive-text, var(--foreground-danger-pressed, #8b0000));
+  }
+}
+
+/* ==========================================================================
+   Switch Sizes & Shape Modifiers
+   ========================================================================== */
+
+/* Small Variant (32px touch target) */
+:where(.switch--sm) {
+  --_switch-height: var(--switch-sm-height, var(--spacing-32, 2rem));
+  --_switch-font-size: var(--switch-sm-font-size, var(--typography-font-size--1, 0.8rem));
+  --_switch-padding-inline: var(--switch-sm-padding-inline, var(--spacing-8, 0.5rem));
+  --_switch-option-min-width: var(--switch-sm-option-min-width, var(--spacing-32, 2rem));
+}
+
+/* Large Variant (56px touch target) */
+:where(.switch--lg) {
+  --_switch-height: var(--switch-lg-height, var(--spacing-64, 3.5rem));
+  --_switch-font-size: var(--switch-lg-font-size, var(--typography-font-size-1, 1.25rem));
+  --_switch-padding-inline: var(--switch-lg-padding-inline, var(--spacing-24, 1.5rem));
+}
+
+/* Round / Rounded Variant */
+:where(.switch--round) {
+  --_switch-radius: var(--radius-round, 9999px);
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+  :where(.switch) .switch__control::before,
+  :where(.switch) .switch__option {
+    transition: none !important;
+  }
+}

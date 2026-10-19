@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Design For Humans: Choices Primitive
+   --------------------------------------------------------------------------
+   Container and item wrapper patterns for grouped interactive choices
+   (checkboxes and radio buttons) with adaptive spatial density, inline
+   flex layouts, semantic list support, and WCAG 2.2 Level AA/AAA compliant
+   target sizes.
+
+   Usage:
+   <fieldset class="fieldset">
+     <legend class="legend">Accessible Options</legend>
+     <div class="choices">
+       <label class="choice" for="opt-1">
+         <input type="checkbox" id="opt-1" class="checkbox-input" />
+         <span>Option One</span>
+       </label>
+     </div>
+   </fieldset>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Choices Container Primitive (:where(.choices))
+   ========================================================================== */
+:where(.choices) {
+  /* --------------------------------------------------------------------------
+     Local Variables & Fallback Ladder
+     -------------------------------------------------------------------------- */
+  --_choices-row-gap: var(--form-choices-row-gap, var(--spacing-16, 1rem));
+  --_choices-col-gap: var(--form-choices-col-gap, var(--spacing-24, 1.5rem));
+
+  /* --------------------------------------------------------------------------
+     Style Container Queries (@container style(...))
+     -------------------------------------------------------------------------- */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_choices-row-gap: var(--spacing-8, 0.5rem);
+    --_choices-col-gap: var(--spacing-16, 1rem);
+  }
+
+  @container style(--choices-layout: inline) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  /* Layout & Display */
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  /* Spacing */
+  gap: var(--_choices-row-gap) var(--_choices-col-gap);
+
+  :where(li) {
+    display: contents;
+  }
+
+  /* Inline Layout Modifier */
+  &:where(.choices--inline) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  /* Density & Compact Modifier */
+  &:where(.choices--compact, .choices--dense) {
+    --_choices-row-gap: var(--spacing-8, 0.5rem);
+    --_choices-col-gap: var(--spacing-16, 1rem);
+  }
+}
+
+/* ==========================================================================
+   2. Choice Item Primitive (:where(.choice))
+   ========================================================================== */
+:where(.choice) {
+  /* --------------------------------------------------------------------------
+     Local Variables & Fallback Ladder
+     -------------------------------------------------------------------------- */
+  --_choice-inner-gap: var(--form-choice-inner-gap, var(--spacing-16, 1rem));
+  --_choice-font-size: var(--form-choice-font-size, var(--choice-font-size, var(--typography-font-size-0, 1rem)));
+  --_choice-line-height: var(--choice-line-height, var(--form-check-size, 1.25rem));
+  --_choice-color: var(--form-choice-color, var(--foreground, currentColor));
+  --_choice-min-block-size: var(--choice-min-block-size, var(--spacing-24, 1.5rem));
+
+  /* Spatial Gap */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_choice-inner-gap: var(--spacing-8, 0.5rem);
+  }
+
+  /* Typographic Scaling */
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    --_choice-font-size: var(--typography-font-size--1, 0.875rem);
+    --_choice-min-block-size: var(--spacing-20, 1.25rem);
+  }
+
+  /* Size Modifiers (.choice--sm, .choice--compact, .choice--lg) */
+  :where(.controls-sm) &,
+  &:where(.choice--sm, .choice--compact) {
+    --_choice-inner-gap: var(--spacing-8, 0.5rem);
+    --_choice-font-size: var(--form-choice-sm-font-size, var(--typography-font-size--1, 0.875rem));
+    --_choice-line-height: var(--form-check-sm-size, var(--spacing-16, 1rem));
+    --_choice-min-block-size: var(--spacing-20, 1.25rem);
+  }
+
+  :where(.controls-lg) &,
+  &:where(.choice--lg) {
+    --_choice-inner-gap: var(--spacing-24, 1.5rem);
+    --_choice-font-size: var(--form-choice-lg-font-size, var(--typography-font-size-1, 1.125rem));
+    --_choice-line-height: var(--form-check-lg-size, var(--spacing-24, 1.5rem));
+    --_choice-min-block-size: var(--spacing-32, 2rem);
+  }
+
+  /* Layout & Display */
+  display: inline-flex;
+  align-items: start;
+  min-block-size: var(--_choice-min-block-size);
+  user-select: none;
+  cursor: pointer;
+
+  /* Spacing */
+  gap: var(--_choice-inner-gap);
+
+  /* Typography */
+  font-family: var(--form-choice-font-family, var(--body-font-family, inherit));
+  font-size: var(--_choice-font-size);
+  line-height: var(--_choice-line-height);
+  color: var(--_choice-color);
+
+  > :where(input:is([type="checkbox"], [type="radio"])) {
+    flex-shrink: 0;
+  }
+
+  :where(a) {
+    position: relative;
+    z-index: 1;
+    user-select: auto;
+  }
+
+  /* Disabled State (Zero Specificity via :where) */
+  &:where(:disabled, [aria-disabled="true"], :has(:disabled, [aria-disabled="true"])) {
+    cursor: not-allowed;
+  }
+}
+
+/* ==========================================================================
+   3. Choice Sub-Elements (:where(.choice__label))
+   ========================================================================== */
+:where(.choice__label) {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+
+  :where(small, .choice__description) {
+    display: block;
+    color: var(--foreground-muted, currentColor);
+    font-size: var(--typography-font-size--1, 0.875rem);
+    line-height: var(--line-height-relaxed, 1.4);
+  }
+}

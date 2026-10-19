@@ -17,19 +17,19 @@
 }
 
 /* Direction */
-:where(.flex-direction-row) {
+:where(.flex-direction-row, .flex-dir-row) {
   flex-direction: row;
 }
 
-:where(.flex-direction-row-reverse) {
+:where(.flex-direction-row-reverse, .flex-dir-row-rev) {
   flex-direction: row-reverse;
 }
 
-:where(.flex-direction-column) {
+:where(.flex-direction-column, .flex-dir-col) {
   flex-direction: column;
 }
 
-:where(.flex-direction-column-reverse) {
+:where(.flex-direction-column-reverse, .flex-dir-col-rev) {
   flex-direction: column-reverse;
 }
 
@@ -38,12 +38,16 @@
   flex-wrap: wrap;
 }
 
-:where(.flex-nowrap) {
+:where(.flex-nowrap, .nowrap) {
   flex-wrap: nowrap;
 }
 
 /* Align Items (Cross Axis) */
 :where(.align-items-start) {
+  align-items: start;
+}
+
+:where(.align-items-flex-start) {
   align-items: flex-start;
 }
 
@@ -52,6 +56,10 @@
 }
 
 :where(.align-items-end) {
+  align-items: end;
+}
+
+:where(.align-items-flex-end) {
   align-items: flex-end;
 }
 
@@ -65,6 +73,10 @@
 
 /* Justify Content (Main Axis) */
 :where(.justify-content-start) {
+  justify-content: start;
+}
+
+:where(.justify-content-flex-start) {
   justify-content: flex-start;
 }
 
@@ -73,6 +85,10 @@
 }
 
 :where(.justify-content-end) {
+  justify-content: end;
+}
+
+:where(.justify-content-flex-end) {
   justify-content: flex-end;
 }
 
@@ -86,6 +102,57 @@
 
 :where(.justify-content-evenly) {
   justify-content: space-evenly;
+}
+
+
+/* Align Self (Cross Axis) */
+:where(.align-self-start) {
+  align-self: start;
+}
+
+:where(.align-self-flex-start) {
+  align-self: flex-start;
+}
+
+:where(.align-self-center) {
+  align-self: center;
+}
+
+:where(.align-self-end) {
+  align-self: end;
+}
+
+:where(.align-self-flex-end) {
+  align-self: flex-end;
+}
+
+:where(.align-self-stretch) {
+  align-self: stretch;
+}
+
+:where(.align-self-baseline) {
+  align-self: baseline;
+}
+
+/* Justify Self (Main Axis) */
+:where(.justify-self-start) {
+  justify-self: start;
+}
+
+:where(.justify-self-flex-start) {
+  justify-self: flex-start;
+}
+
+:where(.justify-self-center) {
+  justify-self: center;
+}
+
+:where(.justify-self-end) {
+  justify-self: end;
+}
+
+:where(.justify-self-flex-end) {
+  justify-self: flex-end;
 }
 
 /* flex-grow */

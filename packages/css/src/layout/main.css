@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Design For Humans: Main Layout Primitive
+   --------------------------------------------------------------------------
+   Primary application landmark container with token-driven cushion padding,
+   full-bleed .main--flush modifier, and viewport-constrained .main--viewport
+   modifier for internal panel and split scrolling layouts.
+   ========================================================================== */
+
+:where(.main) {
+    padding: var(--spacing-cushion, 1rem);
+
+    :where(.app > &:where(main)) {
+        grid-area: main;
+        min-block-size: 0;
+    }
+}
+
+:where(.main--flush) {
+    padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Viewport & Panel Main Landmark (.main--viewport / .main--panels)
+   Constrains height to grid track without scrolling outer landmark, allowing
+   nested .split, .card, or custom panels to manage internal scrolling.
+   -------------------------------------------------------------------------- */
+
+:where(.main--viewport, .main--panels) {
+    block-size: 100%;
+    min-block-size: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @media (width < 48em) or (height < 36em) {
+        block-size: auto;
+        min-block-size: 0;
+        overflow: visible;
+    }
+}

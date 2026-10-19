@@ -19,6 +19,12 @@
    2. Modern Browser Root Settings
    -------------------------------------------------------------------------- */
 :root {
+  --viewport-fit: auto;
+  --safe-area-inset-right: 0px;
+  --safe-area-inset-bottom: 0px;
+  --safe-area-inset-left: 0px;
+  --safe-area-inset-top: 0px;
+
   interpolate-size: allow-keywords;
   font-feature-settings: "case" off, "sinf" off;
 }
@@ -57,6 +63,7 @@ html {
 }
 
 body {
+  font-weight: var(--body-font-weight);
   line-height: var(--body-line-height);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -77,7 +84,7 @@ body {
 /* --------------------------------------------------------------------------
    5. Links
    -------------------------------------------------------------------------- */
-a {
+:where(a) {
   text-decoration: none;
 
   @media screen {
@@ -92,60 +99,77 @@ a {
 /* --------------------------------------------------------------------------
    6. Lists
    -------------------------------------------------------------------------- */
-ul[role='list'],
-ol[role='list'] {
+:where(ul[role='list'], ol[role='list']) {
   list-style: none;
 }
 
 /* --------------------------------------------------------------------------
    7. Media
    -------------------------------------------------------------------------- */
-img,
-video {
+:where(img, video) {
   &:not([style]) {
     block-size: auto;
   }
 }
 
-img,
-iframe,
-video {
+:where(img, iframe, video) {
   max-inline-size: 100%;
 }
 
 /* --------------------------------------------------------------------------
    8. Tables
    -------------------------------------------------------------------------- */
-table {
+:where(table) {
   border-collapse: collapse;
 }
 
 /* --------------------------------------------------------------------------
    9. Forms
    -------------------------------------------------------------------------- */
-textarea {
+:where(textarea) {
   white-space: revert;
 }
 
-meter {
+:where(meter) {
   -webkit-appearance: revert;
   appearance: revert;
 }
 
+/* ----------------------------------------------------------------------------
+  10. Simple Formatting
+  -------------------------------------------------------------------------- */
+
+:where(strong, b) {
+  font-weight: bold;
+}
+
+:where(em, i) {
+  font-style: italic;
+}
+
+:where(small) {
+  font-size: 0.8em;
+}
+
+:where(code, kbd, samp, var) {
+  font-family: var(--typography-font-family-mono);
+}
+
+
 /* --------------------------------------------------------------------------
-   10. Focus Management (WCAG 2.4.7 / 2.4.13)
+   11. Focus Management (WCAG 2.4.7 / 2.4.13)
    -------------------------------------------------------------------------- */
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-:focus-visible {
-  outline: var(--focus-ring-outline);
-  outline-offset: var(--focus-ring-outline-offset);
+:where(:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* --------------------------------------------------------------------------
-   11. Accessibility & Interactive State
+   12. Accessibility & Interactive State
    -------------------------------------------------------------------------- */
 :where([hidden]) {
   display: none !important;
@@ -157,7 +181,7 @@ meter {
 }
 
 /* --------------------------------------------------------------------------
-   12. Browser-Specific Fixes
+   13. Browser-Specific Fixes
    -------------------------------------------------------------------------- */
 :where([contenteditable]) {
   -moz-user-modify: read-write;
@@ -184,7 +208,7 @@ bdi {
 }
 
 /* --------------------------------------------------------------------------
-   13. Container Query Support Utility
+   14. Container Query Support Utility
    -------------------------------------------------------------------------- */
 .\@container {
   container-type: inline-size;

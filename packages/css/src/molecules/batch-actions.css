@@ -1,0 +1,223 @@
+/* ==========================================================================
+   Design For Humans: Batch Actions Primitive
+   --------------------------------------------------------------------------
+   Floating or docked batch operation toolbar triggered upon multi-item selection.
+   Composes Badge, Button, Button Group, and Icon atoms into a focused,
+   accessible toolbar (role="toolbar") for bulk operations.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Batch Actions Container (:where(.batch-actions))
+   ========================================================================== */
+:where(.batch-actions) {
+  /* --------------------------------------------------------------------------
+     Contextual Control Orchestration
+     -------------------------------------------------------------------------- */
+  --button-size: sm;
+
+  /* --------------------------------------------------------------------------
+     Local Variables & Fallback Ladder
+     -------------------------------------------------------------------------- */
+  --_batch-actions-bg: var(--batch-actions-bg, var(--surface-layer, Canvas));
+  --_batch-actions-color: var(--batch-actions-color, var(--foreground, CanvasText));
+  --_batch-actions-border-color: var(--batch-actions-border-color, var(--panel-border-color, currentColor));
+  --_batch-actions-border-width: var(--batch-actions-border-width, var(--panel-border-width, 1px));
+  --_batch-actions-border-style: var(--batch-actions-border-style, solid);
+  --_batch-actions-filter: var(--batch-actions-filter, var(--surface-layer-filter, none));
+  --_batch-actions-flat-bg: var(--batch-actions-docked-bg, var(--surface-card, Canvas));
+  --_batch-actions-radius: var(--batch-actions-radius, calc(var(--button-radius, var(--radius, 0.25rem)) + var(--_batch-actions-border-width) + var(--_batch-actions-padding)));
+  --_batch-actions-round-radius: var(--batch-actions-round-radius, calc(var(--button-min-size, var(--spacing-target-sm, 2rem)) + var(--_batch-actions-padding) + var(--_batch-actions-border-width)));
+  --_batch-actions-shadow: var(--batch-actions-shadow, var(--shadow-raised, var(--shadow-lg, 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1))));
+  --_batch-actions-padding: var(--batch-actions-padding, var(--spacing-8, 0.5rem));
+  --_batch-actions-gap: var(--batch-actions-gap, var(--spacing-16, 1rem));
+  --_batch-actions-offset: var(--batch-actions-offset, var(--spacing-24, 1.5rem));
+  --_batch-actions-max-width: var(--batch-actions-max-width, 46rem);
+  --_batch-actions-transition: var(--batch-actions-transition, var(--duration-sm, 150ms));
+
+  /* Layout & Geometry (Floating by default) */
+  position: fixed;
+  inset-block-end: calc(var(--_batch-actions-offset) + env(safe-area-inset-bottom, 0px));
+  inset-inline: 0;
+  margin-inline: auto;
+  inline-size: max-content;
+  max-inline-size: min(var(--_batch-actions-max-width), calc(100% - calc(var(--spacing-16, 1rem) * 2)));
+  box-sizing: border-box;
+  z-index: var(--layer-floating, 100);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--_batch-actions-gap);
+
+  padding: var(--_batch-actions-padding);
+
+  /* Surface, Border & Elevation */
+  background-color: var(--_batch-actions-bg);
+  color: var(--_batch-actions-color);
+  border: var(--_batch-actions-border-width) var(--_batch-actions-border-style) var(--_batch-actions-border-color);
+  border-radius: var(--_batch-actions-radius);
+  box-shadow: var(--_batch-actions-shadow);
+  backdrop-filter: var(--_batch-actions-filter);
+  -webkit-backdrop-filter: var(--_batch-actions-filter);
+
+  /* Motion & Visibility */
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--_batch-actions-transition) ease,
+    transform var(--_batch-actions-transition) cubic-bezier(0.16, 1, 0.3, 1),
+    visibility var(--_batch-actions-transition) ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &[hidden],
+  &[data-state="closed"] {
+    opacity: 0;
+    transform: translateY(var(--spacing-16, 1rem));
+    pointer-events: none;
+    visibility: hidden;
+  }
+}
+
+/* ==========================================================================
+   2. Sub-Element Structural Hooks
+   ========================================================================== */
+
+/* Summary Information Hook (:where(.batch-actions__summary)) */
+:where(.batch-actions__summary) {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 0.5rem);
+  min-inline-size: 0;
+  padding-inline-start: var(--_batch-actions-padding);
+  user-select: none;
+
+  :where(.batch-actions--scrollable) & {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+/* Actions Group Hook (:where(.batch-actions__actions)) */
+:where(.batch-actions__actions) {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 0.5rem);
+  flex-wrap: wrap;
+
+  :where(.batch-actions--scrollable) & {
+    overflow: auto;
+    flex-wrap: nowrap;
+
+    :where(.button-group) {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+/* Dismiss / Clear Trigger Hook (:where(.batch-actions__dismiss)) */
+:where(.batch-actions__dismiss) {
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
+
+  :where(.batch-actions--scrollable) & {
+    flex-shrink: 0;
+  }
+}
+
+/* Vertical Separator Divider (:where(.batch-actions__separator)) */
+:where(.batch-actions__separator, :where(.batch-actions) > hr) {
+  align-self: center;
+  block-size: 1.25rem;
+  inline-size: 1px;
+  background-color: var(--border-color-quiet, currentColor);
+  opacity: 0.35;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   3. Placement & Aesthetic Modifiers
+   ========================================================================== */
+
+/* Docked at Bottom of Parent Container (:where(.batch-actions--docked)) */
+:where(.batch-actions--docked) {
+  --_batch-actions-bg: var(--_batch-actions-flat-bg);
+  --_batch-actions-filter: none;
+
+  position: var(--batch-actions-docked-position, sticky);
+  inset-block-end: 0;
+  inset-inline: auto;
+  border-radius: 0;
+  border-inline: none;
+  border-block-end: none;
+  box-shadow: var(--shadow-top, 0 -4px 12px rgba(0, 0, 0, 0.05));
+  margin: 0;
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+    max-inline-size: stretch;
+  }
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+}
+
+/* Inline / In-Flow Embedded Modifier (:where(.batch-actions--inline)) */
+:where(.batch-actions--inline) {
+  --_batch-actions-filter: none;
+
+  position: static;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  border-radius: var(--panel-radius, 0.375rem);
+  box-shadow: none;
+  margin: 0;
+}
+
+/* Contrast / Inverted Dark Pill Modifier (:where(.batch-actions--contrast)) */
+:where(.batch-actions--contrast) {
+  --color-palette: inverted;
+  --_batch-actions-bg: var(--surface-card-inverted, #000000);
+  --_batch-actions-color: var(--foreground-inverted, #ffffff);
+}
+
+/* Compact / Dense Mode (:where(.batch-actions--compact)) */
+:where(.batch-actions--compact) {
+  --ui-sizing: compact;
+  --_batch-actions-padding: var(--spacing-4, 0.25rem);
+  --_batch-actions-gap: var(--spacing-8, 0.5rem);
+}
+
+/*
+  Round (:where(.batch-actions--round))
+  NOTE: Based off the height of buttons rather than full round radius.
+  This prevents unsightly shape if the batch actions wrap onto multiple lines.
+*/
+:where(.batch-actions--round) {
+  --button-corners: round;
+  --_batch-actions-radius: var(--_batch-actions-round-radius);
+}
+
+/* Flush / No Padding (:where(.batch-actions--flush)) */
+:where(.batch-actions--flush) {
+  --_batch-actions-bg: transparent;
+  --_batch-actions-border-width: 0;
+  --_batch-actions-filter: none;
+  --_batch-actions-padding: 0;
+  --_batch-actions-radius: 0;
+}
+
+/* Plain / Backgroundless (:where(.batch-actions--plain)) */
+:where(.batch-actions--plain) {
+  --_batch-actions-bg: transparent;
+  --_batch-actions-border-width: 0;
+  --_batch-actions-filter: none;
+  --_batch-actions-radius: 0;
+}

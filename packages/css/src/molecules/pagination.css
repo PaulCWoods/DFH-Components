@@ -1,0 +1,140 @@
+/* ==========================================================================
+   Design For Humans: Pagination & Page Count Primitives
+   --------------------------------------------------------------------------
+   Accessible navigation for multi-page datasets, composing .button-group,
+   .button, .divider, and .inline-form for pagination numbers and jump controls.
+   Strictly adheres to zero-specificity cascade law via :where(...).
+
+   Usage:
+   <!-- Numeric Pagination Cluster -->
+   <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
+     <span class="button button--selected" aria-current="page"><span>1</span></span>
+     <a class="button" href="#2"><span>2</span></a>
+     <a class="button" href="#3"><span>3</span></a>
+     <hr class="divider">
+     <a class="button" href="#10"><span>10</span></a>
+   </nav>
+
+   <!-- Page Count & Jump Bar -->
+   <div class="page-count">
+     <p class="page-count__info">Page 2 of 10</p>
+     <form class="page-count__jump inline-form">
+       <div class="inline-field">
+         <label for="page-box" class="field__label">Go to page</label>
+         <input class="input" type="number" id="page-box" name="page-box" min="1" value="1">
+       </div>
+       <button class="button" type="submit"><span>Go</span></button>
+     </form>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Pagination Container (:where(.pagination))
+   ========================================================================== */
+:where(.pagination) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_pagination-gap: var(--pagination-gap, calc(var(--spacing, 1rem) / 2));
+  --_pagination-justify: var(--pagination-justify-content, flex-start);
+
+  /* Layout & Geometry */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: var(--_pagination-justify);
+  gap: var(--_pagination-gap);
+
+  /* Button Overrides for Compact Numeric Sizing */
+  --button-padding-inline: var(--button-padding-block, var(--spacing-4, 0.25rem));
+  --button-group-gap: var(--_pagination-gap);
+  --divider-width: var(--border-width-1, var(--border-width, 1px));
+  --divider-color: var(--border-color-quiet, currentColor);
+
+  /* --------------------------------------------------------------------------
+     Alignment Modifiers
+     -------------------------------------------------------------------------- */
+  &:where(.pagination--center) {
+    justify-content: center;
+  }
+
+  &:where(.pagination--end) {
+    justify-content: flex-end;
+  }
+
+  &:where(.pagination--between) {
+    justify-content: space-between;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Ellipsis / Range Separator (:where(.pagination__ellipsis))
+   -------------------------------------------------------------------------- */
+:where(.pagination__ellipsis) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--spacing-4, 0.25rem);
+  color: var(--foreground-muted, currentColor);
+  user-select: none;
+}
+
+/* ==========================================================================
+   2. Page Count & Jump Bar Container (:where(.page-count))
+   ========================================================================== */
+:where(.page-count) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_page-count-gap-block: calc(var(--spacing, 1rem) / 2);
+  --_page-count-gap-inline: var(--spacing, 1rem);
+  --_page-count-justify: var(--page-count-justify-content, space-between);
+  --form-inline-gap: var(--spacing-8, 0.5rem);
+
+  /* Layout & Geometry */
+  display: flex;
+  align-items: center;
+  justify-content: var(--_page-count-justify);
+  flex-wrap: wrap;
+  gap: var(--_page-count-gap-block) var(--_page-count-gap-inline);
+  inline-size: 100%;
+
+  /* Dynamic Form Field Sizing */
+  :where(input[type="text"], input[type="number"]) {
+    field-sizing: content;
+
+    @supports not (field-sizing: content) {
+      inline-size: var(--_input-min-inline-size, auto);
+    }
+  }
+
+  /* Alignment Modifiers */
+  &:where(.page-count--center) {
+    justify-content: center;
+  }
+
+  &:where(.page-count--start) {
+    justify-content: flex-start;
+  }
+
+  &:where(.page-count--end) {
+    justify-content: flex-end;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Page Count Info & Jump Form Elements
+   -------------------------------------------------------------------------- */
+:where(.page-count__info) {
+  margin: 0;
+  font-family: var(--page-count-font-family, inherit);
+  font-size: var(--page-count-font-size, var(--typography-font-size-0, 1rem));
+  font-weight: var(--page-count-font-weight, var(--typography-font-weight-regular, 400));
+  color: var(--page-count-color, var(--foreground-muted, currentColor));
+}
+
+:where(.page-count__jump) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--form-inline-gap, var(--spacing-8, 0.5rem));
+}

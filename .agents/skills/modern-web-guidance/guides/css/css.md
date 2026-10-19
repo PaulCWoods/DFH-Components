@@ -227,7 +227,7 @@ One exception is use cases where keeping code small and simple is far more impor
 Typically these are organized in tiers, with each tier building upon the previous one. For example:
 1. Tier 1: Literal design tokens (e.g. `--color-blue-10`, `--color-gray-90`, `--font-sans-serif`, `--size-xl` etc)
 2. Tier 2: Semantic design tokens (e.g. `--color-accent`, `--color-neutral`, `--font-body`, `--font-heading` etc)
-3. Tier 3: General UI design tokens (e.g. `--ui-border`, `--surface-bg-subtle` etc)
+3. Tier 3: General UI design tokens (e.g. `--ui-border`, `--surface-bg-muted` etc)
 4. Tier 4: Component-specific design tokens (e.g. `--button-bg-primary-hover`, `--button-border-color-secondary` etc)
 
 The smaller the scope of the use case, the fewer tiers it needs. E.g. a quick demo or toy app are fine with one tier. Do not overengineer.

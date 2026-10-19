@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Design For Humans: Lockup Component Primitive
+   --------------------------------------------------------------------------
+   Minimal micro-container for paired typographic elements (e.g. <b> and <small>).
+   Provides flex column alignment, overflow containment, and tokenized gap.
+   Zero child selectors — relies on natural browser or inherited typography.
+
+   Usage:
+   <!-- Standalone Data Pair (Table Cell or Card) -->
+   <div class="lockup">
+     <b>Full Sun</b>
+     <small>Mycorrhizal Fungi + Leaf Mulch</small>
+   </div>
+
+   <!-- Composed with .inline and .avatar -->
+   <div class="inline align-items-center">
+     <div class="avatar avatar--sm" aria-hidden="true"><span>MC</span></div>
+     <div class="lockup">
+       <b>Marcus Chen</b>
+       <small>mchen.gardens@urbanmail.net</small>
+     </div>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Lockup Container (:where(.lockup))
+   ========================================================================== */
+
+:where(.lockup) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_lockup-gap: var(--lockup-gap, 0);
+
+  /* Container Style Queries */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_lockup-gap: 0;
+  }
+
+  /* Layout & Display */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  gap: var(--_lockup-gap);
+}
+
+:where(span.lockup) {
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   2. Modifiers (Spacing, Alignment, Horizontal)
+   ========================================================================== */
+
+/* Spacing Modifiers */
+:where(.lockup--tight, .lockup--sm) {
+  --_lockup-gap: var(--spacing-2, 0.125rem);
+}
+
+:where(.lockup--gap, .lockup--md) {
+  --_lockup-gap: var(--spacing-4, 0.25rem);
+}
+
+:where(.lockup--loose, .lockup--lg) {
+  --_lockup-gap: var(--spacing-8, 0.5rem);
+}
+
+/* Alignment Modifiers */
+:where(.lockup--center) {
+  align-items: center;
+  text-align: center;
+}
+
+:where(.lockup--end) {
+  align-items: flex-end;
+  text-align: end;
+}
+
+:where(.lockup--start) {
+  align-items: flex-start;
+  text-align: start;
+}
+
+/* Horizontal Layout Modifier */
+:where(.lockup--horizontal, .lockup--inline) {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--lockup-gap, var(--spacing-8, 0.5rem));
+}

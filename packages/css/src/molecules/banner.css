@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Design For Humans: Banner Primitive
+   --------------------------------------------------------------------------
+   Inline status messages, actions, and semantic notification callouts.
+   Parity with Design For Humans Blog (_banner.scss & _component-library.twig).
+   Prominence matrix: Default (bordered translucent), --subtle (borderless), --strong (high-emphasis filled).
+
+   Usage:
+   <div class="banner banner--warning" role="region" aria-label="Notice">
+     <div class="banner__inner">
+       <p>Scheduled maintenance window begins tonight at 22:00.</p>
+     </div>
+     <button type="button" class="button button--subtle banner__action">
+       <span>Dismiss</span>
+     </button>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Banner Container (:where(.banner))
+   ========================================================================== */
+:where(.banner) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --button-size: sm;
+  --button-variation: subtle;
+  --icon-box-density: compact;
+  --font-sizing: fixed;
+  --vert-spacing: tight;
+
+  --_banner-action-align: var(--banner-action-align, flex-start);
+  --_banner-bg: color-mix(in srgb,
+      var(--banner-bg, var(--surface-card, transparent)),
+      transparent var(--banner-translucency, 0%));
+  --_banner-border-color: var(--banner-border-color, var(--panel-border-color, currentColor));
+  --_banner-border-style: var(--banner-border-style, var(--panel-border-style, solid));
+  --_banner-border-width: var(--banner-border-width, var(--panel-border-width, 1px));
+  --_banner-filter: var(--banner-filter, var(--surface-layer-filter, none));
+  --_banner-gap: var(--banner-gap, var(--spacing-8, .5rem));
+  --_banner-inner-border-color: var(--banner-inner-border-color, var(--banner-border-color, var(--rule-color, currentColor)));
+  --_banner-inner-border-style: var(--banner-inner-border-style, var(--rule-style, solid));
+  --_banner-inner-border-width: var(--banner-inner-border-width, var(--rule-width, 1px));
+  --_banner-inner-padding-block: calc(var(--banner-inner-padding, var(--spacing-8, 0.5rem))/2);
+  --_banner-inner-padding-inline: var(--banner-inner-padding, var(--spacing-8, 0.5rem));
+  --_banner-outer-padding: var(--banner-outer-padding, var(--spacing-8, 0.5rem));
+  --_banner-radius: var(--banner-radius, var(--panel-radius, 0.25rem));
+  --_banner-shadow: var(--banner-shadow, none);
+  --_banner-text: var(--banner-text, var(--foreground, currentColor));
+  --_banner-thumb-width: var(--banner-thumb-width, var(--spacing-block-2xs, 16rem));
+
+  /* Container Query Orchestration */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_banner-gap: var(--banner-sm-gap, var(--spacing-8, 0.5rem));
+    --_banner-outer-padding: var(--banner-sm-outer-padding, var(--spacing-4, 0.25rem));
+    --_banner-inner-padding-block: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
+    --_banner-inner-padding-inline: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
+  }
+
+  /* Layout & Sizing */
+  align-items: center;
+  display: flex;
+  max-inline-size: none;
+  overflow: clip;
+  padding: var(--_banner-outer-padding);
+
+  /* Spacing */
+  gap: var(--_banner-gap);
+
+  /* Surface, Border, Foreground & Backdrop */
+  background-color: var(--_banner-bg);
+  color: var(--_banner-text);
+  border: var(--_banner-border-width) var(--_banner-border-style) var(--_banner-border-color);
+  border-radius: var(--_banner-radius);
+  box-shadow: var(--_banner-shadow);
+  backdrop-filter: var(--_banner-filter);
+
+  /* Child text inherits banner foreground */
+  :where(p, span, h1, h2, h3, h4, h5, h6, .heading, .subheading, .small-heading, .micro-heading) {
+    color: inherit;
+  }
+
+  /* Icons inside Banner */
+  > :where(.icon, svg, .icon-box) {
+    flex-shrink: 0;
+    color: var(--icon-color, currentColor);
+  }
+
+  > :where(.icon-box) {
+    align-self: var(--banner-icon-align, var(--_banner-icon-align, flex-start));
+  }
+}
+
+/* ==========================================================================
+   2. Banner Inner Content Container (:where(.banner__inner))
+   ========================================================================== */
+:where(.banner__inner) {
+  /* Layout */
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+
+  /* Spacing & Content Padding */
+  gap: var(--_banner-gap, var(--banner-gap, var(--spacing, 1rem)));
+  padding-block: var(--_banner-inner-padding-block);
+  padding-inline: var(--_banner-inner-padding-inline);
+
+  /* Reset default child paragraph & heading margins to respect banner gap */
+  > :where(*) {
+    margin: 0;
+  }
+}
+
+/* Banner Thumbnail Container (:where(.banner__thumb)) */
+:where(.banner__thumb) {
+  align-self: stretch;
+  font-size: 0;
+  inline-size: var(--_banner-thumb-width);
+  position: relative;
+  margin-block: calc(var(--_banner-outer-padding) * -1);
+
+  &:first-child {
+    margin-inline-start: calc(var(--_banner-outer-padding) * -1);
+  }
+
+  &:last-child {
+    margin-inline-end: calc(var(--_banner-outer-padding) * -1);
+  }
+
+  :where(img, picture) {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ==========================================================================
+   3. Banner Action Container / Trigger (:where(.banner__action))
+   ========================================================================== */
+:where(.banner__action) {
+  /* Positioning */
+  align-self: var(--banner-action-align, var(--_banner-action-align, flex-start));
+}
+
+/* ==========================================================================
+   4. Prominence Matrix Modifiers (.banner--subtle, .banner--strong)
+   ========================================================================== */
+
+/* Subtle Banner (Borderless soft resting tint) */
+:where(.banner--subtle) {
+  --banner-bg: var(--banner-subtle-bg, var(--surface-muted));
+  --banner-translucency: 0%;
+  --_banner-border-width: 0px;
+  --_banner-border-color: transparent;
+}
+
+/* Strong Banner (High-emphasis solid tone fill with inverted high-contrast white text) */
+:where(.banner--strong) {
+  --color-palette: inverted;
+  --_banner-bg: var(--banner-strong-bg, var(--foreground, currentColor));
+  --_banner-border-color: transparent;
+  --_banner-border-width: 0px;
+  --_banner-text: var(--foreground-inverted-strong, #ffffff);
+  --banner-translucency: 0%;
+  --icon-color: var(--foreground-inverted-strong, #ffffff);
+  --link-color: currentColor;
+}
+
+/* ==========================================================================
+   5. Semantic Variants (.banner--success, .banner--error, etc.)
+   ========================================================================== */
+
+/* Success Variant */
+:where(.banner--success) {
+  --link-color: var(--foreground-success, currentColor);
+  --link-hover-color: var(--foreground-success-hover, currentColor);
+  --link-pressed-color: var(--foreground-success-pressed, currentColor);
+  --icon-color: var(--foreground-success, currentColor);
+  --banner-bg: var(--surface-success, transparent);
+  --banner-border-color: var(--border-color-success, currentColor);
+
+  &:where(.banner--strong) {
+    --icon-color: var(--foreground-inverted-strong);
+    --_banner-bg: var(--banner-success-strong-bg, var(--surface-success-strong, var(--foreground-success, #00875a)));
+  }
+}
+
+/* Error / Danger Variant */
+:where(.banner--error),
+:where(.banner--danger) {
+  --link-color: var(--foreground-danger, currentColor);
+  --link-hover-color: var(--foreground-danger-hover, currentColor);
+  --link-pressed-color: var(--foreground-danger-pressed, currentColor);
+  --icon-color: var(--foreground-danger, currentColor);
+  --banner-bg: var(--surface-danger, transparent);
+  --banner-border-color: var(--border-color-danger, currentColor);
+
+  &:where(.banner--strong) {
+    --_banner-bg: var(--banner-danger-strong-bg, var(--surface-danger-strong, var(--foreground-danger, #d32f2f)));
+    --icon-color: var(--foreground-inverted-strong);
+  }
+}
+
+/* Warning Variant */
+:where(.banner--warning) {
+  --link-color: var(--foreground-warning, currentColor);
+  --link-hover-color: var(--foreground-warning-hover, currentColor);
+  --link-pressed-color: var(--foreground-warning-pressed, currentColor);
+  --icon-color: var(--foreground-warning, currentColor);
+  --banner-bg: var(--surface-warning, transparent);
+  --banner-border-color: var(--border-color-warning, currentColor);
+
+  &:where(.banner--strong) {
+    --icon-color: var(--foreground-inverted-strong);
+    --_banner-bg: var(--banner-warning-strong-bg, var(--surface-warning-strong, var(--foreground-warning, #b06000)));
+  }
+}
+
+/* Info / Accent Variant */
+:where(.banner--info),
+:where(.banner--accent) {
+  --link-color: var(--foreground-accent, currentColor);
+  --link-hover-color: var(--foreground-accent-hover, currentColor);
+  --link-pressed-color: var(--foreground-accent-pressed, currentColor);
+  --icon-color: var(--foreground-accent, currentColor);
+  --banner-bg: var(--surface-accent, transparent);
+  --banner-border-color: var(--border-color-accent, currentColor);
+
+  &:where(.banner--strong) {
+    --_banner-bg: var(--banner-accent-strong-bg, var(--surface-accent-strong, var(--foreground-accent, #008076)));
+    --icon-color: var(--foreground-inverted-strong);
+  }
+}
+
+/* ==========================================================================
+   6. Modifiers (.banner--dynamic-corners, .banner--round, .banner--ruled, etc.)
+   ========================================================================== */
+
+/* Compact / Dense Modifier */
+:where(.banner--compact, .banner--dense) {
+  --_banner-gap: var(--banner-sm-gap, var(--spacing-8, 0.5rem));
+  --_banner-outer-padding: var(--banner-sm-outer-padding, var(--spacing-4, 0.25rem));
+  --_banner-inner-padding-block: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
+  --_banner-inner-padding-inline: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
+}
+
+/* Flush Edge-to-Edge Modifier */
+:where(.banner--flush) {
+  border-radius: 0;
+  border-inline: none;
+}
+
+/* Dynamic Concentric Corners Modifier */
+:where(.banner--dynamic-corners) {
+  --_banner-radius: calc(min(var(--button-radius, var(--radius, 0.25rem)), var(--button-min-size, var(--spacing-target, 3rem)) / 2) + var(--_banner-outer-padding) + var(--_banner-border-width));
+}
+
+/* Round Pill Modifier */
+:where(.banner--round) {
+  --_banner-radius: var(--radius-round, 9999px);
+
+  > :where(.button) {
+    --button-radius: var(--radius-round, 9999px);
+  }
+
+  :where(.banner__inner) {
+    &:first-child {
+      padding-inline-start: calc(var(--banner-inner-padding, var(--spacing-8, 0.5rem)) * 2);
+    }
+
+    &:last-child {
+      padding-inline-end: calc(var(--banner-inner-padding, var(--spacing-8, 0.5rem)) * 2);
+    }
+  }
+}
+
+/* Ruled Divider Modifier */
+:where(.banner--ruled) {
+  @supports (rule: 1px) {
+    rule: var(--_banner-inner-border-width) var(--_banner-inner-border-style) var(--_banner-inner-border-color);
+  }
+}
+
+:where(.banner--action-align-center) {
+  --banner-action-align: center;
+}
+
+/* ==========================================================================
+   7. Alert Integration (.alert .banner)
+   ========================================================================== */
+
+:where(.alert .banner) {
+  display: inline-flex;
+}
+
+:where(.alert:not(.alert--floating) > .banner) {
+  border-radius: 0;
+  border-inline: none;
+  inline-size: 100%;
+}
+
+:where(.alert--top:not(.alert--floating) > .banner,
+  .alert--sticky:not(.alert--floating) > .banner,
+  .alert--fixed-top:not(.alert--floating) > .banner) {
+  border-block-start: none;
+}
+
+:where(.alert--bottom:not(.alert--floating) > .banner,
+  .alert--fixed-bottom:not(.alert--floating) > .banner) {
+  border-block-end: none;
+}
+
+/* When Banner is nested inside .wrapper within .alert */
+:where(.alert .wrapper > .banner) {
+  inline-size: 100%;
+}
+
+/* ==========================================================================
+   8. Accessibility & Media Queries
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  :where(.banner) {
+    --banner-translucency: 0%;
+    --_banner-border-width: var(--border-width-md, var(--border-width, 2px));
+  }
+
+  :where(.banner--subtle) {
+    --_banner-border-width: var(--border-width, 1px);
+    --_banner-border-color: currentColor;
+  }
+}

@@ -1,196 +1,2886 @@
 /* ==========================================================================
    Design For Humans: Responsive Visibility Helpers
    --------------------------------------------------------------------------
-   Viewport media query and container query visibility toggles (.hide, .hide--*).
-   Uses zero-specificity (:where()) for composability.
+   Concise, modern media query and container query visibility toggles.
+   Supports full component hiding/showing, label/text accessible clipping,
+   and decorative accessory hiding.
+   Zero-specificity (:where()) ensures utilities yield to component styles.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Unconditional Hide
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   1. Unconditional Visibility Utilities
+   ========================================================================== */
 
-:where(.hide) {
+/* Element & Component Visibility */
+:where(.hide, .hidden) {
     display: none;
 }
 
-/* --------------------------------------------------------------------------
+/* Label Visibility Toggles */
+:where(.hide-labels) {
+    --ui-labels: hidden;
+}
+
+:where(.show-labels) {
+    --ui-labels: visible;
+}
+
+/* Decoration Visibility Toggles */
+:where(.hide-decor) {
+    --ui-decor: hidden;
+}
+
+:where(.show-decor) {
+    --ui-decor: visible;
+}
+
+/* Generic Label & Decoration Target Hooks */
+:where(.hide-labels) :where(.ui-label),
+:where(.ui-label.hide-labels) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+:where(.show-labels) :where(.ui-label),
+:where(.ui-label.show-labels) {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    padding: revert;
+    margin: revert;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+:where(.hide-decor) :where(.ui-decor),
+:where(.ui-decor.hide-decor) {
+    display: none;
+}
+
+:where(.show-decor) :where(.ui-decor),
+:where(.ui-decor.show-decor) {
+    display: revert;
+}
+
+:where(.flex-auto, .auto) {
+    flex-basis: auto;
+}
+
+/* ==========================================================================
    2. Viewport-Based Visibility Modifiers (@media)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   2.1 Above Breakpoint (Viewport Min-Width: width > $bp)
    -------------------------------------------------------------------------- */
 
-/* Hide Above Breakpoint (Viewport) */
 @media (width > 20em) {
-    :where(.hide--above-2xs, .hide--2xs) {
+
+    :where(.\2xs\:hide, .\2xs\:hidden,
+        .min-2xs\:hide, .min-2xs\:hidden,
+        .hide--above-2xs, .hide--2xs,
+        .max-2xs\:show,
+        .\2xs-max\:show,
+        .show--below-2xs) {
         display: none;
+    }
+
+    :where(.\2xs\:hide-labels, .min-2xs\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\2xs\:show-labels, .min-2xs\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\2xs\:hide-labels, .min-2xs\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\2xs\:show-labels, .min-2xs\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\2xs\:hide-decor, .min-2xs\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\2xs\:show-decor, .min-2xs\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\2xs\:hide-decor, .min-2xs\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\2xs\:show-decor, .min-2xs\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @media (width > 30em) {
-    :where(.hide--above-xs, .hide--xs) {
+
+    :where(.xs\:hide, .xs\:hidden,
+        .min-xs\:hide, .min-xs\:hidden,
+        .hide--above-xs, .hide--xs,
+        .max-xs\:show,
+        .xs-max\:show,
+        .show--below-xs) {
         display: none;
+    }
+
+    :where(.xs\:hide-labels, .min-xs\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.xs\:show-labels, .min-xs\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.xs\:hide-labels, .min-xs\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.xs\:show-labels, .min-xs\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.xs\:hide-decor, .min-xs\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.xs\:show-decor, .min-xs\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.xs\:hide-decor, .min-xs\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.xs\:show-decor, .min-xs\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @media (width > 40em) {
-    :where(.hide--above-sm, .hide--sm) {
+
+    :where(.sm\:hide, .sm\:hidden,
+        .min-sm\:hide, .min-sm\:hidden,
+        .hide--above-sm, .hide--sm,
+        .max-sm\:show,
+        .sm-max\:show,
+        .show--below-sm) {
         display: none;
+    }
+
+    :where(.sm\:hide-labels, .min-sm\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.sm\:show-labels, .min-sm\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.sm\:hide-labels, .min-sm\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.sm\:show-labels, .min-sm\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.sm\:hide-decor, .min-sm\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.sm\:show-decor, .min-sm\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.sm\:hide-decor, .min-sm\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.sm\:show-decor, .min-sm\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @media (width > 48em) {
-    :where(.hide--above-md, .hide--md) {
+
+    :where(.md\:hide, .md\:hidden,
+        .min-md\:hide, .min-md\:hidden,
+        .hide--above-md, .hide--md,
+        .max-md\:show,
+        .md-max\:show,
+        .show--below-md) {
         display: none;
+    }
+
+    :where(.md\:hide-labels, .min-md\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.md\:show-labels, .min-md\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.md\:hide-labels, .min-md\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.md\:show-labels, .min-md\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.md\:hide-decor, .min-md\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.md\:show-decor, .min-md\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.md\:hide-decor, .min-md\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.md\:show-decor, .min-md\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @media (width > 60em) {
-    :where(.hide--above-lg, .hide--lg) {
+
+    :where(.lg\:hide, .lg\:hidden,
+        .min-lg\:hide, .min-lg\:hidden,
+        .hide--above-lg, .hide--lg,
+        .max-lg\:show,
+        .lg-max\:show,
+        .show--below-lg) {
         display: none;
+    }
+
+    :where(.lg\:hide-labels, .min-lg\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.lg\:show-labels, .min-lg\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.lg\:hide-labels, .min-lg\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.lg\:show-labels, .min-lg\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.lg\:hide-decor, .min-lg\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.lg\:show-decor, .min-lg\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.lg\:hide-decor, .min-lg\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.lg\:show-decor, .min-lg\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @media (width > 80em) {
-    :where(.hide--above-xl, .hide--xl) {
+
+    :where(.xl\:hide, .xl\:hidden,
+        .min-xl\:hide, .min-xl\:hidden,
+        .hide--above-xl, .hide--xl,
+        .max-xl\:show,
+        .xl-max\:show,
+        .show--below-xl) {
         display: none;
+    }
+
+    :where(.xl\:hide-labels, .min-xl\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.xl\:show-labels, .min-xl\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.xl\:hide-labels, .min-xl\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.xl\:show-labels, .min-xl\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.xl\:hide-decor, .min-xl\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.xl\:show-decor, .min-xl\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.xl\:hide-decor, .min-xl\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.xl\:show-decor, .min-xl\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @media (width > 96em) {
-    :where(.hide--above-2xl, .hide--2xl) {
+
+    :where(.\2xl\:hide, .\2xl\:hidden,
+        .min-2xl\:hide, .min-2xl\:hidden,
+        .hide--above-2xl, .hide--2xl,
+        .max-2xl\:show,
+        .\2xl-max\:show,
+        .show--below-2xl) {
         display: none;
     }
-}
 
-/* Hide Below / At Breakpoint (Viewport) */
-@media (width <=20em) {
-    :where(.hide--below-2xs) {
+    :where(.\2xl\:hide-labels, .min-2xl\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\2xl\:show-labels, .min-2xl\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\2xl\:hide-labels, .min-2xl\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\2xl\:show-labels, .min-2xl\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\2xl\:hide-decor, .min-2xl\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\2xl\:show-decor, .min-2xl\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\2xl\:hide-decor, .min-2xl\:hide-decor) :where(.ui-decor) {
         display: none;
     }
-}
 
-@media (width <=30em) {
-    :where(.hide--below-xs) {
-        display: none;
-    }
-}
-
-@media (width <=40em) {
-    :where(.hide--below-sm) {
-        display: none;
-    }
-}
-
-@media (width <=48em) {
-    :where(.hide--below-md) {
-        display: none;
-    }
-}
-
-@media (width <=60em) {
-    :where(.hide--below-lg) {
-        display: none;
-    }
-}
-
-@media (width <=80em) {
-    :where(.hide--below-xl) {
-        display: none;
-    }
-}
-
-@media (width <=96em) {
-    :where(.hide--below-2xl) {
-        display: none;
+    :where(.\2xl\:show-decor, .min-2xl\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 /* --------------------------------------------------------------------------
-   3. Container-Based Visibility Modifiers (@container)
-   Hides elements above or below specific container inline-size thresholds.
-   Requires an ancestor with `container-type: inline-size` or `container-type: normal`.
+   2.2 Below Breakpoint (Viewport Max-Width: width <= $bp)
    -------------------------------------------------------------------------- */
 
-/* Hide In Container Above Threshold */
-@container (inline-size > 20em) {
-    :where(.hide--in-container-above-2xs) {
+@media (width <= 20em) {
+
+    :where(.max-2xs\:hide, .max-2xs\:hidden,
+        .\2xs-max\:hide, .\2xs-max\:hidden,
+        .hide--below-2xs,
+        .\2xs\:show,
+        .min-2xs\:show,
+        .show--above-2xs, .show--2xs) {
         display: none;
+    }
+
+    :where(.max-2xs\:hide-labels, .\2xs-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-2xs\:show-labels, .\2xs-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-2xs\:hide-labels, .\2xs-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-2xs\:show-labels, .\2xs-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-2xs\:hide-decor, .\2xs-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-2xs\:show-decor, .\2xs-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-2xs\:hide-decor, .\2xs-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-2xs\:show-decor, .\2xs-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (width <= 30em) {
+
+    :where(.max-xs\:hide, .max-xs\:hidden,
+        .xs-max\:hide, .xs-max\:hidden,
+        .hide--below-xs,
+        .xs\:show,
+        .min-xs\:show,
+        .show--above-xs, .show--xs) {
+        display: none;
+    }
+
+    :where(.max-xs\:hide-labels, .xs-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-xs\:show-labels, .xs-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-xs\:hide-labels, .xs-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-xs\:show-labels, .xs-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-xs\:hide-decor, .xs-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-xs\:show-decor, .xs-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-xs\:hide-decor, .xs-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-xs\:show-decor, .xs-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (width <= 40em) {
+
+    :where(.max-sm\:hide, .max-sm\:hidden,
+        .sm-max\:hide, .sm-max\:hidden,
+        .hide--below-sm,
+        .sm\:show,
+        .min-sm\:show,
+        .show--above-sm, .show--sm) {
+        display: none;
+    }
+
+    :where(.max-sm\:hide-labels, .sm-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-sm\:show-labels, .sm-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-sm\:hide-labels, .sm-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-sm\:show-labels, .sm-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-sm\:hide-decor, .sm-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-sm\:show-decor, .sm-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-sm\:hide-decor, .sm-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-sm\:show-decor, .sm-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (width <= 48em) {
+
+    :where(.max-md\:hide, .max-md\:hidden,
+        .md-max\:hide, .md-max\:hidden,
+        .hide--below-md,
+        .md\:show,
+        .min-md\:show,
+        .show--above-md, .show--md) {
+        display: none;
+    }
+
+    :where(.max-md\:hide-labels, .md-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-md\:show-labels, .md-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-md\:hide-labels, .md-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-md\:show-labels, .md-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-md\:hide-decor, .md-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-md\:show-decor, .md-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-md\:hide-decor, .md-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-md\:show-decor, .md-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (width <= 60em) {
+
+    :where(.max-lg\:hide, .max-lg\:hidden,
+        .lg-max\:hide, .lg-max\:hidden,
+        .hide--below-lg,
+        .lg\:show,
+        .min-lg\:show,
+        .show--above-lg, .show--lg) {
+        display: none;
+    }
+
+    :where(.max-lg\:hide-labels, .lg-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-lg\:show-labels, .lg-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-lg\:hide-labels, .lg-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-lg\:show-labels, .lg-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-lg\:hide-decor, .lg-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-lg\:show-decor, .lg-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-lg\:hide-decor, .lg-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-lg\:show-decor, .lg-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (width <= 80em) {
+
+    :where(.max-xl\:hide, .max-xl\:hidden,
+        .xl-max\:hide, .xl-max\:hidden,
+        .hide--below-xl,
+        .xl\:show,
+        .min-xl\:show,
+        .show--above-xl, .show--xl) {
+        display: none;
+    }
+
+    :where(.max-xl\:hide-labels, .xl-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-xl\:show-labels, .xl-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-xl\:hide-labels, .xl-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-xl\:show-labels, .xl-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-xl\:hide-decor, .xl-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-xl\:show-decor, .xl-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-xl\:hide-decor, .xl-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-xl\:show-decor, .xl-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (width <= 96em) {
+
+    :where(.max-2xl\:hide, .max-2xl\:hidden,
+        .\2xl-max\:hide, .\2xl-max\:hidden,
+        .hide--below-2xl,
+        .\2xl\:show,
+        .min-2xl\:show,
+        .show--above-2xl, .show--2xl) {
+        display: none;
+    }
+
+    :where(.max-2xl\:hide-labels, .\2xl-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-2xl\:show-labels, .\2xl-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-2xl\:hide-labels, .\2xl-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-2xl\:show-labels, .\2xl-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-2xl\:hide-decor, .\2xl-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-2xl\:show-decor, .\2xl-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-2xl\:hide-decor, .\2xl-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-2xl\:show-decor, .\2xl-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2.3 Auto Basis Below Breakpoint (Viewport: width <= $bp)
+   -------------------------------------------------------------------------- */
+
+@media (width <= 20em) {
+
+    :where(.max-2xs\:flex-auto, .max-2xs\:auto,
+        .\2xs-max\:flex-auto, .\2xs-max\:auto,
+        .auto--below-2xs, .flex-auto--below-2xs) {
+        flex-basis: auto;
+    }
+}
+
+@media (width <= 30em) {
+
+    :where(.max-xs\:flex-auto, .max-xs\:auto,
+        .xs-max\:flex-auto, .xs-max\:auto,
+        .auto--below-xs, .flex-auto--below-xs) {
+        flex-basis: auto;
+    }
+}
+
+@media (width <= 40em) {
+
+    :where(.max-sm\:flex-auto, .max-sm\:auto,
+        .sm-max\:flex-auto, .sm-max\:auto,
+        .auto--below-sm, .flex-auto--below-sm) {
+        flex-basis: auto;
+    }
+}
+
+@media (width <= 48em) {
+
+    :where(.max-md\:flex-auto, .max-md\:auto,
+        .md-max\:flex-auto, .md-max\:auto,
+        .auto--below-md, .flex-auto--below-md) {
+        flex-basis: auto;
+    }
+}
+
+@media (width <= 60em) {
+
+    :where(.max-lg\:flex-auto, .max-lg\:auto,
+        .lg-max\:flex-auto, .lg-max\:auto,
+        .auto--below-lg, .flex-auto--below-lg) {
+        flex-basis: auto;
+    }
+}
+
+@media (width <= 80em) {
+
+    :where(.max-xl\:flex-auto, .max-xl\:auto,
+        .xl-max\:flex-auto, .xl-max\:auto,
+        .auto--below-xl, .flex-auto--below-xl) {
+        flex-basis: auto;
+    }
+}
+
+@media (width <= 96em) {
+
+    :where(.max-2xl\:flex-auto, .max-2xl\:auto,
+        .\2xl-max\:flex-auto, .\2xl-max\:auto,
+        .auto--below-2xl, .flex-auto--below-2xl) {
+        flex-basis: auto;
+    }
+}
+
+/* ==========================================================================
+   3. Viewport Height-Based Visibility Modifiers (@media)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   3.1 Above Height Breakpoint (Viewport Min-Height: height > $bp)
+   -------------------------------------------------------------------------- */
+
+@media (height > 20em) {
+
+    :where(.h-2xs\:hide, .h-2xs\:hidden,
+        .\2xs-h\:hide, .\2xs-h\:hidden,
+        .min-h-2xs\:hide, .min-h-2xs\:hidden,
+        .height-2xs\:hide, .height-2xs\:hidden,
+        .min-height-2xs\:hide, .min-height-2xs\:hidden,
+        .hide--above-h-2xs, .hide--h-2xs,
+        .max-h-2xs\:show, .max-height-2xs\:show,
+        .\2xs-h-max\:show,
+        .show--below-h-2xs) {
+        display: none;
+    }
+
+    :where(.h-2xs\:hide-labels, .\2xs-h\:hide-labels, .min-h-2xs\:hide-labels, .height-2xs\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-2xs\:show-labels, .\2xs-h\:show-labels, .min-h-2xs\:show-labels, .height-2xs\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-2xs\:hide-labels, .\2xs-h\:hide-labels, .min-h-2xs\:hide-labels, .height-2xs\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-2xs\:show-labels, .\2xs-h\:show-labels, .min-h-2xs\:show-labels, .height-2xs\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-2xs\:hide-decor, .\2xs-h\:hide-decor, .min-h-2xs\:hide-decor, .height-2xs\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-2xs\:show-decor, .\2xs-h\:show-decor, .min-h-2xs\:show-decor, .height-2xs\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-2xs\:hide-decor, .\2xs-h\:hide-decor, .min-h-2xs\:hide-decor, .height-2xs\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-2xs\:show-decor, .\2xs-h\:show-decor, .min-h-2xs\:show-decor, .height-2xs\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (height > 30em) {
+
+    :where(.h-xs\:hide, .h-xs\:hidden,
+        .xs-h\:hide, .xs-h\:hidden,
+        .min-h-xs\:hide, .min-h-xs\:hidden,
+        .height-xs\:hide, .height-xs\:hidden,
+        .min-height-xs\:hide, .min-height-xs\:hidden,
+        .hide--above-h-xs, .hide--h-xs,
+        .max-h-xs\:show, .max-height-xs\:show,
+        .xs-h-max\:show,
+        .show--below-h-xs) {
+        display: none;
+    }
+
+    :where(.h-xs\:hide-labels, .xs-h\:hide-labels, .min-h-xs\:hide-labels, .height-xs\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-xs\:show-labels, .xs-h\:show-labels, .min-h-xs\:show-labels, .height-xs\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-xs\:hide-labels, .xs-h\:hide-labels, .min-h-xs\:hide-labels, .height-xs\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-xs\:show-labels, .xs-h\:show-labels, .min-h-xs\:show-labels, .height-xs\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-xs\:hide-decor, .xs-h\:hide-decor, .min-h-xs\:hide-decor, .height-xs\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-xs\:show-decor, .xs-h\:show-decor, .min-h-xs\:show-decor, .height-xs\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-xs\:hide-decor, .xs-h\:hide-decor, .min-h-xs\:hide-decor, .height-xs\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-xs\:show-decor, .xs-h\:show-decor, .min-h-xs\:show-decor, .height-xs\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (height > 36em) {
+
+    :where(.h-sm\:hide, .h-sm\:hidden,
+        .sm-h\:hide, .sm-h\:hidden,
+        .min-h-sm\:hide, .min-h-sm\:hidden,
+        .height-sm\:hide, .height-sm\:hidden,
+        .min-height-sm\:hide, .min-height-sm\:hidden,
+        .hide--above-h-sm, .hide--h-sm,
+        .max-h-sm\:show, .max-height-sm\:show,
+        .sm-h-max\:show,
+        .show--below-h-sm,
+        /* Semantic Aliases for Screen Height */
+        .tall\:hide, .tall\:hidden,
+        .min-tall\:hide, .min-tall\:hidden,
+        .hide--tall, .hide--above-short,
+        .short\:show, .max-short\:show,
+        .show--short, .show--below-tall) {
+        display: none;
+    }
+
+    :where(.h-sm\:hide-labels, .sm-h\:hide-labels, .min-h-sm\:hide-labels, .height-sm\:hide-labels, .tall\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-sm\:show-labels, .sm-h\:show-labels, .min-h-sm\:show-labels, .height-sm\:show-labels, .tall\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-sm\:hide-labels, .sm-h\:hide-labels, .min-h-sm\:hide-labels, .height-sm\:hide-labels, .tall\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-sm\:show-labels, .sm-h\:show-labels, .min-h-sm\:show-labels, .height-sm\:show-labels, .tall\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-sm\:hide-decor, .sm-h\:hide-decor, .min-h-sm\:hide-decor, .height-sm\:hide-decor, .tall\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-sm\:show-decor, .sm-h\:show-decor, .min-h-sm\:show-decor, .height-sm\:show-decor, .tall\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-sm\:hide-decor, .sm-h\:hide-decor, .min-h-sm\:hide-decor, .height-sm\:hide-decor, .tall\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-sm\:show-decor, .sm-h\:show-decor, .min-h-sm\:show-decor, .height-sm\:show-decor, .tall\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (height > 48em) {
+
+    :where(.h-md\:hide, .h-md\:hidden,
+        .md-h\:hide, .md-h\:hidden,
+        .min-h-md\:hide, .min-h-md\:hidden,
+        .height-md\:hide, .height-md\:hidden,
+        .min-height-md\:hide, .min-height-md\:hidden,
+        .hide--above-h-md, .hide--h-md,
+        .max-h-md\:show, .max-height-md\:show,
+        .md-h-max\:show,
+        .show--below-h-md) {
+        display: none;
+    }
+
+    :where(.h-md\:hide-labels, .md-h\:hide-labels, .min-h-md\:hide-labels, .height-md\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-md\:show-labels, .md-h\:show-labels, .min-h-md\:show-labels, .height-md\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-md\:hide-labels, .md-h\:hide-labels, .min-h-md\:hide-labels, .height-md\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-md\:show-labels, .md-h\:show-labels, .min-h-md\:show-labels, .height-md\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-md\:hide-decor, .md-h\:hide-decor, .min-h-md\:hide-decor, .height-md\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-md\:show-decor, .md-h\:show-decor, .min-h-md\:show-decor, .height-md\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-md\:hide-decor, .md-h\:hide-decor, .min-h-md\:hide-decor, .height-md\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-md\:show-decor, .md-h\:show-decor, .min-h-md\:show-decor, .height-md\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (height > 60em) {
+
+    :where(.h-lg\:hide, .h-lg\:hidden,
+        .lg-h\:hide, .lg-h\:hidden,
+        .min-h-lg\:hide, .min-h-lg\:hidden,
+        .height-lg\:hide, .height-lg\:hidden,
+        .min-height-lg\:hide, .min-height-lg\:hidden,
+        .hide--above-h-lg, .hide--h-lg,
+        .max-h-lg\:show, .max-height-lg\:show,
+        .lg-h-max\:show,
+        .show--below-h-lg) {
+        display: none;
+    }
+
+    :where(.h-lg\:hide-labels, .lg-h\:hide-labels, .min-h-lg\:hide-labels, .height-lg\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-lg\:show-labels, .lg-h\:show-labels, .min-h-lg\:show-labels, .height-lg\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-lg\:hide-labels, .lg-h\:hide-labels, .min-h-lg\:hide-labels, .height-lg\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-lg\:show-labels, .lg-h\:show-labels, .min-h-lg\:show-labels, .height-lg\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-lg\:hide-decor, .lg-h\:hide-decor, .min-h-lg\:hide-decor, .height-lg\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-lg\:show-decor, .lg-h\:show-decor, .min-h-lg\:show-decor, .height-lg\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-lg\:hide-decor, .lg-h\:hide-decor, .min-h-lg\:hide-decor, .height-lg\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-lg\:show-decor, .lg-h\:show-decor, .min-h-lg\:show-decor, .height-lg\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (height > 80em) {
+
+    :where(.h-xl\:hide, .h-xl\:hidden,
+        .xl-h\:hide, .xl-h\:hidden,
+        .min-h-xl\:hide, .min-h-xl\:hidden,
+        .height-xl\:hide, .height-xl\:hidden,
+        .min-height-xl\:hide, .min-height-xl\:hidden,
+        .hide--above-h-xl, .hide--h-xl,
+        .max-h-xl\:show, .max-height-xl\:show,
+        .xl-h-max\:show,
+        .show--below-h-xl) {
+        display: none;
+    }
+
+    :where(.h-xl\:hide-labels, .xl-h\:hide-labels, .min-h-xl\:hide-labels, .height-xl\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-xl\:show-labels, .xl-h\:show-labels, .min-h-xl\:show-labels, .height-xl\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-xl\:hide-labels, .xl-h\:hide-labels, .min-h-xl\:hide-labels, .height-xl\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-xl\:show-labels, .xl-h\:show-labels, .min-h-xl\:show-labels, .height-xl\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-xl\:hide-decor, .xl-h\:hide-decor, .min-h-xl\:hide-decor, .height-xl\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-xl\:show-decor, .xl-h\:show-decor, .min-h-xl\:show-decor, .height-xl\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-xl\:hide-decor, .xl-h\:hide-decor, .min-h-xl\:hide-decor, .height-xl\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-xl\:show-decor, .xl-h\:show-decor, .min-h-xl\:show-decor, .height-xl\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+@media (height > 96em) {
+
+    :where(.h-2xl\:hide, .h-2xl\:hidden,
+        .\2xl-h\:hide, .\2xl-h\:hidden,
+        .min-h-2xl\:hide, .min-h-2xl\:hidden,
+        .height-2xl\:hide, .height-2xl\:hidden,
+        .min-height-2xl\:hide, .min-height-2xl\:hidden,
+        .hide--above-h-2xl, .hide--h-2xl,
+        .max-h-2xl\:show, .max-height-2xl\:show,
+        .\2xl-h-max\:show,
+        .show--below-h-2xl) {
+        display: none;
+    }
+
+    :where(.h-2xl\:hide-labels, .\2xl-h\:hide-labels, .min-h-2xl\:hide-labels, .height-2xl\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.h-2xl\:show-labels, .\2xl-h\:show-labels, .min-h-2xl\:show-labels, .height-2xl\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.h-2xl\:hide-labels, .\2xl-h\:hide-labels, .min-h-2xl\:hide-labels, .height-2xl\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.h-2xl\:show-labels, .\2xl-h\:show-labels, .min-h-2xl\:show-labels, .height-2xl\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.h-2xl\:hide-decor, .\2xl-h\:hide-decor, .min-h-2xl\:hide-decor, .height-2xl\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.h-2xl\:show-decor, .\2xl-h\:show-decor, .min-h-2xl\:show-decor, .height-2xl\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.h-2xl\:hide-decor, .\2xl-h\:hide-decor, .min-h-2xl\:hide-decor, .height-2xl\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.h-2xl\:show-decor, .\2xl-h\:show-decor, .min-h-2xl\:show-decor, .height-2xl\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3.2 Below Height Breakpoint (Viewport Max-Height: height <= $bp)
+   -------------------------------------------------------------------------- */
+
+@media (height <= 20em) {
+
+    :where(.max-h-2xs\:hide, .max-h-2xs\:hidden,
+        .max-height-2xs\:hide, .max-height-2xs\:hidden,
+        .\2xs-h-max\:hide, .\2xs-h-max\:hidden,
+        .hide--below-h-2xs,
+        .h-2xs\:show, .\2xs-h\:show,
+        .min-h-2xs\:show, .height-2xs\:show,
+        .show--above-h-2xs, .show--h-2xs) {
+        display: none;
+    }
+
+    :where(.max-h-2xs\:hide-labels, .max-height-2xs\:hide-labels, .\2xs-h-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-2xs\:show-labels, .max-height-2xs\:show-labels, .\2xs-h-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-2xs\:hide-labels, .max-height-2xs\:hide-labels, .\2xs-h-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-2xs\:show-labels, .max-height-2xs\:show-labels, .\2xs-h-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-2xs\:hide-decor, .max-height-2xs\:hide-decor, .\2xs-h-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-2xs\:show-decor, .max-height-2xs\:show-decor, .\2xs-h-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-2xs\:hide-decor, .max-height-2xs\:hide-decor, .\2xs-h-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-2xs\:show-decor, .max-height-2xs\:show-decor, .\2xs-h-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-2xs\:flex-auto, .max-h-2xs\:auto,
+        .\2xs-h-max\:flex-auto, .\2xs-h-max\:auto,
+        .auto--below-h-2xs, .flex-auto--below-h-2xs) {
+        flex-basis: auto;
+    }
+}
+
+@media (height <= 30em) {
+
+    :where(.max-h-xs\:hide, .max-h-xs\:hidden,
+        .max-height-xs\:hide, .max-height-xs\:hidden,
+        .xs-h-max\:hide, .xs-h-max\:hidden,
+        .hide--below-h-xs,
+        .h-xs\:show, .xs-h\:show,
+        .min-h-xs\:show, .height-xs\:show,
+        .show--above-h-xs, .show--h-xs) {
+        display: none;
+    }
+
+    :where(.max-h-xs\:hide-labels, .max-height-xs\:hide-labels, .xs-h-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-xs\:show-labels, .max-height-xs\:show-labels, .xs-h-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-xs\:hide-labels, .max-height-xs\:hide-labels, .xs-h-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-xs\:show-labels, .max-height-xs\:show-labels, .xs-h-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-xs\:hide-decor, .max-height-xs\:hide-decor, .xs-h-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-xs\:show-decor, .max-height-xs\:show-decor, .xs-h-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-xs\:hide-decor, .max-height-xs\:hide-decor, .xs-h-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-xs\:show-decor, .max-height-xs\:show-decor, .xs-h-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-xs\:flex-auto, .max-h-xs\:auto,
+        .xs-h-max\:flex-auto, .xs-h-max\:auto,
+        .auto--below-h-xs, .flex-auto--below-h-xs) {
+        flex-basis: auto;
+    }
+}
+
+@media (height <= 36em) {
+
+    :where(.max-h-sm\:hide, .max-h-sm\:hidden,
+        .max-height-sm\:hide, .max-height-sm\:hidden,
+        .sm-h-max\:hide, .sm-h-max\:hidden,
+        .hide--below-h-sm,
+        .h-sm\:show, .sm-h\:show,
+        .min-h-sm\:show, .height-sm\:show,
+        .show--above-h-sm, .show--h-sm,
+        /* Semantic Aliases for Screen Height */
+        .short\:hide, .short\:hidden,
+        .max-short\:hide, .short-max\:hide,
+        .hide--short, .hide--below-tall,
+        .tall\:show, .min-tall\:show,
+        .show--tall, .show--above-short) {
+        display: none;
+    }
+
+    :where(.max-h-sm\:hide-labels, .max-height-sm\:hide-labels, .sm-h-max\:hide-labels, .short\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-sm\:show-labels, .max-height-sm\:show-labels, .sm-h-max\:show-labels, .short\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-sm\:hide-labels, .max-height-sm\:hide-labels, .sm-h-max\:hide-labels, .short\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-sm\:show-labels, .max-height-sm\:show-labels, .sm-h-max\:show-labels, .short\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-sm\:hide-decor, .max-height-sm\:hide-decor, .sm-h-max\:hide-decor, .short\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-sm\:show-decor, .max-height-sm\:show-decor, .sm-h-max\:show-decor, .short\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-sm\:hide-decor, .max-height-sm\:hide-decor, .sm-h-max\:hide-decor, .short\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-sm\:show-decor, .max-height-sm\:show-decor, .sm-h-max\:show-decor, .short\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-sm\:flex-auto, .max-h-sm\:auto,
+        .sm-h-max\:flex-auto, .sm-h-max\:auto,
+        .auto--below-h-sm, .flex-auto--below-h-sm,
+        .short\:flex-auto, .short\:auto) {
+        flex-basis: auto;
+    }
+}
+
+@media (height <= 48em) {
+
+    :where(.max-h-md\:hide, .max-h-md\:hidden,
+        .max-height-md\:hide, .max-height-md\:hidden,
+        .md-h-max\:hide, .md-h-max\:hidden,
+        .hide--below-h-md,
+        .h-md\:show, .md-h\:show,
+        .min-h-md\:show, .height-md\:show,
+        .show--above-h-md, .show--h-md) {
+        display: none;
+    }
+
+    :where(.max-h-md\:hide-labels, .max-height-md\:hide-labels, .md-h-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-md\:show-labels, .max-height-md\:show-labels, .md-h-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-md\:hide-labels, .max-height-md\:hide-labels, .md-h-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-md\:show-labels, .max-height-md\:show-labels, .md-h-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-md\:hide-decor, .max-height-md\:hide-decor, .md-h-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-md\:show-decor, .max-height-md\:show-decor, .md-h-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-md\:hide-decor, .max-height-md\:hide-decor, .md-h-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-md\:show-decor, .max-height-md\:show-decor, .md-h-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-md\:flex-auto, .max-h-md\:auto,
+        .md-h-max\:flex-auto, .md-h-max\:auto,
+        .auto--below-h-md, .flex-auto--below-h-md) {
+        flex-basis: auto;
+    }
+}
+
+@media (height <= 60em) {
+
+    :where(.max-h-lg\:hide, .max-h-lg\:hidden,
+        .max-height-lg\:hide, .max-height-lg\:hidden,
+        .lg-h-max\:hide, .lg-h-max\:hidden,
+        .hide--below-h-lg,
+        .h-lg\:show, .lg-h\:show,
+        .min-h-lg\:show, .height-lg\:show,
+        .show--above-h-lg, .show--h-lg) {
+        display: none;
+    }
+
+    :where(.max-h-lg\:hide-labels, .max-height-lg\:hide-labels, .lg-h-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-lg\:show-labels, .max-height-lg\:show-labels, .lg-h-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-lg\:hide-labels, .max-height-lg\:hide-labels, .lg-h-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-lg\:show-labels, .max-height-lg\:show-labels, .lg-h-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-lg\:hide-decor, .max-height-lg\:hide-decor, .lg-h-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-lg\:show-decor, .max-height-lg\:show-decor, .lg-h-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-lg\:hide-decor, .max-height-lg\:hide-decor, .lg-h-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-lg\:show-decor, .max-height-lg\:show-decor, .lg-h-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-lg\:flex-auto, .max-h-lg\:auto,
+        .lg-h-max\:flex-auto, .lg-h-max\:auto,
+        .auto--below-h-lg, .flex-auto--below-h-lg) {
+        flex-basis: auto;
+    }
+}
+
+@media (height <= 80em) {
+
+    :where(.max-h-xl\:hide, .max-h-xl\:hidden,
+        .max-height-xl\:hide, .max-height-xl\:hidden,
+        .xl-h-max\:hide, .xl-h-max\:hidden,
+        .hide--below-h-xl,
+        .h-xl\:show, .xl-h\:show,
+        .min-h-xl\:show, .height-xl\:show,
+        .show--above-h-xl, .show--h-xl) {
+        display: none;
+    }
+
+    :where(.max-h-xl\:hide-labels, .max-height-xl\:hide-labels, .xl-h-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-xl\:show-labels, .max-height-xl\:show-labels, .xl-h-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-xl\:hide-labels, .max-height-xl\:hide-labels, .xl-h-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-xl\:show-labels, .max-height-xl\:show-labels, .xl-h-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-xl\:hide-decor, .max-height-xl\:hide-decor, .xl-h-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-xl\:show-decor, .max-height-xl\:show-decor, .xl-h-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-xl\:hide-decor, .max-height-xl\:hide-decor, .xl-h-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-xl\:show-decor, .max-height-xl\:show-decor, .xl-h-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-xl\:flex-auto, .max-h-xl\:auto,
+        .xl-h-max\:flex-auto, .xl-h-max\:auto,
+        .auto--below-h-xl, .flex-auto--below-h-xl) {
+        flex-basis: auto;
+    }
+}
+
+@media (height <= 96em) {
+
+    :where(.max-h-2xl\:hide, .max-h-2xl\:hidden,
+        .max-height-2xl\:hide, .max-height-2xl\:hidden,
+        .\2xl-h-max\:hide, .\2xl-h-max\:hidden,
+        .hide--below-h-2xl,
+        .h-2xl\:show, .\2xl-h\:show,
+        .min-h-2xl\:show, .height-2xl\:show,
+        .show--above-h-2xl, .show--h-2xl) {
+        display: none;
+    }
+
+    :where(.max-h-2xl\:hide-labels, .max-height-2xl\:hide-labels, .\2xl-h-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.max-h-2xl\:show-labels, .max-height-2xl\:show-labels, .\2xl-h-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.max-h-2xl\:hide-labels, .max-height-2xl\:hide-labels, .\2xl-h-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.max-h-2xl\:show-labels, .max-height-2xl\:show-labels, .\2xl-h-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.max-h-2xl\:hide-decor, .max-height-2xl\:hide-decor, .\2xl-h-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.max-h-2xl\:show-decor, .max-height-2xl\:show-decor, .\2xl-h-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.max-h-2xl\:hide-decor, .max-height-2xl\:hide-decor, .\2xl-h-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.max-h-2xl\:show-decor, .max-height-2xl\:show-decor, .\2xl-h-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+
+    :where(.max-h-2xl\:flex-auto, .max-h-2xl\:auto,
+        .\2xl-h-max\:flex-auto, .\2xl-h-max\:auto,
+        .auto--below-2xl, .flex-auto--below-2xl) {
+        flex-basis: auto;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3.3 Adaptive Viewport Shell Composite Helpers (@media)
+   Synchronized directly with .app--viewport and .app__workspace unlock boundaries:
+   (width <= 48em) or (height <= 36em)
+   -------------------------------------------------------------------------- */
+
+/* Shown ONLY when Viewport is Unlocked (Mobile Width <= 48em OR Short Height <= 36em) */
+@media (width > 48em) and (height > 36em) {
+
+    :where(.unlocked\:show, .app-unlocked\:show, .viewport-unlocked\:show,
+        .locked\:hide, .app-locked\:hide, .viewport-locked\:hide) {
+        display: none;
+    }
+
+    :where(.unlocked\:hide-labels, .app-unlocked\:hide-labels,
+        .locked\:show-labels, .app-locked\:show-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.unlocked\:hide-decor, .app-unlocked\:hide-decor,
+        .locked\:show-decor, .app-locked\:show-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.unlocked\:hide-labels, .app-unlocked\:hide-labels,
+        .locked\:show-labels, .app-locked\:show-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.unlocked\:hide-decor, .app-unlocked\:hide-decor,
+        .locked\:show-decor, .app-locked\:show-decor) :where(.ui-decor) {
+        display: none;
+    }
+}
+
+/* Shown ONLY when Viewport is Locked (Desktop Width > 48em AND Tall Height > 36em) */
+@media (width <= 48em) or (height <= 36em) {
+
+    :where(.locked\:show, .app-locked\:show, .viewport-locked\:show,
+        .unlocked\:hide, .app-unlocked\:hide, .viewport-unlocked\:hide) {
+        display: none;
+    }
+
+    :where(.locked\:hide-labels, .app-locked\:hide-labels,
+        .unlocked\:show-labels, .app-unlocked\:show-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.locked\:hide-decor, .app-locked\:hide-decor,
+        .unlocked\:show-decor, .app-unlocked\:show-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.locked\:hide-labels, .app-locked\:hide-labels,
+        .unlocked\:show-labels, .app-unlocked\:show-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.locked\:hide-decor, .app-locked\:hide-decor,
+        .unlocked\:show-decor, .app-unlocked\:show-decor) :where(.ui-decor) {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   4. Container-Based Visibility Modifiers (@container)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   3.1 Above Threshold In Container (inline-size > $bp)
+   -------------------------------------------------------------------------- */
+
+@container (inline-size > 20em) {
+
+    :where(.\@2xs\:hide, .\@2xs\:hidden,
+        .\@min-2xs\:hide, .\@min-2xs\:hidden,
+        .hide--in-container-above-2xs,
+        .\@max-2xs\:show,
+        .\@2xs-max\:show,
+        .show--in-container-below-2xs) {
+        display: none;
+    }
+
+    :where(.\@2xs\:hide-labels, .\@min-2xs\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@2xs\:show-labels, .\@min-2xs\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@2xs\:hide-labels, .\@min-2xs\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@2xs\:show-labels, .\@min-2xs\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@2xs\:hide-decor, .\@min-2xs\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@2xs\:show-decor, .\@min-2xs\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@2xs\:hide-decor, .\@min-2xs\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@2xs\:show-decor, .\@min-2xs\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @container (inline-size > 30em) {
-    :where(.hide--in-container-above-xs) {
+
+    :where(.\@xs\:hide, .\@xs\:hidden,
+        .\@min-xs\:hide, .\@min-xs\:hidden,
+        .hide--in-container-above-xs,
+        .\@max-xs\:show,
+        .\@xs-max\:show,
+        .show--in-container-below-xs) {
         display: none;
+    }
+
+    :where(.\@xs\:hide-labels, .\@min-xs\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@xs\:show-labels, .\@min-xs\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@xs\:hide-labels, .\@min-xs\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@xs\:show-labels, .\@min-xs\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@xs\:hide-decor, .\@min-xs\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@xs\:show-decor, .\@min-xs\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@xs\:hide-decor, .\@min-xs\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@xs\:show-decor, .\@min-xs\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @container (inline-size > 40em) {
-    :where(.hide--in-container-above-sm) {
+
+    :where(.\@sm\:hide, .\@sm\:hidden,
+        .\@min-sm\:hide, .\@min-sm\:hidden,
+        .hide--in-container-above-sm,
+        .\@max-sm\:show,
+        .\@sm-max\:show,
+        .show--in-container-below-sm) {
         display: none;
+    }
+
+    :where(.\@sm\:hide-labels, .\@min-sm\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@sm\:show-labels, .\@min-sm\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@sm\:hide-labels, .\@min-sm\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@sm\:show-labels, .\@min-sm\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@sm\:hide-decor, .\@min-sm\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@sm\:show-decor, .\@min-sm\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@sm\:hide-decor, .\@min-sm\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@sm\:show-decor, .\@min-sm\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @container (inline-size > 48em) {
-    :where(.hide--in-container-above-md) {
+
+    :where(.\@md\:hide, .\@md\:hidden,
+        .\@min-md\:hide, .\@min-md\:hidden,
+        .hide--in-container-above-md,
+        .\@max-md\:show,
+        .\@md-max\:show,
+        .show--in-container-below-md) {
         display: none;
+    }
+
+    :where(.\@md\:hide-labels, .\@min-md\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@md\:show-labels, .\@min-md\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@md\:hide-labels, .\@min-md\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@md\:show-labels, .\@min-md\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@md\:hide-decor, .\@min-md\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@md\:show-decor, .\@min-md\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@md\:hide-decor, .\@min-md\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@md\:show-decor, .\@min-md\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @container (inline-size > 60em) {
-    :where(.hide--in-container-above-lg) {
+
+    :where(.\@lg\:hide, .\@lg\:hidden,
+        .\@min-lg\:hide, .\@min-lg\:hidden,
+        .hide--in-container-above-lg,
+        .\@max-lg\:show,
+        .\@lg-max\:show,
+        .show--in-container-below-lg) {
         display: none;
+    }
+
+    :where(.\@lg\:hide-labels, .\@min-lg\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@lg\:show-labels, .\@min-lg\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@lg\:hide-labels, .\@min-lg\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@lg\:show-labels, .\@min-lg\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@lg\:hide-decor, .\@min-lg\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@lg\:show-decor, .\@min-lg\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@lg\:hide-decor, .\@min-lg\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@lg\:show-decor, .\@min-lg\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @container (inline-size > 80em) {
-    :where(.hide--in-container-above-xl) {
+
+    :where(.\@xl\:hide, .\@xl\:hidden,
+        .\@min-xl\:hide, .\@min-xl\:hidden,
+        .hide--in-container-above-xl,
+        .\@max-xl\:show,
+        .\@xl-max\:show,
+        .show--in-container-below-xl) {
         display: none;
+    }
+
+    :where(.\@xl\:hide-labels, .\@min-xl\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@xl\:show-labels, .\@min-xl\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@xl\:hide-labels, .\@min-xl\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@xl\:show-labels, .\@min-xl\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@xl\:hide-decor, .\@min-xl\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@xl\:show-decor, .\@min-xl\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@xl\:hide-decor, .\@min-xl\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@xl\:show-decor, .\@min-xl\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
 @container (inline-size > 96em) {
-    :where(.hide--in-container-above-2xl) {
+
+    :where(.\@2xl\:hide, .\@2xl\:hidden,
+        .\@min-2xl\:hide, .\@min-2xl\:hidden,
+        .hide--in-container-above-2xl,
+        .\@max-2xl\:show,
+        .\@2xl-max\:show,
+        .show--in-container-below-2xl) {
         display: none;
+    }
+
+    :where(.\@2xl\:hide-labels, .\@min-2xl\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@2xl\:show-labels, .\@min-2xl\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@2xl\:hide-labels, .\@min-2xl\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@2xl\:show-labels, .\@min-2xl\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@2xl\:hide-decor, .\@min-2xl\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@2xl\:show-decor, .\@min-2xl\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@2xl\:hide-decor, .\@min-2xl\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@2xl\:show-decor, .\@min-2xl\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-/* Hide In Container Below Threshold */
-@container (inline-size <=20em) {
-    :where(.hide--in-container-below-2xs) {
+/* --------------------------------------------------------------------------
+   3.2 Below Threshold In Container (inline-size <= $bp)
+   -------------------------------------------------------------------------- */
+
+@container (inline-size <= 20em) {
+
+    :where(.\@max-2xs\:hide, .\@max-2xs\:hidden,
+        .\@2xs-max\:hide, .\@2xs-max\:hidden,
+        .hide--in-container-below-2xs,
+        .\@2xs\:show,
+        .\@min-2xs\:show,
+        .show--in-container-above-2xs) {
         display: none;
+    }
+
+    :where(.\@max-2xs\:hide-labels, .\@2xs-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-2xs\:show-labels, .\@2xs-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-2xs\:hide-labels, .\@2xs-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-2xs\:show-labels, .\@2xs-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-2xs\:hide-decor, .\@2xs-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-2xs\:show-decor, .\@2xs-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-2xs\:hide-decor, .\@2xs-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-2xs\:show-decor, .\@2xs-max\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-@container (inline-size <=30em) {
-    :where(.hide--in-container-below-xs) {
+@container (inline-size <= 30em) {
+
+    :where(.\@max-xs\:hide, .\@max-xs\:hidden,
+        .\@xs-max\:hide, .\@xs-max\:hidden,
+        .hide--in-container-below-xs,
+        .\@xs\:show,
+        .\@min-xs\:show,
+        .show--in-container-above-xs) {
         display: none;
+    }
+
+    :where(.\@max-xs\:hide-labels, .\@xs-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-xs\:show-labels, .\@xs-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-xs\:hide-labels, .\@xs-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-xs\:show-labels, .\@xs-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-xs\:hide-decor, .\@xs-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-xs\:show-decor, .\@xs-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-xs\:hide-decor, .\@xs-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-xs\:show-decor, .\@xs-max\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-@container (inline-size <=40em) {
-    :where(.hide--in-container-below-sm) {
+@container (inline-size <= 40em) {
+
+    :where(.\@max-sm\:hide, .\@max-sm\:hidden,
+        .\@sm-max\:hide, .\@sm-max\:hidden,
+        .hide--in-container-below-sm,
+        .\@sm\:show,
+        .\@min-sm\:show,
+        .show--in-container-above-sm) {
         display: none;
+    }
+
+    :where(.\@max-sm\:hide-labels, .\@sm-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-sm\:show-labels, .\@sm-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-sm\:hide-labels, .\@sm-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-sm\:show-labels, .\@sm-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-sm\:hide-decor, .\@sm-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-sm\:show-decor, .\@sm-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-sm\:hide-decor, .\@sm-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-sm\:show-decor, .\@sm-max\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-@container (inline-size <=48em) {
-    :where(.hide--in-container-below-md) {
+@container (inline-size <= 48em) {
+
+    :where(.\@max-md\:hide, .\@max-md\:hidden,
+        .\@md-max\:hide, .\@md-max\:hidden,
+        .hide--in-container-below-md,
+        .\@md\:show,
+        .\@min-md\:show,
+        .show--in-container-above-md) {
         display: none;
+    }
+
+    :where(.\@max-md\:hide-labels, .\@md-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-md\:show-labels, .\@md-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-md\:hide-labels, .\@md-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-md\:show-labels, .\@md-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-md\:hide-decor, .\@md-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-md\:show-decor, .\@md-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-md\:hide-decor, .\@md-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-md\:show-decor, .\@md-max\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-@container (inline-size <=60em) {
-    :where(.hide--in-container-below-lg) {
+@container (inline-size <= 60em) {
+
+    :where(.\@max-lg\:hide, .\@max-lg\:hidden,
+        .\@lg-max\:hide, .\@lg-max\:hidden,
+        .hide--in-container-below-lg,
+        .\@lg\:show,
+        .\@min-lg\:show,
+        .show--in-container-above-lg) {
         display: none;
+    }
+
+    :where(.\@max-lg\:hide-labels, .\@lg-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-lg\:show-labels, .\@lg-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-lg\:hide-labels, .\@lg-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-lg\:show-labels, .\@lg-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-lg\:hide-decor, .\@lg-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-lg\:show-decor, .\@lg-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-lg\:hide-decor, .\@lg-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-lg\:show-decor, .\@lg-max\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-@container (inline-size <=80em) {
-    :where(.hide--in-container-below-xl) {
+@container (inline-size <= 80em) {
+
+    :where(.\@max-xl\:hide, .\@max-xl\:hidden,
+        .\@xl-max\:hide, .\@xl-max\:hidden,
+        .hide--in-container-below-xl,
+        .\@xl\:show,
+        .\@min-xl\:show,
+        .show--in-container-above-xl) {
         display: none;
+    }
+
+    :where(.\@max-xl\:hide-labels, .\@xl-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-xl\:show-labels, .\@xl-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-xl\:hide-labels, .\@xl-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-xl\:show-labels, .\@xl-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-xl\:hide-decor, .\@xl-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-xl\:show-decor, .\@xl-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-xl\:hide-decor, .\@xl-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-xl\:show-decor, .\@xl-max\:show-decor) :where(.ui-decor) {
+        display: revert;
     }
 }
 
-@container (inline-size <=96em) {
-    :where(.hide--in-container-below-2xl) {
+@container (inline-size <= 96em) {
+
+    :where(.\@max-2xl\:hide, .\@max-2xl\:hidden,
+        .\@2xl-max\:hide, .\@2xl-max\:hidden,
+        .hide--in-container-below-2xl,
+        .\@2xl\:show,
+        .\@min-2xl\:show,
+        .show--in-container-above-2xl) {
         display: none;
+    }
+
+    :where(.\@max-2xl\:hide-labels, .\@2xl-max\:hide-labels) {
+        --ui-labels: hidden;
+    }
+
+    :where(.\@max-2xl\:show-labels, .\@2xl-max\:show-labels) {
+        --ui-labels: visible;
+    }
+
+    :where(.\@max-2xl\:hide-labels, .\@2xl-max\:hide-labels) :where(.ui-label) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    :where(.\@max-2xl\:show-labels, .\@2xl-max\:show-labels) :where(.ui-label) {
+        position: static;
+        inline-size: auto;
+        block-size: auto;
+        padding: revert;
+        margin: revert;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
+
+    :where(.\@max-2xl\:hide-decor, .\@2xl-max\:hide-decor) {
+        --ui-decor: hidden;
+    }
+
+    :where(.\@max-2xl\:show-decor, .\@2xl-max\:show-decor) {
+        --ui-decor: visible;
+    }
+
+    :where(.\@max-2xl\:hide-decor, .\@2xl-max\:hide-decor) :where(.ui-decor) {
+        display: none;
+    }
+
+    :where(.\@max-2xl\:show-decor, .\@2xl-max\:show-decor) :where(.ui-decor) {
+        display: revert;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3.3 Auto Basis In Container Below Threshold (inline-size <= $bp)
+   -------------------------------------------------------------------------- */
+
+@container (inline-size <= 20em) {
+
+    :where(.\@max-2xs\:flex-auto, .\@max-2xs\:auto,
+        .\@2xs-max\:flex-auto, .\@2xs-max\:auto,
+        .auto--in-container-below-2xs, .flex-auto--in-container-below-2xs) {
+        flex-basis: auto;
+    }
+}
+
+@container (inline-size <= 30em) {
+
+    :where(.\@max-xs\:flex-auto, .\@max-xs\:auto,
+        .\@xs-max\:flex-auto, .\@xs-max\:auto,
+        .auto--in-container-below-xs, .flex-auto--in-container-below-xs) {
+        flex-basis: auto;
+    }
+}
+
+@container (inline-size <= 40em) {
+
+    :where(.\@max-sm\:flex-auto, .\@max-sm\:auto,
+        .\@sm-max\:flex-auto, .\@sm-max\:auto,
+        .auto--in-container-below-sm, .flex-auto--in-container-below-sm) {
+        flex-basis: auto;
+    }
+}
+
+@container (inline-size <= 48em) {
+
+    :where(.\@max-md\:flex-auto, .\@max-md\:auto,
+        .\@md-max\:flex-auto, .\@md-max\:auto,
+        .auto--in-container-below-md, .flex-auto--in-container-below-md) {
+        flex-basis: auto;
+    }
+}
+
+@container (inline-size <= 60em) {
+
+    :where(.\@max-lg\:flex-auto, .\@max-lg\:auto,
+        .\@lg-max\:flex-auto, .\@lg-max\:auto,
+        .auto--in-container-below-lg, .flex-auto--in-container-below-lg) {
+        flex-basis: auto;
+    }
+}
+
+@container (inline-size <= 80em) {
+
+    :where(.\@max-xl\:flex-auto, .\@max-xl\:auto,
+        .\@xl-max\:flex-auto, .\@xl-max\:auto,
+        .auto--in-container-below-xl, .flex-auto--in-container-below-xl) {
+        flex-basis: auto;
+    }
+}
+
+@container (inline-size <= 96em) {
+
+    :where(.\@max-2xl\:flex-auto, .\@max-2xl\:auto,
+        .\@2xl-max\:flex-auto, .\@2xl-max\:auto,
+        .auto--in-container-below-2xl, .flex-auto--in-container-below-2xl) {
+        flex-basis: auto;
     }
 }

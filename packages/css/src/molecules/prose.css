@@ -1,0 +1,523 @@
+/* ==========================================================================
+   Design For Humans: Prose Molecule Primitive
+   --------------------------------------------------------------------------
+   Rhythmic long-form editorial content container formatting rich text, articles,
+   and documentation. Operates with zero-specificity (:where) resets, native
+   hanging-punctuation, proportional list markers, and responsive vertical rhythm.
+
+   Defaults to fixed scale steps (--font-sizing: fixed; --vert-space: fixed;).
+   Adapts to fluid or container query scaling via .font-sizing-fluid or
+   .font-sizing-cq utilities (@container style(--font-sizing: ...)).
+   Complies with WCAG 2.2 AA/AAA (1.4.1 Use of Color, 1.4.3 Contrast,
+   1.4.8 Visual Presentation, 1.4.12 Text Spacing, 2.4.7 Focus Visible).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Prose Container (:where(.prose))
+   ========================================================================== */
+
+/* Spacing Container Style Query Adaptations */
+:where(*) {
+  @container style(--vert-space: fluid) {
+    --vert-space: var(--prose-vert-spacing-fluid, var(--spacing-breathe, 1rem));
+    --inset-space: calc(var(--prose-vert-spacing-fluid, var(--spacing-breathe, 1rem)) * 1.5);
+  }
+
+  @container style(--vert-space: cq) {
+    --vert-space: var(--prose-vert-spacing-cq, var(--spacing-cq-breathe, 1rem));
+    --inset-space: calc(var(--prose-vert-spacing-cq, var(--spacing-cq-breathe, 1rem)) * 1.5);
+  }
+
+  @container style(--vert-space: fixed) {
+    --vert-space: var(--prose-vert-spacing-fixed, var(--spacing, 1rem));
+    --inset-space: calc(var(--prose-vert-spacing-fixed, var(--spacing, 1rem)) * 1.5);
+  }
+
+  @container style(--vert-space: tight) {
+    --vert-space: calc(var(--prose-vert-spacing-tight, var(--spacing, 1rem)) / 2);
+    --inset-space: calc(var(--prose-vert-spacing-tight, var(--spacing, 1rem)) * 1.5);
+  }
+}
+
+@scope (:where(.prose)) to (:where(.prose-end)) {
+
+  /* --------------------------------------------------------------------------
+     Default Configuration: Fixed Modular Scale & Spacing Rhythm
+     -------------------------------------------------------------------------- */
+  --font-sizing: var(--prose-font-sizing, fixed);
+  --vert-spacing: var(--prose-vert-spacing, fixed);
+
+  font-variant-numeric: lining-nums proportional-nums;
+
+
+  /* ==========================================================================
+   2. Prose Headings Typography & Scale
+   ========================================================================== */
+  /* Title (H1) */
+  :where(h1:not(.display-title)) {
+    font-family: var(--title-font-family, var(--typography-font-family-display, sans-serif));
+    font-size: var(--title-fixed-font-size, var(--typography-font-size-5, 3.052rem));
+    font-weight: var(--title-font-weight, var(--font-weight-bold, 700));
+    letter-spacing: var(--title-letter-spacing, var(--typography-spacing-tight, -0.02em));
+    line-height: var(--title-line-height, var(--typography-line-height--4, 1.1));
+    text-transform: var(--title-text-transform, uppercase);
+    word-spacing: var(--title-word-spacing, 0em);
+
+    @container style(--font-sizing: fluid) {
+      font-size: var(--title-fluid-font-size, var(--typography-font-size-fluid-5, 3.052rem));
+    }
+
+    @container style(--font-sizing: cq) {
+      font-size: var(--title-cq-font-size, var(--typography-font-size-cq-5, 3.052rem));
+    }
+
+    @container style(--font-sizing: compact) {
+      font-size: var(--title-compact-font-size, var(--typography-font-size-4, 2.5rem));
+    }
+  }
+
+  /* Heading (H2) */
+  :where(h2) {
+    font-family: var(--heading-font-family, var(--body-font-family, var(--typography-font-family-sans, sans-serif)));
+    font-size: var(--heading-fixed-font-size, var(--typography-font-size-3, 1.953rem));
+    font-weight: var(--heading-font-weight, var(--font-weight-bold, 700));
+    letter-spacing: var(--heading-letter-spacing, var(--typography-spacing-normal, normal));
+    line-height: var(--heading-line-height, var(--typography-line-height--3, 1.2));
+    text-transform: var(--heading-text-transform, none);
+    word-spacing: var(--heading-word-spacing, 0em);
+
+    @container style(--font-sizing: fluid) {
+      font-size: var(--heading-fluid-font-size, var(--typography-font-size-fluid-3, 1.953rem));
+    }
+
+    @container style(--font-sizing: cq) {
+      font-size: var(--heading-cq-font-size, var(--typography-font-size-cq-3, 1.953rem));
+    }
+
+    @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+      font-size: var(--heading-compact-font-size, var(--typography-font-size-2, 1.75rem));
+    }
+  }
+
+  /* Subheading (H3) */
+  :where(h3) {
+    font-family: var(--subheading-font-family, var(--heading-font-family, var(--body-font-family, var(--typography-font-family-sans, sans-serif))));
+    font-size: var(--subheading-fixed-font-size, var(--typography-font-size-1, 1.25rem));
+    font-weight: var(--subheading-font-weight, var(--heading-font-weight, var(--font-weight-bold, 700)));
+    letter-spacing: var(--subheading-letter-spacing, var(--heading-letter-spacing, var(--typography-spacing-normal, normal)));
+    line-height: var(--subheading-line-height, var(--heading-line-height, var(--typography-line-height--3, 1.2)));
+    text-transform: var(--subheading-text-transform, none);
+    word-spacing: var(--subheading-word-spacing, 0em);
+
+    @container style(--font-sizing: fluid) {
+      font-size: var(--subheading-fluid-font-size, var(--typography-font-size-fluid-1, 1.25rem));
+    }
+
+    @container style(--font-sizing: cq) {
+      font-size: var(--subheading-cq-font-size, var(--typography-font-size-cq-1, 1.25rem));
+    }
+
+    @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+      font-size: var(--subheading-compact-font-size, var(--typography-font-size-0, 1rem));
+    }
+  }
+
+  /* Small Heading (H4, H5, H6) */
+  :where(h4, h5, h6) {
+    font-family: var(--small-heading-font-family, var(--heading-font-family, var(--body-font-family, var(--typography-font-family-sans, sans-serif))));
+    font-size: var(--small-heading-fixed-font-size, var(--typography-font-size-0, 1rem));
+    font-weight: var(--small-heading-font-weight, var(--heading-font-weight, var(--font-weight-bold, 700)));
+    letter-spacing: var(--small-heading-letter-spacing, var(--heading-letter-spacing, var(--typography-spacing-normal, normal)));
+    line-height: var(--small-heading-line-height, var(--heading-line-height, var(--typography-line-height--3, 1.2)));
+    text-transform: var(--small-heading-text-transform, none);
+    word-spacing: var(--small-heading-word-spacing, 0em);
+
+    @container style(--font-sizing: fluid) {
+      font-size: var(--small-heading-fluid-font-size, var(--body-font-size, 1rem));
+    }
+
+    @container style(--font-sizing: cq) {
+      font-size: var(--small-heading-cq-font-size, var(--typography-font-size-cq-0, 1rem));
+    }
+
+    @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+      font-size: var(--small-heading-compact-font-size, var(--typography-font-size--1, 0.875rem));
+    }
+  }
+
+  /* Headings spacing & layout in prose */
+  :where(h1, h2, h3, h4, h5, h6) {
+    break-after: avoid;
+    margin-block-start: 1.5em;
+    text-wrap: balance;
+
+    + :where(h1, h2, h3, h4, h5, h6),
+    &:first-child {
+      margin-block-start: 0;
+    }
+  }
+
+  :where(h2, h3, h4, h5, h6) {
+    max-inline-size: var(--prose-block-width, none);
+  }
+
+  /* ==========================================================================
+   3. Prose Body Text (p, ul, ol, dl)
+   ========================================================================== */
+  :where(p, ul, ol, dl) {
+    font-family: var(--body-font-family, var(--typography-font-family-sans, sans-serif));
+    font-size: var(--body-fixed-font-size, var(--typography-font-size-0, 1rem));
+    font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
+    hyphens: var(--prose-body-hyphens, auto);
+    line-height: var(--body-line-height, var(--typography-line-height-0, 1.5));
+    max-inline-size: min(var(--prose-body-line-length, 66ch), var(--prose-block-width, none));
+
+    @container style(--font-sizing: fluid) {
+      font-size: var(--body-font-size, var(--typography-font-size-fluid-0, 1rem));
+    }
+
+    @container style(--font-sizing: cq) {
+      font-size: var(--body-cq-font-size, var(--typography-font-size-cq-0, 1rem));
+    }
+
+    @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+      font-size: var(--body-compact-font-size, var(--typography-font-size-compact--1, 0.8rem));
+    }
+
+    &:is(.large-text, .small-text, .strong-text) {
+      font-family: var(--prose-body-font-family, inherit);
+    }
+
+    @media (width > 30em) {
+      text-wrap: var(--prose-body-text-wrap, none);
+    }
+  }
+
+  /* Typographic refinements for body paragraphs */
+  :where(p) {
+    font-variant-numeric: oldstyle-nums proportional-nums diagonal-fractions;
+    hanging-punctuation: first allow-end last;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* ==========================================================================
+   4. Small Text & Captions (small, figcaption)
+   ========================================================================== */
+  :where(small, figcaption) {
+    font-family: var(--small-text-font-family, var(--body-font-family, var(--typography-font-family-sans, sans-serif)));
+    font-size: var(--body-sm-fixed-font-size, var(--small-text-fixed-font-size, var(--typography-font-size--1, 0.8rem)));
+    font-weight: var(--small-text-font-weight, var(--body-font-weight, var(--font-weight-regular, 400)));
+    line-height: var(--small-text-line-height, var(--body-sm-line-height, var(--typography-line-height--1, 1.4)));
+
+    @container style(--font-sizing: fluid) {
+      font-size: var(--small-text-font-size, var(--body-sm-fluid-font-size, var(--typography-font-size-fluid--1, 0.8rem)));
+    }
+
+    @container style(--font-sizing: cq) {
+      font-size: var(--small-text-cq-font-size, var(--typography-font-size-cq--1, 0.8rem));
+    }
+
+    @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+      font-size: var(--small-text-compact-font-size, var(--typography-font-size--1, 0.7rem));
+    }
+  }
+
+  /* ==========================================================================
+   5. Strong, Code & Block Rhythm
+   ========================================================================== */
+  :where(strong, b) {
+    font-weight: var(--strong-text-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
+  }
+
+  :where(code, pre) {
+    font-family: var(--code-font-family, var(--typography-code-font-family, monospace));
+    font-variant-numeric: slashed-zero diagonal-fractions;
+  }
+
+  /* Block rhythm: shared spacing keeps reading flow predictable */
+  :where(h1, h2, h3, h4, h5, h6, p, dl, ul, ol, blockquote, hr) {
+    margin-block-end: var(--vert-space, var(--spacing, 1rem));
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  /* Scroll margin for anchored elements within prose */
+  :where([id]) {
+    scroll-margin-block: var(--prose-scroll-margin, 1em);
+  }
+
+  /* ==========================================================================
+   6. Lists: Logical Indentation & Nested Marker Hierarchy
+   ========================================================================== */
+  :where(ul, ol) {
+    padding-inline-start: var(--inset-space, 1.5em);
+
+    :where(ul, ol) {
+      font-size: 1em;
+    }
+  }
+
+  :where(li) {
+    font-variant-numeric: lining-nums;
+    margin-block-end: calc(var(--vert-space, var(--spacing, 1rem)) / 2);
+
+    &::marker {
+      font-variant-numeric: lining-nums;
+    }
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+
+    :where(ol, ul) {
+      margin-block-start: calc(var(--vert-space, var(--spacing, 1rem)) / 2);
+    }
+
+    :where(ol) {
+      list-style: lower-latin;
+
+      :where(ol) {
+        list-style: lower-roman;
+      }
+    }
+
+    :where(ul) {
+      list-style: disc;
+    }
+  }
+
+  /* ==========================================================================
+   7. Links: Semantic Color Inheritance & Custom Underlines
+   ========================================================================== */
+  :where(h1, h2, h3, h4, h5, h6, p, dl, ul, ol) {
+    :where(a:not(.button, .block-link)) {
+      @media screen {
+        font-weight: var(--prose-link-font-weight, inherit);
+        text-decoration: var(--prose-link-underline, underline);
+        text-decoration-color: var(--prose-link-underline-color, currentColor);
+        text-decoration-thickness: var(--prose-link-underline-thickness, 1px);
+        text-underline-offset: var(--prose-link-underline-offset, 0.15em);
+
+        &:target {
+          color: var(--link-color, currentColor);
+          font-weight: var(--font-weight-bold, 700);
+        }
+
+        &:active {
+          color: var(--link-active-color, currentColor);
+        }
+
+        @media (hover: hover) {
+          &:hover {
+            color: var(--link-hover-color, currentColor);
+            text-decoration-color: currentColor;
+          }
+        }
+      }
+    }
+  }
+
+  /* ==========================================================================
+   8. Structural Elements: Dividers & Inset Blockquotes
+   ========================================================================== */
+  :where(hr) {
+    border: none;
+    border-block-start: var(--prose-hr-thickness, var(--border-width, 1px)) solid var(--prose-hr-color, currentColor);
+  }
+
+  :where(blockquote) {
+    border-inline-start: var(--prose-blockquote-border-width, var(--border-width, 1px)) solid;
+    padding-inline-start: calc(var(--inset-space, 1.5em) - var(--prose-blockquote-border-width, var(--border-width, 1px)));
+  }
+
+  /* ==========================================================================
+   9. Media & Figures
+   ========================================================================== */
+  :where(figure) {
+    margin-block: var(--vert-space, var(--spacing, 1rem));
+
+    + :where(h1, h2, h3, h4, h5) {
+      margin-block-start: 0;
+    }
+
+    &:first-child {
+      margin-block-start: 0;
+    }
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  :where(figcaption) {
+    break-before: avoid;
+    margin-block-start: 0.5em;
+    margin-block-end: var(--prose-figcaption-margin-bottom, 2rem);
+    opacity: var(--prose-figcaption-opacity, 1);
+
+    @media screen {
+      color: var(--prose-figcaption-color, inherit);
+    }
+
+    :where(p) {
+      font-family: inherit;
+      font-size: 1em;
+      font-weight: inherit;
+      line-height: inherit;
+      text-wrap: var(--prose-figcaption-text-wrap, auto);
+    }
+
+    :where(a) {
+      font-weight: inherit;
+
+      @media screen {
+        color: var(--link-color, currentColor);
+
+        &:active {
+          color: var(--link-active-color, currentColor);
+        }
+
+        @media (hover: hover) {
+          &:hover {
+            color: var(--link-hover-color, currentColor);
+          }
+        }
+      }
+    }
+  }
+
+  /* ==========================================================================
+   10. Code Syntax Blocks
+   ========================================================================== */
+  :where(pre code) {
+    padding-block: var(--spacing-breathe, 1rem);
+    padding-inline: var(--spacing-cushion, 2rem);
+  }
+
+  :where(pre:has(code)) {
+    break-inside: avoid;
+    font-size: 1rem;
+    margin-block: var(--vert-space, var(--spacing, 1rem));
+    max-inline-size: var(--prose-block-width, none);
+
+    @media screen {
+      background-color: var(--surface-dark, transparent);
+      box-shadow: var(--shadow-inner, none);
+      color: var(--foreground-on-dark, currentColor);
+
+      @media (prefers-contrast: more) {
+        border: var(--border, 1px solid currentColor);
+        box-shadow: none;
+      }
+    }
+
+    @media print {
+      border: var(--border, 1px solid currentColor);
+    }
+
+    :where(code) {
+      background-color: transparent;
+      direction: ltr;
+      display: block;
+      font-family: inherit;
+      overflow-wrap: break-word;
+      text-align: initial;
+      white-space: break-spaces;
+    }
+  }
+
+  /* ==========================================================================
+   11. Inline Semantics
+   ========================================================================== */
+  :where(u, del, ins, s, b strong, strong b) {
+    text-decoration-color: var(--prose-underline-color, currentColor);
+    text-decoration-thickness: var(--prose-underline-thickness, 1px);
+    text-underline-offset: var(--prose-underline-offset, 0.15em);
+  }
+
+  :where(u, ins, b strong, strong b) {
+    text-decoration: underline;
+  }
+
+  :where(del, s) {
+    text-decoration: line-through;
+  }
+
+  :where(ins) {
+    text-decoration-style: dashed;
+  }
+
+  :where(em, i) {
+    font-style: italic;
+
+    :where(em, i) {
+      font-style: normal;
+    }
+  }
+
+  :where(sub, sup) {
+    font-size: var(--script-font-size, 0.75em);
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  :where(sub) {
+    inset-block-end: -0.25em;
+  }
+
+  :where(sup) {
+    inset-block-start: -0.5em;
+  }
+
+}
+
+
+/* ==========================================================================
+   12. Emoji Utilities
+   ========================================================================== */
+:where(h1, h2, h3, h4, h5, h6, p, dl, ul, ol):where(.emoji) {
+  &::before {
+    font-variant-emoji: var(--prose-emoji-variant, emoji);
+    margin-inline-end: 0.5em;
+  }
+
+  &:where(.check)::before {
+    content: "\2705" / "";
+  }
+
+  &:where(.checkbox)::before {
+    content: "\2611" / "";
+  }
+
+  &:where(.cross)::before {
+    content: "\274C" / "";
+  }
+
+  &:where(.idea)::before {
+    content: "\1F4A1" / "";
+  }
+
+  &:where(.infinity)::before {
+    content: "\267E" / "";
+  }
+
+  &:where(.mountain-train)::before {
+    content: "\1F69E" / "";
+  }
+
+  &:where(.star)::before {
+    content: "\2B50" / "";
+  }
+
+  &:where(.sun-cloud)::before {
+    content: "\26C5" / "";
+  }
+
+  &:where(.warning)::before {
+    content: "\26A0" / "";
+  }
+}

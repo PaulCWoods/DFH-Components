@@ -1,0 +1,565 @@
+/* ==========================================================================
+   Design For Humans: Combobox Primitive
+   --------------------------------------------------------------------------
+   Accessible searchable combobox and anchored popup listbox orchestrator.
+   Combines a single/multi-select text entry with an anchored floating listbox,
+   supporting prefix icons, trailing clear/toggle buttons, removable chips,
+   group headers, and empty filter states.
+   Complies with WCAG 2.2 AA / AAA (1.3.1 Info & Relationships, 1.4.3 Contrast,
+   2.1.1 Keyboard Navigation, 2.4.7 Focus Visible, 2.5.5 / 2.5.8 Target Sizing).
+   Parity with Design For Humans Blog (_combobox.scss & _component-library.twig).
+
+   Usage:
+   <!-- Single-Select Combobox -->
+   <div class="field">
+     <label for="framework-combo" class="field__label">Framework</label>
+     <div class="combobox">
+       <div class="combobox__control" style="anchor-name: --combo-framework;">
+         <svg class="icon combobox__icon-start" aria-hidden="true"><use href="#Search"/></svg>
+         <input 
+           id="framework-combo"
+           type="text" 
+           class="combobox__input"
+           role="combobox"
+           aria-expanded="false"
+           aria-autocomplete="list"
+           aria-controls="framework-listbox"
+           placeholder="Search frameworks..."
+         />
+         <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
+           <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
+         </button>
+       </div>
+
+       <!-- Anchored Listbox -->
+       <ul 
+         id="framework-listbox" 
+         role="listbox" 
+         class="combobox__listbox"
+         style="position-anchor: --combo-framework;"
+         aria-label="Framework options"
+       >
+         <li role="option" class="combobox__option" aria-selected="true">
+           <span>Web Components</span>
+           <svg class="icon combobox__check" aria-hidden="true"><use href="#Check"/></svg>
+         </li>
+         <li role="option" class="combobox__option" aria-selected="false">
+           <span>Svelte</span>
+         </li>
+       </ul>
+     </div>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Combobox Container (:where(.combobox))
+   ========================================================================== */
+:where(.combobox) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_combobox-min-height: var(--combobox-min-height, var(--spacing-target, 3rem));
+  --_combobox-bg: var(--combobox-bg, var(--surface-card, Canvas));
+  --_combobox-border-color: var(--combobox-border-color, var(--control-border-color, currentColor));
+  --_combobox-border-width: var(--combobox-border-width, var(--control-border-width, 1px));
+  --_combobox-radius: var(--combobox-radius, var(--radius, 0.25rem));
+  --_combobox-padding-block: var(--combobox-padding-block, var(--spacing-8, 0.5rem));
+  --_combobox-padding-inline: var(--combobox-padding-inline, var(--spacing-12, 0.75rem));
+  --_combobox-gap: var(--combobox-gap, var(--spacing-8, 0.5rem));
+  --_combobox-color: var(--combobox-color, var(--foreground-default, currentColor));
+  --_combobox-placeholder-color: var(--combobox-placeholder-color, var(--foreground-muted, currentColor));
+  --_combobox-font-size: var(--typography-font-size-0, 1rem);
+  --_combobox-line-height: var(--typography-line-height-0, 1.5);
+  --_combobox-subtle-bg: var(--combobox-subtle-bg, var(--surface-translucent, transparent));
+  --_combobox-subtle-hover-bg: var(--combobox-subtle-hover-bg, var(--surface-translucent-strong, transparent));
+
+  /* Focus Ring Contract */
+  --_combobox-focus-ring-width: var(--focus-ring-width, 2px);
+  --_combobox-focus-ring-offset: var(--focus-ring-offset, 2px);
+  --_combobox-focus-ring-color: var(--focus-ring-color, var(--focus-ring, highlight));
+
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  inline-size: 100%;
+  box-sizing: border-box;
+  container-type: inline-size;
+  --font-sizing: cq;
+}
+
+/* ==========================================================================
+   2. Input Chrome Wrapper (:where(.combobox__control))
+   ========================================================================== */
+:where(.combobox__control) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-block-size: var(--_combobox-min-height);
+  padding-block: var(--_combobox-padding-block);
+  padding-inline: var(--_combobox-padding-inline);
+  gap: var(--_combobox-gap);
+  background-color: var(--_combobox-bg);
+  border: var(--_combobox-border-width) solid var(--_combobox-border-color);
+  border-radius: var(--_combobox-radius);
+  color: var(--_combobox-color);
+  box-sizing: border-box;
+  inline-size: 100%;
+  cursor: text;
+  transition:
+    border-color var(--duration-sm, 150ms) ease,
+    outline var(--duration-sm, 150ms) ease,
+    box-shadow var(--duration-sm, 150ms) ease;
+}
+
+/* Single focus ring on outer container — eliminates double rings */
+:where(.combobox__control:focus-within) {
+  outline: var(--_combobox-focus-ring-width) solid var(--_combobox-focus-ring-color);
+  outline-offset: var(--_combobox-focus-ring-offset);
+  border-color: var(--_combobox-focus-ring-color);
+}
+
+/* ==========================================================================
+   3. Inner Input Field (:where(.combobox__input))
+   ========================================================================== */
+:where(.combobox__input) {
+  display: block;
+  flex: 1 1 5rem;
+  min-inline-size: 3rem;
+  min-block-size: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--_combobox-font-size);
+  line-height: var(--_combobox-line-height);
+  color: var(--_combobox-color);
+  box-sizing: border-box;
+}
+
+:where(.combobox__input)::placeholder {
+  color: var(--_combobox-placeholder-color);
+  opacity: 1;
+}
+
+:where(.combobox__input)::-webkit-search-cancel-button,
+:where(.combobox__input)::-webkit-search-decoration {
+  display: none;
+}
+
+/* ==========================================================================
+   4. Action Icons & Buttons (:where(.combobox__icon-start, .combobox__clear, .combobox__toggle))
+   ========================================================================== */
+:where(.combobox__icon-start) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground-muted, currentColor);
+  flex-shrink: 0;
+  pointer-events: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+:where(.combobox__clear),
+:where(.combobox__toggle) {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground-muted, currentColor);
+  cursor: pointer;
+  border-radius: var(--radius-sm, 0.25rem);
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  transition: color var(--duration-sm, 150ms) ease, transform var(--duration-sm, 150ms) ease;
+}
+
+:where(.combobox__clear:hover),
+:where(.combobox__toggle:hover) {
+  color: var(--foreground-default, currentColor);
+}
+
+:where(.combobox__clear:focus-visible),
+:where(.combobox__toggle:focus-visible) {
+  outline: var(--_combobox-focus-ring-width) solid var(--_combobox-focus-ring-color);
+  outline-offset: 1px;
+}
+
+/* Rotate toggle chevron when open */
+:where(.combobox[data-expanded="true"] .combobox__toggle),
+:where(.combobox:has([role="combobox"][aria-expanded="true"]) .combobox__toggle) {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   5. Multi-Select Tags Wrapper (:where(.combobox__tags))
+   ========================================================================== */
+:where(.combobox__tags) {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-8, 0.5rem) var(--_combobox-tag-gap, var(--spacing-16, 1rem));
+}
+
+/* ==========================================================================
+   6. Anchored Listbox Dropdown (:where(.combobox__listbox))
+   ========================================================================== */
+:where(.combobox__listbox) {
+
+  /* Listbox Dropdown */
+  --_combobox-listbox-bg: var(--combobox-listbox-bg, var(--surface-card, Canvas));
+  --_combobox-listbox-border-color: var(--combobox-listbox-border-color, var(--panel-border-color, var(--border-color-quiet, currentColor)));
+  --_combobox-listbox-border-width: var(--combobox-listbox-border-width, var(--panel-border-width, 1px));
+  --_combobox-listbox-radius: var(--combobox-listbox-radius, var(--radius, 0.375rem));
+  --_combobox-listbox-shadow: var(--combobox-listbox-shadow, var(--shadow-md, none));
+  --_combobox-listbox-max-height: var(--combobox-listbox-max-height, 18rem);
+  --_combobox-listbox-padding: var(--combobox-listbox-padding, var(--spacing-4, 0.25rem));
+  --_combobox-listbox-gap: var(--combobox-listbox-gap, 2px);
+
+  position: absolute;
+  z-index: var(--z-index-dropdown, 100);
+  inset-block-start: calc(100% + var(--spacing-4, 0.25rem));
+  inset-inline-start: 0;
+  inline-size: 100%;
+  max-block-size: var(--_combobox-listbox-max-height);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  background-color: var(--_combobox-listbox-bg);
+  border: var(--_combobox-listbox-border-width) solid var(--_combobox-listbox-border-color);
+  border-radius: var(--_combobox-listbox-radius);
+  box-shadow: var(--_combobox-listbox-shadow);
+  padding: var(--_combobox-listbox-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--_combobox-listbox-gap);
+  margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+/* Modern CSS Anchor Positioning enhancement */
+@supports (position-anchor: --test) {
+  :where(.combobox__listbox[style*="position-anchor"]) {
+    inset-block-start: anchor(bottom);
+    min-inline-size: anchor-size(width);
+    margin-block-start: var(--spacing-4, 0.25rem);
+  }
+}
+
+/* In-Flow / Static Listbox (for Command Palettes, Modals & Embedded Panels) */
+:where(.combobox__listbox--static, .combobox__listbox--in-flow) {
+  position: static;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  max-block-size: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* Hidden state when collapsed */
+:where(.combobox:not([data-expanded="true"]):not(:has([role="combobox"][aria-expanded="true"])) > .combobox__listbox:not([popover]:popover-open):not(.combobox__listbox--static, .combobox__listbox--in-flow)) {
+  display: none;
+}
+
+/* ==========================================================================
+   7. Option Items (:where(.combobox__option))
+   ========================================================================== */
+:where(.combobox__option) {
+  /* Option Items */
+  --_combobox-option-padding-block: var(--combobox-option-padding-block, var(--spacing-8, 0.5rem));
+  --_combobox-option-padding-inline: var(--combobox-option-padding-inline, var(--spacing-12, 0.75rem));
+  --_combobox-option-radius: var(--combobox-option-radius, var(--radius-sm, 0.25rem));
+  --_combobox-option-hover-bg: var(--combobox-option-hover-bg, var(--surface-translucent, transparent));
+  --_combobox-option-selected-bg: var(--combobox-option-selected-bg, var(--surface-translucent, transparent));
+  --_combobox-option-selected-color: var(--combobox-option-selected-color, var(--foreground-accent, currentColor));
+  --_combobox-option-selected-font-weight: var(--combobox-option-selected-font-weight, var(--font-weight-semibold, 600));
+  --_combobox-option-font-size: var(--typography-font-size--1, 0.875rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8, 0.5rem);
+  padding-block: var(--_combobox-option-padding-block);
+  padding-inline: var(--_combobox-option-padding-inline);
+  border-radius: var(--_combobox-option-radius);
+  font-size: var(--_combobox-option-font-size);
+  color: var(--_combobox-color);
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  text-align: start;
+  transition:
+    background-color var(--duration-sm, 150ms) ease,
+    color var(--duration-sm, 150ms) ease;
+}
+
+/* Hover & Active Descendant Highlight */
+:where(.combobox__option:hover),
+:where(.combobox__option.is-active),
+:where(.combobox__option[data-focused="true"]) {
+  background-color: var(--_combobox-option-hover-bg);
+}
+
+/* Selected State */
+:where(.combobox__option[aria-selected="true"]),
+:where(.combobox__option.is-selected) {
+  background-color: var(--_combobox-option-selected-bg);
+  color: var(--_combobox-option-selected-color);
+  font-weight: var(--_combobox-option-selected-font-weight);
+}
+
+/* Checkmark indicator */
+:where(.combobox__check) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: auto;
+  color: currentColor;
+  flex-shrink: 0;
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+:where(.combobox__option:not([aria-selected="true"]) .combobox__check) {
+  display: none;
+}
+
+/* Disabled option */
+:where(.combobox__option[aria-disabled="true"]),
+:where(.combobox__option:disabled) {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Option Content Hierarchy */
+:where(.combobox__option-main) {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  text-align: start;
+}
+
+:where(.combobox__option-desc) {
+  color: var(--foreground-muted, currentColor);
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* ==========================================================================
+   8. Groups, Separators & Empty State
+   ========================================================================== */
+/* Combobox Group Header
+   Structural container hook for listbox section labels.
+   Defers typography to heading atom primitives (.micro-heading). */
+:where(.combobox__group-header) {
+  color: var(--foreground-muted, currentColor);
+  margin: 0;
+  min-inline-size: 0;
+  padding-block: var(--spacing-6, 0.375rem);
+  padding-inline: var(--spacing-12, 0.75rem);
+  user-select: none;
+}
+
+:where(.combobox__separator) {
+  block-size: 1px;
+  background-color: var(--border-color-quiet, currentColor);
+  border: none;
+  margin: 0;
+  margin-block: var(--spacing-4, 0.25rem);
+}
+
+:where(.combobox__empty) {
+  padding-block: var(--spacing-16, 1rem);
+  padding-inline: var(--spacing-12, 0.75rem);
+  text-align: center;
+  color: var(--foreground-muted, currentColor);
+  font-size: var(--typography-font-size--1, 0.875rem);
+}
+
+/* ==========================================================================
+   9. Size Modifiers (.combobox--sm, .combobox--lg)
+   ========================================================================== */
+:where(.combobox--sm) {
+  --_combobox-min-height: var(--spacing-32, 2rem);
+  --_combobox-padding-block: var(--spacing-4, 0.25rem);
+  --_combobox-padding-inline: var(--spacing-8, 0.5rem);
+  --_combobox-font-size: var(--typography-font-size--1, 0.875rem);
+  --_combobox-option-padding-block: var(--spacing-6, 0.375rem);
+  --_combobox-option-padding-inline: var(--spacing-8, 0.5rem);
+}
+
+:where(.combobox--lg) {
+  --_combobox-min-height: var(--spacing-56, 3.5rem);
+  --_combobox-padding-block: var(--spacing-12, 0.75rem);
+  --_combobox-padding-inline: var(--spacing-16, 1rem);
+  --_combobox-font-size: var(--typography-font-size-1, 1.25rem);
+}
+
+/* ==========================================================================
+   10. Variation Modifiers (.combobox--flush, .combobox--plain, .combobox--subtle)
+   Matches select.css and input.css visual appearance hierarchy
+   ========================================================================== */
+
+/* Plain Combobox Modifier (Borderless, transparent resting surface) */
+:where(.comboboxes-plain),
+:where(.combobox--plain, .combobox--ghost) {
+  --_combobox-bg: transparent;
+  --_combobox-border-color: transparent;
+
+  :where(.combobox__control) {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+/* Subtle Combobox Modifier (Translucent background, no border) */
+:where(.comboboxes-subtle),
+:where(.combobox--subtle) {
+  --_combobox-bg: var(--_combobox-subtle-bg);
+  --_combobox-border-color: transparent;
+
+  :where(.combobox__control) {
+    background-color: var(--_combobox-subtle-bg);
+    border-color: transparent;
+  }
+}
+
+/* Flush Combobox Modifier (Zero inline padding, borderless, seamless integration in dialogs & cards) */
+:where(.comboboxes-flush),
+:where(.combobox--flush) {
+  --_combobox-bg: transparent;
+  --_combobox-border-color: transparent;
+  --_combobox-padding-inline: 0;
+
+  :where(.combobox__control) {
+    background-color: transparent;
+    border-color: transparent;
+    padding-inline: 0;
+  }
+}
+
+/* Focus-within outline suppression on flush controls to sit cleanly in card headers and search inputs */
+:where(.combobox--flush .combobox__control:focus-within) {
+  outline: none;
+  border-color: transparent;
+}
+
+:where(.card__header--flush, .card__head--flush)>:where(.combobox--flush) {
+  --_combobox-padding-inline: var(--_card-padding);
+
+  :where(.combobox__control) {
+    padding-inline: var(--_combobox-padding-inline);
+    padding-block: var(--_card-padding);
+  }
+}
+
+/* ==========================================================================
+   11. Validation & Disabled States
+   ========================================================================== */
+:where(.combobox--invalid, .combobox:has([aria-invalid="true"])) :where(.combobox__control) {
+  border-color: var(--border-color-danger, var(--foreground-danger, #d32f2f));
+  --_combobox-focus-ring-color: var(--foreground-danger, #d32f2f);
+}
+
+:where(.combobox:has(:disabled), .combobox--disabled) {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+:where(.combobox:has(:disabled), .combobox--disabled) :where(.combobox__control) {
+  background-color: var(--surface-muted, #f5f5f5);
+}
+
+/* ==========================================================================
+   12. Container Style Queries (@container style(...))
+   ========================================================================== */
+* {
+
+  /* Spatial Density */
+  @container style(--combobox-density: compact) or style(--ui-density: dense) or style(--ui-sizing: compact) {
+    :where(.combobox) {
+      --_combobox-min-height: var(--spacing-32, 2rem);
+      --_combobox-padding-block: var(--spacing-4, 0.25rem);
+      --_combobox-padding-inline: var(--spacing-8, 0.5rem);
+      --_combobox-option-padding-block: var(--spacing-6, 0.375rem);
+      --_combobox-option-padding-inline: var(--spacing-8, 0.5rem);
+    }
+  }
+
+  /* Typographic Scaling */
+  @container style(--combobox-density: compact) or style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    :where(.combobox) {
+      --_combobox-font-size: var(--typography-font-size--1, 0.875rem);
+    }
+  }
+
+  /* Variation Orchestration */
+  @container style(--controls-variation: plain) or style(--combobox-variation: plain) {
+    :where(.combobox) {
+      --_combobox-bg: transparent;
+      --_combobox-border-color: transparent;
+    }
+  }
+
+  @container style(--controls-variation: subtle) or style(--combobox-variation: subtle) {
+    :where(.combobox) {
+      --_combobox-bg: var(--_combobox-subtle-bg);
+      --_combobox-border-color: transparent;
+    }
+  }
+
+  @container style(--control-variation: flush) or style(--combobox-variation: flush) {
+    :where(.combobox) {
+      --_combobox-bg: transparent;
+      --_combobox-border-color: transparent;
+      --_combobox-padding-inline: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   12. Accessibility & High Contrast (WCAG 1.4.3 / 1.4.11 / 2.4.7)
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.combobox__control) {
+    border: 1px solid ButtonBorder;
+  }
+
+  :where(.combobox__control:focus-within) {
+    outline: 2px solid Highlight;
+  }
+
+  :where(.combobox__listbox) {
+    border: 1px solid CanvasText;
+  }
+
+  :where(.combobox__option[aria-selected="true"]) {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.combobox__control) {
+    border: var(--border-width-default, 2px) solid var(--border-color-quiet, currentColor);
+  }
+
+  :where(.combobox__listbox) {
+    border: var(--border-width-default, 2px) solid var(--border-color-quiet, currentColor);
+  }
+}

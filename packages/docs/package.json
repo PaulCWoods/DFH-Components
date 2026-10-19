@@ -1,0 +1,17 @@
+{
+  "name": "@design-for-humans/docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 4321",
+    "start": "astro dev --port 4321",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@design-for-humans/components-css": "*",
+    "@astrojs/mdx": "^8.1.0",
+    "astro": "^7.4.0"
+  }
+}

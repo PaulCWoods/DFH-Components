@@ -1,0 +1,64 @@
+---
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | number | string;
+
+interface Props {
+  name: string;
+  class?: string;
+  size?: IconSize;
+  ariaHidden?: boolean;
+  ariaLabel?: string;
+}
+
+const {
+  name,
+  class: className = '',
+  size = 'md',
+  ariaHidden = true,
+  ariaLabel,
+} = Astro.props;
+
+const NAMED_SIZES: Record<string, { class: string; dimension: number }> = {
+  xs: { class: 'icon--xs', dimension: 10 },
+  sm: { class: 'icon--sm', dimension: 12 },
+  md: { class: 'icon--md', dimension: 16 },
+  lg: { class: 'icon--lg', dimension: 20 },
+  xl: { class: 'icon--xl', dimension: 24 },
+  '2xl': { class: 'icon--2xl', dimension: 32 },
+};
+
+function resolveSize(val: IconSize) {
+  if (typeof val === 'string' && val in NAMED_SIZES) {
+    return {
+      modifier: NAMED_SIZES[val].class,
+      dimension: NAMED_SIZES[val].dimension,
+    };
+  }
+
+  const num = typeof val === 'number' ? val : parseInt(String(val), 10);
+  if (!isNaN(num)) {
+    if (num <= 10) return { modifier: 'icon--xs', dimension: num };
+    if (num <= 14) return { modifier: 'icon--sm', dimension: num };
+    if (num <= 17) return { modifier: 'icon--md', dimension: num };
+    if (num <= 22) return { modifier: 'icon--lg', dimension: num };
+    if (num <= 28) return { modifier: 'icon--xl', dimension: num };
+    return { modifier: 'icon--2xl', dimension: num };
+  }
+
+  return { modifier: 'icon--md', dimension: 16 };
+}
+
+const { modifier, dimension } = resolveSize(size);
+const hasExistingModifier = className.includes('icon--');
+const classes = ['icon', !hasExistingModifier ? modifier : '', className].filter(Boolean).join(' ');
+---
+
+<svg
+  class={classes}
+  width={dimension}
+  height={dimension}
+  aria-hidden={ariaHidden ? 'true' : undefined}
+  aria-label={ariaLabel}
+  focusable="false"
+>
+  <use href={`/icons.svg#${name}`}></use>
+</svg>

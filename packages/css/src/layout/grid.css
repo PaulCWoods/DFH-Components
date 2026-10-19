@@ -8,11 +8,12 @@
 /* --------------------------------------------------------------------------
    1. Base Grid Container
    -------------------------------------------------------------------------- */
-
 :where(.grid) {
+    --_gap: var(--gap, var(--spacing, 1rem));
+    --_item-width: var(--spacing-block);
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--item-width, 28rem), 100%), 1fr));
-    gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--_item-width), 100%), 1fr));
+    gap: var(--_gap);
 }
 
 :where(.grid):where(ol, ul) {
@@ -21,45 +22,375 @@
     padding: 0;
 }
 
+:where(.grid--auto-fit) {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--_item-width), 100%), 1fr));
+}
+
 /* --------------------------------------------------------------------------
-   2. Column Min-Width Modifiers
+   2. Column Count Modifiers
+   -------------------------------------------------------------------------- */
+
+:where(.grid--1-col) {
+    grid-template-columns: 1fr;
+}
+
+:where(.grid--2-col) {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+:where(.grid--3-col) {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+:where(.grid--4-col) {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+:where(.grid--5-col) {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+:where(.grid--6-col) {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* --------------------------------------------------------------------------
+   3. Column Min-Width Modifiers
    -------------------------------------------------------------------------- */
 
 :where(.grid--2xs) {
-    --item-width: var(--spacing-block-2xs, 16rem);
+    --_item-width: var(--spacing-block-2xs);
 }
 
 :where(.grid--xs) {
-    --item-width: var(--spacing-block-xs, 20rem);
+    --_item-width: var(--spacing-block-xs);
 }
 
 :where(.grid--sm) {
-    --item-width: var(--spacing-block-sm, 24rem);
+    --_item-width: var(--spacing-block-sm);
 }
 
 :where(.grid--md) {
-    --item-width: var(--spacing-block-md, var(--spacing-block, 28rem));
+    --_item-width: var(--spacing-block-md);
 }
 
 :where(.grid--lg) {
-    --item-width: var(--spacing-block-lg, 32rem);
+    --_item-width: var(--spacing-block-lg);
 }
 
 :where(.grid--xl) {
-    --item-width: var(--spacing-block-xl, 36rem);
+    --_item-width: var(--spacing-block-xl);
 }
 
 :where(.grid--2xl) {
-    --item-width: var(--spacing-block-2xl, 40rem);
+    --_item-width: var(--spacing-block-2xl);
 }
 
 /* --------------------------------------------------------------------------
-   3. Grid Ruled
+   4. Grid Gap Modifiers
+   -------------------------------------------------------------------------- */
+
+:where(.grid--tight) {
+    --_gap: 0;
+}
+
+:where(.grid--cushioned) {
+    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+}
+
+/* --------------------------------------------------------------------------
+   5. Grid Ruled
    -------------------------------------------------------------------------- */
 
 :where(.grid--ruled) {
     @supports (rule: 1px) {
-        gap: var(--rule-width, 1px);
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}
+
+:where(.grid--ruled.grid--tight) {
+    @supports (rule: 1px) {
+        --_gap: var(--rule-width, 1px);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   6. Grid Carousel (Horizontal Snap-Scroller)
+   -------------------------------------------------------------------------- */
+
+:where(.grid--carousel, .grid-carousel) {
+    --_carousel-peek: var(--grid-carousel-peek, 2rem);
+    --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_item-width, 20rem)));
+    --_carousel-snap-align: var(--grid-carousel-snap-align, center);
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--_carousel-item-width);
+    gap: var(--_gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--_gap);
+    scrollbar-width: thin;
+    padding-block-end: var(--spacing-8, 0.5rem);
+
+    > :where(*) {
+        scroll-snap-align: var(--_carousel-snap-align);
+        scroll-snap-stop: normal;
+    }
+}
+
+:where(.grid--carousel-bleed, .grid-carousel--bleed) {
+    margin-inline: calc(var(--spacing-cushion, var(--spacing-16)) * -1);
+    padding-inline: var(--spacing-cushion, var(--spacing-16));
+    scroll-padding-inline: var(--spacing-cushion, var(--spacing-16));
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive Carousel Modifiers (@media & @container)
+   Uses Tailwind/DFH escaped prefix rule: max-md:grid--carousel, md:grid--auto-fit
+   -------------------------------------------------------------------------- */
+
+/* Active below md breakpoint (width <= 48em / 768px) */
+@media (width <=48em) {
+    :where(.max-md\:grid--carousel, .max-md\:carousel, .md-max\:grid--carousel, .grid--carousel-below-md) {
+        --_carousel-peek: var(--grid-carousel-peek, 2rem);
+        --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_item-width, 20rem)));
+        --_carousel-snap-align: var(--grid-carousel-snap-align, start);
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: var(--_carousel-item-width);
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: var(--_gap);
+        scrollbar-width: thin;
+        padding-block-end: var(--spacing-8, 0.5rem);
+
+        > :where(*) {
+            scroll-snap-align: var(--_carousel-snap-align);
+            scroll-snap-stop: normal;
+        }
+    }
+}
+
+/* Active below sm breakpoint (width <= 40em / 640px) */
+@media (width <=40em) {
+    :where(.max-sm\:grid--carousel, .max-sm\:carousel, .sm-max\:grid--carousel) {
+        --_carousel-peek: var(--grid-carousel-peek, 2rem);
+        --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_item-width, 20rem)));
+        --_carousel-snap-align: var(--grid-carousel-snap-align, start);
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: var(--_carousel-item-width);
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: var(--_gap);
+        scrollbar-width: thin;
+        padding-block-end: var(--spacing-8, 0.5rem);
+
+        > :where(*) {
+            scroll-snap-align: var(--_carousel-snap-align);
+            scroll-snap-stop: normal;
+        }
+    }
+}
+
+/* Container query variant (when placed in @container contexts) */
+@container (width <=48em) {
+    :where(.\@max-md\:grid--carousel, .\@max-md\:carousel) {
+        --_carousel-peek: var(--grid-carousel-peek, 2rem);
+        --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_item-width, 20rem)));
+        --_carousel-snap-align: var(--grid-carousel-snap-align, start);
+
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: var(--_carousel-item-width);
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: var(--_gap);
+        scrollbar-width: thin;
+        padding-block-end: var(--spacing-8, 0.5rem);
+
+        > :where(*) {
+            scroll-snap-align: var(--_carousel-snap-align);
+            scroll-snap-stop: normal;
+        }
+    }
+}
+
+/* Mobile-first reset: md:grid / md:grid--auto-fit cancels carousel on desktop */
+@media (width > 48em) {
+    :where(.md\:grid, .md\:grid--auto-fit, .md\:grid--auto-fill) {
+        grid-auto-flow: row;
+        overflow-x: visible;
+        overflow-y: visible;
+        overscroll-behavior-x: auto;
+        scroll-snap-type: none;
+        scroll-padding-inline: 0;
+        padding-block-end: 0;
+
+        > :where(*) {
+            scroll-snap-align: none;
+        }
+    }
+
+    :where(.md\:grid--auto-fit) {
+        grid-template-columns: repeat(auto-fit, minmax(min(var(--_item-width), 100%), 1fr));
+    }
+
+    :where(.md\:grid--auto-fill, .md\:grid--fill) {
+        grid-template-columns: repeat(auto-fill, minmax(min(var(--_item-width), 100%), 1fr));
+    }
+}
+
+/* --------------------------------------------------------------------------
+   8. Responsive Column Count Modifiers (@media & @container)
+   -------------------------------------------------------------------------- */
+
+/* Active above sm breakpoint (width > 40em / 640px) */
+@media (width > 40em) {
+    :where(.sm\:grid--1-col) {
+        grid-template-columns: 1fr;
+    }
+
+    :where(.sm\:grid--2-col) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :where(.sm\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    :where(.sm\:grid--4-col) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Active above md breakpoint (width > 48em / 768px) */
+@media (width > 48em) {
+    :where(.md\:grid--1-col) {
+        grid-template-columns: 1fr;
+    }
+
+    :where(.md\:grid--2-col) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :where(.md\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    :where(.md\:grid--4-col) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    :where(.md\:grid--6-col) {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* Active above lg breakpoint (width > 60em / 960px) */
+@media (width > 60em) {
+    :where(.lg\:grid--2-col) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :where(.lg\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    :where(.lg\:grid--4-col) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    :where(.lg\:grid--5-col) {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    :where(.lg\:grid--6-col) {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* Active above xl breakpoint (width > 75em / 1200px) */
+@media (width > 80em) {
+    :where(.xl\:grid--2-col) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :where(.xl\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    :where(.xl\:grid--4-col) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    :where(.xl\:grid--5-col) {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    :where(.xl\:grid--6-col) {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* Container query responsive column modifiers (@container) */
+@container (width > 40em) {
+    :where(.\@sm\:grid--1-col) {
+        grid-template-columns: 1fr;
+    }
+
+    :where(.\@sm\:grid--2-col) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :where(.\@sm\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@container (width > 48em) {
+    :where(.\@md\:grid--1-col) {
+        grid-template-columns: 1fr;
+    }
+
+    :where(.\@md\:grid--2-col) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    :where(.\@md\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    :where(.\@md\:grid--4-col) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@container (width > 60em) {
+    :where(.\@lg\:grid--3-col) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    :where(.\@lg\:grid--4-col) {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

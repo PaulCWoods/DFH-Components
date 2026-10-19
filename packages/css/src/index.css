@@ -1,63 +1,102 @@
 /**
  * Design For Humans - Core Component Stylesheet
+ * Architecture: Atomic Design (Atoms -> Molecules -> Organisms -> Layout -> Utilities)
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 @import './variables.css';
 @import './reset.css';
 
+/* --------------------------------------------------------------------------
+   1. Atoms (Foundational, indivisible elements)
+   -------------------------------------------------------------------------- */
+@import './atoms/text.css';
+@import './atoms/link.css';
+@import './atoms/icon.css';
+@import './atoms/badge.css';
+@import './atoms/chip.css';
+@import './atoms/button.css';
+@import './atoms/input.css';
+@import './atoms/textarea.css';
+@import './atoms/select.css';
+@import './atoms/check-radio.css';
+@import './atoms/switch.css';
+@import './atoms/range.css';
+@import './atoms/progress.css';
+@import './atoms/divider.css';
+@import './atoms/skeleton.css';
+@import './atoms/skip-link.css';
+@import './atoms/tab.css';
+
+/* --------------------------------------------------------------------------
+   2. Molecules (Focused combinations of 2-3 atoms)
+   -------------------------------------------------------------------------- */
+@import './molecules/lockup.css';
+@import './molecules/avatar.css';
+@import './molecules/field.css';
+@import './molecules/fieldset.css';
+@import './molecules/choices.css';
+@import './molecules/button-group.css';
+@import './molecules/banner.css';
+@import './molecules/alert.css';
+@import './molecules/toast.css';
+@import './molecules/tooltip.css';
+@import './molecules/popover.css';
+@import './molecules/stepper.css';
+@import './molecules/breadcrumb.css';
+@import './molecules/pagination.css';
+@import './molecules/telemetry.css';
+@import './molecules/batch-actions.css';
+@import './molecules/tab-list.css';
+@import './molecules/navigation-tree.css';
+@import './molecules/prose.css';
+
+/* --------------------------------------------------------------------------
+   3. Organisms (Complex, high-level assemblies & interactive flows)
+   -------------------------------------------------------------------------- */
+@import './organisms/card.css';
+@import './organisms/deck.css';
+@import './organisms/dialog.css';
+@import './organisms/accordion.css';
+@import './organisms/menu.css';
+@import './organisms/combobox.css';
+@import './organisms/table.css';
+@import './organisms/tabbed-content.css';
+@import './organisms/empty-state.css';
+@import './organisms/header.css';
+@import './organisms/form.css';
+@import './organisms/section.css';
+
+/* --------------------------------------------------------------------------
+   4. Layout Primitives
+   -------------------------------------------------------------------------- */
+@import './layout/app.css';
 @import './layout/cluster.css';
 @import './layout/grid.css';
 @import './layout/inline.css';
+@import './layout/main.css';
+@import './layout/sidebar.css';
 @import './layout/split.css';
 @import './layout/stack.css';
 @import './layout/wrapper.css';
 
-@import './components/accordion.css';
-@import './components/alert.css';
-@import './components/avatar.css';
-@import './components/badge.css';
-@import './components/banner.css';
-@import './components/breadcrumb.css';
-@import './components/button.css';
-@import './components/button-group.css';
-@import './components/card.css';
-@import './components/check-radio.css';
-@import './components/choices.css';
-@import './components/dialog.css';
-@import './components/divider.css';
-@import './components/field.css';
-@import './components/fieldset.css';
-@import './components/form.css';
-@import './components/header.css';
-@import './components/icon.css';
-@import './components/input.css';
-@import './components/link.css';
-@import './components/pagination.css';
-@import './components/popover.css';
-@import './components/progress.css';
-@import './components/range.css';
-@import './components/select.css';
-@import './components/skip-link.css';
-@import './components/switch.css';
-@import './components/table.css';
-@import './components/tabs.css';
-@import './components/text.css';
-@import './components/textarea.css';
-@import './components/toast.css';
-@import './components/tooltip.css';
-
+/* --------------------------------------------------------------------------
+   5. Utilities (Immutable override layer)
+   -------------------------------------------------------------------------- */
 @import './utilities/accessibility.css';
+@import './utilities/appearance-modes.css';
 @import './utilities/border.css';
 @import './utilities/color-scheme.css';
 @import './utilities/color-palette.css';
 @import './utilities/color.css';
 @import './utilities/container.css';
+@import './utilities/display.css';
 @import './utilities/flex.css';
 @import './utilities/focus-helpers.css';
-@import './utilities/font-size-mode.css';
 @import './utilities/layout-helpers.css';
 @import './utilities/responsive-helpers.css';
+@import './utilities/shadow.css';
+@import './utilities/spacing-blocks.css';
 @import './utilities/spacing.css';
 @import './utilities/typography.css';
 

@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Design For Humans: Alert Primitive
+   --------------------------------------------------------------------------
+   Full-width site-level announcement bars and page-level notification banners.
+   Designed for single, prominent, uncomplicated messages pinned to the top or
+   bottom of the viewport, or floating above page content.
+
+   Composes seamlessly with .banner for status colors/actions and .wrapper for
+   content width constraints.
+
+   Usage:
+   <aside class="alert alert--sticky" role="region" aria-label="System Notice">
+     <div class="wrapper">
+       <div class="banner banner--warning" role="none">
+         <div class="banner__inner">
+           <p><strong>Scheduled Maintenance:</strong> Services will be offline on Sunday from 02:00 to 04:00 UTC.</p>
+         </div>
+         <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert">
+           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+             <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+           </svg>
+         </button>
+       </div>
+     </div>
+   </aside>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Alert Container (:where(.alert))
+   ========================================================================== */
+:where(.alert) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_alert-action-align: var(--alert-action-align, center);
+  --_alert-border-width: var(--alert-border-width, var(--border-width, 1px));
+  --_alert-padding-block: var(--alert-padding-block, var(--spacing-8, 0.5rem));
+  --_alert-padding-inline: var(--alert-padding-inline, var(--spacing-16, 1rem));
+  --_alert-timefunc: var(--alert-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_alert-transition: var(--alert-transition, var(--duration-sm, 150ms));
+  --_alert-z-index: var(--alert-z-index, var(--z-index-sticky, 100));
+
+  /* Inherited Subcomponent Controls */
+  --banner-action-align: var(--_alert-action-align);
+
+  /* Container Query Orchestration */
+  container-type: inline-size;
+
+  /* Spatial Density & Container Style Queries */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_alert-padding-block: var(--alert-sm-padding-block, var(--spacing-4, 0.25rem));
+    --_alert-padding-inline: var(--alert-sm-padding-inline, var(--spacing-8, 0.5rem));
+  }
+
+  /* Layout & Sizing */
+  box-sizing: border-box;
+  display: block;
+  inline-size: 100%;
+
+  /* Transitions */
+  transition-property: opacity, transform, max-block-size;
+  transition-duration: var(--_alert-transition);
+  transition-timing-function: var(--_alert-timefunc);
+
+  :where(.banner) {
+    display: inline-flex;
+  }
+}
+
+/* ==========================================================================
+   2. Placement Modifiers (.alert--sticky, .alert--fixed-top, etc.)
+   Apply z-index stacking context only when pinned or floating above content
+   ========================================================================== */
+
+/* Sticky Top (Sticks to top of scrolling viewport) */
+:where(.alert--sticky),
+:where(.alert--top) {
+  position: sticky;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--_alert-z-index);
+}
+
+/* Fixed Top (Pinned permanently to top edge) */
+:where(.alert--fixed-top) {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--_alert-z-index);
+}
+
+/* Fixed Bottom / Sticky Bottom (Cookie bars, consent notices) */
+:where(.alert--bottom),
+:where(.alert--fixed-bottom) {
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline: 0;
+  z-index: var(--_alert-z-index);
+}
+
+/* Floating Alert (Centered floating bar with padding) */
+:where(.alert--floating) {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--_alert-padding-block);
+  padding-inline: var(--_alert-padding-inline);
+  pointer-events: none;
+  z-index: var(--_alert-z-index);
+
+  > :where(*) {
+    pointer-events: auto;
+  }
+}
+
+/* Compact / Dense Modifier */
+:where(.alert--compact, .alert--dense) {
+  --_alert-padding-block: var(--alert-sm-padding-block, var(--spacing-4, 0.25rem));
+  --_alert-padding-inline: var(--alert-sm-padding-inline, var(--spacing-8, 0.5rem));
+}
+
+/* ==========================================================================
+   3. Dismissing State (.alert--dismissing)
+   ========================================================================== */
+:where(.alert--dismissing) {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+:where(.alert--bottom.alert--dismissing),
+:where(.alert--fixed-bottom.alert--dismissing) {
+  transform: translateY(100%);
+}
+
+/* ==========================================================================
+   4. Accessibility & Media Queries
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :where(.alert) {
+    transition: none;
+  }
+
+  :where(.alert--dismissing) {
+    transform: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.alert) {
+    border-block-end: var(--_alert-border-width) solid currentColor;
+  }
+
+  :where(.alert--bottom),
+  :where(.alert--fixed-bottom) {
+    border-block-end: none;
+    border-block-start: var(--_alert-border-width) solid currentColor;
+  }
+}

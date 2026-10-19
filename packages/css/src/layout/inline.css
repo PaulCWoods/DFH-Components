@@ -11,9 +11,10 @@
    -------------------------------------------------------------------------- */
 
 :where(.inline, .inline-responsive) {
+    --_gap: var(--gap, var(--spacing, 1rem));
     display: var(--display, flex);
     flex-wrap: var(--flex-wrap, nowrap);
-    gap: var(--gap, var(--spacing, 1rem));
+    gap: var(--_gap);
     justify-content: var(--justify-content, var(--justify, normal));
 }
 
@@ -42,18 +43,40 @@
    -------------------------------------------------------------------------- */
 
 /* Tight Modifier (Zero Gap) */
-:where(.inline--tight) {
-    gap: 0;
+:where(.inline--tight, .inline-responsive--tight) {
+    --_gap: 0;
+}
+
+:where(.inline--cushioned, .inline-responsive--cushioned) {
+    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+}
+
+/* Space-Between / Distributed Modifier */
+:where(.inline--between, .inline-responsive--between) {
+    justify-content: space-between;
+
+    @supports not (width: stretch) {
+        inline-size: 100%;
+    }
+
+    @supports (width: stretch) {
+        inline-size: stretch;
+    }
 }
 
 /* --------------------------------------------------------------------------
    3. Ruled Modifier
    -------------------------------------------------------------------------- */
 
-:where(.inline--ruled) {
+:where(.inline--ruled, .inline-responsive--ruled) {
     @supports (rule: 1px) {
-        gap: var(--rule-width, 1px);
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}
+
+:where(.inline--ruled.inline--tight, .inline-responsive--ruled.inline-responsive--tight) {
+    @supports (rule: 1px) {
+        --_gap: var(--rule-width, 1px);
     }
 }
 

@@ -17,15 +17,15 @@
 
     /* Container focus ring activates on nested :focus-visible */
     &:has(:focus-visible) {
-        outline: var(--focus-ring-outline, 2px solid AccentColor);
-        outline-offset: var(--focus-ring-outline-offset, 2px);
+        outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+        outline-offset: var(--focus-ring-offset, 2px);
     }
 
     /* Fallback for browsers without :has() support */
     @supports not selector(:has(*)) {
         &:focus-within {
-            outline: var(--focus-ring-outline, 2px solid AccentColor);
-            outline-offset: var(--focus-ring-outline-offset, 2px);
+            outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+            outline-offset: var(--focus-ring-offset, 2px);
         }
     }
 
@@ -43,8 +43,8 @@
 
 :where(.focus-within--input, .focus-input-container) {
     &:has(:where(input, textarea, select):focus-visible) {
-        outline: var(--focus-ring-outline, 2px solid AccentColor);
-        outline-offset: var(--focus-ring-outline-offset, 2px);
+        outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+        outline-offset: var(--focus-ring-offset, 2px);
     }
 
     &:has(:where(input, textarea, select):focus-visible) :where(input, textarea, select):focus-visible {
@@ -62,7 +62,7 @@
 
     &:has(:focus-visible),
     &:focus-visible {
-        outline-offset: calc(var(--focus-ring-outline-offset, 2px) * -1);
+        outline-offset: calc(var(--focus-ring-offset, 2px) * -2);
     }
 }
 
@@ -79,8 +79,8 @@
 
 /* Explicit standard focus ring trigger */
 :where(.focus-ring):focus-visible {
-    outline: var(--focus-ring-outline, 2px solid AccentColor);
-    outline-offset: var(--focus-ring-outline-offset, 2px);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
 }
 
 /* Suppress default outline on standalone elements (use with custom indicators only) */

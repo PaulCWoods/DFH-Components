@@ -2,19 +2,36 @@
   "$description": "Design For Humans - Tier 2 Semantic UI Design Tokens (W3C DTCG Standard)",
   "translucency": {
     "default": {
-      "$value": "50%"
+      "$value": "{translucency.50}"
     },
     "subtle": {
-      "$value": "10%"
+      "$value": "{translucency.10}"
     },
     "quiet": {
-      "$value": "33%"
+      "$value": "{translucency.33}"
     },
     "strong": {
-      "$value": "70%"
+      "$value": "{translucency.70}"
     },
-    "xstrong": {
-      "$value": "90%"
+    "stronger": {
+      "$value": "{translucency.90}"
+    }
+  },
+  "blur": {
+    "sm": {
+      "$value": "blur(2px)"
+    },
+    "md": {
+      "$value": "blur(4px)"
+    },
+    "lg": {
+      "$value": "blur(8px)"
+    },
+    "xl": {
+      "$value": "blur(16px)"
+    },
+    "default": {
+      "$value": "{blur.md}"
     }
   },
   "color": {
@@ -53,22 +70,16 @@
       "$value": "{color.white}"
     },
     "dark": {
-      "$value": "{color.neutral.900}"
+      "$value": "{color.neutral.1000}"
     },
     "dark-muted": {
-      "$value": "{color.neutral.800}"
+      "$value": "{color.neutral.900}"
     },
     "darker": {
-      "$value": "{color.neutral.1000}"
+      "$value": "{color.black}"
     },
     "accent-light": {
       "$value": "{color.purple.200}"
-    },
-    "accent-muted-light": {
-      "$value": "{color.purple.100}"
-    },
-    "accent-muted-dark": {
-      "$value": "{color.purple.900}"
     },
     "accent-strong-light": {
       "$value": "{color.purple.700}"
@@ -79,29 +90,75 @@
     "accent-dark": {
       "$value": "{color.purple.800}"
     },
+    "complementary-light": {
+      "$value": "{color.olive.200}"
+    },
+    "complementary-strong-light": {
+      "$value": "{color.olive.700}"
+    },
+    "complementary-strong-dark": {
+      "$value": "{color.olive.300}"
+    },
+    "complementary-dark": {
+      "$value": "{color.olive.800}"
+    },
     "danger-light": {
       "$value": "{color.red.100}"
     },
     "danger-dark": {
-      "$value": "{color.red.800}"
+      "$value": "{color.red.900}"
+    },
+    "danger-strong-light": {
+      "$value": "{color.red.300}"
+    },
+    "danger-strong-dark": {
+      "$value": "{color.red.700}"
     },
     "warning-light": {
       "$value": "{color.amber.100}"
     },
     "warning-dark": {
-      "$value": "{color.amber.800}"
+      "$value": "{color.amber.900}"
+    },
+    "warning-strong-light": {
+      "$value": "{color.amber.300}"
+    },
+    "warning-strong-dark": {
+      "$value": "{color.amber.700}"
     },
     "success-light": {
       "$value": "{color.green.100}"
     },
     "success-dark": {
-      "$value": "{color.green.800}"
+      "$value": "{color.green.900}"
+    },
+    "success-strong-light": {
+      "$value": "{color.green.300}"
+    },
+    "success-strong-dark": {
+      "$value": "{color.green.700}"
+    }
+  },
+  "surface-layer": {
+    "filter": {
+      "$value": "{blur.lg}",
+      "$type": "other",
+      "$description": "Backdrop blur filter for glassmorphic layers"
+    },
+    "translucency": {
+      "$value": "{translucency.subtle}",
+      "$type": "other",
+      "$description": "Translucency for surface layer"
     }
   },
   "surface": {
     "$type": "color",
     "$description": "Surface and container background fills",
     "default": {
+      "$value": "light-dark({surface-color.light}, {surface-color.dark})",
+      "$description": "Default canvas / page viewport background"
+    },
+    "subtle": {
       "$value": "light-dark({surface-color.light}, {surface-color.dark})",
       "$description": "Default canvas / page viewport background"
     },
@@ -129,6 +186,10 @@
       "$value": "{surface-color.darker}",
       "$description": "Maximum depth background for deep containers"
     },
+    "layer": {
+      "$value": "light-dark(color-mix(in srgb, {surface-color.lighter}, transparent {surface-layer.translucency}), color-mix(in srgb, {surface-color.darker}, transparent {surface-layer.translucency}))",
+      "$description": "Layer surface background for floating or sticky elements"
+    },
     "accent": {
       "$value": "light-dark({surface-color.accent-light}, {surface-color.accent-dark})",
       "$description": "Light tint accent surface for badges and highlighted areas"
@@ -137,13 +198,21 @@
       "$value": "{surface-color.accent-dark}",
       "$description": "Deep accent surface"
     },
-    "accent-muted": {
-      "$value": "light-dark({surface-color.accent-muted-light}, {surface-color.accent-muted-dark})",
-      "$description": "Soft tint accent surface for hovered selections"
-    },
     "accent-strong": {
       "$value": "light-dark({surface-color.accent-strong-light}, {surface-color.accent-strong-dark})",
       "$description": "High-contrast accent surface for primary interactive elements"
+    },
+    "complementary": {
+      "$value": "light-dark({surface-color.complementary-light}, {surface-color.complementary-dark})",
+      "$description": "Light tint complementary surface for badges and highlighted areas"
+    },
+    "complementary-dark": {
+      "$value": "{surface-color.complementary-dark}",
+      "$description": "Deep complementary surface"
+    },
+    "complementary-strong": {
+      "$value": "light-dark({surface-color.complementary-strong-light}, {surface-color.complementary-strong-dark})",
+      "$description": "High-contrast complementary surface for primary interactive elements"
     },
     "translucent": {
       "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.95})",
@@ -153,17 +222,33 @@
       "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.90})",
       "$description": "Stronger hover tint on interactive surfaces"
     },
+    "shade": {
+      "$value": "light-dark(color-mix(in srgb, {surface-color.dark}, transparent {translucency.95}), color-mix(in srgb, {surface-color.darker}, transparent {translucency.70}))",
+      "$description": "Darker shade for gentle emphasis"
+    },
     "danger": {
       "$value": "light-dark({surface-color.danger-light}, {surface-color.danger-dark})",
       "$description": "Destructive or error alert banner background"
+    },
+    "danger-strong": {
+      "$value": "light-dark({surface-color.danger-strong-dark}, {surface-color.danger-strong-light})",
+      "$description": "High-contrast danger surface for strong alert banners and callouts"
     },
     "warning": {
       "$value": "light-dark({surface-color.warning-light}, {surface-color.warning-dark})",
       "$description": "Cautionary or pending review alert banner background"
     },
+    "warning-strong": {
+      "$value": "light-dark({surface-color.warning-strong-dark}, {surface-color.warning-strong-light})",
+      "$description": "High-contrast warning surface for strong alert banners and callouts"
+    },
     "success": {
       "$value": "light-dark({surface-color.success-light}, {surface-color.success-dark})",
       "$description": "Positive feedback or completed status banner background"
+    },
+    "success-strong": {
+      "$value": "light-dark({surface-color.success-strong-dark}, {surface-color.success-strong-light})",
+      "$description": "High-contrast success surface for strong alert banners and callouts"
     }
   },
   "foreground-color": {
@@ -204,6 +289,24 @@
     },
     "accent-light-pressed": {
       "$value": "{color.purple.400}"
+    },
+    "complementary-dark": {
+      "$value": "{color.olive.700}"
+    },
+    "complementary-dark-hover": {
+      "$value": "{color.olive.600}"
+    },
+    "complementary-dark-pressed": {
+      "$value": "{color.olive.800}"
+    },
+    "complementary-light": {
+      "$value": "{color.olive.300}"
+    },
+    "complementary-light-hover": {
+      "$value": "{color.olive.200}"
+    },
+    "complementary-light-pressed": {
+      "$value": "{color.olive.400}"
     },
     "danger-dark": {
       "$value": "{color.red.700}"
@@ -283,6 +386,10 @@
       "$value": "{foreground-color.light}",
       "$description": "Light text on dark hero sections"
     },
+    "white": {
+      "$value": "{foreground-color.lighter}",
+      "$description": "Light text on dark hero sections"
+    },
     "muted": {
       "$value": "light-dark({foreground-color.dark-muted}, {foreground-color.light-muted})",
       "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
@@ -298,6 +405,18 @@
     "accent-pressed": {
       "$value": "light-dark({foreground-color.accent-dark-pressed}, {foreground-color.accent-light-pressed})",
       "$description": "Active / pressed state for links and accent buttons"
+    },
+    "complementary": {
+      "$value": "light-dark({foreground-color.complementary-dark}, {foreground-color.complementary-light})",
+      "$description": "Complementary links, active navigation items, focus states"
+    },
+    "complementary-hover": {
+      "$value": "light-dark({foreground-color.complementary-dark-hover}, {foreground-color.complementary-light-hover})",
+      "$description": "Complementary state for links and accent buttons"
+    },
+    "complementary-pressed": {
+      "$value": "light-dark({foreground-color.complementary-dark-pressed}, {foreground-color.complementary-light-pressed})",
+      "$description": "Active / pressed state for complementary buttons"
     },
     "danger": {
       "$value": "light-dark({foreground-color.danger-dark}, {foreground-color.danger-light})",
@@ -340,28 +459,34 @@
     "$type": "color",
     "$description": "Base border color tones before light-dark() resolution",
     "accent-dark": {
-      "$value": "{color.purple.700}"
+      "$value": "{color.purple.600}"
     },
     "accent-light": {
-      "$value": "{color.purple.300}"
+      "$value": "{color.purple.400}"
+    },
+    "complementary-dark": {
+      "$value": "{color.olive.600}"
+    },
+    "complementary-light": {
+      "$value": "{color.olive.400}"
     },
     "danger-dark": {
-      "$value": "{color.red.700}"
+      "$value": "{color.red.600}"
     },
     "danger-light": {
-      "$value": "{color.red.300}"
+      "$value": "{color.red.400}"
     },
     "warning-dark": {
-      "$value": "{color.amber.700}"
+      "$value": "{color.amber.600}"
     },
     "warning-light": {
-      "$value": "{color.amber.300}"
+      "$value": "{color.amber.400}"
     },
     "success-dark": {
-      "$value": "{color.green.700}"
+      "$value": "{color.green.600}"
     },
     "success-light": {
-      "$value": "{color.green.300}"
+      "$value": "{color.green.400}"
     }
   },
   "border": {
@@ -384,6 +509,10 @@
         "$value": "light-dark({border-color.accent-light}, {border-color.accent-dark})",
         "$description": "Active interactive border color"
       },
+      "complementary": {
+        "$value": "light-dark({border-color.complementary-light}, {border-color.complementary-dark})",
+        "$description": "Complementary interactive border color"
+      },
       "danger": {
         "$value": "light-dark({border-color.danger-light}, {border-color.danger-dark})",
         "$description": "Invalid input field border"
@@ -400,10 +529,10 @@
     "width": {
       "$type": "dimension",
       "$description": "Border stroke thicknesses",
-      "default": {
+      "medium": {
         "$value": "{border.width.2}",
         "$type": "dimension",
-        "$description": "Standard border stroke thickness"
+        "$description": "Medium border stroke thickness"
       },
       "thin": {
         "$value": "{border.width.1}",
@@ -414,6 +543,11 @@
         "$value": "{border.width.4}",
         "$type": "dimension",
         "$description": "Thick border stroke thickness"
+      },
+      "default": {
+        "$value": "{border.width.medium}",
+        "$type": "dimension",
+        "$description": "Standard border stroke thickness"
       }
     },
     "default": {
@@ -444,13 +578,6 @@
     },
     "disabled": {
       "$value": "{opacity.50}"
-    }
-  },
-  "filter": {
-    "blur": {
-      "$value": "blur(4px)",
-      "$type": "other",
-      "$description": "Backdrop blur filter for glassmorphic layers"
     }
   },
   "site-width": {
@@ -542,6 +669,14 @@
     "bold": {
       "$value": "{typography.font-weight.700}",
       "$description": "Bold heading and action weight"
+    },
+    "heavy": {
+      "$value": "{typography.font-weight.800}",
+      "$description": "Bold heading and action weight"
+    },
+    "black": {
+      "$value": "{typography.font-weight.900}",
+      "$description": "Bold heading and action weight"
     }
   },
   "body": {
@@ -549,18 +684,41 @@
       "$value": "{typography.font-family.sans}",
       "$type": "fontFamilies"
     },
-    "font-size": {
-      "$value": "{fluid.typography.font-size.0}",
-      "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
-    },
     "font-weight": {
       "$value": "{font-weight.regular}",
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{typography.line-height.5}",
+      "$value": "{typography.line-height.0}",
       "$type": "number"
+    }
+  },
+  "body-fixed": {
+    "font-size": {
+      "$value": "{typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+    }
+  },
+  "body-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+    }
+  },
+  "body-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.0}",
+      "$type": "dimension",
+      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+    }
+  },
+  "body-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
     }
   },
   "body-alt": {
@@ -576,28 +734,23 @@
     }
   },
   "body-sm": {
-    "font-size": {
-      "$value": "{fluid.typography.font-size.minus-1}",
-      "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
-    },
     "line-height": {
-      "$value": "{typography.line-height.4}",
+      "$value": "{typography.line-height.minus-1}",
       "$type": "number"
     }
   },
-  "body-lg": {
+  "body-sm-fixed": {
     "font-size": {
-      "$value": "{fluid.typography.font-size.1}",
+      "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
     }
   },
-  "body-cq": {
+  "body-sm-compact": {
     "font-size": {
-      "$value": "{typography.font-size.cq.0}",
+      "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
     }
   },
   "body-sm-cq": {
@@ -607,23 +760,9 @@
       "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
     }
   },
-  "body-lg-cq": {
+  "body-sm-fluid": {
     "font-size": {
-      "$value": "{typography.font-size.cq.1}",
-      "$type": "dimension",
-      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
-    }
-  },
-  "body-fixed": {
-    "font-size": {
-      "$value": "{typography.font-size.0}",
-      "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
-    }
-  },
-  "body-sm-fixed": {
-    "font-size": {
-      "$value": "{typography.font-size.-1}",
+      "$value": "{fluid.typography.font-size.minus-1}",
       "$type": "dimension",
       "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
     }
@@ -631,6 +770,27 @@
   "body-lg-fixed": {
     "font-size": {
       "$value": "{typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    }
+  },
+  "body-lg-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    }
+  },
+  "body-lg-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    }
+  },
+  "body-lg-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.1}",
       "$type": "dimension",
       "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
     }
@@ -649,7 +809,32 @@
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{typography.line-height.4}",
+      "$value": "{typography.line-height.minus-1}",
+      "$type": "number"
+    }
+  },
+  "micro-text-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension",
+      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+    }
+  },
+  "nano-text": {
+    "font-family": {
+      "$value": "{micro-text.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{micro-text.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.minus-2}",
       "$type": "number"
     }
   },
@@ -667,7 +852,7 @@
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{typography.line-height.4}",
+      "$value": "{typography.line-height.minus-1}",
       "$type": "number"
     }
   },
@@ -676,17 +861,12 @@
       "$value": "{body.font-family}",
       "$type": "fontFamilies"
     },
-    "font-size": {
-      "$value": "{fluid.typography.font-size.3}",
-      "$type": "dimension",
-      "$description": "Section title and major heading typography size (fluid step 2: 23px Mobile to 38px Desktop)"
-    },
     "font-weight": {
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{typography.line-height.2}",
+      "$value": "{typography.line-height.minus-3}",
       "$type": "number"
     },
     "letter-spacing": {
@@ -702,18 +882,32 @@
       "$type": "other"
     }
   },
+  "heading-fixed": {
+    "font-size": {
+      "$value": "{typography.font-size.2}",
+      "$type": "dimension",
+      "$description": "Heading typography size (Step 3)"
+    }
+  },
+  "heading-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Heading typography size (Step 3)"
+    }
+  },
   "heading-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.3}",
+      "$value": "{typography.font-size.cq.2-3}",
       "$type": "dimension",
       "$description": "Container-fluid heading typography size using cqi units (Step 3)"
     }
   },
-  "heading-fixed": {
+  "heading-fluid": {
     "font-size": {
-      "$value": "{typography.font-size.3}",
+      "$value": "{fluid.typography.font-size.2-3}",
       "$type": "dimension",
-      "$description": "Heading typography size (Step 3)"
+      "$description": "Section title and major heading typography size (fluid step 2: 23px Mobile to 38px Desktop)"
     }
   },
   "subheading": {
@@ -721,29 +915,17 @@
       "$value": "{heading.font-family}",
       "$type": "fontFamilies"
     },
-    "font-size": {
-      "$value": "{fluid.typography.font-size.1}",
-      "$type": "dimension",
-      "$description": "Subsection subtitle typography size (fluid step 1: 19px Mobile to 30px Desktop)"
-    },
     "font-weight": {
       "$value": "{heading.font-weight}",
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{heading.line-height}",
+      "$value": "{typography.line-height.minus-2}",
       "$type": "number"
     },
     "letter-spacing": {
       "$value": "{heading.letter-spacing}",
       "$type": "dimension"
-    }
-  },
-  "subheading-cq": {
-    "font-size": {
-      "$value": "{typography.font-size.cq.1}",
-      "$type": "dimension",
-      "$description": "Container-fluid subheading typography size using cqi units (Step 1)"
     }
   },
   "subheading-fixed": {
@@ -753,21 +935,38 @@
       "$description": "Subheading typography size (Step 1)"
     }
   },
+  "subheading-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.0}",
+      "$type": "dimension",
+      "$description": "Heading typography size (Step 3)"
+    }
+  },
+  "subheading-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.1}",
+      "$type": "dimension",
+      "$description": "Container-fluid subheading typography size using cqi units (Step 1)"
+    }
+  },
+  "subheading-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.1}",
+      "$type": "dimension",
+      "$description": "Subsection subtitle typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+    }
+  },
   "small-heading": {
     "font-family": {
       "$value": "{heading.font-family}",
       "$type": "fontFamilies"
-    },
-    "font-size": {
-      "$value": "{body.font-size}",
-      "$type": "dimension"
     },
     "font-weight": {
       "$value": "{heading.font-weight}",
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{heading.line-height}",
+      "$value": "{typography.line-height.minus-1}",
       "$type": "number"
     },
     "letter-spacing": {
@@ -779,13 +978,6 @@
       "$type": "other"
     }
   },
-  "small-heading-cq": {
-    "font-size": {
-      "$value": "{typography.font-size.cq.0}",
-      "$type": "dimension",
-      "$description": "Container-fluid small heading typography size using cqi units (Step 0)"
-    }
-  },
   "small-heading-fixed": {
     "font-size": {
       "$value": "{typography.font-size.0}",
@@ -793,9 +985,30 @@
       "$description": "Small heading typography size (Step 0)"
     }
   },
+  "small-heading-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Small heading typography size (Step 0)"
+    }
+  },
+  "small-heading-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.0}",
+      "$type": "dimension",
+      "$description": "Container-fluid small heading typography size using cqi units (Step 0)"
+    }
+  },
+  "small-heading-fluid": {
+    "font-size": {
+      "$value": "{body.font-size}",
+      "$type": "dimension",
+      "$description": "Viewport-fluid small heading typography size using cqi units (Step 0)"
+    }
+  },
   "micro-heading": {
     "font-family": {
-      "$value": "{small-heading.font-family}",
+      "$value": "{body.font-family}",
       "$type": "fontFamilies"
     },
     "font-size": {
@@ -807,7 +1020,7 @@
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{small-heading.line-height}",
+      "$value": "{typography.line-height.minus-3}",
       "$type": "number"
     },
     "letter-spacing": {
@@ -819,45 +1032,87 @@
       "$type": "other"
     }
   },
+  "micro-heading-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension",
+      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+    }
+  },
+  "nano-heading": {
+    "font-family": {
+      "$value": "{micro-heading.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{body.font-weight}",
+      "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.minus-3}",
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": "{typography.spacing.loose}",
+      "$type": "dimension"
+    },
+    "text-transform": {
+      "$value": "{micro-heading.text-transform}",
+      "$type": "other"
+    }
+  },
   "title": {
     "font-family": {
       "$value": "{typography.font-family.display}",
       "$type": "fontFamilies"
-    },
-    "font-size": {
-      "$value": "{fluid.typography.font-size.5}",
-      "$type": "dimension",
-      "$description": "Title typography size (fluid 40px - 73px)"
     },
     "font-weight": {
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{typography.line-height.1}",
+      "$value": "{typography.line-height.minus-4}",
       "$type": "number"
     },
     "letter-spacing": {
-      "$value": "{typography.spacing.tight}",
+      "$value": "{heading.letter-spacing}",
       "$type": "dimension"
     },
     "text-transform": {
-      "$value": "uppercase",
+      "$value": "none",
       "$type": "other"
-    }
-  },
-  "title-cq": {
-    "font-size": {
-      "$value": "{typography.font-size.cq.5}",
-      "$type": "dimension",
-      "$description": "Container-fluid display title typography size using cqi units (Step 5)"
     }
   },
   "title-fixed": {
     "font-size": {
-      "$value": "{typography.font-size.5}",
+      "$value": "{typography.font-size.3}",
       "$type": "dimension",
       "$description": "Title typography size (Step 5)"
+    }
+  },
+  "title-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.2}",
+      "$type": "dimension",
+      "$description": "Title typography size (Step 4)"
+    }
+  },
+  "title-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.3-5}",
+      "$type": "dimension",
+      "$description": "Title typography size (fluid step 4 to 7: 33px Mobile to 114px Desktop)"
+    }
+  },
+  "title-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.3-5}",
+      "$type": "dimension",
+      "$description": "Container-fluid display title typography size using cqi units (Step 4 to 7)"
     }
   },
   "display-title": {
@@ -865,13 +1120,8 @@
       "$value": "{title.font-family}",
       "$type": "fontFamilies"
     },
-    "font-size": {
-      "$value": "{fluid.typography.font-size.8}",
-      "$type": "dimension",
-      "$description": "Hero display title typography size (fluid step 7: 57px Mobile to 114px Desktop)"
-    },
     "font-weight": {
-      "$value": "{title.font-weight}",
+      "$value": "{font-weight.heavy}",
       "$type": "fontWeight"
     },
     "line-height": {
@@ -879,12 +1129,33 @@
       "$type": "number"
     },
     "letter-spacing": {
-      "$value": "{typography.spacing.xtight}",
+      "$value": "{typography.spacing.tight}",
       "$type": "dimension"
     },
     "text-transform": {
-      "$value": "{title.text-transform}",
+      "$value": "none",
       "$type": "other"
+    }
+  },
+  "display-title-fixed": {
+    "font-size": {
+      "$value": "{typography.font-size.5}",
+      "$type": "dimension",
+      "$description": "Title typography size (Step 5)"
+    }
+  },
+  "display-title-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.4}",
+      "$type": "dimension",
+      "$description": "Title typography size (Step 4)"
+    }
+  },
+  "display-title-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.5-8}",
+      "$type": "dimension",
+      "$description": "Hero display title typography size (fluid step 7: 57px Mobile to 114px Desktop)"
     }
   },
   "control": {
@@ -894,9 +1165,17 @@
       "$description": "Standard font size for interactive control elements like buttons and inputs"
     },
     "line-height": {
-      "$value": "{typography.line-height.1}",
+      "$value": "{typography.line-height.minus-2}",
       "$type": "number",
       "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+    },
+    "border-width": {
+      "$value": "{border.width}",
+      "$type": "dimension"
+    },
+    "border-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color"
     }
   },
   "control-sm": {
@@ -906,7 +1185,7 @@
       "$description": "Small control typography font size"
     },
     "line-height": {
-      "$value": "{typography.line-height.1}",
+      "$value": "{typography.line-height.minus-2}",
       "$type": "number",
       "$description": "Tight line-height for single-line controls to prevent baseline overflow"
     }
@@ -918,9 +1197,26 @@
       "$description": "Large control typography font size"
     },
     "line-height": {
-      "$value": "{typography.line-height.1}",
+      "$value": "{typography.line-height.minus-2}",
       "$type": "number",
       "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+    }
+  },
+  "app": {
+    "border-width": {
+      "$value": "{border.width}",
+      "$type": "dimension",
+      "$description": "Standard border stroke thickness for major application landmark components (header, sidebar, footer)"
+    },
+    "border-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color",
+      "$description": "Standard border stroke color for major application landmark components (header, sidebar, footer)"
+    },
+    "border-style": {
+      "$value": "solid",
+      "$type": "strokeStyle",
+      "$description": "Standard border stroke style for major application landmark components (header, sidebar, footer)"
     }
   },
   "panel": {
@@ -961,6 +1257,43 @@
       "$value": "{radius.md}",
       "$type": "dimension",
       "$description": "Standard border radius for UI components and interactive controls"
+    },
+    "sm": {
+      "$value": "{radius.2}",
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": "{radius.4}",
+      "$type": "dimension"
+    },
+    "lg": {
+      "$value": "{radius.8}",
+      "$type": "dimension"
+    },
+    "xl": {
+      "$value": "{radius.12}",
+      "$type": "dimension"
+    },
+    "round": {
+      "$value": "{radius.9999}",
+      "$type": "dimension",
+      "$description": "For pill-shaped components"
+    },
+    "full": {
+      "$value": "{radius.50pc}",
+      "$type": "dimension"
+    }
+  },
+  "header": {
+    "mobile-height": {
+      "$value": "3.75rem",
+      "$type": "dimension",
+      "$description": "Standard application header height"
+    },
+    "desktop-height": {
+      "$value": "5rem",
+      "$type": "dimension",
+      "$description": "Standard application header height"
     }
   },
   "underline": {
@@ -998,12 +1331,12 @@
       "$value": "{border.width.2}",
       "$type": "dimension"
     },
-    "outline": {
-      "$value": "{focus-ring.width} solid {color.focus}",
+    "color": {
+      "$value": "{color.focus}",
       "$type": "border",
       "$description": "Mandatory high-contrast focus ring outline (WCAG 2.4.7 & 2.4.13)"
     },
-    "outline-offset": {
+    "offset": {
       "$value": "{border.width.2}",
       "$type": "dimension"
     },
@@ -1045,12 +1378,32 @@
       "$value": "linear"
     }
   },
+  "ease": {
+    "$type": "other",
+    "in-out": {
+      "$value": "cubic-bezier(0.4, 0.0, 0.2, 1)"
+    },
+    "in": {
+      "$value": "cubic-bezier(0.4, 0.0, 1.0, 1.0)"
+    },
+    "out": {
+      "$value": "cubic-bezier(0.0, 0.0, 0.2, 1)"
+    },
+    "bounce": {
+      "$value": "cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+    }
+  },
   "shadow": {
     "$type": "shadow",
     "color": {
       "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent 90%), color-mix(in srgb, {color.black}, transparent 80%))",
       "$type": "color",
       "$description": "Elevation shadow color tint"
+    },
+    "color-light": {
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.800}, transparent 95%), color-mix(in srgb, {color.black}, transparent 90%))",
+      "$type": "color",
+      "$description": "Subtle elevation shadow color tint"
     },
     "none": {
       "$value": "0 0 0 0 transparent",
@@ -1167,6 +1520,117 @@
       ],
       "$description": "Inset stacked shadow for wells and pressed states"
     },
+    "sm-light": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "0",
+          "blur": "1px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        },
+        {
+          "x": "0",
+          "y": "1px",
+          "blur": "2px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        },
+        {
+          "x": "0",
+          "y": "2px",
+          "blur": "6px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        }
+      ],
+      "$description": "Light tint subtle card & resting surface stacked elevation"
+    },
+    "md-light": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "1px",
+          "blur": "4px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        },
+        {
+          "x": "0",
+          "y": "2px",
+          "blur": "8px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        },
+        {
+          "x": "0",
+          "y": "8px",
+          "blur": "24px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        }
+      ],
+      "$description": "Light tint medium stacked elevation for popovers and hover states"
+    },
+    "lg-light": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "4px",
+          "blur": "16px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        },
+        {
+          "x": "0",
+          "y": "8px",
+          "blur": "32px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        },
+        {
+          "x": "0",
+          "y": "16px",
+          "blur": "64px",
+          "spread": "0",
+          "color": "{shadow.color-light}"
+        }
+      ],
+      "$description": "Light tint high stacked elevation for modals and floating overlays"
+    },
+    "inner-light": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "1px",
+          "blur": "2px",
+          "spread": "0",
+          "color": "{shadow.color-light}",
+          "type": "innerShadow"
+        },
+        {
+          "x": "0",
+          "y": "2px",
+          "blur": "4px",
+          "spread": "0",
+          "color": "{shadow.color-light}",
+          "type": "innerShadow"
+        },
+        {
+          "x": "0",
+          "y": "4px",
+          "blur": "8px",
+          "spread": "0",
+          "color": "{shadow.color-light}",
+          "type": "innerShadow"
+        }
+      ],
+      "$description": "Light tint inset stacked shadow for wells and pressed states"
+    },
     "inset": {
       "$value": "{shadow.inner}",
       "$description": "Alias for inner inset shadow"
@@ -1215,13 +1679,16 @@
     "(prefers-contrast: more)": {
       "surface": {
         "dark": {
-          "$value": "light-dark({color.neutral.900}, {color.neutral.1000})"
+          "$value": "light-dark({color.black}, {color.black})"
         },
         "default": {
-          "$value": "light-dark({color.white}, {color.neutral.1000})"
+          "$value": "light-dark({color.white}, {color.black})"
         },
         "inverted": {
-          "$value": "light-dark({color.neutral.900}, {color.white})"
+          "$value": "light-dark({color.black}, {color.white})"
+        },
+        "layer": {
+          "$value": "light-dark({color.white}, {color.black})"
         }
       },
       "foreground": {

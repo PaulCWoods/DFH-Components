@@ -121,59 +121,116 @@ Within selector blocks, organize CSS properties into logical groups separated by
 
 ---
 
-### E. Local Private Component Variables (`--_<component>-*`)
+### E. Local Private Component Variables (`--_<component>-*`) & State Variable Contract
 To keep component stylesheets clean, performant, and easily discoverable, define a private variable manifest (`--_<component>-*`) at the root of the base component selector.
 
 #### Advantages of the Local Private Variables Pattern:
-1. **Single Source of Fallbacks:** Resolves the public token ladder (`var(--accordion-property, var(--panel-property, <fallback>))`) once at the component root.
-2. **Lean Modifiers:** Modifiers only need to re-assign private variables (e.g., `--_accordion-padding-inline: 0; --_accordion-radius: 0;`) instead of repeating long property declarations or deeply nested child resets.
-3. **No Selector Repetition:** Child elements and pseudo-elements (`summary`, `::details-content`, `.accordion__icon`) cleanly consume `var(--_accordion-*)` without needing extra modifier selectors.
-4. **Per-Instance Scope & Reset:** Scoped cleanly to each component instance without leaking into nested child elements.
-5. **Self-Documenting API:** Developers can immediately see every customizable property by reading the top of the component file.
+1. **Single Source of Fallbacks:** Resolves the public token ladder (`var(--button-bg, transparent)`) once at the component root.
+2. **Lean Modifiers as Pure Token Maps:** Modifiers (`.button--primary`, `.button--subtle`) only re-assign private variables instead of repeating CSS property declarations or deep selectors.
+3. **Single-Source State Handling:** Declares `:hover` and `:active` rules **strictly once** in the base selector, consuming `--_<component>-hover-*` and `--_<component>-active-*` properties. Modifiers never duplicate `@media (hover: hover) { &:hover { ... } }` or `&:active { ... }` blocks.
+4. **No Selector Repetition:** Child elements and pseudo-elements cleanly consume `var(--_<component>-*)` without needing extra modifier selectors.
+5. **Per-Instance Scope & Reset:** Scoped cleanly to each component instance without leaking into nested child elements.
+6. **Self-Documenting API:** Developers can immediately see every customizable property and state transition by reading the top of the component file.
 
 #### Canonical Example:
 ```css
-:where(details.accordion) {
+:where(.button) {
     /* --------------------------------------------------------------------------
        Local Private Variables (Defaults & Fallback Ladder)
        -------------------------------------------------------------------------- */
-    --_accordion-border-color: var(--accordion-border-color, var(--panel-border-color, currentColor));
-    --_accordion-border-style: var(--accordion-border-style, var(--panel-border-style, solid));
-    --_accordion-border-width: var(--accordion-border-width, var(--panel-border-width, 1px));
-    --_accordion-hover-border-color: var(--accordion-hover-border, var(--border-color-accent, currentColor));
-    --_accordion-icon-size: var(--accordion-icon-size, 0.875rem);
-    --_accordion-icon-stroke: var(--accordion-icon-stroke, var(--border-width, 1px));
-    --_accordion-inner-border-color: var(--accordion-inner-border-color, var(--rule-color, currentColor));
-    --_accordion-inner-border-style: var(--accordion-inner-border-style, var(--rule-style, solid));
-    --_accordion-inner-border-width: var(--accordion-inner-border-width, var(--rule-width, 1px));
-    --_accordion-open-bg: var(--accordion-open-bg, var(--surface-card, transparent));
-    --_accordion-padding-block: var(--accordion-padding-block, var(--accordion-padding, var(--spacing, 1rem)));
-    --_accordion-padding-inline: var(--accordion-padding-inline, var(--accordion-padding, var(--spacing, 1rem)));
-    --_accordion-radius: var(--accordion-radius, var(--panel-radius, 0.25rem));
-    --_accordion-summary-color: var(--accordion-summary-color, var(--foreground, currentColor));
-    --_accordion-summary-font-family: var(--accordion-summary-font-family, var(--typography-font-family-sans, sans-serif));
-    --_accordion-summary-font-size: var(--accordion-summary-font-size, var(--typography-font-size-0, 1rem));
-    --_accordion-summary-font-weight: var(--accordion-summary-font-weight, var(--font-weight-bold, 700));
-    --_accordion-summary-gap: var(--accordion-summary-gap, var(--spacing, 1rem));
-    --_accordion-timefunc: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-    --_accordion-transition: var(--accordion-transition, var(--duration-sm, 150ms));
+    --_button-bg: var(--button-bg, transparent);
+    --_button-border-color: var(--button-border-color, var(--border-color-muted, currentColor));
+    --_button-border-width: var(--button-border-width, var(--border-width, 1px));
+    --_button-font-family: var(--button-font-family, var(--typography-font-family-sans, sans-serif));
+    --_button-font-size: var(--button-font-size, var(--control-font-size, var(--typography-font-size-0, 1rem)));
+    --_button-font-weight: var(--button-font-weight, var(--font-weight-bold, 700));
+    --_button-hover-bg: var(--button-hover-bg, var(--foreground, currentColor));
+    --_button-hover-border-color: var(--button-hover-border-color, var(--foreground, currentColor));
+    --_button-hover-text: var(--button-hover-text, var(--surface, #ffffff));
+    --_button-active-bg: var(--button-active-bg, var(--foreground-accent-pressed, #005f57));
+    --_button-active-border-color: var(--button-active-border-color, var(--foreground-accent-pressed, #005f57));
+    --_button-active-text: var(--button-active-text, var(--surface, #ffffff));
+    --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
+    --_button-padding-block: var(--button-padding-block, var(--spacing-4, 0.25rem));
+    --_button-padding-inline: var(--button-padding-inline, var(--spacing-16, 1rem));
+    --_button-radius: var(--button-radius, var(--radius, 0.25rem));
+    --_button-text: var(--button-text, var(--foreground, currentColor));
 
     /* Surface, Border & Shape */
-    border: var(--_accordion-border-width) var(--_accordion-border-style) var(--_accordion-border-color);
-    border-radius: var(--_accordion-radius);
+    background-color: var(--_button-bg);
+    border: var(--_button-border-width) solid var(--_button-border-color);
+    border-radius: var(--_button-radius);
+    color: var(--_button-text);
+
+    /* Single-Source State Handling */
+    @media (hover: hover) {
+        &:hover:not(:disabled, [aria-disabled="true"]) {
+            background-color: var(--_button-hover-bg);
+            border-color: var(--_button-hover-border-color);
+            color: var(--_button-hover-text);
+        }
+    }
+
+    &:active:not(:disabled, [aria-disabled="true"]) {
+        background-color: var(--_button-active-bg);
+        border-color: var(--_button-active-border-color);
+        color: var(--_button-active-text);
+    }
 }
 
-/* Modifiers cleanly reassign private variables */
-:where(details.accordion--flush) {
-    --_accordion-padding-inline: 0;
-    --_accordion-radius: 0;
-    border-inline: 0;
+/* Variant re-assigns private variables ONLY - no duplicate hover/active rules */
+:where(.button--primary) {
+    --_button-bg: var(--button-primary-bg, var(--foreground-accent, #008076));
+    --_button-border-color: var(--button-primary-border-color, var(--button-primary-bg, var(--foreground-accent, #008076)));
+    --_button-text: var(--button-primary-text, var(--surface, #ffffff));
+    --_button-hover-bg: var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e));
+    --_button-hover-border-color: var(--button-primary-hover-border-color, var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e)));
+    --_button-hover-text: var(--button-primary-hover-text, var(--button-primary-text, var(--surface, #ffffff)));
+    --_button-active-bg: var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57));
+    --_button-active-border-color: var(--button-primary-active-border-color, var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57)));
+    --_button-active-text: var(--button-primary-active-text, var(--button-primary-text, var(--surface, #ffffff)));
 }
 ```
 
 ---
 
-### F. Inline Property Annotations
+### F. Container Style Queries (`@container style(...)`)
+Define container style queries directly beneath the private variable manifest inside the base selector. Style queries enable declarative parent orchestration without requiring per-child modifier classes.
+
+#### Standard Comment Header & Structure:
+```css
+/* --------------------------------------------------------------------------
+   Style Container Queries (@container style(...))
+   Enables contextual DX orchestration without per-element utility classes:
+   e.g., .navigation { --button-variation: subtle; --button-corners: round; }
+   -------------------------------------------------------------------------- */
+
+/* Density & Sizing */
+@container style(--ui-density: dense) or style(--button-size: sm) {
+    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2, 0.125rem));
+    --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-8, 0.5rem));
+    --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
+}
+
+/* Variation: Subtle */
+@container style(--button-variation: subtle) or style(--button-appearance: subtle) {
+    --_button-bg: var(--button-subtle-bg, transparent);
+    --_button-border-color: var(--button-subtle-border-color, transparent);
+    --_button-text: var(--button-subtle-text, var(--foreground, currentColor));
+    --_button-hover-bg: var(--button-subtle-hover-bg, var(--surface-hover, rgba(0, 0, 0, 0.05)));
+    --_button-hover-border-color: var(--button-subtle-hover-border-color, transparent);
+    --_button-hover-text: var(--button-subtle-hover-text, var(--foreground, currentColor));
+}
+
+/* Corner Shapes */
+@container style(--button-corners: round) {
+    --_button-radius: var(--radius-round, 9999px);
+}
+```
+
+---
+
+### G. Inline Property Annotations
 Use compact inline comments for non-obvious calculations, browser constraints, accessibility fallbacks, or container query thresholds:
 
 ```css

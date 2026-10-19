@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Design For Humans: Fieldset Primitive
+   --------------------------------------------------------------------------
+   Semantic grouping for related form controls, choices, and option sets
+   with accessible legend labeling, adaptive spatial density, automated
+   required indicators, and WCAG 2.2 Level AA/AAA structure.
+
+   Usage:
+   <fieldset class="fieldset">
+     <legend class="legend">Accessible Group Title</legend>
+     <p class="fieldset__description">Supporting instructions or group hint.</p>
+     <div class="choices">...</div>
+   </fieldset>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Fieldset Container Primitive (:where(.fieldset, fieldset))
+   ========================================================================== */
+:where(.fieldset, fieldset) {
+  /* --------------------------------------------------------------------------
+     Local Variables & Fallback Ladder
+     -------------------------------------------------------------------------- */
+  --_fieldset-inner-gap: var(--fieldset-inner-gap, var(--spacing-16, 1rem));
+
+  /* --------------------------------------------------------------------------
+     Style Container Queries (@container style(...))
+     -------------------------------------------------------------------------- */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_fieldset-inner-gap: var(--fieldset-sm-gap, var(--spacing-8, 0.5rem));
+  }
+
+  /* Layout & Sizing */
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  min-inline-size: 0;
+
+  /* Spacing */
+  column-gap: var(--_fieldset-inner-gap);
+  margin: 0;
+  padding: 0;
+
+  /* Border Reset */
+  border: 0;
+
+  /* Density & Compact Modifiers */
+  &:where(.fieldset--compact, .fieldset--dense) {
+    --_fieldset-inner-gap: var(--fieldset-sm-gap, var(--spacing-8, 0.5rem));
+  }
+
+  &:where(.fieldset--loose, .fieldset--lg) {
+    --_fieldset-inner-gap: var(--spacing-24, 1.5rem);
+  }
+
+  /* Bordered / Card Variant */
+  &:where(.fieldset--bordered) {
+    border: var(--border-width, 1px) solid var(--border-color, currentColor);
+    border-radius: var(--radius-md, var(--radius, 0.5rem));
+    padding: var(--_fieldset-inner-gap);
+
+    &> :where(.legend, legend) {
+      padding-inline: var(--spacing-8, 0.5rem);
+    }
+  }
+
+  /* Disabled State */
+  &:where(:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+
+    :where(.legend, legend) {
+      color: var(--foreground-muted, currentColor);
+    }
+  }
+
+  /* Automatically show accessible required text on legend when group contains required controls */
+  &:not(:has(.required)):has(:required, [aria-required="true"]) :where(.legend, legend):not(:has(.required))::after {
+    content: " (Required)";
+    font-weight: var(--font-weight-regular, 400);
+    margin-inline-start: var(--spacing-8, 0.5rem);
+    font-size: var(--micro-text-font-size, 0.875em);
+    color: var(--foreground-muted, currentColor);
+  }
+}
+
+/* ==========================================================================
+   2. Legend Primitive (:where(.legend, legend))
+   ========================================================================== */
+:where(.legend, legend) {
+  /* --------------------------------------------------------------------------
+     Local Variables & Fallback Ladder
+     -------------------------------------------------------------------------- */
+  --_legend-font-family: var(--legend-font-family, var(--label-font-family, var(--body-font-family, inherit)));
+  --_legend-font-size: var(--legend-font-size, var(--label-font-size, var(--typography-font-size-0, 1rem)));
+  --_legend-font-weight: var(--legend-font-weight, var(--label-font-weight, var(--font-weight-bold, 700)));
+  --_legend-line-height: var(--legend-line-height, var(--label-line-height, var(--typography-line-height-4, 1.4)));
+  --_legend-color: var(--legend-color, var(--foreground, currentColor));
+
+  /* Container Style Queries */
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+    --_legend-font-size: var(--label-compact-font-size, var(--typography-font-size--1, 0.875rem));
+  }
+
+  /* Layout & Browser Reset */
+  display: block;
+  float: left;
+  inline-size: 100%;
+  padding: 0;
+  margin: 0;
+  margin-block-end: var(--_fieldset-inner-gap);
+
+  /* Typography */
+  font-family: var(--_legend-font-family);
+  font-size: var(--_legend-font-size);
+  font-weight: var(--_legend-font-weight);
+  line-height: var(--_legend-line-height);
+  color: var(--_legend-color);
+}
+
+/* ==========================================================================
+   3. Fieldset Description (:where(.fieldset__description))
+   ========================================================================== */
+:where(.fieldset__description) {
+  margin: 0;
+  color: var(--foreground-muted, currentColor);
+  font-size: var(--typography-font-size--1, 0.875rem);
+  line-height: var(--line-height-relaxed, 1.4);
+  margin-block-start: calc(var(--_fieldset-inner-gap) * -.5);
+  margin-block-end: var(--_fieldset-inner-gap);
+}

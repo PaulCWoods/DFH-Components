@@ -1,0 +1,181 @@
+/* ==========================================================================
+   Skip Link Primitive
+   --------------------------------------------------------------------------
+   Accessible bypass mechanism allowing keyboard and screen reader users to
+   skip repetitive navigation and jump directly to landmark page content
+   (WCAG 2.4.1 Bypass Blocks).
+
+   Usage:
+   <a href="#main" class="skip-link"><span>Skip to main content</span></a>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Skip Link Primitive (:where(.skip-link))
+   ========================================================================== */
+:where(.skip-link) {
+  --_skip-link-background-color: var(--skip-link-background-color, var(--surface-accent-strong, #008076));
+  --_skip-link-color: var(--skip-link-text, var(--foreground-inverted, #ffffff));
+
+  /* Layout & Sizing */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: 0;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+
+  /* Spacing & Safe Area Insets */
+  padding-inline-start: calc(var(--site-block-padding, var(--spacing-16, 1rem)) + env(safe-area-inset-left, 0px));
+  padding-inline-end: calc(var(--site-block-padding, var(--spacing-16, 1rem)) + env(safe-area-inset-right, 0px));
+
+  /* Typography */
+  font-family: var(--skip-link-font-family, var(--body-font-family, inherit));
+  font-size: var(--skip-link-font-size, var(--control-font-size, var(--typography-font-size-0, 1rem)));
+  font-weight: var(--skip-link-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
+  line-height: var(--control-line-height, 1);
+
+  /* Link Underline Metrics */
+  text-decoration: none;
+  text-decoration-color: var(--skip-link-underline-color, var(--foreground-inverted, currentColor));
+  text-decoration-thickness: var(--skip-link-underline-thickness, var(--link-underline-thickness, var(--underline-thickness, 1px)));
+  text-underline-offset: var(--skip-link-underline-offset, var(--link-underline-offset, var(--underline-offset, 0.25em)));
+
+  /* Surface & Text Colors */
+  background-color: var(--_skip-link-background-color);
+  color: var(--_skip-link-color);
+
+  /* Transitions */
+  transition-property: block-size, min-block-size;
+  transition-duration: var(--skip-link-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--skip-link-timefunc, var(--timefunc-ease-out, ease-out));
+
+  /* Interactive Hover & Active States */
+  @media (hover: hover) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
+
+  /* Focused State (Expands to full accessible touch target size) */
+  &:where(:focus, :focus-visible) {
+    min-block-size: var(--skip-link-min-size, var(--spacing-target, 3rem));
+    block-size: auto;
+  }
+
+  /* Focus Visible (Inset 3:1 Focus Ring) */
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline-offset: calc(var(--focus-ring-offset, 2px) * -2);
+  }
+
+  /* Prevent browser default link purple/blue on visited state */
+  &:visited {
+    color: var(--_skip-link-color);
+  }
+}
+
+/* ==========================================================================
+   Floating Round Skip Link Modifier (:where(.skip-link--floating))
+   ========================================================================== */
+:where(.skip-link--floating) {
+  /* Layout & Positioning */
+  inline-size: auto;
+  position: fixed;
+  inset-block-start: var(--spacing-16, 1rem);
+  inset-inline-start: var(--spacing-16, 1rem);
+  z-index: var(--z-index-tooltip, 1000);
+  pointer-events: none;
+
+  /* Sizing & Spacing */
+  padding-block: var(--spacing-8, 0.5rem);
+  padding-inline: var(--spacing-16, 1rem);
+
+  /* Surface, Border & Shape */
+  border-radius: var(--ui-radius, var(--radius, 0.25rem));
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1));
+
+  /* Hidden Transformation */
+  transform: translateY(calc(-100% - var(--spacing-16, 1rem) - 1.5rem));
+  opacity: 0;
+
+  transition-property: transform, opacity;
+  transition-duration: var(--skip-link-transition, var(--duration-sm, 150ms));
+  transition-timing-function: var(--skip-link-timefunc, var(--timefunc-ease-out, ease-out));
+
+  &:where(:focus, :focus-visible, :active) {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    block-size: auto;
+    min-block-size: var(--skip-link-min-size, var(--spacing-target, 3rem));
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline-color: var(--_skip-link-background-color);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+}
+
+/* ==========================================================================
+   Grouped Skip Links Container (:where(.skip-links))
+   ========================================================================== */
+:where(.skip-links) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  block-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &:focus-within {
+    block-size: auto;
+  }
+
+  & :where(ul) {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  & :where(li) {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+/* ==========================================================================
+   Accessibility & Media Queries
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :where(.skip-link, .skip-link--floating) {
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.skip-link) {
+    outline-width: calc(var(--border-width, 1px) * 2);
+  }
+}
+
+@media (forced-colors: active) {
+  :where(.skip-link) {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+    outline: 2px solid Highlight;
+  }
+}

@@ -9,94 +9,151 @@
    -------------------------------------------------------------------------- */
 
 :where(.bg-color, .bg) {
+    --bg-color: var(--surface, Canvas);
     background-color: var(--surface, Canvas);
 }
 
 :where(.bg-color-card, .bg-card) {
+    --bg-color: var(--surface-card, Canvas);
     background-color: var(--surface-card, Canvas);
 }
 
 :where(.bg-color-subtle, .bg-subtle) {
+    --bg-color: var(--surface-subtle, Canvas);
+    background-color: var(--surface-subtle, Canvas);
+}
+
+:where(.bg-color-muted, .bg-muted) {
+    --bg-color: var(--surface-muted, Canvas);
     background-color: var(--surface-muted, Canvas);
 }
 
 :where(.bg-color-translucent, .bg-translucent) {
+    --bg-color: var(--surface-translucent, Canvas);
     background-color: var(--surface-translucent, Canvas);
 }
 
 :where(.bg-color-inverted, .bg-inverted) {
+    --bg-color: var(--surface-inverted, Canvas);
     background-color: var(--surface-inverted, Canvas);
 }
 
 :where(.bg-color-dark, .bg-dark) {
+    --bg-color: var(--surface-dark, Canvas);
     background-color: var(--surface-dark, Canvas);
 }
 
 :where(.bg-color-darker, .bg-darker) {
+    --bg-color: var(--surface-darker, Canvas);
     background-color: var(--surface-darker, Canvas);
 }
 
 :where(.bg-color-accent, .bg-accent) {
+    --bg-color: var(--surface-accent, Highlight);
     background-color: var(--surface-accent, Highlight);
 }
 
 :where(.bg-color-accent-strong, .bg-accent-strong) {
+    --bg-color: var(--surface-accent-strong, Highlight);
     background-color: var(--surface-accent-strong, Highlight);
 }
 
 :where(.bg-color-accent-muted, .bg-accent-muted) {
-    background-color: var(--surface-accent-muted, Highlight);
+    --bg-color: var(--surface-accent, Highlight);
+    background-color: var(--surface-accent, Highlight);
 }
 
 :where(.bg-color-accent-dark, .bg-accent-dark) {
+    --bg-color: var(--surface-accent-dark, Highlight);
     background-color: var(--surface-accent-dark, Highlight);
 }
 
 :where(.bg-color-success, .bg-success) {
+    --bg-color: var(--surface-success, Highlight);
     background-color: var(--surface-success, Highlight);
 }
 
 :where(.bg-color-warning, .bg-warning) {
+    --bg-color: var(--surface-warning, Highlight);
     background-color: var(--surface-warning, Highlight);
 }
 
 :where(.bg-color-danger, .bg-danger) {
+    --bg-color: var(--surface-danger, Highlight);
     background-color: var(--surface-danger, Highlight);
 }
 
-:where(.bg-effect-translucent) {
+:where(.bg-effect-translucent, .bg-effect-translucent-10, .bg-effect-translucent-subtle) {
     background-color: color-mix(in srgb,
             var(--bg-color, var(--bg-surface-card, Canvas)),
             transparent var(--translucency-10));
 }
 
-:where(.bg-effect-translucent-33) {
+:where(.bg-effect-translucent-33, .bg-effect-translucent-quiet) {
     background-color: color-mix(in srgb,
             var(--bg-color, var(--bg-surface-card, Canvas)),
             transparent var(--translucency-33));
 }
 
-:where(.bg-effect-translucent-50) {
+:where(.bg-effect-translucent-50, .bg-effect-translucent-half) {
     background-color: color-mix(in srgb,
             var(--bg-color, var(--bg-surface-card, Canvas)),
             transparent var(--translucency-50));
 }
 
-:where(.bg-effect-translucent-90) {
+:where(.bg-effect-translucent-70, .bg-effect-translucent-80, .bg-effect-translucent-strong) {
     background-color: color-mix(in srgb,
             var(--bg-color, var(--bg-surface-card, Canvas)),
-            transparent var(--translucency-80));
+            transparent var(--translucency-strong, var(--translucency-70, 70%)));
 }
 
-:where(.bg-effect-blurred, .bg-blurred) {
-    backdrop-filter: var(--filter-blur);
+:where(.bg-effect-translucent-90, .bg-effect-translucent-stronger) {
+    background-color: color-mix(in srgb,
+            var(--bg-color, var(--bg-surface-card, Canvas)),
+            transparent var(--translucency-stronger, var(--translucency-90, 90%)));
+}
+
+:where(.bg-effect-blurred-sm, .bg-blurred-sm) {
+    backdrop-filter: var(--blur-sm);
+}
+
+:where(.bg-effect-blurred-md, .bg-blurred-md, .bg-effect-blurred, .bg-blurred) {
+    backdrop-filter: var(--blur-md);
+}
+
+:where(.bg-effect-blurred-lg, .bg-blurred-lg) {
+    backdrop-filter: var(--blur-lg);
+}
+
+:where(.bg-effect-blurred-xl, .bg-blurred-xl) {
+    backdrop-filter: var(--blur-xl);
 }
 
 /* --------------------------------------------------------------------------
    Text Color Utilities
    -------------------------------------------------------------------------- */
-:where(.text-color, .text) {
+:where(.text-color) {
     color: var(--foreground, CanvasText);
+}
+
+:where(.text-color-inverted, .text-inverted) {
+    color: var(--foreground-inverted, CanvasText);
+}
+
+:where(.text-color-strong, .text-strong) {
+    color: var(--foreground-strong, CanvasText);
+}
+
+:where(.text-color-inverted-strong, .text-inverted-strong) {
+    color: var(--foreground-inverted-strong, CanvasText);
+}
+
+:where(.text-color-on-dark, .text-on-dark) {
+    color: var(--foreground-on-dark, rgb(55, 13, 13));
+}
+
+:where(.text-color-white, .text-white) {
+    color: var(--foreground-white, white);
 }
 
 :where(.text-color-accent, .text-accent, .color-accent) {
@@ -117,4 +174,25 @@
 
 :where(.text-color-muted, .text-muted, .color-muted) {
     color: var(--foreground-muted, GrayText);
+}
+
+
+/* --------------------------------------------------------------------------
+   Opacity Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.opacity-muted) {
+    opacity: var(--opacity-muted);
+}
+
+:where(.opacity-disabled, .opacity-50) {
+    opacity: var(--opacity-disabled);
+}
+
+:where(.opacity-none, .opacity-0) {
+    opacity: 0;
+}
+
+:where(.opacity-full, .opacity-100) {
+    opacity: 1;
 }

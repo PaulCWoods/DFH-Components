@@ -1,0 +1,277 @@
+/* ==========================================================================
+   Design For Humans: Button Group Primitive
+   --------------------------------------------------------------------------
+   Layout container for grouping related buttons, segmented controls,
+   and action clusters with horizontal, vertical, and full-width layouts.
+
+   Usage:
+   <div class="button-group">
+     <button type="button" class="button">Option 1</button>
+     <button type="button" class="button">Option 2</button>
+     <hr class="divider">
+     <button type="button" class="button button--primary">Confirm</button>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Button Group (:where(.button-group))
+   ========================================================================== */
+:where(.button-group) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_button-group-gap: var(--button-group-gap, var(--spacing, 1rem));
+  --_button-group-divider-width: var(--button-group-divider-width, var(--border-width, 1px));
+  --_button-group-divider-color: var(--button-group-divider-color, var(--border-color, currentColor));
+  --_button-group-content-color: var(--button-group-content-color, currentColor);
+  --_button-group-content-font-family: var(--button-group-content-font-family, var(--typography-font-family-sans, inherit));
+  --_button-group-content-font-size: var(--button-group-content-font-size, var(--typography-font-size-0, 1rem));
+  --_button-group-content-font-weight: var(--button-group-content-font-weight, var(--font-weight-regular, 400));
+  --_button-group-content-justify: var(--button-group-content-justify, center);
+  --_button-group-content-padding-block: 0px;
+  --_button-group-content-padding-inline: var(--button-group-content-padding-inline, var(--spacing-16, 1rem));
+  --_button-group-heading-gap: var(--button-group-heading-gap, var(--spacing-16, 1rem));
+  --_button-group-inner-border-width: var(--button-group-inner-border-width, var(--rule-width, 1px));
+  --_button-group-border-style: var(--button-group-border-style, var(--rule-style, solid));
+  --_button-group-border-color: var(--button-group-border-color, var(--rule-color, currentColor));
+  --_button-group-tight-gap: var(--button-group-tight-gap, 0px);
+
+  --direction: row;
+  --divider-width: var(--_button-group-divider-width);
+  --divider-color: var(--_button-group-divider-color);
+
+  /* Spatial Density & Container Style Queries */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_button-group-gap: var(--button-group-sm-gap, var(--spacing-4, 0.25rem));
+  }
+
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_button-group-gap);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  :where(li) {
+    display: contents;
+  }
+}
+
+/* Compact / Dense Modifier */
+:where(.button-group--compact, .button-group--dense) {
+  --_button-group-gap: var(--button-group-sm-gap, var(--spacing-4, 0.25rem));
+}
+
+/* Tight Sizing (Zero gap) */
+:where(.button-group--tight) {
+  gap: var(--_button-group-tight-gap);
+
+  :where(.button) {
+    border: 0;
+    border-radius: 0;
+
+    &:first-child {
+      border-end-start-radius: var(--_button-radius);
+      border-start-start-radius: var(--_button-radius);
+    }
+
+    &:last-child {
+      border-end-end-radius: var(--_button-radius);
+      border-start-end-radius: var(--_button-radius);
+    }
+  }
+
+  &:where(.button-group--round, .buttons-round) :where(.button) {
+    &:first-child {
+      border-end-start-radius: var(--radius-round, 9999px);
+      border-start-start-radius: var(--radius-round, 9999px);
+    }
+
+    &:last-child {
+      border-end-end-radius: var(--radius-round, 9999px);
+      border-start-end-radius: var(--radius-round, 9999px);
+    }
+  }
+
+  :where(.button):focus-visible {
+    outline-offset: calc(var(--focus-ring-offset, 2px) * -1);
+  }
+}
+
+/* ==========================================================================
+   2. Layout & Orientation Variants (.button-group--stretch, .button-group--stacked)
+   ========================================================================== */
+
+/* Fill Variant (Stretches across available width) */
+:where(.button-group--stretch) {
+  display: flex;
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+}
+
+/* Stacked Variant (Vertical column orientation) */
+:where(.button-group--stacked) {
+  container-type: normal;
+  --direction: column;
+  --_button-group-content-justify: start;
+  --_button-group-content-padding-block: var(--button-group-content-padding-block, var(--spacing-16, 1rem));
+  --_button-group-content-padding-inline: 0px;
+  flex-direction: column;
+  align-items: stretch;
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+
+  > :where(.button:has(.icon ~ :where(.button__text, .lockup, span:not(.visually-hidden)))) {
+    justify-content: flex-start;
+  }
+
+  > :where(.button) {
+    white-space: normal;
+  }
+
+  :where(.button > :where(.lockup, span:not(.icon, .chip, .badge))) {
+    flex-grow: 1;
+  }
+
+  :where(.button__text, .lockup) + :where(kbd, .kbd, .chip, .badge, .icon) {
+    margin-inline-start: auto;
+  }
+
+  :where(.button-group__content):where(h1, h2, h3, h4, h5, h6):not(:first-child) {
+    padding-block-start: calc(var(--_button-group-content-padding-block) + var(--_button-group-heading-gap));
+  }
+
+  &:where(.button-group--tight) :where(.button) {
+    &:first-child {
+      border-end-start-radius: 0px;
+      border-start-end-radius: var(--_button-radius);
+    }
+
+    &:last-child {
+      border-end-start-radius: var(--_button-radius);
+      border-start-end-radius: 0px;
+    }
+  }
+}
+
+:where(.card__body--flush > .button-group--stacked) {
+  --_button-group-content-padding-inline: var(--_card-padding);
+
+  :where(.button) {
+    --button-padding-inline: var(--_card-padding);
+    --button-radius: 0;
+  }
+}
+
+/* Ruled Variant */
+:where(.button-group--ruled) {
+  @supports (rule: 1px) {
+    rule: var(--_button-group-inner-border-width) var(--_button-group-border-style) var(--_button-group-border-color);
+  }
+}
+
+:where(.button-group--ruled.button-group--tight) {
+  @supports (rule: 1px) {
+    --_button-group-gap: var(--_button-group-inner-border-width, 1px);
+  }
+}
+
+/* Justify buttons */
+:where(.button-group--center, .button-group--justify-center) {
+  justify-content: center;
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+}
+
+:where(.button-group--justify-end) {
+  justify-content: flex-end;
+
+  @supports not (width: stretch) {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    block-size: stretch;
+    inline-size: stretch;
+  }
+}
+
+:where(.button-group--space-between) {
+  justify-content: space-between;
+
+  @supports not (width: stretch) {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    block-size: stretch;
+    inline-size: stretch;
+  }
+}
+
+/* Fill buttons */
+:where(.button-group--fill-items) {
+  @supports not (width: stretch) {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    block-size: stretch;
+    inline-size: stretch;
+  }
+
+  :where(.button, .button__text),
+  > :where(.button > span:not(.icon, .chip, .badge)) {
+    flex-grow: 1;
+  }
+}
+
+/* ==========================================================================
+   3. Group Content & Helper Parts
+   ========================================================================== */
+
+/* Text Element inside Button Group */
+:where(.button-group__content) {
+  display: flex;
+  align-items: center;
+  justify-content: var(--_button-group-content-justify);
+  padding-block: var(--_button-group-content-padding-block);
+  padding-inline: var(--_button-group-content-padding-inline);
+  font-family: var(--_button-group-content-font-family);
+  font-size: var(--_button-group-content-font-size);
+  font-weight: var(--_button-group-content-font-weight);
+  color: var(--_button-group-content-color);
+  text-align: var(--_button-group-content-justify);
+}
+
+/* End Alignment (Pushes trailing actions to opposite edge) */
+:where(hr.button-group__end, .button-group__end) {
+  margin-inline-start: auto;
+}
+
+/* Fill Variant (Stretches across available width) */
+:where(.button-group__fill) {
+  flex: 1 1 auto;
+}

@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Design For Humans: Storybook Demo Harness Utilities
+   --------------------------------------------------------------------------
+   Dedicated visual presentation classes for Storybook stories and docs.
+   Provides standardized demo stages, constrained wrappers, wireframe boxes
+   (with accessible light-dark pastel tints), and unified typography labels.
+   Eliminates repetitive inline style tags across Storybook stories.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Demo Stages & Canvas Containers (.sb-demo-stage, .demo-stage)
+   ========================================================================== */
+
+:where(.sb-demo-stage, .sb-demo-container, .demo-stage, .demo-container) {
+  background-color: var(--surface);
+  border: 1px solid var(--border-color-quiet, var(--border-muted, rgba(0, 0, 0, 0.08)));
+  border-radius: var(--radius, 0.375rem);
+  padding: var(--spacing-16, 1rem);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Compact stage padding */
+:where(.sb-demo-stage--sm, .sb-demo-stage--compact, .demo-stage--sm, .demo-stage--compact) {
+  padding: var(--spacing-8, 0.5rem);
+}
+
+/* Generous stage padding */
+:where(.sb-demo-stage--lg, .demo-stage--lg) {
+  padding: var(--spacing-24, 1.5rem);
+}
+
+/* Flush stage with zero padding and clipped overflow */
+:where(.sb-demo-stage--flush, .demo-stage--flush) {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Outlined stage with dashed border */
+:where(.sb-demo-stage--outlined, .demo-stage--outlined) {
+  border-style: dashed;
+}
+
+/* Card surface stage */
+:where(.sb-demo-stage--card, .demo-stage--card) {
+  background-color: var(--surface-card);
+}
+
+/* ==========================================================================
+   2. Constrained Viewport & Container Wrappers (.sb-demo-constrained)
+   ========================================================================== */
+
+:where(.sb-demo-constrained, .demo-constrained) {
+  inline-size: 100%;
+  max-inline-size: var(--demo-max-inline-size, 38rem);
+  container-type: inline-size;
+  box-sizing: border-box;
+}
+
+/* Sizing scale modifiers for constrained containers */
+:where(.sb-demo-constrained--2xs, .demo-constrained--2xs) {
+  max-inline-size: 16rem;
+}
+
+:where(.sb-demo-constrained--xs, .demo-constrained--xs) {
+  max-inline-size: 20rem;
+}
+
+:where(.sb-demo-constrained--sm, .demo-constrained--sm) {
+  max-inline-size: 24rem;
+}
+
+:where(.sb-demo-constrained--md, .demo-constrained--md) {
+  max-inline-size: 36rem;
+}
+
+:where(.sb-demo-constrained--lg, .demo-constrained--lg) {
+  max-inline-size: 48rem;
+}
+
+/* Simulated viewport / frame box */
+:where(.sb-demo-frame, .demo-frame) {
+  inline-size: 100%;
+  block-size: var(--demo-frame-height, 20rem);
+  position: relative;
+  border: 1px dashed var(--border-color-quiet, var(--border-muted, rgba(0, 0, 0, 0.15)));
+  border-radius: var(--radius, 0.375rem);
+  overflow: hidden;
+  box-sizing: border-box;
+
+  & > .app {
+    block-size: 100%;
+  }
+}
+
+:where(.sb-demo-frame--solid, .demo-frame--solid) {
+  border-style: solid;
+}
+
+:where(.sb-demo-frame--app, .demo-frame--app) {
+  block-size: 26rem;
+  border-style: solid;
+}
+
+/* ==========================================================================
+   3. Demo Wireframe Boxes & Cards (.sb-demo-box, .demo-box)
+   ========================================================================== */
+
+:where(.sb-demo-box, .demo-box) {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-color-quiet, var(--border-muted, rgba(0, 0, 0, 0.12)));
+  border-radius: var(--radius, 0.375rem);
+  padding: var(--spacing-12, 0.75rem);
+  color: var(--foreground);
+  box-sizing: border-box;
+}
+
+/* Layout alignment modifiers */
+:where(.sb-demo-box--center, .demo-box--center) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+:where(.sb-demo-box--row, .demo-box--row) {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 0.5rem);
+}
+
+:where(.sb-demo-box--between, .demo-box--between) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-8, 0.5rem);
+}
+
+:where(.sb-demo-box--end, .demo-box--end) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-8, 0.5rem);
+}
+
+:where(.sb-demo-box--stack, .demo-box--stack) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 0.25rem);
+}
+
+/* Box sizing modifiers */
+:where(.sb-demo-box--sm, .demo-box--sm) {
+  padding: var(--spacing-8, 0.5rem);
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+:where(.sb-demo-box--lg, .demo-box--lg) {
+  padding: var(--spacing-16, 1rem);
+}
+
+/* --------------------------------------------------------------------------
+   Pastel Wireframe Color Variants (Accessible light-dark tints)
+   -------------------------------------------------------------------------- */
+
+/* Pink / Start Column (Soft Coral) */
+:where(.sb-demo-box--pink, .sb-demo-box--start, .sb-demo-box--rose,
+  .demo-box--pink, .demo-box--start, .demo-box--rose) {
+  background-color: light-dark(#f8e8ea, #3c1e24);
+  border-color: light-dark(#f1c0c5, #5c2c36);
+}
+
+/* Green / Center Column (Soft Mint) */
+:where(.sb-demo-box--green, .sb-demo-box--center-tint, .sb-demo-box--mint,
+  .demo-box--green, .demo-box--center-tint, .demo-box--mint) {
+  background-color: light-dark(#e6f4ea, #193224);
+  border-color: light-dark(#bce2c7, #244b36);
+}
+
+/* Blue / End Column (Soft Sky) */
+:where(.sb-demo-box--blue, .sb-demo-box--end-tint, .sb-demo-box--sky,
+  .demo-box--blue, .demo-box--end-tint, .demo-box--sky) {
+  background-color: light-dark(#e8f0fe, #1e2c45);
+  border-color: light-dark(#c2d7fc, #2d4268);
+}
+
+/* Yellow / Warning (Soft Amber) */
+:where(.sb-demo-box--yellow, .sb-demo-box--amber,
+  .demo-box--yellow, .demo-box--amber) {
+  background-color: light-dark(#fef7e0, #382e18);
+  border-color: light-dark(#fde293, #574620);
+}
+
+/* Purple / Highlight (Soft Violet) */
+:where(.sb-demo-box--purple, .sb-demo-box--violet,
+  .demo-box--purple, .demo-box--violet) {
+  background-color: light-dark(#f3e8fd, #2f1d43);
+  border-color: light-dark(#dab8fc, #482c68);
+}
+
+/* Neutral Box */
+:where(.sb-demo-box--neutral, .demo-box--neutral) {
+  background-color: var(--surface-card);
+  border-color: var(--border-muted);
+}
+
+/* ==========================================================================
+   4. Demo Typography & Headings (.sb-demo-heading, .sb-demo-label)
+   ========================================================================== */
+
+:where(.sb-demo-heading, .demo-heading) {
+  font-size: var(--font-size-md, 1.125rem);
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0;
+}
+
+:where(.sb-demo-desc, .demo-desc) {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--foreground-muted);
+  margin: 0;
+  line-height: var(--line-height-normal, 1.5);
+}
+
+:where(.sb-demo-label, .demo-label) {
+  font-size: var(--font-size-xs, 0.75rem);
+  font-weight: 700;
+  color: var(--foreground-muted);
+  display: block;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* Demo Stack Containers */
+:where(.sb-demo-title-group, .demo-title-group) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 0.25rem);
+}
+
+:where(.sb-demo-section, .demo-section) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 0.5rem);
+}
+
+:where(.sb-demo-group, .demo-group) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 1.5rem);
+}
+
+/* ==========================================================================
+   5. Form & Component Demo Harnesses (.sb-demo-form-grid, .sb-demo-control-row)
+   ========================================================================== */
+
+:where(.sb-demo-form-grid, .demo-form-grid) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 1rem);
+  inline-size: 100%;
+  max-inline-size: 32rem;
+}
+
+:where(.sb-demo-control-row, .demo-control-row) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-12, 0.75rem);
+}
+
+:where(.sb-demo-density-preview, .demo-density-preview) {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 1rem);
+  padding: var(--spacing-16, 1rem);
+  border: 1px dashed var(--border-color-quiet, currentColor);
+  border-radius: var(--radius, 0.375rem);
+}
+
+/* ==========================================================================
+   6. Layout Diagnostics & Gap Inspector (.sb-demo-inspect-gap)
+   ========================================================================== */
+
+:where(.sb-demo-inspect-gap) {
+  background-image: repeating-linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--color-purple-500, #7c3aed) 12%, transparent),
+    color-mix(in srgb, var(--color-purple-500, #7c3aed) 12%, transparent) 6px,
+    color-mix(in srgb, var(--color-purple-500, #7c3aed) 22%, transparent) 6px,
+    color-mix(in srgb, var(--color-purple-500, #7c3aed) 22%, transparent) 12px
+  );
+  outline: 1.5px dashed var(--border-color-accent, #7c3aed);
+  outline-offset: 2px;
+}

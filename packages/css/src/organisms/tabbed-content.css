@@ -1,0 +1,84 @@
+/* ==========================================================================
+   Design For Humans: Tabbed Content Component (Organism)
+   --------------------------------------------------------------------------
+   Composite container that orchestrates layout geometry between a tab
+   navigation list (.tab-list) and associated content panels (.tab-panel).
+   Complies with the Organism-Atom Composition Law: orchestrates layout
+   geometry without declaring or overriding element typography.
+   Complies with WCAG 2.2 Level AA / AAA (2.4.7 Focus Visible, 1.4.3 Contrast).
+
+   Usage:
+   <!-- Interactive WAI-ARIA Tabbed Content -->
+   <div class="tabbed-content">
+     <div class="tab-list" role="tablist" aria-label="Account Settings">
+       <button type="button" id="tab-1" class="tab" role="tab" aria-selected="true" aria-controls="panel-1">
+         <span class="tab__text">Overview</span>
+       </button>
+       <button type="button" id="tab-2" class="tab" role="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
+         <span class="tab__text">Security</span>
+       </button>
+     </div>
+     <div id="panel-1" class="tab-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
+       <p>Overview content.</p>
+     </div>
+     <div id="panel-2" class="tab-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-2" hidden>
+       <p>Security content.</p>
+     </div>
+   </div>
+
+   <!-- Semantic Navigation Tabs -->
+   <nav class="tabbed-content" aria-label="Sections">
+     <ul class="tab-list">
+       <li><a href="/code" class="tab" aria-current="page"><span class="tab__text">Code</span></a></li>
+       <li><a href="/issues" class="tab"><span class="tab__text">Issues</span></a></li>
+     </ul>
+   </nav>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Tabbed Content Layout (:where(.tabbed-content, .tabs))
+   ========================================================================== */
+:where(.tabbed-content, .tabs) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_tabbed-content-gap: var(--tabbed-content-gap, var(--tabs-block-gap, var(--spacing-unit, 1rem)));
+
+  /* Layout & Geometry */
+  display: flex;
+  flex-direction: column;
+  gap: var(--_tabbed-content-gap);
+  min-inline-size: 0;
+}
+
+/* --------------------------------------------------------------------------
+   1.1 Directional Variants (.tabs-vertical, .tabs-on-right)
+   -------------------------------------------------------------------------- */
+:where(.tabbed-content, .tabs):where(.tabs-vertical) {
+  flex-direction: row;
+}
+
+:where(.tabbed-content, .tabs):where(.tabs-on-right) {
+  flex-direction: row-reverse;
+}
+
+/* ==========================================================================
+   2. Tab Panels (:where(.tabbed-content__panel, .tab-panel, .tabs__panel))
+   ========================================================================== */
+:where(.tabbed-content__panel, .tab-panel, .tabs__panel) {
+  inline-size: 100%;
+  min-inline-size: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}

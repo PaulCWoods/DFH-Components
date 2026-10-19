@@ -1,215 +1,299 @@
 /* ==========================================================================
    Design For Humans: Spacing Block Utilities
    --------------------------------------------------------------------------
+   Token-based utilities for logical element dimensions and flexible sizing.
+   Provides square block presets, semantic width/height aliases (popover,
+   sidebar, dialog, prose, shell), and responsive min/max constraints.
+   Complies with WCAG 2.2 Target Size (2.5.5 AAA / 2.5.8 AA) and Reflow (1.4.10).
    Direct parity with Design For Humans blog architecture (_spacing-blocks.scss).
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Square Block Utilities
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   1. Square Block Utilities (:where(.block-*))
+   ========================================================================== */
 
+/* Base Unit Block (16px) */
 :where(.block-unit) {
-    inline-size: var(--spacing);
-    block-size: var(--spacing);
+  inline-size: var(--spacing, 1rem);
+  block-size: var(--spacing, 1rem);
 }
 
+/* Touch Target Block (48px - WCAG 2.5.5 Level AAA Minimum) */
 :where(.block-target) {
-    inline-size: var(--spacing-target);
-    block-size: var(--spacing-target);
+  inline-size: var(--spacing-target, 3rem);
+  block-size: var(--spacing-target, 3rem);
 }
 
+/* Extra-Extra-Small Block (128px / 8rem) */
 :where(.block-2xs) {
-    inline-size: var(--spacing-block-2xs);
-    block-size: var(--spacing-block-2xs);
+  inline-size: var(--spacing-block-2xs, 8rem);
+  block-size: var(--spacing-block-2xs, 8rem);
 }
 
+/* Extra-Small Block (256px / 16rem) */
 :where(.block-xs) {
-    inline-size: var(--spacing-block-xs);
-    block-size: var(--spacing-block-xs);
+  inline-size: var(--spacing-block-xs, 16rem);
+  block-size: var(--spacing-block-xs, 16rem);
 }
 
+/* Small Block (384px / 24rem) */
 :where(.block-sm) {
-    inline-size: var(--spacing-block-sm);
-    block-size: var(--spacing-block-sm);
+  inline-size: var(--spacing-block-sm, 24rem);
+  block-size: var(--spacing-block-sm, 24rem);
 }
 
+/* Medium Block / Default Block (576px / 36rem) */
 :where(.block-md, .block) {
-    inline-size: var(--spacing-block);
-    block-size: var(--spacing-block);
+  inline-size: var(--spacing-block, 36rem);
+  block-size: var(--spacing-block, 36rem);
 }
 
+/* Large Block (768px / 48rem) */
 :where(.block-lg) {
-    inline-size: var(--spacing-block-lg);
-    block-size: var(--spacing-block-lg);
+  inline-size: var(--spacing-block-lg, 48rem);
+  block-size: var(--spacing-block-lg, 48rem);
 }
 
+/* Extra-Large Block (1024px / 64rem) */
 :where(.block-xl) {
-    inline-size: var(--spacing-block-xl);
-    block-size: var(--spacing-block-xl);
+  inline-size: var(--spacing-block-xl, 64rem);
+  block-size: var(--spacing-block-xl, 64rem);
 }
 
+/* 2X-Large Block (1280px / 80rem) */
 :where(.block-2xl) {
-    inline-size: var(--spacing-block-2xl);
-    block-size: var(--spacing-block-2xl);
+  inline-size: var(--spacing-block-2xl, 80rem);
+  block-size: var(--spacing-block-2xl, 80rem);
 }
 
+/* Fluid & Dynamic Block Sizes */
 :where(.block-fill) {
-    inline-size: 100%;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+:where(.block-stretch) {
+  @supports not (width: stretch) {
     block-size: 100%;
-}
-
-/* --------------------------------------------------------------------------
-   2. Width Utilities
-   -------------------------------------------------------------------------- */
-
-:where(.width-unit) {
-    inline-size: var(--spacing);
-}
-
-:where(.width-2xs) {
-    inline-size: var(--spacing-block-2xs);
-}
-
-:where(.width-xs, .width-popover) {
-    inline-size: var(--spacing-block-xs);
-}
-
-:where(.width-sm, .width-sidebar) {
-    inline-size: var(--spacing-block-sm);
-}
-
-:where(.width-md, .width-dialog) {
-    inline-size: var(--spacing-block);
-}
-
-:where(.width-lg, .width-prose) {
-    inline-size: var(--spacing-block-lg);
-}
-
-:where(.width-xl, .width-wide) {
-    inline-size: var(--spacing-block-xl);
-}
-
-:where(.width-2xl, .width-shell) {
-    inline-size: var(--spacing-block-2xl);
-}
-
-:where(.width-fill) {
     inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    block-size: stretch;
+    inline-size: stretch;
+  }
 }
 
-/* --------------------------------------------------------------------------
-   3. Minimum Width Utilities
-   -------------------------------------------------------------------------- */
+:where(.block-viewport) {
+  inline-size: 100dvh;
+  block-size: 100dvh;
+}
+
+/* ==========================================================================
+   2. Inline Width Utilities (:where(.width-*))
+   ========================================================================== */
+
+/* Unit Width (16px) */
+:where(.width-unit) {
+  inline-size: var(--spacing, 1rem);
+}
+
+/* 2XS Width (128px / 8rem) */
+:where(.width-2xs) {
+  inline-size: var(--spacing-block-2xs, 8rem);
+}
+
+/* XS Width / Popover Preset (256px / 16rem) */
+:where(.width-xs, .width-popover) {
+  inline-size: var(--spacing-block-xs, 16rem);
+}
+
+/* SM Width / Sidebar Preset (384px / 24rem) */
+:where(.width-sm, .width-sidebar) {
+  inline-size: var(--spacing-block-sm, 24rem);
+}
+
+/* MD Width / Dialog Preset (576px / 36rem) */
+:where(.width-md, .width-dialog) {
+  inline-size: var(--spacing-block, 36rem);
+}
+
+/* LG Width / Prose Reading Column (768px / 48rem) */
+:where(.width-lg, .width-prose) {
+  inline-size: var(--spacing-block-lg, 48rem);
+}
+
+/* XL Width / Wide Canvas (1024px / 64rem) */
+:where(.width-xl, .width-wide) {
+  inline-size: var(--spacing-block-xl, 64rem);
+}
+
+/* 2XL Width / Application Shell (1280px / 80rem) */
+:where(.width-2xl, .width-shell) {
+  inline-size: var(--spacing-block-2xl, 80rem);
+}
+
+/* Fluid & Viewport Widths */
+:where(.width-fill) {
+  inline-size: 100%;
+}
+
+:where(.width-stretch) {
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+}
+
+:where(.width-viewport) {
+  inline-size: 100vi;
+}
+
+/* ==========================================================================
+   3. Minimum Width Constraints (:where(.min-width-*))
+   ========================================================================== */
 
 :where(.min-width-sm) {
-    min-inline-size: min(var(--spacing-block-sm), 100%);
+  min-inline-size: min(var(--spacing-block-sm, 24rem), 100%);
 }
 
 :where(.min-width-md) {
-    min-inline-size: min(var(--spacing-block), 100%);
+  min-inline-size: min(var(--spacing-block, 36rem), 100%);
 }
 
 :where(.min-width-lg) {
-    min-inline-size: min(var(--spacing-block-lg), 100%);
+  min-inline-size: min(var(--spacing-block-lg, 48rem), 100%);
 }
 
-/* --------------------------------------------------------------------------
-   4. Maximum Width Utilities
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   4. Maximum Width Constraints (:where(.max-width-*))
+   ========================================================================== */
 
 :where(.max-width-sm) {
-    max-inline-size: min(var(--spacing-block-sm));
+  max-inline-size: min(var(--spacing-block-sm, 24rem), 100%);
 }
 
 :where(.max-width-md) {
-    max-inline-size: min(var(--spacing-block));
+  max-inline-size: min(var(--spacing-block, 36rem), 100%);
 }
 
 :where(.max-width-lg) {
-    max-inline-size: min(var(--spacing-block-lg));
+  max-inline-size: min(var(--spacing-block-lg, 48rem), 100%);
 }
 
 :where(.max-width-full) {
-    max-inline-size: 100%;
+  max-inline-size: 100%;
 }
 
-/* --------------------------------------------------------------------------
-   5. Height Utilities
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   5. Block Height Utilities (:where(.height-*))
+   ========================================================================== */
 
+/* Unit Height (16px) */
 :where(.height-unit) {
-    block-size: var(--spacing);
+  block-size: var(--spacing, 1rem);
 }
 
+/* 2XS Height (128px / 8rem) */
 :where(.height-2xs) {
-    block-size: var(--spacing-block-2xs);
+  block-size: var(--spacing-block-2xs, 8rem);
 }
 
+/* XS Height (256px / 16rem) */
 :where(.height-xs) {
-    block-size: var(--spacing-block-xs);
+  block-size: var(--spacing-block-xs, 16rem);
 }
 
+/* SM Height (384px / 24rem) */
 :where(.height-sm) {
-    block-size: var(--spacing-block-sm);
+  block-size: var(--spacing-block-sm, 24rem);
 }
 
+/* MD Height / Standard Height (576px / 36rem) */
 :where(.height-md, .height) {
-    block-size: var(--spacing-block);
+  block-size: var(--spacing-block, 36rem);
 }
 
+/* LG Height (768px / 48rem) */
 :where(.height-lg) {
-    block-size: var(--spacing-block-lg);
+  block-size: var(--spacing-block-lg, 48rem);
 }
 
+/* XL Height (1024px / 64rem) */
 :where(.height-xl) {
-    block-size: var(--spacing-block-xl);
+  block-size: var(--spacing-block-xl, 64rem);
 }
 
+/* Fluid & Dynamic Heights */
 :where(.height-fill) {
-    block-size: 100%;
+  block-size: 100%;
 }
 
-/* --------------------------------------------------------------------------
-   6. Minimum Height Utilities
-   -------------------------------------------------------------------------- */
+:where(.height-stretch) {
+  @supports not (width: stretch) {
+    block-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    block-size: stretch;
+  }
+}
+
+:where(.height-viewport) {
+  block-size: 100dvh;
+}
+
+/* ==========================================================================
+   6. Minimum Height Constraints (:where(.min-height-*))
+   ========================================================================== */
 
 :where(.min-height-sm) {
-    min-block-size: min(var(--spacing-block-sm));
+  min-block-size: var(--spacing-block-sm, 24rem);
 }
 
 :where(.min-height-md) {
-    min-block-size: min(var(--spacing-block));
+  min-block-size: var(--spacing-block, 36rem);
 }
 
 :where(.min-height-lg) {
-    min-block-size: min(var(--spacing-block-lg));
+  min-block-size: var(--spacing-block-lg, 48rem);
 }
 
-/* --------------------------------------------------------------------------
-   7. Maximum Height Utilities
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   7. Maximum Height Constraints (:where(.max-height-*))
+   ========================================================================== */
+
+:where(.max-height-2xs) {
+  max-block-size: var(--spacing-block-2xs, 8rem);
+}
+
+:where(.max-height-xs) {
+  max-block-size: var(--spacing-block-xs, 16rem);
+}
 
 :where(.max-height-sm) {
-    max-block-size: min(var(--spacing-block-sm));
+  max-block-size: var(--spacing-block-sm, 24rem);
 }
 
 :where(.max-height-md) {
-    max-block-size: min(var(--spacing-block));
+  max-block-size: var(--spacing-block, 36rem);
 }
 
 :where(.max-height-lg) {
-    max-block-size: min(var(--spacing-block-lg));
+  max-block-size: var(--spacing-block-lg, 48rem);
 }
 
 :where(.max-height-full) {
-    max-block-size: 100%;
+  max-block-size: 100%;
 }
 
-/* --------------------------------------------------------------------------
-   8. Flex Growth Utilities
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   8. Flex & Size Growth (:where(.size-grow))
+   ========================================================================== */
 
 :where(.size-grow) {
-    flex-grow: 1;
+  flex-grow: 1;
 }

@@ -24,6 +24,15 @@
     block-size: 100%;
 }
 
+/* Zero Minimum Dimensions (Prevents Flex/Grid Overflow Blowout) */
+:where(.min-h-0, .min-block-0) {
+    min-block-size: 0;
+}
+
+:where(.min-w-0, .min-inline-0) {
+    min-inline-size: 0;
+}
+
 /* --------------------------------------------------------------------------
    2. Positioning Utilities
    -------------------------------------------------------------------------- */
@@ -40,12 +49,28 @@
     position: sticky;
 }
 
+:where(.position-static) {
+    position: static;
+}
+
+:where(.position-fixed) {
+    position: fixed;
+}
+
 /* --------------------------------------------------------------------------
-   3. Overflow Utilities
+   3. Overflow & Overscroll Utilities
    -------------------------------------------------------------------------- */
+
+:where(.overflow-visible) {
+    overflow: visible;
+}
 
 :where(.overflow-hidden) {
     overflow: hidden;
+}
+
+:where(.overflow-clip) {
+    overflow: clip;
 }
 
 :where(.overflow-auto) {
@@ -60,10 +85,53 @@
     overflow-y: auto;
 }
 
+/* Overscroll Behavior Utilities (WCAG 2.1 Reflow & Scroll Chaining Containment) */
+:where(.overscroll-contain) {
+    overscroll-behavior: contain;
+}
+
+:where(.overscroll-none) {
+    overscroll-behavior: none;
+}
+
+:where(.overscroll-auto) {
+    overscroll-behavior: auto;
+}
+
+:where(.overscroll-y-contain) {
+    overscroll-behavior-y: contain;
+}
+
+:where(.overscroll-y-none) {
+    overscroll-behavior-y: none;
+}
+
+/* Scrollbar Gutter Utilities (Prevent Layout Shift on Dynamic Content) */
+:where(.scrollbar-gutter-stable) {
+    scrollbar-gutter: stable;
+}
+
+:where(.scrollbar-gutter-auto) {
+    scrollbar-gutter: auto;
+}
+
 /* --------------------------------------------------------------------------
    4. Isolation Utilities
    -------------------------------------------------------------------------- */
 
 :where(.isolate) {
     isolation: isolate;
+}
+
+/* --------------------------------------------------------------------------
+   5. Accessible Backdrop (Modal Drawers & Overlays)
+   -------------------------------------------------------------------------- */
+
+:where(.backdrop) {
+    position: fixed;
+    inset: 0;
+    background-color: var(--dialog-backdrop, rgba(0, 0, 0, 0.45));
+    backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
+    -webkit-backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
+    z-index: calc(var(--z-modal, 100) - 1);
 }

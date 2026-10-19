@@ -1,23 +1,19 @@
 /* ==========================================================================
-   Design For Humans: Color Scheme & Color Palette Utilities
+   Design For Humans: Color Scheme Utilities
    --------------------------------------------------------------------------
-   Centralized container query palette inversion and light/dark color-scheme.
-   Direct parity with the Design For Humans blog architecture (_color-scheme.scss).
+   Native browser color-scheme mode toggles. Triggers automatic resolution
+   of all light-dark() CSS variables across the DOM cascade.
+   Parity with Design For Humans Blog (_color-scheme.scss).
    ========================================================================== */
 
-/* Color Schemes */
-.color-scheme-dark {
+:where(.color-scheme-dark) {
     color-scheme: dark;
 }
 
-.color-scheme-light {
+:where(.color-scheme-light) {
     color-scheme: light;
 }
 
-/* Color Palette Container Utility Classes */
-.color-palette-default,
-.colors-default {
-    --color-palette: default;
-    background-color: var(--surface);
-    color: var(--foreground);
+:where(.color-scheme-light-dark) {
+    color-scheme: light dark;
 }

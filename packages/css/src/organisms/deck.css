@@ -1,0 +1,636 @@
+/* ==========================================================================
+   Design For Humans: Deck Primitive
+   --------------------------------------------------------------------------
+   Audio and media playback deck container foundation with container queries.
+   Encapsulates track identity, artwork, timeline scrubber, transport
+   toolbar, volume faders, and stereo VU peak monitoring.
+   Composes with .lockup, .subheading, .small-heading, .button-group, and .meter.
+   Complies with WCAG 2.2 AA/AAA (2.5.5 / 2.5.8 Touch Target, 1.4.3 Contrast).
+   Parity with Design For Humans Blog (_deck.scss & _component-library.twig).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Deck Container (:where(.deck))
+   ========================================================================== */
+:where(.deck) {
+  --chip-variation: simple;
+  --font-sizing: cq;
+
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_deck-accent: var(--deck-on-air-border, var(--foreground-accent, #008076));
+  --_deck-art-radius: var(--deck-art-radius, var(--radius-md, 0.375rem));
+  --_deck-art-size: var(--deck-art-size, var(--spacing-80, 5rem));
+  --_deck-bg: var(--deck-bg, var(--surface-card, Canvas));
+  --_deck-border-color: var(--deck-border-color, var(--panel-border-color, currentColor));
+  --_deck-border-style: var(--deck-border-style, var(--panel-border-style, solid));
+  --_deck-border-width: var(--deck-border-width, var(--panel-border-width, 1px));
+  --_deck-gap: var(--deck-gap, var(--spacing-12, 0.75rem));
+  --_deck-on-air-glow: var(--deck-on-air-glow,
+      0 0 0 1px var(--_deck-accent),
+      0 0 16px -2px color-mix(in srgb, var(--_deck-accent) 35%, transparent));
+  --_deck-padding: var(--deck-padding, var(--spacing-16, 1rem));
+  --_deck-play-icon-size: var(--deck-play-icon-size, var(--spacing-24, 1.5rem));
+  --_deck-play-size: var(--deck-play-size, var(--spacing-48, 3rem));
+  --_deck-radius: var(--deck-radius, var(--panel-radius, 0.5rem));
+  --_deck-shadow: var(--deck-shadow, var(--shadow, none));
+  --_deck-text: var(--deck-text, var(--foreground, CanvasText));
+  --_deck-transition: var(--deck-transition, var(--duration-sm, 150ms));
+
+  /* Layout, Sizing & Container Query Context */
+  box-sizing: border-box;
+  container-name: deck;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--_deck-gap);
+  padding: var(--_deck-padding);
+  background-color: var(--_deck-bg);
+  border: var(--_deck-border-width) var(--_deck-border-style) var(--_deck-border-color);
+  border-radius: var(--_deck-radius);
+  box-shadow: var(--_deck-shadow);
+  color: var(--_deck-text);
+  max-inline-size: 100%;
+  overflow: auto;
+  position: relative;
+  transition: border-color var(--_deck-transition) ease,
+    box-shadow var(--_deck-transition) ease;
+
+  /* --------------------------------------------------------------------------
+     Style Container Queries (@container style(...))
+     -------------------------------------------------------------------------- */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--deck-density: compact) {
+    --_deck-art-size: var(--deck-compact-art-size, var(--spacing-48, 3rem));
+    --_deck-gap: var(--deck-compact-gap, var(--spacing-8, 0.5rem));
+    --_deck-padding: var(--deck-compact-padding, var(--spacing-10, 0.625rem));
+    --_deck-play-icon-size: var(--deck-compact-play-icon-size, var(--spacing-18, 1.125rem));
+    --_deck-play-size: var(--deck-compact-play-size, var(--spacing-40, 2.5rem));
+  }
+
+  @container style(--deck-state: on-air) or style(--deck-state: live) {
+    --_deck-border-color: var(--_deck-accent);
+    box-shadow: var(--_deck-on-air-glow);
+  }
+
+  @container style(--deck-state: cue) or style(--deck-state: preview) {
+    --_deck-border-color: var(--color-warning-500, #ffb300);
+  }
+}
+
+/* ==========================================================================
+   2. Deck Structural Regions & Layout Hooks
+   ========================================================================== */
+
+/* Main Content Wrapper (:where(.deck__content)) */
+:where(.deck__content) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: var(--_deck-gap);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+/* Header Region (:where(.deck__header)) - Composes naturally with .split */
+:where(.deck__header) {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--spacing-8, 0.5rem);
+  inline-size: 100%;
+  justify-content: space-between;
+}
+
+/* Status Cluster Hook (:where(.deck__status)) */
+:where(.deck__status) {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--spacing-6, 0.375rem);
+  min-inline-size: 0;
+}
+
+/* Channel Heading Hook (:where(.deck__channel)) */
+:where(.deck__channel) {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Header Actions Cluster Hook (:where(.deck__header-actions)) */
+:where(.deck__header-actions) {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: var(--spacing-4, 0.25rem);
+}
+
+/* Body Section (:where(.deck__body)) */
+:where(.deck__body) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: var(--_deck-gap);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+/* ==========================================================================
+   3. Track Identity & Artwork
+   ========================================================================== */
+
+/* Track Unit Hook (:where(.deck__track)) - Composes with .inline */
+:where(.deck__track) {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--_deck-gap);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+/* Artwork Thumbnail Container (:where(.deck__art)) */
+:where(.deck__art-frame) {
+  block-size: var(--_deck-art-size);
+  display: flex;
+  flex-shrink: 0;
+  inline-size: var(--_deck-art-size);
+  position: relative;
+}
+
+:where(.deck__art) {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  background-color: var(--surface-subtle, Canvas);
+  block-size: var(--_deck-art-size);
+  border-radius: var(--_deck-art-radius);
+  box-sizing: border-box;
+  color: var(--foreground-muted, currentColor);
+  display: flex;
+  flex-shrink: 0;
+  inline-size: var(--_deck-art-size);
+  justify-content: center;
+  overflow: clip;
+  position: relative;
+  transition: transform var(--_deck-transition) ease;
+
+  >img {
+    block-size: 100%;
+    border-radius: inherit;
+    display: block;
+    inline-size: 100%;
+    object-fit: cover;
+  }
+
+  >.icon {
+    block-size: 50%;
+    inline-size: 50%;
+    opacity: 0.85;
+  }
+}
+
+/* Vinyl Turntable Disc Variation (:where(.deck__art--vinyl)) */
+:where(.deck__art--vinyl) {
+  background: radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 24%, #0d0d0d 25%, #2a2a2a 26%, #111111 70%, #050505 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-round, 9999px);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+
+  &::after {
+    background-color: var(--surface-card, #222222);
+    block-size: 20%;
+    border: 2px solid var(--border-color-quiet, #444444);
+    border-radius: var(--radius-round, 9999px);
+    content: "";
+    inline-size: 20%;
+    position: absolute;
+  }
+
+  &.is-spinning {
+    animation: deck-vinyl-spin 3s linear infinite;
+  }
+}
+
+@keyframes deck-vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Artwork Overlay Badge (:where(.deck__badge)) */
+:where(.deck__badge) {
+  font-size: var(--typography-font-size--2, 0.625rem);
+  inset-block-end: var(--spacing-4, 0.25rem);
+  inset-inline-end: var(--spacing-4, 0.25rem);
+  line-height: 1;
+  padding-block: 1px;
+  padding-inline: var(--spacing-4, 0.25rem);
+  position: absolute;
+  z-index: 1;
+}
+
+/* Track Identity Container (:where(.deck__identity)) - Composes with .lockup */
+:where(.deck__identity) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: var(--spacing-2, 0.125rem);
+  min-inline-size: 0;
+}
+
+/* Track Tags Container (:where(.deck__tags)) */
+:where(.deck__tags) {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4, 0.25rem);
+}
+
+/* Title & Artist Text Hooks (Truncation fallback for non-.truncate markup) */
+:where(.deck__title, .deck__artist) {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   4. Timeline Scrubber & Time Displays
+   ========================================================================== */
+
+/* Timeline Progress Region (:where(.deck__timeline)) */
+:where(.deck__timeline) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2, 0.125rem);
+  inline-size: 100%;
+}
+
+/* Time Counters Row (:where(.deck__time)) */
+:where(.deck__time) {
+  align-items: center;
+  color: var(--foreground-muted, currentColor);
+  display: flex;
+  font-family: var(--typography-font-family-mono, monospace);
+  font-size: var(--typography-font-size--2, 0.75rem);
+  font-variant-numeric: tabular-nums;
+  justify-content: space-between;
+  line-height: 1;
+}
+
+/* Scrubber Slider Hook (:where(.deck__scrubber)) */
+:where(.deck__scrubber) {
+  cursor: pointer;
+  inline-size: 100%;
+  margin: 0;
+}
+
+/* ==========================================================================
+   5. Playback Transport Toolbar
+   ========================================================================== */
+
+/* Transport Cluster Hook (:where(.deck__transport)) - Composes with .button-group */
+:where(.deck__transport) {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--spacing-12, 0.75rem);
+  inline-size: 100%;
+  justify-content: center;
+  margin-block: var(--spacing-4, 0.25rem);
+}
+
+/* Primary Play/Pause Hero Button (:where(.deck__play)) */
+:where(.deck__play) {
+  align-items: center;
+  block-size: var(--_deck-play-size);
+  border-radius: var(--radius-round, 9999px);
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: var(--_deck-play-size);
+  justify-content: center;
+  min-block-size: var(--_deck-play-size);
+  min-inline-size: var(--_deck-play-size);
+  padding: 0;
+
+  >.icon {
+    block-size: var(--_deck-play-icon-size);
+    inline-size: var(--_deck-play-icon-size);
+  }
+}
+
+:where(.deck__cue, .deck__skip) {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   6. Volume & Level Output Control
+   ========================================================================== */
+
+/* Volume Container (:where(.deck__volume)) */
+:where(.deck__volume) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6, 0.375rem);
+  inline-size: 100%;
+}
+
+/* Volume Header Hook (:where(.deck__volume-header)) - Composes with .split */
+:where(.deck__volume-header) {
+  align-items: center;
+  display: flex;
+  font-size: var(--typography-font-size--2, 0.75rem);
+  justify-content: space-between;
+}
+
+:where(.deck__volume-label) {
+  color: var(--foreground-muted, currentColor);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+:where(.deck__volume-output) {
+  font-family: var(--typography-font-family-mono, monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-bold, 700);
+}
+
+/* Volume Controls Row Hook (:where(.deck__volume-controls)) - Composes with .inline */
+:where(.deck__volume-controls) {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-8, 0.5rem);
+  inline-size: 100%;
+}
+
+:where(.deck__fader) {
+  cursor: pointer;
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+/* ==========================================================================
+   7. Stereo Peak VU Meters
+   ========================================================================== */
+
+/* VU Meters Container (:where(.deck__meters)) */
+:where(.deck__meters) {
+  background-color: var(--surface-subtle, Canvas);
+  border: 1px solid var(--border-color-quiet, currentColor);
+  border-radius: var(--radius-md, 0.375rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6, 0.375rem);
+  inline-size: 100%;
+  padding: var(--spacing-8, 0.5rem);
+}
+
+/* VU Meters Header Hook (:where(.deck__meters-header)) */
+:where(.deck__meters-header) {
+  align-items: center;
+  color: var(--foreground-muted, currentColor);
+  display: flex;
+  font-size: var(--typography-font-size--2, 0.75rem);
+  justify-content: space-between;
+}
+
+:where(.deck__meters-title) {
+  font-weight: var(--font-weight-bold, 700);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Individual Channel Meter Strip (:where(.deck__channel-meter)) - Composes with .inline */
+:where(.deck__channel-meter) {
+  align-items: center;
+  display: flex;
+  font-family: var(--typography-font-family-mono, monospace);
+  font-size: var(--typography-font-size--2, 0.75rem);
+  gap: var(--spacing-6, 0.375rem);
+  inline-size: 100%;
+}
+
+:where(.deck__meter-ch) {
+  color: var(--foreground-muted, currentColor);
+  font-weight: var(--font-weight-bold, 700);
+  inline-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+:where(.deck__meter-bar) {
+  flex: 1 1 auto;
+  inline-size: 100%;
+}
+
+:where(.deck__meter-val) {
+  color: var(--foreground-muted, currentColor);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  inline-size: 8ch;
+  text-align: end;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   8. Deck Footer Hook
+   ========================================================================== */
+
+/* Secondary Deck Controls Footer (:where(.deck__footer)) */
+:where(.deck__footer) {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--spacing-8, 0.5rem);
+  inline-size: 100%;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   9. Component Modifiers & States
+   ========================================================================== */
+
+/* Broadcast States (.deck--on-air, .deck--live, .deck--cue, .deck--preview) */
+:where(.deck--on-air, .deck--live) {
+  --_deck-border-color: var(--_deck-accent);
+  box-shadow: var(--_deck-on-air-glow);
+}
+
+:where(.deck--cue, .deck--preview) {
+  --_deck-border-color: var(--color-warning-500, #ffb300);
+}
+
+/* Density Modifiers (.deck--compact, .deck--dense) */
+:where(.deck--dense, .deck.ui-dense, .deck--compact, .deck.ui-compact) {
+  --_deck-art-size: var(--deck-compact-art-size, var(--spacing-48, 3rem));
+  --_deck-gap: var(--deck-compact-gap, var(--spacing-8, 0.5rem));
+  --_deck-padding: var(--deck-compact-padding, var(--spacing-10, 0.625rem));
+  --_deck-play-icon-size: var(--deck-compact-play-icon-size, var(--spacing-18, 1.125rem));
+  --_deck-play-size: var(--deck-compact-play-size, var(--spacing-40, 2.5rem));
+}
+
+/* Viewport Stretch Containment (.deck--panel) */
+:where(.deck--panel) {
+  block-size: 100%;
+  flex: 1 1 0%;
+  min-block-size: 0;
+}
+
+/* Translucent Frosted Glass (.deck--translucent) */
+:where(.deck--translucent) {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background-color: color-mix(in srgb, var(--_deck-bg) 75%, transparent);
+}
+
+/* Bordered Modifier (.deck--bordered) */
+:where(.deck--bordered) {
+  --_deck-border-width: var(--panel-border-width, 1px);
+}
+
+/* Flush & Hollow Modifiers (.deck--flush, .deck--plain, .deck--hollow) */
+:where(.deck--flush, .deck--plain) {
+  --_deck-border-width: 0;
+  --_deck-radius: 0;
+  --_deck-shadow: none;
+}
+
+:where(.deck--hollow, .deck--plain) {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   10. Horizontal Player Dock Bar (.deck--horizontal, .deck--dock)
+   ========================================================================== */
+:where(.deck--horizontal, .deck--dock) {
+  --_deck-art-size: var(--spacing-48, 3rem);
+  --_deck-padding: var(--spacing-10, 0.625rem) var(--spacing-16, 1rem);
+
+  >.deck__content,
+  .deck__body {
+    align-items: center;
+    flex-direction: row;
+    gap: var(--spacing-16, 1rem);
+    justify-content: space-between;
+  }
+
+  .deck__track {
+    flex: 0 1 var(--spacing-block-xs);
+    min-inline-size: 0;
+  }
+
+  .deck__timeline-transport-group {
+    align-items: center;
+    display: flex;
+    flex: 1 1 32rem;
+    flex-direction: column;
+    gap: var(--spacing-4, 0.25rem);
+    max-inline-size: 38rem;
+  }
+
+  .deck__volume-meters-group {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 var(--spacing-block-xs);
+    gap: var(--spacing-12, 0.75rem);
+    row-gap: var(--spacing-4, 0.25rem);
+    justify-content: flex-end;
+    min-inline-size: 0;
+  }
+
+  .deck__volume {
+    flex: 0 1 100%;
+  }
+
+  .deck__meters {
+    border: 0;
+    background-color: transparent;
+    flex: 1;
+    gap: 0;
+    padding: 0;
+  }
+
+  .deck__transport {
+    margin-block: 0;
+  }
+}
+
+/* ==========================================================================
+   11. Responsive Container Queries (@container deck (max-width: ...))
+   ========================================================================== */
+
+/* Narrow Container Reflow (< 32rem / 512px) */
+@container deck (max-width: 32rem) {
+  :where(.deck--horizontal, .deck--dock) {
+
+    >.deck__content,
+    .deck__body {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .deck__track,
+    .deck__timeline-transport-group,
+    .deck__volume-meters-group {
+      flex: 1 1 auto;
+      max-inline-size: 100%;
+    }
+  }
+}
+
+/* Ultra-Compact Container (< 22rem / 352px) */
+@container deck (max-width: 22rem) {
+  :where(.deck) {
+    --_deck-art-size: var(--spacing-40, 2.5rem);
+    --_deck-padding: var(--spacing-8, 0.5rem);
+    --_deck-gap: var(--spacing-6, 0.375rem);
+    --_deck-play-size: var(--spacing-36, 2.25rem);
+    --_deck-play-icon-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+   12. Accessibility & Preference Adaptations (WCAG 2.4.7 / 2.3.3 / 1.4.11)
+   ========================================================================== */
+
+/* High-Contrast Focus Visible Perimeter */
+:where(.deck) :focus-visible {
+  outline: 2px solid var(--focus-ring-color, var(--foreground-accent, #008076));
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Optimization (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  :where(.deck) {
+    transition: none !important;
+  }
+
+  :where(.deck__art--vinyl.is-spinning) {
+    animation: none !important;
+  }
+}
+
+/* Enhanced Contrast Perimeter (WCAG 1.4.11) */
+@media (prefers-contrast: more) {
+  :where(.deck) {
+    --_deck-border-width: 2px;
+    border-style: solid;
+  }
+
+  :where(.deck--on-air, .deck--live) {
+    box-shadow: none;
+    outline: 2px solid var(--_deck-accent);
+    outline-offset: 2px;
+  }
+}

@@ -28,6 +28,229 @@
   border: 0;
 }
 
+
+/* --------------------------------------------------------------------------
+   Viewport Media Query Visually Hidden (Max-Width / Mobile)
+   Primary: max-sm:sr-only, max-sm:visually-hidden
+   Synonyms: sm-max:sr-only, sm-max:visually-hidden, visually-hidden--below-sm, sr-only--below-sm
+   -------------------------------------------------------------------------- */
+
+@media (width <=20em) {
+  :where(.\2xs-max\:visually-hidden, .\2xs-max\:sr-only, .max-2xs\:visually-hidden, .max-2xs\:sr-only, .visually-hidden--below-2xs, .sr-only--below-2xs) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (width <=30em) {
+  :where(.xs-max\:visually-hidden, .xs-max\:sr-only, .max-xs\:visually-hidden, .max-xs\:sr-only, .visually-hidden--below-xs, .sr-only--below-xs) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (width <=40em) {
+  :where(.sm-max\:visually-hidden, .sm-max\:sr-only, .max-sm\:visually-hidden, .max-sm\:sr-only, .visually-hidden--below-sm, .sr-only--below-sm) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (width <=48em) {
+  :where(.md-max\:visually-hidden, .md-max\:sr-only, .max-md\:visually-hidden, .max-md\:sr-only, .visually-hidden--below-md, .sr-only--below-md) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (width <=60em) {
+  :where(.lg-max\:visually-hidden, .lg-max\:sr-only, .max-lg\:visually-hidden, .max-lg\:sr-only, .visually-hidden--below-lg, .sr-only--below-lg) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (width <=80em) {
+  :where(.xl-max\:visually-hidden, .xl-max\:sr-only, .max-xl\:visually-hidden, .max-xl\:sr-only, .visually-hidden--below-xl, .sr-only--below-xl) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@media (width <=96em) {
+  :where(.\2xl-max\:visually-hidden, .\2xl-max\:sr-only, .max-2xl\:visually-hidden, .max-2xl\:sr-only, .visually-hidden--below-2xl, .sr-only--below-2xl) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Container Query Visually Hidden (Max-Inline-Size / Narrow Containers)
+   Primary: @max-sm:sr-only, @max-sm:visually-hidden
+   Synonyms: @sm-max:sr-only, @sm-max:visually-hidden, visually-hidden--in-container-below-sm, sr-only--in-container-below-sm
+   -------------------------------------------------------------------------- */
+
+@container (inline-size <=20em) {
+  :where(.\@2xs-max\:visually-hidden, .\@2xs-max\:sr-only, .\@max-2xs\:visually-hidden, .\@max-2xs\:sr-only, .visually-hidden--in-container-below-2xs, .sr-only--in-container-below-2xs) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@container (inline-size <=30em) {
+  :where(.\@xs-max\:visually-hidden, .\@xs-max\:sr-only, .\@max-xs\:visually-hidden, .\@max-xs\:sr-only, .visually-hidden--in-container-below-xs, .sr-only--in-container-below-xs) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@container (inline-size <=40em) {
+  :where(.\@sm-max\:visually-hidden, .\@sm-max\:sr-only, .\@max-sm\:visually-hidden, .\@max-sm\:sr-only, .visually-hidden--in-container-below-sm, .sr-only--in-container-below-sm) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@container (inline-size <=48em) {
+  :where(.\@md-max\:visually-hidden, .\@md-max\:sr-only, .\@max-md\:visually-hidden, .\@max-md\:sr-only, .visually-hidden--in-container-below-md, .sr-only--in-container-below-md) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@container (inline-size <=60em) {
+  :where(.\@lg-max\:visually-hidden, .\@lg-max\:sr-only, .\@max-lg\:visually-hidden, .\@max-lg\:sr-only, .visually-hidden--in-container-below-lg, .sr-only--in-container-below-lg) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@container (inline-size <=80em) {
+  :where(.\@xl-max\:visually-hidden, .\@xl-max\:sr-only, .\@max-xl\:visually-hidden, .\@max-xl\:sr-only, .visually-hidden--in-container-below-xl, .sr-only--in-container-below-xl) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@container (inline-size <=96em) {
+  :where(.\@2xl-max\:visually-hidden, .\@2xl-max\:sr-only, .\@max-2xl\:visually-hidden, .\@max-2xl\:sr-only, .visually-hidden--in-container-below-2xl, .sr-only--in-container-below-2xl) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
 /* ==========================================================================
    Focusable Visually Hidden Utility
    Allows visually hidden items (e.g. "Skip to main content" links) to become

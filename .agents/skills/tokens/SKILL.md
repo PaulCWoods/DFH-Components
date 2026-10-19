@@ -107,11 +107,66 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 | `border.accent-hover` | `--border-accent-hover` | Accent interactive border hover |
 | `border.danger` | `--border-danger` | Form error or destructive border |
 | `border.success` | `--border-success` | Success/verified border |
+| `panel.border-width` | `--panel-border-width` | Shared perimeter border thickness for panels, cards, tables, menus |
+| `panel.border-color` | `--panel-border-color` | Shared perimeter border color for panels, cards, tables, menus |
+| `app.border-width` | `--app-border-width` | Shared perimeter border thickness for major app landmarks (header, sidebar, footer) |
+| `app.border-color` | `--app-border-color` | Shared perimeter border color for major app landmarks (header, sidebar, footer) |
 
 #### Focus Rings (WCAG 2.4.7 & 2.4.13)
 - `--focus-ring-color`: `var(--foreground-accent)`
 - `--focus-ring-outline`: `2px solid var(--focus-ring-color)`
-- `--focus-ring-outline-offset`: `2px`
+- `--focus-ring-offset`: `2px`
+
+#### Elevation & Shadows (3-Layer Stacks & CSS Level 5 `@function`)
+Design For Humans implements an ergonomic, non-verbose shadow architecture pairing 3-layer Gaussian blur geometry with native CSS `@function` rules and 100% backward-compatible variable composition:
+
+| Token JSON Path | CSS Variable Fallback | `@function` Signature | Intended Use |
+| :--- | :--- | :--- | :--- |
+| `shadow.color` | `--shadow-color` | — | Base elevation tint (90% light / 80% dark neutral tint) |
+| `shadow.color-light` | `--shadow-color-light` | — | Subtle elevation tint (95% light / 90% dark neutral tint) |
+| `shadow.none` | `--shadow-none` | — | Flat / reset elevation (`0 0 0 0 transparent`) |
+| `shadow.sm` | `--shadow-sm` | `--shadow-sm(--color)` | Subtle card & resting container elevation |
+| `shadow.md` | `--shadow-md` | `--shadow-md(--color)` | Medium elevated popovers, dropdowns, hovered cards |
+| `shadow.lg` | `--shadow-lg` | `--shadow-lg(--color)` | High modals, drawers, toasts, and floating flyouts |
+| `shadow.inner` | `--shadow-inner` | `--shadow-inner(--color)` | Inset well and pressed states |
+| `shadow.sm-light` | `--shadow-sm-light` | `--shadow-sm(var(--shadow-color-light))` | Light resting surface elevation |
+| `shadow.md-light` | `--shadow-md-light` | `--shadow-md(var(--shadow-color-light))` | Light medium elevation |
+| `shadow.lg-light` | `--shadow-lg-light` | `--shadow-lg(var(--shadow-color-light))` | Light high elevation |
+| `shadow.inner-light` | `--shadow-inner-light` | `--shadow-inner(var(--shadow-color-light))` | Light inset well elevation |
+
+- **Decomposed Layer Geometry (`--_shadow-*-layer-[1..3]`):**
+  - `sm`: Layer 1 (`0 0 1px 0`), Layer 2 (`0 1px 2px 0`), Layer 3 (`0 2px 6px 0`).
+  - `md`: Layer 1 (`0 1px 4px 0`), Layer 2 (`0 2px 8px 0`), Layer 3 (`0 8px 24px 0`).
+  - `lg`: Layer 1 (`0 4px 16px 0`), Layer 2 (`0 8px 32px 0`), Layer 3 (`0 16px 64px 0`).
+  - `inner`: Layer 1 (`inset 0 1px 2px 0`), Layer 2 (`inset 0 2px 4px 0`), Layer 3 (`inset 0 4px 8px 0`).
+- **Dynamic Recoloring via Native `@function` (Modern Browsers):**
+  ```css
+  /* Inline color parameterization without repeating 3-layer stack */
+  .card--brand {
+    box-shadow: --shadow-md(var(--color-purple-500));
+  }
+  .alert--danger {
+    box-shadow: --shadow-lg(var(--color-red-500));
+  }
+  ```
+- **Firefox & Universal Browser Resilience:**
+  - ⚠️ **Firefox Compatibility Gotcha:** Firefox does not yet support CSS `@function`. If a property uses `--shadow-md(...)` directly without fallback, Firefox drops the entire `box-shadow` declaration.
+  - When authoring modern styles using `@function`, always guard with `@supports at-rule(@function)` or provide a preceding cascading fallback:
+  ```css
+  /* 100% universal across Chrome, Safari, and Firefox */
+  .card--brand {
+    --shadow-color: color-mix(in srgb, var(--color-purple-700), transparent 75%);
+    box-shadow: var(--shadow-md, none);
+  }
+
+  /* Progressive enhancement with @function guard */
+  @supports at-rule(@function) {
+    .card--brand {
+      box-shadow: --shadow-md(var(--color-purple-500));
+    }
+  }
+  ```
+
 
 #### Fluid Spacing & Typography Architecture
 Design For Humans supports fluid spacing and responsive typography across both Web and Figma:
@@ -154,6 +209,7 @@ Component tokens scope styles directly to specific UI components (`button`, `dia
 
 - **Naming Pattern:** `--<component>-<property>` or `--<component>-<variant>-<property>`
 - **Control Unification:** Buttons and form inputs share the Tier 2 `control` semantic tokens (`--control-font-size`, `--control-min-size`, `--control-padding-block`, `--control-padding-inline`, `--control-radius`, `--control-border-width`, etc.) ensuring consistent proportions and alignment across form elements.
+- **Organism-Atom Separation & Token Economy:** Tier 3 component tokens should strictly define unique component geometry (paddings, gaps, well dimensions, elevation, border strokes, and specific component surface/border states). Do NOT create Tier 3 component tokens for heading/body typography (`title-font-size`, `title-weight`, `description-font-size`, `subtitle-font-*`) inside organisms (`card`, `empty-state`, `dialog`). Organisms compose atomic typography classes directly (`.heading`, `.small-heading`, `.subheading`, `.micro-heading`, `.display-title`), keeping Tier 3 lean, clean, and free of redundant font tokens.
 - **Mandatory Fallback Rule in CSS:** Always fall back to the semantic token:
   ```css
   background-color: var(--button-primary-bg, var(--foreground-accent));
@@ -182,36 +238,148 @@ Design For Humans components use clean, standard semantic class names **without 
 
 ## 4. Component CSS Architecture & Native CSS Nesting Guidelines
 
-When authoring CSS for components in `packages/css/src/components/<component>.css`:
+When authoring CSS for components in `packages/css/src/{atoms,molecules,organisms}/<component>.css`:
 
 ### 1. Low-Specificity Foundation (`:where()`)
 Always wrap root component selectors and variants in `:where()` to maintain zero-specificity overhead, allowing application consumers to override styles easily:
 ```css
 :where(.component, element.component) {
-  /* Base styles */
+  /* Base styles & private variable manifest */
 }
 
 :where(.component--variant) {
-  /* Variant overrides */
+  /* Variant re-assignments */
 }
 ```
 
-### 2. Native CSS Nesting for States & Pseudo-Classes
+### 2. Local Private Variable Manifest (`--_<component>-*`) & State Variable Contract
+Define a complete private variable manifest at the top of the base `:where(.component)` block. This serves as the single source of truth for the token fallback ladder.
+Crucially, **interactive components MUST declare private state variables for hover and active transitions**:
+
+```css
+:where(.button) {
+  /* Core Geometry & Surface */
+  --_button-bg: var(--button-bg, transparent);
+  --_button-border-color: var(--button-border-color, var(--border-color-muted, currentColor));
+  --_button-text: var(--button-text, var(--foreground, currentColor));
+
+  /* Interactive State Contract */
+  --_button-hover-bg: var(--button-hover-bg, var(--foreground, currentColor));
+  --_button-hover-border-color: var(--button-hover-border-color, var(--foreground, currentColor));
+  --_button-hover-text: var(--button-hover-text, var(--surface, #ffffff));
+  --_button-active-bg: var(--button-active-bg, var(--foreground-accent-pressed, #005f57));
+  --_button-active-border-color: var(--button-active-border-color, var(--foreground-accent-pressed, #005f57));
+  --_button-active-text: var(--button-active-text, var(--surface, #ffffff));
+}
+```
+
+### 3. Single-Source State Handling (Zero Duplicate `:hover` / `:active` Across Variants)
+Never duplicate `@media (hover: hover) { &:hover { ... } }` or `&:active { ... }` blocks across individual component variants.
+Resolve interactive transitions **strictly once** inside the base `:where(.component)` rule using the private state variables:
+
+```css
+:where(.button) {
+  /* ... base properties & transitions ... */
+
+  @media (hover: hover) {
+    &:hover:not(:disabled, [disabled], [aria-disabled="true"]) {
+      background-color: var(--_button-hover-bg);
+      border-color: var(--_button-hover-border-color);
+      color: var(--_button-hover-text);
+    }
+  }
+
+  &:active:not(:disabled, [disabled], [aria-disabled="true"]) {
+    background-color: var(--_button-active-bg);
+    border-color: var(--_button-active-border-color);
+    color: var(--_button-active-text);
+  }
+}
+```
+
+#### Variants as Pure Token Dictionaries:
+Component variants (`.button--primary`, `.button--subtle`, `.button--destructive`) become **pure token maps** that ONLY re-assign the private variables:
+```css
+/* Primary Variant (High-emphasis filled action) */
+:where(.button--primary) {
+  --_button-bg: var(--button-primary-bg, var(--foreground-accent, #008076));
+  --_button-border-color: var(--button-primary-border-color, var(--button-primary-bg, var(--foreground-accent, #008076)));
+  --_button-text: var(--button-primary-text, var(--surface, #ffffff));
+  --_button-hover-bg: var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e));
+  --_button-hover-border-color: var(--button-primary-hover-border-color, var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e)));
+  --_button-hover-text: var(--button-primary-hover-text, var(--button-primary-text, var(--surface, #ffffff)));
+  --_button-active-bg: var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57));
+  --_button-active-border-color: var(--button-primary-active-border-color, var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57)));
+  --_button-active-text: var(--button-primary-active-text, var(--button-primary-text, var(--surface, #ffffff)));
+}
+```
+
+### 4. Zero-Class Orchestration via Style Container Queries (`@container style(...)`)
+To deliver a superior DX that decouples styling from per-element classnames, embed `@container style(...)` queries directly within the base component definition.
+This allows parents (navbars, toolbars, sidebars, forms) to orchestrate child component appearance purely through contextual CSS properties:
+
+```css
+:where(.button) {
+  /* ... private variables manifest ... */
+
+  /* ------------------------------------------------------------------------
+     Style Container Queries (@container style(...))
+     Enables contextual DX orchestration without per-element utility classes:
+     e.g., .navigation { --button-variation: subtle; --button-corners: round; }
+     ------------------------------------------------------------------------ */
+
+  /* Density & Size */
+  @container style(--ui-density: dense) or style(--button-size: sm) {
+    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2, 0.125rem));
+    --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-8, 0.5rem));
+    --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
+    --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
+  }
+
+  /* Variation Orchestration */
+  @container style(--button-variation: subtle) or style(--button-appearance: subtle) {
+    --_button-bg: var(--button-subtle-bg, transparent);
+    --_button-border-color: var(--button-subtle-border-color, transparent);
+    --_button-text: var(--button-subtle-text, var(--foreground, currentColor));
+    --_button-hover-bg: var(--button-subtle-hover-bg, var(--surface-hover, transparent));
+    --_button-hover-border-color: var(--button-subtle-hover-border-color, transparent);
+    --_button-hover-text: var(--button-subtle-hover-text, var(--foreground, currentColor));
+    --_button-active-bg: var(--button-subtle-active-bg, var(--surface-active, transparent));
+    --_button-active-border-color: var(--button-subtle-active-border-color, transparent);
+    --_button-active-text: var(--button-subtle-active-text, var(--foreground, currentColor));
+  }
+
+  /* Corner Shape */
+  @container style(--button-corners: round) {
+    --_button-radius: var(--radius-round, 9999px);
+  }
+}
+```
+
+#### Terminal Fallbacks & Resilient Unstyled Graceful Degradation
+Component variable declarations must always terminate at basic browser primitives rather than hardcoded design tokens or multi-layer hex/rgba strings. If design tokens fail to load or are absent, components must render legibly and function in an unstyled state:
+- **Shadows:** Fall back to `none` (or `0 0 0 transparent`), e.g. `var(--component-shadow, var(--shadow-md, none))`. Never hardcode multi-layer `rgba(...)` stacks.
+- **Borders:** Border colors fall back to `currentColor` (or `transparent` when borderless); border widths fall back to `1px` or `0px`.
+- **Surfaces & Backgrounds:** Fall back to `Canvas`, `Highlight`, or `transparent`. Never hardcode `#ffffff` or arbitrary hex colors.
+- **Foregrounds & Text:** Fall back to `currentColor` or `CanvasText`. Never hardcode arbitrary hex text colors.
+
+#### Application Usage:
+```html
+<nav class="navigation" style="--button-variation: subtle; --button-corners: round;">
+  <!-- Rendered automatically as subtle & round with zero modifier classes -->
+  <button type="button" class="button">Home</button>
+  <button type="button" class="button">Profile</button>
+</nav>
+```
+
+### 5. Native CSS Nesting for States & Pseudo-Classes
 Always use native CSS nesting with an **explicit parent selector (`&`)** for pseudo-classes, states, and media queries:
 - **Pseudo-classes & Attributes:** Must start with `&` to ensure they target the element itself rather than a descendant:
   - `&:focus { outline: none; }`
-  - `&:focus-visible { outline: var(--focus-ring-outline); outline-offset: var(--focus-ring-outline-offset); }`
+  - `&:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }`
   - `&:active:not(:disabled, [aria-disabled="true"]) { ... }`
   - `&:where(:disabled, [aria-disabled="true"]) { ... }`
   - ⚠️ **Critical rule:** Never omit the `&` for pseudo-classes (e.g., writing `:active` inside a block desugars to `& :active`, matching descendants instead of the component itself).
-- **Hover Media Query:** Always wrap hover states in `@media (hover: hover)`:
-  ```css
-  @media (hover: hover) {
-    &:hover:not(:disabled, [aria-disabled="true"]) {
-      background-color: var(--component-hover-bg, var(--foreground));
-    }
-  }
-  ```
 - **Nested Child Elements:** Nest child elements directly by tag name or class:
   ```css
   span {
@@ -219,11 +387,11 @@ Always use native CSS nesting with an **explicit parent selector (`&`)** for pse
   }
   ```
 
-### 3. Logical Properties & Layout Rules
+### 6. Logical Properties & Layout Rules
 - **Dimensions & Spacing:** Use `min-block-size`, `min-inline-size`, `padding-block`, `padding-inline`, `margin-block`, `margin-inline`. Never use physical properties (`width`, `height`, `top`, `bottom`, `left`, `right`).
 - **Aspect Ratio:** For square icon-only buttons or chips, use `aspect-ratio: 1 / 1`.
 
-### 4. Size Modifiers via CSS Variable Overrides
+### 7. Size Modifiers via CSS Variable Overrides
 Size modifiers should **never** redefine layout declarations. Instead, override the scoped custom properties:
 ```css
 :where(.component--sm, .component.\+sm) {
@@ -234,10 +402,10 @@ Size modifiers should **never** redefine layout declarations. Instead, override 
 }
 ```
 
-### 5. Sensible Commenting & Section Headers
+### 8. Sensible Commenting & Section Headers
 Use standardized comment banners to structure component files:
 - `/* ===...=== */` for top-level component sections (`Base Primitive`, `Variants`, `Sizes`, `Link-Specific Resets`).
-- `/* ---...--- */` for nested state subsections inside the base or variant blocks (`Disabled State`, `Focus Visible`, `Hover State`, `Active / Pressed State`, `Typographic Bounding Box Alignment`).
+- `/* ---...--- */` for nested state subsections inside the base or variant blocks (`Local Private Variables`, `Style Container Queries`, `Disabled State`, `Interactive Elements`, `Focus Visible`, `Hover State`, `Active / Pressed State`).
 - Inline property comments grouping declarations by purpose: `/* Layout & Alignment */`, `/* Sizing & Spacing */`, `/* Typography */`, `/* Borders & Surfaces */`, `/* Transitions */`.
 
 ---

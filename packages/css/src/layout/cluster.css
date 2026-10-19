@@ -10,10 +10,11 @@
    -------------------------------------------------------------------------- */
 
 :where(.cluster) {
+    --_gap: var(--gap, var(--spacing, 1rem));
     align-items: var(--align-items, stretch);
     display: inline-flex;
     flex-wrap: wrap;
-    gap: var(--gap, var(--spacing, 1rem));
+    gap: var(--_gap);
     justify-content: var(--justify-content, var(--justify, normal));
 }
 
@@ -27,9 +28,12 @@
    2. Modifiers
    -------------------------------------------------------------------------- */
 
-/* Tight Modifier (Zero Gap) */
 :where(.cluster--tight) {
-    gap: 0;
+    --_gap: 0;
+}
+
+:where(.cluster--cushioned) {
+    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
 }
 
 /* --------------------------------------------------------------------------
@@ -38,7 +42,12 @@
 
 :where(.cluster--ruled) {
     @supports (rule: 1px) {
-        gap: var(--rule-width, 1px);
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+    }
+}
+
+:where(.cluster--ruled.cluster--tight) {
+    @supports (rule: 1px) {
+        --_gap: var(--rule-width, 1px);
     }
 }

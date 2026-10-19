@@ -1,0 +1,71 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import TableOfContents, { type TocItem } from '../components/TableOfContents.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentSection?: string;
+  currentPath?: string;
+  toc?: TocItem[];
+  isProse?: boolean;
+}
+
+const {
+  title = 'Design For Humans',
+  description,
+  currentSection = '',
+  currentPath = '',
+  toc = [],
+  isProse = false,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description} currentSection={currentSection}>
+  <div class="app">
+    <!-- Top Chrome: Sticky Header -->
+    <Header currentSection={currentSection} />
+
+    <!-- Main Workspace Shell -->
+    <div class="app__workspace">
+      <!-- Left Chrome: Navigation Sidebar -->
+      <Sidebar currentSection={currentSection} currentPath={currentPath} />
+
+      <!-- Center Stage: Content Area -->
+      <main id="main-content" class="main">
+        {isProse ? (
+          <article class="prose font-sizing-fluid wrapper wrapper--xl padding-block-breathe">
+            <slot />
+          </article>
+        ) : (
+          <div class="doc-content-wrapper wrapper wrapper--xl padding-block-breathe">
+            <slot />
+          </div>
+        )}
+      </main>
+
+      <!-- Right Chrome: On This Page Table of Contents -->
+      {toc && toc.length > 0 && <TableOfContents toc={toc} />}
+    </div>
+
+    <!-- Modal Chrome: Global Search -->
+    <CommandPalette />
+  </div>
+</BaseLayout>
+
+<style>
+  .doc-content-wrapper {
+    max-inline-size: 72rem;
+    padding-inline: var(--spacing-16, 1rem);
+  }
+
+  @media (min-width: 48em) {
+    .doc-content-wrapper {
+      padding-inline: var(--spacing-32, 2rem);
+    }
+  }
+</style>
+

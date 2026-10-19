@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Design For Humans: Font-size-mode Utilities
+   --------------------------------------------------------------------------
+   Low-specificity ()) utility classes for font-size-mode control. Direct parity with
+   the Design For Humans blog architecture (_font-size-mode.scss).
+   ========================================================================== */
+:where(.font-sizing-fixed) {
+    --font-sizing: fixed;
+    --vert-spacing: fixed;
+    --prose-font-sizing: fixed;
+    --prose-vert-spacing: fixed;
+}
+
+:where(.font-sizing-compact) {
+    --font-sizing: compact;
+    --vert-spacing: tight;
+    --prose-font-sizing: compact;
+    --prose-vert-spacing: tight;
+}
+
+:where(.font-sizing-cq) {
+    --font-sizing: cq;
+    --vert-spacing: cq;
+    --prose-font-sizing: cq;
+    --prose-vert-spacing: cq;
+}
+
+:where(.font-sizing-fluid) {
+    --font-sizing: fluid;
+    --vert-spacing: fluid;
+    --prose-font-sizing: fluid;
+    --prose-vert-spacing: fluid;
+}
+
+:where(.font-sizing-tight) {
+    --font-sizing: fixed;
+    --vert-spacing: tight;
+    --prose-font-sizing: fixed;
+    --prose-vert-spacing: tight;
+}
+
+:where(.font-sizing-compact) {
+    --font-sizing: compact;
+    --vert-spacing: tight;
+    --prose-font-sizing: compact;
+    --prose-vert-spacing: tight;
+
+}
+
+:where(.font-sizing-compact--on-desk) {
+    @media screen and (pointer: fine) and (hover: hover) {
+        --font-sizing: compact;
+        --vert-spacing: tight;
+        --prose-font-sizing: compact;
+        --prose-vert-spacing: tight;
+    }
+}
+
+:where(.vert-spacing-fluid) {
+    --vert-spacing: fluid;
+    --prose-vert-spacing: fluid;
+}
+
+:where(.vert-spacing-cq) {
+    --vert-spacing: cq;
+    --prose-vert-spacing: cq;
+}
+
+:where(.vert-spacing-fixed) {
+    --vert-spacing: fixed;
+    --prose-vert-spacing: fixed;
+}
+
+:where(.vert-spacing-tight) {
+    --vert-spacing: tight;
+    --prose-vert-spacing: tight;
+}
+
+:where(.spacing-mode-fixed) {
+    --spacing-breathe: var(--spacing);
+    --spacing-cushion: var(--spacing);
+    --spacing-cq-breathe: var(--spacing);
+    --spacing-cq-cushion: var(--spacing);
+}
+
+:where(.spacing-mode-cq) {
+    --spacing-breathe: var(--spacing-cq-breathe);
+    --spacing-cushion: var(--spacing-cq-cushion);
+}
+
+:where(.ui-default) {
+    --ui-sizing: default;
+    --ui-density: default;
+}
+
+:where(.ui-compact) {
+    --ui-sizing: compact;
+    --spacing-breathe: var(--spacing);
+    --spacing-cushion: var(--spacing);
+    --spacing-cq-breathe: var(--spacing);
+    --spacing-cq-cushion: var(--spacing);
+    --font-sizing: compact;
+    --vert-spacing: tight;
+    font-size: var(--body-compact-font-size);
+}
+
+:where(.ui-dense) {
+    --ui-density: dense;
+    --spacing-breathe: var(--spacing);
+    --spacing-cushion: var(--spacing);
+    --spacing-cq-breathe: var(--spacing);
+    --spacing-cq-cushion: var(--spacing);
+}
+
+:where(.controls-dense) {
+    --control-density: dense;
+}
+
+:where(.controls-plain) {
+    --controls-variation: plain;
+}
+
+:where(.controls-subtle) {
+    --controls-variation: subtle;
+}
+
+:where(.controls-sm) {
+    --controls-size: sm;
+}
+
+:where(.viewport-fit-cover) {
+    --viewport-fit: cover;
+    --safe-area-inset-right: env(safe-area-inset-right);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+    --safe-area-inset-left: env(safe-area-inset-left);
+    --safe-area-inset-top: env(safe-area-inset-top);
+}

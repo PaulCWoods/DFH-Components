@@ -1,0 +1,853 @@
+/* ==========================================================================
+   Design For Humans: Card Primitive
+   --------------------------------------------------------------------------
+   Composable Container Foundation with Container-Fluid cqi Typography
+   Parity with Design For Humans Blog (_card.scss & _component-library.twig)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Card Container (:where(.card))
+   ========================================================================== */
+:where(.card) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --card-dir: column;
+  --font-sizing: var(--card-font-sizing, fixed);
+
+  /* Surface, Border, Radius & Shadow */
+  --_card-bg: var(--card-bg, var(--surface-card, Canvas));
+  --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
+  --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
+  --_card-padding: var(--card-padding, var(--spacing-breathe));
+  --_card-radius: var(--card-radius, var(--panel-radius, 0.25rem));
+  --_card-shadow: var(--card-shadow, var(--shadow, none));
+  --_card-shadow-active: var(--card-shadow-reset, var(--shadow-reset, none));
+  --_card-shadow-hover: var(--card-shadow-hover, var(--shadow-raised, none));
+  --_card-text: var(--card-text, var(--foreground, CanvasText));
+  --_card-transition: var(--card-transition, var(--duration-sm));
+
+  /* Header & Footer Local Properties */
+  --_card-footer-bg: var(--card-footer-bg, transparent);
+  --_card-header-align: var(--card-header-align, flex-start);
+  --_card-header-bg: var(--card-header-bg, transparent);
+  --_card-header-gap: var(--card-header-gap, calc(var(--spacing) / 2));
+  --_card-header-wrap: var(--card-header-wrap, wrap);
+  --_card-hgroup-gap: var(--card-hgroup-gap, calc(var(--spacing-cq-breathe) / 2));
+
+  /* Inner Rules (Ruled Modifiers) + Inner Padding */
+  --_card-inner-border-color: var(--card-inner-border-color, var(--rule-color, currentColor));
+  --_card-inner-border-style: var(--card-inner-border-style, var(--rule-style, solid));
+  --_card-inner-border-width: var(--card-inner-border-width, var(--rule-width, 1px));
+  --_card-inner-padding: var(--card-inner-padding, var(--space-breathe));
+
+  /* Body Local Properties */
+  --_card-body-color: var(--card-body-color, var(--foreground));
+  --_card-body-font-size: var(--card-body-font-size, var(--typography-font-size-0));
+  --_card-body-line-height: var(--card-body-line-height, var(--body-line-height));
+  --_card-body-padding-block-end: 0px;
+  --_card-body-padding-block-start: 0px;
+
+  /* Typography / Title / Subtitle Hooks */
+  --_card-subtitle-color: var(--card-subtitle-color, var(--foreground-muted, currentColor));
+
+  /* Card Thumb */
+  --_card-thumb-anim-loading: var(--card-thumb-anim-loading, var(--image-anim-loading, none));
+  --_card-thumb-aspect-ratio: var(--card-thumb-aspect-ratio, 2 / 1);
+  --_card-thumb-bg: var(--card-thumb-bg, var(--surface-darker, black));
+  --_card-thumb-border-color: var(--card-thumb-border-color, var(--border-color, currentColor));
+  --_card-thumb-border-width: var(--card-thumb-border-width, 0px);
+  --_card-thumb-height: var(--card-thumb-height, 100%);
+  --_card-thumb-width: var(--card-thumb-width, 100%);
+  --_card-thumb-padding: var(--card-thumb-padding, 0px);
+  --_card-thumb-padding-end: var(--card-thumb-padding-end, 0px);
+  --_card-thumb-radius: var(--card-thumb-radius, 0px);
+  --_card-thumb-shadow: var(--card-thumb-shadow, none);
+
+  /* Card Canvas */
+  --_card-canvas-bg: var(--card-canvas-bg, transparent);
+  --_card-canvas-padding: var(--card-canvas-padding, 0px);
+  --_card-canvas-padding-end: var(--card-canvas-padding-end, 0px);
+  --_card-canvas-overflow: var(--card-canvas-overflow, visible);
+
+  /* Spatial Density */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--card-density: compact) {
+    --_card-padding: var(--card-compact-padding, var(--spacing, 1rem));
+    --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing, 1rem));
+    --_card-hgroup-gap: var(--card-compact-hgroup-gap, var(--spacing-4, 0.25rem));
+  }
+
+
+  /* Layout & Sizing */
+  display: flex;
+  flex-direction: var(--card-dir);
+  flex-grow: 1;
+
+  /* Surface, Stacking & Positioning */
+  background-color: var(--_card-bg);
+  border: var(--_card-border-width) var(--_card-border-style) var(--_card-border-color);
+  border-radius: var(--_card-radius);
+  box-shadow: var(--_card-shadow);
+  color: var(--_card-text, var(--foreground, CanvasText));
+  isolation: isolate;
+  overflow: clip;
+  padding: var(--_card-padding);
+  position: relative;
+
+  &:has(:is(.card__content, .card__canvas)) {
+    padding: 0;
+  }
+
+  /* ------------------------------------------------------------------------
+     Linked-Card Interactions (when card contains an explicit .card__link or .link--stretched)
+     ------------------------------------------------------------------------ */
+  &:has(:is(.card__link, .link--stretched, .link--stretch)) {
+    transition: box-shadow var(--_card-transition) ease;
+
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: var(--_card-shadow-hover);
+      }
+    }
+
+    &:active {
+      box-shadow: var(--_card-shadow-active);
+    }
+
+    /* Loading State: disables pointer events, triggers wait cursor & accessible spinner */
+    &:where(.is-loading) {
+      box-shadow: var(--_card-shadow-active);
+      cursor: wait;
+
+      a {
+        pointer-events: none;
+      }
+
+      /* Backdrop Overlay */
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--color-overlay);
+        z-index: 10;
+      }
+
+      /* Accessible Spinner / Loading Indicator (WCAG 2.3.3 Reduced Motion safe) */
+      &::after {
+        content: "Loading";
+        position: absolute;
+        z-index: 11;
+        margin: auto;
+        inset-inline-start: 50%;
+        inset-block-start: 50%;
+        translate: -50% -50%;
+        color: var(--foreground);
+        font-size: var(--typography-font-size-0);
+        font-weight: var(--font-weight-medium);
+
+        @media (prefers-reduced-motion: no-preference) {
+          content: "";
+          block-size: var(--spinner-size, 2rem);
+          inline-size: var(--spinner-size, 2rem);
+          inset: 0;
+          border: var(--spinner-thickness, 2px) solid transparent;
+          border-top-color: var(--foreground-accent);
+          border-radius: var(--radius-round, 50%);
+          animation: spin var(--spinner-speed, 0.8s) linear infinite;
+          translate: 0 0;
+        }
+      }
+    }
+
+    /* High-Contrast Preference (WCAG 1.4.3 / 1.4.11): eliminate shadows, rely on borders */
+    @media (prefers-contrast: more) {
+      box-shadow: none;
+
+      @media (hover: hover) {
+        &:hover {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     High-Contrast Focus Visible on Card Perimeter (WCAG 2.4.7 / 2.4.13)
+     When .card__link or .link--stretched is focused via keyboard, outline the entire card boundary
+     ------------------------------------------------------------------------ */
+  &:has(:is(.card__link, .link--stretched, .link--stretch):focus-visible) {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* ------------------------------------------------------------------------
+     High-Contrast Mode Border Enhancement (WCAG 1.4.3 / 1.4.11)
+     ------------------------------------------------------------------------ */
+  @media (prefers-contrast: more) {
+    --_card-border-width: var(--border-width-md, var(--border-width, 2px));
+  }
+
+  /* ------------------------------------------------------------------------
+     Reduced Motion Preference (WCAG 2.3.3)
+     ------------------------------------------------------------------------ */
+  @media (prefers-reduced-motion: reduce) {
+    transition-duration: var(--duration-0, 0s);
+  }
+}
+
+/* ==========================================================================
+   2. Card Parts & Subcomponents
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Media / Thumbnail Container (:where(.card__thumb))
+   - font-size: 0 eliminates phantom baseline whitespace beneath media
+   - aspect-ratio and object-fit prevent Cumulative Layout Shift (CLS)
+   -------------------------------------------------------------------------- */
+:where(.card__thumb) {
+  animation: var(--_card-thumb-anim-loading);
+  background-color: var(--_card-thumb-bg);
+  font-size: 0;
+  overflow: var(--_card-thumb-overflow, visible);
+  padding: var(--_card-thumb-padding);
+
+  @container style(--card-dir: column) {
+    padding-block-end: var(--_card-thumb-padding-end);
+  }
+
+  @container style(--card-dir: row) {
+    padding-inline-end: var(--_card-thumb-padding-end);
+  }
+
+  >img,
+  >video {
+    animation: var(--image-anim-load, none);
+    aspect-ratio: var(--_card-thumb-aspect-ratio);
+    block-size: var(--_card-thumb-height);
+    border: var(--_card-thumb-border-width) solid var(--_card-thumb-border-color);
+    border-radius: var(--_card-thumb-radius);
+    box-shadow: var(--_card-thumb-shadow);
+    display: block;
+    inline-size: var(--_card-thumb-width);
+    max-block-size: 100%;
+    max-inline-size: 100%;
+    object-fit: cover;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Canvas :where(.card__canvas)
+   -------------------------------------------------------------------------- */
+:where(.card__canvas) {
+  background-color: var(--_card-canvas-bg);
+  overflow: var(--_card-canvas-overflow, visible);
+  padding: var(--_card-canvas-padding);
+
+  @container style(--card-dir: column) {
+    padding-block-end: var(--_card-canvas-padding-end);
+  }
+
+  @container style(--card-dir: row) {
+    padding-inline-end: var(--_card-canvas-padding-end);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Content Flow Wrapper (:where(.card__content))
+   Establishes container-type: inline-size for cqi-driven typography scaling
+   -------------------------------------------------------------------------- */
+:where(.card__content) {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--_card-padding);
+}
+
+/* --------------------------------------------------------------------------
+   Card Header (:where(.card__header, .card__head))
+   Flush bleeding with negative margins to enable full-bleed and sticky headers
+   -------------------------------------------------------------------------- */
+:where(.card__header, .card__head) {
+  align-items: var(--_card-header-align);
+  display: flex;
+  flex-wrap: var(--_card-header-wrap);
+  gap: var(--_card-header-gap);
+  padding: var(--_card-padding);
+  padding-block-end: var(--_card-inner-padding);
+  background-color: var(--_card-header-bg);
+
+  :where(.card)>& {
+    padding: 0;
+    padding-block-end: var(--_card-inner-padding);
+  }
+
+  &:has(> h1, > h2, > h3, > h4):has(> p) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  :where(.card__content) & {
+    margin-block-start: calc(var(--_card-padding) * -1);
+    margin-inline: calc(var(--_card-padding) * -1);
+  }
+
+  /* Titles and hgroups expand to push action buttons/badges to trailing edge */
+  > :where(h2, h3, hgroup, .card__title, .card__hgroup) {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+  }
+
+  &:where(.card__head--flush, .card__header--flush) {
+    padding: 0;
+  }
+}
+
+
+
+/* --------------------------------------------------------------------------
+   Heading Group Container (:where(.card__hgroup))
+   Semantic grouping of title and subtitle
+   -------------------------------------------------------------------------- */
+:where(.card__hgroup, .card__header > hgroup, .card__head > hgroup) {
+  gap: var(--_card-hgroup-gap);
+}
+
+/* --------------------------------------------------------------------------
+   Header Line Container (:where(.card__header-line))
+   Forces a new full-width line in the Card Header
+   -------------------------------------------------------------------------- */
+
+:where(.card__header-line) {
+  inline-size: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Card Title (:where(.card__title))
+   Structural container hook for card headings.
+   Out of the box, defers typography to heading/text atom primitives
+   (.heading, .small-heading, .title, .subheading, etc.) while providing
+   zero margin reset, flex layout expansion, and text-wrap balance.
+   -------------------------------------------------------------------------- */
+:where(.card__title) {
+  margin: 0;
+  min-inline-size: 0;
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   Card Subtitle (:where(.card__subtitle))
+   Structural container hook for card subheadings and metadata descriptions.
+   Out of the box, defers typography to atom primitives while providing
+   zero margin reset and default muted color fallback.
+   -------------------------------------------------------------------------- */
+:where(.card__subtitle) {
+  margin: 0;
+  min-inline-size: 0;
+  color: var(--card-subtitle-color, var(--_card-subtitle-color, var(--foreground-muted, currentColor)));
+}
+
+/* --------------------------------------------------------------------------
+   Card Link Primitive (:where(.card__link))
+   Alternative standalone link with icon alignment and stretched pseudo overlay
+   -------------------------------------------------------------------------- */
+
+:where(.card:has(:is(.card__link, .link--stretched, .link--stretch))) {
+  isolation: isolate;
+
+  /* Other interactive controls remain accessible above stretched link overlay */
+  :where(button, a:not(.card__link, .link--stretched, .link--stretch), .button, [role="button"], input, select, textarea) {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+:where(.card__link) {
+  color: var(--link-color, var(--foreground-accent, currentColor));
+  text-decoration: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness, 1px);
+    text-underline-offset: var(--underline-offset, 4px);
+  }
+
+  :where(.icon) {
+    font-size: 0.5em;
+    margin-inline: 0.5rem;
+    vertical-align: middle;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Card Band (:where(.card__band))
+   Interstitial structural strip (steppers, toolbars, view toggles, notices)
+   positioned between header and body, body and footer, or chained across sections.
+   Defers internal typography to Atom primitives (.text, .badge, .chip, etc.)
+   -------------------------------------------------------------------------- */
+:where(.card__band) {
+  --_card-band-bg: var(--card-band-bg, transparent);
+  --_card-band-padding-block: var(--card-band-padding-block, calc(var(--_card-padding) / 2));
+  --_card-band-padding-inline: var(--card-band-padding-inline, var(--_card-padding));
+
+  align-items: center;
+  background-color: var(--_card-band-bg);
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_card-band-gap, var(--spacing-8, 0.5rem));
+  justify-content: space-between;
+  min-inline-size: 0;
+  padding-block: var(--_card-band-padding-block);
+  padding-inline: var(--_card-band-padding-inline);
+
+  :where(.card)>& {
+    margin-inline: calc(var(--_card-padding) * -1);
+  }
+
+  :where(.card__content) & {
+    margin-inline: calc(var(--_card-padding) * -1);
+  }
+
+  &:where(.card__band--flush) {
+    padding: 0;
+  }
+
+  &:where(.card__band--subtle) {
+    background-color: var(--card-band-subtle-bg, var(--surface-subtle, rgba(0, 0, 0, 0.02)));
+  }
+
+  &:where(.card__band--ruled, .card__band--bordered) {
+    border-block-end: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+  }
+
+  + :where(.card__body:not(.card__body--flush)) {
+    padding-block-start: var(--_card-padding);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Card Body (:where(.card__body))
+   Reading text remains at stable base size (--typography-font-size-0 / 1rem)
+   to guarantee legibility (WCAG 1.4.4)
+   -------------------------------------------------------------------------- */
+:where(.card__body) {
+  flex-grow: 1;
+  padding-inline: var(--_card-padding);
+  font-size: var(--_card-body-font-size);
+  line-height: var(--_card-body-line-height);
+  color: var(--_card-body-color);
+
+  :where(.card)>& {
+    padding-inline: 0;
+  }
+
+
+  :where(.card__content) & {
+    margin-inline: calc(var(--_card-padding) * -1);
+  }
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+
+  &:not(.card__body--flush):has(+ .card__band) {
+    padding-block-end: var(--_card-padding);
+  }
+}
+
+:where(.card__body--flush) {
+  padding-inline: 0;
+
+  :where(.card__content) & {
+    &:first-child {
+      margin-block-start: calc(var(--_card-padding) * -1);
+    }
+
+    &:last-child {
+      margin-block-end: calc(var(--_card-padding) * -1);
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Card Footer (:where(.card__footer, .card__foot))
+   Negative margins bleed flush with content padding for full-bleed & sticky footers
+   -------------------------------------------------------------------------- */
+:where(.card__footer, .card__foot) {
+  padding: var(--_card-padding);
+  padding-block-start: var(--_card-inner-padding);
+  background-color: var(--_card-footer-bg);
+  margin-block-start: auto;
+
+  :where(.card)>& {
+    padding: 0;
+    padding-block-start: var(--_card-inner-padding);
+  }
+
+  :where(.card__content) & {
+    margin-block-end: calc(var(--_card-padding) * -1);
+    margin-inline: calc(var(--_card-padding) * -1);
+  }
+
+  &:where(.card__foot--flush, .card__footer--flush) {
+    padding: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Card Date (:where(.card__date))
+   -------------------------------------------------------------------------- */
+:where(.card__date) {
+  font-weight: var(--body-strong-font-weight);
+}
+
+/* ==========================================================================
+   3. Card Modifiers (.card--flush, .card--bordered, .card--compact, etc.)
+   ========================================================================== */
+
+:where(.card--sizes-fixed) {
+  --_card-padding: var(--card-padding-fixed, var(--spacing));
+}
+
+:where(.card--sizes-cq) {
+  --_card-padding: var(--card-padding-cq, var(--spacing-));
+}
+
+/* --------------------------------------------------------------------------
+   Card Flush (removes border, border-radius, and shadow)
+   -------------------------------------------------------------------------- */
+:where(.card--flush, .card--plain) {
+  --_card-border-width: 0;
+  --_card-radius: 0;
+  --_card-shadow: none;
+}
+
+:where(.card--flush) {
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Card Bordered and Hollow (:where(.card--bordered, .card--hollow))
+   -------------------------------------------------------------------------- */
+:where(.card--bordered, .card--hollow) {
+  --_card-border-width: var(--card-bordered-border-width, var(--panel-border-width, 1px));
+  --_card-border-style: var(--card-bordered-border-style, var(--panel-border-style, solid));
+  --_card-border-color: var(--card-bordered-border-color, var(--panel-border-color, currentColor));
+}
+
+
+/* --------------------------------------------------------------------------
+   Card Bordered (:where(.card--hollow))
+   -------------------------------------------------------------------------- */
+:where(.card--hollow, .card--plain) {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   Dynamic Corners Modifier
+   Radius calculated dynamically from button-radius and card padding
+   -------------------------------------------------------------------------- */
+:where(.card--dynamic-corners) {
+  --_card-radius: calc(min(var(--button-radius), var(--button-min-size) / 2) + var(--_card-padding) + var(--_card-border-width));
+}
+
+/* --------------------------------------------------------------------------
+   Card Translucent (:where(.card--translucent))
+   -------------------------------------------------------------------------- */
+@media (prefers-contrast: no-preference) {
+  :where(.card--translucent) {
+    --_card-bg: color-mix(in srgb,
+        var(--card-bg, var(--surface-card, Canvas)),
+        transparent var(--card-translucency, 10%));
+    backdrop-filter: var(--card-filter, var(--surface-layer-filter, none));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Card Compact (tighter padding and responsive font sizes)
+   -------------------------------------------------------------------------- */
+:where(.card--dense, .card.ui-dense) {
+  --_card-padding: var(--card-dense-padding, var(--card-compact-padding, var(--spacing, 1rem)));
+  --_card-inner-padding: var(--card-dense-inner-padding, var(--card-compact-inner-padding, var(--spacing, 1rem)));
+  --_card-hgroup-gap: var(--card-dense-hgroup-gap, var(--card-compact-hgroup-gap, var(--spacing-4, 0.25rem)));
+}
+
+:where(.card--compact, .card.ui-compact) {
+  --ui-sizing: compact;
+  --_card-padding: var(--card-compact-padding, var(--spacing, 1rem));
+  --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing, 1rem));
+  --_card-hgroup-gap: var(--card-compact-hgroup-gap, var(--spacing-4, 0.25rem));
+}
+
+/* --------------------------------------------------------------------------
+   Card Ruled (dividing lines between header, body, and footer)
+   -------------------------------------------------------------------------- */
+:where(.card--ruled) {
+  :where(.card__header:not(:last-child)) {
+    border-block-end: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+  }
+
+  :where(.card__footer:not(:first-child)) {
+    border-block-start: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+  }
+
+  :where(.card__band) {
+    border-block-end: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+
+    &:where(:last-child),
+    &:where(:has(+ :is(.card__footer, .card__foot))) {
+      border-block-end: none;
+      border-block-start: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+    }
+  }
+
+  :where(.card__canvas:not(:last-child)) {
+    border-block-end: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+  }
+
+  :where(.card__body) {
+    padding-block: var(--_card-padding);
+
+    &:where(.card__body--flush) {
+      padding-block: 0;
+    }
+  }
+}
+
+:where(.card--bands) {
+  :where(.card__body) {
+    padding-block: var(--_card-padding);
+
+    &:where(.card__body--flush) {
+      padding-block: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. Sticky Header & Footer Capabilities (Scroll-State)
+   ========================================================================== */
+:where(.card--scrollable) {
+  .card__content {
+    overflow-y: auto;
+    overscroll-behavior: var(--_card-overscroll-behavior, none);
+    -webkit-overflow-scrolling: touch;
+
+    @supports (container-type: scroll-state) {
+      container-type: scroll-state inline-size;
+      container-name: card-scroller;
+    }
+  }
+
+  &:where(.card--sticky-header) {
+    --_card-body-padding-block-start: var(--_card-inner-padding);
+
+    .card__header {
+      border-block-end: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 3;
+      box-shadow: var(--shadow-none);
+      background-color: var(--card-header-bg, var(--card-layer-bg, var(--_card-bg)));
+      transition: box-shadow var(--_card-transition);
+
+      @media (prefers-contrast: no-preference) {
+        background-color: color-mix(in srgb,
+            var(--card-header-bg, var(--card-layer-bg, var(--_card-bg))),
+            transparent var(--card-layer-translucency, 10%));
+        backdrop-filter: var(--card-layer-filter);
+      }
+
+      @container card-scroller scroll-state(scrollable: block-start) {
+        box-shadow: var(--card-layer-shadow);
+
+        @media (prefers-contrast: more) {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .card__content .card__header {
+      inset-block-start: calc(var(--_card-padding) * -1);
+    }
+
+    @supports (container-type: scroll-state) {
+      @media (prefers-contrast: no-preference) {
+        --_card-body-padding-block-start: 0px;
+
+        .card__header {
+          border-block-end: none;
+        }
+      }
+    }
+  }
+
+  &:where(.card--sticky-footer) {
+    --_card-body-padding-block-end: var(--_card-inner-padding);
+
+    .card__footer {
+      border-block-start: var(--_card-inner-border-width) var(--_card-inner-border-style) var(--_card-inner-border-color);
+      position: sticky;
+      inset-block-end: 0;
+      z-index: 3;
+      box-shadow: var(--shadow-none);
+      background-color: var(--card-footer-bg, var(--card-layer-bg, var(--_card-bg)));
+      transition: box-shadow var(--_card-transition);
+
+      @media (prefers-contrast: no-preference) {
+        background-color: color-mix(in srgb,
+            var(--card-footer-bg, var(--card-layer-bg, var(--_card-bg))),
+            transparent var(--card-layer-translucency, 10%));
+        backdrop-filter: var(--card-layer-filter);
+      }
+
+      @container card-scroller scroll-state(scrollable: block-end) {
+        box-shadow: var(--card-layer-shadow);
+
+        @media (prefers-contrast: more) {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .card__content .card__footer {
+      inset-block-end: calc(var(--_card-padding) * -1);
+    }
+
+    @supports (container-type: scroll-state) {
+      @media (prefers-contrast: no-preference) {
+        --_card-body-padding-block-end: 0px;
+
+        .card__footer {
+          border-block-start: none;
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. Desktop Panel & Scrollable Body (.card--panel / .card__body--scrollable)
+   --------------------------------------------------------------------------
+   Enables flex-divided desktop application panels where header and footer
+   remain pinned in-flow while only the card body scrolls internally.
+   Seamlessly integrates with .table-container avoiding nested scroll traps.
+   ========================================================================== */
+
+:where(.card--panel) {
+  block-size: 100%;
+  min-block-size: 0;
+
+  &> :where(.card__content) {
+    block-size: 100%;
+    min-block-size: 0;
+    overflow: hidden;
+
+    &> :where(.card__header, .card__head) {
+      flex-shrink: 0;
+    }
+
+    &> :where(.card__body) {
+      flex: 1 1 0%;
+      min-block-size: 0;
+      overflow-y: auto;
+      overscroll-behavior: var(--_card-overscroll-behavior, contain);
+      scrollbar-gutter: var(--card-scrollbar-gutter, stable);
+      -webkit-overflow-scrolling: touch;
+
+      &:has(> :where(.table-container)) {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        &> :where(.table-container) {
+          flex: 1 1 0%;
+          min-block-size: 0;
+        }
+      }
+    }
+
+    &> :where(.card__footer, .card__foot) {
+      flex-shrink: 0;
+    }
+  }
+
+  @media (width < 48em) or (height < 36em) {
+    block-size: auto;
+    min-block-size: auto;
+
+    &> :where(.card__content) {
+      block-size: auto;
+      min-block-size: auto;
+      overflow: visible;
+
+      &> :where(.card__body) {
+        flex: 1 1 auto;
+        overflow-y: visible;
+
+        &:has(> :where(.table-container)) {
+          display: block;
+          overflow: visible;
+
+          &> :where(.table-container) {
+            flex: none;
+            min-block-size: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+:where(.card__body--scrollable) {
+  flex: 1 1 0%;
+  min-block-size: 0;
+  max-block-size: var(--card-body-max-block-size, none);
+  overflow-y: auto;
+  overscroll-behavior: var(--_card-overscroll-behavior, contain);
+  scrollbar-gutter: var(--card-scrollbar-gutter, stable);
+  -webkit-overflow-scrolling: touch;
+
+  @media (width < 48em) or (height < 36em) {
+    overflow-y: visible;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Loading Spinner Keyframes
+   -------------------------------------------------------------------------- */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion Support
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --card-transition: 0s;
+  }
+}

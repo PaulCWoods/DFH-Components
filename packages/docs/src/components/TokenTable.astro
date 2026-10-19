@@ -1,0 +1,109 @@
+---
+import Icon from './Icon.astro';
+
+export interface TokenRow {
+  name: string;
+  property: string;
+  fallback: string;
+  description: string;
+}
+
+interface Props {
+  tokens: TokenRow[];
+  caption?: string;
+}
+
+const { tokens = [], caption = 'Component Design Tokens' } = Astro.props;
+---
+
+<div class="token-table-wrapper prose-end card card--bordered card--compact card--flush overflow-x-auto margin-block-md">
+<div class="table-container">
+  <table class="table table--compact table--sticky-first-column" aria-label={caption}>
+    <thead>
+      <tr>
+        <th scope="col" class="table__col--fit">CSS Token</th>
+        <th scope="col" class="table__col--fit">CSS Property</th>
+        <th scope="col" class="table__col--xl">Fallback / Default</th>
+        <th scope="col" class="table__col--min-xl">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {tokens.map((token) => (
+        <tr>
+          <td class="font-mono table__cell--fit">
+            <div class="inline align-items-center gap-xs">
+              <code class="token-name">{token.name}</code>
+              <button
+                type="button"
+                class="button button--plain button--icon button--xs copy-token-btn"
+                data-token={token.name}
+                aria-label={`Copy ${token.name}`}
+                title="Copy token property"
+              >
+                <Icon name="Duplicate" size={12} class="copy-token-icon" />
+                <Icon name="Check" size={12} class="check-token-icon hide text-success" />
+              </button>
+            </div>
+          </td>
+          <td class="font-mono text-muted table__cell--fit">
+            <code>{token.property}</code>
+          </td>
+          <td class="font-mono table__cell--xl">
+            <code>{token.fallback}</code>
+          </td>
+          <td class="table__cell--min-xl">{token.description}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+</div>
+
+<style>
+  .token-table-wrapper {
+    background-color: var(--surface-card, Canvas);
+    border-radius: var(--radius-md, 0.5rem);
+  }
+
+  .token-name {
+    color: var(--foreground-accent, #008076);
+    font-weight: var(--font-weight-bold, 700);
+    font-size: 0.82rem;
+  }
+
+  .text-success {
+    color: var(--foreground-success, #008060);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    document.addEventListener('click', async (e) => {
+      const btn = e.target.closest('.copy-token-btn');
+      if (!btn) return;
+
+      const token = btn.getAttribute('data-token');
+      if (!token) return;
+
+      try {
+        await navigator.clipboard.writeText(token);
+        const copyIcon = btn.querySelector('.copy-token-icon');
+        const checkIcon = btn.querySelector('.check-token-icon');
+
+        if (copyIcon && checkIcon) {
+          copyIcon.classList.add('hide');
+          checkIcon.classList.remove('hide');
+        }
+
+        setTimeout(() => {
+          if (copyIcon && checkIcon) {
+            copyIcon.classList.remove('hide');
+            checkIcon.classList.add('hide');
+          }
+        }, 1500);
+      } catch (err) {
+        console.error('Failed to copy token: ', err);
+      }
+    });
+  })();
+</script>

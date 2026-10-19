@@ -3,6 +3,8 @@ import type { Preview } from '@storybook/html';
 
 // 👇 Import tokens and component styles
 import '../../css/src/index.css';
+// 👇 Import Storybook demo harness utilities
+import './demo.css';
 
 const preview: Preview = {
   globalTypes: {
@@ -44,7 +46,7 @@ const preview: Preview = {
     options: {
       storySort: {
         method: 'alphabetical',
-        order: ['Components', 'Layout Utilities', 'Utilities', 'Recipes', '*'],
+        order: ['Tokens', 'Atoms', 'Molecules', 'Organisms', 'Layout', 'Utilities', 'Recipes', '*'],
         locales: 'en-US',
       },
     },

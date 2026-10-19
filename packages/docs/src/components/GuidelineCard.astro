@@ -1,0 +1,95 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  doTitle?: string;
+  doDescription: string;
+  doCode?: string;
+  dontTitle?: string;
+  dontDescription: string;
+  dontCode?: string;
+}
+
+const {
+  doTitle = 'Do',
+  doDescription,
+  doCode,
+  dontTitle = "Don't",
+  dontDescription,
+  dontCode,
+} = Astro.props;
+---
+
+<div class="guideline-comparison prose-end grid xl:grid--2-col gap-md margin-block-md">
+  <!-- Do Card -->
+  <div class="card card--bordered guideline-card guideline-card--do">
+    <header class="card__header guideline-card__header inline align-items-center gap-xs">
+      <span class="badge badge--success badge--strong badge--sm badge--round">
+        <Icon name="Check" size={12} />
+      </span>
+      <h3 class="small-heading margin-0 font-weight-bold">{doTitle}</h3>
+    </header>
+    <div class="card__body padding-sm">
+      <p class="small-text margin-0 margin-bottom-xs">{doDescription}</p>
+      {doCode && (
+        <pre class="pre guideline-code font-mono" tabindex="0"><code>{doCode.trim()}</code></pre>
+      )}
+    </div>
+  </div>
+
+  <!-- Don't Card -->
+  <div class="card card--bordered guideline-card guideline-card--dont">
+    <header class="card__header guideline-card__header inline align-items-center gap-xs">
+      <span class="badge badge--danger badge--strong badge--sm badge--round">
+        <Icon name="Close" size={12} />
+      </span>
+      <h3 class="small-heading margin-0 font-weight-bold">{dontTitle}</h3>
+    </header>
+    <div class="card__body padding-sm">
+      <p class="small-text margin-0 margin-bottom-xs">{dontDescription}</p>
+      {dontCode && (
+        <pre class="pre guideline-code font-mono" tabindex="0"><code>{dontCode.trim()}</code></pre>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .guideline-card {
+    border-radius: var(--radius-md, 0.5rem);
+    background-color: var(--surface-card, Canvas);
+    overflow: hidden;
+  }
+
+  .guideline-card--do {
+    border-color: color-mix(in srgb, var(--foreground-success, #008060) 40%, transparent);
+  }
+
+  .guideline-card--dont {
+    border-color: color-mix(in srgb, var(--foreground-danger, #d13212) 40%, transparent);
+  }
+
+  .guideline-card__header {
+    padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem);
+    background-color: var(--surface-layer, var(--surface-subtle, transparent));
+    border-block-end: 1px solid var(--border-color-quiet, currentColor);
+  }
+
+  .guideline-code {
+    margin: var(--spacing-8, 0.5rem) 0 0 0;
+    padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem);
+    background-color: var(--surface-subtle, #f8fafc);
+    border-radius: var(--radius-sm, 0.25rem);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    overflow-x: auto;
+    color: var(--foreground, currentColor);
+  }
+
+  .guideline-code code {
+    background: transparent;
+    padding: 0;
+    border: none;
+    font-family: inherit;
+  }
+</style>

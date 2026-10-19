@@ -1,0 +1,505 @@
+/* ==========================================================================
+   Design For Humans: Tab Primitive (Atom)
+   --------------------------------------------------------------------------
+   Individual interactive tab trigger element. Supports both button elements
+   and anchor navigation links with anchor-positioned selection indicator
+   registration, button appearance modes, and responsive label/decor collapsing.
+   Complies with WCAG 2.2 AA/AAA (2.4.7 Focus Visible, 1.4.3 Contrast).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Tab Primitive (:where(.tab))
+   ========================================================================== */
+:where(.tab) {
+  --focus-ring-offset: var(--_tab-focus-ring-offset, calc(var(--border-width-2, 2px) * -1));
+
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_tab-bg: var(--tab-bg, transparent);
+  --_tab-border-bottom-color: var(--tab-border-bottom-color, transparent);
+  --_tab-border-bottom-width: var(--tab-border-bottom-width, var(--border-width, 1px));
+  --_tab-border-color: var(--tab-border-color, var(--border-color-quiet, currentColor));
+  --_tab-border-width: var(--tab-border-width, 0px);
+  --_tab-button-bg: var(--tab-button-bg, transparent);
+  --_tab-button-border-color: var(--tab-button-border-color, var(--button-border-color, currentColor));
+  --_tab-button-border-width: var(--tab-button-border-width, var(--button-border-width, 1px));
+  --_tab-button-hover-bg: var(--tab-button-hover-bg, transparent);
+  --_tab-button-inner-gap: var(--tab-button-inner-gap, var(--spacing-12, 0.75rem));
+  --_tab-button-padding-block: var(--tab-button-padding-block, var(--button-padding-block, 0.5rem));
+  --_tab-button-padding-inline: var(--tab-button-padding-inline, var(--button-padding-inline, 0.5rem));
+  --_tab-button-radius: var(--tab-button-radius, var(--tabs-button-radius, var(--button-radius, 0.25rem)));
+  --_tab-button-selected-bg: var(--tab-button-selected-bg, var(--tab-button-selected-border-color, var(--foreground, transparent)));
+  --_tab-button-selected-border-color: var(--tab-button-selected-border-color, var(--foreground, currentColor));
+  --_tab-button-selected-color: var(--tab-button-selected-text, var(--foreground-inverted, currentColor));
+  --_tab-button-text: var(--tab-button-text, var(--foreground, currentColor));
+  --_tab-color: var(--tab-text, var(--tabs-color, var(--foreground, currentColor)));
+  --_tab-font-size: var(--tab-font-size, var(--tabs-font-size, inherit));
+  --_tab-font-weight: var(--tab-font-weight, var(--tabs-font-weight, inherit));
+  --_tab-hover-border-color: var(--tab-hover-border-color, currentColor);
+  --_tab-hover-color: var(--tab-hover-color, var(--tabs-hover-color, var(--foreground-accent, currentColor)));
+  --_tab-hover-icon-opacity: 1;
+  --_tab-icon-opacity: 1;
+  --_tab-icon-scale: 1;
+  --_tab-icon-only-icon-scale: 1.25;
+  --_tab-inner-gap: var(--tab-inner-gap, var(--tabs-inner-gap, var(--spacing-8, 0.5rem)));
+  --_tab-line-height: var(--tab-line-height, var(--tabs-line-height, 1));
+  --_tab-min-size: var(--tab-min-size, var(--button-min-size, var(--spacing-target, 3rem)));
+  --_tab-padding-block: var(--tab-padding-block, var(--tabs-padding-block, var(--button-padding-block, 0.5rem)));
+  --_tab-padding-inline: var(--tab-padding-inline, var(--tabs-padding-inline, 0));
+  --_tab-selected-border-color: var(--tab-selected-border-color, var(--tabs-selected-border-color, var(--foreground, currentColor)));
+  --_tab-selected-color: var(--tabs-selected-color, currentColor);
+  --_tab-selected-text: var(--tab-selected-text, var(--tabs-selected-color, currentColor));
+  --_tab-selected-icon-color: var(--tab-selected-icon-color, var(--tabs-selected-color, currentColor));
+  --_tab-selected-icon-opacity: 1;
+  --_tab-selected-font-weight: var(--tab-selected-font-weight, var(--tabs-selected-font-weight, var(--font-weight-bold, bold)));
+  --_tab-plain-hover-icon-opacity: var(--tab-plain-hover-icon-opacity, var(--tab-simple-hover-icon-opacity, 1));
+  --_tab-plain-icon-opacity: var(--tab-plain-icon-opacity, var(--tab-simple-icon-opacity, 0.5));
+  --_tab-plain-selected-icon-color: var(--tab-plain-selected-icon-color, var(--tab-simple-selected-icon-color, var(--tabs-selected-color, currentColor)));
+  --_tab-plain-selected-icon-opacity: var(--tab-plain-selected-icon-opacity, var(--tab-simple-selected-icon-opacity, 1));
+  --_tab-subtle-bg: var(--tab-subtle-bg, var(--button-subtle-bg, var(--surface-translucent, transparent)));
+  --_tab-subtle-border-color: var(--tab-subtle-border-color, transparent);
+  --_tab-subtle-color: var(--tab-subtle-text, var(--foreground, currentColor));
+  --_tab-subtle-hover-bg: var(--tab-subtle-hover-bg, var(--button-subtle-hover-bg, var(--surface-translucent-strong, transparent)));
+  --_tab-subtle-hover-color: var(--tab-subtle-hover-text, var(--foreground-strong, currentColor));
+  --_tab-vert-inner-gap: var(--tab-vert-inner-gap, var(--spacing-16, 1rem));
+  --_tab-vert-min-size: var(--tab-vert-min-size, var(--button-sm-min-size, 1.5rem));
+  --_tab-round-radius: var(--tabs-round-radius, var(--radius-round, 9999px));
+
+  /* Prominence & Variation Container Queries */
+  @container style(--tabs-variation: plain) or style(--tab-variation: plain) or style(--tabs-variation: simple) or style(--tab-variation: simple) or style(--controls-variation: plain) {
+    --_tab-hover-border-color: transparent;
+    --_tab-hover-icon-opacity: var(--_tab-plain-hover-icon-opacity);
+    --_tab-icon-opacity: var(--_tab-plain-icon-opacity);
+    --_tab-selected-border-color: transparent;
+    --_tab-selected-icon-opacity: var(--_tab-plain-selected-icon-opacity);
+    --_tab-selected-icon-color: var(--_tab-plain-selected-icon-color);
+    --_tab-button-bg: var(--tab-plain-bg, transparent);
+    --_tab-button-border-color: transparent;
+    --_tab-button-border-width: 0px;
+    --_tab-button-hover-bg: var(--tab-plain-hover-bg, var(--surface-translucent, transparent));
+  }
+
+  @container style(--tabs-variation: subtle) or style(--tab-variation: subtle) or style(--controls-variation: subtle) {
+    --_tab-button-bg: var(--_tab-subtle-bg);
+    --_tab-button-border-color: var(--_tab-subtle-border-color);
+    --_tab-button-border-width: 0px;
+    --_tab-button-hover-bg: var(--_tab-subtle-hover-bg);
+    --_tab-button-color: var(--_tab-subtle-color);
+  }
+
+  /* Spatial Density */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, 0.25rem));
+    --_tab-padding-inline: var(--tab-sm-padding-inline, 0);
+    --_tab-button-padding-inline: var(--tab-button-sm-padding-inline, var(--button-sm-padding-inline, 0.5rem));
+    --_tab-min-size: var(--tab-sm-min-size, 2rem);
+  }
+
+  /* Typographic Scaling */
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    --_tab-font-size: var(--tab-sm-font-size, var(--typography-font-size--1, 0.875em));
+  }
+
+  /* Layout and Sizing */
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  min-block-size: var(--_tab-min-size);
+  min-inline-size: var(--_tab-min-size);
+  position: relative;
+
+  /* Spacing and Typography */
+  gap: var(--_tab-inner-gap);
+  padding-block: var(--_tab-padding-block);
+  padding-block-end: calc(var(--_tab-padding-block) - var(--_tab-border-bottom-width));
+  padding-inline: var(--_tab-padding-inline);
+  line-height: var(--_tab-line-height);
+  font-size: var(--_tab-font-size);
+  font-weight: var(--_tab-font-weight);
+  color: var(--_tab-color);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  /* Surface & Borders */
+  background-color: var(--_tab-bg);
+  border: var(--_tab-border-width) solid var(--_tab-border-color);
+  border-block-end: var(--_tab-border-bottom-width) solid var(--_tab-border-bottom-color);
+
+  :where(.icon) {
+    opacity: var(--_tab-icon-opacity, 1);
+    scale: var(--_tab-icon-scale, 1);
+  }
+
+  /* Hover State */
+  @media (hover: hover) {
+    &:hover:not(:is([aria-selected="true"], [aria-current="page"])) {
+      color: var(--_tab-hover-color);
+      border-color: var(--_tab-hover-border-color);
+      text-decoration: none;
+
+      :where(.icon) {
+        opacity: var(--_tab-hover-icon-opacity);
+      }
+    }
+  }
+
+  /* Interactive Focus State (WCAG 2.4.7 / 2.4.13 Inset Focus Ring) */
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
+  /* Active / Selected State */
+  &:is([aria-selected="true"], [aria-current="page"], [aria-current="true"], [aria-current="location"], [aria-current]) {
+    color: var(--_tab-selected-text);
+    font-weight: var(--_tab-selected-font-weight);
+
+    :where(.icon) {
+      color: var(--_tab-selected-icon-color);
+      opacity: var(--_tab-selected-icon-opacity);
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  /* Fallback without Anchor Positioning */
+  @supports not (position-anchor: --a) {
+    &:is([aria-selected="true"], [aria-current="page"], [aria-current="true"], [aria-current="location"], [aria-current]) {
+      border-color: var(--_tab-selected-border-color, var(--foreground, currentColor));
+    }
+  }
+
+  /* Anchor Positioning Attachment */
+  @supports (position-anchor: --a) {
+    &:is([aria-selected="true"], [aria-current="page"], [aria-current="true"], [aria-current="location"], [aria-current]) {
+      anchor-name: --tab-selected;
+    }
+  }
+}
+
+a:where(.tab):focus {
+  text-decoration: none;
+}
+
+:where(.tab__text) {
+  flex-grow: 1;
+  padding-block: var(--_tab-padding-block);
+  text-box: trim-both cap alphabetic;
+}
+
+/* ==========================================================================
+   2. Tab Variations & Appearance Modes
+   ========================================================================== */
+
+:where(.tab--fill),
+:where(.tabs-fill) :where(.tab) {
+  flex: 1 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   2.1 Vertical Tab Orientation (.tab--vertical, .tabs-vertical, .tabs-on-right)
+   -------------------------------------------------------------------------- */
+:where(.tab--vertical),
+:where(.tabs-vertical) :where(.tab) {
+  justify-content: flex-start;
+  gap: var(--_tab-vert-inner-gap);
+  min-block-size: var(--_tab-vert-min-size);
+  padding-block: var(--_tab-padding-block);
+  padding-inline-start: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
+  padding-inline-end: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
+  border: var(--_tab-border-width) solid var(--_tab-border-color);
+  border-inline-end: var(--_tab-border-bottom-width) solid var(--_tab-border-bottom-color);
+  text-align: start;
+}
+
+:where(.tabs-on-right) :where(.tab) {
+  border-inline-start: var(--_tab-border-bottom-width) solid var(--_tab-border-bottom-color);
+  border-inline-end: 0;
+  padding-inline-start: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
+  padding-inline-end: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
+}
+
+/* --------------------------------------------------------------------------
+   2.2 Plain Tab Mode (.tab--plain, .tabs-plain)
+   -------------------------------------------------------------------------- */
+:where(.tabs-plain) {
+  --tabs-variation: plain;
+}
+
+:where(.tab--plain),
+:where(.tabs-plain) :where(.tab) {
+  --_tab-hover-border-color: transparent;
+  --_tab-hover-icon-opacity: var(--_tab-plain-hover-icon-opacity);
+  --_tab-icon-opacity: var(--_tab-plain-icon-opacity);
+  --_tab-selected-border-color: transparent;
+  --_tab-selected-icon-opacity: var(--_tab-plain-selected-icon-opacity);
+  --_tab-selected-icon-color: var(--_tab-plain-selected-icon-color);
+
+  /* Button Tab Plain Appearance */
+  --_tab-button-bg: var(--tab-plain-bg, transparent);
+  --_tab-button-border-color: transparent;
+  --_tab-button-border-width: 0px;
+  --_tab-button-hover-bg: var(--tab-plain-hover-bg, var(--surface-translucent, transparent));
+  --_tab-button-selected-bg: var(--tab-plain-selected-bg, var(--surface-translucent, transparent));
+  --_tab-button-selected-color: var(--tab-button-selected-text, var(--foreground, currentColor));
+}
+
+/* --------------------------------------------------------------------------
+   2.3 Subtle Tab Mode (.tab--subtle, .tabs-subtle)
+   -------------------------------------------------------------------------- */
+:where(.tabs-subtle) {
+  --tabs-variation: subtle;
+}
+
+:where(.tab--subtle),
+:where(.tabs-subtle) :where(.tab) {
+  /* Button Tab Subtle Appearance (matches .button--subtle) */
+  --_tab-button-bg: var(--_tab-subtle-bg);
+  --_tab-button-border-color: var(--_tab-subtle-border-color);
+  --_tab-button-border-width: 0px;
+  --_tab-button-hover-bg: var(--_tab-subtle-hover-bg);
+  --_tab-button-color: var(--_tab-subtle-color);
+}
+
+/* --------------------------------------------------------------------------
+   2.4 Small / Compact Sizing (.tab--sm, .tabs-sm)
+   -------------------------------------------------------------------------- */
+:where(.tab--sm),
+:where(.tabs-sm) :where(.tab) {
+  --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, 0.25rem));
+  --_tab-padding-inline: var(--tab-sm-padding-inline, 0);
+  --_tab-button-padding-inline: var(--tab-button-sm-padding-inline, var(--button-sm-padding-inline, 0.5rem));
+  --_tab-min-size: var(--tab-sm-min-size, 2rem);
+  --_tab-font-size: var(--tab-sm-font-size, var(--typography-font-size--1, 0.875em));
+}
+
+
+/* --------------------------------------------------------------------------
+   2.5 Button Style Tabs (.tab--button, .tabs-button)
+   -------------------------------------------------------------------------- */
+:where(.tabs-button) {
+  --tabs-style: button;
+}
+
+:where(.tab--button),
+:where(.tabs-button) :where(.tab) {
+  --focus-ring-color: var(--_tab-button-focus-color, var(--foreground-accent));
+
+  /* Sizing and Spacing */
+  column-gap: var(--_tab-button-inner-gap);
+  justify-content: center;
+  min-block-size: var(--_tab-min-size);
+  min-inline-size: var(--_tab-min-size);
+  padding-block: var(--_tab-padding-block);
+  padding-inline: var(--_tab-button-padding-inline);
+
+  /* Surface and Text */
+  border: var(--_tab-button-border-width) solid var(--_tab-button-border-color);
+  border-radius: var(--_tab-button-radius);
+  background-color: var(--_tab-button-bg);
+  color: var(--_tab-button-color, var(--_tab-button-text));
+
+  @media (hover: hover) {
+    &:hover:not(:is([aria-selected="true"], [aria-current="page"])) {
+      background-color: var(--_tab-button-hover-bg);
+    }
+  }
+
+  &:is([aria-selected="true"], [aria-current="page"]) {
+    border-color: var(--_tab-button-selected-border-color);
+    color: var(--_tab-button-selected-color);
+
+    .badge {
+      --foreground: var(--_tab-button-selected-color);
+    }
+  }
+}
+
+:where(.tab--button, .tabs-button .tab) {
+  &:is([aria-selected="true"], [aria-current="page"]) {
+    background-color: var(--_tab-button-selected-bg);
+  }
+}
+
+:where(.tabs-button .tab:not(a)) {
+  &:is([aria-selected="true"], [aria-current="page"]) {
+    background-color: transparent;
+  }
+}
+
+:where(.tabs-flush .tab-button, .tabs-flush.tabs-button .tab) {
+  --_tab-button-radius: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2.6 Round Tab Modifiers (.tab--round, .tabs-round)
+   -------------------------------------------------------------------------- */
+:where(.tabs-round) {
+  --tabs-shape: round;
+}
+
+:where(.tab--round),
+:where(.tabs-round) :where(.tab) {
+  --_tab-button-radius: var(--_tab-round-radius);
+}
+
+/* ==========================================================================
+   3. Icon-Only Tabs (.tab--icon, .tabs-icon) & Responsive Disclosure
+   ========================================================================== */
+
+/* Explicit Icon-Only Tab Item */
+:where(.tab:has(:where(.visually-hidden, .sr-only, .sr))),
+:where(.tab--icon),
+:where(.tabs-icon) :where(.tab) {
+  --_tab-icon-scale: var(--_tab-icon-only-icon-scale, 1.25);
+  --_tab-inner-gap: 0px;
+  --_tab-padding-inline: var(--_tab-padding-block);
+  --_tab-button-padding-inline: var(--_tab-button-padding-block, var(--_tab-padding-block));
+
+  gap: 0;
+  padding-inline: var(--_tab-padding-inline);
+}
+
+:where(.tab--button.tab--icon),
+:where(.tabs-button.tabs-icon) :where(.tab),
+:where(.tabs-button) :where(.tab--icon),
+:where(.tabs-icon) :where(.tab--button) {
+  aspect-ratio: 1;
+  min-inline-size: var(--_tab-min-size);
+  justify-content: center;
+}
+
+:where(.tab--icon),
+:where(.tabs-icon) :where(.tab) {
+  :where(.tab__text) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  :is(kbd,
+    .kbd,
+    .chip,
+    .badge:not(.badge--top-right-corner,
+      .badge--top-left-corner,
+      .badge--bottom-right-corner,
+      .badge--bottom-left-corner)) {
+    display: none;
+  }
+}
+
+/* Responsive / Container-Adaptive Tab (:where(.tab:has(.icon))) */
+:where(.tab:has(.icon)) {
+  @container style(--ui-labels: hidden) {
+    --_tab-inner-gap: 0;
+    --_tab-padding-inline: var(--_tab-padding-block);
+    --_tab-button-padding-inline: var(--_tab-padding-block);
+
+    gap: var(--_tab-inner-gap);
+    padding-inline: var(--_tab-padding-inline);
+
+    :where(.tab__text, .ui-label) {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    :is(kbd, .kbd, .chip, .badge) {
+      display: none;
+    }
+  }
+
+  @container style(--ui-decor: hidden) {
+    :where(.icon, svg, .ui-decor) {
+      display: none;
+    }
+  }
+}
+
+:where(.tabs-vertical) :where(.tab:has(.icon)) {
+  @container style(--ui-labels: hidden) {
+    justify-content: center;
+    padding-inline-end: 0;
+  }
+}
+
+:where(.tabs-on-right) :where(.tab:has(.icon)) {
+  @container style(--ui-labels: hidden) {
+    justify-content: center;
+    padding-inline-start: 0;
+  }
+}
+
+:where(.hide-labels) :where(.tab:has(.icon)),
+:where(.tab:has(.icon).hide-labels) {
+  --_tab-inner-gap: 0;
+  --_tab-padding-inline: var(--_tab-padding-block);
+  --_tab-button-padding-inline: var(--_tab-padding-block);
+
+  gap: var(--_tab-inner-gap);
+  padding-inline: var(--_tab-padding-inline);
+
+  :where(.tab__text, .ui-label) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  :is(kbd, .kbd, .chip, .badge) {
+    display: none;
+  }
+}
+
+:where(.hide-decor) :where(.tab:has(.icon)),
+:where(.tab:has(.icon).hide-decor) {
+  :where(.icon, svg, .ui-decor) {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   4. Accessibility, High Contrast & Disabled States
+   ========================================================================== */
+:where(.tab:where(:disabled, [aria-disabled="true"])) {
+  opacity: var(--opacity-muted, 0.5);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (prefers-contrast: more) {
+  :where(.tab):is([aria-selected="true"], [aria-current="page"]) {
+    font-weight: var(--font-weight-bold, 700);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  :where(.tabs-button) :where(.tab):is([aria-selected="true"], [aria-current="page"]),
+  :where(.tab--button):is([aria-selected="true"], [aria-current="page"]) {
+    border-width: calc(var(--_tab-button-border-width, 1px) * 2);
+    border-color: currentColor;
+    text-decoration: none;
+  }
+}

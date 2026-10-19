@@ -26,8 +26,8 @@ Accessibility is a core architectural pillar of **Design For Humans**, not an af
 - All interactive elements must use:
   ```css
   :focus-visible {
-    outline: var(--focus-ring-outline);
-    outline-offset: var(--focus-ring-outline-offset);
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
   ```
 - Contrast ratio of the focus indicator against adjacent background colors must be **at least 3:1**.
@@ -58,4 +58,8 @@ Accessibility is a core architectural pillar of **Design For Humans**, not an af
 - **SVGs inside buttons/links:** Must have `aria-hidden="true"` and `focusable="false"`.
 - **Skip to Content Links (WCAG 2.4.1):** Use `<a href="#main" class="visually-hidden visually-hidden--focusable">Skip to main content</a>` so keyboard users can bypass repetitive navigation blocks.
 - **Dialogs:** Must have `aria-labelledby` referencing their title heading and `aria-describedby` referencing their description.
+- **Comboboxes & Listboxes (W3C APG Pattern):** Never place `tabindex="-1"` on individual `<li role="option">` items. Keep keyboard focus delegated to the parent text `<input role="combobox">` and manage virtual active selection using `aria-activedescendant="option-id"`. Every option must declare `role="option"` and `aria-selected="true|false"`.
+- **Collapsible Section Toggles:** Use `<button type="button" aria-expanded="true|false" aria-controls="section-id">` paired with an `.icon--disclosure` indicator that rotates automatically via attribute styling (`[aria-expanded="false"] .icon--disclosure { transform: rotate(-90deg); }`).
+- **Multiple Landmark Uniqueness (WCAG 1.3.1):** When multiple `<aside>` or `<nav>` elements appear on the same page (such as a dual-navigation layout with `.sidebar--rail` and submenu `.sidebar`), each landmark **must** have a unique, distinguishing `aria-label` (e.g. `aria-label="Primary Navigation Rail"` vs `aria-label="Studio Sub-navigation"`).
+
 - **Disabled buttons:** Support both native `:disabled` and `aria-disabled="true"`.

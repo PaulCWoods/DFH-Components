@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Display Utilities
+   ========================================================================== */
+
+:where(.display-block) {
+    display: block;
+}
+
+:where(.display-inline) {
+    display: inline;
+}
+
+:where(.display-inline-block) {
+    display: inline-block;
+}

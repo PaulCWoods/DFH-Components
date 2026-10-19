@@ -1,0 +1,393 @@
+/* ==========================================================================
+   Design For Humans: Telemetry & Stat Pill Primitives
+   --------------------------------------------------------------------------
+   Compact metric pills, stat counters, and dashboard telemetry strips.
+   Pairs key-value metrics with icons, trend indicators, and live status dots.
+   Complies with WCAG 2.2 AA / AAA (1.4.3 Contrast, 1.4.11 Non-text Contrast).
+
+   Usage:
+   <!-- Standard Telemetry Pill -->
+   <div class="telemetry">
+     <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+     <div class="telemetry__content">
+       <span class="telemetry__label">Listeners</span>
+       <strong class="telemetry__value">14,820</strong>
+     </div>
+   </div>
+
+   <!-- Semantic Key-Value Definition List -->
+   <dl class="telemetry-group" aria-label="Station live telemetry">
+     <div class="telemetry">
+       <dt class="telemetry__label">
+         <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+         Uptime
+       </dt>
+       <dd class="telemetry__value">99.98%</dd>
+     </div>
+     <div class="telemetry">
+       <dt class="telemetry__label">
+         <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Circle"/></svg>
+         Latency
+       </dt>
+       <dd class="telemetry__value">42<span class="telemetry__unit">ms</span></dd>
+     </div>
+   </dl>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Telemetry Container (:where(.telemetry, .stat-pill))
+   ========================================================================== */
+
+:where(.telemetry, .stat-pill) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_telemetry-bg: var(--telemetry-bg, var(--surface-layer, Canvas));
+  --_telemetry-border-color: var(--telemetry-border-color, var(--panel-border-color, currentColor));
+  --_telemetry-border-style: var(--telemetry-border-style, var(--panel-border-style, solid));
+  --_telemetry-border-width: var(--telemetry-border-width, var(--border-width-thin, 1px));
+  --_telemetry-radius: var(--telemetry-radius, var(--radius-sm, 0.125rem));
+  --_telemetry-padding-block: var(--telemetry-padding-block, var(--spacing-8, 0.25rem));
+  --_telemetry-padding-inline: var(--telemetry-padding-inline, var(--spacing-12, 0.625rem));
+  --_telemetry-gap: var(--telemetry-gap, var(--spacing-12, 0.75rem));
+  --_telemetry-inner-gap: var(--telemetry-inner-gap, var(--spacing-4, 0.25rem));
+
+  --_telemetry-label-font-family: var(--telemetry-label-font-family, var(--nano-heading-font-family, inherit));
+  --_telemetry-label-font-size: var(--telemetry-label-font-size, var(--nano-heading-font-size, 0.625rem));
+  --_telemetry-label-font-weight: var(--telemetry-label-font-weight, var(--nano-heading-font-weight, 500));
+  --_telemetry-label-line-height: var(--telemetry-label-line-height, 1);
+  --_telemetry-label-letter-spacing: var(--telemetry-label-letter-spacing, var(--nano-heading-letter-spacing, 0.05em));
+  --_telemetry-label-text-transform: var(--telemetry-label-text-transform, var(--nano-heading-text-transform, uppercase));
+  --_telemetry-label-color: var(--telemetry-label-color, var(--foreground, CanvasText));
+
+  --_telemetry-value-font-family: var(--telemetry-value-font-family, var(--body-font-family, inherit));
+  --_telemetry-value-font-size: var(--telemetry-value-font-size, var(--body-fixed-font-size, 1rem));
+  --_telemetry-value-font-weight: var(--telemetry-value-font-weight, var(--body-strong-font-weight, 700));
+  --_telemetry-value-line-height: var(--telemetry-value-line-height, 1);
+  --_telemetry-value-color: var(--telemetry-value-color, var(--foreground, currentColor));
+
+  --_telemetry-icon-size: var(--telemetry-icon-size, var(--spacing-16, 1rem));
+  --_telemetry-icon-color: var(--telemetry-icon-color, var(--foreground, CanvasText));
+  --_telemetry-trend-color: var(--foreground-muted);
+  --_telemetry-trend-font-size: var(--typography-font-size--2, 0.64rem);
+
+  /* Layout & Display */
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_telemetry-gap);
+  padding-block: var(--_telemetry-padding-block);
+  padding-inline: var(--_telemetry-padding-inline);
+  background-color: var(--_telemetry-bg);
+  border: var(--_telemetry-border-width) var(--_telemetry-border-style) var(--_telemetry-border-color);
+  border-radius: var(--_telemetry-radius);
+  color: var(--_telemetry-value-color);
+  line-height: 1;
+  max-inline-size: 100%;
+  text-decoration: none;
+  vertical-align: middle;
+
+  /* --------------------------------------------------------------------------
+     Style Container Queries (@container style(...))
+     -------------------------------------------------------------------------- */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--telemetry-density: compact) {
+    --_telemetry-padding-block: var(--telemetry-compact-padding-block, var(--spacing-4, 0.25rem));
+    --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, var(--spacing-8, 0.5rem));
+    --_telemetry-gap: var(--telemetry-compact-gap, var(--spacing-8, 0.5rem));
+    --_telemetry-inner-gap: var(--telemetry-compact-inner-gap, var(--spacing-2, 2px));
+    --_telemetry-icon-size: var(--telemetry-compact-icon-size, var(--spacing-12, 0.75rem));
+  }
+
+  @container style(--telemetry-variation: subtle) {
+    --_telemetry-bg: transparent;
+    --_telemetry-border-width: 0px;
+  }
+
+  @container style(--telemetry-variation: card) {
+    --_telemetry-padding-block: var(--telemetry-card-padding, var(--spacing-16, 1rem));
+    --_telemetry-padding-inline: var(--telemetry-card-padding, var(--spacing-16, 1rem));
+    --_telemetry-value-font-size: var(--telemetry-card-value-font-size, var(--typography-font-size-2, 1.5625rem));
+    --_telemetry-icon-size: var(--telemetry-lg-icon-size, var(--spacing-24, 1.5rem));
+    --_telemetry-inner-gap: var(--telemetry-lg-inner-gap, var(--spacing-4, 0.25rem));
+  }
+}
+
+/* ==========================================================================
+   2. Internal Slots & Child Elements
+   ========================================================================== */
+
+/* Leading or Contextual Icon (:where(.telemetry__icon, dt > .icon, .telemetry__label > .icon)) */
+:where(.telemetry__icon, dt > .icon, .telemetry__label > .icon) {
+  flex-shrink: 0;
+  inline-size: var(--_telemetry-icon-size);
+  block-size: var(--_telemetry-icon-size);
+  color: var(--_telemetry-icon-color);
+  fill: currentColor;
+}
+
+/* Content Container (:where(.telemetry__content)) */
+:where(.telemetry__content) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--_telemetry-inner-gap);
+  min-inline-size: 0;
+}
+
+/* Metric Label / Name (:where(.telemetry__label, .telemetry dt)) */
+:where(.telemetry__label, .telemetry dt) {
+  box-sizing: border-box;
+  color: var(--_telemetry-label-color);
+  display: block;
+  font-family: var(--_telemetry-label-font-family);
+  font-size: var(--_telemetry-label-font-size);
+  font-weight: var(--_telemetry-label-font-weight);
+  letter-spacing: var(--_telemetry-label-letter-spacing);
+  line-height: var(--_telemetry-label-line-height);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: var(--_telemetry-label-text-transform);
+  white-space: nowrap;
+}
+
+/* Metric Numerical / Text Value (:where(.telemetry__value, .telemetry dd)) */
+:where(.telemetry__value, .telemetry dd) {
+  align-items: baseline;
+  box-sizing: border-box;
+  color: var(--_telemetry-value-color);
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-family: var(--_telemetry-value-font-family);
+  font-size: var(--_telemetry-value-font-size);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: var(--_telemetry-value-font-weight);
+  gap: var(--spacing-2, 0.125rem);
+  line-height: var(--_telemetry-value-line-height);
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Metric Unit Suffix (:where(.telemetry__unit)) */
+:where(.telemetry__unit) {
+  color: var(--_telemetry-label-color);
+  font-family: var(--_telemetry-label-font-family);
+  font-size: var(--_telemetry-label-font-size);
+  font-weight: var(--_telemetry-label-font-weight);
+  text-transform: none;
+}
+
+/* Trend / Delta Indicator (:where(.telemetry__trend)) */
+:where(.telemetry__trend) {
+  align-items: center;
+  color: var(--_telemetry-trend-color);
+  display: inline-flex;
+  font-family: var(--_telemetry-label-font-family);
+  font-size: var(--_telemetry-trend-font-size);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-semibold, 600);
+  gap: 2px;
+  line-height: 1;
+
+  &[data-trend="positive"],
+  &:where(.telemetry__trend--positive) {
+    color: var(--foreground-success, #00875a);
+  }
+
+  &[data-trend="negative"],
+  &:where(.telemetry__trend--negative) {
+    color: var(--foreground-danger, #d32f2f);
+  }
+
+  &[data-trend="neutral"],
+  &:where(.telemetry__trend--neutral) {
+    color: var(--foreground-muted);
+  }
+
+  :where(.icon) {
+    inline-size: 0.85em;
+    block-size: 0.85em;
+  }
+}
+
+/* Status Dot or Badge (:where(.telemetry__status)) */
+:where(.telemetry__status) {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   3. Telemetry Group & Strip Container (:where(.telemetry-group, .telemetry-strip))
+   ========================================================================== */
+
+:where(.telemetry-group, .telemetry-strip) {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--telemetry-group-gap, var(--spacing-8, 0.5rem));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  /* Ruled strip with integrated dividers between telemetry items */
+  &:where(.telemetry-strip--ruled, .telemetry-group--ruled) {
+    gap: 0;
+    border: var(--_telemetry-border-width) var(--_telemetry-border-style) var(--_telemetry-border-color);
+    border-radius: var(--_telemetry-radius);
+    background-color: var(--_telemetry-bg);
+    overflow: hidden;
+
+    &> :where(.telemetry, .stat-pill) {
+      border: none;
+      border-radius: 0;
+      background-color: transparent;
+
+      &:where(:not(:last-child)) {
+        border-inline-end: var(--_telemetry-border-width) var(--_telemetry-border-style) var(--_telemetry-border-color);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. Density & Size Modifiers
+   ========================================================================== */
+
+/* Compact Density (:where(.telemetry--compact, .telemetry--sm)) */
+:where(.telemetry-group):where(.telemetry--compact, .telemetry--sm) :where(.telemetry),
+:where(.telemetry--compact, .telemetry--sm) {
+  --_telemetry-padding-block: var(--telemetry-compact-padding-block, var(--spacing-4, 0.25rem));
+  --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, var(--spacing-8, 0.5rem));
+  --_telemetry-gap: var(--telemetry-compact-gap, var(--spacing-8, 0.5rem));
+  --_telemetry-inner-gap: var(--telemetry-compact-inner-gap, var(--spacing-2, 2px));
+  --_telemetry-icon-size: var(--telemetry-compact-icon-size, var(--spacing-12, 0.75rem));
+  --_telemetry-value-font-size: var(--typography-font-size--1, 0.8rem);
+}
+
+/* Large / Card Metric (:where(.telemetry--lg, .telemetry--card)) */
+:where(.telemetry-group):where(.telemetry--lg, .telemetry--card) :where(.telemetry),
+:where(.telemetry--lg, .telemetry--card) {
+  --_telemetry-padding-block: var(--telemetry-card-padding, var(--spacing-16, 1rem));
+  --_telemetry-padding-inline: var(--telemetry-card-padding, var(--spacing-16, 1rem));
+  --_telemetry-value-font-size: var(--telemetry-card-value-font-size, var(--typography-font-size-2, 1.5625rem));
+  --_telemetry-icon-size: var(--telemetry-lg-icon-size, var(--spacing-24, 1.5rem));
+  --_telemetry-inner-gap: var(--telemetry-lg-inner-gap, var(--spacing-4, 0.25rem));
+  display: flex;
+}
+
+/* ==========================================================================
+   5. Visual Variations
+   ========================================================================== */
+
+/* Subtle Variant (No background or border) */
+:where(.telemetry--subtle) {
+  --_telemetry-bg: transparent;
+  --_telemetry-border-width: 0px;
+}
+
+/* Explicit Bordered Variant */
+:where(.telemetry--bordered) {
+  --_telemetry-border-color: var(--panel-border-color, currentColor);
+  --_telemetry-border-width: var(--border-width-1, 1px);
+}
+
+/* Fully Rounded Pill Corners */
+:where(.telemetry--pill, .telemetry--round) {
+  --_telemetry-radius: var(--radius-round, 9999px);
+  padding-inline: calc(var(--_telemetry-padding-inline) * 1.5);
+}
+
+/* ==========================================================================
+   6. Directional Layout Variations
+   ========================================================================== */
+
+/* Stacked Layout & Definition List Items (Icon absolutely positioned, content stacked) */
+:where(.telemetry--stacked, .telemetry:has(> dt)) {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--_telemetry-inner-gap, var(--spacing-4, 0.25rem));
+
+  &:has(:where(.telemetry__icon, dt > .icon, .telemetry__label > .icon)) {
+    padding-inline-start: calc(var(--_telemetry-padding-inline) + var(--_telemetry-icon-size) + var(--_telemetry-gap));
+
+    :where(.telemetry__icon, dt > .icon, .telemetry__label > .icon) {
+      position: absolute;
+      inset-block-start: var(--_telemetry-padding-block);
+      inset-inline-start: var(--_telemetry-padding-inline);
+      margin: 0;
+    }
+  }
+
+  &:where(.telemetry--pill, .telemetry--round):has(:where(.telemetry__icon, dt > .icon, .telemetry__label > .icon)) {
+    padding-inline-start: calc(var(--_telemetry-padding-inline) * 1.5 + var(--_telemetry-icon-size) + var(--_telemetry-gap));
+
+    :where(.telemetry__icon, dt > .icon, .telemetry__label > .icon) {
+      inset-block: 0;
+      inset-inline-start: calc(var(--_telemetry-padding-inline) * 1.5);
+      margin-block: auto;
+    }
+  }
+
+  &> :where(.telemetry__content) {
+    align-items: flex-start;
+    inline-size: 100%;
+    gap: var(--_telemetry-inner-gap, var(--spacing-4, 0.25rem));
+  }
+}
+
+/* Icon Placement Modifiers */
+:where(.telemetry--icon-end, .telemetry--icon-right):not(.telemetry--stacked) {
+  flex-direction: row-reverse;
+}
+
+/* Inline Single-Row Layout (Label & Value side-by-side) */
+:where(.telemetry--inline) {
+  &> :where(.telemetry__content) {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacing-6, 0.375rem);
+  }
+}
+
+/* ==========================================================================
+   7. Status Intent Highlights
+   ========================================================================== */
+
+:where(.telemetry[data-status="online"], .telemetry--success) {
+  --_telemetry-icon-color: var(--foreground-success, #00875a);
+  --_telemetry-border-color: color-mix(in srgb, var(--foreground-success) 30%, transparent);
+}
+
+:where(.telemetry[data-status="warning"], .telemetry[data-status="away"], .telemetry--warning) {
+  --_telemetry-icon-color: var(--foreground-warning, #b06000);
+  --_telemetry-border-color: color-mix(in srgb, var(--foreground-warning) 30%, transparent);
+}
+
+:where(.telemetry[data-status="busy"], .telemetry[data-status="offline"], .telemetry--danger) {
+  --_telemetry-icon-color: var(--foreground-danger, #d32f2f);
+  --_telemetry-border-color: color-mix(in srgb, var(--foreground-danger) 30%, transparent);
+}
+
+:where(.telemetry--accent) {
+  --_telemetry-icon-color: var(--foreground-accent);
+  --_telemetry-border-color: color-mix(in srgb, var(--foreground-accent) 30%, transparent);
+}
+
+/* ==========================================================================
+   8. Accessibility & High Contrast Preferences
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  :where(.telemetry, .stat-pill) {
+    --_telemetry-border-width: var(--border-width-md, 2px);
+    --_telemetry-border-color: currentColor;
+    --_telemetry-bg: Canvas;
+    --_telemetry-value-color: CanvasText;
+    --_telemetry-label-color: CanvasText;
+    --_telemetry-icon-color: CanvasText;
+  }
+}

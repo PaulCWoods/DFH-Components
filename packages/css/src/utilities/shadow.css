@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Design For Humans: Shadow & Elevation Utilities
+   --------------------------------------------------------------------------
+   Comprehensive, zero-specificity (:where()) elevation helpers mapping
+   directly to 3-layer Gaussian blur tokens and CSS @function architecture.
+   Provides basic fallbacks (none) adhering to unstyled resilience principles.
+   Direct parity with Design For Humans blog architecture (_shadow.scss).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Canonical Elevation Utilities
+   --------------------------------------------------------------------------
+   Maps to resting and raised 3-layer depth tokens.
+   ========================================================================== */
+
+:where(.shadow-none, .shadow-0, .no-shadow) {
+    box-shadow: var(--shadow-none, none);
+}
+
+:where(.shadow-sm) {
+    box-shadow: var(--shadow-sm, none);
+}
+
+:where(.shadow-md, .shadow) {
+    box-shadow: var(--shadow-md, none);
+}
+
+:where(.shadow-lg, .shadow-raised) {
+    box-shadow: var(--shadow-lg, none);
+}
+
+:where(.shadow-inner, .shadow-inset) {
+    box-shadow: var(--shadow-inner, none);
+}
+
+/* ==========================================================================
+   2. Light Elevation Utilities
+   --------------------------------------------------------------------------
+   Low-contrast variants for quiet cards on clean, minimal surfaces.
+   ========================================================================== */
+
+:where(.shadow-sm-light) {
+    box-shadow: var(--shadow-sm-light, none);
+}
+
+:where(.shadow-md-light, .shadow-light) {
+    box-shadow: var(--shadow-md-light, none);
+}
+
+:where(.shadow-lg-light) {
+    box-shadow: var(--shadow-lg-light, none);
+}
+
+:where(.shadow-inner-light, .shadow-inset-light) {
+    box-shadow: var(--shadow-inner-light, none);
+}
+
+/* ==========================================================================
+   3. Contextual Shadow Color Modifiers
+   --------------------------------------------------------------------------
+   Overrides --shadow-color locally. Automatically cascades into all 3 layers
+   of var(--shadow-*) across all browsers including Firefox.
+   ========================================================================== */
+
+:where(.shadow-accent) {
+    --shadow-color: color-mix(in srgb, var(--color-purple-500, Highlight), transparent 75%);
+}
+
+:where(.shadow-aqua, .shadow-teal) {
+    --shadow-color: color-mix(in srgb, var(--color-aqua-500, Highlight), transparent 75%);
+}
+
+:where(.shadow-danger, .shadow-red) {
+    --shadow-color: color-mix(in srgb, var(--color-red-500, Red), transparent 75%);
+}
+
+:where(.shadow-success, .shadow-green) {
+    --shadow-color: color-mix(in srgb, var(--color-green-500, Green), transparent 75%);
+}
+
+:where(.shadow-warning, .shadow-amber) {
+    --shadow-color: color-mix(in srgb, var(--color-amber-500, Yellow), transparent 75%);
+}

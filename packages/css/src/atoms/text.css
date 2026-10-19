@@ -1,0 +1,270 @@
+/* ==========================================================================
+   Design For Humans: Text Component Primitives
+   --------------------------------------------------------------------------
+   Applies shared typographic scale presets to semantic text and heading primitives.
+   Unifies modular heading scales (-2 to 8) and body text presets with zero-specificity
+   (:where) resets.
+
+   Supports fluid responsive scaling (default), container-adaptive scaling via
+   @container style(--font-sizing: cq), and locked modular steps via
+   @container style(--font-sizing: fixed).
+   Parity with Design For Humans Blog (_text.scss).
+   Complies with WCAG 2.2 AA/AAA (1.4.3 Contrast, 1.4.8 Visual Presentation,
+   1.4.12 Text Spacing, and text-wrap: balance).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Display Title (:where(.display-title))
+   ========================================================================== */
+:where(.display-title) {
+  font-family: var(--display-title-font-family, var(--typography-font-family-display, sans-serif));
+  font-size: var(--display-title-fluid-font-size, 5.96rem);
+  font-weight: var(--display-title-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--display-title-letter-spacing, 0em);
+  line-height: var(--display-title-line-height, 1);
+  text-transform: var(--display-title-text-transform, none);
+  word-spacing: var(--display-title-word-spacing, 0em);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--display-title-fixed-font-size, var(--typography-font-size-8, 5.96rem));
+  }
+
+  @container style(--font-sizing: compact) {
+    font-size: var(--display-title-compact-font-size, var(--typography-font-size-5, 2.5rem));
+  }
+}
+
+/* ==========================================================================
+   2. Title (:where(.title))
+   ========================================================================== */
+:where(.title) {
+  font-family: var(--title-font-family, var(--typography-font-family-display, sans-serif));
+  font-size: var(--title-fluid-font-size, 3.052rem);
+  font-weight: var(--title-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--title-letter-spacing, 0em);
+  line-height: var(--title-line-height, 1);
+  text-transform: var(--title-text-transform, none);
+  word-spacing: var(--title-word-spacing, 0em);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--title-fixed-font-size, 3.052rem);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--title-cq-font-size, 3.052rem);
+  }
+
+  @container style(--font-sizing: compact) {
+    font-size: var(--title-compact-font-size, var(--typography-font-size-4, 2.5rem));
+  }
+}
+
+/* ==========================================================================
+   3. Heading (:where(.heading))
+   ========================================================================== */
+:where(.heading) {
+  font-family: var(--heading-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--heading-fluid-font-size, 1.953rem);
+  font-weight: var(--heading-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--heading-letter-spacing, 0em);
+  line-height: var(--heading-line-height, 1.2);
+  text-transform: var(--heading-text-transform, none);
+  word-spacing: var(--heading-word-spacing, 0em);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--heading-fixed-font-size, 1.953rem);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--heading-cq-font-size, 1.953rem);
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--heading-compact-font-size, var(--typography-font-size-2, 1.75rem));
+  }
+}
+
+/* ==========================================================================
+   4. Subheading (:where(.subheading))
+   ========================================================================== */
+:where(.subheading) {
+  font-family: var(--subheading-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--subheading-fluid-font-size, 1.25rem);
+  font-weight: var(--subheading-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--subheading-letter-spacing, 0em);
+  line-height: var(--subheading-line-height, 1.2);
+  text-transform: var(--subheading-text-transform, none);
+  word-spacing: var(--subheading-word-spacing, 0em);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--subheading-fixed-font-size, var(--typography-font-size-1, 1.25rem));
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--subheading-cq-font-size, var(--typography-font-size-cq-1, 1.25rem));
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--subheading-compact-font-size, var(--typography-font-size-0, 1rem));
+  }
+}
+
+/* ==========================================================================
+   5. Small Heading (:where(.small-heading))
+   ========================================================================== */
+:where(.small-heading) {
+  font-family: var(--small-heading-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--small-heading-fluid-font-size, 1rem);
+  font-weight: var(--small-heading-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--small-heading-letter-spacing, 0em);
+  line-height: var(--small-heading-line-height, 1.2);
+  text-transform: var(--small-heading-text-transform, none);
+  word-spacing: var(--small-heading-word-spacing, 0em);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--small-heading-fixed-font-size, var(--typography-font-size-0, 1rem));
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--small-heading-cq-font-size, var(--typography-font-size-cq-0, 1rem));
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--small-heading-compact-font-size, var(--typography-font-size--1, 0.875rem));
+  }
+}
+
+/* ==========================================================================
+   6. Micro Heading & Nano Heading (:where(.micro-heading, .nano-heading))
+   ========================================================================== */
+:where(.micro-heading) {
+  font-family: var(--micro-heading-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--micro-heading-font-size, 0.8rem);
+  font-weight: var(--micro-heading-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--micro-heading-letter-spacing, 0em);
+  line-height: var(--micro-heading-line-height, 1.2);
+  text-transform: var(--micro-heading-text-transform, uppercase);
+  word-spacing: var(--micro-heading-word-spacing, 0em);
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--micro-heading-compact-font-size, var(--typography-font-size--2, 0.6rem));
+  }
+}
+
+:where(.nano-heading) {
+  font-family: var(--nano-heading-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--nano-heading-font-size, 0.8rem);
+  font-weight: var(--nano-heading-font-weight, var(--font-weight-bold, 700));
+  letter-spacing: var(--nano-heading-letter-spacing, 0em);
+  line-height: var(--nano-heading-line-height, 1.2);
+  text-transform: var(--nano-heading-text-transform, uppercase);
+  word-spacing: var(--nano-heading-word-spacing, 0em);
+}
+
+/* ==========================================================================
+   7. Body Text (:where(.text))
+   ========================================================================== */
+:where(.text) {
+  font-family: var(--body-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--body-font-size, 1rem);
+  font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
+  line-height: var(--body-line-height, 1.5);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--body-fixed-font-size, 1rem);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--body-cq-font-size, var(--typography-font-size-cq-0, 1rem));
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--body-compact-font-size, var(--typography-font-size-compact--1, 0.8rem));
+  }
+}
+
+/* ==========================================================================
+   8. Small Text & Caption (:where(.small-text, .caption))
+   ========================================================================== */
+:where(.small-text, .caption) {
+  font-family: var(--small-text-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--small-text-font-size, 0.8rem);
+  font-weight: var(--small-text-font-weight, var(--font-weight-regular, 400));
+  line-height: var(--small-text-line-height, 1.4);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--small-text-fixed-font-size, 0.8rem);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--small-text-cq-font-size, 0.8rem);
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--small-text-compact-font-size, 0.7rem);
+  }
+}
+
+/* ==========================================================================
+   9. Large Text (:where(.large-text))
+   ========================================================================== */
+:where(.large-text) {
+  font-family: var(--large-text-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--large-text-font-size, 1.25rem);
+  font-weight: var(--large-text-font-weight, var(--font-weight-regular, 400));
+  line-height: var(--large-text-line-height, 1.5);
+
+  @container style(--font-sizing: fixed) {
+    font-size: var(--large-text-fixed-font-size, 1.25rem);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--large-text-cq-font-size, 1.25rem);
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--large-text-compact-font-size, 1rem);
+  }
+}
+
+/* ==========================================================================
+   10. Micro Text & Nano Text (:where(.micro-text, .nano-text))
+   ========================================================================== */
+:where(.micro-text) {
+  font-family: var(--micro-text-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--micro-text-font-size, 0.8rem);
+  font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
+  line-height: var(--micro-text-line-height, 1.4);
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--micro-text-compact-font-size, 0.6rem);
+  }
+}
+
+:where(.nano-text) {
+  font-family: var(--nano-text-font-family, var(--typography-font-family-sans, sans-serif));
+  font-size: var(--nano-text-font-size, 0.6rem);
+  font-weight: var(--nano-text-font-weight, var(--font-weight-regular, 400));
+  line-height: var(--nano-text-line-height, 1.4);
+}
+
+/* ==========================================================================
+   11. Strong, Alt & Code Typography Utility Presets
+   ========================================================================== */
+:where(.strong-text) {
+  font-weight: var(--strong-text-font-weight, var(--font-weight-bold, 700));
+}
+
+:where(.alt-text) {
+  font-family: var(--typography-alt-font-family, inherit);
+}
+
+:where(code),
+:where(.code-text, .code) {
+  font-family: var(--code-font-family, var(--typography-code-font-family, monospace));
+  font-variant-numeric: slashed-zero diagonal-fractions;
+}
+
+:where(.pre) {
+  white-space: pre;
+}

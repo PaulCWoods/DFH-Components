@@ -1,0 +1,178 @@
+/* ==========================================================================
+   Design For Humans: Header Landmark Primitive
+   --------------------------------------------------------------------------
+   Semantic top-level header and navigation landmark with sticky positioning,
+   translucent glassmorphism, and token-driven bottom borders.
+   Parity with Design For Humans Blog (_header.scss & _component-library.twig).
+
+   Usage:
+   <header class="header header--sticky header--translucent">
+     <div class="wrapper flex justify-content-between align-items-center">
+       ...
+     </div>
+   </header>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Header Container (:where(.header))
+   ========================================================================== */
+
+:root {
+  --header-height: var(--header-mobile-height);
+
+  @media (min-width: 1024px) {
+    --header-height: var(--header-desktop-height);
+  }
+}
+
+:where(.header, .header-container) {
+  --_header-z-index: var(--header-z-index, var(--z-index-sticky, 100));
+}
+
+:where(.header) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_header-backdrop-filter: var(--header-backdrop-filter, var(--surface-layer-filter, blur(8px)));
+  --_header-bg: var(--header-bg, var(--surface-card, Canvas));
+  --_header-border-color: var(--header-border-color, var(--app-border-color, var(--border-color-quiet, currentColor)));
+  --_header-border-style: var(--header-border-style, var(--app-border-style, solid));
+  --_header-border-width: var(--header-border-width, var(--app-border-width, var(--border-width, 1px)));
+  --_header-color-palette: var(--header-color-palette, default);
+  --_header-color-scheme: var(--header-color-scheme, inherit);
+  --_header-height: var(--header-height, 3.75rem);
+  --_header-padding-inline: var(--header-padding-inline, var(--spacing-cushion, 1rem));
+  --_header-padding-block: var(--header-padding-block, 0px);
+  --_header-text: var(--header-text, var(--foreground, currentColor));
+  --_header-translucency: var(--header-translucency, var(--translucency-subtle, 10%));
+  --_header-transition: var(--header-transition, var(--duration-sm));
+  --_header-z-index: var(--header-z-index, var(--z-index-sticky, 100));
+
+  /* Palette & Scheme */
+  --color-palette: var(--_header-color-palette);
+  color-scheme: var(--_header-color-scheme);
+  color: var(--_header-text);
+
+  /* Layout & Sizing */
+  box-sizing: border-box;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  justify-content: center;
+  min-block-size: var(--_header-height);
+  padding-inline-start: calc(var(--_header-padding-inline) + var(--safe-area-inset-left));
+  padding-inline-end: calc(var(--_header-padding-inline) + var(--safe-area-inset-right));
+  padding-block-start: var(--_header-padding-block);
+  padding-block-end: var(--_header-padding-block);
+  position: relative;
+
+  /* Surface & Border */
+  background-color: var(--_header-bg);
+  border-block-end: var(--_header-border-width) var(--_header-border-style) var(--_header-border-color);
+}
+
+:where(.header:first-child) {
+  padding-block-start: calc(var(--_header-padding-block) + var(--safe-area-inset-top));
+}
+
+:where(.header-container) {
+  --_header-container-gap: var(--header-container-gap, 0px);
+  --_header-height: var(--header-height, 3.75rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--_header-container-gap);
+  justify-content: center;
+  min-block-size: var(--_header-height);
+
+  :where(.header) {
+    min-block-size: var(--header-contained-height, 0px);
+  }
+}
+
+/* ==========================================================================
+   2. Modifiers (.header--sticky, .header--translucent, etc.)
+   ========================================================================== */
+
+/* Sticky Landmark (Pinned to top of scrolling viewport) */
+:where(.header--sticky) {
+  box-shadow: var(--shadow-reset);
+  inset-block-start: 0;
+  position: sticky;
+  transition: box-shadow var(--_header-transition) ease;
+  z-index: var(--_header-z-index);
+
+  @container app scroll-state(scrollable: block-start) {
+    box-shadow: var(--header-shadow, var(--card-layer-shadow));
+
+    @media (prefers-contrast: more) {
+      box-shadow: none;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    animation-timeline: scroll();
+    animation-range: 0px 24px;
+    animation-name: header-elevation;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+
+    @media (prefers-contrast: more) {
+      animation-name: none;
+    }
+  }
+}
+
+@keyframes header-elevation {
+  from {
+    box-shadow: var(--shadow-reset);
+  }
+
+  to {
+    box-shadow: var(--header-shadow, var(--card-layer-shadow));
+  }
+}
+
+/* Translucent Glassmorphism */
+@media (prefers-contrast: no-preference) {
+  :where(.header--translucent) {
+    background-color: color-mix(in srgb, var(--_header-bg), transparent var(--_header-translucency));
+    backdrop-filter: var(--_header-backdrop-filter);
+  }
+}
+
+/* Borderless / Flush Variant */
+:where(.header--borderless) {
+  --_header-border-width: 0;
+  border-block-end: none;
+}
+
+/* No inline padding */
+:where(.header--flush) {
+  --_header-padding-inline: 0px;
+}
+
+/* ==========================================================================
+   3. Accessibility & Media Queries
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  :where(.header) {
+    --_header-border-width: var(--border-width-md, var(--border-width, 2px));
+    --_header-translucency: 0%;
+  }
+
+  :where(.header--translucent) {
+    backdrop-filter: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced Motion Support
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --header-transition: 0s;
+  }
+}

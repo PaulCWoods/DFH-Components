@@ -139,53 +139,56 @@ function compileFluidValue(val, globalTokens = null) {
 }
 
 /**
- * Helper to identify Tier 3 component tokens that reference Tier 2 color/border tokens.
- * These should NOT be emitted into variables.css at :root so that components can directly
- * inherit dynamically inverted color-scheme palettes via fallback values.
+ * Mapping of resting Tier 2 tokens to their inverted equivalents for Tier 3 component tokens.
+ * When a component references a Tier 2 semantic surface, foreground, or border,
+ * its inverted counterpart is automatically emitted into the color-palette-inverted block.
  */
-function isTier3ColorToken(value, rawVal, name) {
-  const type = value.$type || value.type;
-  if (type === 'color') return true;
+const TIER2_INVERTED_MAPPINGS = {
+  // Surfaces
+  '{surface.card}': 'light-dark(var(--surface-color-darker), var(--surface-color-lighter))',
+  '{surface}': 'light-dark(var(--surface-color-dark), var(--surface-color-light))',
+  '{surface.default}': 'light-dark(var(--surface-color-dark), var(--surface-color-light))',
+  '{surface.subtle}': 'light-dark(var(--surface-color-dark), var(--surface-color-light))',
+  '{surface.muted}': 'light-dark(var(--surface-color-dark-muted), var(--surface-color-light-muted))',
+  '{surface.card-inverted}': 'light-dark(var(--surface-color-lighter), var(--surface-color-darker))',
+  '{surface.inverted}': 'light-dark(var(--surface-color-light), var(--surface-color-dark))',
+  '{surface.dark}': 'light-dark(var(--surface-color-darker), var(--surface-color-dark))',
+  '{surface.darker}': 'var(--surface-color-darker)',
+  '{surface.accent-strong}': 'light-dark(var(--surface-color-accent-strong-dark), var(--surface-color-accent-strong-light))',
+  '{surface.accent}': 'light-dark(var(--surface-color-accent-dark), var(--surface-color-accent-light))',
+  '{surface.accent-muted}': 'light-dark(var(--surface-color-accent-muted-dark), var(--surface-color-accent-muted-light))',
+  '{surface.danger}': 'light-dark(var(--surface-color-danger-dark), var(--surface-color-danger-light))',
+  '{surface.warning}': 'light-dark(var(--surface-color-warning-dark), var(--surface-color-warning-light))',
+  '{surface.success}': 'light-dark(var(--surface-color-success-dark), var(--surface-color-success-light))',
 
-  if (typeof rawVal === 'string') {
-    const trimmed = rawVal.trim();
-    if (
-      trimmed.includes('{surface') ||
-      trimmed.includes('{foreground') ||
-      trimmed.includes('{border.color') ||
-      trimmed.includes('{border.default}') ||
-      trimmed.includes('{border.muted}') ||
-      trimmed.includes('{border.subtle}') ||
-      trimmed.includes('{border.quiet}') ||
-      trimmed.includes('{color.') ||
-      trimmed === 'transparent' ||
-      trimmed.startsWith('#') ||
-      trimmed.startsWith('rgb') ||
-      trimmed.startsWith('hsl') ||
-      trimmed.startsWith('light-dark(')
-    ) {
-      if (
-        type === 'border' ||
-        name.includes('-bg') ||
-        name.includes('-text') ||
-        name.includes('-color') ||
-        name.includes('-border') ||
-        name.endsWith('-bg') ||
-        name.endsWith('-text') ||
-        name.endsWith('-border')
-      ) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
+  // Foregrounds
+  '{foreground}': 'light-dark(var(--foreground-color-light), var(--foreground-color-dark))',
+  '{foreground.default}': 'light-dark(var(--foreground-color-light), var(--foreground-color-dark))',
+  '{foreground.strong}': 'light-dark(var(--foreground-color-lighter), var(--foreground-color-darker))',
+  '{foreground.muted}': 'light-dark(var(--foreground-color-light-muted), var(--foreground-color-dark-muted))',
+  '{foreground.inverted}': 'light-dark(var(--foreground-color-dark), var(--foreground-color-light))',
+  '{foreground.inverted-strong}': 'light-dark(var(--foreground-color-darker), var(--foreground-color-lighter))',
+  '{foreground.accent}': 'light-dark(var(--foreground-color-accent-light), var(--foreground-color-accent-dark))',
+  '{foreground.accent-hover}': 'light-dark(var(--foreground-color-accent-light-hover), var(--foreground-color-accent-dark-hover))',
+  '{foreground.accent-pressed}': 'light-dark(var(--foreground-color-accent-light-pressed), var(--foreground-color-accent-dark-pressed))',
+  '{foreground.danger}': 'light-dark(var(--foreground-color-danger-light), var(--foreground-color-danger-dark))',
+  '{foreground.danger-hover}': 'light-dark(var(--foreground-color-danger-light-hover), var(--foreground-color-danger-dark-hover))',
+  '{foreground.danger-pressed}': 'light-dark(var(--foreground-color-danger-light-pressed), var(--foreground-color-danger-dark-pressed))',
+  '{foreground.success}': 'light-dark(var(--foreground-color-success-light), var(--foreground-color-success-dark))',
+  '{foreground.warning}': 'light-dark(var(--foreground-color-warning-light), var(--foreground-color-warning-dark))',
+
+  // Borders
+  '{border.color.accent}': 'light-dark(var(--border-color-accent-dark), var(--border-color-accent-light))',
+  '{border.color.danger}': 'light-dark(var(--border-color-danger-dark), var(--border-color-danger-light))',
+  '{border.color.success}': 'light-dark(var(--border-color-success-dark), var(--border-color-success-light))',
+  '{border.color.warning}': 'light-dark(var(--border-color-warning-dark), var(--border-color-warning-light))',
+};
 
 /**
  * Recursively flattens nested token objects into CSS variable paths.
  * E.g., { color: { surface: { value: '#ffffff' } } } -> --color-surface: #ffffff;
  */
-function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false) {
+function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false, invertedVars = null) {
   let cssVariables = [];
 
   for (const [key, value] of Object.entries(obj)) {
@@ -199,28 +202,46 @@ function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false) {
     if (value && typeof value === 'object' && ('$value' in value || 'value' in value)) {
       // This is a token leaf node (supports W3C DTCG $value and legacy value)
       const rawVal = value.$value !== undefined ? value.$value : value.value;
+      const baseName = (name.includes('-default-') || name.endsWith('-default'))
+        ? name.replace(/-default-/, '-').replace(/-default$/, '')
+        : name;
 
-      // Filter out Tier 3 color tokens so they don't block container palette cascading
-      if (isTier3 && isTier3ColorToken(value, rawVal, name)) {
-        continue;
+      // When compiling Tier 3 component tokens, capture any references to Tier 2 tokens for the inverted palette block
+      if (isTier3 && invertedVars && typeof rawVal === 'string') {
+        const trimmed = rawVal.trim();
+        if (TIER2_INVERTED_MAPPINGS[trimmed]) {
+          invertedVars.push(`  --${baseName}: ${TIER2_INVERTED_MAPPINGS[trimmed]};`);
+        }
       }
 
       let tokenVal = rawVal;
       if (typeof rawVal === 'string' && rawVal.trim().startsWith('fluid(') && rawVal.trim().endsWith(')')) {
         tokenVal = compileFluidValue(rawVal, globalTokens);
       } else if (Array.isArray(rawVal) && rawVal.length > 0 && typeof rawVal[0] === 'object') {
-        const formatShadowLayer = (layer) => {
-          if (typeof layer === 'string') return resolveReferences(layer);
-          if (!layer || typeof layer !== 'object') return '';
-          const isInset = layer.type === 'innerShadow' || layer.inset;
-          const x = layer.x || '0';
-          const y = layer.y || '0';
-          const blur = layer.blur || '0';
-          const spread = layer.spread || '0';
-          const col = resolveReferences(layer.color || '{shadow.color}');
-          return `${isInset ? 'inset ' : ''}${x} ${y} ${blur} ${spread} ${col}`.trim();
-        };
-        tokenVal = '\n    ' + rawVal.map(formatShadowLayer).join(',\n    ');
+        const isShadowPreset = baseName.startsWith('shadow-');
+        const isLightShadow = baseName.endsWith('-light') && isShadowPreset;
+        const shadowPresetName = isShadowPreset
+          ? (isLightShadow ? baseName.replace(/^shadow-/, '').replace(/-light$/, '') : baseName.replace(/^shadow-/, ''))
+          : '';
+        const isSupportedPreset = ['sm', 'md', 'lg', 'inner'].includes(shadowPresetName);
+
+        if (isSupportedPreset) {
+          const colorVar = isLightShadow ? 'var(--shadow-color-light)' : 'var(--shadow-color)';
+          tokenVal = '\n    ' + rawVal.map((_, idx) => `var(--_shadow-${shadowPresetName}-layer-${idx + 1}) ${colorVar}`).join(',\n    ');
+        } else {
+          const formatShadowLayer = (layer) => {
+            if (typeof layer === 'string') return resolveReferences(layer);
+            if (!layer || typeof layer !== 'object') return '';
+            const isInset = layer.type === 'innerShadow' || layer.inset;
+            const x = layer.x || '0';
+            const y = layer.y || '0';
+            const blur = layer.blur || '0';
+            const spread = layer.spread || '0';
+            const col = resolveReferences(layer.color || '{shadow.color}');
+            return `${isInset ? 'inset ' : ''}${x} ${y} ${blur} ${spread} ${col}`.trim();
+          };
+          tokenVal = '\n    ' + rawVal.map(formatShadowLayer).join(',\n    ');
+        }
       } else if (rawVal && typeof rawVal === 'object' && ('x' in rawVal || 'y' in rawVal || 'blur' in rawVal)) {
         const isInset = rawVal.type === 'innerShadow' || rawVal.inset;
         const x = rawVal.x || '0';
@@ -237,15 +258,10 @@ function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false) {
         tokenVal = FONT_WEIGHT_CSS_MAP[rawVal.trim().toLowerCase()];
       }
 
-      if (name.includes('-default-') || name.endsWith('-default')) {
-        const baseName = name.replace(/-default-/, '-').replace(/-default$/, '');
-        cssVariables.push(`  --${baseName}: ${tokenVal};`);
-      } else {
-        cssVariables.push(`  --${name}: ${tokenVal};`);
-      }
+      cssVariables.push(`  --${baseName}: ${tokenVal};`);
     } else if (value && typeof value === 'object') {
       // Recurse deeper into nested categories
-      cssVariables = cssVariables.concat(flattenTokens(value, name, globalTokens, isTier3));
+      cssVariables = cssVariables.concat(flattenTokens(value, name, globalTokens, isTier3, invertedVars));
     }
   }
 
@@ -284,7 +300,153 @@ function extractConditionals(json) {
  * Generates fluid clamp fallbacks and progressive enhancement progress() rules
  * based on fluid parameters.
  */
-function generateFluidSystem(globalTokens) {
+function parseStepKey(key) {
+  if (typeof key !== 'string') return null;
+  const normalized = key.replace(/minus-(\d+)/g, '-$1');
+  const compoundMatch = normalized.match(/^(-?\d+)-(-?\d+)$/);
+  if (compoundMatch) {
+    return {
+      isCompound: true,
+      minStep: parseInt(compoundMatch[1], 10),
+      maxStep: parseInt(compoundMatch[2], 10),
+      stepKey: key
+    };
+  }
+  const singleMatch = normalized.match(/^(-?\d+)$/);
+  if (singleMatch) {
+    const s = parseInt(singleMatch[1], 10);
+    return {
+      isCompound: false,
+      minStep: s,
+      maxStep: s,
+      stepKey: key
+    };
+  }
+  return null;
+}
+
+/**
+ * Automatically recalculates 1-global.json typography font sizes and fluid values
+ * whenever typography.ratio, typography.font-size-base, or fluid-scale ratios are defined or modified.
+ */
+function syncGlobalTypographyScale(globalJson, globalPath) {
+  if (!globalJson || !globalJson.typography) return null;
+  const typo = globalJson.typography;
+
+  const baseRem = parseFloat(typo['font-size-base']?.$value || typo['font-size-base']?.value || '1rem') || 1.0;
+  const ratio = parseFloat(typo.ratio?.$value !== undefined ? typo.ratio.$value : typo.ratio?.value !== undefined ? typo.ratio.value : 1.25) || 1.25;
+
+  const fluidScale = typo['fluid-scale'] || {};
+  const mobileBase = parseFloat(fluidScale['mobile-base']?.$value || fluidScale['mobile-base']?.value || '1rem') || 1.0;
+  const mobileRatio = parseFloat(fluidScale['mobile-ratio']?.$value !== undefined ? fluidScale['mobile-ratio'].$value : 1.2) || 1.2;
+  const desktopBase = parseFloat(fluidScale['desktop-base']?.$value || fluidScale['desktop-base']?.value || '1.5rem') || 1.5;
+  const desktopRatio = parseFloat(fluidScale['desktop-ratio']?.$value !== undefined ? fluidScale['desktop-ratio'].$value : 1.25) || 1.25;
+
+  let changed = false;
+
+  // 1. Recalculate static font-size steps: -2 through 8
+  if (!typo['font-size']) typo['font-size'] = { $type: 'dimension' };
+  const steps = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+  steps.forEach(step => {
+    const key = step < 0 ? `minus-${Math.abs(step)}` : `${step}`;
+    const calculatedRem = +(baseRem * Math.pow(ratio, step)).toFixed(4);
+    const expectedVal = `${calculatedRem}rem`;
+
+    if (!typo['font-size'][key]) {
+      typo['font-size'][key] = { $value: expectedVal };
+      changed = true;
+    } else {
+      const currentVal = typo['font-size'][key].$value !== undefined ? typo['font-size'][key].$value : typo['font-size'][key].value;
+      if (currentVal !== expectedVal) {
+        if (typo['font-size'][key].$value !== undefined) typo['font-size'][key].$value = expectedVal;
+        else typo['font-size'][key].value = expectedVal;
+        changed = true;
+      }
+    }
+  });
+
+  // 2. Recalculate global fluid.typography.font-size base steps: -2 through 8
+  if (!globalJson.fluid) globalJson.fluid = {};
+  if (!globalJson.fluid.typography) globalJson.fluid.typography = {};
+  if (!globalJson.fluid.typography['font-size']) globalJson.fluid.typography['font-size'] = { $type: 'dimension' };
+
+  steps.forEach(step => {
+    const key = step < 0 ? `minus-${Math.abs(step)}` : `${step}`;
+    const minRem = +(mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
+    const maxRem = +(desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
+    const expectedVal = `fluid(${minRem}rem, ${maxRem}rem)`;
+    const expectedDesc = `Fluid font size step ${step} (${minRem}rem / ${Math.round(minRem * 16)}px Mobile to ${maxRem}rem / ${Math.round(maxRem * 16)}px Desktop)`;
+
+    const existing = globalJson.fluid.typography['font-size'][key];
+    if (!existing) {
+      globalJson.fluid.typography['font-size'][key] = {
+        $value: expectedVal,
+        $description: expectedDesc
+      };
+      changed = true;
+    } else {
+      const currentVal = existing.$value !== undefined ? existing.$value : existing.value;
+      if (currentVal !== expectedVal) {
+        if (existing.$value !== undefined) existing.$value = expectedVal;
+        else existing.value = expectedVal;
+        existing.$description = expectedDesc;
+        changed = true;
+      }
+    }
+  });
+
+  if (changed && globalPath) {
+    fs.writeFileSync(globalPath, JSON.stringify(globalJson, null, 2) + '\n', 'utf8');
+    console.log(`✨ Recalculated 1-global.json font sizes (ratio: ${ratio}, mobile: ${mobileRatio}, desktop: ${desktopRatio})`);
+  }
+
+  return {
+    baseRem,
+    ratio,
+    mobileBase,
+    mobileRatio,
+    desktopBase,
+    desktopRatio
+  };
+}
+
+/**
+ * Recursively scans token objects to find any fluid step references like:
+ * {fluid.typography.font-size.2-4} or {typography.font-size.cq.4-7}
+ */
+function discoverFluidStepReferences(tokenObjects) {
+  const referencedSteps = new Set();
+  const pattern = /\{(?:fluid\.typography\.font-size|typography\.font-size\.cq|typography\.font-size\.fluid)\.([a-zA-Z0-9_-]+)\}/g;
+
+  function scan(val) {
+    if (typeof val === 'string') {
+      let m;
+      while ((m = pattern.exec(val)) !== null) {
+        referencedSteps.add(m[1]);
+      }
+    } else if (Array.isArray(val)) {
+      val.forEach(scan);
+    } else if (val && typeof val === 'object') {
+      for (const k of Object.keys(val)) {
+        if (k.startsWith('$') && k !== '$value') continue;
+        scan(val[k]);
+      }
+    }
+  }
+
+  tokenObjects.forEach(obj => {
+    if (obj) scan(obj);
+  });
+
+  return referencedSteps;
+}
+
+/**
+ * Generates automated fluid spacing and fluid typography clamp() fallbacks,
+ * modern round() + progress() progressive enhancements, and Level 5 @function rules.
+ */
+function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scaleParams = null) {
   const minVp = 400; // 400px
   const maxVp = 1280; // 1280px
   const minVpRem = minVp / 16; // 25rem
@@ -350,31 +512,69 @@ function generateFluidSystem(globalTokens) {
     },
   ];
 
-  // Fluid typography scale parameters:
-  // Mobile: Minor Third (1.2 ratio), base 1rem (16px) at 400px viewport
-  // Desktop: Major Third (1.25 ratio), base 1.5rem (24px) at 1280px viewport
-  const minFs = 1.0;
-  const maxFs = 1.5;
-  const minRatio = 1.2;
-  const maxRatio = 1.25;
-  const steps = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8];
+  // Fluid typography scale parameters derived from 1-global.json
+  const mobileBase = scaleParams?.mobileBase || 1.0;
+  const mobileRatio = scaleParams?.mobileRatio || 1.2;
+  const desktopBase = scaleParams?.desktopBase || 1.5;
+  const desktopRatio = scaleParams?.desktopRatio || 1.25;
 
-  const fontDefs = steps.map(step => {
-    const minRem = +(minFs * Math.pow(minRatio, step)).toFixed(4);
-    const maxRem = +(maxFs * Math.pow(maxRatio, step)).toFixed(4);
-    const stepStr = String(step);
-    return {
-      step: stepStr,
-      name: `typography-font-size-fluid-${stepStr}`,
-      nameCq: `typography-font-size-cq-${stepStr}`,
+  const baseSteps = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8];
+  const allStepDefs = new Map();
+
+  // 1. Add standard single-integer scale steps
+  baseSteps.forEach(step => {
+    const key = String(step);
+    const minRem = +(mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
+    const maxRem = +(desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
+    allStepDefs.set(key, {
+      key,
+      isCompound: false,
+      minStep: step,
+      maxStep: step,
       minRem,
       maxRem,
+      name: `typography-font-size-fluid-${key}`,
+      nameCq: `typography-font-size-cq-${key}`,
       clampVi: calculateClamp(minRem, maxRem, 'vi'),
       clampCq: calculateClamp(minRem, maxRem, 'cqi')
-    };
+    });
   });
 
+  // 2. Add dynamically discovered compound steps from 2-semantic.json (e.g. 2-4, 4-7)
+  discoveredSteps.forEach(rawKey => {
+    const parsed = parseStepKey(rawKey);
+    if (!parsed) return;
+    const key = parsed.isCompound ? `${parsed.minStep}-${parsed.maxStep}` : String(parsed.minStep);
+    if (!allStepDefs.has(key)) {
+      const minRem = +(mobileBase * Math.pow(mobileRatio, parsed.minStep)).toFixed(4);
+      const maxRem = +(desktopBase * Math.pow(desktopRatio, parsed.maxStep)).toFixed(4);
+      allStepDefs.set(key, {
+        key,
+        isCompound: parsed.isCompound,
+        minStep: parsed.minStep,
+        maxStep: parsed.maxStep,
+        minRem,
+        maxRem,
+        name: `typography-font-size-fluid-${key}`,
+        nameCq: `typography-font-size-cq-${key}`,
+        clampVi: calculateClamp(minRem, maxRem, 'vi'),
+        clampCq: calculateClamp(minRem, maxRem, 'cqi')
+      });
+      console.log(`✨ Synthesized on-demand fluid step: ${key} (${minRem}rem -> ${maxRem}rem)`);
+    }
+  });
+
+  const fontDefs = Array.from(allStepDefs.values());
+
   const fallbackVars = [
+    '  /* Modular Typography Scale Parameters */',
+    `  --font-size-base: ${mobileBase}rem;`,
+    `  --font-size-ratio: ${mobileRatio};`,
+    '  --_min-font-size: var(--font-size-base);',
+    '  --_min-ratio: var(--font-size-ratio);',
+    `  --_max-font-size: ${desktopBase}rem;`,
+    `  --_max-ratio: ${desktopRatio};`,
+    '',
     '  /* Fluid Spacing (Standard clamp fallbacks: vi units) */',
     ...spacingDefs.map(s => `  --${s.name}: ${calculateClamp(s.min, s.max, 'vi')};`),
     '',
@@ -417,9 +617,112 @@ ${progressiveVars.join('\n')}
   }
 }`;
 
+  // CSS Level 5 @function definitions for spacing and typography
+  const functionDefs = [
+    `@function --spacing-fluid(--size, --factor: 1) {
+  result: round(var(--size) + var(--_progress) * (var(--size) * pow(var(--_space-ratio), var(--factor)) - var(--size)), var(--_interval));
+}`,
+    `@function --spacing-cq(--size, --factor: 1) {
+  result: round(var(--size) + var(--_progress-cq) * (var(--size) * pow(var(--_space-ratio), var(--factor)) - var(--size)), var(--_interval));
+}`,
+    `@function --type-size(--n) {
+  result: round(calc(var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
+}`,
+    `@function --type-size-fluid(--n, --n2: false) {
+  --_mn: calc(var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
+  --_mx: calc(var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  result: round(var(--_mn) + var(--_progress) * (var(--_mx) - var(--_mn)), var(--_interval));
+}`,
+    `@function --type-size-cq(--n, --n2: false) {
+  --_mn: calc(var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
+  --_mx: calc(var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  result: round(var(--_mn) + var(--_progress-cq) * (var(--_mx) - var(--_mn)), var(--_interval));
+}`,
+    `@function --line-height(--n) {
+  result: round(calc(var(--_line-height, 1.6) * pow(var(--_line-height-ratio, 1.125), var(--n))), 0.01);
+}`
+  ];
+
+  const supportsMapping = [
+    '    /* Fluid Spacing Functions */',
+    '    --spacing-fluid: --spacing-fluid(var(--spacing-16), 1);',
+    '    --spacing-fluid-x2: --spacing-fluid(var(--spacing-16), 2);',
+    '    --spacing-fluid-x3: --spacing-fluid(var(--spacing-16), 3);',
+    '',
+    '    /* Container Fluid Spacing Functions */',
+    '    --spacing-cq: --spacing-cq(var(--spacing-16), 1);',
+    '    --spacing-cq-x2: --spacing-cq(var(--spacing-16), 2);',
+    '    --spacing-cq-x3: --spacing-cq(var(--spacing-16), 3);',
+    '',
+    '    /* Fluid Typography Functions */',
+    ...fontDefs.map(f => f.isCompound
+      ? `    --${f.name}: --type-size-fluid(${f.minStep}, ${f.maxStep});`
+      : `    --${f.name}: --type-size-fluid(${f.minStep});`
+    ),
+    '',
+    '    /* Container Fluid Typography Functions */',
+    ...fontDefs.map(f => f.isCompound
+      ? `    --${f.nameCq}: --type-size-cq(${f.minStep}, ${f.maxStep});`
+      : `    --${f.nameCq}: --type-size-cq(${f.minStep});`
+    )
+  ];
+
   return {
     fallbackVars,
-    progressiveBlock
+    progressiveBlock,
+    functionDefs,
+    supportsMapping
+  };
+}
+
+/**
+ * Generates decomposed shadow geometry layers, CSS Level 5 @function rules,
+ * and @supports at-rule(@function) progressive enhancement mappings.
+ */
+function generateShadowSystem(semanticJson) {
+  if (!semanticJson || !semanticJson.shadow) return null;
+  const shadowObj = semanticJson.shadow;
+
+  const presets = ['sm', 'md', 'lg', 'inner'];
+  const layerVars = [];
+  const functionDefs = [];
+  const supportsMapping = [];
+
+  layerVars.push('  /* Shadow Geometry Layers */');
+
+  presets.forEach(name => {
+    const token = shadowObj[name];
+    if (!token) return;
+    const rawVal = token.$value !== undefined ? token.$value : token.value;
+    if (Array.isArray(rawVal) && rawVal.length > 0) {
+      rawVal.forEach((layer, idx) => {
+        const layerIdx = idx + 1;
+        const isInset = layer.type === 'innerShadow' || layer.inset;
+        const x = layer.x || '0';
+        const y = layer.y || '0';
+        const blur = layer.blur || '0';
+        const spread = layer.spread || '0';
+        const geom = `${isInset ? 'inset ' : ''}${x} ${y} ${blur} ${spread}`.trim();
+        layerVars.push(`  --_shadow-${name}-layer-${layerIdx}: ${geom};`);
+      });
+
+      const functionLayers = rawVal
+        .map((_, idx) => `var(--_shadow-${name}-layer-${idx + 1}) var(--color)`)
+        .join(',\n    ');
+
+      functionDefs.push(`@function --shadow-${name}(--color: black) {
+  result: ${functionLayers};
+}`);
+
+      supportsMapping.push(`    --shadow-${name}: --shadow-${name}(var(--shadow-color));`);
+      supportsMapping.push(`    --shadow-${name}-light: --shadow-${name}(var(--shadow-color-light));`);
+    }
+  });
+
+  return {
+    layerVars,
+    functionDefs,
+    supportsMapping
   };
 }
 
@@ -431,8 +734,28 @@ function compileTokens() {
     const tokenFiles = ['1-global.json', '2-semantic.json', '3-component.json'];
     let allCssLines = [];
     let allConditionals = [];
+    let invertedTier3Vars = [];
     const globalPath = path.join(TOKENS_DIR, '1-global.json');
-    const globalJson = fs.existsSync(globalPath) ? JSON.parse(fs.readFileSync(globalPath, 'utf8').trim()) : null;
+    let globalJson = fs.existsSync(globalPath) ? JSON.parse(fs.readFileSync(globalPath, 'utf8').trim()) : null;
+
+    // 1. Sync & recalculate global modular scale if ratio or base sizes changed
+    const scaleParams = syncGlobalTypographyScale(globalJson, globalPath);
+    if (globalPath && fs.existsSync(globalPath)) {
+      globalJson = JSON.parse(fs.readFileSync(globalPath, 'utf8').trim());
+    }
+
+    const semanticPath = path.join(TOKENS_DIR, '2-semantic.json');
+    const semanticJson = fs.existsSync(semanticPath) ? JSON.parse(fs.readFileSync(semanticPath, 'utf8').trim()) : null;
+
+    const componentPath = path.join(TOKENS_DIR, '3-component.json');
+    const componentJson = fs.existsSync(componentPath) ? JSON.parse(fs.readFileSync(componentPath, 'utf8').trim()) : null;
+
+    // 2. Discover any compound or custom fluid steps in 2-semantic.json / 3-component.json
+    const discoveredFluidSteps = discoverFluidStepReferences([semanticJson, componentJson]);
+
+    // 3. Generate fluid system with dynamic compound steps
+    const fluidSystem = generateFluidSystem(globalJson, discoveredFluidSteps, scaleParams);
+    const shadowSystem = generateShadowSystem(semanticJson);
 
     tokenFiles.forEach(file => {
       const filePath = path.join(TOKENS_DIR, file);
@@ -441,15 +764,18 @@ function compileTokens() {
         const json = rawData ? JSON.parse(rawData) : {};
 
         const isTier3 = file === '3-component.json';
-        const flattened = flattenTokens(json, '', globalJson, isTier3);
+        const flattened = flattenTokens(json, '', globalJson, isTier3, isTier3 ? invertedTier3Vars : null);
         const conditionals = extractConditionals(json);
 
         allCssLines.push(`  /* Source: ${file} */`);
+        if (file === '2-semantic.json' && shadowSystem) {
+          allCssLines = allCssLines.concat(shadowSystem.layerVars);
+          allCssLines.push('');
+        }
         allCssLines = allCssLines.concat(flattened);
 
         // After global tokens, inject the automated fluid spacing and typography clamp fallbacks
-        if (file === '1-global.json' && globalJson) {
-          const fluidSystem = generateFluidSystem(globalJson);
+        if (file === '1-global.json' && fluidSystem) {
           allCssLines.push('');
           allCssLines = allCssLines.concat(fluidSystem.fallbackVars);
         }
@@ -487,9 +813,53 @@ ${cond.variables.join('\n')}
     });
 
     // Append fluid system progressive enhancement block
-    if (globalJson) {
-      const fluidSystem = generateFluidSystem(globalJson);
+    if (fluidSystem) {
       conditionalBlocks.push(fluidSystem.progressiveBlock);
+    }
+
+    // Build unified CSS Level 5 @function block
+    const allFunctionDefs = [
+      ...(shadowSystem ? shadowSystem.functionDefs : []),
+      ...(fluidSystem ? fluidSystem.functionDefs : [])
+    ];
+    const allSupportsMappings = [
+      ...(shadowSystem ? shadowSystem.supportsMapping : []),
+      ...(fluidSystem ? fluidSystem.supportsMapping : [])
+    ];
+
+    let functionsBlock = '';
+    if (allFunctionDefs.length > 0) {
+      functionsBlock = `/* ==========================================================================
+   Functions (CSS Values and Units Level 5 @function)
+   --------------------------------------------------------------------------
+   Dynamic color-parameterized shadows, fluid scaling, and typography calculations.
+   ========================================================================== */
+
+${allFunctionDefs.join('\n\n')}
+
+@supports at-rule(@function) {
+  :root {
+${allSupportsMappings.join('\n')}
+  }
+}`;
+    }
+
+    // Build Tier 3 inverted palette blocks for components
+    let invertedBlock = '';
+    if (invertedTier3Vars.length > 0) {
+      invertedBlock = `
+/* ==========================================================================
+   Tier 3 Inverted Component Palette Blocks
+   ========================================================================== */
+:where(.color-palette-inverted, .colors-inverted) {
+${invertedTier3Vars.join('\n')}
+}
+
+* {
+  @container style(--color-palette: inverted) {
+${invertedTier3Vars.join('\n')}
+  }
+}`;
     }
 
     // Wrap in :root selector with modern defaults
@@ -504,7 +874,7 @@ ${cond.variables.join('\n')}
 
 ${allCssLines.join('\n')}
 }
-${conditionalBlocks.length > 0 ? '\n' + conditionalBlocks.join('\n\n') + '\n' : ''}`;
+${functionsBlock ? '\n' + functionsBlock + '\n' : ''}${conditionalBlocks.length > 0 ? '\n' + conditionalBlocks.join('\n\n') + '\n' : ''}${invertedBlock ? '\n' + invertedBlock + '\n' : ''}`;
 
     // Ensure output directory exists
     fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });

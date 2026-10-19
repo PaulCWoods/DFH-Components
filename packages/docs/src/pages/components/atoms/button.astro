@@ -1,0 +1,591 @@
+---
+import DocLayout from '../../../layouts/DocLayout.astro';
+import ComponentHeader from '../../../components/ComponentHeader.astro';
+import ComponentPlayground from '../../../components/ComponentPlayground.astro';
+import CodeBlock from '../../../components/CodeBlock.astro';
+import TokenTable from '../../../components/TokenTable.astro';
+import GuidelineCard from '../../../components/GuidelineCard.astro';
+import ExampleCard from '../../../components/ExampleCard.astro';
+import Icon from '../../../components/Icon.astro';
+import Section from '../../../components/Section.astro';
+
+const toc = [
+  { id: 'playground', label: 'Interactive Playground' },
+  { id: 'prominence', label: 'Prominence & Hierarchy' },
+  { id: 'tones', label: 'Semantic Tones' },
+  { id: 'sizes', label: 'Target Size & Density' },
+  { id: 'icons', label: 'Icons & Accoutrements' },
+  { id: 'zero-js', label: 'Form Switches & Radios' },
+  { id: 'style-queries', label: 'Container Queries' },
+  { id: 'accessibility', label: 'Accessibility (WCAG 2.2)' },
+  { id: 'tokens', label: 'Design Tokens' },
+  { id: 'guidelines', label: 'Do’s and Don’ts' },
+];
+
+interface TokenRow {
+  name: string;
+  property: string;
+  fallback: string;
+  description: string;
+}
+
+const buttonTokens: TokenRow[] = [
+  {
+    name: '--button-bg',
+    property: 'background-color',
+    fallback: 'transparent',
+    description: 'Resting surface background fill for default and subtle variants.',
+  },
+  {
+    name: '--button-border-color',
+    property: 'border-color',
+    fallback: 'var(--border-color-muted, currentColor)',
+    description: 'Boundary border color, guaranteed 3:1 contrast against adjacent background.',
+  },
+  {
+    name: '--button-text',
+    property: 'color',
+    fallback: 'var(--foreground, currentColor)',
+    description: 'Primary text and icon foreground color.',
+  },
+  {
+    name: '--button-min-size',
+    property: 'min-block-size',
+    fallback: 'var(--spacing-target, 3rem)',
+    description: 'Ergonomic touch target constraint (48px AAA default, 32px AA compact).',
+  },
+  {
+    name: '--button-padding-block',
+    property: 'padding-block',
+    fallback: 'var(--spacing-4, 0.25rem)',
+    description: 'Vertical block padding within the button surface.',
+  },
+  {
+    name: '--button-padding-inline',
+    property: 'padding-inline',
+    fallback: 'var(--spacing-16, 1rem)',
+    description: 'Horizontal inline padding hugging inner label and icons.',
+  },
+  {
+    name: '--button-radius',
+    property: 'border-radius',
+    fallback: 'var(--radius, 0.25rem)',
+    description: 'Corner rounding radius (customizable to pill or round).',
+  },
+  {
+    name: '--button-transition',
+    property: 'transition-duration',
+    fallback: 'var(--duration-sm, 150ms)',
+    description: 'Animation timing duration, collapsing to 0s under prefers-reduced-motion.',
+  },
+];
+---
+
+<DocLayout
+  title="Button Component"
+  description="The foundational interactive action element in Design For Humans. Built with strict WCAG 2.2 target-size ergonomics, zero-specificity :where(), and container style queries."
+  currentSection="components"
+  currentPath="/components/atoms/button"
+  toc={toc}
+  isProse={true}
+>
+  <!-- Component Header -->
+  <ComponentHeader
+    title="Button"
+    category="Atoms"
+    categoryHref="/components"
+    type="Atom"
+    wcagLevel="AAA"
+    status="Stable v2.2"
+    sourcePath="src/atoms/button.css"
+    storybookPath="atoms-button--docs"
+    description="The foundational interactive action control in Design For Humans. Combines strict WCAG 2.2 target-size ergonomics (48px AAA default / 32px AA compact), 3:1 contrast-guaranteed focus rings, zero-specificity cascade safety, and declarative container style queries."
+  />
+
+  <!-- 1. Interactive Playground -->
+  <Section id="playground" title="Interactive Playground" flush={true}>
+    <p>
+      Configure prominence, semantic tone, touch target sizing, corner geometry, and icon placement in real time. Switch surfaces to audit contrast in both light and dark environments.
+    </p>
+
+    <ComponentPlayground />
+  </Section>
+
+  <!-- 2. Prominence & Hierarchy -->
+  <Section id="prominence" title="Prominence & Visual Hierarchy">
+    <p>
+      Design For Humans organizes button prominence orthogonally from semantic tone. Every view should have a clear visual hierarchy with exactly one primary action, supported by outline and subtle secondary actions.
+    </p>
+
+    <div class="prose-end grid xl:grid--2-col gap-md margin-bottom-md">
+      <!-- Strong -->
+      <ExampleCard
+        title="Strong Action"
+        code=".button--strong"
+        description="High-emphasis solid fill with inverted high-contrast text. Reserved for primary calls-to-action (one per view)."
+      >
+        <button type="button" class="button button--strong">
+          <span>Strong Action</span>
+        </button>
+      </ExampleCard>
+
+      <!-- Default Outline -->
+      <ExampleCard
+        title="Default (Outline)"
+        code=".button"
+        description="Neutral bordered action with transparent resting background. Standard choice for modal cancel buttons and secondary flows."
+      >
+        <button type="button" class="button">
+          <span>Outline Action</span>
+        </button>
+      </ExampleCard>
+
+      <!-- Subtle -->
+      <ExampleCard
+        title="Subtle"
+        code=".button--subtle"
+        description="Translucent background with borderless resting state. Perfect for toolbar controls, card headers, and dismiss icons."
+      >
+        <button type="button" class="button button--subtle">
+          <span>Subtle Action</span>
+        </button>
+      </ExampleCard>
+
+      <!-- Plain -->
+      <ExampleCard
+        title="Plain (Ghost)"
+        code=".button--plain"
+        description="Zero border and zero resting background. Reveals a hover and focus surface only when engaged. Ideal for icon-only utilities."
+      >
+        <button type="button" class="button button--plain">
+          <span>Plain Action</span>
+        </button>
+      </ExampleCard>
+    </div>
+
+    <CodeBlock
+      title="Prominence Variants HTML"
+      lang="html"
+      code={`<!-- High-emphasis primary action -->
+<button type="button" class="button button--strong button--accent">
+  <span>Confirm & Pay</span>
+</button>
+
+<!-- Secondary outline action -->
+<button type="button" class="button">
+  <span>Review Order</span>
+</button>
+
+<!-- Subtle secondary utility -->
+<button type="button" class="button button--subtle">
+  <span>Save for Later</span>
+</button>
+
+<!-- Plain text action -->
+<button type="button" class="button button--plain">
+  <span>Cancel</span>
+</button>`}
+    />
+  </Section>
+
+  <!-- 3. Semantic Tones -->
+  <Section id="tones" title="Semantic Tones & Intent">
+    <p>
+      Semantic tones signal intent to the user without altering layout geometry or touch targets. Tones can be paired with any prominence level.
+    </p>
+
+    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+      <div class="cluster gap-md align-items-center">
+        <!-- Neutral -->
+        <button type="button" class="button">
+          <span>Neutral</span>
+        </button>
+
+        <!-- Accent Strong -->
+        <button type="button" class="button button--strong button--accent">
+          <span>Accent Primary</span>
+        </button>
+
+        <!-- Accent Outline -->
+        <button type="button" class="button button--accent">
+          <span>Accent Outline</span>
+        </button>
+
+        <!-- Destructive Strong -->
+        <button type="button" class="button button--strong button--destructive">
+          <span>Delete Record</span>
+        </button>
+
+        <!-- Destructive Outline -->
+        <button type="button" class="button button--destructive">
+          <span>Discard Draft</span>
+        </button>
+
+        <!-- Destructive Subtle -->
+        <button type="button" class="button button--subtle button--destructive">
+          <Icon name="Delete" size={14} />
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <CodeBlock
+      title="Destructive Variations HTML"
+      lang="html"
+      code={`<!-- Irreversible, critical deletion (High emphasis) -->
+<button type="button" class="button button--strong button--destructive">
+  <span>Delete Workspace</span>
+</button>
+
+<!-- Secondary destructive choice -->
+<button type="button" class="button button--destructive">
+  <span>Remove Item</span>
+</button>
+
+<!-- Low-friction table row removal -->
+<button type="button" class="button button--subtle button--destructive">
+  <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+  <span>Remove</span>
+</button>`}
+    />
+  </Section>
+
+  <!-- 4. Target Size & Density -->
+  <Section id="sizes" title="Target Size & Ergonomic Density (WCAG 2.5.5 / 2.5.8)">
+    <p>
+      Design For Humans treats touch target sizing as a first-class accessibility invariant. All buttons guarantee comfortable activation on touchscreens, mouse pointers, and stylus devices.
+    </p>
+
+    <div class="prose-end grid lg:grid--2-col xl:grid--3-col gap-md margin-bottom-md">
+      <!-- Default (AAA 48px) -->
+      <ExampleCard
+        title="Default (Standard)"
+        subtitle="Block height: 48px (3rem)"
+        badge="WCAG 2.5.5 AAA"
+        badgeTone="success"
+        description="Default desktop & mobile touch target. Uses --spacing-target (3rem / 48px) for effortless tapping."
+      >
+        <button type="button" class="button">
+          <span>Standard Action (48px)</span>
+        </button>
+      </ExampleCard>
+
+      <!-- Compact (AA 32px) -->
+      <ExampleCard
+        title="Compact / Small"
+        subtitle="Block height: 32px (2rem)"
+        badge="WCAG 2.5.8 AA"
+        badgeTone="accent"
+        description="Dense table row utilities, editor toolbars, and search bars. Exceeds the 24px WCAG 2.5.8 minimum requirement."
+      >
+        <button type="button" class="button button--sm">
+          <span>Compact (32px)</span>
+        </button>
+      </ExampleCard>
+
+      <!-- Large (56px) -->
+      <ExampleCard
+        title="Large / Hero"
+        subtitle="Block height: 56px (3.5rem)"
+        badge="Marketing / Hero"
+        badgeTone="subtle"
+        description="Hero landing pages, conversion sections, and bold calls-to-action requiring elevated visual presence."
+      >
+        <button type="button" class="button button--lg button--strong button--accent">
+          <span>Hero Action (56px)</span>
+        </button>
+      </ExampleCard>
+    </div>
+  </Section>
+
+  <!-- 5. Icons & Accoutrements -->
+  <Section id="icons" title="Icons & Visual Accoutrements">
+    <p>
+      Buttons seamlessly accommodate leading icons, directional trailing icons, and icon-only layouts. Always use <code>aria-hidden="true"</code> on decorative icons and provide accessible DOM text.
+    </p>
+
+    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+      <div class="cluster gap-md align-items-center">
+        <!-- Leading Icon -->
+        <button type="button" class="button button--strong button--accent">
+          <Icon name="Plus" size={16} />
+          <span>Add Member</span>
+        </button>
+
+        <!-- Trailing Directional Icon -->
+        <button type="button" class="button">
+          <span>Continue Checkout</span>
+          <Icon name="ArrowRight" size={16} class="icon--dir" />
+        </button>
+
+        <!-- Icon Only with Accessible Hidden Text -->
+        <button type="button" class="button button--icon" title="Search documentation">
+          <span class="visually-hidden">Search documentation</span>
+          <Icon name="Search" size={16} />
+        </button>
+
+        <!-- Round Avatar Button -->
+        <button type="button" class="button button--avatar button--round" aria-label="Alex Morgan profile menu" data-status="online">
+          <span class="button__text">PW</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Translation Deep Dive Callout -->
+    <div class="prose-end card card--bordered card--translucent padding-md margin-bottom-md border-accent">
+      <div class="inline align-items-center gap-xs margin-bottom-xs">
+        <Icon name="Sparkles" size={16} class="text-accent" />
+        <h3 class="small-heading margin-0 font-weight-bold">Human-Centric Best Practice: Real DOM Text over <code>aria-label</code></h3>
+      </div>
+      <p class="small-text text-muted margin-0">
+        In Design For Humans, icon-only buttons <strong>must</strong> wrap their text in <code>&lt;span class="visually-hidden"&gt;</code> rather than relying solely on <code>aria-label</code>. Unlike HTML attributes, DOM text nodes are reliably translated by automatic browser engines (Google Translate, Apple Safari Translate, DeepL) and reliably picked up by voice control software (Dragon, Apple Voice Control).
+      </p>
+    </div>
+
+    <CodeBlock
+      title="Accessible Icon Button HTML"
+      lang="html"
+      code={`<!-- Accessible Icon-Only Button -->
+<button type="button" class="button button--icon">
+  <span class="visually-hidden">Search site contents</span>
+  <svg class="icon" aria-hidden="true" focusable="false">
+    <use href="#Search"/>
+  </svg>
+</button>`}
+    />
+  </Section>
+
+  <!-- 6. Zero-JS Form Switches & Radios -->
+  <Section id="zero-js" title="Zero-JS Form Switches & Choices">
+    <p>
+      Any <code>&lt;label class="button"&gt;</code> wrapping a native <code>&lt;input type="checkbox"&gt;</code> or <code>&lt;input type="radio"&gt;</code> instantly gains full button styling, keyboard navigation, and checked state management without writing a single line of JavaScript.
+    </p>
+
+    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+      <div class="cluster gap-md align-items-center">
+        <!-- Button Checkbox Switch -->
+        <label class="button">
+          <input type="checkbox" class="visually-hidden" checked />
+          <Icon name="Close" size={14} class="icon--off" />
+          <Icon name="Check" size={14} class="icon--on" />
+          <span>Toggle Switch</span>
+        </label>
+
+        <!-- Segmented Radio Choices -->
+        <div class="button-group button-group--segmented" role="radiogroup" aria-label="Frequency">
+          <label class="button">
+            <input type="radio" name="demo-freq" class="visually-hidden" checked />
+            <Icon name="Check" size={14} class="icon--on" />
+            <span>Monthly</span>
+          </label>
+          <label class="button">
+            <input type="radio" name="demo-freq" class="visually-hidden" />
+            <Icon name="Check" size={14} class="icon--on" />
+            <span>Annual (Save 20%)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <CodeBlock
+      title="Zero-JS Button Checkbox Toggle Markup"
+      lang="html"
+      code={`<!-- Native Checkbox styled as Button Switch -->
+<label class="button">
+  <input type="checkbox" class="visually-hidden" checked />
+  <svg class="icon icon--off" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+  <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  <span>Notifications Enabled</span>
+</label>`}
+    />
+  </Section>
+
+  <!-- 7. Container Style Queries -->
+  <Section id="style-queries" title="Declarative Container Style Queries">
+    <p>
+      Rather than managing repetitive utility classes on every nested child button, parent containers (cards, sidebars, headers, dialogs) declare high-level intent via container variables. Nested buttons react automatically through native <code>@container style(...)</code> queries.
+    </p>
+
+    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+      <div class="compact-demo-container padding-md border-dashed">
+        <div class="small-text text-muted margin-bottom-sm">
+          Parent container declares <code>--ui-sizing: compact</code> and <code>--button-variation: subtle</code>:
+        </div>
+        <div class="cluster gap-xs">
+          <button type="button" class="button">
+            <Icon name="Edit" size={14} />
+            <span>Rename</span>
+          </button>
+          <button type="button" class="button">
+            <Icon name="Duplicate" size={14} />
+            <span>Duplicate</span>
+          </button>
+          <button type="button" class="button button--destructive">
+            <Icon name="Delete" size={14} />
+            <span>Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <CodeBlock
+      title="CSS Container Style Query Usage"
+      lang="css"
+      code={`/* Orchestrate child button styling from parent landmark */
+.table-toolbar {
+  --ui-sizing: compact;          /* All child buttons automatically step down to 32px */
+  --button-variation: subtle;    /* All child buttons adopt translucent appearance */
+}
+
+/* Child buttons require ZERO modifier classes: */
+.table-toolbar button {
+  /* Automatically styled! */
+}`}
+    />
+  </Section>
+
+  <!-- 8. Accessibility & WCAG 2.2 Deep Dive -->
+  <Section id="accessibility" title="Accessibility & Usability (WCAG 2.2 Deep Dive)">
+    <p>
+      Accessibility is not a bolt-on feature. The button primitive adheres to the strictest WCAG 2.2 Level AA and Level AAA standards.
+    </p>
+
+    <div class="prose-end card card--bordered card--flush overflow-x-auto margin-bottom-md">
+      <table class="table" aria-label="WCAG 2.2 Compliance Matrix for Button Primitive">
+        <thead>
+          <tr>
+            <th scope="col" class="table__col--fit">Criterion</th>
+            <th scope="col" class="table__col--fit">Target</th>
+            <th scope="col" class="table__col--fit">Status</th>
+            <th scope="col">Implementation & Verification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-weight-bold table__cell--fit">2.5.5 Target Size</td>
+            <td class="table__cell--fit">Level AAA</td>
+            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td>Default block size is <code>48×48px</code> (3rem) via <code>--button-min-size: var(--spacing-target)</code>.</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold table__cell--fit">2.5.8 Target Size (Minimum)</td>
+            <td class="table__cell--fit">Level AA</td>
+            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td>Compact size is <code>32×32px</code>, well above the 24×24px AA threshold.</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold table__cell--fit">1.4.3 Contrast (Minimum)</td>
+            <td class="table__cell--fit">Level AA</td>
+            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td>Minimum 4.5:1 text-to-surface contrast across all light and dark palettes.</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold table__cell--fit">1.4.6 Contrast (Enhanced)</td>
+            <td class="table__cell--fit">Level AAA</td>
+            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td>7:1+ contrast achieved on strong actions with inverted dark/light palettes.</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold table__cell--fit">2.4.7 & 2.4.13 Focus Appearance</td>
+            <td class="table__cell--fit">Level AAA</td>
+            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td>Dual-ring high-contrast <code>:focus-visible</code> indicator with 3:1 contrast and 2px offset.</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold table__cell--fit">2.3.3 Reduced Motion</td>
+            <td class="table__cell--fit">Level AAA</td>
+            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><code>@media (prefers-reduced-motion: reduce)</code> collapses transition duration to 0s.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Keyboard Navigation Table -->
+    <h3>Keyboard Navigation</h3>
+    <div class="prose-end card card--bordered card--flush overflow-x-auto margin-bottom-md">
+      <table class="table" aria-label="Button Keyboard Interactions">
+        <thead>
+          <tr>
+            <th scope="col" class="table__col--fit">Key</th>
+            <th scope="col">Interaction & Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-mono"><kbd class="kbd">Tab</kbd></td>
+            <td>Moves focus to the button. Displays high-contrast focus ring via <code>:focus-visible</code>.</td>
+          </tr>
+          <tr>
+            <td class="font-mono"><kbd class="kbd">Enter</kbd></td>
+            <td>Activates the button action or submits a parent <code>&lt;form&gt;</code>.</td>
+          </tr>
+          <tr>
+            <td class="font-mono"><kbd class="kbd">Space</kbd></td>
+            <td>Triggers the button action or toggles checked state on button-like checkboxes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <!-- 9. Design Tokens Reference -->
+  <Section id="tokens" title="Design Tokens & CSS Custom Properties">
+    <p>
+      The button primitive exposes local private custom properties that hook seamlessly into Tier 1 and Tier 2 tokens. Override them locally without specificity escalation.
+    </p>
+
+    <TokenTable tokens={buttonTokens} caption="Button Primitive CSS Tokens" />
+  </Section>
+
+  <!-- 10. Do's and Don'ts -->
+  <Section id="guidelines" title="Usage Guidelines & Best Practices">
+    <p>
+      Follow these human-centric authoring rules to ensure rock-solid accessibility and clean component architecture.
+    </p>
+
+    <GuidelineCard
+      doTitle="Use native button types"
+      doDescription="Always specify an explicit type attribute (type='button' or type='submit') so buttons do not accidentally submit enclosing forms."
+      doCode={`<button type="button" class="button button--primary">\n  <span>Save Changes</span>\n</button>`}
+      dontTitle="Don't use div or span onclick"
+      dontDescription="Never use div or span elements with click listeners. They lack keyboard focus, activation semantics, and accessibility tree visibility."
+      dontCode={`<!-- ❌ Non-accessible anti-pattern -->\n<div class="button" onclick="save()">\n  Save Changes\n</div>`}
+    />
+
+    <GuidelineCard
+      doTitle="Provide hidden text for icon buttons"
+      doDescription="Use <span class='visually-hidden'> to give icon-only buttons accessible names that work across browser translation tools and voice control."
+      doCode={`<button type="button" class="button button--icon">\n  <span class="visually-hidden">Search records</span>\n  <svg class="icon"><use href="#Search"/></svg>\n</button>`}
+      dontTitle="Don't rely solely on title or aria-label"
+      dontDescription="Avoid leaving icon buttons without DOM text. Title tooltips do not appear on touch screens and aria-label is often skipped by translation tools."
+      dontCode={`<!-- ❌ Inaccessible to voice control & translation -->\n<button type="button" class="button button--icon" title="Search">\n  <svg class="icon"><use href="#Search"/></svg>\n</button>`}
+    />
+
+    <GuidelineCard
+      doTitle="Respect the Organism-Atom Law"
+      doDescription="Allow the button atom to govern its own padding and typography. Let parent organisms control only layout geometry (flex, grid, margins)."
+      doCode={`/* ✅ Container orchestrates via style queries */\n.dialog__footer {\n  --ui-sizing: compact;\n  display: flex;\n  justify-content: flex-end;\n}`}
+      dontTitle="Don't clobber typography from organisms"
+      dontDescription="Never declare font-size, font-weight, or padding overrides directly on organism selectors targeting nested buttons."
+      dontCode={`/* ❌ Violates zero-specificity cascade rule */\n.dialog__footer button {\n  font-size: 12px; /* Breaks container scaling! */\n  padding: 4px;    /* Violates touch target AA! */\n}`}
+    />
+  </Section>
+</DocLayout>
+
+<style>
+  .border-accent {
+    border-color: color-mix(in srgb, var(--foreground-accent, #008076) 40%, transparent);
+  }
+
+  .compact-demo-container {
+    --ui-sizing: compact;
+    --button-variation: subtle;
+    background-color: var(--surface-subtle, #f8fafc);
+    border-radius: var(--radius-sm, 0.25rem);
+  }
+
+  .border-dashed {
+    border: 1px dashed var(--border-color-muted, currentColor);
+  }
+</style>

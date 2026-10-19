@@ -10,8 +10,11 @@
     "prepare": "husky || true",
     "build:tokens": "node packages/figma-sync/compile-tokens.js",
     "export:figma": "node packages/figma-sync/export-figma-tokens.js",
+    "sync:icons": "node scripts/sync-icons.js",
     "storybook": "npm run storybook --workspace=@design-for-humans/storybook",
-    "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook"
+    "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook",
+    "docs": "npm run dev --workspace=@design-for-humans/docs",
+    "build:docs": "npm run build --workspace=@design-for-humans/docs"
   },
   "devDependencies": {
     "prettier": "^3.0.0",

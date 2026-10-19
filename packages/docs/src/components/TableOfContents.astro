@@ -1,0 +1,65 @@
+---
+export interface TocItem {
+  id: string;
+  label: string;
+  depth?: number;
+}
+
+interface Props {
+  toc: TocItem[];
+}
+
+const { toc = [] } = Astro.props;
+---
+
+{toc.length > 0 && (
+  <aside id="docs-toc" class="sidebar sidebar--sticky sidebar--end max-xl:hide" aria-label="Table of contents" style="min-inline-size: 13rem; max-inline-size: 16rem; flex: 0 0 auto;">
+    <div class="sidebar__scroller py">
+      <span class="navigation-tree__heading micro-heading text-muted margin-bottom">On This Page</span>
+      <nav class="navigation-tree navigation-tree--indicator navigation-tree--compact navigation-tree--flush" aria-label="Table of contents">
+        <ol class="navigation-tree__list">
+          {toc.map((item) => (
+            <li class={`navigation-tree__item ${item.depth === 3 ? 'navigation-tree__item--nested' : ''}`.trim()}>
+              <a href={`#${item.id}`} class="navigation-tree__link toc-link" data-target-id={item.id}>
+                <span class="navigation-tree__text">{item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
+  </aside>
+)}
+
+<script is:inline>
+  (() => {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    if (!tocLinks.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            tocLinks.forEach((link) => {
+              if (link.getAttribute('data-target-id') === id) {
+                link.setAttribute('aria-current', 'true');
+              } else {
+                link.removeAttribute('aria-current');
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px' }
+    );
+
+    tocLinks.forEach((link) => {
+      const targetId = link.getAttribute('data-target-id');
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        observer.observe(targetEl);
+      }
+    });
+  })();
+</script>

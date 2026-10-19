@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Form Primitive
+   --------------------------------------------------------------------------
+   Top-level form layout container and accessible action submission bar.
+
+   Usage:
+   <form class="form">
+     <div class="field">...</div>
+     <div class="form__submission form__submission--right">
+       <button type="submit" class="button button--primary"><span>Submit</span></button>
+     </div>
+   </form>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Form Container (:where(.form, form))
+   ========================================================================== */
+:where(.form) {
+  --_form-gap: var(--field-gap, var(--spacing-16, 1rem));
+
+  /* Container Style Queries */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_form-gap: var(--spacing-8, 0.5rem);
+  }
+
+  /* Layout & Display */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  /* Spacing */
+  gap: var(--_form-gap);
+}
+
+/* ==========================================================================
+   Compact Form (:where(.form--compact))
+   ========================================================================== */
+
+.form--compact {
+  --_form-gap: var(--spacing-8, 0.5rem);
+}
+
+/* ==========================================================================
+   Inline Form Container (:where(.inline-form))
+   ========================================================================== */
+:where(.inline-form) {
+  --direction: row;
+  display: var(--inline-form-display, inline-flex);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--form-inline-gap, var(--spacing-16, 1rem));
+}
+
+/* ==========================================================================
+   Form Submission Action Bar Primitive (:where(.form__submission))
+   ========================================================================== */
+:where(.form__submission) {
+  --_form-submission-gap: var(--form-submission-gap, var(--spacing-16, 1rem));
+  --_form-submission-inner-gap: var(--form-submission-inner-gap, var(--spacing-16, 1rem));
+
+  /* Layout & Sizing */
+  inline-size: 100%;
+  margin-block-start: var(--_form-submission-gap);
+
+  &:not(.button) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--_form-submission-inner-gap);
+  }
+
+  /* Alignment via Container Style Queries */
+  @container style(--form-submission-align: right) {
+    &:not(.button) {
+      justify-content: flex-end;
+    }
+
+    &.button {
+      margin-inline-start: auto;
+    }
+  }
+
+  @container style(--form-submission-align: left) {
+    &:not(.button) {
+      justify-content: flex-start;
+    }
+
+    &.button {
+      margin-inline-end: auto;
+    }
+  }
+
+  /* Utility Modifier Fallbacks */
+  &.form__submission--right {
+    justify-content: flex-end;
+
+    &.button {
+      margin-inline-start: auto;
+    }
+  }
+
+  &.form__submission--left {
+    justify-content: flex-start;
+
+    &.button {
+      margin-inline-end: auto;
+    }
+  }
+}

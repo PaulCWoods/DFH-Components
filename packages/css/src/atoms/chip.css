@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Design For Humans: Chip & Live Status Primitives
+   --------------------------------------------------------------------------
+   Accessible metadata tags, removable filter chips, and live status dots
+   conforming to WCAG 2.2 AA / AAA contrast standards (1.4.3 & 1.4.11).
+
+   Usage:
+   <span class="chip"><span>TypeScript</span></span>
+   <span class="chip">
+     <span>Design Systems</span>
+     <button type="button" class="chip__remove" aria-label="Remove Design Systems tag">
+       <svg class="icon"><use href="#Close"/></svg>
+     </button>
+   </span>
+   <span class="chip chip--plain">Lesson 04</span>
+   <span class="status" data-status="online">Online</span>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Chip & Live Status Primitive (:where(.chip, .status))
+   ========================================================================== */
+:where(.chip, .status) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables (Defaults & Fallback Ladder)
+     -------------------------------------------------------------------------- */
+  --_chip-font-family: var(--chip-font-family, var(--typography-font-family-sans, sans-serif));
+  --_chip-font-size: var(--chip-font-size, var(--typography-font-size--2, 0.75em));
+  --_chip-font-weight: var(--chip-font-weight, var(--body-strong-font-weight, 700));
+  --_chip-gap: var(--chip-gap, var(--spacing-8, 0.25rem));
+  --_chip-text: var(--chip-text, currentColor);
+  --_chip-text-transform: var(--chip-text-transform, uppercase);
+
+  /* Layout & Display */
+  color: var(--_chip-text);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_chip-gap);
+  flex-shrink: 0;
+  font-family: var(--_chip-font-family);
+  font-size: var(--_chip-font-size);
+  font-weight: var(--_chip-font-weight);
+  text-transform: var(--_chip-text-transform);
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   2. Chip Tag Primitive (:where(.chip))
+   ========================================================================== */
+:where(.chip) {
+  --_chip-bg: var(--chip-bg, var(--surface-translucent, transparent));
+  --_chip-hover-bg: var(--chip-hover-bg, var(--surface-translucent-strong, transparent));
+  --_chip-hover-text: var(--chip-hover-text, var(--foreground, CanvasText));
+  --_chip-active-bg: var(--chip-active-bg, var(--surface-translucent-strong, transparent));
+  --_chip-active-text: var(--chip-active-text, var(--foreground, CanvasText));
+  --_chip-padding: var(--chip-padding, var(--spacing-4, 0.25rem));
+  --_chip-radius: var(--chip-radius, var(--radius-sm, 0.125rem));
+
+  /* Container Style Queries */
+  @container style(--chip-variation: plain) or style(--chip-variation: simple) {
+    --_chip-bg: transparent;
+    --_chip-hover-bg: transparent;
+    --_chip-padding: 0;
+    --_chip-text: var(--chip-plain-text, var(--chip-simple-text, color-mix(in srgb, currentColor, transparent var(--translucency-33))));
+  }
+
+  background-color: var(--_chip-bg);
+  padding: var(--_chip-padding);
+  border-radius: var(--_chip-radius);
+
+  :where(button, .chip__remove) {
+    cursor: pointer;
+    line-height: 0;
+    opacity: 0.5;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (hover: hover) {
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      opacity: 1;
+    }
+  }
+
+  &:has(button, .chip__remove) {
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--_chip-hover-bg);
+        color: var(--_chip-hover-text);
+      }
+    }
+
+    &:active {
+      background-color: var(--_chip-hover-bg);
+      color: var(--_chip-hover-text);
+    }
+  }
+}
+
+/* ==========================================================================
+   3. Plain Chip Modifier (:where(.chip--plain, .chip--simple))
+   ========================================================================== */
+:where(.chip--plain, .chip--simple) {
+  --_chip-bg: transparent;
+  --_chip-hover-bg: transparent;
+  --_chip-padding: 0;
+  --_chip-text: var(--chip-plain-text, var(--chip-simple-text, color-mix(in srgb, currentColor, transparent var(--translucency-33))));
+}
+
+/* Small Chip Modifier */
+:where(.chip--sm) {
+  --_chip-font-size: var(--chip-sm-font-size, var(--typography-font-size--3, 0.6875rem));
+  --_chip-padding: var(--chip-sm-padding, var(--spacing-2, 0.125rem));
+}
+
+/* ==========================================================================
+   4. Live Status Indicators (:where(.status, .chip--status))
+   ========================================================================== */
+:where(.chip--status, .status):where([data-status="online"]),
+:where(.chip--color-success, .status--success) {
+  color: var(--chip-color-success, var(--foreground-success, currentColor));
+  opacity: 1;
+}
+
+:where(.chip--status, .status):where([data-status="away"]),
+:where(.chip--color-warning, .status--warning) {
+  color: var(--chip-color-warning, var(--foreground-warning, currentColor));
+  opacity: 1;
+}
+
+:where(.chip--status, .status):where([data-status="busy"]),
+:where(.chip--color-danger, .status--danger) {
+  color: var(--chip-color-danger, var(--foreground-danger, currentColor));
+  opacity: 1;
+}
+
+:where(.chip--status, .status):where([data-status]):before {
+  content: "";
+  inline-size: 1lh;
+  block-size: 1lh;
+  border-radius: var(--radius-round, 9999px);
+  background-color: currentColor;
+}

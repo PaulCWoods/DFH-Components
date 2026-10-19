@@ -1,0 +1,10 @@
+/* ==========================================================================
+   Design For Humans: Tabs Component (Organism Forwarder)
+   --------------------------------------------------------------------------
+   Backward-compatible alias for Tabbed Content organism.
+   Composes Atom (.tab), Molecule (.tab-list), and Organism (.tabbed-content).
+   ========================================================================== */
+
+@import '../atoms/tab.css';
+@import '../molecules/tab-list.css';
+@import './tabbed-content.css';

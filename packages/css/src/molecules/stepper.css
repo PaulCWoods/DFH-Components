@@ -1,0 +1,431 @@
+/* ==========================================================================
+   Design For Humans: Stepper Primitive
+   --------------------------------------------------------------------------
+   Structured sequential progression and multi-step wizard navigation.
+   Supports linear workflows, status tracking, interactive jump navigation,
+   and responsive container query collapse.
+   Complies with WCAG 2.2 AA / AAA (1.3.1 Info and Relationships, 1.4.1 Use
+   of Color, 1.4.3 Contrast, 2.4.7 Focus Visible).
+
+   Usage (Progress Stepper):
+   <nav class="stepper" aria-label="Registration progress">
+     <ol class="stepper__list">
+       <li class="stepper__item is-complete">
+         <div class="stepper__step">
+           <span class="stepper__indicator" aria-hidden="true">
+             <svg class="icon"><use href="#Check"/></svg>
+           </span>
+           <div class="stepper__content">
+             <span class="stepper__title">Account Details</span>
+             <span class="stepper__description text-muted">Completed</span>
+           </div>
+         </div>
+       </li>
+       <li class="stepper__item is-active" aria-current="step">
+         <div class="stepper__step">
+           <span class="stepper__indicator">2</span>
+           <div class="stepper__content">
+             <span class="stepper__title">Profile Setup</span>
+             <span class="stepper__description text-muted">In progress</span>
+           </div>
+         </div>
+       </li>
+       <li class="stepper__item">
+         <div class="stepper__step">
+           <span class="stepper__indicator">3</span>
+           <div class="stepper__content">
+             <span class="stepper__title">Review &amp; Submit</span>
+             <span class="stepper__description text-muted">Pending</span>
+           </div>
+         </div>
+       </li>
+     </ol>
+   </nav>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Stepper Container (:where(.stepper))
+   ========================================================================== */
+
+:where(.stepper) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables & Fallback Ladder
+     -------------------------------------------------------------------------- */
+  --_stepper-gap: var(--stepper-gap, var(--spacing-16, 1rem));
+  --_stepper-track-thickness: var(--stepper-track-thickness, var(--border-width-2, 2px));
+  --_stepper-track-color: var(--stepper-track-color, var(--border-color-quiet, currentColor));
+  --_stepper-track-color-complete: var(--stepper-track-color-complete, var(--foreground-success, #00875a));
+
+  --_stepper-indicator-size: var(--stepper-indicator-size, var(--spacing-36, 2.25rem));
+  --_stepper-indicator-font-family: var(--stepper-indicator-font-family, var(--micro-heading-font-family, var(--typography-font-family-sans, inherit)));
+  --_stepper-indicator-font-size: var(--stepper-indicator-font-size, var(--micro-heading-font-size, var(--typography-font-size--1, 0.875rem)));
+  --_stepper-indicator-font-weight: var(--stepper-indicator-font-weight, var(--micro-heading-font-weight, var(--font-weight-bold, 700)));
+  --_stepper-indicator-border-width: var(--stepper-indicator-border-width, var(--border-width-2, 2px));
+
+  --_stepper-desc-color: var(--stepper-desc-color, var(--foreground-muted, GrayText));
+
+  /* Container Setup */
+  box-sizing: border-box;
+  display: block;
+  container-type: inline-size;
+  --font-sizing: cq;
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+    max-inline-size: stretch;
+  }
+}
+
+/* List Container (:where(.stepper__list)) */
+:where(.stepper__list) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  inline-size: 100%;
+}
+
+/* Step Item (:where(.stepper__item)) - Stacked Layout by Default */
+:where(.stepper__item) {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex: 1 1 0px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-inline-size: 0;
+
+  /* Horizontal connecting track running directly between step circles */
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--_stepper-indicator-size) / 2 - (var(--_stepper-track-thickness) / 2));
+    inset-inline-start: calc(50% + (var(--_stepper-indicator-size) / 2) + var(--spacing-8, 0.5rem));
+    inset-inline-end: calc(-50% + (var(--_stepper-indicator-size) / 2) + var(--spacing-8, 0.5rem));
+    block-size: var(--_stepper-track-thickness);
+    background-color: var(--_stepper-track-color);
+    transition: background-color var(--duration-sm, 150ms) ease;
+    z-index: 0;
+  }
+
+  /* Track turns completed color when this step is complete */
+  &:where(.is-complete):not(:last-child)::after {
+    background-color: var(--_stepper-track-color-complete);
+  }
+}
+
+/* ==========================================================================
+   2. Step Anatomy & Content (:where(.stepper__step, .stepper__trigger))
+   ========================================================================== */
+
+:where(.stepper__step, .button.stepper__step) {
+  --_button-bg: transparent;
+  --_button-hover-bg: transparent;
+  --_button-active-bg: transparent;
+  --_button-selected-bg: transparent;
+  --_button-border: none;
+  --_button-padding-block: 0;
+  --_button-padding-inline: 0;
+  --_button-min-size: 0;
+  --_button-shadow: none;
+
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-8, 0.5rem) var(--spacing-16, 1rem);
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  text-decoration: none;
+  inline-size: 100%;
+
+  &:where(.is-active, :hover, :active, :focus) {
+    background: transparent;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  /* Interactive button/link trigger */
+  &:where(button, a) {
+    cursor: pointer;
+    border-radius: var(--radius-sm, 0.25rem);
+    font: inherit;
+    min-block-size: var(--spacing-target-sm, 2rem);
+
+    &:where(:focus-visible) {
+      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+      outline-offset: 4px;
+    }
+
+    &:where(:disabled, [aria-disabled="true"]) {
+      cursor: not-allowed;
+      opacity: var(--opacity-disabled, 0.6);
+    }
+  }
+
+  /* Hover micro-interaction on interactive triggers */
+  @media (hover: hover) {
+    &:where(button:not(:disabled, [aria-disabled="true"]), a):hover {
+      :where(.stepper__indicator) {
+        transform: scale(1.08);
+      }
+
+      :where(.stepper__title) {
+        color: var(--foreground-accent, #00d2c4);
+      }
+    }
+  }
+}
+
+/* Indicator Circle (:where(.stepper__indicator)) */
+:where(.stepper__indicator) {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  inline-size: var(--_stepper-indicator-size);
+  block-size: var(--_stepper-indicator-size);
+  border-radius: var(--radius-round, 9999px);
+  border: var(--_stepper-indicator-border-width) solid var(--border-color-quiet, currentColor);
+  background-color: var(--surface-layer, Canvas);
+  color: var(--foreground-muted, GrayText);
+  font-family: var(--_stepper-indicator-font-family);
+  font-size: var(--_stepper-indicator-font-size);
+  font-weight: var(--_stepper-indicator-font-weight);
+  line-height: 1;
+  transition: all var(--duration-sm, 150ms) ease;
+
+  :where(.icon) {
+    scale: 1.2;
+  }
+
+  :where(span, .stepper__indicator-text) {
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+/* Text Content Container (:where(.stepper__content)) */
+:where(.stepper__content) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-2, 2px);
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+/* Step Title (:where(.stepper__title, .stepper__label))
+   Structural container hook for step title headings.
+   Out of the box, defers typography to heading/text atom primitives
+   (.small-heading, .micro-heading, etc.) while providing structural layout. */
+:where(.stepper__title, .stepper__label) {
+  box-sizing: border-box;
+  color: var(--foreground-muted, GrayText);
+  display: block;
+  margin: 0;
+  min-inline-size: 0;
+  text-align: center;
+  text-wrap: balance;
+  white-space: normal;
+  transition: color var(--duration-sm, 150ms) ease;
+}
+
+/* Optional Supporting Description / Subtitle (:where(.stepper__description, .stepper__desc))
+   Structural container hook for step descriptions.
+   Out of the box, defers typography to atom primitives (.micro-text, .small-text, etc.). */
+:where(.stepper__description, .stepper__desc) {
+  box-sizing: border-box;
+  color: var(--_stepper-desc-color);
+  display: block;
+  margin: 0;
+  min-inline-size: 0;
+  text-align: center;
+  text-wrap: balance;
+  white-space: normal;
+}
+
+/* ==========================================================================
+   3. State Modifiers (.is-active, .is-complete, .is-invalid)
+   ========================================================================== */
+
+/* Active / Current Step */
+:where(.stepper__item.is-active, .stepper__item[aria-current="step"], .stepper__step.is-active, .stepper__step[aria-current="step"]) {
+  :where(.stepper__indicator) {
+    border-color: var(--foreground-accent, #00d2c4);
+    background-color: var(--surface-layer, Canvas);
+    color: var(--foreground-accent, #00d2c4);
+    box-shadow: none;
+  }
+
+  :where(.stepper__title) {
+    color: var(--foreground, currentColor);
+  }
+}
+
+/* Completed Step */
+:where(.stepper__item.is-complete) {
+  :where(.stepper__indicator) {
+    border-color: var(--foreground-success, #00875a);
+    background-color: var(--foreground-success, #00875a);
+    color: var(--foreground-inverted-strong, #ffffff);
+  }
+
+  :where(.stepper__title) {
+    color: var(--foreground, currentColor);
+  }
+}
+
+/* Invalid / Error Step */
+:where(.stepper__item.is-invalid) {
+  :where(.stepper__indicator) {
+    border-color: var(--foreground-danger, #d32f2f);
+    background-color: var(--surface-layer, Canvas);
+    color: var(--foreground-danger, #d32f2f);
+    box-shadow: none;
+  }
+
+  :where(.stepper__title) {
+    color: var(--foreground-danger, #d32f2f);
+  }
+}
+
+/* ==========================================================================
+   4. Layout & Directional Variations
+   ========================================================================== */
+
+/* Vertical Stepper (:where(.stepper--vertical)) */
+:where(.stepper--vertical) {
+  :where(.stepper__list) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-24, 1.5rem);
+  }
+
+  :where(.stepper__item) {
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: start;
+
+    /* Vertical spine connecting down to next step */
+    &:not(:last-child)::after {
+      inset-block-start: calc(var(--_stepper-indicator-size) + var(--spacing-4, 0.25rem));
+      inset-inline-start: calc(var(--_stepper-indicator-size) / 2 - (var(--_stepper-track-thickness) / 2));
+      inset-inline-end: auto;
+      block-size: calc(100% + var(--spacing-24, 1.5rem) - var(--_stepper-indicator-size) - var(--spacing-8, 0.5rem));
+      inline-size: var(--_stepper-track-thickness);
+    }
+  }
+
+  :where(.stepper__step) {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  :where(.stepper__content) {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  :where(.stepper__title, .stepper__description) {
+    text-align: start;
+  }
+}
+
+/* Inline Stepper (:where(.stepper--inline) - Indicator left, text right) */
+:where(.stepper--inline) {
+  :where(.stepper__item) {
+    flex-direction: row;
+    align-items: center;
+    text-align: start;
+
+    &:not(:last-child)::after {
+      display: none;
+    }
+  }
+
+  :where(.stepper__step) {
+    flex-direction: row;
+    align-items: center;
+    text-align: start;
+  }
+
+  :where(.stepper__content) {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  :where(.stepper__title, .stepper__description) {
+    text-align: start;
+  }
+}
+
+/* Compact Stepper (Dense layout without descriptions) */
+:where(.stepper--compact) {
+  --ui-sizing: compact;
+  --_stepper-indicator-size: var(--spacing-28, 1.75rem);
+  --_stepper-indicator-font-size: var(--typography-font-size--2, 0.75rem);
+
+  :where(.stepper__description) {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   5. Responsive Container Queries
+   ========================================================================== */
+
+@container (inline-size < 34rem) {
+  :where(.stepper:not(.stepper--vertical)) {
+    :where(.stepper__description) {
+      display: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   6. High Contrast & Accessibility Preferences
+   ========================================================================== */
+
+@media (prefers-contrast: more) {
+  :where(.stepper) {
+    --_stepper-track-thickness: 3px;
+    --_stepper-indicator-border-width: 2px;
+  }
+
+  :where(.stepper__indicator) {
+    border-color: CanvasText;
+  }
+
+  :where(.stepper__item.is-active) :where(.stepper__indicator) {
+    outline: 2px solid Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.stepper__item::after, .stepper__indicator, .stepper__title) {
+    transition: none !important;
+  }
+}

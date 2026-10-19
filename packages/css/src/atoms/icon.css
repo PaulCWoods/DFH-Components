@@ -1,0 +1,255 @@
+/* ==========================================================================
+   Design For Humans: Icon Primitive
+   --------------------------------------------------------------------------
+   Accessible inline SVG icon component that scales proportionally with surrounding
+   typography (1em x 1em) and mirrors directional indicators in RTL contexts.
+   Includes .icon-box container matching button touch target dimensions.
+   Adheres to zero-specificity cascade law.
+
+   Usage:
+   <svg class="icon" aria-hidden="true"><use href="#ArrowRight"/></svg>
+   <svg class="icon icon--dir" aria-hidden="true"><use href="#ArrowRight"/></svg>
+   <span class="icon-box"><svg class="icon" aria-hidden="true"><use href="#Bell"/></svg></span>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Icon Primitive (:where(.icon))
+   ========================================================================== */
+
+:where(.icon) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables
+     -------------------------------------------------------------------------- */
+  --_icon-dir-scale: 1;
+
+  /* Layout & Sizing (Fixed glyph dimensions relative to font-size) */
+  display: inline-block;
+  inline-size: var(--icon-size, 1em);
+  block-size: var(--icon-size, 1em);
+  scale: calc(var(--_icon-dir-scale) * var(--icon-scale, 1)) var(--icon-scale, 1);
+  vertical-align: middle;
+  flex-shrink: 0;
+
+  /* Surface & Fill */
+  fill: currentColor;
+
+  /* --------------------------------------------------------------------------
+     Size Modifiers (Proportional to parent font-size)
+     -------------------------------------------------------------------------- */
+  &:where(.icon--xs) {
+    --icon-size: var(--icon-size-xs, 0.75em);
+  }
+
+  &:where(.icon--sm) {
+    --icon-size: var(--icon-size-sm, 0.875em);
+  }
+
+  &:where(.icon--md) {
+    --icon-size: var(--icon-size-md, 1em);
+  }
+
+  &:where(.icon--lg) {
+    --icon-size: var(--icon-size-lg, 1.25em);
+  }
+
+  &:where(.icon--xl) {
+    --icon-size: var(--icon-size-xl, 1.5em);
+  }
+
+  &:where(.icon--2xl) {
+    --icon-size: var(--icon-size-2xl, 2em);
+  }
+
+  /* --------------------------------------------------------------------------
+     Scale Modifiers (Multiplying transforms)
+     -------------------------------------------------------------------------- */
+  &:where(.icon--scale-sm) {
+    --icon-scale: var(--icon-scale-sm, 0.875);
+  }
+
+  &:where(.icon--scale-lg) {
+    --icon-scale: var(--icon-scale-lg, 1.25);
+  }
+
+  &:where(.icon--scale-xl) {
+    --icon-scale: var(--icon-scale-xl, 1.5);
+  }
+
+  /* --------------------------------------------------------------------------
+     Semantic Tone Modifiers
+     -------------------------------------------------------------------------- */
+  &:where(.icon--accent) {
+    fill: var(--icon-accent-color, var(--foreground-accent, #008076));
+  }
+
+  &:where(.icon--success) {
+    fill: var(--icon-success-color, var(--foreground-success, #00875a));
+  }
+
+  &:where(.icon--warning) {
+    fill: var(--icon-warning-color, var(--foreground-warning, #b06000));
+  }
+
+  &:where(.icon--danger, .icon--destructive) {
+    fill: var(--icon-danger-color, var(--foreground-danger, #d32f2f));
+  }
+
+  &:where(.icon--muted) {
+    fill: var(--icon-muted-color, var(--foreground-muted, currentColor));
+  }
+
+  /* --------------------------------------------------------------------------
+     Directional Mirroring in RTL contexts ([dir="rtl"])
+     -------------------------------------------------------------------------- */
+  :where([dir="rtl"]) &:where(.icon--dir, .dir),
+  &:where([dir="rtl"]):where(.icon--dir, .dir) {
+    --_icon-dir-scale: -1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Disclosure Indicator Modifier (.icon--disclosure)
+   Smoothly rotates chevron icon when controlling collapsible panels
+   -------------------------------------------------------------------------- */
+:where(.icon--disclosure) {
+  transition: transform var(--duration-sm, 150ms) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:where([aria-expanded="false"]) :where(.icon--disclosure) {
+  transform: rotate(-90deg);
+}
+
+:where([aria-expanded="true"]) :where(.icon--disclosure) {
+  transform: rotate(0deg);
+}
+
+/* ----------------------------------------------------------------------------
+   Standalone & Parent Scoped Utility Aliases
+   ---------------------------------------------------------------------------- */
+
+:where(.icon--xs) {
+  --icon-size: var(--icon-size-xs, 0.75em);
+}
+
+:where(.icon--sm) {
+  --icon-size: var(--icon-size-sm, 0.875em);
+}
+
+:where(.icon--md) {
+  --icon-size: var(--icon-size-md, 1em);
+}
+
+:where(.icon--lg) {
+  --icon-size: var(--icon-size-lg, 1.25em);
+}
+
+:where(.icon--xl) {
+  --icon-size: var(--icon-size-xl, 1.5em);
+}
+
+:where(.icon--2xl) {
+  --icon-size: var(--icon-size-2xl, 2em);
+}
+
+:where(.icon--scale-sm) {
+  --icon-scale: var(--icon-scale-sm, 0.875);
+}
+
+:where(.icon--scale-lg) {
+  --icon-scale: var(--icon-scale-lg, 1.25);
+}
+
+:where(.icon--scale-xl) {
+  --icon-scale: var(--icon-scale-xl, 1.5);
+}
+
+/* ==========================================================================
+   2. Icon Box Container (:where(.icon-box))
+   Provides an explicit bounding container matching button target sizing.
+   ========================================================================== */
+
+:where(.icon-box) {
+  /* --------------------------------------------------------------------------
+     Local Private Variables
+     -------------------------------------------------------------------------- */
+  --_icon-box-padding: var(--icon-box-padding, var(--button-padding-block, 0.25rem));
+  --_icon-box-size: var(--icon-box-size, var(--button-min-size, var(--spacing-target, 3rem)));
+  --_icon-box-radius: var(--icon-box-radius, var(--radius));
+
+  /* Layout & Geometry */
+  border-radius: var(--_icon-box-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--_icon-box-padding);
+  block-size: var(--_icon-box-size);
+  inline-size: var(--_icon-box-size);
+  flex-shrink: 0;
+  color: var(--icon-box-color, var(--icon-color, currentColor));
+
+  /* --------------------------------------------------------------------------
+     Container Style Queries (Dense & Compact Contexts)
+     -------------------------------------------------------------------------- */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--icon-box-density: compact) or style(--icon-box-size: sm) {
+    --_icon-box-padding: var(--icon-box-sm-padding, var(--button-sm-padding-block, 0.125rem));
+    --_icon-box-size: var(--icon-box-size, var(--button-sm-min-size, var(--spacing-target-sm, 2rem)));
+  }
+
+  @container style(--ui-density: dense) or style(--icon-box-size: sm) {
+    --_icon-box-padding: var(--icon-box-sm-padding, var(--button-sm-padding-block, 0.125rem));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Size Modifiers
+   -------------------------------------------------------------------------- */
+/* Small Size Modifier (.icon-box--sm or scoped via .buttons-sm / .icon-boxes-sm) */
+:where(.icon-boxes-compact) {
+  --icon-box-density: compact;
+}
+
+:where(.icon-box-compact) {
+  --_icon-box-padding: var(--icon-box-sm-padding, var(--button-sm-padding-block, 0.125rem));
+  --_icon-box-size: var(--icon-box-size, var(--button-sm-min-size, var(--spacing-target-sm, 2rem)));
+}
+
+:where(.icon-boxes-sm, .buttons-sm) {
+  --icon-box-size: sm;
+}
+
+:where(.icon-box--sm) {
+  --_icon-box-padding: var(--icon-box-sm-padding, var(--button-sm-padding-block, 0.125rem));
+  --_icon-box-size: var(--icon-box-size, var(--button-sm-min-size, var(--spacing-target-sm, 2rem)));
+}
+
+/* Large Size Modifier */
+:where(.buttons-lg, .icon-boxes-lg, .icon-box-lg) :where(.icon-box),
+:where(.icon-box--lg) {
+  --_icon-box-padding: var(--icon-box-lg-padding, var(--button-lg-padding-block, 0.5rem));
+  --_icon-box-size: var(--icon-box-size, var(--button-lg-min-size, var(--spacing-target-lg, 3.5rem)));
+
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_icon-box-padding: var(--icon-box-padding, var(--button-padding-block, 0.25rem));
+    --_icon-box-size: var(--icon-box-size, var(--button-min-size, var(--spacing-target, 3rem)));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Shape & Surface Modifiers
+   -------------------------------------------------------------------------- */
+:where(.icon-box--round) {
+  --_icon-box-radius: var(--icon-box-round-radius, var(--radius-round, 9999px));
+}
+
+:where(.icon-box--surface) {
+  background-color: var(--icon-box-bg, var(--surface-muted));
+}
+
+/* ==========================================================================
+   Size & Density Regular Resets
+   ========================================================================== */
+:where(.icon-boxes-regular) {
+  --icon-box-size: regular;
+  --icon-box-density: regular;
+}

@@ -40,10 +40,10 @@ The following is a basic example of the above implementation steps.
 }
 
 .bugs {
-  --density: compact;
+  --density: dense;
 }
 
-@container style(--density: compact) {
+@container style(--density: dense) {
   .card {
     padding: 8px;
   }
@@ -113,7 +113,7 @@ While it’s NOT RECOMMENDED, if you want to use style queries as a progressive 
 
 /* Use style queries as a progressive enhancement: same specificity, so order of appearance is used */
 
-@container style(--density: compact) {
+@container style(--density: dense) {
   .card {
     padding: var(--card-padding-compact);
   }

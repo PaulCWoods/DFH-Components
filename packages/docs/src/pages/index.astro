@@ -1,0 +1,25 @@
+---
+import DocLayout from '../layouts/DocLayout.astro';
+---
+
+<DocLayout title="Documentation Shell" isProse={true} currentSection="overview" currentPath="/">
+  <h1>Documentation Frame</h1>
+  <p class="lede">
+    A clean, minimal content canvas inside <code>.prose</code>. Use this blank stage to shape, refine, and polish the outer frame and chrome of the documentation site.
+  </p>
+
+  <h2>Standard Prose Elements</h2>
+  <p>
+    This content area automatically applies Design For Humans <code>.prose</code> typography presets to native HTML elements without utility classes or specificity conflicts.
+  </p>
+
+  <ul>
+    <li>Fluid container-adaptive line lengths and font sizing.</li>
+    <li>Zero-specificity styles that yield gracefully to custom extensions.</li>
+    <li>High-contrast text and link colors automatically tuned for light and dark color schemes.</li>
+  </ul>
+
+  <blockquote>
+    <p>“Organisms orchestrate layout geometry; Atoms dictate elemental styling.”</p>
+  </blockquote>
+</DocLayout>

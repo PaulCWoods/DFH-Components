@@ -4,9 +4,30 @@
      --------------------------------------------------------------------------
      Uses native CSS @scope donut scoping to isolate Storybook Docs chrome/tables
      while strictly preventing style leaks into component demo canvases.
+     Complies with WCAG 2.2 AA / AAA (1.4.3 Contrast, 2.4.7 Focus, 1.4.10 Reflow).
      ========================================================================== */
 
-  /* 1. Base Preview Canvas & Iframe */
+  /* --------------------------------------------------------------------------
+     1. Syntax Highlighting Token Palette (WCAG 1.4.3 Level AAA Contrast)
+     -------------------------------------------------------------------------- */
+  :root {
+    --syntax-bg: light-dark(#f8fafc, #181824);
+    --syntax-text: light-dark(#0f172a, #f1f5f9);
+    --syntax-comment: light-dark(#64748b, #94a3b8);
+    --syntax-tag: light-dark(#0284c7, #38bdf8);
+    --syntax-attr-name: light-dark(#7c3aed, #c084fc);
+    --syntax-attr-val: light-dark(#16a34a, #4ade80);
+    --syntax-string: light-dark(#d97706, #fde047);
+    --syntax-keyword: light-dark(#e11d48, #fb7185);
+    --syntax-punctuation: light-dark(#475569, #cbd5e1);
+    --syntax-operator: light-dark(#475569, #cbd5e1);
+    --syntax-number: light-dark(#2563eb, #818cf8);
+    --syntax-boolean: light-dark(#2563eb, #818cf8);
+  }
+
+  /* --------------------------------------------------------------------------
+     2. Base Preview Canvas & Iframe
+     -------------------------------------------------------------------------- */
   html,
   body {
     background-color: var(--surface);
@@ -16,7 +37,9 @@
     transition: background-color var(--duration-sm, 200ms) ease, color var(--duration-sm, 200ms) ease;
   }
 
-  /* 2. Storybook Docs Page Typography (Donut Scoped: Excludes .docs-story & .sb-story) */
+  /* --------------------------------------------------------------------------
+     3. Storybook Docs Page Typography (Donut Scoped: Excludes component stories)
+     -------------------------------------------------------------------------- */
   @scope (.sbdocs, #storybook-docs) to (.docs-story, .sb-story, .innerZoomElementWrapper) {
 
     :scope,
@@ -41,7 +64,6 @@
     .sbdocs-h5,
     .sbdocs-h6 {
       color: var(--foreground) !important;
-      font-family: var(--heading-font-family, inherit);
     }
 
     /* Descriptions & Body Copy */
@@ -69,41 +91,172 @@
       border-color: var(--border-muted) !important;
     }
 
-    /* Code Blocks outside demos */
-    code:not(pre code),
-    .sbdocs-code {
+    /* Inline Code snippets outside demos */
+    code:not(pre code) {
       background-color: var(--surface-card) !important;
-      color: var(--foreground) !important;
+      color: var(--foreground-accent) !important;
       border: 1px solid var(--border-muted) !important;
+      padding: 2px 6px !important;
+      border-radius: var(--radius-sm, 4px) !important;
     }
 
-    pre {
-      background-color: var(--surface-card) !important;
+    /* Preformatted Code Blocks */
+    pre,
+    .docblock-source {
+      background-color: var(--syntax-bg) !important;
+      color: var(--syntax-text) !important;
       border: 1px solid var(--border-muted) !important;
+      border-radius: var(--radius-md, 0.375rem) !important;
+    }
+
+    /* --------------------------------------------------------------------------
+       Markdown Tables in Storybook Docs (Fixes dark mode contrast & white zebra stripes)
+       -------------------------------------------------------------------------- */
+    table:not(.docblock-argstable) {
+      inline-size: 100% !important;
+      border-collapse: collapse !important;
+      border: 1px solid var(--border-muted) !important;
+      background-color: var(--surface-card) !important;
+      color: var(--foreground) !important;
+      margin-block: var(--spacing-16, 1rem) !important;
+      border-radius: var(--radius-md, 0.375rem) !important;
+      overflow: hidden !important;
+
+      thead {
+        background-color: var(--surface-muted, var(--surface)) !important;
+      }
+
+      th {
+        color: var(--foreground) !important;
+        background-color: var(--surface-muted, var(--surface)) !important;
+        border: 1px solid var(--border-muted) !important;
+        padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem) !important;
+        font-weight: 700 !important;
+        text-align: start !important;
+      }
+
+      tbody {
+        background-color: var(--surface-card) !important;
+      }
+
+      tr {
+        background-color: var(--surface-card) !important;
+        border-bottom: 1px solid var(--border-muted) !important;
+      }
+
+      /* Dark mode zebra striping using translucent tint instead of hardcoded white */
+      tr:nth-of-type(2n) {
+        background-color: var(--surface-translucent, color-mix(in srgb, var(--surface-card) 92%, var(--foreground) 8%)) !important;
+      }
+
+      td {
+        color: var(--foreground) !important;
+        border: 1px solid var(--border-muted) !important;
+        padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem) !important;
+        background-color: transparent !important;
+      }
+
+      /* Ensure cell descendants inherit foreground color */
+      td * {
+        color: inherit;
+      }
+
+      td strong {
+        color: var(--foreground) !important;
+      }
+
+      td code {
+        background-color: var(--surface, #1e1e1e) !important;
+        color: var(--foreground-accent, #7c3aed) !important;
+        border: 1px solid var(--border-muted) !important;
+        padding: 2px 6px !important;
+        border-radius: var(--radius-sm, 4px) !important;
+      }
+
+      td a {
+        color: var(--foreground-accent) !important;
+      }
     }
   }
 
-  /* 3. Story Preview Canvas Card in Docs View */
+  /* --------------------------------------------------------------------------
+     4. Story Preview Canvas Card in Docs View
+     -------------------------------------------------------------------------- */
   .docs-story,
   .sb-story,
   .sbdocs-preview,
   .innerZoomElementWrapper {
-    background-color: var(--surface-card);
+    background-color: var(--surface);
     color: var(--foreground);
-
-    .prismjs {
-      background-color: var(--surface-darker, black) !important;
-    }
   }
 
-  /* Outer border container wrapping the preview story block */
   div:has(> .docs-story),
   div:has(> .innerZoomElementWrapper),
   div:has(> div > .docs-story) {
     border-color: var(--border-muted);
   }
 
-  /* 4. Controls / ArgsTable (Scoped directly to the table container) */
+  /* --------------------------------------------------------------------------
+     5. PrismJS / Storybook Code Syntax Highlighting Bridge (WCAG 1.4.3 AAA)
+     -------------------------------------------------------------------------- */
+  .prismjs,
+  pre.prismjs,
+  .docblock-source {
+    background-color: var(--syntax-bg) !important;
+    color: var(--syntax-text) !important;
+    border: 1px solid var(--border-muted) !important;
+
+    code {
+      color: var(--syntax-text) !important;
+      background: transparent !important;
+      border: none !important;
+    }
+  }
+
+  /* Token syntax classes */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: var(--syntax-comment) !important;
+    font-style: italic;
+  }
+
+  .token.tag,
+  .token.selector {
+    color: var(--syntax-tag) !important;
+    font-weight: 600;
+  }
+
+  .token.attr-name,
+  .token.property {
+    color: var(--syntax-attr-name) !important;
+  }
+
+  .token.attr-value,
+  .token.string {
+    color: var(--syntax-attr-val) !important;
+  }
+
+  .token.keyword,
+  .token.atrule {
+    color: var(--syntax-keyword) !important;
+  }
+
+  .token.punctuation,
+  .token.operator {
+    color: var(--syntax-punctuation) !important;
+  }
+
+  .token.number,
+  .token.boolean,
+  .token.constant {
+    color: var(--syntax-string) !important;
+  }
+
+  /* --------------------------------------------------------------------------
+     6. Controls / ArgsTable (Scoped directly to the table container)
+     -------------------------------------------------------------------------- */
   @scope (.docblock-argstable) {
 
     :scope,
@@ -145,38 +298,265 @@
       background-color: transparent !important;
     }
 
-    td span,
-    td div,
-    td strong,
+    /* Row Property Name & Required Indicator */
+    td:first-child span {
+      color: var(--foreground) !important;
+      font-weight: 600 !important;
+    }
+
+    td:first-child span[title="Required"],
+    td:first-child [title="Required"] {
+      color: var(--feedback-danger, #ef4444) !important;
+      margin-left: var(--spacing-4, 0.25rem) !important;
+    }
+
+    /* Descriptions & Body Copy in Cells */
     td p {
+      color: var(--foreground-muted, #94a3b8) !important;
+      margin: 0 0 var(--spacing-6, 0.375rem) 0 !important;
+    }
+
+    td strong {
       color: var(--foreground) !important;
     }
 
-    /* Type badges (e.g. number, string, boolean) */
-    td code {
-      background-color: var(--surface) !important;
+    td a {
       color: var(--foreground-accent) !important;
-      border: 1px solid var(--border-muted) !important;
-      padding: 2px 6px !important;
-      border-radius: var(--radius-sm, 4px) !important;
+      text-decoration: underline !important;
     }
 
-    /* Inputs, Selects, Textareas */
-    input:not([type="checkbox"]):not([type="radio"]),
-    select,
-    textarea {
-      color: var(--foreground) !important;
-      background-color: var(--surface) !important;
-      border: 1px solid var(--border-muted) !important;
+    /* ------------------------------------------------------------------------
+       Type Badges & Summaries (string, boolean, number, enum, etc.)
+       Targeted specifically to the Description and Default columns
+       ------------------------------------------------------------------------ */
+    td:not(:first-child):not(:last-child) span:not(:has(*)),
+    td code,
+    .docblock-argstable code {
+      background-color: var(--surface, #181820) !important;
+      color: var(--foreground-accent, #a78bfa) !important;
+      border: 1px solid var(--border-muted, rgba(255, 255, 255, 0.15)) !important;
+      padding: 2px 7px !important;
       border-radius: var(--radius-sm, 4px) !important;
+      font-family: var(--typography-font-family-mono, monospace) !important;
+      font-size: var(--font-size-xs, 0.75rem) !important;
+      font-weight: 500 !important;
+      line-height: 1.4 !important;
+      display: inline-block !important;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
     }
 
-    button {
+    /* Default Column: Clean empty indicator "-" */
+    td:nth-child(3)>span:only-child {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      color: var(--foreground-muted, #94a3b8) !important;
+      padding: 0 !important;
+    }
+
+    /* Expand button for complex / union types */
+    td:not(:first-child):not(:last-child) button {
+      background: none !important;
+      border: none !important;
+      color: var(--foreground-accent, #a78bfa) !important;
+      font-family: var(--typography-font-family-mono, monospace) !important;
+      font-size: var(--font-size-xs, 0.75rem) !important;
+      cursor: pointer !important;
+      text-decoration: underline !important;
+      padding: 2px 4px !important;
+    }
+
+    /* ------------------------------------------------------------------------
+       Storybook Boolean Switch Controls (False / True Pill Switch)
+       ------------------------------------------------------------------------ */
+    td:last-child label:has(input[type="checkbox"]) {
+      background-color: var(--surface-muted, #1a1a24) !important;
+      border: 1px solid var(--border-muted, rgba(255, 255, 255, 0.15)) !important;
+      border-radius: 3em !important;
+      padding: 3px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+      vertical-align: middle !important;
+    }
+
+    /* Inactive Span (Default / Off State) */
+    td:last-child label:has(input[type="checkbox"]) span {
+      background-color: transparent !important;
+      color: var(--foreground-muted, #94a3b8) !important;
+      box-shadow: none !important;
+      border-radius: 3em !important;
+      padding: 5px 12px !important;
+      font-size: var(--font-size-xs, 0.75rem) !important;
+      font-weight: 500 !important;
+      line-height: 1 !important;
+      cursor: pointer !important;
+      transition: background-color var(--duration-fast, 150ms) ease,
+        color var(--duration-fast, 150ms) ease,
+        box-shadow var(--duration-fast, 150ms) ease !important;
+    }
+
+    /* Inactive Span Hover */
+    td:last-child label:has(input[type="checkbox"]) span:hover {
+      color: var(--foreground, #ffffff) !important;
+    }
+
+    /* Active Span (False when unchecked; True when checked) */
+    td:last-child label:has(input[type="checkbox"]) input:not(:checked)~span:first-of-type,
+    td:last-child label:has(input[type="checkbox"]) input:checked~span:last-of-type {
+      background-color: var(--surface-card, #2d2d3a) !important;
+      color: var(--foreground, #ffffff) !important;
+      font-weight: 700 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-muted, rgba(255, 255, 255, 0.2)) !important;
+    }
+
+    /* Focus Visible State on Boolean Switch */
+    td:last-child label:has(input[type="checkbox"]):has(input:focus-visible) {
+      outline: 2px solid var(--border-accent, #6366f1) !important;
+      outline-offset: 2px !important;
+    }
+
+    /* Disabled State on Boolean Switch */
+    td:last-child label:has(input[type="checkbox"][disabled]),
+    td:last-child label:has(input[type="checkbox"])[aria-disabled="true"] {
+      opacity: 0.5 !important;
+      cursor: not-allowed !important;
+    }
+
+    /* ------------------------------------------------------------------------
+       Form Inputs, Selects, and Textareas in Controls Column
+       ------------------------------------------------------------------------ */
+    td:last-child input:not([type="checkbox"]):not([type="radio"]),
+    td:last-child select,
+    td:last-child textarea {
       color: var(--foreground) !important;
+      background-color: var(--surface, #181820) !important;
+      border: 1px solid var(--border-muted, rgba(255, 255, 255, 0.15)) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem) !important;
+      font-family: inherit !important;
+      font-size: var(--font-size-sm, 0.875rem) !important;
+      line-height: 1.5 !important;
+      box-sizing: border-box !important;
+      transition: border-color var(--duration-fast, 150ms) ease, box-shadow var(--duration-fast, 150ms) ease !important;
+    }
+
+    td:last-child textarea {
+      min-height: 4.5rem !important;
+      resize: vertical !important;
+    }
+
+    td:last-child select {
+      padding-right: var(--spacing-24, 1.5rem) !important;
+      cursor: pointer !important;
+    }
+
+    td:last-child select option {
+      background-color: var(--surface-card, #202028) !important;
+      color: var(--foreground, #ffffff) !important;
+    }
+
+    /* Dropdown chevron SVG */
+    td:last-child div:has(> select) svg,
+    td:last-child div:has(> select) svg path {
+      fill: var(--foreground-muted, #94a3b8) !important;
+      color: var(--foreground-muted, #94a3b8) !important;
+    }
+
+    /* Focus States for Controls */
+    td:last-child input:focus-visible,
+    td:last-child select:focus-visible,
+    td:last-child textarea:focus-visible {
+      outline: 2px solid var(--border-accent, #6366f1) !important;
+      outline-offset: 1px !important;
+      border-color: var(--border-accent, #6366f1) !important;
+    }
+
+    /* Radio and Checkbox Options Controls */
+    td:last-child label:has(input[type="radio"]),
+    td:last-child label:has(input[type="checkbox"]:not(~ span + span)) {
+      color: var(--foreground) !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: var(--spacing-6, 0.375rem) !important;
+    }
+
+    td:last-child label:has(input[type="radio"]) span,
+    td:last-child label:has(input[type="checkbox"]:not(~ span + span)) span {
+      color: var(--foreground) !important;
+    }
+
+    /* Header Reset Controls Icon Button */
+    th button,
+    th button[title="Reset controls"] {
+      color: var(--foreground-muted, #94a3b8) !important;
+      background: transparent !important;
+      border: none !important;
+      cursor: pointer !important;
+      transition: color var(--duration-fast, 150ms) ease !important;
+    }
+
+    th button:hover,
+    th button[title="Reset controls"]:hover {
+      color: var(--foreground, #ffffff) !important;
+    }
+
+    th button svg,
+    th button svg path {
+      fill: currentColor !important;
+      stroke: currentColor !important;
+    }
+
+    /* Outline Action Buttons ("Set string", "Set boolean") */
+    td:last-child button:not([class*="docblock"]) {
+      color: var(--foreground) !important;
+      background-color: var(--surface, #181820) !important;
+      border: 1px solid var(--border-muted, rgba(255, 255, 255, 0.15)) !important;
+      border-radius: var(--radius-sm, 4px) !important;
+      padding: 4px 10px !important;
+      font-size: var(--font-size-xs, 0.75rem) !important;
+      cursor: pointer !important;
+      transition: background-color var(--duration-fast, 150ms) ease,
+        border-color var(--duration-fast, 150ms) ease !important;
+    }
+
+    td:last-child button:not([class*="docblock"]):hover {
+      background-color: var(--surface-card, #2d2d3a) !important;
+      border-color: var(--border-accent, #6366f1) !important;
+      color: var(--foreground-accent, #a78bfa) !important;
+    }
+
+    /* Category Header Section Rows */
+    tr[title] td {
+      background-color: var(--surface-muted, #1a1a24) !important;
+      color: var(--foreground) !important;
+      font-weight: 700 !important;
+    }
+
+    tr[title] svg,
+    tr[title] svg path {
+      fill: var(--foreground) !important;
+    }
+
+    /* ------------------------------------------------------------------------
+       FIX: Storybook Category Row Expand/Collapse Overlay Buttons
+       Storybook uses transparent overlay buttons (color: transparent) across
+       category header cells. We strictly ensure their text remains transparent
+       so screen reader / hit targets work without visually colliding with the title!
+       ------------------------------------------------------------------------ */
+    tr:has(button) td>button:first-child:not([class*="docblock"]),
+    tr[title] td button,
+    button[style*="transparent"],
+    button[style*="row-resize"] {
+      color: transparent !important;
+      user-select: none;
     }
   }
 
-  /* 5. Docblock Code Toggle & Source Blocks */
+  /* --------------------------------------------------------------------------
+     7. Docblock Code Toggle & Source Blocks
+     -------------------------------------------------------------------------- */
   .docblock-code-toggle {
     background-color: var(--surface-card) !important;
     color: var(--foreground) !important;
@@ -184,7 +564,7 @@
   }
 
   .docblock-source {
-    background-color: var(--surface-card) !important;
+    background-color: var(--syntax-bg) !important;
     border-color: var(--border-muted) !important;
   }
 </style>

@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Field Primitive
+   --------------------------------------------------------------------------
+   Accessible form field wrapper uniting labels, hints, inputs, and validation errors.
+
+   Usage:
+   <div class="field">
+     <label for="email" class="field__label">Email Address</label>
+     <p id="email-hint" class="field__hint">We will never share your email.</p>
+     <input id="email" type="email" class="input" aria-describedby="email-hint" />
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   Base Field Wrapper Primitive (:where(.field))
+   ========================================================================== */
+:where(.field) {
+  --_field-inner-gap: var(--field-inner-gap, var(--spacing-8, 0.5rem));
+  --_inline-field-label-width: var(--inline-field-label-width, var(--spacing-192, 12rem));
+
+  /* Container Style Queries */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_field-inner-gap: var(--spacing-4, 0.25rem);
+    --_inline-field-label-width: var(--inline-compact-field-label-width, var(--spacing-128, 8rem));
+  }
+
+  /* Layout & Display */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  inline-size: 100%;
+
+  /* Spacing */
+  gap: var(--_field-inner-gap);
+
+  /* Container opacity on disabled state */
+  &:has(:disabled, [aria-disabled="true"]) {
+    opacity: var(--opacity-disabled, 0.4);
+  }
+
+  /* Automatically show accessible required text on label when control has :required or [aria-required="true"] */
+  &:not(:has(.required)):has(:required, [aria-required="true"]) :where(.field__label, .label):not(:has(.required))::after {
+    content: " (Required)";
+    font-weight: var(--font-weight-regular, 400);
+    margin-inline-start: var(--spacing-8, 0.5rem);
+    font-size: var(--micro-text-font-size, 0.875em);
+    color: var(--foreground-muted, currentColor);
+  }
+}
+
+/* ==========================================================================
+   Density & Size Modifiers
+   ========================================================================== */
+:where(.field--compact, .field--dense, .field--sm) {
+  --_field-inner-gap: var(--spacing-4, 0.25rem);
+}
+
+:where(.field--loose, .field--lg) {
+  --_field-inner-gap: var(--spacing-12, 0.75rem);
+}
+
+/* ==========================================================================
+   Inline Field Container (:where(.inline-field))
+   ========================================================================== */
+:where(.inline-field) {
+  --direction: row;
+  display: var(--inline-field-display, inline-flex);
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: var(--field-inline-gap, var(--spacing-12, 0.75rem));
+}
+
+:where(.fields-grid) {
+  container-type: inline-size;
+
+  @container (inline-size > 32em) {
+    > :where(.field) {
+      display: var(--field-grid-display, grid);
+      grid-template-columns: var(--_inline-field-label-width) 1fr;
+      grid-template-areas: "label input" "label hint" "label errors";
+      align-items: baseline;
+      column-gap: var(--field-inline-gap, var(--spacing-12, 0.75rem));
+
+      :where(.field__label, .label, label) {
+        grid-area: label;
+      }
+
+      :where(.field__input, .input, .select, select, textarea, .textarea, .button-group, .cluster, .check-group, .radio-group) {
+        grid-area: input;
+      }
+
+      :where(.field__hint) {
+        grid-area: hint;
+      }
+
+      :where(.field__error) {
+        grid-area: errors;
+      }
+    }
+  }
+}
+
+
+/* ==========================================================================
+   Fields Grid Container (:where(.fields-inline))
+   ========================================================================== */
+
+:where(.fields-inline) {
+  --_fields-inline-gap: var(--fields-inline-gap, var(--field-gap, var(--spacing-16, 1rem)));
+  --_fields-inline-width: var(--fields-inline-width, var(--spacing-block-xs, 256px));
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--_fields-inline-width)), 1fr));
+
+  /* Container Style Queries */
+  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
+    --_fields-inline-gap: var(--spacing-8, 0.5rem);
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  /* Spacing */
+  gap: var(--_fields-inline-gap);
+}
+
+/* ==========================================================================
+   Field Sub-Elements (Header, Label, Hint, Output, Errors)
+   ========================================================================== */
+:where(.field__header) {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  inline-size: 100%;
+  gap: var(--field-header-gap, var(--spacing-8, 0.5rem));
+}
+
+:where(.field__label, .label, .switch__label) {
+  --_label-font-family: var(--label-font-family, var(--body-font-family, inherit));
+  --_label-font-size: var(--label-font-size, var(--typography-font-size-0, 1rem));
+  --_label-font-weight: var(--label-font-weight, var(--font-weight-bold, 700));
+  --_label-line-height: var(--label-line-height, var(--typography-line-height--1, 1.4));
+
+  font-family: var(--_label-font-family);
+  font-size: var(--_label-font-size);
+  font-weight: var(--_label-font-weight);
+  line-height: var(--_label-line-height);
+  color: var(--label-color, var(--foreground, currentColor));
+  cursor: pointer;
+
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+    --_label-font-size: var(--label-compact-font-size, var(--typography-font-size--1, 0.875rem));
+    --_label-font-weight: var(--label-compact-font-weight, var(--font-weight-medium, 500));
+    --_label-line-height: var(--label-compact-line-height, var(--typography-line-height--1, 1.4));
+  }
+}
+
+:where(.field__hint, .hint) {
+  --_field-hint-font-family: var(--micro-text-font-family, var(--body-font-family, inherit));
+  --_field-hint-font-size: var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem));
+  --_field-hint-font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
+  --_field-hint-line-height: var(--micro-text-line-height, var(--typography-line-height-4, 1.4));
+
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+    --_field-hint-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+  }
+
+  margin: 0;
+  font-family: var(--_field-hint-font-family);
+  font-size: var(--_field-hint-font-size);
+  font-weight: var(--_field-hint-font-weight);
+  line-height: var(--_field-hint-line-height);
+  color: var(--field-hint-color, var(--foreground-muted, currentColor));
+}
+
+:where(.field__output, .field__result, .output) {
+  --_field-output-font-family: var(--output-font-family, var(--micro-text-font-family, var(--body-font-family, inherit)));
+  --_field-output-font-size: var(--output-font-size, var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem)));
+  --_field-output-font-weight: var(--output-font-weight, var(--micro-text-font-weight, var(--font-weight-regular, 400)));
+  --_field-output-line-height: var(--output-line-height, var(--micro-text-line-height, var(--typography-line-height-4, 1.4)));
+
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+    --_field-output-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+  }
+
+  margin: 0;
+  font-family: var(--_field-output-font-family);
+  font-size: var(--_field-output-font-size);
+  font-weight: var(--_field-output-font-weight);
+  line-height: var(--_field-output-line-height);
+}
+
+:where(.field__errors, .field__error, .field .errors, .error-message) {
+  --_field-error-font-family: var(--micro-text-font-family, var(--body-font-family, inherit));
+  --_field-error-font-size: var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem));
+  --_field-error-font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
+  --_field-error-line-height: var(--micro-text-line-height, var(--typography-line-height-4, 1.4));
+
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+    --_field-error-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+  }
+
+  margin: 0;
+  font-family: var(--_field-error-font-family);
+  font-size: var(--_field-error-font-size);
+  font-weight: var(--_field-error-font-weight);
+  line-height: var(--_field-error-line-height);
+  color: var(--field-error-color, var(--foreground-danger, #d32f2f));
+}
+
+ul:where(.field__errors, .field__error, .field .errors) {
+  padding-inline-start: 1.5em;
+  list-style: disc;
+}

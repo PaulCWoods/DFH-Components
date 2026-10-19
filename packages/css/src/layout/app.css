@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Design For Humans: App Layout Primitive
+   --------------------------------------------------------------------------
+   3-row Holy Grail application shell (header, main, footer) utilizing dynamic
+   viewport units (100dvb) and zero-specificity (:where()) grid layout.
+   ========================================================================== */
+
+:where(.app) {
+    min-block-size: 100dvb;
+    container-name: app;
+    container-type: scroll-state;
+    overflow: visible;
+
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-columns: 100%;
+    grid-template-areas:
+        "header"
+        "aside"
+        "main"
+        "footer";
+
+    &> :is(header, .header, .header-container) {
+        grid-area: header;
+    }
+
+    &> :is(aside, .aside, .alert, .app__aside, .sidebar) {
+        grid-area: aside;
+    }
+
+    &> :is(main, .main, .app__workspace, .workspace) {
+        grid-area: main;
+    }
+
+    &> :is(footer, .footer, .app__footer) {
+        grid-area: footer;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Footer Landmark Primitive (:where(.footer, .app__footer))
+   Semantic application-level footer landmark with token-driven top borders.
+   -------------------------------------------------------------------------- */
+
+:where(.footer, .app__footer) {
+    /* Local Private Variables (Defaults & Fallback Ladder) */
+    --_footer-bg: var(--footer-bg, var(--surface-card, Canvas));
+    --_footer-border-color: var(--footer-border-color, var(--app-border-color, var(--border-color-quiet, currentColor)));
+    --_footer-border-style: var(--footer-border-style, var(--app-border-style, solid));
+    --_footer-border-width: var(--footer-border-width, var(--app-border-width, var(--border-width, 1px)));
+    --_footer-padding: var(--footer-padding, var(--spacing-cushion, 1rem));
+
+    background-color: var(--_footer-bg);
+    border-block-start: var(--_footer-border-width) var(--_footer-border-style) var(--_footer-border-color);
+    box-sizing: border-box;
+    padding: var(--_footer-padding);
+}
+
+/* --------------------------------------------------------------------------
+   Workspace Landmark & Sidebar Orchestrator (.app__workspace / .workspace)
+   Orchestrates side-by-side sidebars, rails, and main content canvas under
+   the application header, expanding to fill available vertical space.
+   -------------------------------------------------------------------------- */
+
+:where(.app__workspace, .workspace) {
+    display: flex;
+    inline-size: 100%;
+    min-block-size: 0;
+    flex: 1 1 auto;
+    align-items: stretch;
+
+    & > :where(.main) {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+    }
+
+    @media (width < 48em) {
+        flex-direction: column;
+    }
+}
+
+:where(.app--viewport, .app--locked) :where(.app__workspace, .workspace) {
+    block-size: 100%;
+    min-block-size: 0;
+    overflow: hidden;
+
+    @media (width < 48em) or (height < 36em) {
+        block-size: auto;
+        min-block-size: 0;
+        overflow: visible;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Viewport-Locked Application Shell (.app--viewport / .app--locked)
+   Locks outer viewport on desktop to enable internal pane/card scrolling.
+   Gracefully unlocks to natural document scroll on mobile (< 48em).
+   -------------------------------------------------------------------------- */
+
+:where(.app--viewport, .app--locked) {
+    block-size: 100dvb;
+    container-type: normal;
+    overflow: hidden;
+
+    @media (width < 48em) or (height < 36em) {
+        block-size: auto;
+        min-block-size: 100dvb;
+        container-type: scroll-state;
+        overflow: visible;
+    }
+}
