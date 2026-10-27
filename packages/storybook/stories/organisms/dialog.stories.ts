@@ -30,7 +30,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 
 \`\`\`html
 <!-- 1. Centered Modal Dialog -->
-<button type="button" class="button button--primary" commandfor="confirm-dialog" command="show-modal" aria-haspopup="dialog">
+<button type="button" class="button button--strong button--accent" commandfor="confirm-dialog" command="show-modal" aria-haspopup="dialog">
   <span>Open Confirmation Dialog</span>
 </button>
 
@@ -59,7 +59,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
           <button type="submit" class="button button--subtle" commandfor="confirm-dialog" command="close">
             <span>Cancel</span>
           </button>
-          <button type="submit" value="confirm" class="button button--primary">
+          <button type="submit" value="confirm" class="button button--strong button--accent">
             <span>Publish Report</span>
           </button>
         </form>
@@ -99,7 +99,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         <!-- Long body copy -->
       </div>
       <footer class="card__footer">
-        <button type="button" class="button button--primary">Accept</button>
+        <button type="button" class="button button--strong button--accent">Accept</button>
       </footer>
     </article>
   </div>
@@ -191,7 +191,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         <button 
           id="playground-open-btn" 
           type="button" 
-          class="button button--primary"
+          class="button button--strong button--accent"
           commandfor="${dialogId}" 
           command="show-modal"
           aria-haspopup="dialog"
@@ -229,7 +229,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
                   <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
                     <span>${args.cancelLabel || 'Cancel'}</span>
                   </button>
-                  <button type="submit" value="confirm" class="button button--primary">
+                  <button type="submit" value="confirm" class="button button--strong button--accent">
                     <span>${args.confirmLabel || 'Confirm'}</span>
                   </button>
                 </form>
@@ -285,7 +285,7 @@ export const Anatomy: Story = {
           <button 
             id="anatomy-open-btn" 
             type="button" 
-            class="button button--primary"
+            class="button button--strong button--accent"
             commandfor="${dialogId}" 
             command="show-modal"
             aria-haspopup="dialog"
@@ -327,7 +327,7 @@ export const Anatomy: Story = {
                   <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
                     <span>Dismiss</span>
                   </button>
-                  <button type="submit" class="button button--primary">
+                  <button type="submit" class="button button--strong button--accent">
                     <span>Understood</span>
                   </button>
                 </form>
@@ -361,7 +361,7 @@ export const ModalConfirmation: Story = {
         <button 
           id="open-confirm-modal-btn" 
           type="button" 
-          class="button button--primary"
+          class="button button--strong button--accent"
           commandfor="${dialogId}" 
           command="show-modal"
           aria-haspopup="dialog"
@@ -389,7 +389,7 @@ export const ModalConfirmation: Story = {
                   <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
                     <span>Cancel</span>
                   </button>
-                  <button type="submit" class="button button--primary">
+                  <button type="submit" class="button button--strong button--accent">
                     <span>Approve & Deploy</span>
                   </button>
                 </form>
@@ -423,7 +423,7 @@ export const SlideOutDrawer: Story = {
         <button 
           id="open-drawer-panel-btn" 
           type="button" 
-          class="button button--secondary"
+          class="button"
           commandfor="${dialogId}" 
           command="show-modal"
           aria-haspopup="dialog"
@@ -473,7 +473,7 @@ export const SlideOutDrawer: Story = {
                 <form method="dialog" class="form__submission" style="display: flex; justify-content: flex-end;">
                   <button 
                     type="submit" 
-                    class="button button--primary"
+                    class="button button--strong button--accent"
                     commandfor="${dialogId}"
                     command="close"
                   >
@@ -511,7 +511,7 @@ export const WholeCardScrollable: Story = {
         <button 
           id="open-scrollable-dialog-btn" 
           type="button" 
-          class="button button--secondary"
+          class="button"
           commandfor="${dialogId}" 
           command="show-modal"
           aria-haspopup="dialog"
@@ -583,7 +583,7 @@ export const WholeCardScrollable: Story = {
                   </button>
                   <button 
                     type="submit" 
-                    class="button button--primary"
+                    class="button button--strong button--accent"
                     commandfor="${dialogId}"
                     command="close"
                   >
@@ -622,7 +622,7 @@ export const RealWorldRecipes: Story = {
           <button 
             id="open-delete-dialog-btn" 
             type="button" 
-            class="button button--destructive"
+            class="button button--danger"
             commandfor="${deleteDialogId}" 
             command="show-modal"
             aria-haspopup="dialog"
@@ -654,7 +654,7 @@ export const RealWorldRecipes: Story = {
                   <button type="submit" class="button button--subtle" commandfor="${deleteDialogId}" command="close">
                     <span>Cancel</span>
                   </button>
-                  <button type="submit" value="delete" class="button button--destructive">
+                  <button type="submit" value="delete" class="button button--danger">
                     <span>Yes, Delete Project</span>
                   </button>
                 </form>

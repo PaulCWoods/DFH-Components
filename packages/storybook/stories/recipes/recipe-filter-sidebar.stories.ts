@@ -489,7 +489,7 @@ export const EmptyFilterResults: Story = {
                     </p>
                   </div>
                   <div class="empty-state__actions">
-                    <button type="button" class="button button--primary">
+                    <button type="button" class="button button--strong button--accent">
                       <span>Clear All Filters</span>
                     </button>
                     <button type="button" class="button button--placeholder">

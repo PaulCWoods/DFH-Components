@@ -25,7 +25,7 @@ const meta: Meta = {
   Uses the canonical Holy Grail grid defined in \`layout/app.css\` with modern dynamic viewport height (\`100dvb\`) and desktop viewport containment (\`.app--viewport\`). Keeps the **Station Header** and **Persistent Audio Dock** firmly anchored while enabling individual panels in the **Main Workspace** (\`.main--viewport\` + \`.split--stretch\` + \`.card--panel\`) to scroll internally.
 
 - **Station Header & Telemetry (\`.header.header--sticky.header--translucent\`):**
-  Sticky glassmorphism header featuring station selector (\`.select.select--sm\`), stream health badge (\`.badge\` with live indicator dot and \`data-status="online"\`), quick metrics stat cards (\`.card.card--compact.card--bordered\`), and global emergency action buttons (\`.button--destructive\`, \`.button--destructive\`).
+  Sticky glassmorphism header featuring station selector (\`.select.select--sm\`), stream health badge (\`.badge\` with live indicator dot and \`data-status="online"\`), quick metrics stat cards (\`.card.card--compact.card--bordered\`), and global emergency action buttons (\`.button--danger\`, \`.button--danger\`).
 
 - **Leading Sidebar Deck A (\`.deck.deck--on-air.deck--panel.deck--bordered\`):**
   Dedicated playback station composed with the **Deck Organism** (\`deck.css\`) featuring rotating vinyl turntable artwork (\`.deck__art--vinyl.is-spinning\`), typographic lockup (\`.deck__identity.lockup\`), live timeline scrubber (\`.range.range--sm.deck__scrubber\`), primary transport toolbar (\`.button-group.button-group--center\`), level output faders (\`.deck__volume\`), and stereo VU peak monitoring (\`<meter class="meter meter--sm">\`).
@@ -412,16 +412,16 @@ export const LiveDashboard: Story = {
         isMasterMuted = !isMasterMuted;
         btnMasterMute.setAttribute('aria-pressed', isMasterMuted.toString());
         if (isMasterMuted) {
-          btnMasterMute.classList.remove('button--destructive');
-          btnMasterMute.classList.add('button--destructive');
+          btnMasterMute.classList.remove('button--danger');
+          btnMasterMute.classList.add('button--danger');
           if (streamHealthBadge) {
             streamHealthBadge.className = 'badge badge--danger';
             streamHealthBadge.innerHTML = '<span>MUTED (OFF-AIR)</span>';
           }
           updateVolumeDisplay(0);
         } else {
-          btnMasterMute.classList.remove('button--destructive');
-          btnMasterMute.classList.add('button--destructive');
+          btnMasterMute.classList.remove('button--danger');
+          btnMasterMute.classList.add('button--danger');
           if (streamHealthBadge) {
             streamHealthBadge.className = 'badge badge--success';
             streamHealthBadge.innerHTML = '<span>Live</span><span class="md-max:visually-hidden">320k AAC</span>';
@@ -562,7 +562,7 @@ export const LiveDashboard: Story = {
                     <button type="button" class="button button--subtle button--icon button--sm btn-row-down" data-id="${item.id}" ${index === filtered.length - 1 ? 'disabled' : ''} aria-label="Move ${item.title} down">
                       <svg class="icon"><use href="#ArrowDown"/></svg>
                     </button>
-                    <button type="button" class="button button--destructive button--icon button--sm btn-row-del" data-id="${item.id}" ${isLive ? 'disabled' : ''} aria-label="Remove ${item.title} from queue">
+                    <button type="button" class="button button--danger button--icon button--sm btn-row-del" data-id="${item.id}" ${isLive ? 'disabled' : ''} aria-label="Remove ${item.title} from queue">
                       <svg class="icon"><use href="#Delete"/></svg>
                     </button>
                     <button 
@@ -591,11 +591,11 @@ export const LiveDashboard: Story = {
                     <dl class="telemetry-group grid grid--auto-fit grid--2xs" aria-label="Audio engineering telemetry for ${item.title}">
                       <div class="telemetry telemetry--stacked telemetry--bordered">
                         <dt class="telemetry__label">Integrated Loudness</dt>
-                        <dd class="telemetry__value font-mono">${item.lufs} <span class="text-muted font-weight-normal font-sans font-size-xs">(Target: -14)</span></dd>
+                        <dd class="telemetry__value font-mono">${item.lufs} <small class="text-muted ml-sm">(Target: -14)</small></dd>
                       </div>
                       <div class="telemetry telemetry--stacked telemetry--bordered">
                         <dt class="telemetry__label">Audio Codec / Ingest</dt>
-                        <dd class="telemetry__value font-mono font-size-xs">${item.format}</dd>
+                        <dd class="telemetry__value font-mono">${item.format}</dd>
                       </div>
                       <div class="telemetry telemetry--stacked telemetry--bordered">
                         <dt class="telemetry__label">Tempo & Musical Key</dt>
@@ -603,7 +603,7 @@ export const LiveDashboard: Story = {
                       </div>
                       <div class="telemetry telemetry--stacked telemetry--bordered">
                         <dt class="telemetry__label">ISRC / License ID</dt>
-                        <dd class="telemetry__value font-mono font-size-xs">${item.isrc}</dd>
+                        <dd class="telemetry__value font-mono">${item.isrc}</dd>
                       </div>
                     </dl>
                   </div>
@@ -1124,12 +1124,12 @@ export const LiveDashboard: Story = {
 
                 <!-- Right: Global Emergency Actions -->
                 <div class="inline align-items-center gap-xs">
-                  <button type="button" class="button button--destructive button--sm" id="btn-master-mute" aria-pressed="false" aria-label="Toggle Emergency Master Mute">
+                  <button type="button" class="button button--danger button--sm" id="btn-master-mute" aria-pressed="false" aria-label="Toggle Emergency Master Mute">
                     <svg class="icon" aria-hidden="true" id="master-mute-icon"><use href="#Muted"/></svg>
                     <span>Mute Master</span>
                   </button>
 
-                  <button type="button" class="button button--destructive button--sm" id="btn-emergency-cart" aria-label="Trigger Backup Automation Cart">
+                  <button type="button" class="button button--danger button--sm" id="btn-emergency-cart" aria-label="Trigger Backup Automation Cart">
                     <svg class="icon" aria-hidden="true"><use href="#Play"/></svg>
                     <span class="max-sm:hide">Backup Cart</span>
                   </button>
@@ -1263,7 +1263,7 @@ export const LiveDashboard: Story = {
 
                     <button 
                       type="button" 
-                      class="button button--primary button--round deck__play" 
+                      class="button button--strong button--accent button--round deck__play" 
                       id="deck-play-btn" 
                       aria-label="Pause playback"
                     >
@@ -1339,11 +1339,11 @@ export const LiveDashboard: Story = {
                     <p class="card__subtitle micro-heading" id="queue-count-summary" role="status" aria-live="polite">8 items queued • Total remaining airtime: 34m 18s</p>
                   </hgroup>
                   <div class="cluster gap-xs align-items-center @max-md:hide-labels">
-                    <button type="button" class="button button--secondary button--sm" id="btn-balance-queue" aria-label="Auto-Balance Queue Clocks">
+                    <button type="button" class="button button--sm" id="btn-balance-queue" aria-label="Auto-Balance Queue Clocks">
                       <svg class="icon"><use href="#Sortable"/></svg>
                       <span>Auto-Balance</span>
                     </button>
-                    <button type="button" class="button button--primary button--sm" id="btn-insert-asset" aria-label="Insert Asset to Queue">
+                    <button type="button" class="button button--strong button--accent button--sm" id="btn-insert-asset" aria-label="Insert Asset to Queue">
                       <svg class="icon"><use href="#Plus"/></svg>
                       <span>Insert Track</span>
                     </button>
@@ -1463,7 +1463,7 @@ export const LiveDashboard: Story = {
                     <button type="button" class="button button--subtle button--icon button--sm" id="dock-prev-btn" aria-label="Cue previous track">
                       <svg class="icon"><use href="#ChevronStart"/></svg>
                     </button>
-                    <button type="button" class="button button--primary button--round deck__play" id="dock-play-btn" aria-label="Pause playback">
+                    <button type="button" class="button button--strong button--accent button--round deck__play" id="dock-play-btn" aria-label="Pause playback">
                       <svg class="icon font-size-xs" id="dock-play-icon"><use href="#Pause"/></svg>
                     </button>
                     <button type="button" class="button button--subtle button--icon button--sm" id="dock-next-btn" aria-label="Skip to next track">
@@ -1524,7 +1524,7 @@ export const LiveDashboard: Story = {
                   <!-- Stream Settings Modal Trigger -->
                   <button 
                     type="button" 
-                    class="button button--secondary button--sm" 
+                    class="button button--sm" 
                     commandfor="cadence-settings-dialog" 
                     command="show-modal" 
                     aria-haspopup="dialog"
@@ -1544,8 +1544,8 @@ export const LiveDashboard: Story = {
         <!-- 4. Broadcast & DSP Settings Modal Dialog (<dialog>)                -->
         <!-- ================================================================== -->
         <dialog id="cadence-settings-dialog" class="dialog" aria-labelledby="cadence-dialog-title" aria-describedby="cadence-dialog-desc">
-          <div class="card card--bordered wrapper wrapper--md controls-dense font-sizing-compact" style="margin: 0 auto;">
-            <article class="card__content stack gap-md">
+          <div class="card card--bordered card--ruled wrapper wrapper--md" style="margin: 0 auto;">
+            <article class="card__content">
               
               <!-- Dialog Header -->
               <header class="card__header">
@@ -1561,7 +1561,8 @@ export const LiveDashboard: Story = {
               </header>
 
               <!-- Dialog Body -->
-              <div class="card__body stack gap-md">
+              <div class="card__body">
+                <div class="form controls-subtle">
                 
                 <!-- Audio Source -->
                 <div class="field">
@@ -1583,9 +1584,9 @@ export const LiveDashboard: Story = {
                     <option value="flac">FLAC Lossless 24-bit (Archival Feed)</option>
                   </select>
                 </div>
+                <hr class="divider" />
 
                 <!-- Loudness Normalization Switch -->
-                <hr class="divider" />
                 <label class="switch">
                   <span class="switch__label">
                     <strong>EBU R128 / ReplayGain Loudness Processing</strong>
@@ -1599,7 +1600,6 @@ export const LiveDashboard: Story = {
                 </label>
 
                 <!-- Emergency Failsafe Switch -->
-                <hr class="divider" />
                 <label class="switch">
                   <span class="switch__label">
                     <strong>Auto-Failover to Emergency Cart</strong>
@@ -1621,16 +1621,17 @@ export const LiveDashboard: Story = {
                   </div>
                   <input type="range" class="range range--sm" id="setting-buffer" min="10" max="250" value="42" style="--value: 17%;" />
                 </div>
+                </div>
 
               </div>
 
               <!-- Dialog Footer -->
               <footer class="card__footer inline justify-content-end">
                 <form method="dialog" class="inline">
-                  <button type="submit" class="button button--secondary" commandfor="cadence-settings-dialog" command="close">
+                  <button type="submit" class="button" commandfor="cadence-settings-dialog" command="close">
                     <span>Cancel</span>
                   </button>
-                  <button type="submit" value="save" class="button button--primary" id="btn-save-settings">
+                  <button type="submit" value="save" class="button button--strong button--accent" id="btn-save-settings">
                     <span>Save Configuration</span>
                   </button>
                 </form>
@@ -1682,7 +1683,7 @@ export const BufferingState: Story = {
           </div>
 
           <div class="inline align-items-center gap-xs">
-            <button type="button" class="button button--destructive button--sm">
+            <button type="button" class="button button--danger button--sm">
               <svg class="icon"><use href="#Play"/></svg>
               <span>Force Backup Cart</span>
             </button>
@@ -1701,7 +1702,7 @@ export const BufferingState: Story = {
               <h3 class="alert__title">Audio Stream Stalled (Ingest Server Timeout)</h3>
               <p class="alert__description">The ingest uplink from WDFH Main Studio has exceeded the 250ms threshold. Automated fallback cart will activate in 12 seconds.</p>
             </div>
-            <button type="button" class="button button--secondary button--sm"><span>Retry Connection</span></button>
+            <button type="button" class="button button--sm"><span>Retry Connection</span></button>
           </div>
 
           <!-- Skeleton Queue Loading Grid -->

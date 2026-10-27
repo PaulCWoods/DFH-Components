@@ -65,7 +65,7 @@ AI agents and developers MUST use the following semantic patterns:
 <!-- 2. Progressive Label Disclosure (Zero-JS, zero-DOM changes) -->
 <div class="container-inline">
   <div class="cluster gap-sm @max-md:hide-labels">
-    <button type="button" class="button button--primary">
+    <button type="button" class="button button--strong button--accent">
       <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Check"/></svg>
       <span class="button__text">Approve Order</span>
     </button>
@@ -233,7 +233,7 @@ export const Playground: Story = {
 
             <div class="cluster gap-sm align-items-center ${args.visibilityMode === 'icons-only' ? appliedClass : ''}">
               <!-- Always visible primary action -->
-              <button type="button" class="button button--primary">
+              <button type="button" class="button button--strong button--accent">
                 <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
@@ -242,7 +242,7 @@ export const Playground: Story = {
               </button>
 
               <!-- Conditionally hidden / adaptive action -->
-              <button type="button" class="button button--secondary ${args.visibilityMode !== 'icons-only' ? appliedClass : ''}">
+              <button type="button" class="button ${args.visibilityMode !== 'icons-only' ? appliedClass : ''}">
                 <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                   <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                   <polyline points="17 21 17 13 7 13 7 21"></polyline>
@@ -294,8 +294,8 @@ export const ContainerVsViewportComparison: Story = {
               Correctly detects its <em>own</em> narrow container width and hides non-essential buttons cleanly.
             </p>
             <div class="cluster gap-xs">
-              <button type="button" class="button button--primary button--sm"><span>Save</span></button>
-              <button type="button" class="button button--secondary button--sm @max-md:hide"><span>Export</span></button>
+              <button type="button" class="button button--strong button--accent button--sm"><span>Save</span></button>
+              <button type="button" class="button button--sm @max-md:hide"><span>Export</span></button>
               <button type="button" class="button button--subtle button--sm @max-md:hide"><span>History</span></button>
             </div>
           </div>
@@ -313,8 +313,8 @@ export const ContainerVsViewportComparison: Story = {
               Checks the <em>entire browser window</em> (desktop). All 3 buttons remain forced into the narrow column!
             </p>
             <div class="cluster gap-xs">
-              <button type="button" class="button button--primary button--sm"><span>Save</span></button>
-              <button type="button" class="button button--secondary button--sm max-md:hide"><span>Export</span></button>
+              <button type="button" class="button button--strong button--accent button--sm"><span>Save</span></button>
+              <button type="button" class="button button--sm max-md:hide"><span>Export</span></button>
               <button type="button" class="button button--subtle button--sm max-md:hide"><span>History</span></button>
             </div>
           </div>
@@ -343,13 +343,13 @@ export const ProgressiveDisclosureToolbar: Story = {
         <div class="container-inline card card--bordered padding stack gap-sm">
           <span class="font-size-xs font-weight-bold text-color-muted">1. WIDE CONTAINER (Above 48em threshold):</span>
           <div class="cluster gap-sm align-items-center @max-md:hide-labels">
-            <button type="button" class="button button--primary">
+            <button type="button" class="button button--strong button--accent">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
               <span class="button__text">Approve Audit</span>
             </button>
-            <button type="button" class="button button--secondary">
+            <button type="button" class="button">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -371,13 +371,13 @@ export const ProgressiveDisclosureToolbar: Story = {
         <div class="container-inline card card--bordered padding stack gap-sm" style="max-inline-size: 24rem;">
           <span class="font-size-xs font-weight-bold text-color-muted">2. NARROW CONTAINER (Below 48em threshold):</span>
           <div class="cluster gap-sm align-items-center @max-md:hide-labels">
-            <button type="button" class="button button--primary" aria-label="Approve Audit">
+            <button type="button" class="button button--strong button--accent" aria-label="Approve Audit">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
               <span class="button__text">Approve Audit</span>
             </button>
-            <button type="button" class="button button--secondary" aria-label="Download Report">
+            <button type="button" class="button" aria-label="Download Report">
               <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                 <polyline points="7 10 12 15 17 10"></polyline>
@@ -485,7 +485,7 @@ export const ViewportLayoutShell: Story = {
         <!-- Right Action Cluster -->
         <div class="inline align-items-center gap-xs">
           <span class="badge badge--accent max-sm:hide">v2.4.0</span>
-          <button type="button" class="button button--primary button--sm">
+          <button type="button" class="button button--strong button--accent button--sm">
             <span>Log In</span>
           </button>
         </div>

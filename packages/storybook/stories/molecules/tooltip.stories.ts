@@ -160,7 +160,7 @@ export const Playground: Story = {
       <div class="demo-stage demo-stage--lg" style="min-block-size: 16rem; display: flex; align-items: center; justify-content: center;">
         <button 
           type="button" 
-          class="button button--secondary"
+          class="button"
           interestfor="${tipId}"
           popovertarget="${tipId}"
           style="anchor-name: ${anchorName};"
@@ -260,7 +260,7 @@ export const Variants: Story = {
           <div>
             <button 
               type="button" 
-              class="button button--icon button--secondary"
+              class="button button--icon"
               interestfor="v-tip-bookmark"
               popovertarget="v-tip-bookmark"
               style="anchor-name: --v-bm-anchor;"
@@ -279,7 +279,7 @@ export const Variants: Story = {
           <div>
             <button 
               type="button" 
-              class="button button--secondary"
+              class="button"
               interestfor="v-tip-search"
               popovertarget="v-tip-search"
               style="anchor-name: --v-search-anchor;"
@@ -468,7 +468,7 @@ export const DirectionalAnchoring: Story = {
         <div class="cluster" style="justify-content: center; gap: var(--spacing-32); flex-wrap: wrap;">
           <!-- Top (Default) -->
           <div>
-            <button type="button" class="button button--secondary" interestfor="tip-dir-top" popovertarget="tip-dir-top" style="anchor-name: --dir-top-anchor;">
+            <button type="button" class="button" interestfor="tip-dir-top" popovertarget="tip-dir-top" style="anchor-name: --dir-top-anchor;">
               <span>Top (Default)</span>
             </button>
             <div id="tip-dir-top" popover="hint" class="tooltip" style="position-anchor: --dir-top-anchor;">
@@ -478,7 +478,7 @@ export const DirectionalAnchoring: Story = {
 
           <!-- Bottom -->
           <div>
-            <button type="button" class="button button--secondary" interestfor="tip-dir-btm" popovertarget="tip-dir-btm" style="anchor-name: --dir-btm-anchor;">
+            <button type="button" class="button" interestfor="tip-dir-btm" popovertarget="tip-dir-btm" style="anchor-name: --dir-btm-anchor;">
               <span>Bottom</span>
             </button>
             <div id="tip-dir-btm" popover="hint" class="tooltip tooltip--bottom" style="position-anchor: --dir-btm-anchor;">
@@ -488,7 +488,7 @@ export const DirectionalAnchoring: Story = {
 
           <!-- Left / Start -->
           <div>
-            <button type="button" class="button button--secondary" interestfor="tip-dir-left" popovertarget="tip-dir-left" style="anchor-name: --dir-left-anchor;">
+            <button type="button" class="button" interestfor="tip-dir-left" popovertarget="tip-dir-left" style="anchor-name: --dir-left-anchor;">
               <span>Left</span>
             </button>
             <div id="tip-dir-left" popover="hint" class="tooltip tooltip--left" style="position-anchor: --dir-left-anchor;">
@@ -498,7 +498,7 @@ export const DirectionalAnchoring: Story = {
 
           <!-- Right / End -->
           <div>
-            <button type="button" class="button button--secondary" interestfor="tip-dir-right" popovertarget="tip-dir-right" style="anchor-name: --dir-right-anchor;">
+            <button type="button" class="button" interestfor="tip-dir-right" popovertarget="tip-dir-right" style="anchor-name: --dir-right-anchor;">
               <span>Right</span>
             </button>
             <div id="tip-dir-right" popover="hint" class="tooltip tooltip--right" style="position-anchor: --dir-right-anchor;">

@@ -49,15 +49,21 @@
     --_switch-option-min-width: var(--switch-sm-option-min-width, var(--spacing-32, 2rem));
   }
 
+  @container style(--switch-size: lg) {
+    --_switch-height: var(--switch-lg-height, var(--spacing-64, 3.5rem));
+    --_switch-font-size: var(--switch-lg-font-size, var(--typography-font-size-1, 1.25rem));
+    --_switch-padding-inline: var(--switch-lg-padding-inline, var(--spacing-24, 1.5rem));
+  }
+
   /* Typographic Scaling */
   @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--switch-size: sm) or style(--control-density: dense) {
     --_switch-font-size: var(--switch-sm-font-size, var(--typography-font-size--1, 0.8rem));
   }
 
-  @container style(--switch-size: lg) {
-    --_switch-height: var(--switch-lg-height, var(--spacing-64, 3.5rem));
-    --_switch-font-size: var(--switch-lg-font-size, var(--typography-font-size-1, 1.25rem));
-    --_switch-padding-inline: var(--switch-lg-padding-inline, var(--spacing-24, 1.5rem));
+  /* Subtle variation */
+  @container style(--switch-variation: subtle) or style(--controls-variation: subtle) {
+    --_switch-border-width: 0px;
+    --_switch-bg: var(--switch-subtle-bg, var(--surface-translucent, transparent));
   }
 
   /* Corner Shape */
@@ -78,6 +84,14 @@
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
+
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
 
   /* Visually hide the native input while preserving accessibility and keyboard focus */
   :where(input) {
@@ -293,6 +307,15 @@
 /* Round / Rounded Variant */
 :where(.switch--round) {
   --_switch-radius: var(--radius-round, 9999px);
+}
+
+/* ==========================================================================
+   Switch Appearance Modifier
+   ========================================================================== */
+
+:where(.switch--subtle) {
+  --_switch-border-width: 0;
+  --_switch-bg: var(--switch-subtle-bg, var(--surface-translucent, transparent));
 }
 
 /* ==========================================================================

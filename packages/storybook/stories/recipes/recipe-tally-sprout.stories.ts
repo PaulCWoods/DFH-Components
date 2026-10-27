@@ -324,7 +324,7 @@ export const Default: Story = {
               <!-- New Plot Lease Modal Trigger -->
               <button 
                 type="button" 
-                class="button button--primary button--sm"
+                class="button button--strong button--accent button--sm"
                 id="btn-trigger-new-lease"
                 aria-haspopup="dialog"
               >
@@ -467,7 +467,7 @@ export const Default: Story = {
                     <div class="button-group buttons-subtle buttons-sm" role="radiogroup" aria-label="Registry View Mode">
                       <button 
                         type="button" 
-                        class="button button--selected" 
+                        class="button is-active" 
                         id="view-table-btn" 
                         aria-checked="true" 
                         role="radio"
@@ -752,7 +752,7 @@ export const Default: Story = {
                       Try adjusting or clearing your query, plot type, or fee status filters.
                     </p>
                     <div class="empty-state__actions margin-block-start-md">
-                      <button type="button" class="button button--secondary button--sm" id="btn-empty-reset">
+                      <button type="button" class="button button--sm" id="btn-empty-reset">
                         <span>Clear All Filters</span>
                       </button>
                     </div>
@@ -991,10 +991,10 @@ export const Default: Story = {
                     <span>Back</span>
                   </button>
 
-                  <button type="button" class="button button--secondary button-group__end" onclick="document.getElementById('new-lease-dialog').close();">
+                  <button type="button" class="button button-group__end" onclick="document.getElementById('new-lease-dialog').close();">
                     <span>Cancel</span>
                   </button>
-                  <button type="button" class="button button--primary" id="btn-wizard-next">
+                  <button type="button" class="button button--strong button--accent" id="btn-wizard-next">
                     <span>Continue to Agreement &rarr;</span>
                   </button>
                 </div>
@@ -1066,7 +1066,7 @@ export const Default: Story = {
                     </div>
                     <p class="text-muted" style="margin: 0;">Borrowed by <strong>Plot #C-02</strong> on Monday 09:00.</p>
                     <div class="inline justify-content-end margin-block-start-xs">
-                      <button type="button" class="button button--subtle button--destructive button--sm" onclick="alert('Automated reminder notification sent to borrower.');">
+                      <button type="button" class="button button--subtle button--danger button--sm" onclick="alert('Automated reminder notification sent to borrower.');">
                         <svg class="icon" aria-hidden="true"><use href="#Email"/></svg>
                         <span>Send Overdue Ping</span>
                       </button>
@@ -1101,7 +1101,7 @@ export const Default: Story = {
               <!-- Drawer Footer -->
               <footer class="card__footer inline justify-content-end padding-md" style="border-block-start: 1px solid var(--border-color-quiet, currentColor);">
                 <form method="dialog">
-                  <button type="submit" class="button button--secondary button--sm">
+                  <button type="submit" class="button button--sm">
                     <span>Close Locker</span>
                   </button>
                 </form>
@@ -1241,18 +1241,18 @@ export const Default: Story = {
 
           if (viewTableBtn && viewGridBtn && tableView && gridView) {
             viewTableBtn.addEventListener('click', () => {
-              viewTableBtn.classList.add('button--selected');
+              viewTableBtn.classList.add('is-active');
               viewTableBtn.setAttribute('aria-checked', 'true');
-              viewGridBtn.classList.remove('button--selected');
+              viewGridBtn.classList.remove('is-active');
               viewGridBtn.setAttribute('aria-checked', 'false');
               tableView.style.display = 'block';
               gridView.style.display = 'none';
             });
 
             viewGridBtn.addEventListener('click', () => {
-              viewGridBtn.classList.add('button--selected');
+              viewGridBtn.classList.add('is-active');
               viewGridBtn.setAttribute('aria-checked', 'true');
-              viewTableBtn.classList.remove('button--selected');
+              viewTableBtn.classList.remove('is-active');
               viewTableBtn.setAttribute('aria-checked', 'false');
               tableView.style.display = 'none';
               gridView.style.display = 'block';
@@ -1332,7 +1332,7 @@ export const Default: Story = {
                 gridView.style.display = 'none';
               } else {
                 emptyState.style.display = 'none';
-                const isTableSelected = viewTableBtn?.classList.contains('button--selected');
+                const isTableSelected = viewTableBtn?.classList.contains('is-active');
                 tableView.style.display = isTableSelected ? 'block' : 'none';
                 gridView.style.display = isTableSelected ? 'none' : 'block';
               }
@@ -1584,10 +1584,10 @@ export const EmptyState: Story = {
               No municipal garden plots matched your current combination of keywords and sunlight criteria. Try resetting your query or viewing all available beds.
             </p>
             <div class="empty-state__actions margin-block-start-md inline justify-content-center gap-xs">
-              <button type="button" class="button button--secondary button--sm">
+              <button type="button" class="button button--sm">
                 <span>Reset All Filters</span>
               </button>
-              <button type="button" class="button button--primary button--sm">
+              <button type="button" class="button button--strong button--accent button--sm">
                 <span>View Full Registry</span>
               </button>
             </div>

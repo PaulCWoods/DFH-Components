@@ -214,8 +214,8 @@
    Destructive Action Variant
    -------------------------------------------------------------------------- */
 :where(.menu__item--destructive),
-:where(.menu)> :where(.button--destructive, .button--destructive),
-:where(.menu)>li> :where(.button--destructive, .button--destructive) {
+:where(.menu)> :where(.button--danger, .button--danger),
+:where(.menu)>li> :where(.button--danger, .button--danger) {
   color: var(--_menu-destructive-color);
 
   > :where(.icon) {

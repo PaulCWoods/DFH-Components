@@ -205,7 +205,7 @@ export const Playground: Story = {
                 </div>
                 <div class="inline" style="--gap: var(--spacing-8);">
                   <button type="button" class="button button--subtle button--sm"><span>Settings</span></button>
-                  <button type="button" class="button button--primary button--sm"><span>Deploy</span></button>
+                  <button type="button" class="button button--strong button--accent button--sm"><span>Deploy</span></button>
                 </div>
               </div>
             </header>

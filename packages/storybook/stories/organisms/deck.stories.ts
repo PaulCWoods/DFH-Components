@@ -110,7 +110,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
           <svg class="icon"><use href="#ChevronStart"/></svg>
         </button>
-        <button type="button" class="button button--primary button--round deck__play" aria-label="Pause playback">
+        <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback">
           <svg class="icon"><use href="#Pause"/></svg>
         </button>
         <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next track">
@@ -347,7 +347,7 @@ export const Playground: Story = {
                       <button type="button" class="button button--subtle button--icon button--sm deck__cue" aria-label="Cue to start">
                         <svg class="icon"><use href="#ChevronStart"/></svg>
                       </button>
-                      <button type="button" class="button button--primary button--round deck__play" aria-label="${args.isPlaying ? 'Pause playback' : 'Start playback'}">
+                      <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="${args.isPlaying ? 'Pause playback' : 'Start playback'}">
                         <svg class="icon"><use href="#${playIcon}"/></svg>
                       </button>
                       <button type="button" class="button button--subtle button--icon button--sm deck__skip" aria-label="Skip to next track">
@@ -478,7 +478,7 @@ export const Playground: Story = {
                   <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
                     <svg class="icon"><use href="#ChevronStart"/></svg>
                   </button>
-                  <button type="button" class="button button--primary button--round deck__play" aria-label="${args.isPlaying ? 'Pause playback' : 'Start playback'}">
+                  <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="${args.isPlaying ? 'Pause playback' : 'Start playback'}">
                     <svg class="icon"><use href="#${playIcon}"/></svg>
                   </button>
                   <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next track">
@@ -604,7 +604,7 @@ export const OnAirDeck: Story = {
                 <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
                   <svg class="icon"><use href="#ChevronStart"/></svg>
                 </button>
-                <button type="button" class="button button--primary button--round deck__play" aria-label="Pause playback">
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback">
                   <svg class="icon"><use href="#Pause"/></svg>
                 </button>
                 <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next queued track">
@@ -706,7 +706,7 @@ export const DualDeckConsole: Story = {
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Deck A transport">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--primary button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
               </div>
 
@@ -767,7 +767,7 @@ export const DualDeckConsole: Story = {
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Deck B transport">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--secondary button--round deck__play" aria-label="Play"><svg class="icon"><use href="#Play"/></svg></button>
+                <button type="button" class="button button--round deck__play" aria-label="Play"><svg class="icon"><use href="#Play"/></svg></button>
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
               </div>
 
@@ -838,7 +838,7 @@ export const CompactDeck: Story = {
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Cart controls">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Restart"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--primary button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Eject"><svg class="icon"><use href="#Close"/></svg></button>
               </div>
             </div>
@@ -884,7 +884,7 @@ export const HorizontalDock: Story = {
               <div class="deck__timeline-transport-group">
                 <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Dock playback controls">
                   <button type="button" class="button button--subtle button--icon button--sm" aria-label="Previous track"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                  <button type="button" class="button button--primary button--round deck__play" aria-label="Pause playback"><svg class="icon"><use href="#Pause"/></svg></button>
+                  <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback"><svg class="icon"><use href="#Pause"/></svg></button>
                   <button type="button" class="button button--subtle button--icon button--sm" aria-label="Next track"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
                 </div>
 
@@ -968,7 +968,7 @@ export const VinylTurntable: Story = {
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Turntable motor controls">
                 <button type="button" class="button button--subtle button--icon" aria-label="Start motor"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--primary button--round deck__play" aria-label="Stop rotation"><svg class="icon"><use href="#Pause"/></svg></button>
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Stop rotation"><svg class="icon"><use href="#Pause"/></svg></button>
                 <button type="button" class="button button--subtle button--icon" aria-label="33 / 45 RPM switch"><svg class="icon"><use href="#Refresh"/></svg></button>
               </div>
 

@@ -64,7 +64,7 @@ AI agents and developers MUST use the following semantic patterns:
     </div>
     <div class="cluster">
       <button type="button" class="button button--subtle"><span>Export</span></button>
-      <button type="button" class="button button--primary"><span>Generate Report</span></button>
+      <button type="button" class="button button--strong button--accent"><span>Generate Report</span></button>
     </div>
   </div>
 </div>
@@ -315,7 +315,7 @@ export const ResponsiveContainerSwitcher: Story = {
             </div>
             <div class="cluster" style="--gap: var(--spacing-8);">
               <button type="button" class="button button--subtle button--sm"><span>Details</span></button>
-              <button type="button" class="button button--primary button--sm"><span>Sign Off</span></button>
+              <button type="button" class="button button--strong button--accent button--sm"><span>Sign Off</span></button>
             </div>
           </div>
         </div>
@@ -330,7 +330,7 @@ export const ResponsiveContainerSwitcher: Story = {
             </div>
             <div class="cluster" style="--gap: var(--spacing-8);">
               <button type="button" class="button button--subtle button--sm"><span>Details</span></button>
-              <button type="button" class="button button--primary button--sm"><span>Sign Off</span></button>
+              <button type="button" class="button button--strong button--accent button--sm"><span>Sign Off</span></button>
             </div>
           </div>
         </div>

@@ -613,7 +613,7 @@ export const RealWorldRecipes: Story = {
             </div>
             <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
               <button type="button" class="button button--subtle"><span>Export CSV</span></button>
-              <button type="button" class="button button--primary"><span>Generate Invoice</span></button>
+              <button type="button" class="button button--strong button--accent"><span>Generate Invoice</span></button>
             </footer>
           </article>
         </div>

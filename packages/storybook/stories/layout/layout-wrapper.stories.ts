@@ -247,7 +247,7 @@ export const VerticalCenteringHero: Story = {
               <h4 class="font-weight-bold font-size-sm">Session Expired</h4>
               <p class="font-size-xs color-muted">Please sign in to continue your audit.</p>
             </div>
-            <button type="button" class="button button--primary button--sm">
+            <button type="button" class="button button--strong button--accent button--sm">
               <span>Sign In</span>
             </button>
           </div>

@@ -23,7 +23,7 @@
        </p>
      </div>
      <div class="empty-state__actions">
-       <button type="button" class="button button--primary">
+       <button type="button" class="button button--strong button--accent">
          <span>Create New Item</span>
        </button>
        <button type="button" class="button button--subtle">

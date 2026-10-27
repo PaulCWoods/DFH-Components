@@ -258,7 +258,7 @@ export const Interactive: Story = {
             <footer class="card__footer flex justify-content-end">
               <button 
                 type="button" 
-                class="button button--primary"
+                class="button button--strong button--accent"
                 commandfor="${dialogId}" 
                 command="show-modal"
                 onclick="document.getElementById('${dialogId}').showModal(); document.getElementById('${inputId}').focus();"

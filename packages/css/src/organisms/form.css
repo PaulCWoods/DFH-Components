@@ -7,7 +7,7 @@
    <form class="form">
      <div class="field">...</div>
      <div class="form__submission form__submission--right">
-       <button type="submit" class="button button--primary"><span>Submit</span></button>
+       <button type="submit" class="button button--strong button--accent"><span>Submit</span></button>
      </div>
    </form>
    ========================================================================== */

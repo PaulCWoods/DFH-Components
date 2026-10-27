@@ -419,7 +419,7 @@ export const RealWorldRecipes: Story = {
             <span class="chip">Markdown Supported</span>
             <div style="display: flex; gap: var(--spacing-8);">
               <button type="button" class="button button--subtle"><span>Cancel</span></button>
-              <button type="button" class="button button--primary"><span>Post Comment</span></button>
+              <button type="button" class="button button--strong button--accent"><span>Post Comment</span></button>
             </div>
           </footer>
         </article>
@@ -453,7 +453,7 @@ export const RealWorldRecipes: Story = {
           </div>
           <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
             <button type="button" class="button button--subtle"><span>Discard</span></button>
-            <button type="submit" class="button button--primary"><span>Submit Report</span></button>
+            <button type="submit" class="button button--strong button--accent"><span>Submit Report</span></button>
           </footer>
         </article>
       </div>

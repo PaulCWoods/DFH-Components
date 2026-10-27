@@ -603,6 +603,10 @@
       "$value": "{spacing.64}",
       "$description": "Large interactive touch target size (56px-64px / 4rem)"
     },
+    "target-min": {
+      "$value": "{spacing.target}",
+      "$description": "Minimum hit area for every interactive control. Defaults to the 48px touch target; a product that opts into fine-pointer targets sets it to spacing.target-sm (PRINCIPLES §2)."
+    },
     "block-2xs": {
       "$value": "{spacing.128}",
       "$description": "Smallest block spacing"

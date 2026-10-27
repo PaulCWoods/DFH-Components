@@ -48,7 +48,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     <h3 class="subheading">Design System v2.4 Available</h3>
     <p>Includes updated WCAG 2.2 AAA token scales and native anchor positioning.</p>
     <div class="button-group" style="margin-block-start: var(--spacing-4);">
-      <button type="button" class="button button--primary button--sm"><span>Update Now</span></button>
+      <button type="button" class="button button--strong button--accent button--sm"><span>Update Now</span></button>
       <button type="button" class="button button--subtle button--sm"><span>Release Notes</span></button>
     </div>
   </div>
@@ -59,7 +59,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <div class="banner__inner">
     <p class="heading">Proceed with audit synchronization?</p>
   </div>
-  <button type="button" class="button button--primary banner__action">
+  <button type="button" class="button button--strong button--accent banner__action">
     <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
     <span class="visually-hidden">Confirm action</span>
   </button>
@@ -174,7 +174,7 @@ export const Playground: Story = {
       if (args.actionType === 'buttons') {
         actionMarkup = `
           <div class="button-group banner__action" style="margin-block-start: var(--spacing-4);">
-            <button type="button" class="button button--primary button--sm"><span>Acknowledge</span></button>
+            <button type="button" class="button button--strong button--accent button--sm"><span>Acknowledge</span></button>
             <button type="button" class="button button--subtle button--sm"><span>Dismiss</span></button>
           </div>
         `;
@@ -335,7 +335,7 @@ export const Variants: Story = {
                 <h4 class="subheading">Audit Failure Detected</h4>
                 <p>3 components violate WCAG 2.5.8 target size requirements. Deployment blocked.</p>
               </div>
-              <button type="button" class="button button--primary button--icon banner__action" aria-label="Dismiss error">
+              <button type="button" class="button button--strong button--accent button--icon banner__action" aria-label="Dismiss error">
                 <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Close"/></svg>
                 <span class="visually-hidden">Dismiss</span>
               </button>
@@ -431,7 +431,7 @@ export const ProminenceMatrix: Story = {
               <div class="banner banner--strong banner--info" role="region" aria-label="Info Strong">
                 <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Info"/></svg></span>
                 <div class="banner__inner"><p>Info Strong: Solid accent fill with high-contrast inverted text.</p></div>
-                <button type="button" class="button button--primary button--sm banner__action"><span>Update</span></button>
+                <button type="button" class="button button--strong button--accent button--sm banner__action"><span>Update</span></button>
               </div>
               <div class="banner banner--strong banner--success" role="status" aria-label="Success Strong">
                 <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
@@ -480,7 +480,7 @@ export const StateMatrix: Story = {
                   buttons inherit the warning color scheme automatically.
                 </p>
                 <div class="button-group" style="margin-block-start: var(--spacing-4);">
-                  <button type="button" class="button button--primary button--sm"><span>Primary Action</span></button>
+                  <button type="button" class="button button--strong button--accent button--sm"><span>Primary Action</span></button>
                   <button type="button" class="button button--subtle button--sm"><span>Subtle Action</span></button>
                 </div>
               </div>
@@ -533,7 +533,7 @@ export const SizesAndDensity: Story = {
                   <h4 class="subheading">Database Migration Required</h4>
                   <p>Changes in DTCG token architecture require a schema re-indexing.</p>
                   <div class="button-group" style="margin-block-start: var(--spacing-4);">
-                    <button type="button" class="button button--primary button--sm"><span>Run Migration</span></button>
+                    <button type="button" class="button button--strong button--accent button--sm"><span>Run Migration</span></button>
                     <button type="button" class="button button--subtle button--sm"><span>Postpone</span></button>
                   </div>
                 </div>
@@ -578,7 +578,7 @@ export const GeometryModifiers: Story = {
                 <div class="banner__inner">
                   <p class="heading" style="margin: 0;">Publish to Production?</p>
                 </div>
-                <button type="button" class="button button--primary banner__action">
+                <button type="button" class="button button--strong button--accent banner__action">
                   <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
                   <span class="visually-hidden">Confirm Publish</span>
                 </button>
@@ -592,7 +592,7 @@ export const GeometryModifiers: Story = {
                 <div class="banner__inner">
                   <p class="micro-text" style="margin: 0;">New version released — click to reload application.</p>
                 </div>
-                <button type="button" class="button button--primary button--sm banner__action">
+                <button type="button" class="button button--strong button--accent button--sm banner__action">
                   <span>Reload</span>
                 </button>
               </div>
@@ -627,7 +627,7 @@ export const RealWorldRecipes: Story = {
                   We use cookies and telemetry strictly to verify accessible design system performance.
                 </p>
                 <div class="button-group" style="margin-block-start: var(--spacing-4);">
-                  <button type="button" class="button button--primary button--sm"><span>Accept All</span></button>
+                  <button type="button" class="button button--strong button--accent button--sm"><span>Accept All</span></button>
                   <button type="button" class="button button--subtle button--sm"><span>Manage Preferences</span></button>
                 </div>
               </div>

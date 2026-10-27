@@ -84,6 +84,10 @@
 }
 
 /* Suppress default outline on standalone elements (use with custom indicators only) */
-:is(.focus-none, .focus-ring-none):focus-visible {
+:is(.focus-none, .focus-ring-none, .outline-none):focus-visible {
+    outline: none;
+}
+
+:where(.outline-none) {
     outline: none;
 }

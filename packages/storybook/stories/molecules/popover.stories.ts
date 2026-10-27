@@ -30,7 +30,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <!-- 1. Anchored Action Menu (Trigger + Popover + Card + Stacked Button Group) -->
 <button 
   type="button" 
-  class="button button--secondary" 
+  class="button" 
   popovertarget="doc-actions" 
   style="anchor-name: --action-anchor;"
   aria-haspopup="dialog"
@@ -61,7 +61,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
             <span>Export Manifest</span>
           </button>
           <hr class="divider">
-          <button type="button" class="button button--destructive">
+          <button type="button" class="button button--danger">
             <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
             <span>Delete File</span>
           </button>
@@ -177,7 +177,7 @@ export const Playground: Story = {
       <div class="demo-stage demo-stage--lg" style="min-block-size: 20rem; display: flex; align-items: center; justify-content: center;">
         <button 
           type="button" 
-          class="button button--primary"
+          class="button button--strong button--accent"
           popovertarget="${popoverId}"
           style="anchor-name: ${anchorName};"
           aria-haspopup="dialog"
@@ -236,7 +236,7 @@ export const Anatomy: Story = {
               <p class="micro-text" style="margin-block: var(--spacing-4);">
                 Button declaring <code>style="anchor-name: --my-anchor;"</code> and <code>popovertarget="popover-id"</code>.
               </p>
-              <button type="button" class="button button--secondary" style="pointer-events: none;">
+              <button type="button" class="button" style="pointer-events: none;">
                 <span>Anchor Trigger</span>
                 <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
               </button>
@@ -295,7 +295,7 @@ export const Variants: Story = {
           <div>
             <button 
               type="button" 
-              class="button button--secondary" 
+              class="button" 
               popovertarget="v-actions" 
               style="anchor-name: --v-actions-anchor;"
               aria-haspopup="dialog"
@@ -321,7 +321,7 @@ export const Variants: Story = {
                         <span>Export JSON</span>
                       </button>
                       <hr class="divider">
-                      <button type="button" class="button button--destructive">
+                      <button type="button" class="button button--danger">
                         <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
                         <span>Delete Item</span>
                       </button>
@@ -370,7 +370,7 @@ export const Variants: Story = {
                   </div>
                   <footer class="card__footer">
                     <div class="button-group button-group--space-between">
-                      <button type="button" class="button button--primary button--sm"><span>Profile</span></button>
+                      <button type="button" class="button button--strong button--accent button--sm"><span>Profile</span></button>
                       <button type="button" class="button button--subtle button--sm"><span>Sign Out</span></button>
                     </div>
                   </footer>
@@ -383,7 +383,7 @@ export const Variants: Story = {
           <div>
             <button 
               type="button" 
-              class="button button--secondary" 
+              class="button" 
               popovertarget="v-prefs" 
               style="anchor-name: --v-prefs-anchor;"
             >
@@ -449,7 +449,7 @@ export const Variants: Story = {
                   <h4 class="subheading">Storage Notice</h4>
                   <p>Your team workspace is at 82% capacity.</p>
                   <div class="button-group">
-                    <button type="button" class="button button--primary"><span>Upgrade</span></button>
+                    <button type="button" class="button button--strong button--accent"><span>Upgrade</span></button>
                     <button type="button" class="button button--subtle" popovertarget="v-notice" popovertargetaction="hide"><span>Dismiss</span></button>
                   </div>
                 </div>
@@ -617,7 +617,7 @@ export const DirectionalAnchoring: Story = {
         <div class="cluster" style="justify-content: center; gap: var(--spacing-24); flex-wrap: wrap;">
           <!-- Bottom (Default) -->
           <div>
-            <button type="button" class="button button--secondary" popovertarget="dir-bottom" style="anchor-name: --dir-bottom-btn;">
+            <button type="button" class="button" popovertarget="dir-bottom" style="anchor-name: --dir-bottom-btn;">
               <span>Bottom (Default)</span>
             </button>
             <div id="dir-bottom" popover class="popover popover--anchored" style="position-anchor: --dir-bottom-btn;">
@@ -629,7 +629,7 @@ export const DirectionalAnchoring: Story = {
 
           <!-- Top -->
           <div>
-            <button type="button" class="button button--secondary" popovertarget="dir-top" style="anchor-name: --dir-top-btn;">
+            <button type="button" class="button" popovertarget="dir-top" style="anchor-name: --dir-top-btn;">
               <span>Top (.popover--top)</span>
             </button>
             <div id="dir-top" popover class="popover popover--top" style="position-anchor: --dir-top-btn;">
@@ -641,7 +641,7 @@ export const DirectionalAnchoring: Story = {
 
           <!-- End / Right -->
           <div>
-            <button type="button" class="button button--secondary" popovertarget="dir-end" style="anchor-name: --dir-end-btn;">
+            <button type="button" class="button" popovertarget="dir-end" style="anchor-name: --dir-end-btn;">
               <span>End (.popover--end)</span>
             </button>
             <div id="dir-end" popover class="popover popover--end" style="position-anchor: --dir-end-btn;">
@@ -653,7 +653,7 @@ export const DirectionalAnchoring: Story = {
 
           <!-- Bottom End -->
           <div>
-            <button type="button" class="button button--secondary" popovertarget="dir-bottom-end" style="anchor-name: --dir-bottom-end-btn;">
+            <button type="button" class="button" popovertarget="dir-bottom-end" style="anchor-name: --dir-bottom-end-btn;">
               <span>Bottom-End (.popover--bottom-end)</span>
             </button>
             <div id="dir-bottom-end" popover class="popover popover--bottom-end" style="position-anchor: --dir-bottom-end-btn;">
@@ -685,7 +685,7 @@ export const RealWorldRecipes: Story = {
           <div>
             <button 
               type="button" 
-              class="button button--primary"
+              class="button button--strong button--accent"
               popovertarget="recipe-ctx" 
               style="anchor-name: --recipe-ctx-btn;"
               aria-haspopup="dialog"
@@ -717,7 +717,7 @@ export const RealWorldRecipes: Story = {
                         <kbd class="kbd">⌘E</kbd>
                       </button>
                       <hr class="divider">
-                      <button type="button" class="button button--destructive" style="justify-content: space-between;">
+                      <button type="button" class="button button--danger" style="justify-content: space-between;">
                         <span class="cluster" style="gap: var(--spacing-8);">
                           <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
                           <span>Archive Record</span>
@@ -735,7 +735,7 @@ export const RealWorldRecipes: Story = {
           <div>
             <button 
               type="button" 
-              class="button button--secondary"
+              class="button"
               popovertarget="recipe-filter" 
               style="anchor-name: --recipe-filter-btn;"
               aria-haspopup="dialog"
@@ -770,7 +770,7 @@ export const RealWorldRecipes: Story = {
                     <button type="button" class="button button--subtle button--sm" popovertarget="recipe-filter" popovertargetaction="hide">
                       <span>Reset</span>
                     </button>
-                    <button type="button" class="button button--primary button--sm" popovertarget="recipe-filter" popovertargetaction="hide">
+                    <button type="button" class="button button--strong button--accent button--sm" popovertarget="recipe-filter" popovertargetaction="hide">
                       <span>Apply</span>
                     </button>
                   </footer>

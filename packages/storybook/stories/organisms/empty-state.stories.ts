@@ -41,7 +41,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     </p>
   </div>
   <div class="empty-state__actions">
-    <button type="button" class="button button--primary">
+    <button type="button" class="button button--strong button--accent">
       <span>Create Item</span>
     </button>
     <button type="button" class="button button--subtle">
@@ -64,7 +64,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         </p>
       </div>
       <div class="empty-state__actions">
-        <button type="button" class="button button--primary">
+        <button type="button" class="button button--strong button--accent">
           <span>New Project</span>
         </button>
       </div>
@@ -199,7 +199,7 @@ export const Default: Story = {
           <p class="empty-state__description small-text">${args.description}</p>
         </div>
         <div class="empty-state__actions">
-          <button type="button" class="button button--primary">
+          <button type="button" class="button button--strong button--accent">
             <span>Clear Filters</span>
           </button>
           <button type="button" class="button button--subtle">
@@ -226,11 +226,11 @@ export const FirstTimeOnboarding: Story = {
           </p>
         </div>
         <div class="empty-state__actions">
-          <button type="button" class="button button--primary">
+          <button type="button" class="button button--strong button--accent">
             <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Plus"/></svg>
             <span>Create New System</span>
           </button>
-          <button type="button" class="button button--secondary">
+          <button type="button" class="button">
             <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Upload"/></svg>
             <span>Import DTCG Tokens</span>
           </button>
@@ -331,7 +331,7 @@ export const StartAligned: Story = {
           </p>
         </div>
         <div class="empty-state__actions">
-          <button type="button" class="button button--primary button--sm">
+          <button type="button" class="button button--strong button--accent button--sm">
             <span>Reset Category</span>
           </button>
         </div>
@@ -354,7 +354,7 @@ export const BorderedDashed: Story = {
           </p>
         </div>
         <div class="empty-state__actions">
-          <button type="button" class="button button--secondary">
+          <button type="button" class="button">
             <span>Browse Files</span>
           </button>
         </div>
@@ -403,7 +403,7 @@ export const SemanticStatusVariants: Story = {
             </p>
           </div>
           <div class="empty-state__actions">
-            <button type="button" class="button button--secondary button--sm">
+            <button type="button" class="button button--sm">
               <span>View Report</span>
             </button>
           </div>
@@ -423,7 +423,7 @@ export const SemanticStatusVariants: Story = {
             </p>
           </div>
           <div class="empty-state__actions">
-            <button type="button" class="button button--secondary button--sm">
+            <button type="button" class="button button--sm">
               <span>Renew Plan</span>
             </button>
           </div>
@@ -443,7 +443,7 @@ export const SemanticStatusVariants: Story = {
             </p>
           </div>
           <div class="empty-state__actions">
-            <button type="button" class="button button--destructive button--sm">
+            <button type="button" class="button button--danger button--sm">
               <span>Retry Connection</span>
             </button>
           </div>

@@ -26,7 +26,7 @@
     border: var(--border-width-thin, 1px) dashed var(--border-color-quiet, currentColor);
 }
 
-:where(.border-none, .bd-0) {
+:where(.border-none, .border-0, .bd-0) {
     border: none;
 }
 
@@ -49,70 +49,70 @@
 }
 
 /* Block Start (Top) */
-:where(.border-top, .bt) {
+:where(.border-top, .border-t, .bt) {
     border-block-start: var(--border-width, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-top-sm, .bt-sm) {
+:where(.border-top-sm, .border-t-sm, .bt-sm) {
     border-block-start: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-top-md, .bt-md) {
+:where(.border-top-md, .border-t-md, .bt-md) {
     border-block-start: var(--border-width-md, 2px) solid var(--border-color, currentColor);
 }
 
-:where(.border-top-lg, .bt-lg) {
+:where(.border-top-lg, .border-t-lg, .bt-lg) {
     border-block-start: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
 }
 
 /* Block End (Bottom) */
-:where(.border-bottom, .bb) {
+:where(.border-bottom, .border-b, .bb) {
     border-block-end: var(--border-width, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-bottom-sm, .bb-sm) {
+:where(.border-bottom-sm, .border-b-sm, .bb-sm) {
     border-block-end: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-bottom-md, .bb-md) {
+:where(.border-bottom-md, .border-b-md, .bb-md) {
     border-block-end: var(--border-width-md, 2px) solid var(--border-color, currentColor);
 }
 
-:where(.border-bottom-lg, .bb-lg) {
+:where(.border-bottom-lg, .border-b-lg, .bb-lg) {
     border-block-end: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
 }
 
 /* Inline Start (Left in LTR) */
-:where(.border-left, .bl) {
+:where(.border-left, .border-l, .border-start, .border-s, .bl, .bs) {
     border-inline-start: var(--border-width, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-left-sm, .bl-sm) {
+:where(.border-left-sm, .border-l-sm, .border-start-sm, .border-s-sm, .bl-sm, .bs-sm) {
     border-inline-start: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-left-md, .bl-md) {
+:where(.border-left-md, .border-l-md, .border-start-md, .border-s-md, .bl-md, .bs-md) {
     border-inline-start: var(--border-width-md, 2px) solid var(--border-color, currentColor);
 }
 
-:where(.border-left-lg, .bl-lg) {
+:where(.border-left-lg, .border-l-lg, .border-start-lg, .border-s-lg, .bl-lg, .bs-lg) {
     border-inline-start: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
 }
 
 /* Inline End (Right in LTR) */
-:where(.border-right, .br) {
+:where(.border-right, .border-r, .border-end, .border-e, .br, .be) {
     border-inline-end: var(--border-width, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-right-sm, .br-sm) {
+:where(.border-right-sm, .border-r-sm, .border-end-sm, .border-e-sm, .br-sm, .be-sm) {
     border-inline-end: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
 }
 
-:where(.border-right-md, .br-md) {
+:where(.border-right-md, .border-r-md, .border-end-md, .border-e-md, .br-md, .be-md) {
     border-inline-end: var(--border-width-md, 2px) solid var(--border-color, currentColor);
 }
 
-:where(.border-right-lg, .br-lg) {
+:where(.border-right-lg, .border-r-lg, .border-end-lg, .border-e-lg, .br-lg, .be-lg) {
     border-inline-end: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
 }
 
@@ -236,8 +236,33 @@
     border-radius: var(--radius-lg, 8px);
 }
 
+:where(.radius-xl, .rounded-xl, .rd-xl) {
+    border-radius: var(--radius-xl, 12px);
+}
+
 :where(.radius-round, .radius-full, .rounded-full, .round, .pill-shape, .rd-full) {
     border-radius: var(--radius-round, 9999px);
+}
+
+/* Directional Radius (Logical Corner Pairing) */
+:where(.radius-t, .rounded-t) {
+    border-start-start-radius: var(--radius, 4px);
+    border-start-end-radius: var(--radius, 4px);
+}
+
+:where(.radius-b, .rounded-b) {
+    border-end-start-radius: var(--radius, 4px);
+    border-end-end-radius: var(--radius, 4px);
+}
+
+:where(.radius-s, .radius-l, .rounded-s, .rounded-l) {
+    border-start-start-radius: var(--radius, 4px);
+    border-end-start-radius: var(--radius, 4px);
+}
+
+:where(.radius-e, .radius-r, .rounded-e, .rounded-r) {
+    border-start-end-radius: var(--radius, 4px);
+    border-end-end-radius: var(--radius, 4px);
 }
 
 /* --------------------------------------------------------------------------

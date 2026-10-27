@@ -24,7 +24,7 @@
      Local Private Variables (Defaults & Fallback Ladder)
      -------------------------------------------------------------------------- */
   --button-size: sm;
-  --button-variation: subtle;
+  --button-prominence: subtle;
   --icon-box-density: compact;
   --font-sizing: fixed;
   --vert-spacing: tight;

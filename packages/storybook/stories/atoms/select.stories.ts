@@ -483,7 +483,7 @@ export const RealWorldRecipes: Story = {
                 <option value="date-desc">Newest First</option>
                 <option value="severity">Highest Severity</option>
               </select>
-              <button type="button" class="button button--secondary button--sm">
+              <button type="button" class="button button--sm">
                 <span>Reset Filters</span>
               </button>
             </form>
@@ -529,7 +529,7 @@ export const RealWorldRecipes: Story = {
           </div>
           <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
             <button type="button" class="button button--subtle"><span>Cancel</span></button>
-            <button type="button" class="button button--primary"><span>Save Preferences</span></button>
+            <button type="button" class="button button--strong button--accent"><span>Save Preferences</span></button>
           </footer>
         </article>
       </div>

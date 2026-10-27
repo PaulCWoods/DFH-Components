@@ -10,7 +10,7 @@
    designed to contain composable primitives (Card, Banner, Menu lists).
 
    Usage with Card:
-   <button type="button" class="button button--secondary" popovertarget="actions-popover" style="anchor-name: --action-anchor;">
+   <button type="button" class="button" popovertarget="actions-popover" style="anchor-name: --action-anchor;">
      <span>Actions</span>
    </button>
 
@@ -24,7 +24,7 @@
            <div class="stack stack--tight buttons-subtle buttons-sm">
              <button type="button" class="button"><span>Duplicate Item</span></button>
              <button type="button" class="button"><span>Export Data</span></button>
-             <button type="button" class="button button--destructive"><span>Delete</span></button>
+             <button type="button" class="button button--danger"><span>Delete</span></button>
            </div>
          </div>
        </article>

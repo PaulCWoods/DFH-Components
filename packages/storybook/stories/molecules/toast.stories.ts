@@ -271,7 +271,7 @@ export const Variants: Story = {
                 <h4 class="subheading">Sync Failed</h4>
                 <p>Unable to connect to the automated verification endpoint.</p>
               </div>
-              <button type="button" class="button button--destructive button--icon banner__action" aria-label="Dismiss error" onclick="this.closest('.toast').remove()">
+              <button type="button" class="button button--danger button--icon banner__action" aria-label="Dismiss error" onclick="this.closest('.toast').remove()">
                 <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
               </button>
             </div>
@@ -397,13 +397,13 @@ export const RealWorldRecipes: Story = {
           <div class="demo-box demo-box--neutral demo-constrained--md">
             <span class="demo-label" style="margin-block-end: var(--spacing-12);">Interactive Notification Dispatcher</span>
             <div class="cluster" style="gap: var(--spacing-12); margin-block-end: var(--spacing-16);">
-              <button type="button" class="button button--primary button--sm" id="btn-demo-success">
+              <button type="button" class="button button--strong button--accent button--sm" id="btn-demo-success">
                 <span>Trigger Success</span>
               </button>
-              <button type="button" class="button button--destructive button--sm" id="btn-demo-error">
+              <button type="button" class="button button--danger button--sm" id="btn-demo-error">
                 <span>Trigger Error</span>
               </button>
-              <button type="button" class="button button--secondary button--sm" id="btn-demo-info">
+              <button type="button" class="button button--sm" id="btn-demo-info">
                 <span>Trigger Info</span>
               </button>
             </div>
@@ -432,7 +432,7 @@ export const RealWorldRecipes: Story = {
                 toast.setAttribute('role', variant === 'error' ? 'alert' : 'status');
                 toast.setAttribute('aria-live', variant === 'error' ? 'assertive' : 'polite');
 
-                const btnClass = variant === 'error' ? 'button button--destructive button--icon' : 'button button--subtle button--icon';
+                const btnClass = variant === 'error' ? 'button button--danger button--icon' : 'button button--subtle button--icon';
 
                 toast.innerHTML = \`
                   <div class="banner banner--\${variant} buttons-sm" role="none">

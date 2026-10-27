@@ -238,7 +238,7 @@ export const CompanionModifier: Story = {
 
       <!-- 2. Button Primitive + .skeleton -->
       <div class="inline gap-md align-items-center">
-        <button type="button" class="button button--primary skeleton" aria-hidden="true" disabled>
+        <button type="button" class="button button--strong button--accent skeleton" aria-hidden="true" disabled>
           <span>Primary Action</span>
         </button>
         <div class="stack gap-xs">

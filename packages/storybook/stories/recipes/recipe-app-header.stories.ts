@@ -162,7 +162,7 @@ export const Standard: Story = {
               <!-- Spotlight / Search Trigger Button (Launches Command Palette) -->
               <button 
                 type="button" 
-                class="button button--subtle-tint"
+                class="button button--subtle"
                 commandfor="${cmdDialogId}"
                 command="show-modal"
                 onclick="document.getElementById('${cmdDialogId}').showModal();"
@@ -229,7 +229,7 @@ export const Standard: Story = {
                       </div>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <button type="button" class="button button--subtle-tint button--sm" onclick="this.closest('.card__content').querySelector('.card__body').innerHTML = '<div class=\\'empty-state empty-state--compact empty-state--flush padding-block-sm\\'><div class=\\'empty-state__visual\\'><svg class=\\'icon\\'><use href=\\'#Check\\'/></svg></div><div class=\\'empty-state__content\\'><h4 class=\\'empty-state__title\\'>All caught up!</h4><p class=\\'empty-state__description\\'>No unread notifications.</p></div></div>'; this.style.display='none';">
+                      <button type="button" class="button button--subtle button--sm" onclick="this.closest('.card__content').querySelector('.card__body').innerHTML = '<div class=\\'empty-state empty-state--compact empty-state--flush padding-block-sm\\'><div class=\\'empty-state__visual\\'><svg class=\\'icon\\'><use href=\\'#Check\\'/></svg></div><div class=\\'empty-state__content\\'><h4 class=\\'empty-state__title\\'>All caught up!</h4><p class=\\'empty-state__description\\'>No unread notifications.</p></div></div>'; this.style.display='none';">
                         <span>Mark all read</span>
                       </button>
                       <a href="#all-notifications" class="link font-size-sm"><span>View all</span></a>
@@ -509,7 +509,7 @@ export const WithBreadcrumbSubnav: Story = {
                   <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Duplicate"/></svg>
                   <span>Clone Recipe</span>
                 </button>
-                <button type="button" class="button button--primary button--sm inline gap-sm">
+                <button type="button" class="button button--strong button--accent button--sm inline gap-sm">
                   <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Download"/></svg>
                   <span>Export CSS</span>
                 </button>
@@ -619,7 +619,7 @@ export const ResponsiveCollapsibleNav: Story = {
               <!-- Spotlight / Search Trigger Button (Hidden below sm) -->
               <button 
                 type="button" 
-                class="button button--subtle-tint max-sm:hide"
+                class="button button--subtle max-sm:hide"
                 aria-label="Search design system (Press Command+K)"
               >
                 <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false">

@@ -212,17 +212,17 @@ const buttonTokens: TokenRow[] = [
         </button>
 
         <!-- Destructive Strong -->
-        <button type="button" class="button button--strong button--destructive">
+        <button type="button" class="button button--strong button--danger">
           <span>Delete Record</span>
         </button>
 
         <!-- Destructive Outline -->
-        <button type="button" class="button button--destructive">
+        <button type="button" class="button button--danger">
           <span>Discard Draft</span>
         </button>
 
         <!-- Destructive Subtle -->
-        <button type="button" class="button button--subtle button--destructive">
+        <button type="button" class="button button--subtle button--danger">
           <Icon name="Delete" size={14} />
           <span>Remove</span>
         </button>
@@ -233,17 +233,17 @@ const buttonTokens: TokenRow[] = [
       title="Destructive Variations HTML"
       lang="html"
       code={`<!-- Irreversible, critical deletion (High emphasis) -->
-<button type="button" class="button button--strong button--destructive">
+<button type="button" class="button button--strong button--danger">
   <span>Delete Workspace</span>
 </button>
 
 <!-- Secondary destructive choice -->
-<button type="button" class="button button--destructive">
+<button type="button" class="button button--danger">
   <span>Remove Item</span>
 </button>
 
 <!-- Low-friction table row removal -->
-<button type="button" class="button button--subtle button--destructive">
+<button type="button" class="button button--subtle button--danger">
   <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
   <span>Remove</span>
 </button>`}
@@ -409,7 +409,7 @@ const buttonTokens: TokenRow[] = [
     <div class="prose-end card card--bordered padding-md margin-bottom-md">
       <div class="compact-demo-container padding-md border-dashed">
         <div class="small-text text-muted margin-bottom-sm">
-          Parent container declares <code>--ui-sizing: compact</code> and <code>--button-variation: subtle</code>:
+          Parent container declares <code>--ui-sizing: compact</code> and <code>--button-prominence: subtle</code>:
         </div>
         <div class="cluster gap-xs">
           <button type="button" class="button">
@@ -420,7 +420,7 @@ const buttonTokens: TokenRow[] = [
             <Icon name="Duplicate" size={14} />
             <span>Duplicate</span>
           </button>
-          <button type="button" class="button button--destructive">
+          <button type="button" class="button button--danger">
             <Icon name="Delete" size={14} />
             <span>Delete</span>
           </button>
@@ -434,7 +434,7 @@ const buttonTokens: TokenRow[] = [
       code={`/* Orchestrate child button styling from parent landmark */
 .table-toolbar {
   --ui-sizing: compact;          /* All child buttons automatically step down to 32px */
-  --button-variation: subtle;    /* All child buttons adopt translucent appearance */
+  --button-prominence: subtle;    /* All child buttons adopt translucent appearance */
 }
 
 /* Child buttons require ZERO modifier classes: */
@@ -547,7 +547,7 @@ const buttonTokens: TokenRow[] = [
     <GuidelineCard
       doTitle="Use native button types"
       doDescription="Always specify an explicit type attribute (type='button' or type='submit') so buttons do not accidentally submit enclosing forms."
-      doCode={`<button type="button" class="button button--primary">\n  <span>Save Changes</span>\n</button>`}
+      doCode={`<button type="button" class="button button--strong button--accent">\n  <span>Save Changes</span>\n</button>`}
       dontTitle="Don't use div or span onclick"
       dontDescription="Never use div or span elements with click listeners. They lack keyboard focus, activation semantics, and accessibility tree visibility."
       dontCode={`<!-- ❌ Non-accessible anti-pattern -->\n<div class="button" onclick="save()">\n  Save Changes\n</div>`}
@@ -580,7 +580,7 @@ const buttonTokens: TokenRow[] = [
 
   .compact-demo-container {
     --ui-sizing: compact;
-    --button-variation: subtle;
+    --button-prominence: subtle;
     background-color: var(--surface-subtle, #f8fafc);
     border-radius: var(--radius-sm, 0.25rem);
   }

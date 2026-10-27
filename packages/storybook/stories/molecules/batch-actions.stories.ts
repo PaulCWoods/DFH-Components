@@ -44,7 +44,7 @@ Composed with **Badge**, **Button**, **Button Group**, and **Icon** atoms, it pr
         <svg class="icon" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
         <span>Bulk Edit</span>
       </button>
-      <button type="button" class="button button--destructive">
+      <button type="button" class="button button--danger">
         <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
         <span>Delete</span>
       </button>
@@ -105,7 +105,7 @@ export const Default: Story = {
               <svg class="icon" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
               <span>Edit</span>
             </button>
-            <button type="button" class="button button--destructive">
+            <button type="button" class="button button--danger">
               <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
               <span>Delete</span>
             </button>
@@ -150,7 +150,7 @@ export const HighContrast: Story = {
               <svg class="icon" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               <span>Mark Watered</span>
             </button>
-            <button type="button" class="button button--destructive">
+            <button type="button" class="button button--danger">
               <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
               <span>Archive</span>
             </button>
@@ -221,7 +221,7 @@ export const DockedInCard: Story = {
                   <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                   <span>Export</span>
                 </button>
-                <button type="button" class="button button--destructive">
+                <button type="button" class="button button--danger">
                   <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                   <span>Remove</span>
                 </button>
@@ -262,7 +262,7 @@ export const InCardBand: Story = {
 
               <div class="batch-actions__actions">
                 <div class="button-group buttons-sm buttons-subtle">
-                  <button type="button" class="button button--primary">
+                  <button type="button" class="button button--strong button--accent">
                     <svg class="icon" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                     <span>Log Harvest</span>
                   </button>

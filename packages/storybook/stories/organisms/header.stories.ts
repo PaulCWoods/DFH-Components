@@ -35,7 +35,7 @@ Semantic top-level header and navigation landmark with sticky positioning (\`pos
       <button type="button" class="button button--subtle button--icon" aria-label="Search">
         <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
       </button>
-      <button type="button" class="button button--primary button--sm">
+      <button type="button" class="button button--strong button--accent button--sm">
         <span>Get Started</span>
       </button>
     </div>
@@ -140,7 +140,7 @@ export const Playground: Story = {
             </nav>
 
             <div style="display: flex; gap: var(--spacing-8); align-items: center;">
-              <button type="button" class="button button--primary button--sm">
+              <button type="button" class="button button--strong button--accent button--sm">
                 <span>Deploy</span>
               </button>
             </div>
@@ -222,7 +222,7 @@ export const Variants: Story = {
               <strong>Standard In-Flow</strong>
               <div style="display: flex; gap: var(--spacing-8);">
                 <button type="button" class="button button--subtle button--sm">Features</button>
-                <button type="button" class="button button--primary button--sm">Sign In</button>
+                <button type="button" class="button button--strong button--accent button--sm">Sign In</button>
               </div>
             </div>
           </header>
@@ -255,7 +255,7 @@ export const Variants: Story = {
               <span style="font-weight: bold;">Dark Surface</span>
               <div style="display: flex; gap: var(--spacing-8);">
                 <button type="button" class="button button--subtle button--sm" style="color: inherit;">Docs</button>
-                <button type="button" class="button button--primary button--sm">Dashboard</button>
+                <button type="button" class="button button--strong button--accent button--sm">Dashboard</button>
               </div>
             </div>
           </header>
@@ -295,7 +295,7 @@ export const StateMatrix: Story = {
         <header class="header" style="padding-block: var(--spacing-12);">
           <div style="display: flex; justify-content: space-between; align-items: center; padding-inline: var(--spacing-16);">
             <span>Focus State</span>
-            <button type="button" class="button button--primary button--sm" style="outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset);">
+            <button type="button" class="button button--strong button--accent button--sm" style="outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset);">
               <span>Focused Action</span>
             </button>
           </div>
@@ -378,7 +378,7 @@ export const ZeroClassOrchestration: Story = {
         <header class="header" style="padding-block: var(--spacing-12); --safe-area-inset-left: 2rem; --safe-area-inset-right: 2rem;">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>Notch Inset Aware (2rem virtual sensor island simulation)</span>
-            <button type="button" class="button button--primary button--sm">Profile</button>
+            <button type="button" class="button button--strong button--accent button--sm">Profile</button>
           </div>
         </header>
       </div>

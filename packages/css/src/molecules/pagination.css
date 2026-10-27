@@ -8,7 +8,7 @@
    Usage:
    <!-- Numeric Pagination Cluster -->
    <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
-     <span class="button button--selected" aria-current="page"><span>1</span></span>
+     <span class="button is-active" aria-current="page"><span>1</span></span>
      <a class="button" href="#2"><span>2</span></a>
      <a class="button" href="#3"><span>3</span></a>
      <hr class="divider">

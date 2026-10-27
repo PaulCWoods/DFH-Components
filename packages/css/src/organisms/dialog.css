@@ -21,7 +21,7 @@
            <p>Dialog body copy.</p>
          </div>
          <footer class="card__footer">
-           <button type="button" class="button button--primary" commandfor="my-dialog" command="close">
+           <button type="button" class="button button--strong button--accent" commandfor="my-dialog" command="close">
              <span>Confirm</span>
            </button>
          </footer>
@@ -43,9 +43,8 @@
   --_dialog-border-color: var(--dialog-border-color, var(--card-border-color, var(--border-color-quiet, currentColor)));
   --_dialog-border-style: var(--dialog-border-style, var(--card-border-style, solid));
   --_dialog-border-width: var(--dialog-border-width, var(--card-border-width, 0px));
-  --_dialog-close-button-variation: var(--dialog-close-button-variation, subtle);
-  --_dialog-close-button-density: var(--dialog-close-button-density, dense);
-  --_dialog-close-button-size: var(--dialog-close-button-size, md);
+  --_dialog-close-button-prominence: var(--dialog-close-button-prominence, subtle);
+  --_dialog-close-button-size: var(--dialog-close-button-size, sm);
   --_dialog-color: var(--dialog-color, var(--foreground, currentColor));
   --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion, 2rem));
   --_dialog-drawer-max-width: var(--dialog-drawer-max-width, 28rem);
@@ -154,8 +153,7 @@
 
   /* Close button overides */
   :where(form[method="dialog"]:has(.button:only-child)) {
-    --button-variation: var(--_dialog-close-button-variation);
-    --button-density: var(--_dialog-close-button-density);
+    --button-prominence: var(--_dialog-close-button-prominence);
     --button-size: var(--_dialog-close-button-size);
   }
 }

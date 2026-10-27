@@ -389,7 +389,7 @@ export const FormComposition: Story = {
             <button type="reset" class="button button--subtle">
               <span>Reset</span>
             </button>
-            <button type="submit" class="button button--primary">
+            <button type="submit" class="button button--strong button--accent">
               <span>Save Settings</span>
             </button>
           </div>
@@ -434,7 +434,7 @@ export const CardContentComposition: Story = {
           </div>
 
           <footer class="card__footer" style="justify-content: flex-end;">
-            <button type="button" class="button button--secondary">
+            <button type="button" class="button">
               <span>View Specification</span>
             </button>
           </footer>

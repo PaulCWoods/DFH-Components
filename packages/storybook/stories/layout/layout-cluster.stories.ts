@@ -41,8 +41,8 @@ AI agents and developers MUST use the following semantic patterns:
 \`\`\`html
 <!-- 1. Standard Button / Action Cluster -->
 <div class="cluster">
-  <button type="button" class="button button--primary"><span>Publish</span></button>
-  <button type="button" class="button button--secondary"><span>Save Draft</span></button>
+  <button type="button" class="button button--strong button--accent"><span>Publish</span></button>
+  <button type="button" class="button"><span>Save Draft</span></button>
   <button type="button" class="button button--subtle"><span>Cancel</span></button>
 </div>
 
@@ -321,7 +321,7 @@ export const JustificationVariants: Story = {
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">flex-end (Trailing Actions)</h4>
           <div class="cluster" style="justify-content: flex-end; inline-size: 100%;">
             <button type="button" class="button button--subtle"><span>Cancel</span></button>
-            <button type="button" class="button button--primary"><span>Confirm Action</span></button>
+            <button type="button" class="button button--strong button--accent"><span>Confirm Action</span></button>
           </div>
         </div>
 
@@ -335,7 +335,7 @@ export const JustificationVariants: Story = {
             </div>
             <div class="cluster" style="--gap: var(--spacing-8);">
               <button type="button" class="button button--subtle"><span>Export</span></button>
-              <button type="button" class="button button--primary"><span>Run Scan</span></button>
+              <button type="button" class="button button--strong button--accent"><span>Run Scan</span></button>
             </div>
           </div>
         </div>
@@ -478,10 +478,10 @@ export const ActionToolbar: Story = {
             <button type="button" class="button button--subtle">
               <span>View Logs</span>
             </button>
-            <button type="button" class="button button--secondary">
+            <button type="button" class="button">
               <span>Configure Rules</span>
             </button>
-            <button type="button" class="button button--primary">
+            <button type="button" class="button button--strong button--accent">
               <span>Start Full Audit</span>
             </button>
           </div>

@@ -56,7 +56,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <!-- 2. Anchored Dropdown Menu (Button Trigger + Popover + Menu) -->
 <button 
   type="button" 
-  class="button button--secondary" 
+  class="button" 
   popovertarget="actions-dropdown" 
   style="anchor-name: --menu-trigger;"
   aria-haspopup="menu"
@@ -214,7 +214,7 @@ export const AnchoredDropdown: Story = {
     <div style="min-block-size: 20rem; padding: var(--spacing-32, 2rem); display: flex; align-items: flex-start; justify-content: center;">
       <button 
         type="button" 
-        class="button button--secondary" 
+        class="button" 
         popovertarget="demo-dropdown-menu" 
         style="anchor-name: --demo-dropdown-anchor;"
         aria-haspopup="menu"
@@ -374,7 +374,7 @@ export const ButtonCompanionCompatibility: Story = {
           <span>Fetch Origin</span>
         </button>
         <hr class="menu__separator">
-        <button type="button" class="button button--destructive">
+        <button type="button" class="button button--danger">
           <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Delete"/></svg>
           <span>Discard Changes</span>
         </button>

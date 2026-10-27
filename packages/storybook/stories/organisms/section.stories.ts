@@ -49,7 +49,7 @@ Adhering strictly to the **Organism-Atom Composition Law**:
     <!-- Section body content -->
   </div>
   <footer class="section__footer">
-    <button type="button" class="button button--primary">
+    <button type="button" class="button button--strong button--accent">
       <span>Re-run Audit</span>
     </button>
   </footer>
@@ -167,7 +167,7 @@ export const Default: Story = {
         </div>
         ${args.hasFooter ? `
           <footer class="section__footer">
-            <button type="button" class="button button--primary button--sm">
+            <button type="button" class="button button--strong button--accent button--sm">
               <span>Save Changes</span>
             </button>
             <button type="button" class="button button--plain button--sm">

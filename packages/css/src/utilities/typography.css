@@ -68,27 +68,27 @@
    font-weight: 300;
 }
 
-:where(.font-weight-400, .fw-400, .font-weight-regular, .regular) {
+:where(.font-weight-400, .fw-400, .font-weight-regular, .font-normal, .regular) {
    font-weight: var(--font-weight-regular, 400);
 }
 
-:where(.font-weight-500, .fw-500, .font-weight-medium) {
+:where(.font-weight-500, .fw-500, .font-weight-medium, .font-medium) {
    font-weight: 500;
 }
 
-:where(.font-weight-600, .fw-600, .font-weight-semibold, .semibold) {
+:where(.font-weight-600, .fw-600, .font-weight-semibold, .font-semibold, .semibold) {
    font-weight: 600;
 }
 
-:where(.font-weight-700, .fw-700, .font-weight-bold, .bold) {
+:where(.font-weight-700, .fw-700, .font-weight-bold, .font-bold, .bold) {
    font-weight: var(--font-weight-bold, 700);
 }
 
-:where(.font-weight-800, .fw-800, .font-weight-heavy) {
+:where(.font-weight-800, .fw-800, .font-weight-heavy, .font-heavy) {
    font-weight: 800;
 }
 
-:where(.font-weight-900, .fw-900, .font-weight-black) {
+:where(.font-weight-900, .fw-900, .font-weight-black, .font-black) {
    font-weight: 900;
 }
 
@@ -182,7 +182,7 @@
    white-space: normal;
 }
 
-:where(.white-space-nowrap, .nowrap) {
+:where(.white-space-nowrap, .text-nowrap, .nowrap) {
    white-space: nowrap;
 }
 
@@ -202,8 +202,14 @@
    word-wrap: break-word;
 }
 
-:where(.overflow-wrap-anywhere, .wrap-anywhere) {
+:where(.overflow-wrap-anywhere, .wrap-anywhere, .break-anywhere) {
    overflow-wrap: anywhere;
+}
+
+:where(.truncate) {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 :where(.text-wrap-pretty, .wrap-pretty, .text-pretty) {

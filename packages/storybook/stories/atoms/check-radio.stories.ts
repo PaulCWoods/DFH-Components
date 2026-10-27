@@ -264,15 +264,15 @@ export const Variants: Story = {
       <div>
         <div class="demo-label">4. Button-Like Choice Radios (Zero-JS)</div>
         <div class="cluster" style="display: flex; gap: var(--spacing-8);">
-          <label class="button button--secondary">
+          <label class="button">
             <input type="radio" name="btn-choice-demo" class="visually-hidden" checked />
             <span>Option 1</span>
           </label>
-          <label class="button button--secondary">
+          <label class="button">
             <input type="radio" name="btn-choice-demo" class="visually-hidden" />
             <span>Option 2</span>
           </label>
-          <label class="button button--secondary">
+          <label class="button">
             <input type="radio" name="btn-choice-demo" class="visually-hidden" />
             <span>Option 3</span>
           </label>
@@ -486,7 +486,7 @@ export const RealWorldRecipes: Story = {
           </div>
           <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
             <button type="button" class="button button--subtle"><span>Reject Non-Essential</span></button>
-            <button type="button" class="button button--primary"><span>Save Preferences</span></button>
+            <button type="button" class="button button--strong button--accent"><span>Save Preferences</span></button>
           </footer>
         </article>
       </div>
@@ -537,7 +537,7 @@ export const RealWorldRecipes: Story = {
           </div>
           <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
             <button type="button" class="button button--subtle"><span>Cancel</span></button>
-            <button type="button" class="button button--primary"><span>Start Audit Run</span></button>
+            <button type="button" class="button button--strong button--accent"><span>Start Audit Run</span></button>
           </footer>
         </article>
       </div>

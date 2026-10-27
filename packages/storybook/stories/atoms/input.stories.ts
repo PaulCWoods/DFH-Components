@@ -427,7 +427,7 @@ export const RealWorldRecipes: Story = {
                 placeholder="Search components, tokens, or accessibility rules..." 
                 style="flex: 1 1 auto;" 
               />
-              <button type="submit" class="button button--primary">
+              <button type="submit" class="button button--strong button--accent">
                 <span>Search</span>
               </button>
             </form>
@@ -461,7 +461,7 @@ export const RealWorldRecipes: Story = {
           </div>
           <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
             <button type="button" class="button button--subtle"><span>Cancel</span></button>
-            <button type="button" class="button button--primary"><span>Save Changes</span></button>
+            <button type="button" class="button button--strong button--accent"><span>Save Changes</span></button>
           </footer>
         </article>
       </div>

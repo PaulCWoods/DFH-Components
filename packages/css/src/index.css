@@ -1,103 +1,111 @@
 /**
  * Design For Humans - Core Component Stylesheet
  * Architecture: Atomic Design (Atoms -> Molecules -> Organisms -> Layout -> Utilities)
+ *
+ * Cascade layers fix precedence by layer, not by import order or specificity
+ * (PRINCIPLES §7). Later layers win; unlayered consumer CSS beats every layer.
+ * Components stay wrapped in :where() so specificity inside a layer is zero.
+ *
+ * The library loads no fonts (PRINCIPLES §4). Font tokens name the brand face
+ * first and end in a system stack; consumers link or self-host the faces.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
-@import './variables.css';
-@import './reset.css';
+@layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
+
+@import './reset.css' layer(reset);
+@import './variables.css' layer(tokens);
 
 /* --------------------------------------------------------------------------
    1. Atoms (Foundational, indivisible elements)
    -------------------------------------------------------------------------- */
-@import './atoms/text.css';
-@import './atoms/link.css';
-@import './atoms/icon.css';
-@import './atoms/badge.css';
-@import './atoms/chip.css';
-@import './atoms/button.css';
-@import './atoms/input.css';
-@import './atoms/textarea.css';
-@import './atoms/select.css';
-@import './atoms/check-radio.css';
-@import './atoms/switch.css';
-@import './atoms/range.css';
-@import './atoms/progress.css';
-@import './atoms/divider.css';
-@import './atoms/skeleton.css';
-@import './atoms/skip-link.css';
-@import './atoms/tab.css';
+@import './atoms/text.css' layer(atoms);
+@import './atoms/link.css' layer(atoms);
+@import './atoms/icon.css' layer(atoms);
+@import './atoms/badge.css' layer(atoms);
+@import './atoms/chip.css' layer(atoms);
+@import './atoms/button.css' layer(atoms);
+@import './atoms/input.css' layer(atoms);
+@import './atoms/textarea.css' layer(atoms);
+@import './atoms/select.css' layer(atoms);
+@import './atoms/check-radio.css' layer(atoms);
+@import './atoms/switch.css' layer(atoms);
+@import './atoms/range.css' layer(atoms);
+@import './atoms/progress.css' layer(atoms);
+@import './atoms/divider.css' layer(atoms);
+@import './atoms/skeleton.css' layer(atoms);
+@import './atoms/skip-link.css' layer(atoms);
+@import './atoms/tab.css' layer(atoms);
 
 /* --------------------------------------------------------------------------
    2. Molecules (Focused combinations of 2-3 atoms)
    -------------------------------------------------------------------------- */
-@import './molecules/lockup.css';
-@import './molecules/avatar.css';
-@import './molecules/field.css';
-@import './molecules/fieldset.css';
-@import './molecules/choices.css';
-@import './molecules/button-group.css';
-@import './molecules/banner.css';
-@import './molecules/alert.css';
-@import './molecules/toast.css';
-@import './molecules/tooltip.css';
-@import './molecules/popover.css';
-@import './molecules/stepper.css';
-@import './molecules/breadcrumb.css';
-@import './molecules/pagination.css';
-@import './molecules/telemetry.css';
-@import './molecules/batch-actions.css';
-@import './molecules/tab-list.css';
-@import './molecules/navigation-tree.css';
-@import './molecules/prose.css';
+@import './molecules/lockup.css' layer(molecules);
+@import './molecules/avatar.css' layer(molecules);
+@import './molecules/field.css' layer(molecules);
+@import './molecules/fieldset.css' layer(molecules);
+@import './molecules/choices.css' layer(molecules);
+@import './molecules/button-group.css' layer(molecules);
+@import './molecules/banner.css' layer(molecules);
+@import './molecules/alert.css' layer(molecules);
+@import './molecules/toast.css' layer(molecules);
+@import './molecules/tooltip.css' layer(molecules);
+@import './molecules/popover.css' layer(molecules);
+@import './molecules/stepper.css' layer(molecules);
+@import './molecules/breadcrumb.css' layer(molecules);
+@import './molecules/pagination.css' layer(molecules);
+@import './molecules/telemetry.css' layer(molecules);
+@import './molecules/batch-actions.css' layer(molecules);
+@import './molecules/tab-list.css' layer(molecules);
+@import './molecules/navigation-tree.css' layer(molecules);
+@import './molecules/prose.css' layer(molecules);
 
 /* --------------------------------------------------------------------------
    3. Organisms (Complex, high-level assemblies & interactive flows)
    -------------------------------------------------------------------------- */
-@import './organisms/card.css';
-@import './organisms/deck.css';
-@import './organisms/dialog.css';
-@import './organisms/accordion.css';
-@import './organisms/menu.css';
-@import './organisms/combobox.css';
-@import './organisms/table.css';
-@import './organisms/tabbed-content.css';
-@import './organisms/empty-state.css';
-@import './organisms/header.css';
-@import './organisms/form.css';
-@import './organisms/section.css';
+@import './organisms/card.css' layer(organisms);
+@import './organisms/deck.css' layer(organisms);
+@import './organisms/dialog.css' layer(organisms);
+@import './organisms/accordion.css' layer(organisms);
+@import './organisms/menu.css' layer(organisms);
+@import './organisms/combobox.css' layer(organisms);
+@import './organisms/table.css' layer(organisms);
+@import './organisms/tabbed-content.css' layer(organisms);
+@import './organisms/empty-state.css' layer(organisms);
+@import './organisms/header.css' layer(organisms);
+@import './organisms/form.css' layer(organisms);
+@import './organisms/section.css' layer(organisms);
 
 /* --------------------------------------------------------------------------
    4. Layout Primitives
    -------------------------------------------------------------------------- */
-@import './layout/app.css';
-@import './layout/cluster.css';
-@import './layout/grid.css';
-@import './layout/inline.css';
-@import './layout/main.css';
-@import './layout/sidebar.css';
-@import './layout/split.css';
-@import './layout/stack.css';
-@import './layout/wrapper.css';
+@import './layout/app.css' layer(layout);
+@import './layout/cluster.css' layer(layout);
+@import './layout/grid.css' layer(layout);
+@import './layout/inline.css' layer(layout);
+@import './layout/main.css' layer(layout);
+@import './layout/sidebar.css' layer(layout);
+@import './layout/split.css' layer(layout);
+@import './layout/stack.css' layer(layout);
+@import './layout/wrapper.css' layer(layout);
 
 /* --------------------------------------------------------------------------
    5. Utilities (Immutable override layer)
    -------------------------------------------------------------------------- */
-@import './utilities/accessibility.css';
-@import './utilities/appearance-modes.css';
-@import './utilities/border.css';
-@import './utilities/color-scheme.css';
-@import './utilities/color-palette.css';
-@import './utilities/color.css';
-@import './utilities/container.css';
-@import './utilities/display.css';
-@import './utilities/flex.css';
-@import './utilities/focus-helpers.css';
-@import './utilities/layout-helpers.css';
-@import './utilities/responsive-helpers.css';
-@import './utilities/shadow.css';
-@import './utilities/spacing-blocks.css';
-@import './utilities/spacing.css';
-@import './utilities/typography.css';
+@import './utilities/accessibility.css' layer(utilities);
+@import './utilities/appearance-modes.css' layer(utilities);
+@import './utilities/border.css' layer(utilities);
+@import './utilities/color-scheme.css' layer(utilities);
+@import './utilities/color-palette.css' layer(utilities);
+@import './utilities/color.css' layer(utilities);
+@import './utilities/container.css' layer(utilities);
+@import './utilities/display.css' layer(utilities);
+@import './utilities/flex.css' layer(utilities);
+@import './utilities/focus-helpers.css' layer(utilities);
+@import './utilities/layout-helpers.css' layer(utilities);
+@import './utilities/responsive-helpers.css' layer(utilities);
+@import './utilities/shadow.css' layer(utilities);
+@import './utilities/spacing-blocks.css' layer(utilities);
+@import './utilities/spacing.css' layer(utilities);
+@import './utilities/typography.css' layer(utilities);
 
-@import './overrides.css';
+@import './overrides.css' layer(overrides);

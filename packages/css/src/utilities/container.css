@@ -6,7 +6,7 @@
    ========================================================================== */
 
 :where(.container-type-inline-size, .container-inline,
-  .cq-inline) {
+  .cq-inline, .cq) {
   container-type: inline-size;
 }
 

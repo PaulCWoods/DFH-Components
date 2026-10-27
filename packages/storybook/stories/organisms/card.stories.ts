@@ -171,7 +171,7 @@ export const Playground: Story = {
             </div>
             <footer class="card__footer" style="display: flex; justify-content: space-between; align-items: center;">
               <time class="card__date" datetime="2026-10-13">13 Oct 2026</time>
-              <button type="button" class="button button--primary button--sm">
+              <button type="button" class="button button--strong button--accent button--sm">
                 <span>${args.actionLabel}</span>
               </button>
             </footer>
@@ -230,7 +230,7 @@ export const Anatomy: Story = {
               <span class="badge badge--sm"><span>footer.card__footer</span></span>
               <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-start: var(--spacing-4);">time.card__date</span>
             </div>
-            <button type="button" class="button button--secondary button--sm">
+            <button type="button" class="button button--sm">
               <span>Interactive Control</span>
             </button>
           </footer>
@@ -353,7 +353,7 @@ export const Variants: Story = {
             <p>Outer radius formula adapts to internal button radius + padding.</p>
           </div>
           <footer class="card__footer">
-            <button type="button" class="button button--primary button--round">
+            <button type="button" class="button button--strong button--accent button--round">
               <span>Capsule Action</span>
             </button>
           </footer>
@@ -507,7 +507,7 @@ export const SizesAndDensity: Story = {
               <p>Standard card padding adapts dynamically to device size while preserving breathing room.</p>
             </div>
             <footer class="card__footer" style="display: flex; justify-content: flex-end;">
-              <button type="button" class="button button--primary"><span>Continue</span></button>
+              <button type="button" class="button button--strong button--accent"><span>Continue</span></button>
             </footer>
           </article>
         </div>
@@ -530,7 +530,7 @@ export const SizesAndDensity: Story = {
               <p>Ideal for data-dense tables, sidebar widgets, popover cards, and dashboard metrics.</p>
             </div>
             <footer class="card__footer" style="display: flex; justify-content: flex-end;">
-              <button type="button" class="button button--secondary button--sm"><span>Details</span></button>
+              <button type="button" class="button button--sm"><span>Details</span></button>
             </footer>
           </article>
         </div>
@@ -691,7 +691,7 @@ export const RealWorldRecipes: Story = {
             </div>
             <footer class="card__footer" style="display: flex; justify-content: space-between; align-items: center;">
               <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted);">Section 4 of 4</span>
-              <button type="button" class="button button--primary button--sm">
+              <button type="button" class="button button--strong button--accent button--sm">
                 <span>Accept Terms</span>
               </button>
             </footer>
@@ -731,7 +731,7 @@ export const CardWithBand: Story = {
               </div>
               <div class="button-group button-group--tight buttons-sm buttons-subtle">
                 <button type="button" class="button"><span>Previous</span></button>
-                <button type="button" class="button button--primary"><span>Continue</span></button>
+                <button type="button" class="button button--strong button--accent"><span>Continue</span></button>
               </div>
             </div>
           </div>

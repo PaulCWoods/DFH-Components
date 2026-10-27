@@ -65,7 +65,7 @@ AI agents and developers MUST use the following semantic patterns:
 <!-- 2. Target-Specific Container (Input highlights container, button focuses locally) -->
 <div class="inline align-items-center gap-sm pd-sm rounded-md border focus-within--input" style="background-color: var(--surface);">
   <input type="text" class="input input--plain flex-1" value="https://designforhumans.com" readonly />
-  <button type="button" class="button button--secondary button--sm"><span>Copy</span></button>
+  <button type="button" class="button button--sm"><span>Copy</span></button>
 </div>
 
 <!-- 3. Inset Focus Container for Flush Cards or Dialog Sections -->
@@ -198,11 +198,11 @@ export const Playground: Story = {
             <button type="button" class="button button--subtle button--sm">
               <span>Filter</span>
             </button>
-            <button type="button" class="button button--primary button--sm">
+            <button type="button" class="button button--strong button--accent button--sm">
               <span>Search</span>
             </button>
           ` : `
-            <button type="button" class="button button--primary button--sm">
+            <button type="button" class="button button--strong button--accent button--sm">
               <span>Go</span>
             </button>
           `}
@@ -250,7 +250,7 @@ export const CompoundSearchBar: Story = {
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-        <button type="button" class="button button--primary button--sm">
+        <button type="button" class="button button--strong button--accent button--sm">
           <span>Search</span>
         </button>
       </div>
@@ -287,7 +287,7 @@ export const TargetedInputContainer: Story = {
             value="https://cdn.designforhumans.com/v2/tokens.css" 
             readonly 
           />
-          <button type="button" class="button button--secondary button--sm">
+          <button type="button" class="button button--sm">
             <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -372,7 +372,7 @@ export const BorderHighlightContainer: Story = {
           placeholder="Enter email for audit notification..." 
           aria-label="Email notification"
         />
-        <button type="submit" class="button button--primary button--sm">
+        <button type="submit" class="button button--strong button--accent button--sm">
           <span>Subscribe</span>
         </button>
       </div>
@@ -453,7 +453,7 @@ export const StandaloneFocusUtilities: Story = {
         <div class="cluster gap-sm">
           <button 
             type="button" 
-            class="button button--secondary focus-none" 
+            class="button focus-none" 
             style="border: 2px solid var(--border-color);"
             onfocus="this.style.borderColor='var(--color-primary, #0066cc)'; this.style.backgroundColor='var(--surface-active);'"
             onblur="this.style.borderColor='var(--border-color)'; this.style.backgroundColor='';"
@@ -489,7 +489,7 @@ export const StateMatrix: Story = {
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border focus-within" style="background: var(--surface);">
             <input type="text" class="input input--plain flex-1 input--sm" placeholder="Any focused child..." aria-label="Matrix focus within" />
-            <button type="button" class="button button--primary button--sm"><span>Go</span></button>
+            <button type="button" class="button button--strong button--accent button--sm"><span>Go</span></button>
           </div>
         </div>
 
@@ -501,7 +501,7 @@ export const StateMatrix: Story = {
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border focus-within--input" style="background: var(--surface);">
             <input type="text" class="input input--plain flex-1 input--sm" placeholder="Input triggers, button isolated..." aria-label="Matrix focus within input" />
-            <button type="button" class="button button--secondary button--sm"><span>Action</span></button>
+            <button type="button" class="button button--sm"><span>Action</span></button>
           </div>
         </div>
 
@@ -525,7 +525,7 @@ export const StateMatrix: Story = {
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border-md focus-within--border focus-within" style="background: var(--surface);">
             <input type="text" class="input input--plain flex-1 input--sm" placeholder="Elevated border stroke..." aria-label="Matrix border elevation" />
-            <button type="button" class="button button--primary button--sm"><span>Apply</span></button>
+            <button type="button" class="button button--strong button--accent button--sm"><span>Apply</span></button>
           </div>
         </div>
       </div>

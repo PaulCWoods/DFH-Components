@@ -333,7 +333,7 @@ export const Variants: Story = {
           <div class="prose-end" style="margin-block: var(--spacing-16); padding: var(--spacing-16); background-color: var(--surface); border: 1px dashed var(--border-quiet); border-radius: var(--radius-md);">
             <div class="cluster" style="align-items: center; justify-content: space-between;">
               <span class="badge badge--sm">Opt-Out Sub-tree: .prose-end</span>
-              <button type="button" class="button button--sm button--primary"><span>Interactive Action</span></button>
+              <button type="button" class="button button--sm button--strong button--accent"><span>Interactive Action</span></button>
             </div>
             <p style="margin: var(--spacing-8) 0 0 0; font-size: 0.875rem; color: var(--foreground-muted);">
               Elements inside <code>.prose-end</code> completely escape <code>@scope</code> prose styling, preventing conflicts with complex nested UI components.

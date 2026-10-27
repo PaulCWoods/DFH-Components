@@ -963,7 +963,7 @@ export const RealWorldRecipes: Story = {
 
             <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
               <button type="button" class="button button--subtle"><span>Cancel</span></button>
-              <button type="button" class="button button--primary"><span>Save Preferences</span></button>
+              <button type="button" class="button button--strong button--accent"><span>Save Preferences</span></button>
             </footer>
           </article>
         </div>

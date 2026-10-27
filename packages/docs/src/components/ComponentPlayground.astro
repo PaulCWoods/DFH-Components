@@ -90,11 +90,11 @@ import Icon from './Icon.astro';
 
         <!-- Semantic Tone -->
         <div class="field">
-          <label for="ctrl-tone" class="field__label">Semantic Tone</label>
+          <label for="ctrl-tone" class="field__label">Intent</label>
           <select id="ctrl-tone" class="select">
             <option value="neutral" selected>Neutral</option>
             <option value="accent">Accent / Primary (.button--accent)</option>
-            <option value="destructive">Destructive (.button--destructive)</option>
+            <option value="danger">Danger (.button--danger)</option>
           </select>
         </div>
 
@@ -411,7 +411,7 @@ import Icon from './Icon.astro';
       if (prominence === 'placeholder') classes.push('button--placeholder');
 
       if (tone === 'accent') classes.push('button--accent');
-      if (tone === 'destructive') classes.push('button--destructive');
+      if (tone === 'danger') classes.push('button--danger');
 
       if (size === 'sm') classes.push('button--sm');
       if (size === 'lg') classes.push('button--lg');
@@ -456,8 +456,8 @@ import Icon from './Icon.astro';
 
       // Container Query alternative
       const cqProperties = [];
-      if (prominence !== 'default') cqProperties.push(`  --button-variation: ${prominence};`);
-      if (tone !== 'neutral') cqProperties.push(`  --button-tone: ${tone};`);
+      if (prominence !== 'default') cqProperties.push(`  --button-prominence: ${prominence};`);
+      if (tone !== 'neutral') cqProperties.push(`  --button-intent: ${tone};`);
       if (size === 'sm') cqProperties.push(`  --ui-sizing: compact;`);
       if (size === 'lg') cqProperties.push(`  --button-size: lg;`);
       if (corners !== 'default') cqProperties.push(`  --button-corners: ${corners};`);

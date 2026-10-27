@@ -15,7 +15,8 @@
    ========================================================================== */
 
 .visually-hidden,
-.sr-only {
+.sr-only,
+.sr {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -258,7 +259,9 @@
    ========================================================================== */
 
 :is(.visually-hidden--focusable,
-  .sr-only--focusable) {
+  .sr-only--focusable,
+  .sr--focusable,
+  .sr-focusable) {
   &:is(:focus, :focus-within) {
     position: static;
     inline-size: auto;

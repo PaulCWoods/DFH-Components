@@ -70,7 +70,7 @@ AI agents and developers MUST use the following semantic patterns:
   <div class="inline"><a href="/" class="font-weight-bold">Brand</a></div>
   <div><input type="search" class="input w-full" placeholder="Search..." /></div>
   <div class="cluster" style="justify-content: flex-end;">
-    <button type="button" class="button button--primary"><span>Profile</span></button>
+    <button type="button" class="button button--strong button--accent"><span>Profile</span></button>
   </div>
 </header>
 \`\`\`
@@ -331,7 +331,7 @@ export const TripleSplitLayout: Story = {
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
               </svg>
             </button>
-            <button type="button" class="button button--primary button--sm">
+            <button type="button" class="button button--strong button--accent button--sm">
               <span>Deploy</span>
             </button>
           </div>

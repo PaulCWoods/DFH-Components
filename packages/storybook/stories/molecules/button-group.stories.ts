@@ -28,13 +28,13 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <button type="button" class="button"><span>Cancel</span></button>
   <button type="button" class="button"><span>Save Draft</span></button>
   <hr class="divider">
-  <button type="button" class="button button--primary"><span>Publish</span></button>
+  <button type="button" class="button button--strong button--accent"><span>Publish</span></button>
 </div>
 
 <!-- Segmented Control with Joined Borders -->
 <div class="button-group button-group--tight">
   <button type="button" class="button"><span>Day</span></button>
-  <button type="button" class="button button--selected"><span>Week</span></button>
+  <button type="button" class="button is-active"><span>Week</span></button>
   <button type="button" class="button"><span>Month</span></button>
 </div>
 
@@ -49,7 +49,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     <span>Export JSON</span>
   </button>
   <hr class="divider">
-  <button type="button" class="button button--subtle button--destructive">
+  <button type="button" class="button button--subtle button--danger">
     <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
     <span>Delete</span>
   </button>
@@ -59,7 +59,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <div class="button-group button-group--stretch">
   <button type="button" class="button"><span>Previous</span></button>
   <span class="button-group__content button-group__fill">Step 2 of 5</span>
-  <button type="button" class="button button--primary button-group__end"><span>Next Step</span></button>
+  <button type="button" class="button button--strong button--accent button-group__end"><span>Next Step</span></button>
 </div>
 \`\`\`
 
@@ -96,8 +96,8 @@ Parents can declaratively orchestrate child button styles in groups:
 \`\`\`css
 /* Example: Contextual subtle toolbar */
 .table-toolbar {
-  --button-variation: subtle;
-  --ui-density: dense;
+  --button-prominence: subtle;
+  --ui-sizing: compact;
 }
 \`\`\`
 `,
@@ -120,7 +120,7 @@ Parents can declaratively orchestrate child button styles in groups:
   },
   render: (args) => {
     const layoutClass = args.layout && args.layout !== 'default' ? `button-group--${args.layout}` : '';
-    const densityStyle = args.density === 'dense' ? '--ui-density: dense;' : '';
+    const densityStyle = args.density === 'dense' ? '--ui-sizing: compact;' : '';
 
     return `
       <div class="demo-stage demo-constrained--md" style="${densityStyle}">
@@ -128,7 +128,7 @@ Parents can declaratively orchestrate child button styles in groups:
           <button type="button" class="button"><span>Cancel</span></button>
           <button type="button" class="button"><span>Save Draft</span></button>
           <hr class="divider">
-          <button type="button" class="button button--primary"><span>Publish</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Publish</span></button>
         </div>
       </div>
     `;
@@ -163,7 +163,7 @@ export const Anatomy: Story = {
         <hr class="divider">
         <span class="button-group__content button-group__fill">Step 3 of 5 (Review Deliverables)</span>
         <hr class="divider">
-        <button type="button" class="button button--primary button-group__end"><span>Continue</span></button>
+        <button type="button" class="button button--strong button--accent button-group__end"><span>Continue</span></button>
       </div>
     </div>
   `,
@@ -183,7 +183,7 @@ export const Variants: Story = {
           <button type="button" class="button"><span>Review</span></button>
           <button type="button" class="button"><span>Approve</span></button>
           <hr class="divider">
-          <button type="button" class="button button--primary"><span>Deploy</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Deploy</span></button>
         </div>
       </div>
 
@@ -193,7 +193,7 @@ export const Variants: Story = {
       <div>
         <div class="demo-label">2. Segmented Tight Control (.button-group--tight / Joined Radii)</div>
         <div class="button-group button-group--tight">
-          <button type="button" class="button button--selected"><span>Overview</span></button>
+          <button type="button" class="button is-active"><span>Overview</span></button>
           <button type="button" class="button"><span>Activity</span></button>
           <button type="button" class="button"><span>Audit Logs</span></button>
           <button type="button" class="button"><span>Settings</span></button>
@@ -207,7 +207,7 @@ export const Variants: Story = {
         <div class="demo-label">3. Full-Width Stretched (.button-group--stretch)</div>
         <div class="button-group button-group--stretch" style="inline-size: 100%;">
           <button type="button" class="button" style="flex: 1 1 auto;"><span>Cancel</span></button>
-          <button type="button" class="button button--primary" style="flex: 1 1 auto;"><span>Submit</span></button>
+          <button type="button" class="button button--strong button--accent" style="flex: 1 1 auto;"><span>Submit</span></button>
         </div>
       </div>
 
@@ -229,7 +229,7 @@ export const Variants: Story = {
                   <span>Export Report</span>
                 </button>
                 <hr class="divider">
-                <button type="button" class="button button--subtle button--destructive">
+                <button type="button" class="button button--subtle button--danger">
                   <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
                   <span>Delete Permanently</span>
                 </button>
@@ -251,7 +251,7 @@ export const StateMatrix: Story = {
     <div class="demo-stage demo-constrained--lg stack">
       <div class="demo-label">Item States in Group (Selected, Resting, Disabled)</div>
       <div class="button-group button-group--tight">
-        <button type="button" class="button button--selected">
+        <button type="button" class="button is-active">
           <span>Active View</span>
         </button>
         <button type="button" class="button">
@@ -269,7 +269,7 @@ export const StateMatrix: Story = {
         <button type="button" class="button button--subtle"><span>Cancel</span></button>
         <button type="button" class="button"><span>Save Draft</span></button>
         <hr class="divider">
-        <button type="button" class="button button--primary"><span>Confirm Action</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Confirm Action</span></button>
       </div>
     </div>
   `,
@@ -287,18 +287,18 @@ export const SizesAndDensity: Story = {
         <div class="demo-label">Standard Density (48px Touch Targets)</div>
         <div class="button-group">
           <button type="button" class="button"><span>Action 1</span></button>
-          <button type="button" class="button button--primary"><span>Action 2</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Action 2</span></button>
         </div>
       </div>
 
       <hr class="divider" />
 
       <!-- Dense Container Query -->
-      <div style="--ui-density: dense;">
-        <div class="demo-label">Dense Container (--ui-density: dense / 32px Touch Targets)</div>
+      <div style="--ui-sizing: compact;">
+        <div class="demo-label">Dense Container (--ui-sizing: compact / 32px Touch Targets)</div>
         <div class="button-group">
           <button type="button" class="button"><span>Action 1</span></button>
-          <button type="button" class="button button--primary"><span>Action 2</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Action 2</span></button>
         </div>
       </div>
     </div>
@@ -313,8 +313,8 @@ export const ZeroClassOrchestration: Story = {
   render: () => `
     <div class="stack demo-constrained--md">
       <!-- Subtle Navigation Group -->
-      <div class="demo-label">Parent: style="--button-variation: subtle; --button-corners: round;"</div>
-      <div class="demo-stage" style="--button-variation: subtle; --button-corners: round;">
+      <div class="demo-label">Parent: style="--button-prominence: subtle; --button-corners: round;"</div>
+      <div class="demo-stage" style="--button-prominence: subtle; --button-corners: round;">
         <div class="button-group">
           <button type="button" class="button"><span>Summary</span></button>
           <button type="button" class="button"><span>Issues</span></button>
@@ -323,10 +323,10 @@ export const ZeroClassOrchestration: Story = {
       </div>
 
       <!-- Dense Segmented Toolbar -->
-      <div class="demo-label">Parent: style="--ui-density: dense;"</div>
-      <div class="demo-stage" style="--ui-density: dense;">
+      <div class="demo-label">Parent: style="--ui-sizing: compact;"</div>
+      <div class="demo-stage" style="--ui-sizing: compact;">
         <div class="button-group button-group--tight">
-          <button type="button" class="button button--selected"><span>Grid</span></button>
+          <button type="button" class="button is-active"><span>Grid</span></button>
           <button type="button" class="button"><span>Table</span></button>
           <button type="button" class="button"><span>Kanban</span></button>
         </div>
@@ -365,7 +365,7 @@ export const RealWorldRecipes: Story = {
                 <span>Mark as Reviewed</span>
               </button>
               <hr class="divider">
-              <button type="button" class="button button--subtle button--destructive">
+              <button type="button" class="button button--subtle button--danger">
                 <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
                 <span>Move to Trash</span>
               </button>
@@ -387,7 +387,7 @@ export const RealWorldRecipes: Story = {
                 Step 3 of 4: WCAG Checklist
               </span>
               <hr class="divider">
-              <button type="button" class="button button--primary button-group__end">
+              <button type="button" class="button button--strong button--accent button-group__end">
                 <span>Continue &rarr;</span>
               </button>
             </div>

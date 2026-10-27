@@ -18,7 +18,7 @@ Accessible dataset navigation composing \`.button-group\`, \`.button\`, \`.divid
 #### 1. Numeric Pagination Cluster
 \`\`\`html
 <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
-  <span class="button button--selected" aria-current="page"><span>1</span></span>
+  <span class="button is-active" aria-current="page"><span>1</span></span>
   <a class="button" href="#2"><span>2</span></a>
   <a class="button" href="#3"><span>3</span></a>
   <a class="button" href="#4"><span>4</span></a>
@@ -124,7 +124,7 @@ export const Playground: Story = {
     const renderPageBtn = (num: number) => {
       const isCurrent = num === args.currentPage;
       if (isCurrent) {
-        return `<span class="${btnClass} button--selected" aria-current="page"><span>${num}</span></span>`;
+        return `<span class="${btnClass} is-active" aria-current="page"><span>${num}</span></span>`;
       }
       return `<a class="${btnClass}" href="#page-${num}"><span>${num}</span></a>`;
     };
@@ -178,7 +178,7 @@ export const Anatomy: Story = {
     <div style="display: flex; flex-direction: column; gap: var(--spacing-24); max-inline-size: 46rem;">
       <div class="demo-card-callout" style="padding: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md); background: var(--surface-muted);">
         <p style="margin: 0; font-size: var(--typography-font-size--1); color: var(--foreground-muted);">
-          <strong>Structural Breakdown:</strong> Composed of <code>&lt;nav class="pagination button-group buttons-subtle"&gt;</code>. The active page is represented by a non-link <code>span.button.button--selected[aria-current="page"]</code>, disconnected intervals are separated by <code>hr.divider</code>, and step summaries use <code>.page-count</code>.
+          <strong>Structural Breakdown:</strong> Composed of <code>&lt;nav class="pagination button-group buttons-subtle"&gt;</code>. The active page is represented by a non-link <code>span.button.is-active[aria-current="page"]</code>, disconnected intervals are separated by <code>hr.divider</code>, and step summaries use <code>.page-count</code>.
         </p>
       </div>
 
@@ -191,7 +191,7 @@ export const Anatomy: Story = {
             <span class="visually-hidden">Previous (disabled)</span>
           </span>
 
-          <span class="button button--selected" aria-current="page" style="outline: 2px dashed var(--color-success);">
+          <span class="button is-active" aria-current="page" style="outline: 2px dashed var(--color-success);">
             <span>aria-current="page"</span>
           </span>
 
@@ -229,7 +229,7 @@ export const Variants: Story = {
           1. Numbered Sequence with Truncation Divider
         </span>
         <nav class="pagination button-group buttons-subtle" aria-label="Numbered sequence">
-          <span class="button button--selected" aria-current="page"><span>1</span></span>
+          <span class="button is-active" aria-current="page"><span>1</span></span>
           <a class="button" href="#2"><span>2</span></a>
           <a class="button" href="#3"><span>3</span></a>
           <a class="button" href="#4"><span>4</span></a>
@@ -298,10 +298,10 @@ export const StateMatrix: Story = {
       <!-- Selected State -->
       <div class="pd bd rd">
         <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Active Page (.button--selected)
+          Active Page (.is-active)
         </span>
         <div class="pagination button-group buttons-subtle">
-          <span class="button button--selected" aria-current="page"><span>1</span></span>
+          <span class="button is-active" aria-current="page"><span>1</span></span>
         </div>
       </div>
 
@@ -371,7 +371,7 @@ export const SizesAndDensity: Story = {
           Standard Size (48px Touch Targets — WCAG 2.5.5 AAA Target)
         </span>
         <nav class="pagination button-group buttons-subtle" aria-label="Standard pagination">
-          <span class="button button--selected" aria-current="page"><span>1</span></span>
+          <span class="button is-active" aria-current="page"><span>1</span></span>
           <a class="button" href="#2"><span>2</span></a>
           <a class="button" href="#3"><span>3</span></a>
           <hr class="divider">
@@ -385,7 +385,7 @@ export const SizesAndDensity: Story = {
           Compact Size (.button-group--sm / 32px Targets — WCAG 2.5.8 AA Target)
         </span>
         <nav class="pagination button-group button-group--sm buttons-subtle" aria-label="Compact pagination">
-          <span class="button button--sm button--selected" aria-current="page"><span>1</span></span>
+          <span class="button button--sm is-active" aria-current="page"><span>1</span></span>
           <a class="button button--sm" href="#2"><span>2</span></a>
           <a class="button button--sm" href="#3"><span>3</span></a>
           <hr class="divider">
@@ -454,7 +454,7 @@ export const RealWorldRecipes: Story = {
               </a>
               <a class="button button--sm" href="#1"><span>1</span></a>
               <a class="button button--sm" href="#2"><span>2</span></a>
-              <span class="button button--sm button--selected" aria-current="page"><span>3</span></span>
+              <span class="button button--sm is-active" aria-current="page"><span>3</span></span>
               <a class="button button--sm" href="#4"><span>4</span></a>
               <hr class="divider">
               <a class="button button--sm" href="#14"><span>14</span></a>

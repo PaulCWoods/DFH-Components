@@ -2,14 +2,22 @@
    Display Utilities
    ========================================================================== */
 
-:where(.display-block) {
+:where(.display-block, .d-block, .block) {
     display: block;
 }
 
-:where(.display-inline) {
+:where(.display-inline, .d-inline) {
     display: inline;
 }
 
-:where(.display-inline-block) {
+:where(.display-inline-block, .d-inline-block, .inline-block) {
     display: inline-block;
+}
+
+:where(.display-contents, .d-contents, .contents) {
+    display: contents;
+}
+
+:where(.display-none, .d-none, .hidden, .hide) {
+    display: none;
 }

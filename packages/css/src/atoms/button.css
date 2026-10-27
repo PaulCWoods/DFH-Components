@@ -1,162 +1,178 @@
 /* ==========================================================================
    Design For Humans: Button Primitive
    --------------------------------------------------------------------------
-   Interactive button control adhering to WCAG 2.2 AA / AAA standards:
-   - 2.5.5 Target Size (Enhanced: 48x48px default via --button-min-size)
-   - 2.5.8 Target Size (Minimum: 24x24px / 32px for compact size)
-   - 1.4.3 Contrast (Minimum 4.5:1 text on background)
-   - 2.4.7 Focus Visible & 2.4.13 Focus Appearance (High-contrast focus ring)
+   Shared axes (PRINCIPLES §2). Each modifier sets exactly one axis, and each
+   axis can also be set on a container through a style-query flag:
+
+   | Axis       | Modifiers                          | Container flag                  |
+   | ---------- | ---------------------------------- | ------------------------------- |
+   | Prominence | (outline) --strong --subtle --plain | --button-prominence             |
+   | Intent     | (neutral) --accent --danger        | --button-intent                 |
+   | Size       | --sm --lg                          | --button-size, --controls-size  |
+   | Density    | (none: containers own density)     | --ui-sizing: compact steps to sm |
+   | Corners    | --round                            | --button-corners                |
+
+   Intent sets a tone (--_button-tone*); prominence decides where the tone is
+   applied. Every prominence × intent pairing therefore works without
+   combination rules. Modifiers on the button beat container flags.
+
+   WCAG 2.2:
+   - 2.5.5 Target Size (Enhanced): 48px hit area on every size. A smaller
+     visual size keeps the hit area through ::after, unless the product has
+     opted into fine-pointer targets (--spacing-target-min).
+   - 2.5.8 Target Size (Minimum): never below 24px.
+   - 1.4.1 Use of Color: pair --accent and --danger with an icon or text.
+   - 2.4.7 / 2.4.13 Focus Visible: the ring uses the tone colour on filled
+     states, where currentColor would match the page.
 
    Usage:
-   <button type="button" class="button button--primary">
+   <button type="button" class="button button--strong button--accent">
      <span>Primary Action</span>
    </button>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Button Primitive (:where(.button, a.button))
+   1. Base Button (:where(.button))
    ========================================================================== */
 :where(.button) {
-  --lockup-gap: var(--spacing-2);
+  --lockup-gap: var(--button-lockup-gap, 0.125rem);
   --color-palette: var(--_button-color-palette);
+
   /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
+     Tone (Neutral Intent)
+     Public hooks: --button-tone, --button-tone-hover, --button-tone-pressed,
+     --button-tone-border, --button-on-tone. Undefined by default; set them on
+     a button or a container to recolour every prominence consistently.
      -------------------------------------------------------------------------- */
-  --_button-bg: var(--button-bg, transparent);
-  --_button-border-color: var(--button-border-color, var(--border-color-muted, currentColor));
-  --_button-border-width: var(--button-border-width, var(--border-width, 1px));
+  --_button-tone: var(--button-tone, var(--foreground, CanvasText));
+  --_button-tone-hover: var(--button-tone-hover, var(--foreground-strong, var(--_button-tone)));
+  --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-strong, var(--_button-tone)));
+  --_button-tone-border: var(--button-tone-border, var(--border-color-muted, currentColor));
+  --_button-on-tone: var(--button-on-tone, var(--foreground-inverted-strong, Canvas));
+
+  /* --------------------------------------------------------------------------
+     Prominence: Default (Outline)
+     Rest: tone text and border. Hover and active: filled with the tone.
+     -------------------------------------------------------------------------- */
+  --_button-bg: transparent;
+  --_button-text: var(--_button-tone);
+  --_button-border-color: var(--_button-tone-border);
+  --_button-hover-bg: var(--_button-tone);
+  --_button-hover-text: var(--_button-on-tone);
+  --_button-hover-border-color: var(--_button-tone);
+  --_button-active-bg: var(--_button-tone-pressed);
+  --_button-active-text: var(--_button-on-tone);
+  --_button-active-border-color: var(--_button-tone-pressed);
+  --_button-ring-color: var(--focus-ring-color, currentColor);
   --_button-color-palette: initial;
-  --_button-font-family: var(--button-font-family, var(--typography-font-family-sans, sans-serif));
-  --_button-font-size: var(--button-font-size, var(--control-font-size, var(--typography-font-size-0, 1rem)));
-  --_button-font-weight: var(--button-font-weight, var(--font-weight-bold, 700));
-  --_button-hover-bg: var(--button-hover-bg, var(--foreground, currentColor));
-  --_button-hover-border-color: var(--button-hover-border-color, var(--foreground, currentColor));
   --_button-hover-color-palette: inverted;
-  --_button-hover-text: var(--button-hover-text, var(--surface, #ffffff));
-  --_button-active-bg: var(--button-active-bg, var(--foreground-accent-pressed, #005f57));
-  --_button-active-border-color: var(--button-active-border-color, var(--foreground-accent-pressed, #005f57));
   --_button-active-color-palette: inverted;
-  --_button-active-text: var(--button-active-text, var(--surface, #ffffff));
-  --_button-inner-gap: var(--button-inner-gap, var(--spacing-12, 0.75rem));
+
+  /* --------------------------------------------------------------------------
+     Geometry (Tier 3 tokens, terminating in literal fallbacks)
+     -------------------------------------------------------------------------- */
+  --_button-border-width: var(--button-border-width, 1px);
+  --_button-font-family: var(--button-font-family, var(--body-font-family, inherit));
+  --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
+  --_button-font-weight: var(--button-font-weight, var(--font-weight-bold, 700));
+  --_button-inner-gap: var(--button-inner-gap, 0.75rem);
   --_button-line-height: var(--button-line-height, var(--control-line-height, 1.25));
   --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
-  --_button-padding-block: var(--button-padding-block, var(--spacing-4, 0.25rem));
-  --_button-padding-inline: var(--button-padding-inline, var(--spacing-16, 1rem));
+  --_button-padding-block: var(--button-padding-block, 0.25rem);
+  --_button-padding-inline: var(--button-padding-inline, 1rem);
   --_button-radius: var(--button-radius, var(--radius, 0.25rem));
-  --_button-text: var(--button-text, var(--foreground, currentColor));
+  --_button-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_button-timefunc: var(--button-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   --_button-transition: var(--button-transition, var(--duration-sm, 150ms));
 
   /* ------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes:
-     e.g., .navigation { --button-variation: subtle; --button-corners: round; }
+     Container Flags (@container style(...))
+     Declared before the modifier classes below, so a modifier on the button
+     beats a flag inherited from a container.
+     e.g. .toolbar { --button-prominence: subtle; --button-corners: round; }
      ------------------------------------------------------------------------ */
 
-  /* Density & Size */
-  @container style(--ui-density: dense) or style(--control-density: dense) or style(--button-density: dense) {
-    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2, 0.125rem));
-    --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-8, 0.5rem));
-    --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
+  /* Intent */
+  @container style(--button-intent: accent) {
+    --_button-tone: var(--button-tone, var(--foreground-accent, CanvasText));
+    --_button-tone-hover: var(--button-tone-hover, var(--foreground-accent-hover, var(--_button-tone)));
+    --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
+    --_button-tone-border: var(--button-tone-border, var(--_button-tone));
   }
 
-  @container style(--font-sizing: compact) {
-    --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
+  @container style(--button-intent: danger) {
+    --_button-tone: var(--button-tone, var(--foreground-danger, CanvasText));
+    --_button-tone-hover: var(--button-tone-hover, var(--foreground-danger-hover, var(--_button-tone)));
+    --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
+    --_button-tone-border: var(--button-tone-border, var(--_button-tone));
   }
 
-  @container style(--ui-sizing: compact) or style(--button-size: sm) or style(--control-size: sm) {
-    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2, 0.125rem));
-    --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-8, 0.5rem));
+  /* Prominence */
+  @container style(--button-prominence: strong) {
+    --_button-bg: var(--_button-tone);
+    --_button-text: var(--_button-on-tone);
+    --_button-border-color: var(--_button-tone);
+    --_button-hover-bg: var(--_button-tone-hover);
+    --_button-hover-border-color: var(--_button-tone-hover);
+    --_button-ring-color: var(--_button-tone);
+    --_button-color-palette: inverted;
+  }
+
+  @container style(--button-prominence: subtle) or style(--controls-variation: subtle) {
+    --_button-bg: var(--surface-translucent, transparent);
+    --_button-text: var(--_button-tone);
+    --_button-border-color: transparent;
+    --_button-hover-bg: var(--surface-translucent-strong, transparent);
+    --_button-hover-text: var(--_button-tone-hover);
+    --_button-hover-border-color: transparent;
+    --_button-active-bg: var(--surface-translucent-strong, transparent);
+    --_button-active-text: var(--_button-tone-pressed);
+    --_button-active-border-color: transparent;
+    --_button-ring-color: var(--focus-ring-color, currentColor);
+    --_button-color-palette: initial;
+    --_button-hover-color-palette: initial;
+    --_button-active-color-palette: initial;
+  }
+
+  @container style(--button-prominence: plain) or style(--controls-variation: plain) {
+    --_button-bg: transparent;
+    --_button-text: var(--_button-tone);
+    --_button-border-color: transparent;
+    --_button-hover-bg: var(--surface-translucent, transparent);
+    --_button-hover-text: var(--_button-tone-hover);
+    --_button-hover-border-color: transparent;
+    --_button-active-bg: var(--surface-translucent-strong, transparent);
+    --_button-active-text: var(--_button-tone-pressed);
+    --_button-active-border-color: transparent;
+    --_button-ring-color: var(--focus-ring-color, currentColor);
+    --_button-color-palette: initial;
+    --_button-hover-color-palette: initial;
+    --_button-active-color-palette: initial;
+  }
+
+  /* Size, and density from a compact container */
+  @container style(--button-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
+    --_button-padding-block: var(--button-sm-padding-block, 0.125rem);
+    --_button-padding-inline: var(--button-sm-padding-inline, 0.5rem);
     --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
+    --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
   }
 
   @container style(--button-size: lg) {
-    --_button-padding-block: var(--button-lg-padding-block, var(--spacing-8, 0.5rem));
-    --_button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24, 1.5rem));
-    --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, var(--typography-font-size-1, 1.125rem)));
-    --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 3.5rem));
+    --_button-padding-block: var(--button-lg-padding-block, 0.5rem);
+    --_button-padding-inline: var(--button-lg-padding-inline, 1.5rem);
+    --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
+    --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
   }
 
-  /* Prominence: Strong / Selected */
-  @container style(--button-variation: strong) or style(--button-appearance: strong) or style(--button-variation: selected) {
-    --_button-bg: var(--button-strong-bg, var(--foreground, #111827));
-    --_button-border-color: var(--button-strong-border-color, var(--_button-bg, var(--foreground, #111827)));
-    --_button-text: var(--button-strong-text, var(--surface, #ffffff));
-    --_button-hover-bg: var(--button-strong-hover-bg, var(--foreground-accent-hover, #00665e));
-    --_button-hover-border-color: var(--button-strong-hover-border-color, var(--button-strong-hover-bg, var(--foreground-accent-hover, #00665e)));
-    --_button-hover-text: var(--button-strong-hover-text, var(--surface, #ffffff));
-    --_button-active-bg: var(--button-strong-active-bg, var(--foreground-accent-pressed, #005f57));
-    --_button-active-border-color: var(--button-strong-active-border-color, var(--button-strong-active-bg, var(--foreground-accent-pressed, #005f57)));
-    --_button-active-text: var(--button-strong-active-text, var(--surface, #ffffff));
+  /* Type only: steps the label down without changing geometry */
+  @container style(--font-sizing: compact) {
+    --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
   }
 
-  /* Tone: Accent */
-  @container style(--button-tone: accent) or style(--button-variation: accent) {
-    --_button-border-color: var(--button-accent-border-color, var(--foreground-accent, #008076));
-    --_button-text: var(--button-accent-text, var(--foreground-accent, #008076));
-    --_button-hover-bg: var(--button-accent-hover-bg, var(--foreground-accent, #008076));
-    --_button-hover-border-color: var(--button-accent-hover-border-color, var(--foreground-accent, #008076));
-    --_button-hover-text: var(--button-accent-hover-text, var(--surface, #ffffff));
-    --_button-active-bg: var(--button-accent-active-bg, var(--foreground-accent-pressed, #005f57));
-    --_button-active-border-color: var(--button-accent-active-border-color, var(--foreground-accent-pressed, #005f57));
-    --_button-active-text: var(--button-accent-active-text, var(--surface, #ffffff));
-  }
-
-  /* Variation: Primary (Strong Accent) */
-  @container style(--button-variation: primary) or style(--button-appearance: primary) {
-    --_button-bg: var(--button-primary-bg, var(--foreground-accent, #008076));
-    --_button-border-color: var(--button-primary-border-color, var(--button-primary-bg, var(--foreground-accent, #008076)));
-    --_button-text: var(--button-primary-text, var(--surface, #ffffff));
-    --_button-hover-bg: var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e));
-    --_button-hover-border-color: var(--button-primary-hover-border-color, var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e)));
-    --_button-hover-text: var(--button-primary-hover-text, var(--button-primary-text, var(--surface, #ffffff)));
-    --_button-active-bg: var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57));
-    --_button-active-border-color: var(--button-primary-active-border-color, var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57)));
-    --_button-active-text: var(--button-primary-active-text, var(--button-primary-text, var(--surface, #ffffff)));
-  }
-
-  /* Variation: Plain (Transparent background, no border) */
-  @container style(--button-variation: plain) or style(--button-appearance: plain) or style(--controls-variation: plain) or style(--button-variation: ghost) {
-    --_button-bg: var(--button-plain-bg, transparent);
-    --_button-border-color: transparent;
-    --_button-text: var(--button-plain-text, var(--foreground, currentColor));
-    --_button-hover-bg: var(--button-plain-hover-bg, var(--surface-translucent, transparent));
-    --_button-hover-border-color: transparent;
-    --_button-hover-text: var(--button-plain-hover-text, var(--foreground-accent-hover, currentColor));
-    --_button-active-bg: var(--button-plain-active-bg, var(--surface-translucent-strong, transparent));
-    --_button-active-border-color: transparent;
-    --_button-active-text: var(--button-plain-active-text, var(--foreground-accent-pressed, currentColor));
-  }
-
-  /* Variation: Subtle (Translucent background, no border - previously subtle-tint) */
-  @container style(--button-variation: subtle) or style(--button-appearance: subtle) or style(--controls-variation: subtle) or style(--button-variation: subtle-tint) {
-    --_button-bg: var(--button-subtle-bg, var(--button-subtle-tint-bg, var(--surface-translucent, transparent)));
-    --_button-border-color: transparent;
-    --_button-text: var(--button-subtle-text, var(--foreground, currentColor));
-    --_button-hover-bg: var(--button-subtle-hover-bg, var(--button-subtle-tint-hover-bg, var(--surface-translucent-strong, transparent)));
-    --_button-hover-border-color: transparent;
-    --_button-hover-text: var(--button-subtle-hover-text, var(--button-subtle-tint-hover-text, var(--foreground-strong, currentColor)));
-    --_button-active-bg: var(--button-subtle-active-bg, var(--button-subtle-tint-active-bg, var(--surface-translucent-strong, transparent)));
-    --_button-active-border-color: transparent;
-    --_button-active-text: var(--button-subtle-active-text, var(--button-subtle-tint-active-text, var(--foreground-strong, currentColor)));
-  }
-
-  /* Variation: Destructive */
-  @container style(--button-variation: destructive) or style(--button-appearance: destructive) {
-    --_button-border-color: var(--button-destructive-border-color, var(--foreground-danger, #d32f2f));
-    --_button-text: var(--button-destructive-text, var(--foreground-danger, #d32f2f));
-    --_button-hover-bg: var(--button-destructive-hover-bg, var(--foreground-danger, #d32f2f));
-    --_button-hover-border-color: var(--button-destructive-hover-border-color, var(--foreground-danger, #d32f2f));
-    --_button-hover-text: var(--button-destructive-hover-text, var(--foreground-inverted-strong, #ffffff));
-    --_button-active-bg: var(--button-destructive-active-bg, var(--foreground-danger-pressed, #8e0000));
-    --_button-active-border-color: var(--button-destructive-active-border-color, var(--foreground-danger-pressed, #8e0000));
-    --_button-active-text: var(--button-destructive-active-text, var(--foreground-inverted-strong, #ffffff));
-  }
-
-  /* Corners: Round */
+  /* Corners */
   @container style(--button-corners: round) {
-    --_button-radius: var(--button-round-radius, var(--radius-round, 9999px));
+    --_button-radius: var(--radius-round, 9999px);
   }
 
   /* Layout & Display */
@@ -192,10 +208,22 @@
   color: var(--_button-text);
 
   /* ------------------------------------------------------------------------
+     Hit Area (WCAG 2.5.5 / 2.5.8)
+     Extends the target to --_button-target-size when the visual size is
+     smaller. Collapses to the button's own box when it is already larger.
+     ------------------------------------------------------------------------ */
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--_button-target-size)) / 2));
+    inset-inline: min(0px, calc((100% - var(--_button-target-size)) / 2));
+  }
+
+  /* ------------------------------------------------------------------------
      Disabled State Handling (Native :disabled & aria-disabled="true")
      ------------------------------------------------------------------------ */
   &:where(:disabled, [disabled], [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled, 0.4);
+    opacity: var(--opacity-disabled, 0.5);
     cursor: not-allowed;
     pointer-events: none;
     box-shadow: none;
@@ -221,13 +249,14 @@
     }
 
     &:focus-visible {
-      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+      outline: var(--focus-ring-width, 2px) solid var(--_button-ring-color);
       outline-offset: var(--focus-ring-offset, 2px);
     }
 
     @media (hover: hover) {
       &:hover:not(:disabled, [disabled], [aria-disabled="true"]) {
         --color-palette: var(--_button-hover-color-palette);
+        --_button-ring-color: var(--_button-tone);
         background-color: var(--_button-hover-bg);
         border-color: var(--_button-hover-border-color);
         color: var(--_button-hover-text);
@@ -236,6 +265,7 @@
 
     &:active:not(:disabled, [disabled], [aria-disabled="true"]) {
       --color-palette: var(--_button-active-color-palette);
+      --_button-ring-color: var(--_button-tone);
       background-color: var(--_button-active-bg);
       border-color: var(--_button-active-border-color);
       color: var(--_button-active-text);
@@ -264,237 +294,159 @@
   }
 }
 
-a:where(.button):is(:hover, :focus) {
-  text-decoration: none;
+/* ==========================================================================
+   2. Intent Modifiers (.button--accent, .button--danger)
+   Set the tone only; prominence decides where it is applied.
+   ========================================================================== */
+:where(.button--accent) {
+  --_button-tone: var(--button-tone, var(--foreground-accent, CanvasText));
+  --_button-tone-hover: var(--button-tone-hover, var(--foreground-accent-hover, var(--_button-tone)));
+  --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
+  --_button-tone-border: var(--button-tone-border, var(--_button-tone));
+}
+
+:where(.button--danger) {
+  --_button-tone: var(--button-tone, var(--foreground-danger, CanvasText));
+  --_button-tone-hover: var(--button-tone-hover, var(--foreground-danger-hover, var(--_button-tone)));
+  --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
+  --_button-tone-border: var(--button-tone-border, var(--_button-tone));
 }
 
 /* ==========================================================================
-   2. Button Variants & Prominence Matrix
-   --------------------------------------------------------------------------
-   Orthogonal composition matrix combining Prominence (Weight) and Tone (Intent):
-
-   - Prominence (Weight):
-     * Default (Outline) : Transparent background, muted stroke border
-     * .button--strong    : Solid high-emphasis filled surface (synonym: .button--selected, .button.is-active)
-     * .button--subtle    : Translucent tint surface, borderless (alias: .button--subtle-tint)
-     * .button--plain     : Completely transparent surface, borderless (alias: .button--ghost)
-
-   - Tone (Intent):
-     * Default (Neutral)  : Standard foreground/surface palette
-     * .button--accent    : Brand accent palette (teal)
-     * .button--destructive : Danger palette (red)
-
-   - Orthogonal Combinations:
-     * .button--strong.button--accent (alias: .button--primary)
-     * .button--strong.button--destructive
-     * .button--subtle.button--accent (alias: .button--subtle-primary)
-     * .button--subtle.button--destructive (alias: .button--destructive)
-     * .button--plain.button--accent (alias: .button--plain-primary)
-     * .button--plain.button--destructive (alias: .button--plain-destructive)
+   3. Prominence Modifiers (.button--subtle, .button--plain, .button--strong)
+   Strong is last so a selected state (.is-active, :checked) wins over a
+   subtle or plain resting style.
    ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   Tone / Intent Modifiers (Standard Outlined States)
-   -------------------------------------------------------------------------- */
-
-/* Tone: Accent (Outlined brand action) */
-:where(.button--accent) {
-  --_button-border-color: var(--button-accent-border-color, var(--foreground-accent, #008076));
-  --_button-text: var(--button-accent-text, var(--foreground-accent, #008076));
-  --_button-hover-bg: var(--button-accent-hover-bg, var(--foreground-accent, #008076));
-  --_button-hover-border-color: var(--button-accent-hover-border-color, var(--foreground-accent, #008076));
-  --_button-hover-text: var(--button-accent-hover-text, var(--surface, #ffffff));
-  --_button-active-bg: var(--button-accent-active-bg, var(--foreground-accent-pressed, #005f57));
-  --_button-active-border-color: var(--button-accent-active-border-color, var(--foreground-accent-pressed, #005f57));
-  --_button-active-text: var(--button-accent-active-text, var(--surface, #ffffff));
-
-  &:focus-visible {
-    outline-color: var(--button-accent-border-color, var(--foreground-accent, #008076));
-  }
-}
-
-/* Tone: Destructive (Outlined danger action) */
-:where(.button--destructive) {
-  --_button-border-color: var(--button-destructive-border-color, var(--foreground-danger, #d32f2f));
-  --_button-text: var(--button-destructive-text, var(--foreground-danger, #d32f2f));
-  --_button-hover-bg: var(--button-destructive-hover-bg, var(--foreground-danger, #d32f2f));
-  --_button-hover-border-color: var(--button-destructive-hover-border-color, var(--foreground-danger, #d32f2f));
-  --_button-hover-text: var(--button-destructive-hover-text, var(--foreground-inverted-strong, #ffffff));
-  --_button-active-bg: var(--button-destructive-active-bg, var(--foreground-danger-pressed, #8e0000));
-  --_button-active-border-color: var(--button-destructive-active-border-color, var(--foreground-danger-pressed, #8e0000));
-  --_button-active-text: var(--button-destructive-active-text, var(--foreground-inverted-strong, #ffffff));
-
-  &:focus-visible {
-    outline-color: var(--button-destructive-border-color, var(--foreground-danger, #d32f2f));
-  }
-}
-
-/* --------------------------------------------------------------------------
-   Prominence / Weight Modifiers (Surface & Border Treatments)
-   -------------------------------------------------------------------------- */
-
-/* Borderless Base for Plain and Subtle Controls */
-:where(.buttons-plain) {
-  --button-variation: plain;
-}
-
-:where(.buttons-plain, .buttons-subtle, .buttons-subtle, .controls-plain, .controls-subtle) :where(.button),
-:where(.button--plain, .button--ghost, .button--subtle, .button--subtle-tint) {
+:where(.button--subtle) {
+  --_button-bg: var(--surface-translucent, transparent);
+  --_button-text: var(--_button-tone);
   --_button-border-color: transparent;
+  --_button-hover-bg: var(--surface-translucent-strong, transparent);
+  --_button-hover-text: var(--_button-tone-hover);
   --_button-hover-border-color: transparent;
+  --_button-active-bg: var(--surface-translucent-strong, transparent);
+  --_button-active-text: var(--_button-tone-pressed);
   --_button-active-border-color: transparent;
-}
-
-/* Prominence: Plain / Ghost (Transparent resting surface, borderless) */
-:where(.buttons-plain .button, .controls-plain .button),
-:where(.button--plain, .button--ghost) {
-  --_button-bg: var(--button-plain-bg, transparent);
-  --_button-text: var(--button-plain-text, var(--foreground, currentColor));
-  --_button-hover-bg: var(--button-plain-hover-bg, var(--surface-translucent, transparent));
+  --_button-ring-color: var(--focus-ring-color, currentColor);
+  --_button-color-palette: initial;
   --_button-hover-color-palette: initial;
-  --_button-hover-text: var(--button-plain-hover-text, var(--foreground-accent-hover, currentColor));
-  --_button-active-bg: var(--button-plain-active-bg, var(--surface-translucent-strong, transparent));
   --_button-active-color-palette: initial;
-  --_button-active-text: var(--button-plain-active-text, var(--foreground-accent-pressed, currentColor));
 }
 
-/* Prominence: Subtle (Translucent resting surface, borderless - alias: subtle-tint) */
-:where(.buttons-subtle) {
-  --button-variation: subtle;
-}
-
-:where(.buttons-subtle .button, .buttons-subtle .button, .controls-subtle .button),
-:where(.button--subtle, .button--subtle-tint) {
-  --_button-bg: var(--button-subtle-bg, var(--button-subtle-tint-bg, var(--surface-translucent, transparent)));
-  --_button-text: var(--button-subtle-text, var(--foreground, currentColor));
-  --_button-hover-bg: var(--button-subtle-hover-bg, var(--button-subtle-tint-hover-bg, var(--surface-translucent-strong, transparent)));
+:where(.button--plain) {
+  --_button-bg: transparent;
+  --_button-text: var(--_button-tone);
+  --_button-border-color: transparent;
+  --_button-hover-bg: var(--surface-translucent, transparent);
+  --_button-hover-text: var(--_button-tone-hover);
+  --_button-hover-border-color: transparent;
+  --_button-active-bg: var(--surface-translucent-strong, transparent);
+  --_button-active-text: var(--_button-tone-pressed);
+  --_button-active-border-color: transparent;
+  --_button-ring-color: var(--focus-ring-color, currentColor);
+  --_button-color-palette: initial;
   --_button-hover-color-palette: initial;
-  --_button-hover-text: var(--button-subtle-hover-text, var(--button-subtle-tint-hover-text, var(--foreground-strong, currentColor)));
-  --_button-active-bg: var(--button-subtle-active-bg, var(--button-subtle-tint-active-bg, var(--surface-translucent-strong, transparent)));
   --_button-active-color-palette: initial;
-  --_button-active-text: var(--button-subtle-active-text, var(--button-subtle-tint-active-text, var(--foreground-strong, currentColor)));
 }
 
-/* Prominence: Strong (Solid filled high-emphasis action, synonym: .button--selected, .is-active) */
-:where(.buttons-strong) {
-  --button-variation: strong;
-}
-
-:where(.button:has(:checked), .buttons-strong .button),
-:where(.button--strong, .button--selected, .button.is-active) {
-  --_button-bg: var(--button-strong-bg, var(--button-selected-bg, var(--foreground, #111827)));
-  --_button-border-color: var(--button-strong-border-color, var(--button-selected-border-color, var(--_button-bg, var(--foreground, #111827))));
+/* Strong, and the selected states that render as strong */
+:where(.button--strong, .button.is-active, .button:has(:checked)) {
+  --_button-bg: var(--_button-tone);
+  --_button-text: var(--_button-on-tone);
+  --_button-border-color: var(--_button-tone);
+  --_button-hover-bg: var(--_button-tone-hover);
+  --_button-hover-text: var(--_button-on-tone);
+  --_button-hover-border-color: var(--_button-tone-hover);
+  --_button-active-bg: var(--_button-tone-pressed);
+  --_button-active-text: var(--_button-on-tone);
+  --_button-active-border-color: var(--_button-tone-pressed);
+  --_button-ring-color: var(--_button-tone);
   --_button-color-palette: inverted;
-  --_button-text: var(--button-strong-text, var(--button-selected-text, var(--surface, #ffffff)));
-  --_button-hover-bg: var(--button-strong-hover-bg, var(--button-selected-hover-bg, var(--foreground-accent-hover, #00665e)));
-  --_button-hover-border-color: var(--button-strong-hover-border-color, var(--button-selected-hover-border-color, var(--foreground-accent-hover, #00665e)));
-  --_button-hover-text: var(--button-strong-hover-text, var(--button-selected-hover-text, var(--surface, #ffffff)));
-  --_button-active-bg: var(--button-strong-active-bg, var(--button-selected-active-bg, var(--foreground-accent-pressed, #005f57)));
-  --_button-active-border-color: var(--button-strong-active-border-color, var(--button-selected-active-border-color, var(--foreground-accent-pressed, #005f57)));
-  --_button-active-text: var(--button-strong-active-text, var(--button-selected-active-text, var(--surface, #ffffff)));
+  --_button-hover-color-palette: inverted;
+  --_button-active-color-palette: inverted;
 }
 
-/* --------------------------------------------------------------------------
-   Orthogonal Combinations: Prominence × Tone
-   -------------------------------------------------------------------------- */
-
-/* Combination: Strong Accent / Primary (High-emphasis solid brand action) */
-:where(.button--primary, :is(.button--strong, .button--selected, .button.is-active):is(.button--accent, .button--primary), .buttons-primary .button) {
-  --_button-color-palette: initial;
-  --_button-hover-color-palette: initial;
-  --_button-active-color-palette: initial;
-  --_button-bg: var(--button-primary-bg, var(--foreground-accent, #008076));
-  --_button-border-color: var(--button-primary-border-color, var(--button-primary-bg, var(--foreground-accent, #008076)));
-  --_button-text: var(--button-primary-text, var(--surface, #ffffff));
-  --_button-hover-bg: var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e));
-  --_button-hover-border-color: var(--button-primary-hover-border-color, var(--button-primary-hover-bg, var(--foreground-accent-hover, #00665e)));
-  --_button-hover-text: var(--button-primary-hover-text, var(--button-primary-text, var(--surface, #ffffff)));
-  --_button-active-bg: var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57));
-  --_button-active-border-color: var(--button-primary-active-border-color, var(--button-primary-active-bg, var(--foreground-accent-pressed, #005f57)));
-  --_button-active-text: var(--button-primary-active-text, var(--button-primary-text, var(--surface, #ffffff)));
-
-  &:focus-visible {
-    outline-color: var(--button-primary-bg, var(--foreground-accent, #008076));
-  }
-}
-
-/* Combination: Strong Destructive (High-emphasis solid danger action) */
-:where(:is(.button--strong, .button--selected, .button.is-active).button--destructive, .buttons-destructive .button) {
-  --_button-color-palette: initial;
-  --_button-hover-color-palette: initial;
-  --_button-active-color-palette: initial;
-  --_button-bg: var(--button-strong-destructive-bg, var(--foreground-danger, #d32f2f));
-  --_button-border-color: var(--button-strong-destructive-border-color, var(--_button-bg, var(--foreground-danger, #d32f2f)));
-  --_button-text: var(--button-strong-destructive-text, var(--foreground-inverted-strong, #ffffff));
-  --_button-hover-bg: var(--button-strong-destructive-hover-bg, var(--foreground-danger-hover, #b71c1c));
-  --_button-hover-border-color: var(--button-strong-destructive-hover-border-color, var(--_button-hover-bg, var(--foreground-danger-hover, #b71c1c)));
-  --_button-hover-text: var(--button-strong-destructive-hover-text, var(--foreground-inverted-strong, #ffffff));
-  --_button-active-bg: var(--button-strong-destructive-active-bg, var(--foreground-danger-pressed, #8e0000));
-  --_button-active-border-color: var(--button-strong-destructive-active-border-color, var(--_button-active-bg, var(--foreground-danger-pressed, #8e0000)));
-  --_button-active-text: var(--button-strong-destructive-active-text, var(--foreground-inverted-strong, #ffffff));
-
-  &:focus-visible {
-    outline-color: var(--button-strong-destructive-bg, var(--foreground-danger, #d32f2f));
-  }
-}
-
-/* Combination: Plain Accent (Transparent resting surface, accent text) */
-:where(.buttons-plain) :where(.button--accent),
-:where(.button--plain, .button--ghost):is(.button--accent) {
-  --_button-bg: var(--button-plain-accent-bg, transparent);
-  --_button-text: var(--button-plain-accent-text, var(--foreground-accent, currentColor));
-  --_button-hover-bg: var(--button-plain-accent-hover-bg, var(--surface-translucent, transparent));
-  --_button-hover-text: var(--button-plain-accent-hover-text, var(--foreground-accent-hover, currentColor));
-  --_button-active-bg: var(--button-plain-accent-active-bg, var(--surface-translucent-strong, transparent));
-  --_button-active-text: var(--button-plain-accent-active-text, var(--foreground-accent-pressed, currentColor));
-}
-
-/* Combination: Plain Destructive (Transparent resting surface, danger text) */
-:where(.buttons-plain) :where(.button--destructive),
-:where(.button--plain, .button--ghost):is(.button--destructive, .button--plain button--destructive) {
-  --_button-bg: var(--button-plain-destructive-bg, transparent);
-  --_button-text: var(--button-plain-destructive-text, var(--foreground-danger, currentColor));
-  --_button-hover-bg: var(--button-plain-destructive-hover-bg, var(--surface-translucent, transparent));
-  --_button-hover-text: var(--button-plain-destructive-hover-text, var(--foreground-danger-hover, currentColor));
-  --_button-active-bg: var(--button-plain-destructive-active-bg, var(--surface-translucent-strong, transparent));
-  --_button-active-text: var(--button-plain-destructive-active-text, var(--foreground-danger-pressed, currentColor));
-}
-
-/* Combination: Subtle Accent (Translucent resting surface, accent text) */
-:where(.buttons-subtle) :where(.button--accent),
-:where(.button--subtle, .button--subtle-tint):is(.button--accent, .button--primary, .button--subtle-primary) {
-  --_button-bg: var(--button-subtle-accent-bg, var(--surface-translucent, transparent));
-  --_button-text: var(--button-subtle-accent-text, var(--foreground-accent, currentColor));
-  --_button-hover-bg: var(--button-subtle-accent-hover-bg, var(--surface-translucent-strong, transparent));
-  --_button-hover-text: var(--button-subtle-accent-hover-text, var(--foreground-accent-hover, currentColor));
-  --_button-active-bg: var(--button-subtle-accent-active-bg, var(--surface-translucent-strong, transparent));
-  --_button-active-text: var(--button-subtle-accent-active-text, var(--foreground-accent-pressed, currentColor));
-}
-
-/* Combination: Subtle Destructive (Translucent resting surface, danger text) */
-:where(.buttons-subtle) :where(.button--destructive),
-:where(.button--subtle, .button--subtle-tint):is(.button--destructive) {
-  --_button-bg: var(--button-subtle-destructive-bg, var(--button-subtle-tint-destructive-bg, var(--surface-translucent, transparent)));
-  --_button-text: var(--button-subtle-destructive-text, var(--foreground-danger, currentColor));
-  --_button-hover-bg: var(--button-subtle-destructive-hover-bg, var(--button-subtle-tint-destructive-hover-bg, var(--surface-translucent-strong, transparent)));
-  --_button-hover-text: var(--button-subtle-destructive-hover-text, var(--button-subtle-tint-destructive-hover-text, var(--foreground-danger-hover, currentColor)));
-  --_button-active-bg: var(--button-subtle-destructive-active-bg, var(--button-subtle-tint-active-bg, var(--surface-translucent-strong, transparent)));
-  --_button-active-text: var(--button-subtle-destructive-active-text, var(--button-subtle-tint-destructive-active-text, var(--foreground-danger-pressed, currentColor)));
-}
-
-
+/* Placeholder: dashed outline for "add" affordances */
 :where(.button--placeholder):not(:hover, :active) {
   --_button-border-color: var(--button-placeholder-border-color, var(--border-color-quiet, currentColor));
   border-style: dashed;
 }
 
-:where(.avatar-group--stackable:not(:hover)),
-:where(.avatar-group--stacked) {
-  :where(.button--avatar) {
-    --_button-bg: var(--button-bg, var(--surface-card, Canvas));
+/* ==========================================================================
+   4. Size Modifiers (.button--sm, .button--lg)
+   ========================================================================== */
+
+/* Small: 32px visual, 48px hit area unless fine-pointer targets are opted in */
+:where(.button--sm) {
+  --_button-padding-block: var(--button-sm-padding-block, 0.125rem);
+  --_button-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+  --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
+  --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
+}
+
+/* Large: 64px; steps down to the default size inside a compact container */
+:where(.button--lg) {
+  --_button-padding-block: var(--button-lg-padding-block, 0.5rem);
+  --_button-padding-inline: var(--button-lg-padding-inline, 1.5rem);
+  --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
+  --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
+
+  @container style(--ui-sizing: compact) {
+    --_button-padding-block: var(--button-padding-block, 0.25rem);
+    --_button-padding-inline: var(--button-padding-inline, 1rem);
+    --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
+    --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   }
 }
 
+/* Flush: no padding or minimum size, for icon glyphs inside dense toolbars.
+   The hit area above still applies. */
+:where(.button--flush) {
+  padding: 0;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+/* ==========================================================================
+   5. Shape Modifiers (.button--round)
+   ========================================================================== */
+:where(.button--round) {
+  --_button-radius: var(--radius-round, 9999px);
+}
+
+/* ==========================================================================
+   6. Container Group Classes (.buttons-*)
+   Set a container flag only; the base button reads it via style queries.
+   ========================================================================== */
+:where(.buttons-strong) {
+  --button-prominence: strong;
+}
+
+:where(.buttons-subtle) {
+  --button-prominence: subtle;
+}
+
+:where(.buttons-plain) {
+  --button-prominence: plain;
+}
+
+:where(.buttons-sm) {
+  --button-size: sm;
+}
+
+:where(.buttons-lg) {
+  --button-size: lg;
+}
+
+:where(.buttons-round) {
+  --button-corners: round;
+}
+
+/* ==========================================================================
+   7. Icons, Toggles & Icon-Only Presentation
+   ========================================================================== */
+
+/* Toggle icons (.icon--on / .icon--off) for checkbox, radio and pressed buttons */
 :where(.button:has(.icon--off),
   .button:has(input[type="checkbox"], input[type="radio"])) {
   .icon--on {
@@ -543,64 +495,7 @@ a:where(.button):is(:hover, :focus) {
   }
 }
 
-/* ==========================================================================
-   3. Button Shapes & Sizes (.button--round, .button--sm, .button--lg, etc.)
-   ========================================================================== */
-
-/* Round Shape Modifier */
-:where(.buttons-round) {
-  --button-corners: round;
-}
-
-:where(.buttons-round .button),
-:where(.button--round) {
-  --_button-radius: var(--radius-round, 9999px);
-}
-
-/* Tight Sizing (Zero padding for compact toolbars) */
-:where(.button--flush) {
-  padding: 0;
-  min-block-size: 0;
-  min-inline-size: 0;
-}
-
-/* Dense Sizing (Small padding for compact toolbars) */
-:where(.buttons-dense) {
-  --button-density: dense;
-}
-
-/* Small Variant (Minimum 32px height, 24px WCAG 2.5.8 compliant) */
-:where(.button--sm) {
-  --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2, 0.125rem));
-  --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-8, 0.5rem));
-  --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
-  --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
-}
-
-:where(.buttons-sm) {
-  --button-size: sm;
-}
-
-/* Large Variant (56px touch target) */
-:where(.buttons-lg .button),
-:where(.button--lg) {
-  --_button-padding-block: var(--button-lg-padding-block, var(--spacing-8, 0.5rem));
-  --_button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24, 1.5rem));
-  --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, var(--typography-font-size-1, 1.125rem)));
-  --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 3.5rem));
-
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_button-padding-block: var(--button-padding-block, var(--spacing-4, 0.25rem));
-    --_button-padding-inline: var(--button-padding-inline, var(--spacing-16, 1rem));
-    --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
-  }
-}
-
-:where(.buttons-lg) {
-  --button-size: lg;
-}
-
-/* Icon-Only Button */
+/* Icon-Only Button (minimal presentation; keeps an accessible name) */
 :where(.button:has(:where(span.visually-hidden, span.sr-only, span.sr))),
 :where(.button--icon) {
   --_button-padding-inline: var(--_button-padding-block);
@@ -636,10 +531,10 @@ a:where(.button):is(:hover, :focus) {
   --icon-size: var(--icon-size-lg, 1.25em);
 }
 
-/* Responsive / Container-Adaptive Button */
+/* Container-Adaptive Presentation (labels collapse to icon-only) */
 :where(.button:not(.button--labeled):has(.icon)) {
   @container style(--ui-labels: hidden) {
-    --_button-padding-inline: var(--_button-padding-block, var(--spacing-4, 0.25rem));
+    --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
     > :where(span:not(.button__icon), .button__text, .ui-label) {
       position: absolute;
@@ -673,7 +568,7 @@ a:where(.button):is(:hover, :focus) {
 
 :where(.hide-labels) :where(.button:not(.button--labeled):has(.icon)),
 :where(.button:not(.button--labeled):has(.icon).hide-labels) {
-  --_button-padding-inline: var(--_button-padding-block, var(--spacing-4, 0.25rem));
+  --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
   > :where(span:not(.button__icon), .button__text, .ui-label) {
     position: absolute;
@@ -705,9 +600,18 @@ a:where(.button):is(:hover, :focus) {
   }
 }
 
+/* ==========================================================================
+   8. Avatar Button (.button--avatar)
+   ========================================================================== */
+:where(.avatar-group--stackable:not(:hover)),
+:where(.avatar-group--stacked) {
+  :where(.button--avatar) {
+    --_button-bg: var(--button-bg, var(--surface-card, Canvas));
+  }
+}
 
 :where(.button--avatar) {
-  --_button-padding-inline: var(--button-padding-block, 0.5rem);
+  --_button-padding-inline: var(--button-padding-block, 0.25rem);
   --_button-radius: var(--avatar-radius, var(--button-radius, var(--radius-md, 0.25rem)));
   block-size: var(--_button-min-size);
   overflow: hidden;
@@ -718,19 +622,19 @@ a:where(.button):is(:hover, :focus) {
   }
 
   &:where([data-status="online"], .avatar--status-online) {
-    --_button-border-color: var(--avatar-online-status-color, var(--foreground-success, green));
+    --_button-border-color: var(--avatar-online-status-color, var(--foreground-success, currentColor));
   }
 
   &:where([data-status="away"], .avatar--status-away) {
-    --_button-border-color: var(--avatar-away-status-color, var(--foreground-warning, yellow));
+    --_button-border-color: var(--avatar-away-status-color, var(--foreground-warning, currentColor));
   }
 
   &:where([data-status="busy"], .avatar--status-busy) {
-    --_button-border-color: var(--avatar-busy-status-color, var(--foreground-danger, red));
+    --_button-border-color: var(--avatar-busy-status-color, var(--foreground-danger, currentColor));
   }
 
   &:where([data-status="offline"], .avatar--status-offline) {
-    --_button-border-color: var(--avatar-offline-status-color, var(--foreground-muted, gray));
+    --_button-border-color: var(--avatar-offline-status-color, var(--foreground-muted, currentColor));
   }
 
   :where(img, picture) {
@@ -742,7 +646,9 @@ a:where(.button):is(:hover, :focus) {
   }
 }
 
-/* Link-Specific Resets (:where(a.button)) */
+/* ==========================================================================
+   9. Link Resets & Text (:where(a.button), .button__text)
+   ========================================================================== */
 :where(a.button) {
   text-decoration: none;
 
@@ -752,7 +658,6 @@ a:where(.button):is(:hover, :focus) {
   }
 }
 
-/* Button Text */
 :where(.button > span:not(.button__icon), .button__text) {
   padding-block: var(--_button-padding-block);
   text-box: trim-both cap alphabetic;
@@ -768,18 +673,7 @@ a:where(.button):is(:hover, :focus) {
 }
 
 /* ==========================================================================
-   4. Size & Density Regular Resets
-   ========================================================================== */
-
-:where(.buttons-regular) {
-  --button-size: regular;
-  --button-density: regular;
-  --button-variation: default;
-  --button-corners: default;
-}
-
-/* ==========================================================================
-   5. Accessibility & Media Queries
+   10. Accessibility & User Preferences
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   :where(.button, a.button) {
@@ -789,6 +683,23 @@ a:where(.button):is(:hover, :focus) {
 
 @media (prefers-contrast: more) {
   :where(.button, a.button) {
-    --_button-border-width: var(--border-width-md, var(--border-width, 2px));
+    --_button-border-width: var(--border-width-medium, 2px);
+  }
+}
+
+/* Forced colors: backgrounds are removed, so selected and disabled states
+   are carried by system colours. Transparent borders on subtle and plain
+   buttons become visible automatically. */
+@media (forced-colors: active) {
+  :where(.button.is-active, .button:has(:checked), .button[aria-pressed="true"]) {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    border-color: Highlight;
+    color: HighlightText;
+  }
+
+  :where(.button):where(:disabled, [disabled], [aria-disabled="true"]) {
+    border-color: GrayText;
+    color: GrayText;
   }
 }

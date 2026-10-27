@@ -66,7 +66,7 @@ AI agents and developers MUST use the following markup structures:
   <div class="field">...</div>
   <div class="form__submission form__submission--right">
     <button type="reset" class="button button--subtle"><span>Cancel</span></button>
-    <button type="submit" class="button button--primary"><span>Submit</span></button>
+    <button type="submit" class="button button--strong button--accent"><span>Submit</span></button>
   </div>
 </form>
 \`\`\`
@@ -373,7 +373,7 @@ export const ZeroClassOrchestration: Story = {
           </div>
           <div class="form__submission">
             <button type="button" class="button button--subtle"><span>Discard</span></button>
-            <button type="submit" class="button button--primary"><span>Save</span></button>
+            <button type="submit" class="button button--strong button--accent"><span>Save</span></button>
           </div>
         </form>
       </div>
@@ -387,7 +387,7 @@ export const ZeroClassOrchestration: Story = {
             <input id="csq-left-input" type="text" class="input" placeholder="Filter tags..." />
           </div>
           <div class="form__submission">
-            <button type="submit" class="button button--primary"><span>Search Tag</span></button>
+            <button type="submit" class="button button--strong button--accent"><span>Search Tag</span></button>
           </div>
         </form>
       </div>
@@ -475,7 +475,7 @@ export const RealWorldRecipes: Story = {
                 <button type="reset" class="button button--subtle">
                   <span>Reset</span>
                 </button>
-                <button type="submit" class="button button--primary">
+                <button type="submit" class="button button--strong button--accent">
                   <span>Complete Registration</span>
                 </button>
               </div>

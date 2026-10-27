@@ -8,6 +8,11 @@
    Background Color Utilities
    -------------------------------------------------------------------------- */
 
+:where(.bg-transparent, .bg-none) {
+    --bg-color: transparent;
+    background-color: transparent;
+}
+
 :where(.bg-color, .bg) {
     --bg-color: var(--surface, Canvas);
     background-color: var(--surface, Canvas);
@@ -134,6 +139,14 @@
    -------------------------------------------------------------------------- */
 :where(.text-color) {
     color: var(--foreground, CanvasText);
+}
+
+:where(.text-current, .text-color-current) {
+    color: currentColor;
+}
+
+:where(.text-transparent) {
+    color: transparent;
 }
 
 :where(.text-color-inverted, .text-inverted) {

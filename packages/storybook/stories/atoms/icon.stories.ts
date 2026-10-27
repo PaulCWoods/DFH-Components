@@ -465,12 +465,12 @@ export const RealWorldRecipes: Story = {
           Recipe 2: Action Buttons with Trailing Directional Icons
         </h4>
         <div style="display: flex; gap: var(--spacing-12); align-items: center; flex-wrap: wrap;">
-          <button type="button" class="button button--primary">
+          <button type="button" class="button button--strong button--accent">
             <span>Continue</span>
             <svg class="icon icon--dir" aria-hidden="true"><use href="#ArrowRight"/></svg>
           </button>
 
-          <button type="button" class="button button--secondary">
+          <button type="button" class="button">
             <span>Download Report</span>
             <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
           </button>

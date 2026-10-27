@@ -30,7 +30,7 @@ Semantic thematic break (\`<hr class="divider">\`) that dynamically adapts betwe
   <button type="button" class="button"><span>Cut</span></button>
   <button type="button" class="button"><span>Copy</span></button>
   <hr class="divider">
-  <button type="button" class="button button--destructive"><span>Delete</span></button>
+  <button type="button" class="button button--danger"><span>Delete</span></button>
 </div>
 \`\`\`
 
@@ -328,7 +328,7 @@ export const RealWorldRecipes: Story = {
             <button type="button" class="button button--sm"><span>Edit</span></button>
             <button type="button" class="button button--sm"><span>Duplicate</span></button>
             <hr class="divider">
-            <button type="button" class="button button--sm button--destructive"><span>Delete</span></button>
+            <button type="button" class="button button--sm button--danger"><span>Delete</span></button>
           </div>
         </div>
       </section>

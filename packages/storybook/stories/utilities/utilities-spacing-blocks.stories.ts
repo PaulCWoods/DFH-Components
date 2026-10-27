@@ -264,7 +264,7 @@ export const SemanticWidthHierarchy: Story = {
               <span class="font-size-xs font-weight-bold text-color-muted">QUICK ACTIONS</span>
               <button type="button" class="button button--subtle button--sm inline justify-content-start"><span>Duplicate Item</span></button>
               <button type="button" class="button button--subtle button--sm inline justify-content-start"><span>Export JSON</span></button>
-              <button type="button" class="button button--destructive button--sm inline justify-content-start"><span>Delete</span></button>
+              <button type="button" class="button button--danger button--sm inline justify-content-start"><span>Delete</span></button>
             </div>
           </div>
         </div>
@@ -285,7 +285,7 @@ export const SemanticWidthHierarchy: Story = {
                 <option>Archived</option>
               </select>
             </div>
-            <button type="button" class="button button--primary button--sm"><span>Apply Filters</span></button>
+            <button type="button" class="button button--strong button--accent button--sm"><span>Apply Filters</span></button>
           </aside>
         </div>
 
@@ -304,8 +304,8 @@ export const SemanticWidthHierarchy: Story = {
               Are you sure you want to deploy release v2.4.0 to the staging environment? All automated axe accessibility scans must pass before promoting to production.
             </p>
             <footer class="inline justify-content-end gap-sm">
-              <button type="button" class="button button--secondary"><span>Cancel</span></button>
-              <button type="button" class="button button--primary"><span>Confirm</span></button>
+              <button type="button" class="button"><span>Cancel</span></button>
+              <button type="button" class="button button--strong button--accent"><span>Confirm</span></button>
             </footer>
           </div>
         </div>

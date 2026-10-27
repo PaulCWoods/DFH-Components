@@ -48,7 +48,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     </div>
     <div class="button-group banner__action">
       <button type="button" class="button button--subtle"><span>Preferences</span></button>
-      <button type="button" class="button button--primary"><span>Accept All</span></button>
+      <button type="button" class="button button--strong button--accent"><span>Accept All</span></button>
     </div>
   </div>
 </aside>
@@ -275,7 +275,7 @@ export const Variants: Story = {
                   </div>
                   <div class="button-group banner__action">
                     <button type="button" class="button button--subtle"><span>Preferences</span></button>
-                    <button type="button" class="button button--primary"><span>Accept All</span></button>
+                    <button type="button" class="button button--strong button--accent"><span>Accept All</span></button>
                   </div>
                 </div>
               </aside>
@@ -343,7 +343,7 @@ export const StateMatrix: Story = {
               <div style="padding: 4rem 1.5rem; text-align: center;">
                 <button 
                   type="button" 
-                  class="button button--secondary button--sm"
+                  class="button button--sm"
                   onclick="document.getElementById('demo-alert-dismiss').classList.remove('alert--dismissing')"
                 >
                   <span>Reset Alert</span>
@@ -434,7 +434,7 @@ export const RealWorldRecipes: Story = {
                 </div>
                 <div class="button-group banner__action">
                   <button type="button" class="button button--subtle"><span>Reject Non-Essential</span></button>
-                  <button type="button" class="button button--primary"><span>Accept All</span></button>
+                  <button type="button" class="button button--strong button--accent"><span>Accept All</span></button>
                 </div>
               </div>
             </aside>

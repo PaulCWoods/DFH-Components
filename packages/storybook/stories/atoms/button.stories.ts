@@ -54,12 +54,12 @@ AI agents and developers MUST strictly use the following semantic patterns:
 </button>
 
 <!-- Destructive Action Button (Outlined danger) -->
-<button type="button" class="button button--destructive">
+<button type="button" class="button button--danger">
   <span>Delete Item</span>
 </button>
 
 <!-- Strong Destructive Action Button (High-emphasis solid danger) -->
-<button type="button" class="button button--strong button--destructive">
+<button type="button" class="button button--strong button--danger">
   <span>Delete Record</span>
 </button>
 
@@ -69,7 +69,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 </button>
 
 <!-- Icon Button (Trailing) -->
-<button type="button" class="button button--primary">
+<button type="button" class="button button--strong button--accent">
   <span>Get Started</span>
   <svg class="icon icon--dir" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
 </button>
@@ -94,7 +94,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 </label>
 
 <!-- Link Styled as Button (MANDATORY: role="button") -->
-<a href="/login" class="button button--primary" role="button">
+<a href="/login" class="button button--strong button--accent" role="button">
   <span>Log In</span>
 </a>
 \`\`\`
@@ -270,7 +270,7 @@ export const Anatomy: Story = {
       <div class="demo-label">1. Target Bounds (48px) &rarr; 2. Label Text &rarr; 3. Trailing Icon (aria-hidden) &rarr; 4. High-Contrast Focus Ring</div>
       
       <div class="cluster" style="display: flex; gap: var(--spacing-16); align-items: center;">
-        <button type="button" class="button button--primary">
+        <button type="button" class="button button--strong button--accent">
           <span>Continue Checkout</span>
           <svg class="icon icon--dir" aria-hidden="true" focusable="false">
             <use href="#ArrowRight"/>
@@ -324,9 +324,9 @@ export const Variants: Story = {
         <button type="button" class="button button--accent">
           <span>button--accent</span>
         </button>
-        <button type="button" class="button button--destructive">
+        <button type="button" class="button button--danger">
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
-          <span>button--destructive</span>
+          <span>button--danger</span>
         </button>
       </div>
 
@@ -335,9 +335,9 @@ export const Variants: Story = {
       <div class="demo-label">3. High Prominence (Strong) Combinations</div>
       <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
         <button type="button" class="button button--strong button--accent">
-          <span>Strong + Accent (.button--primary)</span>
+          <span>Strong + Accent (.button--strong button--accent)</span>
         </button>
-        <button type="button" class="button button--strong button--destructive">
+        <button type="button" class="button button--strong button--danger">
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
           <span>Strong + Destructive</span>
         </button>
@@ -354,14 +354,14 @@ export const Variants: Story = {
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Check"/></svg>
           <span>Subtle + Accent</span>
         </button>
-        <button type="button" class="button button--subtle button--destructive">
+        <button type="button" class="button button--subtle button--danger">
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
           <span>Subtle + Destructive</span>
         </button>
         <button type="button" class="button button--plain button--accent">
           <span>Plain + Accent</span>
         </button>
-        <button type="button" class="button button--plain button--destructive">
+        <button type="button" class="button button--plain button--danger">
           <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
           <span>Plain + Destructive</span>
         </button>
@@ -380,22 +380,22 @@ export const StateMatrix: Story = {
       <div class="demo-label">Interactive States (Resting, Active, Disabled, Aria-Disabled)</div>
       <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
         <!-- Resting -->
-        <button type="button" class="button button--primary">
+        <button type="button" class="button button--strong button--accent">
           <span>Resting</span>
         </button>
 
         <!-- Selected Toggle -->
-        <button type="button" class="button button--primary button--selected">
+        <button type="button" class="button button--strong button--accent is-active">
           <span>Selected / Active</span>
         </button>
 
         <!-- Native Disabled -->
-        <button type="button" class="button button--primary" disabled>
+        <button type="button" class="button button--strong button--accent" disabled>
           <span>Native Disabled</span>
         </button>
 
         <!-- Aria Disabled (Still focusable for screen readers) -->
-        <button type="button" class="button button--primary" aria-disabled="true">
+        <button type="button" class="button button--strong button--accent" aria-disabled="true">
           <span>Aria Disabled</span>
         </button>
 
@@ -419,7 +419,7 @@ export const SizesAndDensity: Story = {
         <!-- Small -->
         <div class="stack" style="align-items: center;">
           <div class="demo-label">Small (.button--sm / 32px height)</div>
-          <button type="button" class="button button--primary button--sm">
+          <button type="button" class="button button--strong button--accent button--sm">
             <span>Small Action</span>
           </button>
         </div>
@@ -427,7 +427,7 @@ export const SizesAndDensity: Story = {
         <!-- Medium (Default) -->
         <div class="stack" style="align-items: center;">
           <div class="demo-label">Standard (.button / 48px WCAG AAA)</div>
-          <button type="button" class="button button--primary">
+          <button type="button" class="button button--strong button--accent">
             <span>Standard Action</span>
           </button>
         </div>
@@ -435,7 +435,7 @@ export const SizesAndDensity: Story = {
         <!-- Large -->
         <div class="stack" style="align-items: center;">
           <div class="demo-label">Large (.button--lg / 56px height)</div>
-          <button type="button" class="button button--primary button--lg">
+          <button type="button" class="button button--strong button--accent button--lg">
             <span>Large Action</span>
           </button>
         </div>
@@ -459,7 +459,7 @@ export const IconButtonsAndShapes: Story = {
         </button>
 
         <!-- Round Action Pill -->
-        <button type="button" class="button button--primary button--round">
+        <button type="button" class="button button--strong button--accent button--round">
           <span>Rounded Pill</span>
         </button>
 
@@ -534,7 +534,7 @@ export const ZeroClassOrchestration: Story = {
       <div class="demo-stage" style="--ui-density: dense;">
         <div class="cluster" style="display: flex; gap: var(--spacing-8); align-items: center;">
           <button type="button" class="button"><span>Cancel</span></button>
-          <button type="button" class="button button--primary"><span>Save Changes</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Save Changes</span></button>
         </div>
       </div>
     </div>
@@ -576,7 +576,7 @@ export const ResponsiveAdaptive: Story = {
                     <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                     <span class="button__text">Search</span>
                   </button>
-                  <button type="button" class="button button--primary" aria-label="Create component">
+                  <button type="button" class="button button--strong button--accent" aria-label="Create component">
                     <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                     <span class="button__text">Create</span>
                   </button>
@@ -618,7 +618,7 @@ export const RealWorldRecipes: Story = {
             <button type="button" class="button">
               <span>Save as Draft</span>
             </button>
-            <button type="button" class="button button--primary">
+            <button type="button" class="button button--strong button--accent">
               <span>Publish Report</span>
               <svg class="icon icon--dir" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
             </button>
@@ -637,7 +637,7 @@ export const RealWorldRecipes: Story = {
             <button type="button" class="button button--subtle">
               <span>Cancel</span>
             </button>
-            <button type="button" class="button button--destructive">
+            <button type="button" class="button button--danger">
               <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
               <span>Delete Permanently</span>
             </button>

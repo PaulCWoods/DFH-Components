@@ -9,10 +9,20 @@
    1. Dimension Utilities (Width & Height)
    -------------------------------------------------------------------------- */
 
-/* Full Viewport Height */
+/* Full Viewport Height & Width */
 :where(.min-h-screen, .min-block-screen) {
     min-block-size: 100vh;
     min-block-size: 100dvh;
+}
+
+:where(.w-screen, .inline-screen) {
+    inline-size: 100vw;
+    inline-size: 100dvw;
+}
+
+:where(.h-screen, .block-screen) {
+    block-size: 100vh;
+    block-size: 100dvh;
 }
 
 /* Full Width & Height */
@@ -22,6 +32,14 @@
 
 :where(.h-full, .block-full) {
     block-size: 100%;
+}
+
+:where(.w-auto, .inline-auto) {
+    inline-size: auto;
+}
+
+:where(.h-auto, .block-auto) {
+    block-size: auto;
 }
 
 /* Zero Minimum Dimensions (Prevents Flex/Grid Overflow Blowout) */
@@ -37,23 +55,23 @@
    2. Positioning Utilities
    -------------------------------------------------------------------------- */
 
-:where(.position-relative) {
+:where(.position-relative, .relative) {
     position: relative;
 }
 
-:where(.position-absolute) {
+:where(.position-absolute, .absolute) {
     position: absolute;
 }
 
-:where(.position-sticky) {
+:where(.position-sticky, .sticky) {
     position: sticky;
 }
 
-:where(.position-static) {
+:where(.position-static, .static) {
     position: static;
 }
 
-:where(.position-fixed) {
+:where(.position-fixed, .fixed) {
     position: fixed;
 }
 
@@ -134,4 +152,40 @@
     backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
     -webkit-backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
     z-index: calc(var(--z-modal, 100) - 1);
+}
+
+/* --------------------------------------------------------------------------
+   6. Z-Index Utilities
+   -------------------------------------------------------------------------- */
+
+:where(.z-auto) {
+    z-index: auto;
+}
+
+:where(.z-0, .z-base) {
+    z-index: var(--z-index-base, 0);
+}
+
+:where(.z-10, .z-sticky) {
+    z-index: var(--z-index-sticky, 100);
+}
+
+:where(.z-20, .z-overlay) {
+    z-index: var(--z-index-overlay, 300);
+}
+
+:where(.z-30, .z-dialog) {
+    z-index: var(--z-index-dialog, 400);
+}
+
+:where(.z-40, .z-popover) {
+    z-index: var(--z-index-popover, 500);
+}
+
+:where(.z-50, .z-toast) {
+    z-index: var(--z-index-toast, 600);
+}
+
+:where(.z-tooltip) {
+    z-index: var(--z-index-tooltip, 700);
 }

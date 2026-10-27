@@ -1,9 +1,62 @@
 # AGENTS.md: Design For Humans Component Library
 
 ## Project Context & Mission
-**Design For Humans** is an accessible, modern, token-driven UI component library and design system combining Web Standards, Figma synchronization, and AI-agent workflows.
+**Design For Humans** is an accessible, modern, token-driven UI component library and design system combining Web Standards, Figma synchronization, and automated workflows.
 - **Lead / Author:** Paul Charles Woods (Senior web professional specializing in digital accessibility and web standards).
 - **Target Standard:** WCAG 2.2 Level AA / AAA, Baseline Widely Available + Modern Web Standards.
+
+---
+
+## Source of Truth & Pre-v1 Migration
+- **`docs/PRINCIPLES.md` outranks this file.** It defines the shared variant axes, token tiers, v1 scope and the refinement checklist. Where this file and PRINCIPLES disagree, PRINCIPLES wins and this file is the one to fix.
+- **Dual audience:** DFH-Components feeds developers (CSS) and designers (Figma Variables and Tokens Studio via `packages/figma-sync/`) from one token source. Any change to token tiers, axis names or variant values must keep parity in both.
+- **Pre-v1 status:** The library is being refactored component by component against PRINCIPLES. Markup in this file uses names the current CSS supports. Where a canonical name is not yet implemented, the table below gives the current class to use and the target it will become. When you refactor a component, migrate it to the target names, delete its aliases, and update its section here.
+
+### Shared Variant Axes (PRINCIPLES §2)
+Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.button--subtle-primary`, `.button--plain-destructive` are forbidden; write `.button--subtle.button--accent`).
+
+| Axis | Applies to | Values |
+| :--- | :--- | :--- |
+| Pointer | Everything | Touch (48px targets, default), fine (32px targets, opt-in by the product via a root token only) |
+| Size | Atoms & interactive controls only | default, `--sm`, `--lg` |
+| Density | Containers & layout only | default, `--compact` (sets `--ui-sizing: compact`; nested gaps, type and controls step down) |
+| Presentation | Everything | Normal (text + icon), minimal (icon only) |
+| Prominence | Everything with a surface | default, `--strong`, `--subtle`, `--plain` |
+| Intent | Status or consequence | neutral (default), `--accent`, `--danger`, `--warning`, `--success`, `--info` |
+
+- **Intent never relies on colour alone** (WCAG 1.4.1): pair every non-neutral intent with an icon, a role (`role="alert"`, `role="status"`) or descriptive text.
+- **Smaller size never shrinks the hit area:** `--sm` controls (and controls stepped down by a compact container) keep a 48px target unless the product has opted into fine-pointer targets, and never drop below 24px (WCAG 2.5.8). The library never switches fine-pointer mode on automatically with `@media (pointer: fine)`.
+
+### Legacy → Canonical Names
+| Current class (use until migrated) | Target | Notes |
+| :--- | :--- | :--- |
+| `.button--primary` | `.button--strong.button--accent` | Already supported. Do not write `--primary` in new markup. |
+| `.button--secondary` | `.button` (default) | Not a button modifier; never use it. |
+| `.button--destructive` | `.button--danger` | Keep `--destructive` until button is migrated. |
+| `.button--subtle-primary`, `.button--plain-primary`, `.button--plain-destructive`, `.button--subtle-tint`, `.button--ghost` | Combine single-axis modifiers | Compound or duplicate prominence names; remove. |
+| `--dense` modifiers (`.card--dense`, `.field--dense`, `.banner--dense`, etc.) | `--compact` | One density modifier only. |
+| `.ui-dense`, `style(--ui-density: dense)`, `--control-density`, `--menu-density`, `--combobox-density`, `--textarea-density`, `--telemetry-density` | `.ui-compact`, `style(--ui-sizing: compact)` | One density flag. Migrate in each component's pass. |
+| `.banner--info` | Undecided | Currently maps to accent; settled in the banner pass. |
+| `.alert` styling | `.banner` + `role` | `.alert` is a placement container only (see §21). |
+| `.range-group` | `.range-lockup` | Do not use. |
+| `.tabs`, `.tabs__panel`, `.tab--simple`, `.workspace` | `.tabbed-content`, `.tab-panel`, `.tab--plain`, `.app__workspace` | Do not use. |
+| Responsive visibility synonyms (§31D) | First name in each row | Do not use synonyms. |
+
+### v1 Scope
+- **In core:** `telemetry` (to be refactored onto badge, text and icon atoms), `batch-actions`.
+- **Out of core:** `deck` is a stress-test showcase moving to `packages/storybook/stories/recipes/`. Do not use it in new library work or treat it as a pattern to copy.
+
+---
+
+## Technology Stack
+- **Monorepo Architecture:** npm workspaces (`packages/*`).
+- **Core Styling:** Vanilla Modern CSS (CSS Nesting, Logical Properties, Container Queries, Container Style Queries, CSS Anchor Positioning, Native CSS Functions `@function`, Native `light-dark()`, and `:where()` zero-specificity cascade). No Tailwind, no CSS-in-JS.
+- **Design Tokens:** W3C DTCG (Design Token Community Group) 3-tier JSON specification (`tokens/*.json`) compiled to native CSS Custom Properties.
+- **Storybook:** Storybook 8 (HTML + Vite) with `@storybook/addon-a11y` (axe-core automated WCAG auditing).
+- **Documentation Site:** Astro 7 with MDX (`packages/docs`).
+- **Iconography:** Canonical SVG sprite sheet (`icons/icons.svg`) synchronized across web, Storybook, and Craft CMS targets.
+- **Figma Synchronization:** Node.js token compiler and exporter supporting Tokens Studio ($0 free tier) and Native Figma Variables.
+- **Consumer Site:** Craft CMS blog (`/Users/paulwoods/Sites/designforhumans-blog`) consuming tokens & utilities via Sass.
 
 ---
 
@@ -15,38 +68,49 @@ DFH-Components/
 │   ├── 2-semantic.json        # Tier 2: Semantic UI tokens (light-dark(), surfaces, focus, shadows)
 │   └── 3-component.json       # Tier 3: Component tokens (button, dialog, popover, accordion)
 ├── packages/
-│   ├── css/
+│   ├── css/                   # @design-for-humans/components-css
 │   │   ├── src/
+│   │   │   ├── reset.css      # Modern accessible CSS reset
 │   │   │   ├── variables.css  # Auto-compiled CSS custom properties (DO NOT edit directly)
 │   │   │   ├── index.css      # Core entrypoint importing layout, components & utilities
 │   │   │   ├── atoms/         # Foundational indivisible primitives (text, button, tab, input, badge, icon, etc.)
 │   │   │   ├── molecules/     # Simple combined units (field, lockup, tab-list, avatar, banner, telemetry, popover, etc.)
-│   │   │   ├── organisms/     # Complex composite assemblies (card, deck, dialog, table, tabbed-content, header, etc.)
-│   │   │   ├── layout/        # 1D/2D layout primitives (cluster.css, grid.css, inline.css, split.css, stack.css, wrapper.css)
-│   │   │   ├── utilities/     # Utility classes (spacing.css, border.css, typography.css, accessibility.css, responsive-helpers.css)
+│   │   │   ├── organisms/     # Complex composite assemblies (card, dialog, table, tabbed-content, header, etc.)
+│   │   │   ├── layout/        # 1D/2D spatial layout primitives (cluster, grid, inline, split, stack, wrapper, sidebar, app)
+│   │   │   ├── utilities/     # Low-specificity utility classes (spacing, border, typography, accessibility, display, flex, layout-helpers)
 │   │   │   └── overrides.css  # Custom extension layer for project-specific overrides
-│   ├── figma-sync/
+│   ├── docs/                  # @design-for-humans/docs (Astro documentation portal)
+│   │   ├── src/
+│   │   │   ├── components/    # Astro documentation components (ExampleCard, CodeBlock, ComponentPlayground, etc.)
+│   │   │   ├── layouts/       # Astro page shells & layout wrappers
+│   │   │   └── pages/         # Documentation routes (/components, /components/atoms/button, etc.)
+│   │   └── public/            # Public assets (icons.svg, favicon)
+│   ├── figma-sync/            # Token compilation & Figma export tooling
 │   │   ├── compile-tokens.js      # Node token compiler (W3C DTCG -> CSS variables)
 │   │   ├── export-figma-tokens.js # Figma exporter (Tokens Studio & Honza Toman Variables)
 │   │   └── dist/
 │   │       ├── tokens-studio/     # Tokens Studio format (figma-tokens.json)
 │   │       └── native-variables/  # Native Figma Variables format (unified and modular collections)
-│   └── storybook/
+│   └── storybook/             # @design-for-humans/storybook
 │       ├── .storybook/        # Storybook configuration with @storybook/addon-a11y
 │       └── stories/           # Component stories with automated axe WCAG checks
 │           ├── atoms/         # Stories for indivisible primitives (button, input, badge, icon, etc.)
 │           ├── molecules/     # Stories for composed units (field, lockup, avatar, banner, etc.)
-│           ├── organisms/     # Stories for complex assemblies (card, deck, dialog, table, tabs, etc.)
-│           ├── layout/        # Stories for 1D/2D layout primitives (grid, stack, cluster, etc.)
-│           ├── utilities/     # Stories for utility classes (spacing, border, typography, etc.)
-│           ├── recipes/       # Stories for composite workflows (tally-sprout, cadence-dashboard, etc.)
+│           ├── organisms/     # Stories for complex assemblies (card, dialog, table, tabs, etc.)
+│           ├── layout/        # Stories for 1D/2D layout primitives (grid, stack, cluster, inline, split, etc.)
+│           ├── utilities/     # Stories for utility classes (spacing, border, typography, flex, etc.)
+│           ├── recipes/       # Stories for composite workflows and domain showcases (tally-sprout, cadence-dashboard, deck, etc.)
 │           └── tokens/        # Stories for tokens (shadows, elevation, etc.)
+├── docs/                      # Architecture, principles, and handover documentation
+│   ├── PRINCIPLES.md          # Core design and engineering principles (outranks AGENTS.md)
+│   ├── HANDOVER.md            # Active project state, decisions, and roadmap
+│   └── audit/                 # Component inventory and audit findings
 ├── icons/
 │   ├── icons.svg              # CANONICAL Single Source of Truth SVG sprite sheet (91 symbols)
 │   └── icons.html             # Auto-synchronized standalone HTML preview
 ├── scripts/
 │   └── sync-icons.js          # Synchronizer script (npm run sync:icons)
-└── .agents/
+└── .agents/                   # Agent & developer skills and workflow guides
     └── skills/
         ├── modern-web-guidance/   # Chrome web standard best practices
         ├── tokens/SKILL.md        # Detailed token system specification & naming conventions
@@ -55,7 +119,92 @@ DFH-Components/
         └── css-commenting/        # CSS maintenance and block (/* */) commenting guide
 ```
 
-> **Icon System Workflow:** `DFH-Components/icons/icons.svg` is the Single Source of Truth for all SVG symbols. To add or update icons, edit `icons/icons.svg` and execute `npm run sync:icons`. This automatically propagates the updated sprite to `@design-for-humans/components-css`, Storybook runtime (`preview-body.html`), and `designforhumans-blog/templates/_icons.twig`.
+---
+
+## Commands & Development Workflow
+
+### 1. Daily Development & Preview
+| Command | Workspace / Context | Description |
+| :--- | :--- | :--- |
+| `npm run storybook` | `@design-for-humans/storybook` | Starts Storybook dev server on `http://localhost:6006` with live a11y checks. |
+| `npm run build:storybook` | `@design-for-humans/storybook` | Generates static Storybook production bundle in `storybook-static/`. |
+| `npm run docs` | `@design-for-humans/docs` | Starts Astro documentation dev server on `http://localhost:4321`. |
+| `npm run build:docs` | `@design-for-humans/docs` | Builds static Astro documentation site into `packages/docs/dist/`. |
+
+### 2. Tokens & Assets Pipeline
+| Command | Workspace / Context | Description |
+| :--- | :--- | :--- |
+| `npm run build:tokens` | Root | Compiles `tokens/*.json` into `packages/css/src/variables.css`. |
+| `npm run export:figma` | Root | Exports Tokens Studio and Native Figma Variables JSON into `packages/figma-sync/dist/`. |
+| `npm run sync:icons` | Root | Propagates `icons/icons.svg` to CSS package, Storybook, Astro docs, and Craft CMS blog. |
+
+### 3. Linting & Testing Status
+- **Formatting:** Prettier (`^3.0.0`) configured via package.json.
+- **Linter:** TODO (No standalone `npm run lint` script or stylelint configured yet; manual adherence to CSS commenting and zero-specificity rules required).
+- **Accessibility / Automated Testing:** Every Storybook story automatically runs axe-core assertions via `@storybook/addon-a11y`.
+- **Unit / Integration Tests:** TODO (No Jest/Vitest runner configured yet).
+
+---
+
+## Dual-Repository Architecture & Synchronization
+The component library operates in tandem with the live site repository:
+- **Library Repo:** `DFH-Components` (`/Users/paulwoods/Sites/DFH-Components`)
+- **Blog Repo:** `designforhumans-blog` (`/Users/paulwoods/Sites/designforhumans-blog`)
+
+### Synchronization Conventions:
+1. **Utility & Atom Parity:** When modifying CSS utilities or atoms in `packages/css/src/utilities/`, mirror corresponding changes into `designforhumans-blog/web/styles/scss/library/utilities/`.
+2. **Sass Recompilation:** After updating SCSS in `designforhumans-blog`, recompile shared stylesheets using:
+   ```bash
+   /opt/homebrew/bin/sass web/styles/scss/dfh-shared.scss web/styles/dfh-shared.css && /opt/homebrew/bin/sass web/styles/scss/dfh-blog.scss web/styles/dfh-blog.css
+   ```
+3. **Icon Propagation:** `DFH-Components/icons/icons.svg` is the single source of truth. Running `npm run sync:icons` automatically writes updated sprites to `designforhumans-blog/templates/_icons.twig` and `designforhumans-blog/web/web/symbol-defs.svg`.
+
+---
+
+## Naming & Architectural Conventions
+
+### 1. Token Architecture (W3C DTCG 3-Tier)
+- **Tier 1 (Global):** `tokens/1-global.json` — Foundation values (`palette.*`, `space.*`, `font.*`).
+- **Tier 2 (Semantic):** `tokens/2-semantic.json` — Functional UI roles using `light-dark()` (`surface.*`, `foreground.*`, `border.*`, `shadow.*`, `focus.*`).
+- **Tier 3 (Component):** `tokens/3-component.json` — Specific component variables (`button.*`, `dialog.*`, `table.*`).
+- **CSS Variable Mapping:** Formatted as `--<domain>-<prop>` (e.g. `--surface-card`, `--focus-ring-color`).
+- **Component Private Manifest:** Local component variables use `--_<component>-<prop>` (e.g. `--_button-bg`, `--_card-padding`).
+
+### 2. Component Class Names & BEM-Lite
+- **Block:** `.card`, `.button`, `.badge`, `.dialog`, `.field`
+- **Modifiers:** BEM double-hyphen syntax: `.button--strong`, `.button--accent`, `.card--compact`, `.dialog--scrollable`
+- **Sub-elements:** BEM double-underscore syntax: `.card__header`, `.card__title`, `.card__body`, `.card__footer`, `.field__label`
+
+### 3. Spatial Layout Primitives vs. Utilities Law
+- **Spatial Layout Primitives** (`.inline`, `.stack`, `.grid`, `.cluster`, `.split`, `.wrapper`, `.sidebar`, `.app`) are structural orchestration components managing geometry, gap, and child distribution.
+- **Display Utilities** MUST NOT use bare component names. Display utilities use explicit prefixes:
+  - `display: block` $\rightarrow$ `.d-block`, `.display-block`
+  - `display: inline` $\rightarrow$ `.d-inline`, `.display-inline` *(DO NOT use `.inline` which clobbers the layout primitive)*
+  - `display: inline-block` $\rightarrow$ `.d-inline-block`, `.display-inline-block`
+  - `display: contents` $\rightarrow$ `.d-contents`, `.display-contents`
+  - `display: none` $\rightarrow$ `.d-none`, `.display-none`, `.hidden`, `.hide`
+- **Utility Shorthands:** Standard hyphenated prefixes (`.p-sm`, `.m-md`, `.ms-sm`, `.me-sm`, `.rounded-md`, `.border-0`, `.border-t`, `.font-bold`, `.truncate`, `.text-nowrap`, `.z-10`, `.sr`). Never generate bare single-letter tags (`.p`, `.m`, `.b`).
+
+---
+
+## CSS Architecture & Cascade Order
+The stylesheet cascade is strictly defined in `packages/css/src/index.css`:
+1. **Reset:** `@import './reset.css';`
+2. **Tokens & Variables:** `@import './variables.css';`
+3. **Atoms:** `@import './atoms/*.css';` (indivisible controls)
+4. **Molecules:** `@import './molecules/*.css';` (composed units)
+5. **Organisms:** `@import './organisms/*.css';` (composite assemblies)
+6. **Layout Primitives:** `@import './layout/*.css';` (spatial shells)
+7. **Utilities:** `@import './utilities/*.css';` (immutable overrides)
+8. **Overrides:** `@import './overrides.css';` (project-specific overrides)
+
+**Cascade layers (PRINCIPLES §7, pending migration):** `index.css` will declare
+```css
+@layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
+```
+with every stylesheet in its layer. Until then the order above is enforced by import order. Components stay wrapped in `:where()` either way.
+
+**Fonts (PRINCIPLES §4):** Library CSS must not load fonts or make any external request. The Google Fonts `@import` in `index.css` is pending removal. Font tokens default to system stacks; Storybook (`.storybook/preview-head.html`) and the docs site load their own fonts in the page head.
 
 ---
 
@@ -63,7 +212,7 @@ DFH-Components/
 
 > **Fundamental Axiom:** *Organisms orchestrate layout geometry; Atoms dictate elemental styling.*
 
-In Design For Humans, complex assemblies (`.card`, `.dialog`, `.deck`, `.empty-state`, `.table`, `.tabs`) are **Organisms** that compose foundational **Atoms** (`.button`, `.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.text`, `.caption`, `.badge`, `.chip`, `.icon`).
+In Design For Humans, complex assemblies (`.card`, `.dialog`, `.empty-state`, `.table`, `.tabbed-content`) are **Organisms** that compose foundational **Atoms** (`.button`, `.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.text`, `.caption`, `.badge`, `.chip`, `.icon`).
 
 ### 1. The Zero-Specificity Cascade Rule
 All component primitives are wrapped in `:where(...)` to ensure a level playing field with zero specificity `(0, 0, 0)`. Because organisms are imported downstream from atoms in the stylesheet cascade, **any typography property declared on an organism hook (even `inherit` or `font-size: 1rem`) will clobber atom utility classes placed on that element**.
@@ -77,12 +226,12 @@ All component primitives are wrapped in `:where(...)` to ensure a level playing 
 ```
 
 ### 2. Constraints on Organism Element Hooks
-Organism sub-element hooks (`.card__title`, `.card__subtitle`, `.card__band`, `.empty-state__title`, `.empty-state__description`, `.stepper__title`, `.stepper__description`, `.deck__title`, `.deck__artist`, `.menu__heading`, `.combobox__group-header`, etc.) are **structural layout hooks only**:
+Organism sub-element hooks (`.card__title`, `.card__subtitle`, `.card__band`, `.empty-state__title`, `.empty-state__description`, `.stepper__title`, `.stepper__description`, `.menu__heading`, `.combobox__group-header`, etc.) are **structural layout hooks only**:
 - **ALLOWED declarations:** `margin: 0; min-inline-size: 0; text-wrap: balance; flex: 1; align-self: stretch; color: var(--_...-color); user-select: none;`
 - **FORBIDDEN declarations:** `font-size`, `font-family`, `font-weight`, `line-height`, `letter-spacing`, `text-transform`, or `inherit`.
 
 ### 3. Container-Adaptive Typography Mode (`--font-sizing: cq`)
-Organism and structural molecule containers (`.card__content`, `.empty-state`, `.stepper`, `.deck`, `.dialog`, `.menu`, `.combobox`) establish container query contexts and enable container query font sizing:
+Organism and structural molecule containers (`.card__content`, `.empty-state`, `.stepper`, `.dialog`, `.menu`, `.combobox`) establish container query contexts and enable container query font sizing:
 ```css
 container-type: inline-size;
 --font-sizing: cq;
@@ -90,19 +239,21 @@ container-type: inline-size;
 This enables all typography atoms placed inside (`.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.small-text`, `.micro-text`) to scale adaptively with container query units (`cqi`), remaining perfectly proportioned across any container width without breakpoint micro-management.
 
 ### 4. Container Density & Sizing Orchestration (`--ui-sizing: compact` & `--font-sizing: compact`)
-When an organism or molecule enters a dense or compact presentation mode (`.stepper--compact`, `.card--compact`, `.menu--compact`, `.table--compact`, `.combobox--compact`), declare:
+When an organism or molecule enters compact density (the only density modifier is `--compact`; `--dense` is legacy) (`.stepper--compact`, `.card--compact`, `.menu--compact`, `.table--compact`, `.combobox--compact`), declare:
 ```css
 --ui-sizing: compact;
 ```
 This enables nested text atoms (`.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.micro-text`, etc.) to automatically step down to their compact scale variants (`--micro-heading-compact-font-size`, `--micro-text-compact-font-size`, `--title-compact-font-size`, etc.) via `@container style(--ui-sizing: compact) or style(--font-sizing: compact)` container style queries without manual utility overrides or invasive class juggling.
+
+To step down typography alone without changing container geometry, set `--font-sizing: compact` on the region instead. Size modifiers (`--sm`, `--lg`) belong to atoms and controls only; containers never take a size modifier.
 
 ### 5. Tier 3 Token Economy
 Never create redundant Tier 3 component tokens for heading or description typography (e.g. `card.title-font-size`, `empty-state.title-font-size`, `stepper.title-font-size`, `menu.header-font-size`). Typography is owned globally and composed atomically.
 
 ---
 
-## Canonical Component Markup Signatures for AI Agents
-When generating HTML markup for Design For Humans components, AI agents MUST strictly use the following semantic patterns:
+## Canonical Component Markup Signatures
+When generating or authoring HTML markup for Design For Humans components, strictly use the following semantic patterns:
 
 ### 1. Button Primitive
 ```html
@@ -116,11 +267,10 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
   <span>Strong Action</span>
 </button>
 
-<!-- Strong Accent / Primary Button (High-emphasis solid brand action) -->
+<!-- Strong Accent Button (High-emphasis solid brand action; replaces legacy .button--primary) -->
 <button type="button" class="button button--strong button--accent">
   <span>Primary Action</span>
 </button>
-<!-- Backward-compatible alias: <button type="button" class="button button--primary"> -->
 
 <!-- Subtle Button (Translucent background, no border) -->
 <button type="button" class="button button--subtle">
@@ -153,7 +303,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </button>
 
 <!-- With Icon (Trailing) -->
-<button type="button" class="button button--primary">
+<button type="button" class="button button--strong button--accent">
   <span>Get Started</span>
   <svg class="icon icon--dir" aria-hidden="true" focusable="false">
     <use href="#ArrowRight"/>
@@ -196,7 +346,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 </div>
 
 <!-- Link Styled as Button (MANDATORY: role="button") -->
-<a href="/login" class="button button--primary" role="button">
+<a href="/login" class="button button--strong button--accent" role="button">
   <span>Log In</span>
 </a>
 
@@ -210,7 +360,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 ### 2. Modal Dialog Primitive (Native HTML `<dialog>` composed with `.card`)
 ```html
 <!-- Trigger Button (Declarative Invoker command="show-modal") -->
-<button type="button" class="button button--primary" commandfor="my-dialog" command="show-modal" aria-haspopup="dialog">
+<button type="button" class="button button--strong button--accent" commandfor="my-dialog" command="show-modal" aria-haspopup="dialog">
   <span>Open Dialog</span>
 </button>
 
@@ -241,10 +391,10 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 
       <footer class="card__footer" style="justify-content: flex-end;">
         <form method="dialog" style="display: flex; gap: var(--spacing-8);">
-          <button type="submit" class="button button--secondary" commandfor="my-dialog" command="close">
+          <button type="submit" class="button" commandfor="my-dialog" command="close">
             <span>Cancel</span>
           </button>
-          <button type="submit" value="confirm" class="button button--primary">
+          <button type="submit" value="confirm" class="button button--strong button--accent">
             <span>Confirm</span>
           </button>
         </form>
@@ -265,7 +415,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
         <p>Whole-card scrolling: header, body, and footer scroll together as a single unit.</p>
       </div>
       <footer class="card__footer" style="justify-content: flex-end;">
-        <button type="submit" class="button button--primary"><span>Accept</span></button>
+        <button type="submit" class="button button--strong button--accent"><span>Accept</span></button>
       </footer>
     </article>
   </div>
@@ -277,7 +427,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 <!-- Trigger Button with anchor-name and popovertarget -->
 <button 
   type="button" 
-  class="button button--secondary"
+  class="button"
   popovertarget="my-popover"
   style="anchor-name: --my-anchor;"
   aria-haspopup="dialog"
@@ -354,7 +504,7 @@ When generating HTML markup for Design For Humans components, AI agents MUST str
 <!-- Anchored Dropdown Menu (Button Trigger + Popover + Menu) -->
 <button 
   type="button" 
-  class="button button--secondary" 
+  class="button" 
   popovertarget="doc-menu" 
   style="anchor-name: --menu-anchor;"
   aria-haspopup="menu"
@@ -790,7 +940,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 <input type="range" class="range range--warning" value="45" min="0" max="100" style="--value: 45%;" />
 <input type="range" class="range range--danger" value="20" min="0" max="100" style="--value: 20%;" />
 
-<!-- Range Lockup Primitive (.range-lockup, legacy alias: .range-group) -->
+<!-- Range Lockup Primitive (.range-lockup; legacy .range-group is pending removal, never use it) -->
 <!-- Unified composite pairing an action button, slider, and numerical readout -->
 <!-- Note: Renamed from .range-group to avoid collision with emerging native <rangegroup> -->
 <div class="range-lockup range-lockup--sm">
@@ -823,7 +973,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
     <button type="reset" class="button button--subtle">
       <span>Cancel</span>
     </button>
-    <button type="submit" class="button button--primary">
+    <button type="submit" class="button button--strong button--accent">
       <span>Submit</span>
     </button>
   </div>
@@ -1029,7 +1179,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
       <p>Card outer boundary curves harmoniously with the round action button below.</p>
     </div>
     <footer class="card__footer">
-      <button type="button" class="button button--primary">
+      <button type="button" class="button button--strong button--accent">
         <span>Get Started</span>
       </button>
     </footer>
@@ -1054,7 +1204,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
       <span class="badge badge--accent badge--round"><span>Step 2 of 4</span></span>
       <div class="button-group button-group--tight buttons-sm buttons-subtle">
         <button type="button" class="button"><span>Back</span></button>
-        <button type="button" class="button button--primary"><span>Proceed</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Proceed</span></button>
       </div>
     </div>
 
@@ -1076,7 +1226,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
         <p class="card__subtitle">8 items queued</p>
       </hgroup>
       <div class="cluster gap-xs align-items-center">
-        <button type="button" class="button button--secondary button--sm"><span>Auto-Balance</span></button>
+        <button type="button" class="button button--sm"><span>Auto-Balance</span></button>
       </div>
 
       <!-- Forced full-width second row for search, filter pills, or segmented views -->
@@ -1168,7 +1318,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
   <div class="banner__inner">
     <p>This is an error banner message.</p>
   </div>
-  <button type="button" class="button button--primary banner__action">
+  <button type="button" class="button button--strong button--accent banner__action">
     <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
       <use href="#Close" />
     </svg>
@@ -1187,7 +1337,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
       <button type="button" class="button">
         <span>Cancel</span>
       </button>
-      <button type="button" class="button button--primary">
+      <button type="button" class="button button--strong button--accent">
         <span>OK</span>
       </button>
     </div>
@@ -1501,7 +1651,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
   <a href="/prev" class="button"><span>Previous</span></a>
   <span class="button-group__content button-group__fill">Step 2 of 4</span>
   <hr class="divider">
-  <button type="button" class="button button--primary"><span>Next</span></button>
+  <button type="button" class="button button--strong button--accent"><span>Next</span></button>
 </div>
 ```
 
@@ -1511,7 +1661,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
 <div class="button-group button-group--stretch">
   <a href="/drafts" class="button"><span>Drafts</span></a>
   <span class="button"><span>Published</span></span>
-  <button type="button" class="button button-group__end button--primary"><span>Create</span></button>
+  <button type="button" class="button button-group__end button--strong button--accent"><span>Create</span></button>
 </div>
 
 <!-- Stacked & Ruled (Vertical column listbox / menu with section headings & auto-pushed trailing badges) -->
@@ -1659,7 +1809,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
       <p><strong>Connection Lost</strong></p>
       <p>Unable to sync changes to server.</p>
     </div>
-    <button type="button" class="button button--primary button--icon banner__action" aria-label="Dismiss error">
+    <button type="button" class="button button--strong button--accent button--icon banner__action" aria-label="Dismiss error">
       <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
         <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
       </svg>
@@ -1737,7 +1887,7 @@ Composes Badge, Button, Button Group, and Icon atoms into structural hook classe
     <span>5 selected</span>
   </div>
   <div class="batch-actions__actions">
-    <button type="button" class="button button--primary button--sm"><span>Archive</span></button>
+    <button type="button" class="button button--strong button--accent button--sm"><span>Archive</span></button>
   </div>
   <div class="batch-actions__dismiss">
     <button type="button" class="button button--plain button--sm"><span>Deselect all</span></button>
@@ -1798,7 +1948,7 @@ Composes Badge, Button, Button Group, and Icon atoms into structural hook classe
 
 #### D. Application Shell & Multi-Sidebar Workspace (`.app`, `.app--viewport`, `.app__workspace`)
 The canonical Holy Grail application shell. Grid rows: `auto minmax(0, 1fr) auto`. Dynamic viewport containment: `.app--viewport` (`100dvb`).
-`.app__workspace` (alias `.workspace`) coordinates multiple sidebars/rails side-by-side with the main content canvas under sticky top chrome.
+`.app__workspace` coordinates multiple sidebars/rails side-by-side with the main content canvas under sticky top chrome.
 
 ```html
 <!-- Full Application Workspace Shell -->
@@ -1954,7 +2104,8 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
 </div>
 ```
 
-### 21. Alert Primitive (Full-Width Site Announcements & Pinned Banners)
+### 21. Alert Placement (Full-Width Site Announcements & Pinned Banners)
+`banner` is the only visual component for announcements. An alert is a banner with `role="alert"` (urgent) or `role="status"` (non-critical). `.alert` is a placement container only (sticky, top, bottom); it must not restyle the banner or define its own `--alert-*` tokens. Duplicate alert tokens and styles are pending removal.
 
 #### A. Sticky Top Announcement Bar with Constrained Content
 ```html
@@ -2001,7 +2152,7 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
       </div>
       <div style="display: flex; gap: var(--spacing-8); align-self: center;">
         <button type="button" class="button button--subtle"><span>Manage</span></button>
-        <button type="button" class="button button--primary"><span>Accept All</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Accept All</span></button>
       </div>
     </div>
   </div>
@@ -2058,7 +2209,7 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
 <!-- Trigger Button with native interestfor, popovertarget fallback, and anchor-name -->
 <button 
   type="button" 
-  class="button button--icon button--primary"
+  class="button button--icon button--strong button--accent"
   interestfor="tip-save"
   popovertarget="tip-save"
   style="anchor-name: --anchor-save;"
@@ -2110,11 +2261,11 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
 The tabs system in Design For Humans is decomposed across three distinct architectural tiers:
 1. **Atom (`.tab`):** Individual interactive trigger (button or link).
    - **Flavours:** Regular Tab (default underline indicator) and Button Tab (`.tab--button`).
-   - **Variations:** Default (outline / underline), Subtle (`.tab--subtle`, matching `.button--subtle` with translucent tinted surface and borderless treatment), Plain (`.tab--plain`, borderless and transparent, alias `.tab--simple`), and Round (`.tab--round`).
+   - **Variations:** Default (outline / underline), Subtle (`.tab--subtle`, matching `.button--subtle` with translucent tinted surface and borderless treatment), Plain (`.tab--plain`, borderless and transparent), and Round (`.tab--round`).
    - Registers `anchor-name: --tab-selected` when selected.
 2. **Molecule (`.tab-list`):** Collection container for tabs with `anchor-scope: --tab-selected` and a shared sliding indicator (`::before`). Can live **standalone** as a top-level site nav bar, sub-nav, or floating dock without any organism wrapper. Supports `.tabs-subtle` and `.tabs-plain` container variations.
 3. **Organism (`.tabbed-content`):** Spatial layout coordinator between a `.tab-list` and content panels (`.tab-panel`).
-*Backwards compatibility aliases:* `.tabs` (alias for `.tabbed-content`), `.tab-list` (alias for `.tab-list`), and `.tabs__panel` (alias for `.tab-panel`).
+*Legacy aliases pending removal (never use):* `.tabs` (use `.tabbed-content`) and `.tabs__panel` (use `.tab-panel`).
 
 #### A. Standalone Navigation Tab List (Molecule + Atom)
 ```html
@@ -2424,7 +2575,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     </p>
   </div>
   <div class="empty-state__actions">
-    <button type="button" class="button button--primary button--sm">
+    <button type="button" class="button button--strong button--accent button--sm">
       <span>Clear Filters</span>
     </button>
   </div>
@@ -2442,11 +2593,11 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     </p>
   </div>
   <div class="empty-state__actions">
-    <button type="button" class="button button--primary">
+    <button type="button" class="button button--strong button--accent">
       <svg class="icon" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
       <span>New Project</span>
     </button>
-    <button type="button" class="button button--secondary">
+    <button type="button" class="button">
       <span>Import Repository</span>
     </button>
   </div>
@@ -2611,7 +2762,8 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 </div>
 ```
 
-### 29. Deck Primitive (Audio & Media Playback Console)
+### 29. Deck (Out of v1 Core — Moving to Recipes)
+`deck` is a domain-specific stress test of the token system, not a library component. It is moving from `packages/css/src/organisms/` to `packages/storybook/stories/recipes/`. Do not use it in new library work or copy its patterns into core components. Markup is kept here for reference until the move.
 ```html
 <!-- 1. Standard On-Air Broadcast Deck -->
 <section class="deck deck--on-air deck--bordered" aria-label="Deck A • On Air">
@@ -2672,7 +2824,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
         <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
           <svg class="icon"><use href="#ChevronStart"/></svg>
         </button>
-        <button type="button" class="button button--primary button--round deck__play" aria-label="Pause playback">
+        <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback">
           <svg class="icon"><use href="#Pause"/></svg>
         </button>
         <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next track">
@@ -2733,7 +2885,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
       <div class="deck__timeline-transport-group">
         <div class="deck__transport" role="toolbar" aria-label="Dock controls">
           <button type="button" class="button button--subtle button--icon button--sm deck__cue" aria-label="Cue"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-          <button type="button" class="button button--primary button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
+          <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
           <button type="button" class="button button--subtle button--icon button--sm deck__skip" aria-label="Skip"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
         </div>
         <div class="deck__timeline">
@@ -2978,8 +3130,8 @@ Preferred for modular components, sidebars, cards, tables, and dialogs:
 - `xl`: `80em` (1280px, Standard Desktop)
 - `2xl`: `96em` (1536px, Large Screen)
 
-#### D. Synonym Cascade for AI Agents
-To ensure AI agents and developers do not encounter breaking syntax errors, the stylesheet maintains backward-compatible synonyms:
+#### D. Legacy Synonyms (Pending Removal)
+The stylesheet still contains synonyms for these helpers. They are removed before v1 (PRINCIPLES §7). Always write the **first** name in each row:
 - `sm:hide` ⇄ `sm:hidden`, `min-sm:hide`, `min-sm:hidden`, `hide--above-sm`
 - `max-sm:hide` ⇄ `max-sm:hidden`, `sm-max:hide`, `sm-max:hidden`, `hide--below-sm`
 - `@sm:hide` ⇄ `@sm:hidden`, `@min-sm:hide`, `@min-sm:hidden`, `hide--in-container-above-sm`
@@ -2995,7 +3147,7 @@ Composes `.popover.popover--anchored` + `.menu.menu--translucent` + `.menu__item
 ```html
 <button 
   type="button" 
-  class="button button--secondary" 
+  class="button" 
   popovertarget="menu-popover" 
   style="anchor-name: --menu-anchor;"
   aria-haspopup="menu"
@@ -3060,7 +3212,7 @@ Composes `.avatar` with `data-status`, `.badge`, `.status`, and `.button-group--
     </div>
     <footer class="card__footer">
       <div class="button-group button-group--space-between">
-        <button type="button" class="button button--primary button--sm"><span>View Profile</span></button>
+        <button type="button" class="button button--strong button--accent button--sm"><span>View Profile</span></button>
         <button type="button" class="button button--subtle button--sm"><span>Sign Out</span></button>
       </div>
     </footer>
@@ -3336,7 +3488,7 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
 
 ---
 
-## Non-Negotiable Rules for AI Agents
+## Non-Negotiable Architectural Rules
 
 ### 1. Zero Legacy Hacks — Rely on Native Primitives
 - **Overlays & Dialogs:** Use native HTML `<dialog>` with `.showModal()`. Never generate custom `div` modals or JS focus traps.
@@ -3358,6 +3510,8 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
     - **Borders:** Border colors terminate at `currentColor` (or `transparent` when borderless); border widths terminate at `1px` or `0px`.
     - **Surfaces & Backgrounds:** Terminate at `Canvas`, `Highlight`, or `transparent`. Never hardcoded `#ffffff` or arbitrary hexes.
     - **Foregrounds & Text:** Terminate at `currentColor` or `CanvasText`.
+- **Token Tier Boundary:** Components reference Tier 2 semantic tokens (and their own optional Tier 3 tokens) only. Never reference Tier 1 tokens such as `--spacing-4`, `--spacing-8`, `--spacing-16` or raw `--color-*` ramps directly. Semantic spacing tokens (for example `--space-sm`, `--space-md`) do not exist yet: add one to `tokens/2-semantic.json` only when a component being refactored actually needs it, never speculatively.
+- **No Literal Colour Fallbacks:** `var(--button-bg, #1a1a1a)` fails review. Chain to a semantic token and end at a system value: `var(--button-bg, var(--surface-neutral, Canvas))`.
 - **Semantic Fallbacks in CSS:** When using component tokens, always supply semantic fallbacks: `var(--component-x, var(--<domain>-x, <basic-terminal-fallback>))`.
 - **Dual-Bridge Strategy (Web & Figma):**
   - Token source (`1-global.json`) contains the pure modular scale (`-2` to `8`) without web math or `fluid-N` clutter.
@@ -3384,14 +3538,15 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
 
 ### 4. Accessibility First (WCAG 2.2 AA / AAA)
 - **High-Contrast Focus Visible:** Every interactive element must display `outline: var(--focus-ring-width) solid var(--focus-ring-color)` with `outline-offset: var(--focus-ring-offset)`.
-- **Target Sizes:** Primary buttons and touch targets must meet `--button-min-size: var(--spacing-target)` (`3rem` / `48px`, exceeding WCAG 2.5.5). Small variants must meet at least `24x24px` (WCAG 2.5.8).
+- **Target Sizes:** Primary buttons and touch targets must meet `--button-min-size: var(--spacing-target)` (`3rem` / `48px`, exceeding WCAG 2.5.5). Small variants must meet at least `24x24px` (WCAG 2.5.8), and on coarse pointers keep a 48px hit area via a transparent `::after` or padding buffer.
+- **Intent Is Never Colour Alone (WCAG 1.4.1):** Every danger, warning, success, info or accent variant must also carry an icon, role or descriptive text.
 - **Automated Axe Audits:** Every Storybook story must pass `@storybook/addon-a11y` without contrast, labeling, or keyboard violations.
 - Consult `.agents/skills/accessibility/SKILL.md` for specific ARIA patterns.
 
 ### 5. Local Private Variables Manifest & State Variable Contract
 - In component stylesheets, define all local fallback ladders at the top of the base `:where(.<component>)` selector using the private `--_<component>-*` prefix.
 - **Interactive State Contract:** Declare `--_<component>-hover-*` and `--_<component>-active-*` private variables at the component root. Handle `:hover` and `:active` **strictly once** inside the base selector consuming these variables.
-- Modifiers (`.<component>--primary`, `.<component>--subtle`, `.<component>--flush`) act as **pure token maps** that re-assign private variables rather than duplicating pseudo-classes or declarations.
+- Modifiers (`.<component>--accent`, `.<component>--subtle`, `.<component>--compact`) act as **pure token maps** that re-assign private variables rather than duplicating pseudo-classes or declarations.
 - Child elements and pseudo-elements must consume `var(--_<component>-*)` directly.
 
 ### 6. Container Style Queries (`@container style(...)`)
@@ -3400,7 +3555,7 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
 
 ---
 
-## Agent Workflow for Creating Components
+## Component Authoring Workflow
 1. **Check Tokens:** Verify required tokens exist in `tokens/3-component.json`. If missing, add them and run `npm run build:tokens`.
 2. **Author CSS:** Create `packages/css/src/{atoms,molecules,organisms}/<component>.css` based on the component's Atomic Design tier. Use `:where()` for low specificity, local private variables manifest (`--_<component>-*`) with state contract (`--_<component>-hover-*`, `--_<component>-active-*`), container style queries (`@container style(...)`), native CSS nesting with explicit `&` for states (`&:hover`, `&:active`, `&:focus-visible`), logical properties (`inline-size`, `block-size`, `padding-inline`, `padding-block`), and standardized section comments. Consult `.agents/skills/tokens/SKILL.md` (Section 4) and `.agents/skills/css-commenting/SKILL.md` for full guidelines.
 3. **Register in Entrypoint:** Add `@import './{atoms,molecules,organisms}/<component>.css';` into the appropriate Atomic tier in `packages/css/src/index.css`.

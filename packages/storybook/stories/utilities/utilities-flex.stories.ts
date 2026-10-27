@@ -46,7 +46,7 @@ AI agents and developers MUST use the following semantic patterns:
   <div class="flex-1">
     <input type="search" class="input w-full" placeholder="Search..." />
   </div>
-  <button type="button" class="button button--primary button--sm"><span>Action</span></button>
+  <button type="button" class="button button--strong button--accent button--sm"><span>Action</span></button>
 </div>
 
 <!-- 2. Split Space-Between Alignment -->
@@ -209,7 +209,7 @@ export const JustifyContentDistributions: Story = {
           <p class="font-size-xs font-weight-bold color-muted">.justify-content-end (Trailing action bar)</p>
           <div class="flex justify-content-end align-items-center gap-sm sb-demo-inspect-gap padding-sm">
             <button type="button" class="button button--subtle button--sm"><span>Cancel</span></button>
-            <button type="button" class="button button--primary button--sm"><span>Save</span></button>
+            <button type="button" class="button button--strong button--accent button--sm"><span>Save</span></button>
           </div>
         </div>
 
@@ -314,7 +314,7 @@ export const FluidChildSizing: Story = {
             <input type="search" class="input w-full" placeholder="Search components, tokens, stories..." />
           </div>
 
-          <button type="button" class="button button--primary button--sm">
+          <button type="button" class="button button--strong button--accent button--sm">
             <span>New Recipe</span>
           </button>
         </div>

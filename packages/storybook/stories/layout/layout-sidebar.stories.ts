@@ -741,7 +741,7 @@ export const InspectorEndPanel: Story = {
               <div class="stack gap-xs">
                 <div class="inline gap-xs">
                   <button type="button" class="button button--subtle button--sm button--icon" aria-label="Align left"><svg class="icon" width="16" height="16"><use href="#AlignLeft"/></svg></button>
-                  <button type="button" class="button button--subtle button--sm button--icon button--selected" aria-label="Align center"><svg class="icon" width="16" height="16"><use href="#AlignCenter"/></svg></button>
+                  <button type="button" class="button button--subtle button--sm button--icon is-active" aria-label="Align center"><svg class="icon" width="16" height="16"><use href="#AlignCenter"/></svg></button>
                   <button type="button" class="button button--subtle button--sm button--icon" aria-label="Align right"><svg class="icon" width="16" height="16"><use href="#AlignRight"/></svg></button>
                 </div>
               </div>
@@ -760,11 +760,11 @@ export const InspectorEndPanel: Story = {
         </div>
 
         <footer class="sidebar__footer">
-          <button type="button" class="button button--destructive button--subtle button--sm">
+          <button type="button" class="button button--danger button--subtle button--sm">
             <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Delete"/></svg>
             <span>Delete Layer</span>
           </button>
-          <button type="button" class="button button--primary button--sm">
+          <button type="button" class="button button--strong button--accent button--sm">
             <span>Apply</span>
           </button>
         </footer>
@@ -791,7 +791,7 @@ export const AppShellIntegration: Story = {
         </div>
         <div class="inline gap-sm">
           <button type="button" class="button button--subtle button--sm"><span>Docs</span></button>
-          <button type="button" class="button button--primary button--sm"><span>Deploy</span></button>
+          <button type="button" class="button button--strong button--accent button--sm"><span>Deploy</span></button>
         </div>
       </header>
 
