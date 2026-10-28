@@ -40,19 +40,19 @@ Defined in \`utilities/shadow.css\` and synchronized with \`_shadow.scss\` in th
 <!-- 1. Standard Elevated Card with Medium Elevation -->
 <div class="card shadow-md bd-sm rounded-md padding">
   <h3 class="card__title subheading">Elevated Surface</h3>
-  <p class="micro-text text-muted">Uses .shadow-md with clean fallback to none</p>
+  <p class="small-text text-muted">Uses .shadow-md with clean fallback to none</p>
 </div>
 
 <!-- 2. Resting Card with Subtle Light Elevation -->
 <div class="card shadow-sm-light bd-sm rounded-md padding">
   <h3 class="card__title subheading">Subtle Light Card</h3>
-  <p class="micro-text text-muted">Uses .shadow-sm-light</p>
+  <p class="small-text text-muted">Uses .shadow-sm-light</p>
 </div>
 
 <!-- 3. Tinted Brand Glow via Contextual Utility -->
 <div class="card shadow-md shadow-aqua bd-sm rounded-md padding">
   <h3 class="card__title text-accent">Active Aqua Telemetry</h3>
-  <p class="micro-text text-muted">Combines .shadow-md and .shadow-aqua</p>
+  <p class="small-text text-muted">Combines .shadow-md and .shadow-aqua</p>
 </div>
 
 <!-- 4. Danger Alert Dialog Shadow -->
@@ -121,27 +121,27 @@ export const CanonicalUtilities: Story = {
     <div class="grid" style="--grid-min-col: 14rem; gap: var(--spacing-24);">
       <article class="card bd-sm padding shadow-none">
         <h4 class="card__title small-heading">.shadow-none</h4>
-        <p class="micro-text text-muted">Flat surface on canvas</p>
+        <p class="small-text text-muted">Flat surface on canvas</p>
       </article>
 
       <article class="card bd-sm padding shadow-sm">
         <h4 class="card__title small-heading">.shadow-sm</h4>
-        <p class="micro-text text-muted">Resting container depth</p>
+        <p class="small-text text-muted">Resting container depth</p>
       </article>
 
       <article class="card bd-sm padding shadow-md">
         <h4 class="card__title small-heading">.shadow-md</h4>
-        <p class="micro-text text-muted">Medium elevated depth (.shadow)</p>
+        <p class="small-text text-muted">Medium elevated depth (.shadow)</p>
       </article>
 
       <article class="card bd-sm padding shadow-lg">
         <h4 class="card__title small-heading">.shadow-lg</h4>
-        <p class="micro-text text-muted">High floating depth (.shadow-raised)</p>
+        <p class="small-text text-muted">High floating depth (.shadow-raised)</p>
       </article>
 
       <article class="card bd-sm padding shadow-inner" style="background: var(--surface-muted);">
         <h4 class="card__title small-heading">.shadow-inner</h4>
-        <p class="micro-text text-muted">Recessed well depth (.shadow-inset)</p>
+        <p class="small-text text-muted">Recessed well depth (.shadow-inset)</p>
       </article>
     </div>
   `,
@@ -155,22 +155,22 @@ export const LightUtilities: Story = {
     <div class="grid" style="--grid-min-col: 14rem; gap: var(--spacing-24);">
       <article class="card bd-sm padding shadow-sm-light">
         <h4 class="card__title small-heading">.shadow-sm-light</h4>
-        <p class="micro-text text-muted">Gentle resting card depth</p>
+        <p class="small-text text-muted">Gentle resting card depth</p>
       </article>
 
       <article class="card bd-sm padding shadow-md-light">
         <h4 class="card__title small-heading">.shadow-md-light</h4>
-        <p class="micro-text text-muted">Gentle popover depth (.shadow-light)</p>
+        <p class="small-text text-muted">Gentle popover depth (.shadow-light)</p>
       </article>
 
       <article class="card bd-sm padding shadow-lg-light">
         <h4 class="card__title small-heading">.shadow-lg-light</h4>
-        <p class="micro-text text-muted">Gentle dialog depth</p>
+        <p class="small-text text-muted">Gentle dialog depth</p>
       </article>
 
       <article class="card bd-sm padding shadow-inner-light" style="background: var(--surface-muted);">
         <h4 class="card__title small-heading">.shadow-inner-light</h4>
-        <p class="micro-text text-muted">Gentle recessed well depth</p>
+        <p class="small-text text-muted">Gentle recessed well depth</p>
       </article>
     </div>
   `,
@@ -184,27 +184,27 @@ export const TintedUtilities: Story = {
     <div class="grid" style="--grid-min-col: 14rem; gap: var(--spacing-24);">
       <article class="card bd-sm padding shadow-md shadow-aqua" style="border-color: var(--color-aqua-500);">
         <h4 class="card__title text-accent">.shadow-aqua</h4>
-        <p class="micro-text text-muted"><code>.shadow-md.shadow-aqua</code></p>
+        <p class="small-text text-muted"><code>.shadow-md.shadow-aqua</code></p>
       </article>
 
       <article class="card bd-sm padding shadow-md shadow-accent" style="border-color: var(--color-purple-500);">
         <h4 class="card__title" style="color: var(--color-purple-500);">.shadow-accent</h4>
-        <p class="micro-text text-muted"><code>.shadow-md.shadow-accent</code></p>
+        <p class="small-text text-muted"><code>.shadow-md.shadow-accent</code></p>
       </article>
 
       <article class="card bd-sm padding shadow-lg shadow-danger" style="border-color: var(--color-red-500);">
         <h4 class="card__title text-danger">.shadow-danger</h4>
-        <p class="micro-text text-muted"><code>.shadow-lg.shadow-danger</code></p>
+        <p class="small-text text-muted"><code>.shadow-lg.shadow-danger</code></p>
       </article>
 
       <article class="card bd-sm padding shadow-md shadow-success" style="border-color: var(--color-green-500);">
         <h4 class="card__title text-success">.shadow-success</h4>
-        <p class="micro-text text-muted"><code>.shadow-md.shadow-success</code></p>
+        <p class="small-text text-muted"><code>.shadow-md.shadow-success</code></p>
       </article>
 
       <article class="card bd-sm padding shadow-inner shadow-warning" style="background: var(--surface-muted); border-color: var(--color-amber-500);">
         <h4 class="card__title text-warning">.shadow-warning</h4>
-        <p class="micro-text text-muted"><code>.shadow-inner.shadow-warning</code></p>
+        <p class="small-text text-muted"><code>.shadow-inner.shadow-warning</code></p>
       </article>
     </div>
   `,

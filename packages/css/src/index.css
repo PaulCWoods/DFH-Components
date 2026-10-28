@@ -23,6 +23,8 @@
 @import './atoms/icon.css' layer(atoms);
 @import './atoms/badge.css' layer(atoms);
 @import './atoms/chip.css' layer(atoms);
+@import './atoms/status.css' layer(atoms);
+@import './atoms/kbd.css' layer(atoms);
 @import './atoms/button.css' layer(atoms);
 @import './atoms/input.css' layer(atoms);
 @import './atoms/textarea.css' layer(atoms);
@@ -44,6 +46,7 @@
 @import './molecules/field.css' layer(molecules);
 @import './molecules/fieldset.css' layer(molecules);
 @import './molecules/choices.css' layer(molecules);
+@import './molecules/range-lockup.css' layer(molecules);
 @import './molecules/button-group.css' layer(molecules);
 @import './molecules/banner.css' layer(molecules);
 @import './molecules/alert.css' layer(molecules);

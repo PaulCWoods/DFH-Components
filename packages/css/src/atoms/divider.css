@@ -1,106 +1,76 @@
 /* ==========================================================================
-   Design For Humans: Divider Primitive
+   Design For Humans: Divider Atom
    --------------------------------------------------------------------------
-   Semantic horizontal/vertical separator adapting automatically to container
-   direction via modern container style queries (@container style(--direction: row))
-   or explicit orientation modifiers. Adheres to zero-specificity cascade law.
+   A rule between groups. Organisms place it (bleed, height); they never
+   restyle it.
 
-   Usage:
+   Orientation follows the direct parent only:
+   - horizontal by default;
+   - vertical when the parent sets --direction: row (.inline, .cluster,
+     .button-group, .batch-actions). --direction doesn't inherit, so a
+     divider deeper inside a row stays horizontal;
+   - vertical anywhere with aria-orientation="vertical", which is also what
+     assistive technology hears. Add it whenever a divider is vertical.
+
+   Prominence: default (decorative, quiet) and --strong (at least 3:1, for a
+   rule that is the only boundary between groups, WCAG 1.4.11).
+   Style: --dashed.
+
+   Markup:
    <hr class="divider">
    <hr class="divider" aria-orientation="vertical">
+   <li role="separator" class="divider"></li>   (inside <menu>, <ul>, <ol>)
    ========================================================================== */
 
-/* ==========================================================================
-   1. Base Divider Primitive (:where(hr, .divider))
-   ========================================================================== */
+@property --direction {
+  syntax: "*";
+  inherits: false;
+}
 
-:where(hr, .divider) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_divider-width: var(--divider-border-width, var(--divider-width, var(--rule-width, 1px)));
-  --_divider-style: var(--divider-border-style, var(--divider-style, var(--rule-style, solid)));
-  --_divider-color: var(--divider-border-color, var(--divider-color, var(--rule-color, var(--border-color-quiet, currentColor))));
+:where(.divider) {
+  --_divider-width: var(--divider-width);
+  --_divider-style: var(--divider-style, solid);
+  --_divider-color: var(--divider-color, currentColor);
+  --_divider-line: var(--_divider-width, 1px) var(--_divider-style) var(--_divider-color);
 
-  /* Layout & Geometry */
   box-sizing: border-box;
-  border: none;
-  border-block-start: var(--_divider-width) var(--_divider-style) var(--_divider-color);
-  margin: 0;
-  inline-size: 100%;
+  align-self: stretch;
+  flex: none;
   block-size: 0;
+  inline-size: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-block-start: var(--_divider-line);
+  color: inherit;
+  list-style: none;
 
-  /* --------------------------------------------------------------------------
-     Container Style Queries (Zero-JS Contextual Adaptation)
-     -------------------------------------------------------------------------- */
   @container style(--direction: row) {
-    align-self: stretch;
-    border-block-start: 0;
-    border-inline-start: var(--_divider-width) var(--_divider-style) var(--_divider-color);
-    inline-size: 0;
     block-size: auto;
+    inline-size: 0;
+    border-block-start: 0;
+    border-inline-start: var(--_divider-line);
   }
 
-  /* --------------------------------------------------------------------------
-     Explicit Orientation Modifiers & ARIA Attribute Support
-     -------------------------------------------------------------------------- */
-  &:where(.divider--vertical, [aria-orientation="vertical"]) {
-    align-self: stretch;
-    border-block-start: 0;
-    border-inline-start: var(--_divider-width) var(--_divider-style) var(--_divider-color);
-    inline-size: 0;
+  &:where([aria-orientation="vertical"]) {
     block-size: auto;
+    inline-size: 0;
+    border-block-start: 0;
+    border-inline-start: var(--_divider-line);
   }
 
-  /* --------------------------------------------------------------------------
-     Stroke Texture Modifiers
-     -------------------------------------------------------------------------- */
+  &:where(.divider--strong) {
+    --_divider-color: var(--divider-strong-color, currentColor);
+  }
+
   &:where(.divider--dashed) {
     --_divider-style: dashed;
   }
-
-  &:where(.divider--dotted) {
-    --_divider-style: dotted;
-  }
-
-  /* --------------------------------------------------------------------------
-     Thickness Modifiers
-     -------------------------------------------------------------------------- */
-  &:where(.divider--sm) {
-    --_divider-width: var(--divider-sm-width, 1px);
-  }
-
-  &:where(.divider--md) {
-    --_divider-width: var(--divider-md-width, 2px);
-  }
-
-  &:where(.divider--lg) {
-    --_divider-width: var(--divider-lg-width, 4px);
-  }
-
-  /* --------------------------------------------------------------------------
-     Tone Modifiers
-     -------------------------------------------------------------------------- */
-  &:where(.divider--strong) {
-    --_divider-color: var(--divider-strong-color, var(--border-color-strong, var(--foreground, currentColor)));
-  }
-
-  &:where(.divider--subtle, .divider--quiet) {
-    --_divider-color: var(--divider-subtle-color, var(--border-color-quiet, currentColor));
-  }
-
-  &:where(.divider--accent) {
-    --_divider-color: var(--divider-accent-color, var(--border-color-accent, var(--foreground-accent, #008076)));
-  }
 }
 
-/* ==========================================================================
-   2. High Contrast Mode (WCAG 1.4.11 Non-Text Contrast Reinforcement)
-   ========================================================================== */
-
+/* Increased contrast: every divider takes the strong colour. */
 @media (prefers-contrast: more) {
-  :where(hr, .divider) {
-    --_divider-color: var(--border-color, currentColor);
-    --_divider-width: max(var(--divider-border-width, var(--divider-width, 1px)), 1.5px);
+  :where(.divider) {
+    --_divider-color: var(--divider-strong-color, currentColor);
   }
 }

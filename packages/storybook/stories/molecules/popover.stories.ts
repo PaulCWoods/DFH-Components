@@ -36,7 +36,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   aria-haspopup="dialog"
 >
   <span>Document Actions</span>
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
 </button>
 
 <div 
@@ -53,16 +53,16 @@ AI agents and developers MUST strictly use the following semantic patterns:
       <div class="card__body card__body--flush">
         <div class="button-group button-group--tight button-group--stacked buttons-subtle">
           <button type="button" class="button">
-            <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
             <span>Duplicate File</span>
           </button>
           <button type="button" class="button">
-            <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
             <span>Export Manifest</span>
           </button>
           <hr class="divider">
           <button type="button" class="button button--danger">
-            <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
             <span>Delete File</span>
           </button>
         </div>
@@ -183,7 +183,7 @@ export const Playground: Story = {
           aria-haspopup="dialog"
         >
           <span>Open Popover</span>
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
         </button>
 
         <div 
@@ -198,7 +198,7 @@ export const Playground: Story = {
                 <h3 class="card__title small-heading">${args.title}</h3>
               </header>
               <div class="card__body">
-                <p class="micro-text">${args.content}</p>
+                <p class="small-text">${args.content}</p>
               </div>
               <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
                 <button type="button" class="button button--subtle button--sm" popovertarget="${popoverId}" popovertargetaction="hide">
@@ -233,31 +233,31 @@ export const Anatomy: Story = {
             <!-- Trigger Element Spec -->
             <div class="demo-box demo-box--pink demo-constrained--xs">
               <span class="demo-label">1. Invoker Element</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Button declaring <code>style="anchor-name: --my-anchor;"</code> and <code>popovertarget="popover-id"</code>.
               </p>
               <button type="button" class="button" style="pointer-events: none;">
                 <span>Anchor Trigger</span>
-                <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
               </button>
             </div>
 
             <!-- Popover Shell Spec -->
             <div class="demo-box demo-box--blue demo-constrained--xs">
               <span class="demo-label">2. Popover Wrapper</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Top-layer container with <code>[popover]</code> and <code>style="position-anchor: --my-anchor;"</code>.
                 Resets default borders and background.
               </p>
               <div style="padding: var(--spacing-8); border: 1px dashed var(--accent); border-radius: var(--radius-sm); text-align: center;">
-                <span class="micro-text">Transparent [popover] Host</span>
+                <span class="small-text">Transparent [popover] Host</span>
               </div>
             </div>
 
             <!-- Composed Card Surface Spec -->
             <div class="demo-box demo-box--green demo-constrained--xs">
               <span class="demo-label">3. Composed Surface</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Nested <code>.card</code> or <code>.banner</code> provides surface color, borders, padding, and hierarchy.
               </p>
               <div class="card card--compact" style="pointer-events: none;">
@@ -270,7 +270,7 @@ export const Anatomy: Story = {
 
           <div class="demo-box demo-box--neutral">
             <span class="demo-label">Top-Layer Discrete Transitions</span>
-            <p class="micro-text" style="margin-block-start: var(--spacing-4);">
+            <p class="small-text" style="margin-block-start: var(--spacing-4);">
               Popovers fade and scale cleanly on open/close without JavaScript using:
               <code>@starting-style { opacity: 0; transform: scale(0.96) translateY(-0.25rem); }</code>
               and <code>transition-behavior: allow-discrete;</code>.
@@ -301,7 +301,7 @@ export const Variants: Story = {
               aria-haspopup="dialog"
             >
               <span>Actions Menu</span>
-              <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
 
             <div id="v-actions" popover class="popover popover--anchored" style="position-anchor: --v-actions-anchor;">
@@ -313,16 +313,16 @@ export const Variants: Story = {
                   <div class="card__body card__body--flush">
                     <div class="button-group button-group--tight button-group--stacked buttons-subtle">
                       <button type="button" class="button">
-                        <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                         <span>Duplicate</span>
                       </button>
                       <button type="button" class="button">
-                        <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                         <span>Export JSON</span>
                       </button>
                       <hr class="divider">
                       <button type="button" class="button button--danger">
-                        <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                         <span>Delete Item</span>
                       </button>
                     </div>
@@ -354,16 +354,16 @@ export const Variants: Story = {
                     </div>
                     <hgroup class="card__hgroup">
                       <h3 class="card__title small-heading">Jordan Lee</h3>
-                      <p class="card__subtitle micro-text text-muted">jordan.lee@dfh.design</p>
+                      <p class="card__subtitle small-text text-muted">jordan.lee@dfh.design</p>
                     </hgroup>
                   </header>
                   <div class="card__body">
                     <div class="stack">
                       <div class="cluster">
-                        <span class="badge badge--subtle"><span>Design Lead</span></span>
-                        <span class="status" data-status="online">Online</span>
+                        <span class="chip chip--subtle"><span class="chip__text">Design Lead</span></span>
+                        <span class="status status--success status--plain"><span class="status__text">Online</span></span>
                       </div>
-                      <p class="micro-text">
+                      <p class="small-text">
                         Lead accessibility auditor for WCAG 2.2 Level AA / AAA design systems.
                       </p>
                     </div>
@@ -387,7 +387,7 @@ export const Variants: Story = {
               popovertarget="v-prefs" 
               style="anchor-name: --v-prefs-anchor;"
             >
-              <svg class="icon" aria-hidden="true"><use href="#Settings"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
               <span>Settings</span>
             </button>
 
@@ -400,7 +400,7 @@ export const Variants: Story = {
                   <div class="card__body">
                     <div class="stack" style="gap: var(--spacing-16);">
                       <label class="switch switch--sm" style="inline-size: 100%;">
-                        <span class="switch__label micro-text">High Contrast Mode</span>
+                        <span class="switch__label small-text">High Contrast Mode</span>
                         <input type="checkbox" role="switch" class="visually-hidden" />
                         <span class="switch__control" aria-hidden="true">
                           <span class="switch__option switch__option--off">Off</span>
@@ -437,9 +437,9 @@ export const Variants: Story = {
               style="anchor-name: --v-notice-anchor; position: relative;"
               aria-label="View system notifications"
             >
-              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#BellFilled"/></svg>
-              <span class="badge badge--danger badge--sm badge--round badge--bottom-left-corner">
-                <span>1</span>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+              <span class="badge badge--danger badge--sm badge--bottom-start">
+                <span class="badge__text">1</span>
               </span>
             </button>
 
@@ -469,7 +469,7 @@ export const Variants: Story = {
             </button>
 
             <div id="v-fallback" popover class="popover popover--anchored" style="position-anchor: --v-fallback-anchor;">
-              <p class="micro-text">
+              <p class="small-text">
                 <strong>Standalone Popover:</strong> Styled via <code>--_popover-bg</code> and <code>--_popover-padding</code> directly without a nested Card primitive.
               </p>
             </div>
@@ -507,7 +507,7 @@ export const StateMatrix: Story = {
                       <h4 class="card__title small-heading">Active Menu Surface</h4>
                     </header>
                     <div class="card__body">
-                      <p class="micro-text">Rendered on top of all page content via browser top-layer stacking context.</p>
+                      <p class="small-text">Rendered on top of all page content via browser top-layer stacking context.</p>
                     </div>
                   </article>
                 </div>
@@ -516,11 +516,11 @@ export const StateMatrix: Story = {
               <div class="stack demo-constrained--sm">
                 <div class="demo-box demo-box--green">
                   <span class="demo-label">Light-Dismiss (Zero JS)</span>
-                  <p class="micro-text">Clicking anywhere outside the popover or pressing <kbd class="kbd">Esc</kbd> automatically dismisses the element.</p>
+                  <p class="small-text">Clicking anywhere outside the popover or pressing <kbd class="kbd">Esc</kbd> automatically dismisses the element.</p>
                 </div>
                 <div class="demo-box demo-box--blue">
                   <span class="demo-label">Accessibility Association</span>
-                  <p class="micro-text">Invoker buttons declare <code>aria-haspopup="dialog"</code> so screen readers announce menu availability.</p>
+                  <p class="small-text">Invoker buttons declare <code>aria-haspopup="dialog"</code> so screen readers announce menu availability.</p>
                 </div>
               </div>
             </div>
@@ -531,7 +531,7 @@ export const StateMatrix: Story = {
             <span class="demo-label">High Contrast Mode (@media (prefers-contrast: more))</span>
             <div class="cluster" style="margin-block-start: var(--spacing-12); align-items: flex-start; gap: var(--spacing-24);">
               <div class="popover" style="position: static; opacity: 1; transform: none; outline: 2px solid currentColor; outline-offset: 1px; inline-size: 18rem;">
-                <p class="micro-text" style="padding: var(--spacing-12); margin: 0;">
+                <p class="small-text" style="padding: var(--spacing-12); margin: 0;">
                   Standalone popovers automatically render an explicit 2px outline in forced-colors / high contrast environments.
                 </p>
               </div>
@@ -563,7 +563,7 @@ export const SizesAndDensity: Story = {
               <div class="card card--compact card--bordered">
                 <article class="card__content">
                   <header class="card__header"><h4 class="card__title small-heading">Standard Width (16rem)</h4></header>
-                  <div class="card__body"><p class="micro-text">Ideal for context action menus, select options, and small filters.</p></div>
+                  <div class="card__body"><p class="small-text">Ideal for context action menus, select options, and small filters.</p></div>
                 </article>
               </div>
             </div>
@@ -576,7 +576,7 @@ export const SizesAndDensity: Story = {
               <div class="card card--compact card--bordered">
                 <article class="card__content">
                   <header class="card__header"><h4 class="card__title small-heading">Large Width (24rem)</h4></header>
-                  <div class="card__body"><p class="micro-text">Ideal for user profile summaries, multi-control settings, and notification lists.</p></div>
+                  <div class="card__body"><p class="small-text">Ideal for user profile summaries, multi-control settings, and notification lists.</p></div>
                 </article>
               </div>
             </div>
@@ -589,7 +589,7 @@ export const SizesAndDensity: Story = {
               <div class="card card--compact card--bordered">
                 <article class="card__content">
                   <header class="card__header"><h4 class="card__title small-heading">Extra Large Width (36rem)</h4></header>
-                  <div class="card__body"><p class="micro-text">Ideal for rich preview cards, complex data filters, and multi-column menus.</p></div>
+                  <div class="card__body"><p class="small-text">Ideal for rich preview cards, complex data filters, and multi-column menus.</p></div>
                 </article>
               </div>
             </div>
@@ -622,7 +622,7 @@ export const DirectionalAnchoring: Story = {
             </button>
             <div id="dir-bottom" popover class="popover popover--anchored" style="position-anchor: --dir-bottom-btn;">
               <div class="card card--compact card--bordered">
-                <p class="micro-text" style="padding: var(--spacing-12); margin: 0;">Anchored to bottom span-right.</p>
+                <p class="small-text" style="padding: var(--spacing-12); margin: 0;">Anchored to bottom span-right.</p>
               </div>
             </div>
           </div>
@@ -634,7 +634,7 @@ export const DirectionalAnchoring: Story = {
             </button>
             <div id="dir-top" popover class="popover popover--top" style="position-anchor: --dir-top-btn;">
               <div class="card card--compact card--bordered">
-                <p class="micro-text" style="padding: var(--spacing-12); margin: 0;">Anchored to top span-right.</p>
+                <p class="small-text" style="padding: var(--spacing-12); margin: 0;">Anchored to top span-right.</p>
               </div>
             </div>
           </div>
@@ -646,7 +646,7 @@ export const DirectionalAnchoring: Story = {
             </button>
             <div id="dir-end" popover class="popover popover--end" style="position-anchor: --dir-end-btn;">
               <div class="card card--compact card--bordered">
-                <p class="micro-text" style="padding: var(--spacing-12); margin: 0;">Anchored to right span-bottom.</p>
+                <p class="small-text" style="padding: var(--spacing-12); margin: 0;">Anchored to right span-bottom.</p>
               </div>
             </div>
           </div>
@@ -658,7 +658,7 @@ export const DirectionalAnchoring: Story = {
             </button>
             <div id="dir-bottom-end" popover class="popover popover--bottom-end" style="position-anchor: --dir-bottom-end-btn;">
               <div class="card card--compact card--bordered">
-                <p class="micro-text" style="padding: var(--spacing-12); margin: 0;">Anchored to bottom span-left.</p>
+                <p class="small-text" style="padding: var(--spacing-12); margin: 0;">Anchored to bottom span-left.</p>
               </div>
             </div>
           </div>
@@ -691,7 +691,7 @@ export const RealWorldRecipes: Story = {
               aria-haspopup="dialog"
             >
               <span>Manage Record</span>
-              <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
 
             <div id="recipe-ctx" popover class="popover popover--anchored" style="position-anchor: --recipe-ctx-btn;">
@@ -704,14 +704,14 @@ export const RealWorldRecipes: Story = {
                     <div class="button-group button-group--tight button-group--stacked buttons-subtle">
                       <button type="button" class="button" style="justify-content: space-between;">
                         <span class="cluster" style="gap: var(--spacing-8);">
-                          <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+                          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                           <span>Clone Record</span>
                         </span>
                         <kbd class="kbd">⌘D</kbd>
                       </button>
                       <button type="button" class="button" style="justify-content: space-between;">
                         <span class="cluster" style="gap: var(--spacing-8);">
-                          <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+                          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                           <span>Export JSON</span>
                         </span>
                         <kbd class="kbd">⌘E</kbd>
@@ -719,7 +719,7 @@ export const RealWorldRecipes: Story = {
                       <hr class="divider">
                       <button type="button" class="button button--danger" style="justify-content: space-between;">
                         <span class="cluster" style="gap: var(--spacing-8);">
-                          <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+                          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                           <span>Archive Record</span>
                         </span>
                         <kbd class="kbd">⌫</kbd>
@@ -740,7 +740,7 @@ export const RealWorldRecipes: Story = {
               style="anchor-name: --recipe-filter-btn;"
               aria-haspopup="dialog"
             >
-              <svg class="icon" aria-hidden="true"><use href="#Settings"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
               <span>Filter Status</span>
             </button>
 
@@ -788,7 +788,7 @@ export const RealWorldRecipes: Story = {
               style="anchor-name: --recipe-help-btn;"
               aria-label="What is WCAG 2.2?"
             >
-              <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Check"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             </button>
 
             <div id="recipe-help" popover class="popover popover--anchored popover--lg" style="position-anchor: --recipe-help-btn;">
@@ -798,13 +798,13 @@ export const RealWorldRecipes: Story = {
                     <h3 class="card__title small-heading">WCAG 2.2 Standard</h3>
                   </header>
                   <div class="card__body">
-                    <p class="micro-text">
+                    <p class="small-text">
                       Web Content Accessibility Guidelines (WCAG) 2.2 covers new criteria including 2.5.8 Target Size (Minimum)
                       and 2.4.11 Focus Not Obscured.
                     </p>
                   </div>
                   <footer class="card__footer" style="display: flex; justify-content: space-between; align-items: center;">
-                    <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer" class="link micro-text">
+                    <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener noreferrer" class="link small-text">
                       <span>Read W3C Spec</span>
                     </a>
                     <button type="button" class="button button--subtle button--sm" popovertarget="recipe-help" popovertargetaction="hide">

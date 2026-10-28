@@ -58,12 +58,12 @@ AI agents and developers MUST strictly use the following semantic patterns:
     <!-- Deck Header (Composed with .micro-heading) -->
     <header class="deck__header">
       <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-        <span class="status" data-status="online" aria-hidden="true"></span>
+        <span class="status status--success status--plain" aria-hidden="true"></span>
         <h2 class="deck__channel micro-heading">Deck A • On Air</h2>
       </div>
       <div class="deck__header-actions inline align-items-center gap-xs">
         <button type="button" class="button button--subtle button--icon button--sm" aria-label="Deck options">
-          <svg class="icon"><use href="#Info"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
         </button>
       </div>
     </header>
@@ -75,16 +75,16 @@ AI agents and developers MUST strictly use the following semantic patterns:
       <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
         <div class="deck__art-frame" aria-hidden="true">
           <div class="deck__art">
-            <svg class="icon"><use href="#Disc"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
           </div>
-          <span class="badge badge--accent badge--sm badge--round deck__badge"><span>LIVE</span></span>
+          <span class="status status--accent status--sm status--round deck__badge"><span class="status__text">LIVE</span></span>
         </div>
         <div class="deck__identity lockup">
           <div class="deck__tags">
-            <span class="chip chip--sm"><span>Heavy Rotation</span></span>
+            <span class="chip chip--subtle chip--sm"><span class="chip__text">Heavy Rotation</span></span>
           </div>
           <h3 class="deck__title small-heading">Celestial Horizon</h3>
-          <p class="deck__artist micro-text">Aura & Tycho — Continuum LP</p>
+          <p class="deck__artist small-text">Aura & Tycho — Continuum LP</p>
         </div>
       </div>
 
@@ -108,13 +108,13 @@ AI agents and developers MUST strictly use the following semantic patterns:
       <!-- Playback Transport Controls (Composed with .button-group.button-group--center) -->
       <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport">
         <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
-          <svg class="icon"><use href="#ChevronStart"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
         </button>
         <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback">
-          <svg class="icon"><use href="#Pause"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg>
         </button>
         <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next track">
-          <svg class="icon"><use href="#ChevronEnd"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
         </button>
       </div>
 
@@ -126,7 +126,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         </div>
         <div class="deck__volume-controls inline align-items-center">
           <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Toggle mute">
-            <svg class="icon"><use href="#VolumeOn"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
           </button>
           <input type="range" class="range range--sm deck__fader" id="deck-vol" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume level" />
         </div>
@@ -138,7 +138,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     <div class="deck__meters" role="region" aria-label="Stereo Master Peak Meters">
       <div class="deck__meters-header">
         <span class="deck__meters-title">Stereo Peak (dBFs)</span>
-        <span class="badge badge--success badge--sm"><span>-1.8 dB Headroom</span></span>
+        <span class="status status--success status--sm"><span class="status__text">-1.8 dB Headroom</span></span>
       </div>
       <div class="deck__channel-meter inline align-items-center">
         <span class="deck__meter-ch">L</span>
@@ -323,21 +323,21 @@ export const Playground: Story = {
                       <div class="deck__art ${vinylClass}">
                         ${args.hasVinyl
           ? ''
-          : '<svg class="icon"><use href="#Disc"/></svg>'
+          : '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>'
         }
                       </div>
                       ${!args.hasVinyl
-          ? '<span class="badge badge--accent badge--sm badge--round deck__badge"><span>LIVE</span></span>'
+          ? '<span class="status status--accent status--sm status--round deck__badge"><span class="status__text">LIVE</span></span>'
           : ''
         }
                     </div>
                     <div class="deck__identity lockup">
                       <div class="deck__tags">
-                        <span class="status" data-status="${args.status}" aria-hidden="true"></span>
-                        <span class="chip chip--sm"><span>${args.tag}</span></span>
+                        <span class="status status--plain" aria-hidden="true"></span>
+                        <span class="chip chip--subtle chip--sm"><span class="chip__text">${args.tag}</span></span>
                       </div>
                       <h3 class="deck__title small-heading">${args.title}</h3>
-                      <p class="deck__artist micro-text">${args.artist}</p>
+                      <p class="deck__artist small-text">${args.artist}</p>
                     </div>
                   </div>
 
@@ -345,13 +345,13 @@ export const Playground: Story = {
                   <div class="deck__timeline-transport-group">
                     <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport">
                       <button type="button" class="button button--subtle button--icon button--sm deck__cue" aria-label="Cue to start">
-                        <svg class="icon"><use href="#ChevronStart"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                       </button>
                       <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="${args.isPlaying ? 'Pause playback' : 'Start playback'}">
-                        <svg class="icon"><use href="#${playIcon}"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${playIcon}"/></svg>
                       </button>
                       <button type="button" class="button button--subtle button--icon button--sm deck__skip" aria-label="Skip to next track">
-                        <svg class="icon"><use href="#ChevronEnd"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
                       </button>
                     </div>
 
@@ -377,7 +377,7 @@ export const Playground: Story = {
                     <div class="deck__volume">
                       <div class="deck__volume-controls inline align-items-center">
                         <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Toggle mute">
-                          <svg class="icon"><use href="#${volIcon}"/></svg>
+                          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${volIcon}"/></svg>
                         </button>
                         <input 
                           type="range" 
@@ -420,12 +420,12 @@ export const Playground: Story = {
               <!-- Deck Header -->
               <header class="deck__header">
                 <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                  <span class="status" data-status="${args.status}" aria-hidden="true"></span>
+                  <span class="status status--plain" aria-hidden="true"></span>
                   <h2 class="deck__channel micro-heading">${args.channel}</h2>
                 </div>
                 <div class="deck__header-actions inline align-items-center gap-xs">
                   <button type="button" class="button button--subtle button--icon button--sm" aria-label="Deck options">
-                    <svg class="icon"><use href="#Settings"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                   </button>
                 </div>
               </header>
@@ -439,20 +439,20 @@ export const Playground: Story = {
                     <div class="deck__art ${vinylClass}">
                       ${args.hasVinyl
           ? ''
-          : '<svg class="icon"><use href="#Disc"/></svg>'
+          : '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>'
         }
                     </div>
                     ${!args.hasVinyl
-          ? '<span class="badge badge--accent badge--sm badge--round deck__badge"><span>LIVE</span></span>'
+          ? '<span class="status status--accent status--sm status--round deck__badge"><span class="status__text">LIVE</span></span>'
           : ''
         }
                   </div>
                   <div class="deck__identity lockup">
                     <div class="deck__tags">
-                      <span class="chip chip--sm"><span>${args.tag}</span></span>
+                      <span class="chip chip--subtle chip--sm"><span class="chip__text">${args.tag}</span></span>
                     </div>
                     <h3 class="deck__title small-heading">${args.title}</h3>
-                    <p class="deck__artist micro-text">${args.artist}</p>
+                    <p class="deck__artist small-text">${args.artist}</p>
                   </div>
                 </div>
 
@@ -476,13 +476,13 @@ export const Playground: Story = {
                 <!-- Playback Transport (Composed with .button-group.button-group--center) -->
                 <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport">
                   <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
-                    <svg class="icon"><use href="#ChevronStart"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                   </button>
                   <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="${args.isPlaying ? 'Pause playback' : 'Start playback'}">
-                    <svg class="icon"><use href="#${playIcon}"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${playIcon}"/></svg>
                   </button>
                   <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next track">
-                    <svg class="icon"><use href="#ChevronEnd"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
                   </button>
                 </div>
 
@@ -496,7 +496,7 @@ export const Playground: Story = {
                   </div>
                   <div class="deck__volume-controls inline align-items-center">
                     <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Toggle mute">
-                      <svg class="icon"><use href="#${volIcon}"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${volIcon}"/></svg>
                     </button>
                     <input 
                       type="range" 
@@ -517,7 +517,7 @@ export const Playground: Story = {
               <div class="deck__meters" role="region" aria-label="Stereo Master Peak Meters">
                 <div class="deck__meters-header">
                   <span class="deck__meters-title">Stereo Peak (dBFs)</span>
-                  <span class="badge badge--success badge--sm"><span>-1.8 dB Headroom</span></span>
+                  <span class="status status--success status--sm"><span class="status__text">-1.8 dB Headroom</span></span>
                 </div>
                 <div class="deck__channel-meter inline align-items-center">
                   <span class="deck__meter-ch">L</span>
@@ -553,12 +553,12 @@ export const OnAirDeck: Story = {
             
             <header class="deck__header">
               <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                <span class="status" data-status="online" aria-hidden="true"></span>
+                <span class="status status--success status--plain" aria-hidden="true"></span>
                 <h2 class="deck__channel micro-heading">Deck A • On Air</h2>
               </div>
               <div class="deck__header-actions inline align-items-center gap-xs">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Inspect Track Metadata and ISRC">
-                  <svg class="icon"><use href="#Info"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
                 </button>
               </div>
             </header>
@@ -571,16 +571,16 @@ export const OnAirDeck: Story = {
                     class="deck__art" 
                     style="background: linear-gradient(135deg, var(--foreground-accent), #1a1a2e); color: #ffffff;"
                   >
-                    <svg class="icon"><use href="#Disc"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                   </div>
-                  <span class="badge badge--accent badge--sm badge--round deck__badge"><span>LIVE</span></span>
+                  <span class="status status--accent status--sm status--round deck__badge"><span class="status__text">LIVE</span></span>
                 </div>
                 <div class="deck__identity lockup">
                   <div class="deck__tags">
-                    <span class="chip chip--sm"><span>Heavy Rotation</span></span>
+                    <span class="chip chip--subtle chip--sm"><span class="chip__text">Heavy Rotation</span></span>
                   </div>
                   <h3 class="deck__title small-heading">Celestial Horizon</h3>
-                  <p class="deck__artist micro-text">Aura & Tycho — Continuum LP</p>
+                  <p class="deck__artist small-text">Aura & Tycho — Continuum LP</p>
                 </div>
               </div>
 
@@ -602,13 +602,13 @@ export const OnAirDeck: Story = {
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport controls">
                 <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
-                  <svg class="icon"><use href="#ChevronStart"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                 </button>
                 <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback">
-                  <svg class="icon"><use href="#Pause"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg>
                 </button>
                 <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next queued track">
-                  <svg class="icon"><use href="#ChevronEnd"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
                 </button>
               </div>
 
@@ -621,7 +621,7 @@ export const OnAirDeck: Story = {
                 </div>
                 <div class="deck__volume-controls inline align-items-center">
                   <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Toggle Deck Mute">
-                    <svg class="icon"><use href="#VolumeOn"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
                   </button>
                   <input 
                     type="range" 
@@ -641,7 +641,7 @@ export const OnAirDeck: Story = {
             <div class="deck__meters" role="region" aria-label="Stereo Master Peak Meters">
               <div class="deck__meters-header">
                 <span class="deck__meters-title">Stereo Peak (dBFs)</span>
-                <span class="badge badge--success badge--sm"><span>-1.8 dB Headroom</span></span>
+                <span class="status status--success status--sm"><span class="status__text">-1.8 dB Headroom</span></span>
               </div>
               <div class="deck__channel-meter inline align-items-center">
                 <span class="deck__meter-ch">L</span>
@@ -677,22 +677,22 @@ export const DualDeckConsole: Story = {
           <div class="deck__content">
             <header class="deck__header">
               <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                <span class="status" data-status="online" aria-hidden="true"></span>
+                <span class="status status--success status--plain" aria-hidden="true"></span>
                 <h2 class="deck__channel micro-heading">Deck A • On Air</h2>
               </div>
-              <span class="badge badge--accent badge--sm"><span>ON AIR</span></span>
+              <span class="status status--accent status--sm"><span class="status__text">ON AIR</span></span>
             </header>
 
             <div class="deck__body">
               <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
                 <div class="deck__art-frame" aria-hidden="true">
                   <div class="deck__art" style="background: linear-gradient(135deg, var(--foreground-accent), #1a1a2e); color: #fff;">
-                    <svg class="icon"><use href="#Disc"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                   </div>
                 </div>
                 <div class="deck__identity lockup">
                   <h3 class="deck__title small-heading">Celestial Horizon</h3>
-                  <p class="deck__artist micro-text">Aura & Tycho</p>
+                  <p class="deck__artist small-text">Aura & Tycho</p>
                 </div>
               </div>
 
@@ -705,14 +705,14 @@ export const DualDeckConsole: Story = {
               </div>
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Deck A transport">
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
+                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
+                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
               </div>
 
               <div class="deck__volume">
                 <div class="deck__volume-controls inline align-items-center">
-                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Mute"><svg class="icon"><use href="#VolumeOn"/></svg></button>
+                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Mute"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg></button>
                   <input type="range" class="range range--sm deck__fader" value="90" style="--value: 90%;" aria-label="Deck A Volume" />
                 </div>
               </div>
@@ -738,22 +738,22 @@ export const DualDeckConsole: Story = {
           <div class="deck__content">
             <header class="deck__header">
               <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                <span class="status" data-status="away" aria-hidden="true"></span>
+                <span class="status status--warning status--plain" aria-hidden="true"></span>
                 <h2 class="deck__channel micro-heading">Deck B • Headphone Cue</h2>
               </div>
-              <span class="badge badge--warning badge--sm"><span>CUED</span></span>
+              <span class="status status--warning status--sm"><span class="status__text">CUED</span></span>
             </header>
 
             <div class="deck__body">
               <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
                 <div class="deck__art-frame" aria-hidden="true">
                   <div class="deck__art" style="background: linear-gradient(135deg, #e65100, #263238); color: #fff;">
-                    <svg class="icon"><use href="#Disc"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                   </div>
                 </div>
                 <div class="deck__identity lockup">
                   <h3 class="deck__title small-heading">Solaris Drift</h3>
-                  <p class="deck__artist micro-text">Kiasmos & Olafur Arnalds</p>
+                  <p class="deck__artist small-text">Kiasmos & Olafur Arnalds</p>
                 </div>
               </div>
 
@@ -766,14 +766,14 @@ export const DualDeckConsole: Story = {
               </div>
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Deck B transport">
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--round deck__play" aria-label="Play"><svg class="icon"><use href="#Play"/></svg></button>
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
+                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
+                <button type="button" class="button button--round deck__play" aria-label="Play"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg></button>
+                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
               </div>
 
               <div class="deck__volume">
                 <div class="deck__volume-controls inline align-items-center">
-                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Unmute"><svg class="icon"><use href="#VolumeOff"/></svg></button>
+                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Unmute"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOff"/></svg></button>
                   <input type="range" class="range range--sm deck__fader" value="0" style="--value: 0%;" aria-label="Deck B Volume" />
                 </div>
               </div>
@@ -813,22 +813,22 @@ export const CompactDeck: Story = {
             
             <header class="deck__header">
               <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                <span class="status" data-status="online" aria-hidden="true"></span>
+                <span class="status status--success status--plain" aria-hidden="true"></span>
                 <h3 class="deck__channel micro-heading">Cart 01 • Stager</h3>
               </div>
-              <span class="chip chip--sm"><span>00:15</span></span>
+              <span class="chip chip--subtle chip--sm"><span class="chip__text">00:15</span></span>
             </header>
 
             <div class="deck__body">
               <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
                 <div class="deck__art-frame" aria-hidden="true">
                   <div class="deck__art" style="background: var(--surface-darker, #111); color: #fff;">
-                    <svg class="icon"><use href="#Radio"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Radio"/></svg>
                   </div>
                 </div>
                 <div class="deck__identity lockup">
                   <h4 class="deck__title small-heading">Station Top-of-Hour ID</h4>
-                  <p class="deck__artist micro-text">DFH Radio Network</p>
+                  <p class="deck__artist small-text">DFH Radio Network</p>
                 </div>
               </div>
 
@@ -837,9 +837,9 @@ export const CompactDeck: Story = {
               </div>
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Cart controls">
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Restart"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Eject"><svg class="icon"><use href="#Close"/></svg></button>
+                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Restart"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
+                <button type="button" class="button button--subtle button--icon button--sm" aria-label="Eject"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
               </div>
             </div>
 
@@ -867,25 +867,25 @@ export const HorizontalDock: Story = {
               <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
                 <div class="deck__art-frame" aria-hidden="true">
                   <div class="deck__art" style="background: linear-gradient(135deg, var(--foreground-accent), #0f172a); color: #fff;">
-                    <svg class="icon"><use href="#Disc"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                   </div>
                 </div>
                 <div class="deck__identity lockup">
                   <div class="deck__tags">
-                    <span class="status" data-status="online" aria-hidden="true"></span>
-                    <span class="chip chip--sm"><span>On Air</span></span>
+                    <span class="status status--success status--plain" aria-hidden="true"></span>
+                    <span class="chip chip--subtle chip--sm"><span class="chip__text">On Air</span></span>
                   </div>
                   <h3 class="deck__title small-heading">Equinox Sunset (Club Mix)</h3>
-                  <p class="deck__artist micro-text">Bonobo & Kiasmos</p>
+                  <p class="deck__artist small-text">Bonobo & Kiasmos</p>
                 </div>
               </div>
 
               <!-- Center: Transport & Scrubber -->
               <div class="deck__timeline-transport-group">
                 <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Dock playback controls">
-                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Previous track"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                  <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback"><svg class="icon"><use href="#Pause"/></svg></button>
-                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Next track"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
+                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Previous track"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
+                  <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
+                  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Next track"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
                 </div>
 
                 <div class="deck__timeline" role="region" aria-label="Dock track progress">
@@ -901,7 +901,7 @@ export const HorizontalDock: Story = {
               <div class="deck__volume-meters-group">
                 <div class="deck__volume">
                   <div class="deck__volume-controls inline align-items-center">
-                    <button type="button" class="button button--subtle button--icon button--sm" aria-label="Toggle mute"><svg class="icon"><use href="#VolumeOn"/></svg></button>
+                    <button type="button" class="button button--subtle button--icon button--sm" aria-label="Toggle mute"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg></button>
                     <input type="range" class="range range--sm deck__fader" value="85" style="--value: 85%;" aria-label="Master Dock Volume" />
                   </div>
                 </div>
@@ -940,10 +940,10 @@ export const VinylTurntable: Story = {
             
             <header class="deck__header">
               <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                <span class="status" data-status="online" aria-hidden="true"></span>
+                <span class="status status--success status--plain" aria-hidden="true"></span>
                 <h2 class="deck__channel micro-heading">Turntable 1 • 33⅓ RPM</h2>
               </div>
-              <span class="badge badge--sm"><span>ANALOG LINE-IN</span></span>
+              <span class="chip chip--sm"><span class="chip__text">ANALOG LINE-IN</span></span>
             </header>
 
             <div class="deck__body">
@@ -951,10 +951,10 @@ export const VinylTurntable: Story = {
                 <div class="deck__art-frame"><div class="deck__art deck__art--vinyl is-spinning" aria-label="Spinning vinyl record"></div></div>
                 <div class="deck__identity lockup">
                   <div class="deck__tags">
-                    <span class="chip chip--sm"><span>Direct Drive</span></span>
+                    <span class="chip chip--subtle chip--sm"><span class="chip__text">Direct Drive</span></span>
                   </div>
                   <h3 class="deck__title small-heading">Kind of Blue (Master Cut)</h3>
-                  <p class="deck__artist micro-text">Miles Davis Quintet</p>
+                  <p class="deck__artist small-text">Miles Davis Quintet</p>
                 </div>
               </div>
 
@@ -967,9 +967,9 @@ export const VinylTurntable: Story = {
               </div>
 
               <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Turntable motor controls">
-                <button type="button" class="button button--subtle button--icon" aria-label="Start motor"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Stop rotation"><svg class="icon"><use href="#Pause"/></svg></button>
-                <button type="button" class="button button--subtle button--icon" aria-label="33 / 45 RPM switch"><svg class="icon"><use href="#Refresh"/></svg></button>
+                <button type="button" class="button button--subtle button--icon" aria-label="Start motor"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
+                <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Stop rotation"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
+                <button type="button" class="button button--subtle button--icon" aria-label="33 / 45 RPM switch"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg></button>
               </div>
 
               <div class="deck__volume">

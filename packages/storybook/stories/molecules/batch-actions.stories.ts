@@ -27,36 +27,36 @@ Composed with **Badge**, **Button**, **Button Group**, and **Icon** atoms, it pr
 <aside class="batch-actions" role="toolbar" aria-label="Batch actions">
   <!-- Summary Hook: Count Badge + Selection Label -->
   <div class="batch-actions__summary">
-    <span class="badge badge--accent badge--round"><span>3</span></span>
+    <span class="badge badge--accent"><span class="badge__text">3</span></span>
     <span class="micro-heading">3 items selected</span>
   </div>
 
-  <hr class="batch-actions__separator" aria-hidden="true" />
+  <hr class="divider" aria-hidden="true" />
 
   <!-- Actions Hook: Bulk Operations Button Group -->
   <div class="batch-actions__actions">
     <div class="button-group buttons-sm buttons-subtle">
       <button type="button" class="button">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
         <span>Export</span>
       </button>
       <button type="button" class="button">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
         <span>Bulk Edit</span>
       </button>
       <button type="button" class="button button--danger">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
         <span>Delete</span>
       </button>
     </div>
   </div>
 
-  <hr class="batch-actions__separator" aria-hidden="true" />
+  <hr class="divider" aria-hidden="true" />
 
   <!-- Dismiss Hook: Clear Selection Trigger -->
   <div class="batch-actions__dismiss">
     <button type="button" class="button button--subtle button--icon button--sm" aria-label="Clear selection">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       <span class="visually-hidden">Clear selection</span>
     </button>
   </div>
@@ -87,36 +87,36 @@ export const Default: Story = {
 
       <aside class="batch-actions" role="toolbar" aria-label="Batch actions">
         <div class="batch-actions__summary">
-          <span class="badge badge--accent badge--round">
-            <span>3</span>
+          <span class="badge badge--accent">
+            <span class="badge__text">3</span>
           </span>
           <span class="micro-heading">3 items selected</span>
         </div>
 
-        <hr class="batch-actions__separator" aria-hidden="true" />
+        <hr class="divider" aria-hidden="true" />
 
         <div class="batch-actions__actions">
           <div class="button-group buttons-sm buttons-subtle">
             <button type="button" class="button">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
               <span>Export</span>
             </button>
             <button type="button" class="button">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
               <span>Edit</span>
             </button>
             <button type="button" class="button button--danger">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
               <span>Delete</span>
             </button>
           </div>
         </div>
 
-        <hr class="batch-actions__separator" aria-hidden="true" />
+        <hr class="divider" aria-hidden="true" />
 
         <div class="batch-actions__dismiss">
           <button type="button" class="button button--subtle button--icon button--sm" aria-label="Clear selection">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
             <span class="visually-hidden">Clear selection</span>
           </button>
         </div>
@@ -132,36 +132,36 @@ export const HighContrast: Story = {
 
       <aside class="batch-actions batch-actions--contrast" role="toolbar" aria-label="Batch actions">
         <div class="batch-actions__summary">
-          <span class="badge badge--accent badge--round">
-            <span>5</span>
+          <span class="badge badge--accent">
+            <span class="badge__text">5</span>
           </span>
           <span class="micro-heading" style="color: inherit;">5 plants selected</span>
         </div>
 
-        <hr class="batch-actions__separator" aria-hidden="true" />
+        <hr class="divider" aria-hidden="true" />
 
         <div class="batch-actions__actions">
           <div class="button-group buttons-sm">
             <button type="button" class="button button--plain" style="color: inherit;">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
               <span>Export CSV</span>
             </button>
             <button type="button" class="button button--plain" style="color: inherit;">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               <span>Mark Watered</span>
             </button>
             <button type="button" class="button button--danger">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
               <span>Archive</span>
             </button>
           </div>
         </div>
 
-        <hr class="batch-actions__separator" aria-hidden="true" />
+        <hr class="divider" aria-hidden="true" />
 
         <div class="batch-actions__dismiss">
           <button type="button" class="button button--plain button--icon button--sm" style="color: inherit;" aria-label="Clear selection">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
             <span class="visually-hidden">Clear selection</span>
           </button>
         </div>
@@ -186,7 +186,7 @@ export const DockedInCard: Story = {
             <table class="table table--compact" style="inline-size: 100%;">
               <thead>
                 <tr>
-                  <th style="inline-size: 2.5rem;"><input type="checkbox" aria-label="Select all" checked /></th>
+                  <th style="inline-size: 2.5rem;"><input type="checkbox" class="checkbox-input" aria-label="Select all" checked /></th>
                   <th>Variety</th>
                   <th>Location</th>
                   <th>Status</th>
@@ -194,16 +194,16 @@ export const DockedInCard: Story = {
               </thead>
               <tbody>
                 <tr class="table__row--selected">
-                  <td><input type="checkbox" aria-label="Select Brandywine" checked /></td>
+                  <td><input type="checkbox" class="checkbox-input" aria-label="Select Brandywine" checked /></td>
                   <td><strong>Brandywine Heirloom</strong></td>
                   <td>Bed A-02</td>
-                  <td><span class="badge badge--success">Healthy</span></td>
+                  <td><span class="status status--success"><span class="status__text">Healthy</span></span></td>
                 </tr>
                 <tr class="table__row--selected">
-                  <td><input type="checkbox" aria-label="Select Genovese" checked /></td>
+                  <td><input type="checkbox" class="checkbox-input" aria-label="Select Genovese" checked /></td>
                   <td><strong>Genovese Basil</strong></td>
                   <td>Greenhouse G-1</td>
-                  <td><span class="badge badge--accent">Optimal</span></td>
+                  <td><span class="status status--accent"><span class="status__text">Optimal</span></span></td>
                 </tr>
               </tbody>
             </table>
@@ -211,18 +211,18 @@ export const DockedInCard: Story = {
 
           <footer class="card__footer batch-actions batch-actions--docked" role="toolbar" aria-label="Table batch actions">
             <div class="batch-actions__summary">
-              <span class="badge badge--accent badge--round"><span>2</span></span>
+              <span class="badge badge--accent"><span class="badge__text">2</span></span>
               <span class="micro-heading">2 crops selected</span>
             </div>
 
             <div class="batch-actions__actions">
               <div class="button-group buttons-sm buttons-subtle">
                 <button type="button" class="button">
-                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                   <span>Export</span>
                 </button>
                 <button type="button" class="button button--danger">
-                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                   <span>Remove</span>
                 </button>
               </div>
@@ -256,18 +256,18 @@ export const InCardBand: Story = {
           <div class="card__band card__band--subtle">
             <div class="batch-actions batch-actions--inline batch-actions--compact" role="toolbar" aria-label="Batch actions">
               <div class="batch-actions__summary">
-                <span class="badge badge--accent badge--round"><span>4</span></span>
+                <span class="badge badge--accent"><span class="badge__text">4</span></span>
                 <span class="micro-heading">4 items marked for harvest</span>
               </div>
 
               <div class="batch-actions__actions">
                 <div class="button-group buttons-sm buttons-subtle">
                   <button type="button" class="button button--strong button--accent">
-                    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                     <span>Log Harvest</span>
                   </button>
                   <button type="button" class="button">
-                    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                     <span>Print QR Tags</span>
                   </button>
                 </div>

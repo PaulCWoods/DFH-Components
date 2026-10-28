@@ -134,7 +134,7 @@ export const Playground: Story = {
           <div class="${classes}">
             <div class="card card--bordered padding">
               <h4 class="font-size-sm font-weight-bold">Bounded Content Box</h4>
-              <p class="font-size-xs color-muted margin-top-xs">
+              <p class="font-size-xs text-muted margin-top-xs">
                 Active tier: <code>${args.size}</code> &middot; Alignment: <code>${args.align}</code>
               </p>
             </div>
@@ -195,7 +195,7 @@ export const HorizontalAlignments: Story = {
       <div class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
         <!-- Start -->
         <div>
-          <p class="font-size-xs color-muted margin-bottom-xs">Leading Edge: <code>.wrapper--start</code></p>
+          <p class="font-size-xs text-muted margin-bottom-xs">Leading Edge: <code>.wrapper--start</code></p>
           <div class="wrapper wrapper--xs wrapper--start sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Left-Aligned</div>
           </div>
@@ -203,7 +203,7 @@ export const HorizontalAlignments: Story = {
 
         <!-- Center -->
         <div>
-          <p class="font-size-xs color-muted margin-bottom-xs">Centered: <code>.wrapper</code> (Default)</p>
+          <p class="font-size-xs text-muted margin-bottom-xs">Centered: <code>.wrapper</code> (Default)</p>
           <div class="wrapper wrapper--xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Centered</div>
           </div>
@@ -211,7 +211,7 @@ export const HorizontalAlignments: Story = {
 
         <!-- End -->
         <div>
-          <p class="font-size-xs color-muted margin-bottom-xs">Trailing Edge: <code>.wrapper--end</code></p>
+          <p class="font-size-xs text-muted margin-bottom-xs">Trailing Edge: <code>.wrapper--end</code></p>
           <div class="wrapper wrapper--xs wrapper--end sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Right-Aligned</div>
           </div>
@@ -238,14 +238,11 @@ export const VerticalCenteringHero: Story = {
         <div class="wrapper wrapper--xs wrapper--middle">
           <div class="card card--bordered padding stack" style="--gap: var(--spacing-12); text-align: center;">
             <div class="avatar avatar--placeholder" style="margin-inline: auto;">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
             </div>
             <div>
               <h4 class="font-weight-bold font-size-sm">Session Expired</h4>
-              <p class="font-size-xs color-muted">Please sign in to continue your audit.</p>
+              <p class="font-size-xs text-muted">Please sign in to continue your audit.</p>
             </div>
             <button type="button" class="button button--strong button--accent button--sm">
               <span>Sign In</span>
@@ -274,7 +271,7 @@ export const OptimalReadingColumn: Story = {
         <article class="wrapper wrapper--sm stack" style="--gap: var(--spacing-16);">
           <hgroup class="stack" style="--gap: var(--spacing-4);">
             <h3 class="font-size-fluid-2 font-weight-bold">Designing for Humans</h3>
-            <p class="color-muted font-size-sm">Published by Paul Charles Woods &middot; Oct 2026</p>
+            <p class="text-muted font-size-sm">Published by Paul Charles Woods &middot; Oct 2026</p>
           </hgroup>
 
           <p class="line-height-relaxed font-size-md">

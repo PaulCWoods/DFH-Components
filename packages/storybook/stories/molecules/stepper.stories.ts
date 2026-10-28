@@ -23,11 +23,11 @@ Structured, accessible sequential progression and multi-step wizard navigation c
     <li class="stepper__item is-complete">
       <div class="stepper__step">
         <span class="stepper__indicator" aria-hidden="true">
-          <svg class="icon"><use href="#Check"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         </span>
         <div class="stepper__content">
           <span class="stepper__title small-heading">Personal Details</span>
-          <span class="stepper__description micro-text text-muted">Completed</span>
+          <span class="stepper__description small-text text-muted">Completed</span>
         </div>
       </div>
     </li>
@@ -38,7 +38,7 @@ Structured, accessible sequential progression and multi-step wizard navigation c
         <span class="stepper__indicator"><span>2</span></span>
         <div class="stepper__content">
           <span class="stepper__title small-heading">Growing Agreement</span>
-          <span class="stepper__description micro-text text-muted">In progress</span>
+          <span class="stepper__description small-text text-muted">In progress</span>
         </div>
       </div>
     </li>
@@ -49,7 +49,7 @@ Structured, accessible sequential progression and multi-step wizard navigation c
         <span class="stepper__indicator"><span>3</span></span>
         <div class="stepper__content">
           <span class="stepper__title small-heading">Fee Schedule</span>
-          <span class="stepper__description micro-text text-muted">Pending</span>
+          <span class="stepper__description small-text text-muted">Pending</span>
         </div>
       </div>
     </li>
@@ -64,7 +64,7 @@ Structured, accessible sequential progression and multi-step wizard navigation c
     <li class="stepper__item is-complete">
       <button type="button" class="stepper__step">
         <span class="stepper__indicator" aria-hidden="true">
-          <svg class="icon"><use href="#Check"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         </span>
         <span class="stepper__title small-heading">Shipping</span>
       </button>
@@ -109,7 +109,7 @@ Structured, accessible sequential progression and multi-step wizard navigation c
 | \`--_stepper-indicator-size\` | \`var(--stepper-indicator-size)\` | \`var(--spacing-36, 2.25rem)\` | Diameter of the step circle indicator |
 | \`--_stepper-indicator-font-size\` | \`var(--stepper-indicator-font-size)\` | \`var(--micro-heading-font-size, 0.875rem)\` | Indicator numeral font size |
 | \`--_stepper-title-font-size\` | \`var(--stepper-title-font-size)\` | \`var(--micro-heading-font-size, 0.875rem)\` | Step label text size |
-| \`--_stepper-desc-font-size\` | \`var(--stepper-desc-font-size)\` | \`var(--micro-text-font-size, 0.875rem)\` | Subtitle description text size |
+| \`--_stepper-desc-font-size\` | \`var(--stepper-desc-font-size)\` | \`var(--body-sm-font-size)\` | Subtitle description text size |
         `,
       },
     },
@@ -169,11 +169,11 @@ export const Playground: Story = {
                   <li class="stepper__item ${stateClass}" ${ariaCurrent}>
                     <div class="stepper__step">
                       <span class="stepper__indicator" aria-hidden="true">
-                        ${isComplete ? '<svg class="icon"><use href="#Check"/></svg>' : `<span>${s.id}</span>`}
+                        ${isComplete ? '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>' : `<span>${s.id}</span>`}
                       </span>
                       <div class="stepper__content">
                         <span class="stepper__title small-heading">${s.title}</span>
-                        ${!isCompact ? `<span class="stepper__description micro-text text-muted">${isComplete ? 'Completed' : s.desc}</span>` : ''}
+                        ${!isCompact ? `<span class="stepper__description small-text text-muted">${isComplete ? 'Completed' : s.desc}</span>` : ''}
                       </div>
                     </div>
                   </li>
@@ -199,11 +199,11 @@ export const LinearProgress: Story = {
           <li class="stepper__item is-complete">
             <div class="stepper__step">
               <span class="stepper__indicator" aria-hidden="true">
-                <svg class="icon"><use href="#Check"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               </span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Select Plot</span>
-                <span class="stepper__description micro-text text-muted">Plot #B-04</span>
+                <span class="stepper__description small-text text-muted">Plot #B-04</span>
               </div>
             </div>
           </li>
@@ -212,7 +212,7 @@ export const LinearProgress: Story = {
               <span class="stepper__indicator"><span>2</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Gardener Info</span>
-                <span class="stepper__description micro-text text-muted">In progress</span>
+                <span class="stepper__description small-text text-muted">In progress</span>
               </div>
             </div>
           </li>
@@ -221,7 +221,7 @@ export const LinearProgress: Story = {
               <span class="stepper__indicator"><span>3</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Civic Agreement</span>
-                <span class="stepper__description micro-text text-muted">Pending</span>
+                <span class="stepper__description small-text text-muted">Pending</span>
               </div>
             </div>
           </li>
@@ -230,7 +230,7 @@ export const LinearProgress: Story = {
               <span class="stepper__indicator"><span>4</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Keycard Issuance</span>
-                <span class="stepper__description micro-text text-muted">Final step</span>
+                <span class="stepper__description small-text text-muted">Final step</span>
               </div>
             </div>
           </li>
@@ -252,11 +252,11 @@ export const InteractiveWizard: Story = {
           <li class="stepper__item is-complete">
             <button type="button" class="stepper__step" onclick="alert('Navigating to Step 1: Account Details');">
               <span class="stepper__indicator" aria-hidden="true">
-                <svg class="icon"><use href="#Check"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               </span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Account Details</span>
-                <span class="stepper__description micro-text text-muted">Click to edit</span>
+                <span class="stepper__description small-text text-muted">Click to edit</span>
               </div>
             </button>
           </li>
@@ -265,7 +265,7 @@ export const InteractiveWizard: Story = {
               <span class="stepper__indicator"><span>2</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Organization</span>
-                <span class="stepper__description micro-text text-muted">Current step</span>
+                <span class="stepper__description small-text text-muted">Current step</span>
               </div>
             </button>
           </li>
@@ -274,7 +274,7 @@ export const InteractiveWizard: Story = {
               <span class="stepper__indicator"><span>3</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Billing Tier</span>
-                <span class="stepper__description micro-text text-muted">Locked</span>
+                <span class="stepper__description small-text text-muted">Locked</span>
               </div>
             </button>
           </li>
@@ -296,11 +296,11 @@ export const Vertical: Story = {
           <li class="stepper__item is-complete">
             <div class="stepper__step">
               <span class="stepper__indicator" aria-hidden="true">
-                <svg class="icon"><use href="#Check"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               </span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Account Setup</span>
-                <span class="stepper__description micro-text text-muted">Verified email</span>
+                <span class="stepper__description small-text text-muted">Verified email</span>
               </div>
             </div>
           </li>
@@ -309,7 +309,7 @@ export const Vertical: Story = {
               <span class="stepper__indicator"><span>2</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Security Keys</span>
-                <span class="stepper__description micro-text text-muted">2FA Enrollment</span>
+                <span class="stepper__description small-text text-muted">2FA Enrollment</span>
               </div>
             </div>
           </li>
@@ -318,7 +318,7 @@ export const Vertical: Story = {
               <span class="stepper__indicator"><span>3</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Team Invites</span>
-                <span class="stepper__description micro-text text-muted">Collaborator roles</span>
+                <span class="stepper__description small-text text-muted">Collaborator roles</span>
               </div>
             </div>
           </li>
@@ -339,13 +339,13 @@ export const Compact: Story = {
         <ol class="stepper__list">
           <li class="stepper__item is-complete">
             <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+              <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
               <span class="stepper__title small-heading">Details</span>
             </div>
           </li>
           <li class="stepper__item is-complete">
             <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+              <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
               <span class="stepper__title small-heading">Preferences</span>
             </div>
           </li>
@@ -378,10 +378,10 @@ export const ValidationErrorState: Story = {
         <ol class="stepper__list">
           <li class="stepper__item is-complete">
             <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+              <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Identity</span>
-                <span class="stepper__description micro-text text-muted">Verified</span>
+                <span class="stepper__description small-text text-muted">Verified</span>
               </div>
             </div>
           </li>
@@ -390,7 +390,7 @@ export const ValidationErrorState: Story = {
               <span class="stepper__indicator" aria-hidden="true"><span>!</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Soil Agreement</span>
-                <span class="stepper__description micro-text text-danger">Signature missing</span>
+                <span class="stepper__description small-text text-danger">Signature missing</span>
               </div>
             </div>
           </li>
@@ -399,7 +399,7 @@ export const ValidationErrorState: Story = {
               <span class="stepper__indicator"><span>3</span></span>
               <div class="stepper__content">
                 <span class="stepper__title small-heading">Annual Dues</span>
-                <span class="stepper__description micro-text text-muted">Current step</span>
+                <span class="stepper__description small-text text-muted">Current step</span>
               </div>
             </div>
           </li>

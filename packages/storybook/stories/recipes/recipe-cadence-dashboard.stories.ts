@@ -16,10 +16,10 @@ const meta: Meta = {
 
 #### 1. Composed Primitives & Architecture
 
-- **Adaptive Double Navigation Layout (\`.app__workspace\`, \`.sidebar--rail\`, \`.sidebar\`, \`.tabs-docked\`):**
+- **Adaptive Double Navigation Layout (\`.app__workspace\`, \`.sidebar--rail\`, \`.sidebar\`, \`.tab-list--docked\`):**
   Orchestrates an advanced, multi-tiered responsive layout designed to stress-test UI library resilience:
   - **Desktop View (Wide Viewports):** A slim, permanent **Primary Rail** (\`.sidebar.sidebar--rail\`, 4.5rem) with brand logo, icon-only navigation tier buttons (Broadcast, Schedule, Library, Analytics, Settings), search, and user profile avatar. Sitting immediately alongside is a **Submenu Sidebar** (\`.sidebar\`, 16rem) with text-labeled hierarchical sub-navigation and badges under the active tier.
-  - **Mobile View (Small Viewports):** The primary rail gracefully disappears; its identity and utilities migrate to a compact **Mobile Top Navigation Bar** (\`.header.md:hide\`) with drawer toggle button; the main navigation buttons migrate to a **Floating Tab Bar Dock** (\`.tabs-docked.md:hide\`) at the bottom of the viewport; and the submenu sidebar transforms into an off-canvas **Slide-Over Drawer** with accessible dark blurred backdrop (\`.backdrop\`).
+  - **Mobile View (Small Viewports):** The primary rail gracefully disappears; its identity and utilities migrate to a compact **Mobile Top Navigation Bar** (\`.header.md:hide\`) with drawer toggle button; the main navigation buttons migrate to a **Floating Tab Bar Dock** (\`.tab-list--docked\`) at the bottom of the viewport; and the submenu sidebar transforms into an off-canvas **Slide-Over Drawer** with accessible dark blurred backdrop (\`.backdrop\`).
 
 - **Application Holy Grail Frame (\`.app.app--viewport\` & \`.main.main--viewport\`):**
   Uses the canonical Holy Grail grid defined in \`layout/app.css\` with modern dynamic viewport height (\`100dvb\`) and desktop viewport containment (\`.app--viewport\`). Keeps the **Station Header** and **Persistent Audio Dock** firmly anchored while enabling individual panels in the **Main Workspace** (\`.main--viewport\` + \`.split--stretch\` + \`.card--panel\`) to scroll internally.
@@ -290,7 +290,7 @@ export const LiveDashboard: Story = {
       // Batch Action Floating Bar Elements
       const selectAllCb = container.querySelector<HTMLInputElement>('#select-all-queue-cb');
       const batchActionBar = container.querySelector<HTMLElement>('#batch-action-bar');
-      const batchCounterBadge = container.querySelector<HTMLElement>('#batch-counter-badge');
+      const batchCounterBadge = container.querySelector<HTMLElement>('#batch-counter-badge .badge__text');
       const btnBatchCue = container.querySelector<HTMLButtonElement>('#btn-batch-cue');
       const btnBatchRemove = container.querySelector<HTMLButtonElement>('#btn-batch-remove');
 
@@ -415,16 +415,18 @@ export const LiveDashboard: Story = {
           btnMasterMute.classList.remove('button--danger');
           btnMasterMute.classList.add('button--danger');
           if (streamHealthBadge) {
-            streamHealthBadge.className = 'badge badge--danger';
-            streamHealthBadge.innerHTML = '<span>MUTED (OFF-AIR)</span>';
+            streamHealthBadge.className = 'status status--danger';
+            const text = streamHealthBadge.querySelector('.status__text');
+            if (text) text.textContent = 'Muted (off-air)';
           }
           updateVolumeDisplay(0);
         } else {
           btnMasterMute.classList.remove('button--danger');
           btnMasterMute.classList.add('button--danger');
           if (streamHealthBadge) {
-            streamHealthBadge.className = 'badge badge--success';
-            streamHealthBadge.innerHTML = '<span>Live</span><span class="md-max:visually-hidden">320k AAC</span>';
+            streamHealthBadge.className = 'status status--success';
+            const text = streamHealthBadge.querySelector('.status__text');
+            if (text) text.textContent = 'Live • 320k AAC';
           }
           updateVolumeDisplay(prevVolume || 85);
         }
@@ -484,7 +486,7 @@ export const LiveDashboard: Story = {
             <tr>
               <td colspan="7" class="padding-block-xl text-center text-muted">
                 <div class="empty-state empty-state--compact" style="margin: 0 auto;">
-                  <div class="empty-state__visual" aria-hidden="true"><svg class="icon font-size-lg"><use href="#Search"/></svg></div>
+                  <div class="empty-state__visual" aria-hidden="true"><svg class="icon font-size-lg" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg></div>
                   <div class="empty-state__content">
                     <p class="empty-state__title font-weight-medium">No assets matching filter</p>
                     <p class="empty-state__description font-size-xs text-muted">Try clearing the search term or switching to "All".</p>
@@ -527,7 +529,7 @@ export const LiveDashboard: Story = {
                 <td class="table__col--lg">
                   <div class="inline align-items-center">
                     <div class="avatar avatar--sm border-none" style="--avatar-bg: var(--surface-subtle); --avatar-text: var(--foreground-muted);" aria-hidden="true">
-                      <svg class="icon" aria-hidden="true"><use href="${iconRef}"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="${iconRef}"/></svg>
                     </div>
                     <div class="lockup">
                       <b class="${isLive ? 'color-accent' : ''}">${item.title}</b>
@@ -538,7 +540,7 @@ export const LiveDashboard: Story = {
 
                 <!-- Type Chip (Fit & Center aligned) -->
                 <td class="table__col--fit table__col--center">
-                  <span class="chip chip--sm"><span>${item.typeLabel}</span></span>
+                  <span class="chip chip--subtle chip--sm"><span class="chip__text">${item.typeLabel}</span></span>
                 </td>
 
                 <!-- Duration (Fit & Center aligned) -->
@@ -548,8 +550,8 @@ export const LiveDashboard: Story = {
 
                 <!-- Status Badge (Fit & Center aligned) -->
                 <td class="table__col--fit table__col--center">
-                  <span class="badge badge--${item.statusVariant} badge--sm">
-                    <span>${item.status}</span>
+                  <span class="status status--${item.statusVariant} status--sm">
+                    <span class="status__text">${item.status}</span>
                   </span>
                 </td>
 
@@ -557,13 +559,13 @@ export const LiveDashboard: Story = {
                 <td class="table__col--fit table__cell--center">
                   <div class="inline align-items-center gap-xs">
                     <button type="button" class="button button--subtle button--icon button--sm btn-row-up" data-id="${item.id}" ${index === 0 ? 'disabled' : ''} aria-label="Move ${item.title} up">
-                      <svg class="icon"><use href="#ArrowUp"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
                     </button>
                     <button type="button" class="button button--subtle button--icon button--sm btn-row-down" data-id="${item.id}" ${index === filtered.length - 1 ? 'disabled' : ''} aria-label="Move ${item.title} down">
-                      <svg class="icon"><use href="#ArrowDown"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowDown"/></svg>
                     </button>
                     <button type="button" class="button button--danger button--icon button--sm btn-row-del" data-id="${item.id}" ${isLive ? 'disabled' : ''} aria-label="Remove ${item.title} from queue">
-                      <svg class="icon"><use href="#Delete"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                     </button>
                     <button 
                       type="button" 
@@ -572,7 +574,7 @@ export const LiveDashboard: Story = {
                       aria-controls="subrow-${item.id}"
                       aria-label="Toggle technical ingest telemetry for ${item.title}"
                     >
-                      <svg class="icon icon--dir" aria-hidden="true"><use href="#ChevronDown"/></svg>
+                      <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                     </button>
                   </div>
                 </td>
@@ -584,7 +586,7 @@ export const LiveDashboard: Story = {
                   <div class="padding-md stack gap-sm" style="border-inline-start: 4px solid var(--border-color-accent, currentColor);">
                     <div class="inline justify-content-between align-items-center flex-wrap gap-xs">
                       <strong class="text-accent font-size-xs">Ingest Pipeline & Audio Rights Telemetry for "${item.title}"</strong>
-                      <span class="badge badge--sm badge--accent"><span>${item.typeLabel} Stream</span></span>
+                      <span class="chip chip--sm"><span class="chip__text">${item.typeLabel} Stream</span></span>
                     </div>
 
                     <!-- Telemetry responsive grid using DFH Telemetry Primitive (<dl class="telemetry-group">) -->
@@ -879,18 +881,18 @@ export const LiveDashboard: Story = {
                 aria-expanded="false" 
                 aria-label="Toggle broadcast sub-navigation drawer"
               >
-                <svg class="icon"><use href="#Navigation"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
               </button>
               <div class="inline align-items-center">
               
-                <svg class="icon icon--2xl"><use href="#BrandDesignForHumans"/></svg>
+                <svg class="icon" width="1em" height="1em" style="--icon-size: 2em;" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
                 <strong class="font-size-sm">Cadence</strong>
               </div>
             </div>
 
             <div class="inline align-items-center gap-xs">
               <button type="button" class="button button--plain button--icon button--sm" aria-label="Search broadcast station">
-                <svg class="icon"><use href="#Search"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
               </button>
               <button type="button" class="button button--avatar button--round" aria-label="Alex Morgan profile" title="Station Manager Alex Morgan" data-status="online">
                 AM
@@ -912,41 +914,41 @@ export const LiveDashboard: Story = {
             <!-- Top: Brand Logo / Station Identity -->
             <div class="sidebar__header">
               <a href="#broadcast" class="link inline align-items-center justify-content-center" aria-label="Cadence Station Home" title="Cadence Broadcast Studio">
-                  <svg class="icon icon--2xl"><use href="#BrandDesignForHumans"/></svg>
+                  <svg class="icon" width="1em" height="1em" style="--icon-size: 2em;" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
               </a>
             </div>
 
             <!-- Middle: Vertical Icon Navigation Tier (Home/Broadcast, Schedule, Library, Analytics, Settings) -->
             <div class="sidebar__scroller">
-              <nav class="tab-list tabs-vertical tabs-subtle tabs-button tabs-sm" aria-label="Primary Station Tiers">
+              <nav class="tab-list tab-list--vertical tab-list--subtle tab-list--segmented tab-list--sm" aria-label="Primary Station Tiers">
                 <ul>
                   <li>
-                    <button type="button" class="tab is-active" aria-current="page" data-tier="broadcast" aria-label="Broadcast Live Stream" title="Broadcast Live Stream">
-                      <svg class="icon"><use href="#Radio"/></svg>
+                    <button type="button" class="tab" aria-current="page" data-tier="broadcast" aria-label="Broadcast Live Stream" title="Broadcast Live Stream">
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Radio"/></svg>
                       <span class="visually-hidden">Broadcast</span>
                     </button>
                   </li>
                   <li>
                     <button type="button" class="tab" data-tier="schedule" aria-label="Broadcast Schedule" title="Broadcast Schedule">
-                      <svg class="icon"><use href="#Calendar"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Calendar"/></svg>
                       <span class="visually-hidden">Schedule</span>
                     </button>
                   </li>
                   <li>
                     <button type="button" class="tab" data-tier="library" aria-label="Media Library & Audio Vault" title="Media Library & Audio Vault">
-                      <svg class="icon"><use href="#Folder"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Folder"/></svg>
                       <span class="visually-hidden">Library</span>
                     </button>
                   </li>
                   <li>
                     <button type="button" class="tab" data-tier="analytics" aria-label="Station Telemetry & Analytics" title="Station Telemetry & Analytics">
-                      <svg class="icon"><use href="#ChartBar"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg>
                       <span class="visually-hidden">Analytics</span>
                     </button>
                   </li>
                   <li>
                     <button type="button" class="tab" data-tier="settings" aria-label="Station Configuration" title="Station Configuration">
-                      <svg class="icon"><use href="#Settings"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                       <span class="visually-hidden">Settings</span>
                     </button>
                   </li>
@@ -957,7 +959,7 @@ export const LiveDashboard: Story = {
             <!-- Bottom: Search Icon Button & Account Avatar Trigger -->
             <div class="sidebar__footer flex-direction-column gap-xs">
               <button type="button" class="button button--plain button--icon button--sm" aria-label="Search station">
-                <svg class="icon"><use href="#Search"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
               </button>
               <button type="button" class="button button--avatar" aria-label="Alex Morgan profile" title="Station Manager Alex Morgan" data-status="online">
                 AM
@@ -984,21 +986,21 @@ export const LiveDashboard: Story = {
                   id="cadence-drawer-close"
                   aria-label="Close navigation drawer"
                 >
-                  <svg class="icon"><use href="#Close"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 </button>
               </div>
             </header>
 
             <div class="sidebar__scroller">
-              <nav class="tab-list tabs-vertical tabs-plain tabs-flush tabs-sm" aria-label="Broadcast Sub-Navigation">
+              <nav class="tab-list tab-list--vertical tab-list--plain tab-list--flush tab-list--sm" aria-label="Broadcast Sub-Navigation">
                 <ul>
                   <li>
                     <span class="tab-list__content micro-heading text-muted">Operations</span>
                     <ul>
                       <li>
-                        <a href="#live-stream" class="tab is-active" aria-current="page">
+                        <a href="#live-stream" class="tab" aria-current="page">
                           <span class="tab__text">Live Stream</span>
-                          <span class="badge badge--success badge--sm"><span>On Air</span></span>
+                          <span class="status status--success status--sm"><span class="status__text">On Air</span></span>
                         </a>
                       </li>
                       <li>
@@ -1009,7 +1011,7 @@ export const LiveDashboard: Story = {
                       <li>
                         <a href="#playlists-queues" class="tab">
                           <span class="tab__text">Playlists & Queues</span>
-                          <span class="badge badge--subtle badge--sm"><span>8 Queued</span></span>
+                          <span class="badge badge--sm"><span class="badge__text">8 Queued</span></span>
                         </a>
                       </li>
                       <li>
@@ -1040,7 +1042,7 @@ export const LiveDashboard: Story = {
                       <li>
                         <a href="#alerts" class="tab">
                           <span class="tab__text">Log & Alerts</span>
-                          <span class="badge badge--danger badge--sm"><span>2</span></span>
+                          <span class="badge badge--danger badge--sm"><span class="badge__text">2</span></span>
                         </a>
                       </li>
                     </ul>
@@ -1062,7 +1064,7 @@ export const LiveDashboard: Story = {
             
             <!-- Desktop Station Header & Live Broadcast Status (Desktop ONLY >= 48em) -->
             <header class="header header--sticky header--translucent py-sm px-md max-md:hide" aria-label="Station Header and Controls">
-              <div class="inline justify-content-between align-items-center flex-wrap gap-sm controls-dense buttons-subtle inputs-plain">
+              <div class="inline justify-content-between align-items-center flex-wrap gap-sm ui-compact buttons-subtle controls-plain">
                 
                 <!-- Left: Station Selector & Health Badge -->
                 <div class="cluster align-items-center gap-sm">
@@ -1074,9 +1076,9 @@ export const LiveDashboard: Story = {
                       <option value="cadence-underground">Cadence Underground (Web 320k)</option>
                     </select>
 
-                    <span id="stream-health-badge" class="badge badge--success" data-status="online" role="status" aria-live="polite">
-                      <svg class="icon font-size-xs" aria-hidden="true"><use href="#Record"/></svg>
-                      <span>Live • 320k AAC</span>
+                    <span id="stream-health-badge" class="status status--success" role="status" aria-live="polite">
+                      <svg class="icon font-size-xs" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Record"/></svg>
+                      <span class="status__text">Live • 320k AAC</span>
                     </span>
                   </div>
                 </div>
@@ -1086,7 +1088,7 @@ export const LiveDashboard: Story = {
                   
                   <!-- Metric 1: Active Listeners -->
                   <div class="telemetry">
-                    <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+                    <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                     <div class="telemetry__content">
                       <span class="telemetry__label">Listeners</span>
                       <strong id="metric-listeners" class="telemetry__value">14,820</strong>
@@ -1095,7 +1097,7 @@ export const LiveDashboard: Story = {
 
                   <!-- Metric 2: Peak Today -->
                   <div class="telemetry">
-                    <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Progress"/></svg>
+                    <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
                     <div class="telemetry__content">
                       <span class="telemetry__label">Peak</span>
                       <strong id="metric-peak" class="telemetry__value">28,450</strong>
@@ -1104,7 +1106,7 @@ export const LiveDashboard: Story = {
 
                   <!-- Metric 3: Broadcast Uptime -->
                   <div class="telemetry" data-status="online">
-                    <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Record"/></svg>
+                    <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Record"/></svg>
                     <div class="telemetry__content">
                       <span class="telemetry__label">Uptime</span>
                       <strong id="metric-uptime" class="telemetry__value">99.98%</strong>
@@ -1113,7 +1115,7 @@ export const LiveDashboard: Story = {
 
                   <!-- Metric 4: Buffer Latency -->
                   <div class="telemetry">
-                    <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Settings"/></svg>
+                    <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                     <div class="telemetry__content">
                       <span class="telemetry__label">Latency</span>
                       <strong id="metric-latency" class="telemetry__value">42ms</strong>
@@ -1125,12 +1127,12 @@ export const LiveDashboard: Story = {
                 <!-- Right: Global Emergency Actions -->
                 <div class="inline align-items-center gap-xs">
                   <button type="button" class="button button--danger button--sm" id="btn-master-mute" aria-pressed="false" aria-label="Toggle Emergency Master Mute">
-                    <svg class="icon" aria-hidden="true" id="master-mute-icon"><use href="#Muted"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" id="master-mute-icon" focusable="false"><use href="#Muted"/></svg>
                     <span>Mute Master</span>
                   </button>
 
                   <button type="button" class="button button--danger button--sm" id="btn-emergency-cart" aria-label="Trigger Backup Automation Cart">
-                    <svg class="icon" aria-hidden="true"><use href="#Play"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg>
                     <span class="max-sm:hide">Backup Cart</span>
                   </button>
 
@@ -1142,7 +1144,7 @@ export const LiveDashboard: Story = {
                     aria-haspopup="dialog" 
                     aria-label="Stream Encoder Settings"
                   >
-                    <svg class="icon" aria-hidden="true"><use href="#Settings"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                   </button>
                 </div>
 
@@ -1163,7 +1165,7 @@ export const LiveDashboard: Story = {
                 <!-- Deck Header & Metadata Popover -->
                 <header class="deck__header">
                   <div class="deck__status inline align-items-center" style="--gap: var(--spacing-6);">
-                    <span class="status" data-status="online" aria-hidden="true"></span>
+                    <span class="status status--success status--plain" aria-hidden="true"></span>
                     <h2 class="deck__channel micro-heading">Deck A • On Air</h2>
                   </div>
 
@@ -1178,7 +1180,7 @@ export const LiveDashboard: Story = {
                       aria-haspopup="dialog"
                       aria-label="Inspect Track Metadata and ISRC"
                     >
-                      <svg class="icon" aria-hidden="true"><use href="#Info"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
                     </button>
 
                     <!-- Anchored Popover -->
@@ -1193,7 +1195,7 @@ export const LiveDashboard: Story = {
                               <table class="table table--compact font-size-xs">
                                 <tbody>
                                   <tr><th scope="row" class="text-muted">ISRC</th><td><code>US-AT2-24-00192</code></td></tr>
-                                  <tr><th scope="row" class="text-muted">PRO / Rights</th><td><span class="badge badge--sm"><span>ASCAP / BMI</span></span></td></tr>
+                                  <tr><th scope="row" class="text-muted">PRO / Rights</th><td><span class="chip chip--sm"><span class="chip__text">ASCAP / BMI</span></span></td></tr>
                                   <tr><th scope="row" class="text-muted">Format</th><td>FLAC 24-bit / 96kHz</td></tr>
                                   <tr><th scope="row" class="text-muted">Loudness</th><td>-14.2 LUFS (Target: -14)</td></tr>
                                   <tr><th scope="row" class="text-muted">BPM / Key</th><td>124 BPM • E Minor</td></tr>
@@ -1219,17 +1221,17 @@ export const LiveDashboard: Story = {
                       class="deck__art deck__art--vinyl is-spinning" 
                       id="deck-art-vinyl" 
                     >
-                      <svg class="icon"><use href="#Disc"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                     </div>
-                      <span class="badge badge--accent badge--sm badge--round deck__badge"><span>LIVE</span></span>
+                      <span class="status status--accent status--sm status--round deck__badge"><span class="status__text">LIVE</span></span>
                     </div>
 
                     <div class="deck__identity lockup">
                       <div class="deck__tags">
-                        <span class="chip chip--sm"><span>Heavy Rotation</span></span>
+                        <span class="chip chip--subtle chip--sm"><span class="chip__text">Heavy Rotation</span></span>
                       </div>
                       <h3 id="current-track-title" class="deck__title small-heading">Celestial Horizon</h3>
-                      <p id="current-track-artist" class="deck__artist micro-text">Aura & Tycho — Continuum LP</p>
+                      <p id="current-track-artist" class="deck__artist small-text">Aura & Tycho — Continuum LP</p>
                     </div>
                   </div>
 
@@ -1258,7 +1260,7 @@ export const LiveDashboard: Story = {
                   <!-- Transport Controls -->
                   <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport controls">
                     <button type="button" class="button button--subtle button--icon deck__cue" id="deck-cue-btn" aria-label="Cue to start">
-                      <svg class="icon"><use href="#ChevronStart"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                     </button>
 
                     <button 
@@ -1267,11 +1269,11 @@ export const LiveDashboard: Story = {
                       id="deck-play-btn" 
                       aria-label="Pause playback"
                     >
-                      <svg class="icon" aria-hidden="true" id="deck-play-icon"><use href="#Pause"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" id="deck-play-icon" focusable="false"><use href="#Pause"/></svg>
                     </button>
 
                     <button type="button" class="button button--subtle button--icon deck__skip" id="deck-skip-btn" aria-label="Skip to next queued track">
-                      <svg class="icon"><use href="#ChevronEnd"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
                     </button>
                   </div>
 
@@ -1285,7 +1287,7 @@ export const LiveDashboard: Story = {
                     </div>
                     <div class="deck__volume-controls inline align-items-center">
                       <button type="button" class="button button--subtle button--icon button--sm deck__mute" id="btn-deck-mute" aria-label="Toggle Deck Mute">
-                        <svg class="icon font-size-sm" aria-hidden="true" id="deck-mute-icon"><use href="#VolumeOn"/></svg>
+                        <svg class="icon font-size-sm" width="1em" height="1em" aria-hidden="true" id="deck-mute-icon" focusable="false"><use href="#VolumeOn"/></svg>
                       </button>
                       <input 
                         type="range" 
@@ -1305,7 +1307,7 @@ export const LiveDashboard: Story = {
                 <div class="deck__meters" role="region" aria-label="Stereo Master Peak Meters">
                   <div class="deck__meters-header">
                     <span class="deck__meters-title">Stereo Peak (dBFs)</span>
-                    <span class="badge badge--success badge--sm" id="vu-headroom-badge"><span>-1.8 dB Headroom</span></span>
+                    <span class="status status--success status--sm" id="vu-headroom-badge"><span class="status__text">-1.8 dB Headroom</span></span>
                   </div>
 
                   <!-- Channel Left -->
@@ -1340,11 +1342,11 @@ export const LiveDashboard: Story = {
                   </hgroup>
                   <div class="cluster gap-xs align-items-center @max-md:hide-labels">
                     <button type="button" class="button button--sm" id="btn-balance-queue" aria-label="Auto-Balance Queue Clocks">
-                      <svg class="icon"><use href="#Sortable"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Sortable"/></svg>
                       <span>Auto-Balance</span>
                     </button>
                     <button type="button" class="button button--strong button--accent button--sm" id="btn-insert-asset" aria-label="Insert Asset to Queue">
-                      <svg class="icon"><use href="#Plus"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
                       <span>Insert Track</span>
                     </button>
                   </div>
@@ -1374,16 +1376,16 @@ export const LiveDashboard: Story = {
                   <!-- Dynamic Multi-Select Batch Action Floating Bar (Sprout Pattern) -->
                   <div id="batch-action-bar" class="inline justify-content-between align-items-center padding-xs margin-block-start-xs radius-sm" style="display: none; background-color: var(--surface-translucent, transparent); border: var(--border-width, 1px) solid var(--border-color-accent, currentColor);">
                     <div class="inline align-items-center gap-sm">
-                      <span class="badge badge--accent badge--sm" id="batch-counter-badge">0 selected</span>
+                      <span class="badge badge--accent badge--sm" id="batch-counter-badge"><span class="badge__text">0 selected</span></span>
                       <span class="font-size-xs">Batch actions for selected tracks:</span>
                     </div>
                     <div class="inline gap-xs">
                       <button type="button" class="button button--plain button--sm" id="btn-batch-cue">
-                        <svg class="icon" aria-hidden="true"><use href="#Play"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg>
                         <span>Cue Next</span>
                       </button>
                       <button type="button" class="button button--plain button--sm" id="btn-batch-remove">
-                        <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                         <span>Remove Selected</span>
                       </button>
                     </div>
@@ -1419,7 +1421,7 @@ export const LiveDashboard: Story = {
                 <!-- Queue Automation Status Footer -->
                 <footer class="card__footer inline justify-content-between align-items-center text-muted font-size-xs">
                   <div class="inline align-items-center gap-xs">
-                    <svg class="icon font-size-xs" aria-hidden="true"><use href="#Check"/></svg>
+                    <svg class="icon font-size-xs" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                     <span>Automation Engine: AutoDJ Active (Next ad break window at 11:45 AM)</span>
                   </div>
                   <span>Sync: Primary Master (0 dropped frames)</span>
@@ -1444,16 +1446,16 @@ export const LiveDashboard: Story = {
                 <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
                   <div class="deck__art-frame" aria-hidden="true">
                     <div class="deck__art deck__art--vinyl is-spinning" id="dock-art-vinyl">
-                      <svg class="icon"><use href="#Disc"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                     </div>
                   </div>
                   <div class="deck__identity lockup">
                     <div class="deck__tags">
-                      <span class="status" data-status="online" aria-hidden="true"></span>
-                      <span class="chip chip--sm"><span>ON AIR</span></span>
+                      <span class="status status--success status--plain" aria-hidden="true"></span>
+                      <span class="chip chip--subtle chip--sm"><span class="chip__text">ON AIR</span></span>
                     </div>
                     <strong id="dock-track-title" class="deck__title small-heading">Celestial Horizon</strong>
-                    <p id="dock-track-artist" class="deck__artist micro-text">Aura & Tycho • 320k AAC</p>
+                    <p id="dock-track-artist" class="deck__artist small-text">Aura & Tycho • 320k AAC</p>
                   </div>
                 </div>
 
@@ -1461,13 +1463,13 @@ export const LiveDashboard: Story = {
                 <div class="deck__timeline-transport-group">
                   <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Dock playback controls">
                     <button type="button" class="button button--subtle button--icon button--sm" id="dock-prev-btn" aria-label="Cue previous track">
-                      <svg class="icon"><use href="#ChevronStart"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                     </button>
                     <button type="button" class="button button--strong button--accent button--round deck__play" id="dock-play-btn" aria-label="Pause playback">
-                      <svg class="icon font-size-xs" id="dock-play-icon"><use href="#Pause"/></svg>
+                      <svg class="icon font-size-xs" width="1em" height="1em" id="dock-play-icon" aria-hidden="true" focusable="false"><use href="#Pause"/></svg>
                     </button>
                     <button type="button" class="button button--subtle button--icon button--sm" id="dock-next-btn" aria-label="Skip to next track">
-                      <svg class="icon"><use href="#ChevronEnd"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
                     </button>
                   </div>
 
@@ -1494,7 +1496,7 @@ export const LiveDashboard: Story = {
                   <div class="deck__volume">
                     <div class="deck__volume-controls inline align-items-center">
                       <button type="button" class="button button--subtle button--icon button--sm deck__mute" id="dock-mute-btn" aria-label="Mute dock audio">
-                        <svg class="icon font-size-sm" id="dock-mute-icon"><use href="#VolumeOn"/></svg>
+                        <svg class="icon font-size-sm" width="1em" height="1em" id="dock-mute-icon" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
                       </button>
                       <input 
                         type="range" 
@@ -1530,7 +1532,7 @@ export const LiveDashboard: Story = {
                     aria-haspopup="dialog"
                     aria-label="Stream Encoder Settings"
                   >
-                    <svg class="icon"><use href="#Settings"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                     <span class="max-md:hide">Settings</span>
                   </button>
                 </div>
@@ -1555,7 +1557,7 @@ export const LiveDashboard: Story = {
                 </hgroup>
                 <form method="dialog">
                   <button type="submit" class="button button--subtle button--icon" commandfor="cadence-settings-dialog" command="close" aria-label="Close settings dialog">
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </form>
               </header>
@@ -1644,13 +1646,13 @@ export const LiveDashboard: Story = {
         <!-- ================================================================== -->
         <!-- 4. Mobile Floating Tab Bar Dock (Bottom Navigation, icons only)    -->
         <!-- ================================================================== -->
-        <div class="tabs-docked app-unlocked:show" style="z-index: calc(var(--z-index-sticky, 100) + 1);">
-          <nav class="bg-accent bg-effect-translucent-50 color-scheme-dark tab-list tabs-button tabs-icon tabs-round tabs-floating" aria-label="Mobile Bottom Navigation">
-            <button type="button" class="tab is-active" aria-current="page" data-tier="broadcast" aria-label="Broadcast Live Stream"><svg class="icon"><use href="#Radio"/></svg></button>
-            <button type="button" class="tab" data-tier="schedule" aria-label="Broadcast Schedule"><svg class="icon"><use href="#Calendar"/></svg></button>
-            <button type="button" class="tab" data-tier="library" aria-label="Media Library"><svg class="icon"><use href="#Folder"/></svg></button>
-            <button type="button" class="tab" data-tier="analytics" aria-label="Station Telemetry"><svg class="icon"><use href="#ChartBar"/></svg></button>
-            <button type="button" class="tab" data-tier="settings" aria-label="Station Configuration"><svg class="icon"><use href="#Settings"/></svg></button>
+        <div class="app-unlocked:show">
+          <nav class="bg-accent bg-effect-translucent-50 color-scheme-dark tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked" style="z-index: calc(var(--z-index-sticky, 100) + 1);" aria-label="Mobile Bottom Navigation">
+            <button type="button" class="tab tab--icon" aria-current="page" data-tier="broadcast" aria-label="Broadcast Live Stream"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Radio"/></svg></button>
+            <button type="button" class="tab tab--icon" data-tier="schedule" aria-label="Broadcast Schedule"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Calendar"/></svg></button>
+            <button type="button" class="tab tab--icon" data-tier="library" aria-label="Media Library"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Folder"/></svg></button>
+            <button type="button" class="tab tab--icon" data-tier="analytics" aria-label="Station Telemetry"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg></button>
+            <button type="button" class="tab tab--icon" data-tier="settings" aria-label="Station Configuration"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg></button>
           </nav>
         </div>
 
@@ -1677,14 +1679,14 @@ export const BufferingState: Story = {
         <div class="inline justify-content-between align-items-center flex-wrap gap-sm">
           <div class="cluster align-items-center gap-sm">
             <strong class="font-size-md">Cadence</strong>
-            <span class="badge badge--warning" data-status="away" role="status" aria-live="assertive">
-              <span>Reconnecting • Buffer Depleted</span>
+            <span class="status status--warning" role="status" aria-live="assertive">
+              <span class="status__text">Reconnecting • Buffer Depleted</span>
             </span>
           </div>
 
           <div class="inline align-items-center gap-xs">
             <button type="button" class="button button--danger button--sm">
-              <svg class="icon"><use href="#Play"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg>
               <span>Force Backup Cart</span>
             </button>
           </div>
@@ -1697,7 +1699,7 @@ export const BufferingState: Story = {
           
           <!-- Global Warning Alert -->
           <div class="alert alert--warning" role="alert">
-            <div class="alert__visual"><svg class="icon" aria-hidden="true"><use href="#Warning"/></svg></div>
+            <div class="alert__visual"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></div>
             <div class="alert__content">
               <h3 class="alert__title">Audio Stream Stalled (Ingest Server Timeout)</h3>
               <p class="alert__description">The ingest uplink from WDFH Main Studio has exceeded the 250ms threshold. Automated fallback cart will activate in 12 seconds.</p>
@@ -1710,9 +1712,10 @@ export const BufferingState: Story = {
             <div class="card__content stack gap-sm">
               <h3 class="card__title font-size-sm">Broadcast Queue (Holding Pattern)</h3>
               <div class="stack gap-xs" aria-busy="true" aria-label="Re-synchronizing queue timetable">
-                <span class="skeleton skeleton--heading skeleton--w-75"></span>
-                <span class="skeleton skeleton--text"></span>
-                <span class="skeleton skeleton--text skeleton--w-50"></span>
+                <p class="visually-hidden" role="status">Re-synchronizing the queue…</p>
+                <span class="skeleton skeleton--heading skeleton--w-75" aria-hidden="true"></span>
+                <span class="skeleton skeleton--text" aria-hidden="true"></span>
+                <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
               </div>
             </div>
           </div>
@@ -1728,19 +1731,19 @@ export const BufferingState: Story = {
               <div class="deck__track inline align-items-center" style="--gap: var(--_deck-gap);">
                 <div class="deck__art-frame" aria-hidden="true">
                   <div class="deck__art">
-                    <svg class="icon"><use href="#Disc"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
                   </div>
                 </div>
                 <div class="deck__identity lockup">
                   <div class="deck__tags">
-                    <span class="chip chip--sm chip--status" data-status="away">Buffering...</span>
+                    <span class="status status--warning status--plain status--sm"><span class="status__text">Buffering...</span></span>
                   </div>
                   <strong class="deck__title small-heading">Celestial Horizon</strong>
-                  <p class="deck__artist micro-text">Signal paused — awaiting reconnect</p>
+                  <p class="deck__artist small-text">Signal paused — awaiting reconnect</p>
                 </div>
               </div>
               <div class="inline align-items-center gap-sm">
-                <span class="badge badge--sm badge--warning"><span>Auto-Recovery Active</span></span>
+                <span class="status status--warning status--sm"><span class="status__text">Auto-Recovery Active</span></span>
                 <button type="button" class="button button--subtle button--sm" disabled>
                   <span>Connecting...</span>
                 </button>

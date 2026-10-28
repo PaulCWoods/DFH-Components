@@ -253,7 +253,7 @@
 
 /* Optional Supporting Description / Subtitle (:where(.stepper__description, .stepper__desc))
    Structural container hook for step descriptions.
-   Out of the box, defers typography to atom primitives (.micro-text, .small-text, etc.). */
+   Out of the box, defers typography to atom primitives (.small-text, .micro-heading, etc.). */
 :where(.stepper__description, .stepper__desc) {
   box-sizing: border-box;
   color: var(--_stepper-desc-color);

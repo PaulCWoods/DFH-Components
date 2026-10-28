@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
 interface SkeletonArgs {
-  variant?: 'text' | 'heading' | 'avatar' | 'button' | 'badge' | 'media';
-  animation?: 'shimmer' | 'pulse' | 'static';
-  width?: string;
+  shape: 'text' | 'heading' | 'avatar' | 'button' | 'input' | 'badge' | 'media' | 'none';
+  pulse: boolean;
+  width: string;
 }
+
+const cls = (a: Partial<SkeletonArgs>) =>
+  ['skeleton', a.shape && a.shape !== 'none' ? `skeleton--${a.shape}` : '', a.pulse ? 'skeleton--pulse' : '']
+    .filter(Boolean)
+    .join(' ');
 
 const meta: Meta<SkeletonArgs> = {
   title: 'Atoms/Skeleton',
@@ -13,315 +18,191 @@ const meta: Meta<SkeletonArgs> = {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Skeleton Primitive
+### Skeleton
 
-The **Skeleton** primitive is an accessible placeholder foundation engineered to eliminate **Cumulative Layout Shift (CLS)** and provide immediate visual feedback while asynchronous data loads.
+A placeholder that holds the space of content still loading, so nothing moves when it arrives.
 
-It operates seamlessly in two modes:
-1. **Standalone Primitive:** Direct geometric placeholders (\`.skeleton--text\`, \`.skeleton--heading\`, \`.skeleton--avatar\`, \`.skeleton--button\`, \`.skeleton--media\`).
-2. **Companion Modifier:** Directly applied to existing library primitives (\`<div class="avatar skeleton">\`, \`<button class="button skeleton">\`, \`<span class="badge skeleton">\`, \`<div class="card skeleton">\`).
+| Use | Markup |
+| :--- | :--- |
+| Shape | \`.skeleton\` with \`--text\`, \`--heading\`, \`--avatar\`, \`--button\`, \`--input\`, \`--badge\` or \`--media\` |
+| Companion | \`.skeleton\` on \`.avatar\`, \`.button\`, \`.input\`, \`.textarea\`, \`.select\`, \`.badge\`, \`.chip\`, \`.status\` or \`.kbd\`: the atom keeps its box, the skeleton replaces the paint |
+| Width | \`--w-50\`, \`--w-75\`, \`--w-90\`; any other with \`--skeleton-width\` (and \`--skeleton-height\` on a bare \`.skeleton\`) |
+| Motion | Shimmer (default), \`--pulse\`; \`--skeleton-motion: shimmer \\| pulse \\| none\` on a container |
 
----
-
-#### 1. Canonical Semantic Markup Signatures
-AI agents and developers MUST strictly use the following semantic patterns:
+- **Text lines size from the text atom they sit in.** \`--text\` and \`--heading\` are one line box high with the bar at cap height, so a line inside \`.text\` or \`.heading\` is exactly one of its lines. Hold a heading's place with the atom class on a \`div\`, not a heading element, which would be an empty heading.
+- The fill mixes the text colour, so it shows the same on the page, a card or a band. Increased contrast strengthens it; reduced motion stops it; forced colours draws it in \`GrayText\`.
+- **Announce loading.** Shapes take \`aria-hidden="true"\`; the region takes \`aria-busy="true"\` and a \`role="status"\` message. When loading ends, set \`aria-busy="false"\` and update or remove the message.
 
 \`\`\`html
-<!-- 1. Text & Heading Placeholders (with aria-hidden="true") -->
-<span class="skeleton skeleton--heading" aria-hidden="true"></span>
-<span class="skeleton skeleton--text" aria-hidden="true"></span>
-<span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
-
-<!-- 2. Shape Placeholders -->
-<div class="skeleton skeleton--avatar" aria-hidden="true"></div>
-<div class="skeleton skeleton--button" aria-hidden="true"></div>
-<div class="skeleton skeleton--media" aria-hidden="true"></div>
-
-<!-- 3. Companion Modifier on Existing Primitives -->
-<div class="avatar skeleton" aria-hidden="true"></div>
-<button type="button" class="button skeleton" aria-hidden="true" disabled>
-  <span>Submit</span>
-</button>
-
-<!-- 4. Async Loading Container with aria-busy="true" -->
-<section aria-busy="true" aria-label="Loading profile content">
-  <div class="card">
-    <article class="card__content">
-      <div class="inline gap-md">
-        <div class="skeleton skeleton--avatar" aria-hidden="true"></div>
-        <div class="stack gap-xs flex-grow">
-          <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-          <span class="skeleton skeleton--text skeleton--w-25" aria-hidden="true"></span>
-        </div>
-      </div>
-    </article>
-  </div>
+<section aria-busy="true" aria-labelledby="feed-title">
+  <h2 id="feed-title" class="heading">Activity</h2>
+  <p class="visually-hidden" role="status">Loading activity…</p>
+  <div class="small-heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
+  <p class="text">
+    <span class="skeleton skeleton--text" aria-hidden="true"></span>
+    <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+  </p>
+  <button type="button" class="button skeleton" aria-hidden="true" disabled><span>Save</span></button>
 </section>
 \`\`\`
-
----
-
-#### 2. WCAG 2.2 Conformance Matrix
-
-| Criterion | Level | Implementation Strategy |
-| :--- | :---: | :--- |
-| **2.3.3 Reduced Motion** | **AAA** | Automatically disables shimmer and pulse animations under \`@media (prefers-reduced-motion: reduce)\`, switching to an accessible static tint. |
-| **1.4.3 Contrast Minimum** | **AA** | Base fill uses \`--surface-muted\` with adaptive light-dark() and inverted palette support, ensuring visible contrast against page and card surfaces. |
-| **1.4.11 Non-Text Contrast** | **AA** | In Forced Colors / High Contrast mode, renders an explicit 1px \`ButtonBorder\` outline so shapes are distinct. |
-| **Screen Reader Semantics** | **A** | Decorative placeholders must have \`aria-hidden="true"\`; loading parent regions use \`aria-busy="true"\` to alert assistive tech. |
-
----
-
-#### 3. CSS Custom Property Contract Table
-
-| Property | Default Value | Description |
-| :--- | :--- | :--- |
-| \`--skeleton-bg\` | \`var(--surface-muted)\` | Base placeholder background fill |
-| \`--skeleton-shimmer\` | \`light-dark(...)\` | Moving highlight wave sweep tone |
-| \`--skeleton-radius\` | \`var(--radius-sm, 0.25rem)\` | Default corner radius for text and block placeholders |
-| \`--skeleton-radius-full\` | \`var(--radius-full, 9999px)\` | Circular corner radius for avatars and chips |
-| \`--skeleton-duration\` | \`1.6s\` | Shimmer and pulse animation cycle duration |
-        `,
+`,
       },
     },
   },
   argTypes: {
-    variant: {
+    shape: {
       control: 'select',
-      options: ['text', 'heading', 'avatar', 'button', 'badge', 'media'],
-      description: 'Geometric preset shape',
+      options: ['text', 'heading', 'avatar', 'button', 'input', 'badge', 'media', 'none'],
+      description: 'Shape modifier (none: a bare block)',
     },
-    animation: {
-      control: 'select',
-      options: ['shimmer', 'pulse', 'static'],
-      description: 'Animation mode (shimmer wave, opacity pulse, or static)',
-    },
-    width: {
-      control: 'text',
-      description: 'Inline width override (e.g. 50%, 80%, 12rem)',
-    },
+    pulse: { control: 'boolean', description: '--pulse' },
+    width: { control: 'text', description: '--skeleton-width (any length)' },
   },
+  args: { shape: 'text', pulse: false, width: '' },
+  render: (args) => `
+    <div class="demo-stage stack" style="max-inline-size: 32rem;">
+      <span class="${cls(args)}" aria-hidden="true" style="${args.width ? `--skeleton-width: ${args.width};` : ''}${args.shape === 'none' ? ' --skeleton-height: 4rem;' : ''}"></span>
+    </div>
+  `,
 };
 
 export default meta;
 type Story = StoryObj<SkeletonArgs>;
 
-function getSkeletonClasses(args: SkeletonArgs): string {
-  const classes = ['skeleton'];
-  if (args.variant && args.variant !== 'text') {
-    classes.push(`skeleton--${args.variant}`);
-  } else if (args.variant === 'text') {
-    classes.push('skeleton--text');
-  }
-  if (args.animation === 'pulse') classes.push('skeleton--pulse');
-  if (args.animation === 'static') classes.push('skeleton--static');
-  return classes.join(' ');
-}
+/**
+ * Interactive sandbox: shape, motion and width.
+ */
+export const Playground: Story = {};
 
-export const Default: Story = {
-  args: {
-    variant: 'text',
-    animation: 'shimmer',
-    width: '100%',
-  },
-  render: (args) => `
-    <div style="max-inline-size: 32rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
-      <div class="stack gap-sm" aria-busy="true" aria-label="Loading content">
-        <span class="skeleton skeleton--heading skeleton--w-75" aria-hidden="true"></span>
-        <span class="${getSkeletonClasses(args)}" style="${args.width ? `max-inline-size: ${args.width};` : ''}" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--w-90" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
+/**
+ * Each shape takes the size of the atom it stands in for.
+ */
+export const Shapes: Story = {
+  render: () => `
+    <div class="demo-stage stack" style="max-inline-size: 32rem;">
+      ${(['text', 'heading', 'avatar', 'button', 'input', 'badge', 'media'] as const)
+        .map(
+          (shape) => `
+        <div class="stack" style="--gap: var(--spacing-8);">
+          <span class="sb-demo-tag">--${shape}</span>
+          <span class="${cls({ shape })}" aria-hidden="true"></span>
+        </div>`
+        )
+        .join('')}
+    </div>
+  `,
+};
+
+/**
+ * Text lines inside text atoms: each skeleton line is one line of the atom
+ * around it, so the loaded text replaces it without moving anything.
+ */
+export const TextInAtoms: Story = {
+  render: () => `
+    <div class="demo-stage grid grid--auto-fit grid--xs">
+      <div class="stack" style="--gap: var(--spacing-8);">
+        <span class="sb-demo-tag">Loading</span>
+        <div class="heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
+        <p class="text">
+          <span class="skeleton skeleton--text" aria-hidden="true"></span>
+          <span class="skeleton skeleton--text skeleton--w-90" aria-hidden="true"></span>
+          <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
+        </p>
+        <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 8rem;"></span></p>
+      </div>
+      <div class="stack" style="--gap: var(--spacing-8);">
+        <span class="sb-demo-tag">Loaded</span>
+        <h3 class="heading">Release notes</h3>
+        <p class="text">Every atom now takes its size from the scale. Skeleton lines match the text they hold the place of.</p>
+        <p class="small-text text-muted">Updated today</p>
       </div>
     </div>
   `,
 };
 
-export const ShapeVariants: Story = {
+/**
+ * On another atom, .skeleton keeps that atom's box and replaces the paint.
+ */
+export const Companions: Story = {
   render: () => `
-    <div class="stack gap-xl" style="max-inline-size: 36rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
-      
-      <!-- 1. Text & Headings -->
-      <div class="stack gap-xs">
-        <h3 class="font-bold font-size-0 text-muted">1. Text & Headings</h3>
-        <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
-      </div>
-
-      <!-- 2. Circular Avatars -->
-      <div class="stack gap-xs">
-        <h3 class="font-bold font-size-0 text-muted">2. Circular Avatars</h3>
-        <div class="inline gap-md align-items-center">
-          <div class="skeleton skeleton--avatar" style="--avatar-size: 2rem;" aria-hidden="true"></div>
-          <div class="skeleton skeleton--avatar" aria-hidden="true"></div>
-          <div class="skeleton skeleton--avatar" style="--avatar-size: 3.5rem;" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <!-- 3. Interactive Controls (Buttons, Inputs, Badges) -->
-      <div class="stack gap-xs">
-        <h3 class="font-bold font-size-0 text-muted">3. Controls (Buttons, Inputs, Badges)</h3>
-        <div class="cluster gap-sm align-items-center">
-          <div class="skeleton skeleton--badge" aria-hidden="true"></div>
-          <div class="skeleton skeleton--badge" style="inline-size: 6rem;" aria-hidden="true"></div>
-          <div class="skeleton skeleton--button" aria-hidden="true"></div>
-        </div>
-        <div class="skeleton skeleton--input" style="max-inline-size: 20rem;" aria-hidden="true"></div>
-      </div>
-
-      <!-- 4. Media & Aspect-Ratio Cards -->
-      <div class="stack gap-xs">
-        <h3 class="font-bold font-size-0 text-muted">4. Media Banner (16:9 Aspect Ratio)</h3>
-        <div class="skeleton skeleton--media" aria-hidden="true"></div>
-      </div>
-
-    </div>
-  `,
-};
-
-export const CardCompositeSkeleton: Story = {
-  render: () => `
-    <div style="max-inline-size: 24rem; padding: var(--spacing-16, 1rem);">
-      <!-- Zero-CLS Card Loading State -->
-      <article class="card card--bordered bg-card" aria-busy="true" aria-label="Loading article card">
-        <div class="card__content">
-          
-          <!-- Card Media Placeholder -->
-          <div class="skeleton skeleton--media" style="border-radius: var(--radius-sm, 0.25rem);" aria-hidden="true"></div>
-
-          <!-- Card Header Placeholder -->
-          <header class="card__header inline gap-sm align-items-center">
-            <div class="skeleton skeleton--avatar" aria-hidden="true"></div>
-            <div class="stack gap-xs flex-grow">
-              <span class="skeleton skeleton--heading skeleton--w-75" style="margin: 0;" aria-hidden="true"></span>
-              <span class="skeleton skeleton--text skeleton--w-40" style="margin: 0;" aria-hidden="true"></span>
-            </div>
-          </header>
-
-          <!-- Card Body Placeholder -->
-          <div class="card__body stack gap-xs">
-            <span class="skeleton skeleton--text" aria-hidden="true"></span>
-            <span class="skeleton skeleton--text skeleton--w-90" aria-hidden="true"></span>
-            <span class="skeleton skeleton--text skeleton--w-60" aria-hidden="true"></span>
+    <div class="demo-stage stack">
+      ${[
+        ['.button', '<button type="button" class="button button--strong button--accent{s}"{a}><span>Save changes</span></button>'],
+        ['.status', '<span class="status status--success{s}"{a}><span class="status__text">Published</span></span>'],
+        ['.chip', '<span class="chip chip--subtle{s}"{a}><span class="chip__text">TypeScript</span></span>'],
+        ['.input', '<input type="text" class="input{s}" value="Alex Morgan"{a} aria-label="Name" />'],
+        ['.avatar', '<div class="avatar{s}"{a}><span>AM</span></div>'],
+      ]
+        .map(
+          ([label, html]) => `
+        <div class="stack" style="--gap: var(--spacing-8);">
+          <span class="sb-demo-tag">${label}</span>
+          <div class="cluster">
+            ${html.replace('{s}', ' skeleton').replace('{a}', label === '.button' || label === '.input' ? ' aria-hidden="true" disabled' : ' aria-hidden="true"').replace(' aria-label="Name"', '')}
+            ${html.replace('{s}', '').replace('{a}', '')}
           </div>
+        </div>`
+        )
+        .join('')}
+    </div>
+  `,
+};
 
-          <!-- Card Footer Placeholder -->
-          <footer class="card__footer split align-items-center">
-            <div class="skeleton skeleton--badge" aria-hidden="true"></div>
-            <div class="skeleton skeleton--button" style="inline-size: 6rem; min-block-size: 2.25rem;" aria-hidden="true"></div>
+/**
+ * Shimmer (default) and pulse. A container sets the motion for everything
+ * inside with --skeleton-motion; none stops it. Reduced motion stops it too.
+ */
+export const Motion: Story = {
+  render: () => `
+    <div class="demo-stage stack" style="max-inline-size: 32rem;">
+      <span class="sb-demo-tag">Shimmer (default)</span>
+      <p class="text"><span class="skeleton skeleton--text" aria-hidden="true"></span></p>
+      <span class="sb-demo-tag">.skeleton--pulse</span>
+      <p class="text"><span class="skeleton skeleton--text skeleton--pulse" aria-hidden="true"></span></p>
+      <span class="sb-demo-tag">--skeleton-motion: pulse on a container</span>
+      <div class="cluster" style="--skeleton-motion: pulse;">
+        <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
+        <span class="skeleton skeleton--button" aria-hidden="true"></span>
+      </div>
+      <span class="sb-demo-tag">--skeleton-motion: none on a container</span>
+      <div class="cluster" style="--skeleton-motion: none;">
+        <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
+        <span class="skeleton skeleton--button" aria-hidden="true"></span>
+      </div>
+    </div>
+  `,
+};
+
+/**
+ * The whole pattern: a busy card with a status message, a header lockup,
+ * text lines and a companion button.
+ */
+export const LoadingCard: Story = {
+  render: () => `
+    <div class="demo-stage" style="max-inline-size: 24rem;">
+      <article class="card card--bordered" aria-busy="true" aria-labelledby="skeleton-card-title">
+        <div class="card__content">
+          <header class="card__header">
+            <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
+            <hgroup class="card__hgroup">
+              <h3 id="skeleton-card-title" class="card__title small-heading">Team activity</h3>
+              <p class="card__subtitle small-text"><span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 8rem;"></span></p>
+            </hgroup>
+          </header>
+          <div class="card__body">
+            <p class="visually-hidden" role="status">Loading team activity…</p>
+            <span class="skeleton skeleton--media" aria-hidden="true"></span>
+            <p class="text">
+              <span class="skeleton skeleton--text" aria-hidden="true"></span>
+              <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+            </p>
+          </div>
+          <footer class="card__footer">
+            <span class="status skeleton" aria-hidden="true"><span class="status__text">Active</span></span>
+            <button type="button" class="button button--subtle skeleton" aria-hidden="true" disabled><span>Open</span></button>
           </footer>
-
         </div>
       </article>
-    </div>
-  `,
-};
-
-export const CompanionModifier: Story = {
-  render: () => `
-    <div class="stack gap-xl" style="max-inline-size: 32rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
-      
-      <p class="font-size--1 text-muted">
-        Demonstrates adding the <code>.skeleton</code> class directly onto existing primitives. Children elements and text are automatically masked, retaining exact primitive geometry.
-      </p>
-
-      <!-- 1. Avatar Primitive + .skeleton -->
-      <div class="inline gap-md align-items-center">
-        <div class="avatar skeleton" aria-hidden="true">
-          <span>JD</span>
-        </div>
-        <div class="stack gap-xs">
-          <span class="font-bold font-size-0">Avatar Primitive</span>
-          <span class="text-muted font-size--1"><code>&lt;div class="avatar skeleton"&gt;</code></span>
-        </div>
-      </div>
-
-      <!-- 2. Button Primitive + .skeleton -->
-      <div class="inline gap-md align-items-center">
-        <button type="button" class="button button--strong button--accent skeleton" aria-hidden="true" disabled>
-          <span>Primary Action</span>
-        </button>
-        <div class="stack gap-xs">
-          <span class="font-bold font-size-0">Button Primitive</span>
-          <span class="text-muted font-size--1"><code>&lt;button class="button skeleton" disabled&gt;</code></span>
-        </div>
-      </div>
-
-      <!-- 3. Badge Primitive + .skeleton -->
-      <div class="inline gap-md align-items-center">
-        <span class="badge skeleton" aria-hidden="true">
-          <span>Status</span>
-        </span>
-        <div class="stack gap-xs">
-          <span class="font-bold font-size-0">Badge Primitive</span>
-          <span class="text-muted font-size--1"><code>&lt;span class="badge skeleton"&gt;</code></span>
-        </div>
-      </div>
-
-      <!-- 4. Input Primitive + .skeleton -->
-      <div class="inline gap-md align-items-center">
-        <input type="text" class="input skeleton" value="Placeholder value" aria-hidden="true" disabled style="max-inline-size: 14rem;" />
-        <div class="stack gap-xs">
-          <span class="font-bold font-size-0">Input Primitive</span>
-          <span class="text-muted font-size--1"><code>&lt;input class="input skeleton" disabled&gt;</code></span>
-        </div>
-      </div>
-
-    </div>
-  `,
-};
-
-export const AnimationModes: Story = {
-  render: () => `
-    <div class="grid grid--3-col gap-lg" style="padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
-      
-      <!-- 1. Shimmer (Default) -->
-      <div class="card card--bordered padding-md stack gap-sm">
-        <h4 class="font-bold font-size-0">Shimmer (Default)</h4>
-        <p class="font-size--1 text-muted">Moving highlight gradient sweep</p>
-        <div class="skeleton skeleton--media" aria-hidden="true"></div>
-        <span class="skeleton skeleton--heading skeleton--w-75" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
-      </div>
-
-      <!-- 2. Pulse Mode (.skeleton--pulse) -->
-      <div class="card card--bordered padding-md stack gap-sm">
-        <h4 class="font-bold font-size-0">Pulse (.skeleton--pulse)</h4>
-        <p class="font-size--1 text-muted">Subtle opacity breathe cycle</p>
-        <div class="skeleton skeleton--media skeleton--pulse" aria-hidden="true"></div>
-        <span class="skeleton skeleton--heading skeleton--pulse skeleton--w-75" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--pulse" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--pulse skeleton--w-50" aria-hidden="true"></span>
-      </div>
-
-      <!-- 3. Static Mode (.skeleton--static) -->
-      <div class="card card--bordered padding-md stack gap-sm">
-        <h4 class="font-bold font-size-0">Static (.skeleton--static)</h4>
-        <p class="font-size--1 text-muted">Zero animation fill (print / battery)</p>
-        <div class="skeleton skeleton--media skeleton--static" aria-hidden="true"></div>
-        <span class="skeleton skeleton--heading skeleton--static skeleton--w-75" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--static" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--static skeleton--w-50" aria-hidden="true"></span>
-      </div>
-
-    </div>
-  `,
-};
-
-export const ContainerStyleQuery: Story = {
-  render: () => `
-    <div class="stack gap-lg" style="max-inline-size: 32rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
-      <p class="font-size--1 text-muted">
-        Parent containers set <code>--skeleton-animation: pulse;</code> to declaratively configure all descendant skeletons without adding classes to each child.
-      </p>
-
-      <div style="--skeleton-animation: pulse;" class="card card--bordered padding-md stack gap-sm">
-        <span class="badge badge--accent badge--sm">Container Style Query Active</span>
-        <span class="skeleton skeleton--heading skeleton--w-75" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
-      </div>
     </div>
   `,
 };

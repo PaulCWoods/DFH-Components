@@ -299,8 +299,8 @@ export const Default: Story = {
               </div>
 
               <!-- Season Status Badge -->
-              <span class="badge badge--accent badge--round max-md:hide">
-                <span>Spring 2026 Season Active</span>
+              <span class="status status--accent status--round max-md:hide">
+                <span class="status__text">Spring 2026 Season Active</span>
               </span>
             </div>
 
@@ -315,9 +315,9 @@ export const Default: Story = {
                 aria-haspopup="dialog"
                 style="position: relative;"
               >
-                <svg class="icon" aria-hidden="true"><use href="#Settings"/></svg>
-                <span class="badge badge--danger badge--sm badge--round badge--top-right-corner" aria-hidden="true">
-                  <span>2</span>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
+                <span class="badge badge--danger badge--sm badge--top-end" aria-hidden="true">
+                  <span class="badge__text">2</span>
                 </span>
               </button>
 
@@ -328,7 +328,7 @@ export const Default: Story = {
                 id="btn-trigger-new-lease"
                 aria-haspopup="dialog"
               >
-                <svg class="icon" aria-hidden="true"><use href="#Plus"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
                 <span>New Plot Lease</span>
               </button>
             </div>
@@ -347,9 +347,7 @@ export const Default: Story = {
               </p>
             </div>
             <button type="button" class="button button--subtle button--icon banner__action" onclick="document.getElementById('frost-alert-banner').remove();" aria-label="Dismiss alert">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
             </button>
           </div>
         </aside>
@@ -375,8 +373,8 @@ export const Default: Story = {
                         <h3 class="card__title subheading">Plot Occupancy</h3>
                         <p class="card__subtitle text-muted">Spring 2026 Season</p>
                       </hgroup>
-                      <span class="badge badge--success" data-status="online">
-                        <span>87.5% Full</span>
+                      <span class="status status--success">
+                        <span class="status__text">87.5% Full</span>
                       </span>
                     </header>
                     <div class="card__body">
@@ -394,8 +392,8 @@ export const Default: Story = {
                         <h3 class="card__title subheading">Pending Renewals</h3>
                         <p class="card__subtitle text-muted">Verification required</p>
                       </hgroup>
-                      <span class="badge badge--warning">
-                        <span>Action Required</span>
+                      <span class="status status--warning">
+                        <span class="status__text">Action Required</span>
                       </span>
                     </header>
                     <div class="card__body">
@@ -413,8 +411,8 @@ export const Default: Story = {
                         <h3 class="card__title subheading">Tool Locker</h3>
                         <p class="card__subtitle text-muted">Shared shed inventory</p>
                       </hgroup>
-                      <span class="badge badge--danger">
-                        <span>2 Overdue</span>
+                      <span class="status status--danger">
+                        <span class="status__text">2 Overdue</span>
                       </span>
                     </header>
                     <div class="card__body">
@@ -432,8 +430,8 @@ export const Default: Story = {
                         <h3 class="card__title subheading">Cistern Reserve</h3>
                         <p class="card__subtitle text-muted">Rainwater harvest</p>
                       </hgroup>
-                      <span class="badge badge--accent">
-                        <span>~18 Days</span>
+                      <span class="chip">
+                        <span class="chip__text">~18 Days</span>
                       </span>
                     </header>
                     <div class="card__body stack gap-xs">
@@ -441,7 +439,7 @@ export const Default: Story = {
                         <span class="font-size-lg font-weight-bold font-mono">7,850 L</span>
                         <span class="text-muted">78% of 10,000L</span>
                       </div>
-                      <progress class="progress progress--accent" value="78" max="100" aria-label="Rainwater Cistern Capacity"></progress>
+                      <progress class="progress" value="78" max="100" aria-label="Rainwater Cistern Capacity"></progress>
                     </div>
                   </article>
                 </div>
@@ -473,7 +471,7 @@ export const Default: Story = {
                         role="radio"
                         aria-label="Table View"
                       >
-                        <svg class="icon" aria-hidden="true"><use href="#List"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#List"/></svg>
                         <span class="max-sm:hide">Table</span>
                       </button>
                       <button 
@@ -484,7 +482,7 @@ export const Default: Story = {
                         role="radio"
                         aria-label="Grid Cards View"
                       >
-                        <svg class="icon" aria-hidden="true"><use href="#Grid"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Grid"/></svg>
                         <span class="max-sm:hide">Cards</span>
                       </button>
                     </div>
@@ -604,7 +602,7 @@ export const Default: Story = {
 
                               <!-- Plot Type -->
                               <td class="table__col--fit">
-                                <span class="chip chip--sm"><span>${plot.type}</span></span>
+                                <span class="chip chip--subtle chip--sm"><span class="chip__text">${plot.type}</span></span>
                               </td>
 
                               <!-- Gardener Contact -->
@@ -630,8 +628,8 @@ export const Default: Story = {
 
                               <!-- Fee Status Badge (Standalone centered discrete pill) -->
                               <td class="table__col--fit table__col--center">
-                                <span class="badge ${statusBadgeClass}">
-                                  <span>${plot.feeStatus}</span>
+                                <span class="status ${statusBadgeClass}">
+                                  <span class="status__text">${plot.feeStatus}</span>
                                 </span>
                               </td>
 
@@ -652,7 +650,7 @@ export const Default: Story = {
                                   aria-controls="subrow-${plot.id}"
                                   aria-label="Toggle soil test history for plot ${plot.number}"
                                 >
-                                  <svg class="icon icon--dir" aria-hidden="true"><use href="#ChevronDown"/></svg>
+                                  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                                 </button>
                               </td>
                             </tr>
@@ -663,7 +661,7 @@ export const Default: Story = {
                                 <div class="padding-md stack gap-sm" style="border-inline-start: 4px solid var(--border-color-accent, currentColor);">
                                   <div class="inline justify-content-between align-items-center flex-wrap gap-xs">
                                     <strong class="text-accent">Soil Chemistry & Microclimate Telemetry for Plot ${plot.number}</strong>
-                                    <span class="badge badge--sm badge--accent"><span>${plot.irrigationZone}</span></span>
+                                    <span class="chip chip--sm"><span class="chip__text">${plot.irrigationZone}</span></span>
                                   </div>
 
                                   <!-- Soil Telemetry responsive grid using DFH Telemetry Primitive (<dl class="telemetry-group">) -->
@@ -708,16 +706,16 @@ export const Default: Story = {
                             <header class="card__header inline justify-content-between align-items-center bg-subtle">
                               <hgroup class="card__hgroup">
                                 <h3 class="card__title small-heading">${plot.number}</h3>
-                                <p class="card__subtitle text-muted micro-text">${plot.type}</p>
+                                <p class="card__subtitle text-muted small-text">${plot.type}</p>
                               </hgroup>
-                              <span class="badge ${plot.feeStatus === 'Paid' ? 'badge--success' : plot.feeStatus === 'Due' ? 'badge--warning' : plot.feeStatus === 'Overdue' ? 'badge--danger' : 'badge--accent'}">
-                                <span>${plot.feeStatus}</span>
+                              <span class="status ${plot.feeStatus === 'Paid' ? 'badge--success' : plot.feeStatus === 'Due' ? 'badge--warning' : plot.feeStatus === 'Overdue' ? 'badge--danger' : 'badge--accent'}">
+                                <span class="status__text">${plot.feeStatus}</span>
                               </span>
                             </header>
                             <div class="card__body stack gap-xs">
                               <div class="inline align-items-center">
-                                <span class="chip chip--sm"><span>${plot.type}</span></span>
-                                <span class="chip chip--sm">${plot.sunlight}</span>
+                                <span class="chip chip--subtle chip--sm"><span class="chip__text">${plot.type}</span></span>
+                                <span class="chip chip--subtle chip--sm"><span class="chip__text">${plot.sunlight}</span></span>
                               </div>
                               <div class="inline align-items-center margin-block-start-xs" style="--gap: var(--spacing-8);">
                                 <div class="avatar avatar--sm" aria-hidden="true"><span>${plot.gardener.initials}</span></div>
@@ -745,7 +743,7 @@ export const Default: Story = {
                   <!-- Empty State Block (Displayed when filters match zero items) -->
                   <div id="filter-empty-state" class="empty-state padding-block-xl text-center" style="display: none;">
                     <div class="empty-state__icon margin-inline-auto" aria-hidden="true" style="inline-size: 3rem; block-size: 3rem;">
-                      <svg class="icon" width="48" height="48"><use href="#Search"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                     </div>
                     <h3 class="empty-state__title font-size-md font-weight-bold margin-block-start-sm">No garden plots match your search</h3>
                     <p class="empty-state__description font-size-sm text-muted margin-block-start-xs">
@@ -780,7 +778,7 @@ export const Default: Story = {
                 </hgroup>
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--sm" aria-label="Close registration modal">
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </form>
               </header>
@@ -987,7 +985,7 @@ export const Default: Story = {
               <footer class="card__footer">
                 <div class="button-group button-group--stretch">
                   <button type="button" class="button button--plain" id="btn-wizard-prev" style="visibility: hidden;">
-                    <svg class="icon icon--dir" aria-hidden="true"><use href="#ArrowLeft"/></svg>
+                    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowLeft"/></svg>
                     <span>Back</span>
                   </button>
 
@@ -1019,7 +1017,7 @@ export const Default: Story = {
                 </hgroup>
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--sm" aria-label="Close tool locker drawer">
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </form>
               </header>
@@ -1040,7 +1038,7 @@ export const Default: Story = {
                   <div class="card__content stack gap-xs">
                     <div class="inline justify-content-between align-items-center">
                       <strong>DeWit 5-Tine Broadfork</strong>
-                      <span class="badge badge--success" data-status="online"><span>In Shed</span></span>
+                      <span class="status status--success"><span class="status__text">In Shed</span></span>
                     </div>
                     <p class="text-muted" style="margin: 0;">Located in Tool Bay 1 (Left wall rack). Available for bed aerating.</p>
                   </div>
@@ -1051,7 +1049,7 @@ export const Default: Story = {
                   <div class="card__content stack gap-xs">
                     <div class="inline justify-content-between align-items-center">
                       <strong>Dual-Wheel Compost Barrow #2</strong>
-                      <span class="badge badge--warning"><span>Checked Out</span></span>
+                      <span class="status status--warning"><span class="status__text">Checked Out</span></span>
                     </div>
                     <p class="text-muted" style="margin: 0;">On loan to <strong>Plot #A-04 (Elena R.)</strong> • Due Today by 17:00</p>
                   </div>
@@ -1062,12 +1060,12 @@ export const Default: Story = {
                   <div class="card__content stack gap-xs">
                     <div class="inline justify-content-between align-items-center">
                       <strong>Earthway Precision Push Seeder</strong>
-                      <span class="badge badge--danger"><span>2 Days Overdue</span></span>
+                      <span class="status status--danger"><span class="status__text">2 Days Overdue</span></span>
                     </div>
                     <p class="text-muted" style="margin: 0;">Borrowed by <strong>Plot #C-02</strong> on Monday 09:00.</p>
                     <div class="inline justify-content-end margin-block-start-xs">
                       <button type="button" class="button button--subtle button--danger button--sm" onclick="alert('Automated reminder notification sent to borrower.');">
-                        <svg class="icon" aria-hidden="true"><use href="#Email"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Email"/></svg>
                         <span>Send Overdue Ping</span>
                       </button>
                     </div>
@@ -1079,7 +1077,7 @@ export const Default: Story = {
                   <div class="card__content stack gap-xs">
                     <div class="inline justify-content-between align-items-center">
                       <strong>1/4" Mesh Rotary Trommel Sifter</strong>
-                      <span class="badge badge--success" data-status="online"><span>In Shed</span></span>
+                      <span class="status status--success"><span class="status__text">In Shed</span></span>
                     </div>
                     <p class="text-muted" style="margin: 0;">Located at East Compost Station. Cleared for communal sift day.</p>
                   </div>
@@ -1090,7 +1088,7 @@ export const Default: Story = {
                   <div class="card__content stack gap-xs">
                     <div class="inline justify-content-between align-items-center">
                       <strong>15L Organic Neem & Compost Tea Sprayer</strong>
-                      <span class="badge badge--warning"><span>Maintenance</span></span>
+                      <span class="status status--warning"><span class="status__text">Maintenance</span></span>
                     </div>
                     <p class="text-muted" style="margin: 0;">Gasket replacement underway. Do not fill until Friday.</p>
                   </div>
@@ -1133,9 +1131,7 @@ export const Default: Story = {
                 onclick="document.getElementById('tally-toast').style.display = 'none';" 
                 aria-label="Dismiss notification"
               >
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               </button>
             </div>
           </div>
@@ -1150,36 +1146,36 @@ export const Default: Story = {
           hidden
         >
           <div class="batch-actions__summary">
-            <span class="badge badge--accent badge--round">
-              <span id="batch-counter-badge">0</span>
+            <span class="badge badge--accent">
+              <span id="batch-counter-badge" class="badge__text">0</span>
             </span>
             <span class="micro-heading" id="batch-counter-text">0 plots selected</span>
           </div>
 
-          <hr class="batch-actions__separator" aria-hidden="true" />
+          <hr class="divider" aria-hidden="true" />
 
           <div class="batch-actions__actions">
             <div class="button-group buttons-sm buttons-plain gap-xs">
               <button type="button" class="button" id="btn-batch-email">
-                <svg class="icon" aria-hidden="true" focusable="false"><use href="#Email"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Email"/></svg>
                 <span>Email Notice</span>
               </button>
               <button type="button" class="button" id="btn-batch-compost">
-                <svg class="icon" aria-hidden="true" focusable="false"><use href="#Clipboard"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Clipboard"/></svg>
                 <span>Mark Compost</span>
               </button>
               <button type="button" class="button" id="btn-batch-export">
-                <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                 <span>Export CSV</span>
               </button>
             </div>
           </div>
 
-          <hr class="batch-actions__separator" aria-hidden="true" />
+          <hr class="divider" aria-hidden="true" />
 
           <div class="batch-actions__dismiss">
             <button type="button" class="button button--plain button--icon button--sm" id="btn-batch-deselect" aria-label="Clear plot selection">
-              <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               <span class="visually-hidden">Clear plot selection</span>
             </button>
           </div>
@@ -1494,7 +1490,7 @@ export const Default: Story = {
               } else if (num < currentStep) {
                 el.className = 'stepper__item is-complete';
                 el.removeAttribute('aria-current');
-                if (indicator) indicator.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#Check"/></svg>';
+                if (indicator) indicator.innerHTML = '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>';
               } else {
                 el.className = 'stepper__item';
                 el.removeAttribute('aria-current');
@@ -1573,11 +1569,11 @@ export const EmptyState: Story = {
               <h2 class="card__title font-size-md">Plot Registry Directory</h2>
               <p class="card__subtitle text-muted">Municipal plot search results</p>
             </hgroup>
-            <span class="badge badge--danger"><span>0 Matches</span></span>
+            <span class="status status--danger"><span class="status__text">0 Matches</span></span>
           </header>
           <div class="card__body empty-state padding-block-xl text-center">
             <div class="empty-state__icon margin-inline-auto" aria-hidden="true" style="inline-size: 4rem; block-size: 4rem;">
-              <svg class="icon" width="64" height="64"><use href="#Search"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             </div>
             <h3 class="empty-state__title font-size-lg font-weight-bold margin-block-start-sm">No Plots Found for "Hydroponic Greenhouse"</h3>
             <p class="empty-state__description font-size-sm text-muted margin-block-start-xs" style="max-inline-size: 28rem; margin-inline: auto;">
@@ -1604,20 +1600,21 @@ export const EmptyState: Story = {
  */
 export const LoadingSkeleton: Story = {
   render: () => `
-    <div class="app" style="background-color: var(--surface); color: var(--foreground); min-block-size: 100dvb; padding: var(--spacing-16);">
+    <div class="app" style="background-color: var(--surface); color: var(--foreground); min-block-size: 100dvb; padding: var(--spacing-16);" aria-busy="true">
       <div class="stack gap-lg">
-        
+        <p class="visually-hidden" role="status">Loading your garden…</p>
+
         <!-- Skeleton Header -->
         <div class="card card--compact card--bordered">
           <div class="card__content inline justify-content-between align-items-center">
             <div class="inline align-items-center gap-sm">
-              <div class="skeleton skeleton--circle" style="inline-size: 2.5rem; block-size: 2.5rem;"></div>
+              <div class="skeleton skeleton--avatar" style="--skeleton-width: 2.5rem;"></div>
               <div class="stack gap-xs">
-                <div class="skeleton skeleton--text" style="inline-size: 12rem; block-size: 1.25rem;"></div>
-                <div class="skeleton skeleton--text" style="inline-size: 8rem; block-size: 0.75rem;"></div>
+                <div class="skeleton" style="--skeleton-width: 12rem; --skeleton-height: 1.25rem;"></div>
+                <div class="skeleton" style="--skeleton-width: 8rem; --skeleton-height: 0.75rem;"></div>
               </div>
             </div>
-            <div class="skeleton skeleton--button" style="inline-size: 9rem; block-size: 2rem;"></div>
+            <div class="skeleton skeleton--button" style="--skeleton-width: 9rem; --skeleton-height: 2rem;"></div>
           </div>
         </div>
 
@@ -1626,9 +1623,9 @@ export const LoadingSkeleton: Story = {
           ${[1, 2, 3, 4].map(() => `
             <div class="card card--compact card--bordered">
               <div class="card__content stack gap-sm">
-                <div class="skeleton skeleton--text" style="inline-size: 60%; block-size: 0.875rem;"></div>
-                <div class="skeleton skeleton--text" style="inline-size: 40%; block-size: 2rem;"></div>
-                <div class="skeleton skeleton--text" style="inline-size: 85%; block-size: 0.75rem;"></div>
+                <div class="skeleton" style="--skeleton-width: 60%; --skeleton-height: 0.875rem;"></div>
+                <div class="skeleton" style="--skeleton-width: 40%; --skeleton-height: 2rem;"></div>
+                <div class="skeleton" style="--skeleton-width: 85%; --skeleton-height: 0.75rem;"></div>
               </div>
             </div>
           `).join('')}
@@ -1638,30 +1635,30 @@ export const LoadingSkeleton: Story = {
         <div class="card card--bordered">
           <div class="card__content stack gap-md">
             <div class="card__header inline justify-content-between">
-              <div class="skeleton skeleton--text" style="inline-size: 14rem; block-size: 1.5rem;"></div>
-              <div class="skeleton skeleton--text" style="inline-size: 6rem; block-size: 1.5rem;"></div>
+              <div class="skeleton" style="--skeleton-width: 14rem; --skeleton-height: 1.5rem;"></div>
+              <div class="skeleton" style="--skeleton-width: 6rem; --skeleton-height: 1.5rem;"></div>
             </div>
             <div class="table-container">
               <table class="table table--striped">
                 <thead>
                   <tr>
-                    <th><div class="skeleton skeleton--text" style="inline-size: 2rem;"></div></th>
-                    <th><div class="skeleton skeleton--text" style="inline-size: 4rem;"></div></th>
-                    <th><div class="skeleton skeleton--text" style="inline-size: 6rem;"></div></th>
-                    <th><div class="skeleton skeleton--text" style="inline-size: 10rem;"></div></th>
-                    <th><div class="skeleton skeleton--text" style="inline-size: 6rem;"></div></th>
-                    <th><div class="skeleton skeleton--text" style="inline-size: 5rem;"></div></th>
+                    <th><div class="skeleton skeleton--text" style="--skeleton-width: 2rem;"></div></th>
+                    <th><div class="skeleton skeleton--text" style="--skeleton-width: 4rem;"></div></th>
+                    <th><div class="skeleton skeleton--text" style="--skeleton-width: 6rem;"></div></th>
+                    <th><div class="skeleton skeleton--text" style="--skeleton-width: 10rem;"></div></th>
+                    <th><div class="skeleton skeleton--text" style="--skeleton-width: 6rem;"></div></th>
+                    <th><div class="skeleton skeleton--text" style="--skeleton-width: 5rem;"></div></th>
                   </tr>
                 </thead>
                 <tbody>
                   ${[1, 2, 3, 4, 5].map(() => `
                     <tr>
-                      <td><div class="skeleton skeleton--text" style="inline-size: 1.25rem; block-size: 1.25rem;"></div></td>
-                      <td><div class="skeleton skeleton--text" style="inline-size: 3rem;"></div></td>
-                      <td><div class="skeleton skeleton--badge" style="inline-size: 5rem; block-size: 1.25rem;"></div></td>
-                      <td><div class="skeleton skeleton--text" style="inline-size: 8rem;"></div></td>
-                      <td><div class="skeleton skeleton--text" style="inline-size: 4rem;"></div></td>
-                      <td><div class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;"></div></td>
+                      <td><div class="skeleton" style="--skeleton-width: 1.25rem; --skeleton-height: 1.25rem;"></div></td>
+                      <td><div class="skeleton skeleton--text" style="--skeleton-width: 3rem;"></div></td>
+                      <td><div class="skeleton skeleton--badge" style="--skeleton-width: 5rem; --skeleton-height: 1.25rem;"></div></td>
+                      <td><div class="skeleton skeleton--text" style="--skeleton-width: 8rem;"></div></td>
+                      <td><div class="skeleton skeleton--text" style="--skeleton-width: 4rem;"></div></td>
+                      <td><div class="skeleton skeleton--badge" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></div></td>
                     </tr>
                   `).join('')}
                 </tbody>

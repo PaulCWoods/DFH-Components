@@ -32,7 +32,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <!-- 1. Standalone Empty State -->
 <section class="empty-state" aria-labelledby="empty-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon"><use href="#Search"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="empty-title" class="empty-state__title subheading">No items found</h3>
@@ -55,7 +55,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <div class="card__content">
     <div class="empty-state empty-state--flush">
       <div class="empty-state__visual" aria-hidden="true">
-        <svg class="icon"><use href="#Plus"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
       </div>
       <div class="empty-state__content">
         <h3 id="card-empty-title" class="empty-state__title">No projects yet</h3>
@@ -75,7 +75,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <!-- 3. Semantic Status Variants -->
 <section class="empty-state empty-state--success" aria-labelledby="status-empty-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon"><use href="#Check"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="status-empty-title" class="empty-state__title">Sync complete</h3>
@@ -192,7 +192,7 @@ export const Default: Story = {
     <div style="max-inline-size: 38rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
       <section class="${getEmptyStateClasses(args)}" aria-labelledby="demo-empty-title">
         <div class="empty-state__visual" aria-hidden="true">
-          <svg class="icon"><use href="${iconHref}"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="${iconHref}"/></svg>
         </div>
         <div class="empty-state__content">
           <h3 id="demo-empty-title" class="empty-state__title subheading">${args.title}</h3>
@@ -217,7 +217,7 @@ export const FirstTimeOnboarding: Story = {
     <div style="max-inline-size: 36rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
       <section class="empty-state" aria-labelledby="onboard-title">
         <div class="empty-state__visual" aria-hidden="true">
-          <svg class="icon"><use href="#Plus"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
         </div>
         <div class="empty-state__content">
           <h3 id="onboard-title" class="empty-state__title subheading">Create your first design system</h3>
@@ -227,11 +227,11 @@ export const FirstTimeOnboarding: Story = {
         </div>
         <div class="empty-state__actions">
           <button type="button" class="button button--strong button--accent">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Plus"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
             <span>Create New System</span>
           </button>
           <button type="button" class="button">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Upload"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Upload"/></svg>
             <span>Import DTCG Tokens</span>
           </button>
         </div>
@@ -248,17 +248,17 @@ export const CardCompanion: Story = {
           
           <header class="card__header">
             <h3 class="card__title font-size-0 font-bold">Activity Feed</h3>
-            <span class="badge badge--sm">Live</span>
+            <span class="status status--sm"><span class="status__text">Live</span></span>
           </header>
 
           <div class="card__body">
             <div class="empty-state empty-state--flush empty-state--compact" aria-labelledby="card-empty-heading">
               <div class="empty-state__visual" aria-hidden="true">
-                <svg class="icon"><use href="#Check"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               </div>
               <div class="empty-state__content">
                 <h4 id="card-empty-heading" class="empty-state__title small-heading">All caught up</h4>
-                <p class="empty-state__description micro-text text-muted">
+                <p class="empty-state__description small-text text-muted">
                   There are no pending review tasks or unread notifications in this workspace.
                 </p>
               </div>
@@ -294,7 +294,7 @@ export const TableEmptyState: Story = {
               <td colspan="4" style="padding: 0;">
                 <div class="empty-state empty-state--compact" style="padding-block: var(--spacing-32, 2rem);" aria-labelledby="table-empty-title">
                   <div class="empty-state__visual" aria-hidden="true">
-                    <svg class="icon"><use href="#Search"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                   </div>
                   <div class="empty-state__content">
                     <h4 id="table-empty-title" class="empty-state__title small-heading">No matching tokens found</h4>
@@ -322,7 +322,7 @@ export const StartAligned: Story = {
     <div style="max-inline-size: 26rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
       <section class="empty-state empty-state--start empty-state--compact" aria-labelledby="sidebar-empty-title">
         <div class="empty-state__visual" aria-hidden="true">
-          <svg class="icon"><use href="#Search"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         </div>
         <div class="empty-state__content">
           <h4 id="sidebar-empty-title" class="empty-state__title small-heading">Filter returned no items</h4>
@@ -345,7 +345,7 @@ export const BorderedDashed: Story = {
     <div style="max-inline-size: 34rem; padding: var(--spacing-24, 1.5rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem);">
       <section class="empty-state empty-state--bordered" aria-labelledby="bordered-empty-title">
         <div class="empty-state__visual" aria-hidden="true">
-          <svg class="icon"><use href="#Upload"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Upload"/></svg>
         </div>
         <div class="empty-state__content">
           <h3 id="bordered-empty-title" class="empty-state__title subheading">Drop design files here</h3>
@@ -373,7 +373,7 @@ export const ContainerStyleQuery: Story = {
       <div style="--empty-state-density: compact;" class="card card--bordered padding-md">
         <section class="empty-state" aria-labelledby="csq-empty-title">
           <div class="empty-state__visual" aria-hidden="true">
-            <svg class="icon"><use href="#Check"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
           </div>
           <div class="empty-state__content">
             <h4 id="csq-empty-title" class="empty-state__title small-heading">Container query density</h4>
@@ -394,7 +394,7 @@ export const SemanticStatusVariants: Story = {
       <div style="flex: 1; min-inline-size: 18rem; padding: var(--spacing-20, 1.25rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem); border: 1px solid var(--border-color-quiet, currentColor);">
         <section class="empty-state empty-state--success empty-state--compact" aria-labelledby="status-success-title">
           <div class="empty-state__visual" aria-hidden="true">
-            <svg class="icon"><use href="#Check"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
           </div>
           <div class="empty-state__content">
             <h3 id="status-success-title" class="empty-state__title small-heading">Sync complete</h3>
@@ -414,7 +414,7 @@ export const SemanticStatusVariants: Story = {
       <div style="flex: 1; min-inline-size: 18rem; padding: var(--spacing-20, 1.25rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem); border: 1px solid var(--border-color-quiet, currentColor);">
         <section class="empty-state empty-state--warning empty-state--compact" aria-labelledby="status-warning-title">
           <div class="empty-state__visual" aria-hidden="true">
-            <svg class="icon"><use href="#Warning"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
           </div>
           <div class="empty-state__content">
             <h3 id="status-warning-title" class="empty-state__title small-heading">Subscription expiring</h3>
@@ -434,7 +434,7 @@ export const SemanticStatusVariants: Story = {
       <div style="flex: 1; min-inline-size: 18rem; padding: var(--spacing-20, 1.25rem); background-color: var(--surface); border-radius: var(--radius-md, 0.5rem); border: 1px solid var(--border-color-quiet, currentColor);">
         <section class="empty-state empty-state--error empty-state--compact" aria-labelledby="status-error-title">
           <div class="empty-state__visual" aria-hidden="true">
-            <svg class="icon"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </div>
           <div class="empty-state__content">
             <h3 id="status-error-title" class="empty-state__title small-heading">Connection failed</h3>

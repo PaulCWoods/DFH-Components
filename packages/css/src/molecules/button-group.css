@@ -21,8 +21,6 @@
      Local Private Variables (Defaults & Fallback Ladder)
      -------------------------------------------------------------------------- */
   --_button-group-gap: var(--button-group-gap, var(--spacing, 1rem));
-  --_button-group-divider-width: var(--button-group-divider-width, var(--border-width, 1px));
-  --_button-group-divider-color: var(--button-group-divider-color, var(--border-color, currentColor));
   --_button-group-content-color: var(--button-group-content-color, currentColor);
   --_button-group-content-font-family: var(--button-group-content-font-family, var(--typography-font-family-sans, inherit));
   --_button-group-content-font-size: var(--button-group-content-font-size, var(--typography-font-size-0, 1rem));
@@ -37,8 +35,6 @@
   --_button-group-tight-gap: var(--button-group-tight-gap, 0px);
 
   --direction: row;
-  --divider-width: var(--_button-group-divider-width);
-  --divider-color: var(--_button-group-divider-color);
 
   /* Spatial Density & Container Style Queries */
   @container style(--ui-density: dense) or style(--ui-sizing: compact) {
@@ -142,11 +138,11 @@
     white-space: normal;
   }
 
-  :where(.button > :where(.lockup, span:not(.icon, .chip, .badge))) {
+  :where(.button > :where(.lockup, span:not(.icon, .chip, .status, .badge))) {
     flex-grow: 1;
   }
 
-  :where(.button__text, .lockup) + :where(kbd, .kbd, .chip, .badge, .icon) {
+  :where(.button__text, .lockup) + :where(kbd, .kbd, .chip, .status, .badge, .icon) {
     margin-inline-start: auto;
   }
 
@@ -243,7 +239,7 @@
   }
 
   :where(.button, .button__text),
-  > :where(.button > span:not(.icon, .chip, .badge)) {
+  > :where(.button > span:not(.icon, .chip, .status, .badge)) {
     flex-grow: 1;
   }
 }

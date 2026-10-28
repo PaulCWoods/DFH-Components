@@ -6,11 +6,11 @@
 
    | Axis       | Modifiers                          | Container flag                  |
    | ---------- | ---------------------------------- | ------------------------------- |
-   | Prominence | (outline) --strong --subtle --plain | --button-prominence             |
+   | Prominence | (outline) --strong --subtle --plain | --button-prominence, --controls-prominence |
    | Intent     | (neutral) --accent --danger        | --button-intent                 |
    | Size       | --sm --lg                          | --button-size, --controls-size  |
    | Density    | (none: containers own density)     | --ui-sizing: compact steps to sm |
-   | Corners    | --round                            | --button-corners                |
+   | Corners    | --round                            | --button-corners, --controls-corners |
 
    Intent sets a tone (--_button-tone*); prominence decides where the tone is
    applied. Every prominence × intent pairing therefore works without
@@ -40,15 +40,15 @@
 
   /* --------------------------------------------------------------------------
      Tone (Neutral Intent)
-     Public hooks: --button-tone, --button-tone-hover, --button-tone-pressed,
-     --button-tone-border, --button-on-tone. Undefined by default; set them on
+     Public hooks: --button-color, --button-color-hover, --button-color-pressed,
+     --button-color-border, --button-on-color. Undefined by default; set them on
      a button or a container to recolour every prominence consistently.
      -------------------------------------------------------------------------- */
-  --_button-tone: var(--button-tone, var(--foreground, CanvasText));
-  --_button-tone-hover: var(--button-tone-hover, var(--foreground-strong, var(--_button-tone)));
-  --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-strong, var(--_button-tone)));
-  --_button-tone-border: var(--button-tone-border, var(--border-color-muted, currentColor));
-  --_button-on-tone: var(--button-on-tone, var(--foreground-inverted-strong, Canvas));
+  --_button-tone: var(--button-color, var(--foreground, CanvasText));
+  --_button-tone-hover: var(--button-color-hover, var(--foreground-strong, var(--_button-tone)));
+  --_button-tone-pressed: var(--button-color-pressed, var(--foreground-strong, var(--_button-tone)));
+  --_button-tone-border: var(--button-color-border, var(--border-color-muted, currentColor));
+  --_button-on-tone: var(--button-on-color, var(--foreground-inverted-strong, Canvas));
 
   /* --------------------------------------------------------------------------
      Prominence: Default (Outline)
@@ -94,17 +94,17 @@
 
   /* Intent */
   @container style(--button-intent: accent) {
-    --_button-tone: var(--button-tone, var(--foreground-accent, CanvasText));
-    --_button-tone-hover: var(--button-tone-hover, var(--foreground-accent-hover, var(--_button-tone)));
-    --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
-    --_button-tone-border: var(--button-tone-border, var(--_button-tone));
+    --_button-tone: var(--button-color, var(--foreground-accent, CanvasText));
+    --_button-tone-hover: var(--button-color-hover, var(--foreground-accent-hover, var(--_button-tone)));
+    --_button-tone-pressed: var(--button-color-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
+    --_button-tone-border: var(--button-color-border, var(--_button-tone));
   }
 
   @container style(--button-intent: danger) {
-    --_button-tone: var(--button-tone, var(--foreground-danger, CanvasText));
-    --_button-tone-hover: var(--button-tone-hover, var(--foreground-danger-hover, var(--_button-tone)));
-    --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
-    --_button-tone-border: var(--button-tone-border, var(--_button-tone));
+    --_button-tone: var(--button-color, var(--foreground-danger, CanvasText));
+    --_button-tone-hover: var(--button-color-hover, var(--foreground-danger-hover, var(--_button-tone)));
+    --_button-tone-pressed: var(--button-color-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
+    --_button-tone-border: var(--button-color-border, var(--_button-tone));
   }
 
   /* Prominence */
@@ -118,7 +118,7 @@
     --_button-color-palette: inverted;
   }
 
-  @container style(--button-prominence: subtle) or style(--controls-variation: subtle) {
+  @container style(--button-prominence: subtle) or style(--controls-prominence: subtle) {
     --_button-bg: var(--surface-translucent, transparent);
     --_button-text: var(--_button-tone);
     --_button-border-color: transparent;
@@ -134,7 +134,7 @@
     --_button-active-color-palette: initial;
   }
 
-  @container style(--button-prominence: plain) or style(--controls-variation: plain) {
+  @container style(--button-prominence: plain) or style(--controls-prominence: plain) {
     --_button-bg: transparent;
     --_button-text: var(--_button-tone);
     --_button-border-color: transparent;
@@ -158,7 +158,7 @@
     --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
   }
 
-  @container style(--button-size: lg) {
+  @container style(--button-size: lg) or style(--controls-size: lg) {
     --_button-padding-block: var(--button-lg-padding-block, 0.5rem);
     --_button-padding-inline: var(--button-lg-padding-inline, 1.5rem);
     --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
@@ -171,7 +171,7 @@
   }
 
   /* Corners */
-  @container style(--button-corners: round) {
+  @container style(--button-corners: round) or style(--controls-corners: round) {
     --_button-radius: var(--radius-round, 9999px);
   }
 
@@ -299,17 +299,17 @@
    Set the tone only; prominence decides where it is applied.
    ========================================================================== */
 :where(.button--accent) {
-  --_button-tone: var(--button-tone, var(--foreground-accent, CanvasText));
-  --_button-tone-hover: var(--button-tone-hover, var(--foreground-accent-hover, var(--_button-tone)));
-  --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
-  --_button-tone-border: var(--button-tone-border, var(--_button-tone));
+  --_button-tone: var(--button-color, var(--foreground-accent, CanvasText));
+  --_button-tone-hover: var(--button-color-hover, var(--foreground-accent-hover, var(--_button-tone)));
+  --_button-tone-pressed: var(--button-color-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
+  --_button-tone-border: var(--button-color-border, var(--_button-tone));
 }
 
 :where(.button--danger) {
-  --_button-tone: var(--button-tone, var(--foreground-danger, CanvasText));
-  --_button-tone-hover: var(--button-tone-hover, var(--foreground-danger-hover, var(--_button-tone)));
-  --_button-tone-pressed: var(--button-tone-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
-  --_button-tone-border: var(--button-tone-border, var(--_button-tone));
+  --_button-tone: var(--button-color, var(--foreground-danger, CanvasText));
+  --_button-tone-hover: var(--button-color-hover, var(--foreground-danger-hover, var(--_button-tone)));
+  --_button-tone-pressed: var(--button-color-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
+  --_button-tone-border: var(--button-color-border, var(--_button-tone));
 }
 
 /* ==========================================================================
@@ -397,14 +397,6 @@
     --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
     --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   }
-}
-
-/* Flush: no padding or minimum size, for icon glyphs inside dense toolbars.
-   The hit area above still applies. */
-:where(.button--flush) {
-  padding: 0;
-  min-block-size: 0;
-  min-inline-size: 0;
 }
 
 /* ==========================================================================
@@ -502,7 +494,7 @@
 }
 
 :where(.button--icon) {
-  > :where(span:not(.button__icon), .button__text) {
+  > :where(span:not(.button__icon, .badge), .button__text) {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -517,10 +509,11 @@
   :is(kbd,
     .kbd,
     .chip,
-    .badge:not(.badge--top-right-corner,
-      .badge--top-left-corner,
-      .badge--bottom-right-corner,
-      .badge--bottom-left-corner)) {
+    .status,
+    .badge:not(.badge--top-end,
+      .badge--top-start,
+      .badge--bottom-end,
+      .badge--bottom-start)) {
     display: none;
   }
 }
@@ -536,7 +529,7 @@
   @container style(--ui-labels: hidden) {
     --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
-    > :where(span:not(.button__icon), .button__text, .ui-label) {
+    > :where(span:not(.button__icon, .badge), .button__text, .ui-label) {
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
@@ -551,10 +544,11 @@
     :is(kbd,
       .kbd,
       .chip,
-      .badge:not(.badge--top-right-corner,
-        .badge--top-left-corner,
-        .badge--bottom-right-corner,
-        .badge--bottom-left-corner)) {
+      .status,
+      .badge:not(.badge--top-end,
+        .badge--top-start,
+        .badge--bottom-end,
+        .badge--bottom-start)) {
       display: none;
     }
   }
@@ -570,7 +564,7 @@
 :where(.button:not(.button--labeled):has(.icon).hide-labels) {
   --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
-  > :where(span:not(.button__icon), .button__text, .ui-label) {
+  > :where(span:not(.button__icon, .badge), .button__text, .ui-label) {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -585,10 +579,11 @@
   :is(kbd,
     .kbd,
     .chip,
-    .badge:not(.badge--top-right-corner,
-      .badge--top-left-corner,
-      .badge--bottom-right-corner,
-      .badge--bottom-left-corner)) {
+    .status,
+    .badge:not(.badge--top-end,
+      .badge--top-start,
+      .badge--bottom-end,
+      .badge--bottom-start)) {
     display: none;
   }
 }
@@ -658,7 +653,7 @@
   }
 }
 
-:where(.button > span:not(.button__icon), .button__text) {
+:where(.button > span:not(.button__icon, .badge, .status, .chip), .button__text) {
   padding-block: var(--_button-padding-block);
   text-box: trim-both cap alphabetic;
 

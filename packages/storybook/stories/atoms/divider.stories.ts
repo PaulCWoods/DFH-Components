@@ -1,338 +1,162 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-const meta: Meta = {
+interface DividerArgs {
+  strong: boolean;
+  dashed: boolean;
+}
+
+const cls = (a: Partial<DividerArgs>) =>
+  ['divider', a.strong ? 'divider--strong' : '', a.dashed ? 'divider--dashed' : ''].filter(Boolean).join(' ');
+
+const meta: Meta<DividerArgs> = {
   title: 'Atoms/Divider',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-# Divider Primitive
+### Divider
 
-Semantic thematic break (\`<hr class="divider">\`) that dynamically adapts between horizontal and vertical orientations via zero-class Container Style Queries (\`@container style(--direction: row)\`), adhering to WCAG 2.2 Level AA / AAA non-text contrast rules.
+A rule between groups. Organisms (menu, combobox, batch actions, button group) place it; they never restyle it.
 
----
+| Axis | Values |
+| :--- | :--- |
+| Orientation | Horizontal (default); vertical when the **direct parent** sets \`--direction: row\` (\`.inline\`, \`.cluster\`, \`.button-group\`, \`.batch-actions\`), or with \`aria-orientation="vertical"\` |
+| Prominence | Default (quiet, decorative), \`--strong\` (at least 3:1, for a rule that is the only boundary) |
+| Style | Solid, \`--dashed\` |
 
-### Canonical Semantic Markup Signatures
+- \`--direction\` doesn't inherit: a divider deeper inside a row stays horizontal.
+- Put \`aria-orientation="vertical"\` on a vertical divider, or \`aria-hidden="true"\` if it is purely decorative.
+- In \`<menu>\`, \`<ul>\` or \`<ol>\`: \`<li role="separator" class="divider"></li>\`.
+- A bare \`<hr>\` gets a quiet rule from the reset.
 
-#### 1. Horizontal Thematic Break (Default Block Flow)
 \`\`\`html
-<section>
-  <p>First content block.</p>
-  <hr class="divider">
-  <p>Second content block.</p>
-</section>
-\`\`\`
-
-#### 2. Vertical Separator (Inside Row Container or Button Group)
-\`\`\`html
-<div class="button-group" style="--direction: row;">
-  <button type="button" class="button"><span>Cut</span></button>
-  <button type="button" class="button"><span>Copy</span></button>
-  <hr class="divider">
-  <button type="button" class="button button--danger"><span>Delete</span></button>
+<hr class="divider">
+<div class="button-group">
+  <button type="button" class="button"><span>Edit</span></button>
+  <hr class="divider" aria-orientation="vertical">
+  <button type="button" class="button"><span>Share</span></button>
 </div>
 \`\`\`
-
----
-
-### WCAG 2.2 Conformance Matrix
-| Criterion | Level | Status | Architectural Implementation |
-| :--- | :--- | :--- | :--- |
-| **1.3.1 Info and Relationships** | A | **Pass** | Semantic HTML5 \`<hr>\` element announces a thematic boundary or paragraph-level transition to screen readers. |
-| **1.4.11 Non-Text Contrast** | AA (3:1) | **Pass** | The divider border stroke uses \`var(--rule-color, currentColor)\` meeting >= 3:1 contrast against adjacent surfaces. |
-| **Zero-JS Multi-Directional** | Best Practice | **Pass** | Container style query \`@container style(--direction: row)\` converts the divider from horizontal to vertical seamlessly. |
-| **High Contrast Mode** | Best Practice | **Pass** | Retains border structure and scales stroke thickness under \`@media (prefers-contrast: more)\`. |
-
----
-
-### CSS Custom Property Token Contract
-| CSS Variable | Default Value | Fallback Ladder | Description |
-| :--- | :--- | :--- | :--- |
-| \`--divider-border-width\` | \`var(--rule-width, 1px)\` | \`1px\` | Stroke thickness of the divider line |
-| \`--divider-border-style\` | \`var(--rule-style, solid)\` | \`solid\` | Line stroke pattern (solid, dashed, dotted) |
-| \`--divider-border-color\` | \`var(--rule-color)\` | \`currentColor\` | Separator line stroke color |
-        `,
+`,
       },
     },
   },
+  argTypes: {
+    strong: { control: 'boolean', description: '--strong' },
+    dashed: { control: 'boolean', description: '--dashed' },
+  },
+  args: { strong: false, dashed: false },
+  render: (args) => `
+    <div class="demo-stage stack">
+      <p class="text" style="margin: 0;">Above the rule.</p>
+      <hr class="${cls(args)}">
+      <p class="text" style="margin: 0;">Below the rule.</p>
+      <div class="inline">
+        <span>Before</span>
+        <hr class="${cls(args)}" aria-orientation="vertical">
+        <span>After</span>
+      </div>
+    </div>
+  `,
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<DividerArgs>;
 
 /**
- * 1. Playground
- * Interactive sandbox exploring orientation, stroke patterns, and colors.
+ * Interactive sandbox: horizontal in a stack, vertical in a row.
  */
-export const Playground: Story = {
-  args: {
-    orientation: 'horizontal',
-    borderStyle: 'solid',
-    borderWidth: '1px',
-  },
-  argTypes: {
-    orientation: {
-      name: 'Orientation',
-      control: { type: 'inline-radio' },
-      options: ['horizontal', 'vertical'],
-      description: 'Block-flow horizontal rule vs row-flow vertical rule.',
-    },
-    borderStyle: {
-      name: 'Border Style',
-      control: { type: 'select' },
-      options: ['solid', 'dashed', 'dotted'],
-      description: 'Line stroke texture.',
-    },
-    borderWidth: {
-      name: 'Border Width',
-      control: { type: 'select' },
-      options: ['1px', '2px', '4px'],
-      description: 'Thickness of the divider rule.',
-    },
-  },
-  render: (args) => {
-    if (args.orientation === 'vertical') {
-      return `
-        <div style="max-inline-size: 32rem; margin-inline: auto; padding: var(--spacing-24); border: 1px dashed var(--border-color); border-radius: var(--radius-md);">
-          <div style="--direction: row; display: flex; align-items: center; gap: var(--spacing-16); block-size: 3rem;">
-            <span>Left Section</span>
-            <hr class="divider" style="--divider-border-style: ${args.borderStyle}; --divider-border-width: ${args.borderWidth};">
-            <span>Right Section</span>
-          </div>
-        </div>
-      `;
-    }
-
-    return `
-      <div style="max-inline-size: 36rem; margin-inline: auto; padding: var(--spacing-24); display: flex; flex-direction: column; gap: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md);">
-        <p style="margin: 0;">Preceding paragraph copy representing Section 1.</p>
-        <hr class="divider" style="--divider-border-style: ${args.borderStyle}; --divider-border-width: ${args.borderWidth};">
-        <p style="margin: 0; color: var(--foreground-muted);">Succeeding paragraph copy representing Section 2.</p>
-      </div>
-    `;
-  },
-};
+export const Playground: Story = {};
 
 /**
- * 2. Anatomy
- * Exploded breakdown highlighting the semantic hr element, inline-size, and container query attachment.
+ * Default (decorative) and --strong (at least 3:1), solid and dashed.
  */
-export const Anatomy: Story = {
+export const Prominence: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-24); max-inline-size: 44rem;">
-      <div class="demo-card-callout" style="padding: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md); background: var(--surface-muted);">
-        <p style="margin: 0; font-size: var(--typography-font-size--1); color: var(--foreground-muted);">
-          <strong>Structural Breakdown:</strong> <code>&lt;hr class="divider"&gt;</code> has zero default margin and renders <code>border-block-start</code> at 100% inline-width. When wrapped in a container with <code>--direction: row</code>, container style queries automatically switch it to <code>border-inline-start</code> and <code>align-self: stretch</code>.
-        </p>
-      </div>
-
-      <div style="padding: var(--spacing-24); border: 2px dashed var(--color-accent); border-radius: var(--radius-md);">
-        <div style="display: flex; flex-direction: column; gap: var(--spacing-12);">
-          <span class="badge badge--sm"><span>Block Context (Horizontal)</span></span>
-          <hr class="divider" style="outline: 1px dashed var(--color-success); outline-offset: 2px;">
-        </div>
-
-        <div style="margin-block-start: var(--spacing-24); display: flex; flex-direction: column; gap: var(--spacing-12);">
-          <span class="badge badge--sm"><span>Row Context (Vertical)</span></span>
-          <div style="--direction: row; display: flex; gap: var(--spacing-12); block-size: 2.5rem; align-items: center;">
-            <span>Item A</span>
-            <hr class="divider" style="outline: 1px dashed var(--color-warning); outline-offset: 2px;">
-            <span>Item B</span>
-          </div>
-        </div>
-      </div>
+    <div class="demo-stage stack">
+      ${[
+        ['default', {}],
+        ['--strong', { strong: true }],
+        ['--dashed', { dashed: true }],
+        ['--strong --dashed', { strong: true, dashed: true }],
+      ]
+        .map(
+          ([label, a]) => `
+        <div class="stack" style="--gap: var(--spacing-8);">
+          <span class="sb-demo-tag">${label}</span>
+          <hr class="${cls(a as Partial<DividerArgs>)}">
+        </div>`
+        )
+        .join('')}
     </div>
   `,
 };
 
 /**
- * 3. Variants
- * Visual gallery showcasing solid, dashed, dotted, and colored variants.
+ * Vertical comes from the direct parent: .inline, .cluster, .button-group and
+ * .batch-actions set --direction: row. A divider nested deeper (here, inside a
+ * card in a row) stays horizontal.
  */
-export const Variants: Story = {
+export const Orientation: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-32); max-inline-size: 46rem;">
-      
-      <!-- Variant 1: Solid (Standard) -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          1. Solid Line (Default)
-        </span>
-        <hr class="divider">
+    <div class="demo-stage stack">
+      <span class="sb-demo-tag">.cluster</span>
+      <div class="cluster">
+        <span class="chip"><span class="chip__text">Design</span></span>
+        <hr class="divider" aria-orientation="vertical">
+        <span class="chip"><span class="chip__text">Code</span></span>
       </div>
 
-      <!-- Variant 2: Dashed -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          2. Dashed Texture (--divider-border-style: dashed)
-        </span>
-        <hr class="divider" style="--divider-border-style: dashed;">
+      <span class="sb-demo-tag">.button-group</span>
+      <div class="button-group buttons-subtle">
+        <button type="button" class="button"><span>Edit</span></button>
+        <button type="button" class="button"><span>Share</span></button>
+        <hr class="divider" aria-orientation="vertical">
+        <button type="button" class="button button--danger"><span>Delete</span></button>
       </div>
 
-      <!-- Variant 3: Dotted -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          3. Dotted Texture (--divider-border-style: dotted; --divider-border-width: 2px;)
-        </span>
-        <hr class="divider" style="--divider-border-style: dotted; --divider-border-width: 2px;">
-      </div>
-
-      <!-- Variant 4: Accent Colored -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          4. Accent Brand Color (--divider-border-color: var(--color-accent))
-        </span>
-        <hr class="divider" style="--divider-border-color: var(--color-accent); --divider-border-width: 2px;">
-      </div>
-
-    </div>
-  `,
-};
-
-/**
- * 4. StateMatrix
- * Covers default surface, inverted theme surface, and high-contrast mode simulations.
- */
-export const StateMatrix: Story = {
-  render: () => `
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); gap: var(--spacing-24); max-inline-size: 52rem;">
-      
-      <!-- Standard Light Surface -->
-      <div class="pd bd rd">
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-12);">
-          Default Canvas Surface
-        </span>
-        <p style="margin: 0 0 var(--spacing-8);">Section 1</p>
-        <hr class="divider">
-        <p style="margin: var(--spacing-8) 0 0; color: var(--foreground-muted);">Section 2</p>
-      </div>
-
-      <!-- Inverted Dark Surface -->
-      <div class="color-palette-inverted" style="padding: var(--spacing-16); border-radius: var(--radius-md);">
-        <span style="font-size: var(--typography-font-size--1); opacity: 0.8; display: block; margin-block-end: var(--spacing-12);">
-          Inverted Dark Surface
-        </span>
-        <p style="margin: 0 0 var(--spacing-8);">Dark Section 1</p>
-        <hr class="divider">
-        <p style="margin: var(--spacing-8) 0 0; opacity: 0.8;">Dark Section 2</p>
-      </div>
-
-      <!-- High Contrast Mode Simulation -->
-      <div style="padding: var(--spacing-16); border: 2px solid currentColor; border-radius: var(--radius-md);">
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-12);">
-          High-Contrast Mode (2px Reinforced)
-        </span>
-        <p style="margin: 0 0 var(--spacing-8); font-weight: bold;">Section 1</p>
-        <hr class="divider" style="--divider-border-width: 2px; --divider-border-color: currentColor;">
-        <p style="margin: var(--spacing-8) 0 0;">Section 2</p>
-      </div>
-
-    </div>
-  `,
-};
-
-/**
- * 5. SizesAndDensity
- * Compares subtle 1px divider with prominent 2px and 4px structural section divisions.
- */
-export const SizesAndDensity: Story = {
-  render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-24); max-inline-size: 44rem;">
-      
-      <!-- 1px Subtle -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Subtle Compartment (1px)
-        </span>
-        <hr class="divider" style="--divider-border-width: 1px;">
-      </div>
-
-      <!-- 2px Medium -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Medium Section Divider (2px)
-        </span>
-        <hr class="divider" style="--divider-border-width: 2px;">
-      </div>
-
-      <!-- 4px Heavy -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Heavy Landmark Boundary (4px)
-        </span>
-        <hr class="divider" style="--divider-border-width: 4px;">
-      </div>
-
-    </div>
-  `,
-};
-
-/**
- * 6. ZeroClassOrchestration
- * Demonstrates zero-JS orientation switching powered by container style queries.
- */
-export const ZeroClassOrchestration: Story = {
-  render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-24); max-inline-size: 46rem;">
-      <div class="demo-card-callout" style="padding: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md); background: var(--surface-muted);">
-        <p style="margin: 0; font-size: var(--typography-font-size--1); color: var(--foreground-muted);">
-          <strong>Container Style Queries:</strong> When a parent layout establishes <code>--direction: row</code>, the exact same <code>&lt;hr class="divider"&gt;</code> element automatically morphs into a vertical line stretching the container height without requiring a <code>.divider--vertical</code> modifier class.
-        </p>
-      </div>
-
-      <div style="--direction: row; display: flex; align-items: center; justify-content: space-around; padding: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md); block-size: 4rem;">
-        <span>Left Metric</span>
-        <hr class="divider">
-        <span>Middle Metric</span>
-        <hr class="divider">
-        <span>Right Metric</span>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 7. RealWorldRecipes
- * Production patterns: Editorial Article Break and Toolbar Compartments.
- */
-export const RealWorldRecipes: Story = {
-  render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-32); max-inline-size: 52rem;">
-      
-      <!-- Recipe 1: Long-Form Editorial Thematic Break -->
-      <section style="display: flex; flex-direction: column; gap: var(--spacing-16);">
-        <h4 style="font-size: var(--typography-font-size-1); margin: 0;">
-          Recipe 1: Editorial Article Thematic Break
-        </h4>
-        <div class="card card--bordered" style="padding: var(--spacing-24); display: flex; flex-direction: column; gap: var(--spacing-16);">
-          <h3 style="margin: 0;">Design Principles for Humans</h3>
-          <p style="margin: 0; line-height: 1.6;">
-            Accessibility is the foundation of high-performance web systems. When we prioritize clear semantics and predictable focus indicators, all users benefit.
-          </p>
-          <hr class="divider">
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--typography-font-size--1); color: var(--foreground-muted);">
-            <span>Written by Paul Charles Woods</span>
-            <time datetime="2026-10-13">13 October 2026</time>
-          </div>
-        </div>
-      </section>
-
-      <!-- Recipe 2: Toolbar Action Group with Separator -->
-      <section style="display: flex; flex-direction: column; gap: var(--spacing-16);">
-        <h4 style="font-size: var(--typography-font-size-1); margin: 0;">
-          Recipe 2: Action Toolbar with Vertical Divider
-        </h4>
-        <div class="card card--bordered card--compact" style="padding: var(--spacing-12);">
-          <div class="button-group buttons-subtle">
-            <button type="button" class="button button--sm"><span>Edit</span></button>
-            <button type="button" class="button button--sm"><span>Duplicate</span></button>
+      <span class="sb-demo-tag">Card inside .inline: the card's divider stays horizontal</span>
+      <div class="inline" style="align-items: stretch;">
+        <div class="card card--bordered">
+          <div class="card__content stack">
+            <p class="text" style="margin: 0;">Section one</p>
             <hr class="divider">
-            <button type="button" class="button button--sm button--danger"><span>Delete</span></button>
+            <p class="text" style="margin: 0;">Section two</p>
           </div>
         </div>
-      </section>
+        <hr class="divider" aria-orientation="vertical">
+        <p class="text" style="margin: 0;">Beside the card</p>
+      </div>
+    </div>
+  `,
+};
 
+/**
+ * Organisms place the divider: a menu bleeds it to its edges, a batch actions
+ * bar stands it upright.
+ */
+export const InOrganisms: Story = {
+  render: () => `
+    <div class="demo-stage stack">
+      <menu class="menu" role="menu" aria-label="Document options" style="max-inline-size: 16rem;">
+        <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Duplicate</span></button></li>
+        <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Export</span></button></li>
+        <li role="separator" class="divider"></li>
+        <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><span>Delete</span></button></li>
+      </menu>
+
+      <div class="batch-actions batch-actions--inline" role="toolbar" aria-label="Batch operations">
+        <div class="batch-actions__summary"><span class="small-text">3 selected</span></div>
+        <hr class="divider" aria-hidden="true" />
+        <div class="batch-actions__actions">
+          <button type="button" class="button button--subtle button--sm"><span>Export</span></button>
+        </div>
+        <hr class="divider" aria-hidden="true" />
+        <div class="batch-actions__dismiss">
+          <button type="button" class="button button--plain button--sm"><span>Clear</span></button>
+        </div>
+      </div>
     </div>
   `,
 };

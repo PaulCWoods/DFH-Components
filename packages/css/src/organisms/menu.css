@@ -17,7 +17,7 @@
          <kbd class="kbd">⌘D</kbd>
        </button>
      </li>
-     <hr class="menu__separator">
+     <li role="separator" class="divider"></li>
      <li>
        <button type="button" class="menu__item menu__item--destructive">
          <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
@@ -113,7 +113,7 @@
   box-shadow: var(--_menu-shadow);
 
   /* List resets */
-  >li {
+  >li:not(.divider) {
     display: contents;
     list-style: none;
     margin: 0;
@@ -161,7 +161,7 @@
   transition-timing-function: var(--_menu-timefunc);
 
   /* Label Text Auto-Grow */
-  :where(.menu__text, span:not(.icon, .chip, .badge, .kbd, [aria-hidden])) {
+  :where(.menu__text, span:not(.icon, .chip, .status, .badge, .kbd, [aria-hidden])) {
     flex-grow: 1;
   }
 
@@ -175,7 +175,7 @@
   }
 
   /* Trailing Metadata (kbd shortcuts, badges, chips, chevrons) */
-  :where(.menu__text, span:not(.icon, .chip, .badge, .kbd, [aria-hidden]))+ :where(kbd, .kbd, .chip, .badge, .icon) {
+  :where(.menu__text, span:not(.icon, .chip, .status, .badge, .kbd, [aria-hidden]))+ :where(kbd, .kbd, .chip, .status, .badge, .icon) {
     margin-inline-start: auto;
     flex-shrink: 0;
   }
@@ -214,8 +214,8 @@
    Destructive Action Variant
    -------------------------------------------------------------------------- */
 :where(.menu__item--destructive),
-:where(.menu)> :where(.button--danger, .button--danger),
-:where(.menu)>li> :where(.button--danger, .button--danger) {
+:where(.menu)> :where(.button--danger),
+:where(.menu)>li> :where(.button--danger) {
   color: var(--_menu-destructive-color);
 
   > :where(.icon) {
@@ -277,13 +277,10 @@
   margin-block-start: var(--spacing-4, 0.25rem);
 }
 
-/* Hairline Separator */
-:where(.menu__separator, .menu > hr.divider) {
-  border: 0;
-  border-block-start: var(--_menu-divider-width) solid var(--_menu-divider-color);
+/* Divider (.divider atom): the menu only places it, bleeding to its edges. */
+:where(.menu) > :where(.divider) {
   margin-block: var(--spacing-4, 0.25rem);
   margin-inline: calc(var(--_menu-padding) * -1);
-  inline-size: calc(100% + (var(--_menu-padding) * 2));
 }
 
 /* ==========================================================================
@@ -311,9 +308,8 @@
   @supports (rule: 1px) {
     rule: var(--_menu-divider-width) solid var(--_menu-divider-color);
 
-    :where(.menu__separator) {
-      opacity: 0;
-      border: 0;
+    > :where(.divider) {
+      display: none;
     }
   }
 }

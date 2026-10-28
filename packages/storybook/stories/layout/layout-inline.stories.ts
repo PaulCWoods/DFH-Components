@@ -42,7 +42,7 @@ AI agents and developers MUST use the following semantic patterns:
 \`\`\`html
 <!-- 1. Inline Icon + Label Pairing -->
 <div class="inline" style="--gap: var(--spacing-8);">
-  <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   <span>WCAG 2.2 Level AA Conformance</span>
 </div>
 
@@ -51,7 +51,7 @@ AI agents and developers MUST use the following semantic patterns:
   <div class="avatar" data-status="online"><span>AB</span></div>
   <div>
     <p class="font-weight-bold">Alex Bennett</p>
-    <p class="font-size-xs color-muted">Lead Accessibility Engineer</p>
+    <p class="font-size-xs text-muted">Lead Accessibility Engineer</p>
   </div>
 </div>
 
@@ -79,7 +79,7 @@ AI agents and developers MUST use the following semantic patterns:
 <!-- 5. Distributed / Between Row (.inline--between) -->
 <div class="inline inline--between">
   <span>Left Label / Heading</span>
-  <span class="badge badge--success"><span>Live</span></span>
+  <span class="status status--success"><span class="status__text">Live</span></span>
 </div>
 \`\`\`
 
@@ -263,9 +263,9 @@ export const GapScaleHierarchy: Story = {
             </header>
             <div class="card__body">
               <div class="inline sb-demo-inspect-gap">
-                <span class="badge badge--accent"><span>Active</span></span>
-                <span class="badge badge--success"><span>Passing</span></span>
-                <span class="badge badge--warning"><span>Pending</span></span>
+                <span class="status status--accent"><span class="status__text">Active</span></span>
+                <span class="status status--success"><span class="status__text">Passing</span></span>
+                <span class="status status--warning"><span class="status__text">Pending</span></span>
               </div>
             </div>
           </article>
@@ -307,11 +307,11 @@ export const ResponsiveContainerSwitcher: Story = {
       <div class="stack gap">
         <!-- Constrained narrow container (Simulated Mobile / Sidebar) -->
         <div class="card card--bordered padding" style="max-inline-size: 24rem; container-type: inline-size;">
-          <p class="font-size-xs font-weight-bold color-muted margin-bottom-sm">Narrow Container (&lt; 48em): Stacks Vertically</p>
+          <p class="font-size-xs font-weight-bold text-muted margin-bottom-sm">Narrow Container (&lt; 48em): Stacks Vertically</p>
           <div class="inline-responsive inline-responsive--sm sb-demo-inspect-gap" style="justify-content: space-between;">
             <div>
               <p class="font-weight-bold font-size-sm">Sprint Milestone 4</p>
-              <p class="font-size-xs color-muted">WCAG AAA verification</p>
+              <p class="font-size-xs text-muted">WCAG AAA verification</p>
             </div>
             <div class="cluster" style="--gap: var(--spacing-8);">
               <button type="button" class="button button--subtle button--sm"><span>Details</span></button>
@@ -322,11 +322,11 @@ export const ResponsiveContainerSwitcher: Story = {
 
         <!-- Wide container (Simulated Desktop / Main Content) -->
         <div class="card card--bordered padding" style="max-inline-size: 54rem; container-type: inline-size;">
-          <p class="font-size-xs font-weight-bold color-muted margin-bottom-sm">Wide Container (&gt; 48em): Flows Horizontally</p>
+          <p class="font-size-xs font-weight-bold text-muted margin-bottom-sm">Wide Container (&gt; 48em): Flows Horizontally</p>
           <div class="inline-responsive inline-responsive--sm sb-demo-inspect-gap" style="justify-content: space-between;">
             <div>
               <p class="font-weight-bold font-size-sm">Sprint Milestone 4</p>
-              <p class="font-size-xs color-muted">WCAG AAA verification</p>
+              <p class="font-size-xs text-muted">WCAG AAA verification</p>
             </div>
             <div class="cluster" style="--gap: var(--spacing-8);">
               <button type="button" class="button button--subtle button--sm"><span>Details</span></button>
@@ -393,13 +393,13 @@ export const Between: Story = {
         <h4 class="font-size-xs font-weight-bold text-muted">Widget Header Bar</h4>
         <div class="inline inline--between">
           <div class="inline align-items-center" style="--gap: var(--spacing-8);">
-            <span class="status" data-status="online" aria-hidden="true"></span>
+            <span class="status status--success status--plain" aria-hidden="true"></span>
             <strong>Primary Node Status</strong>
           </div>
           <div class="inline align-items-center" style="--gap: var(--spacing-8);">
-            <span class="badge badge--success badge--sm"><span>Operational</span></span>
+            <span class="status status--success status--sm"><span class="status__text">Operational</span></span>
             <button type="button" class="button button--subtle button--icon button--sm" aria-label="Refresh node">
-              <svg class="icon"><use href="#ArrowRight"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
             </button>
           </div>
         </div>
@@ -409,15 +409,15 @@ export const Between: Story = {
         <h4 class="font-size-xs font-weight-bold text-muted">Key-Value Telemetry Rows</h4>
         <div class="stack" style="--gap: var(--spacing-8);">
           <div class="inline inline--between">
-            <span class="color-muted font-size-sm">Volume Level</span>
+            <span class="text-muted font-size-sm">Volume Level</span>
             <output class="font-size-sm font-bold">85%</output>
           </div>
           <div class="inline inline--between">
-            <span class="color-muted font-size-sm">Audio Headroom</span>
+            <span class="text-muted font-size-sm">Audio Headroom</span>
             <output class="font-size-sm color-success font-bold">-1.8 dB</output>
           </div>
           <div class="inline inline--between">
-            <span class="color-muted font-size-sm">Active Listeners</span>
+            <span class="text-muted font-size-sm">Active Listeners</span>
             <output class="font-size-sm font-bold">1,248</output>
           </div>
         </div>
@@ -443,9 +443,9 @@ export const ScopedModifiers: Story = {
         <div class="card card--bordered padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.inline--tight</code></h4>
           <div class="inline inline--tight sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
-            <span class="badge badge--warning"><span>Gamma</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
+            <span class="status status--warning"><span class="status__text">Gamma</span></span>
           </div>
         </div>
 
@@ -483,18 +483,14 @@ export const IdentityLockup: Story = {
             <div>
               <div class="inline" style="--gap: var(--spacing-8);">
                 <span class="font-weight-bold font-size-sm">Jordan Lee</span>
-                <span class="status" data-status="online">Online</span>
+                <span class="status status--success status--plain"><span class="status__text">Online</span></span>
               </div>
-              <p class="font-size-xs color-muted">Lead Design Engineer</p>
+              <p class="font-size-xs text-muted">Lead Design Engineer</p>
             </div>
           </div>
 
           <button type="button" class="button button--subtle button--icon" aria-label="User actions">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <circle cx="12" cy="12" r="1"></circle>
-              <circle cx="12" cy="5" r="1"></circle>
-              <circle cx="12" cy="19" r="1"></circle>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#More"/></svg>
           </button>
         </div>
       </div>
@@ -517,9 +513,9 @@ export const MetadataBreadcrumbRow: Story = {
 
       <div class="card card--bordered padding">
         <div class="inline inline--ruled" style="--gap: var(--spacing-12); font-size: var(--typography-font-size--1);">
-          <span class="color-muted">October 13, 2026</span>
-          <span class="color-muted">8 min read</span>
-          <span class="badge badge--accent badge--sm"><span>Architecture</span></span>
+          <span class="text-muted">October 13, 2026</span>
+          <span class="text-muted">8 min read</span>
+          <span class="chip chip--sm"><span class="chip__text">Architecture</span></span>
           <a href="#" class="link link--subtle font-size-xs" onclick="event.preventDefault();"><span>Discuss (14)</span></a>
         </div>
       </div>
@@ -571,16 +567,16 @@ export const StateMatrix: Story = {
         <div class="card card--bordered padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Inline</h4>
           <div class="inline sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
           </div>
         </div>
 
         <div class="card card--bordered padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Inline</h4>
           <div class="inline inline--tight sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
           </div>
         </div>
 
@@ -595,16 +591,16 @@ export const StateMatrix: Story = {
         <div class="card card--bordered padding stack">
           <h4 class="font-size-xs font-weight-bold">Distributed Inline (.inline--between)</h4>
           <div class="inline inline--between sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Omega</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Omega</span></span>
           </div>
         </div>
 
         <div class="card card--bordered padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Responsive Switcher (.inline-responsive--sm)</h4>
           <div class="inline-responsive inline-responsive--sm sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
           </div>
         </div>
       </div>

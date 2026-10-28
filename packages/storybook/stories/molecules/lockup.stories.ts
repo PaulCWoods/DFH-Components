@@ -148,7 +148,7 @@ export const InTableCells: Story = {
               <small>Mycorrhizal Fungi + Leaf Mulch</small>
             </div>
           </td>
-          <td><span class="badge badge--success"><span>Paid</span></span></td>
+          <td><span class="status status--success"><span class="status__text">Paid</span></span></td>
         </tr>
         <tr>
           <td><strong class="font-mono text-accent">B-04</strong></td>
@@ -167,7 +167,7 @@ export const InTableCells: Story = {
               <small>Hardwood Biochar + Aged Manure</small>
             </div>
           </td>
-          <td><span class="badge badge--warning"><span>Pending</span></span></td>
+          <td><span class="status status--warning"><span class="status__text">Pending</span></span></td>
         </tr>
       </tbody>
     </table>

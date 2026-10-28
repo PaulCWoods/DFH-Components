@@ -1,189 +1,276 @@
 /* ==========================================================================
    Design For Humans: Tab Primitive (Atom)
    --------------------------------------------------------------------------
-   Individual interactive tab trigger element. Supports both button elements
-   and anchor navigation links with anchor-positioned selection indicator
-   registration, button appearance modes, and responsive label/decor collapsing.
-   Complies with WCAG 2.2 AA/AAA (2.4.7 Focus Visible, 1.4.3 Contrast).
+   One tab: a <button role="tab"> in a tablist, or an <a> in navigation.
+   The tab list (molecules/tab-list.css) owns the axes and draws the sliding
+   selection indicator; the tab reads the list's flags.
+
+   | Axis         | Values                                    | List flag             |
+   | ------------ | ----------------------------------------- | --------------------- |
+   | Style        | underline (default), segmented            | --tab-list-style      |
+   | Prominence   | default, --subtle (segmented), --plain    | --tab-list-prominence |
+   | Size         | default, --sm                             | --tab-list-size       |
+   | Corners      | default, --round (segmented)              | --tab-list-corners    |
+   | Presentation | .tab--icon on the tab; .hide-labels       | --ui-labels: hidden   |
+
+   Selected state comes from ARIA: aria-selected="true", or aria-current
+   with any value except "false".
+
+   WCAG 2.2:
+   - 1.4.11 Non-text Contrast: the selected tab is always marked at 3:1 or
+     more: a line or a fill from the list, and bold type. Plain lists add the
+     accent colour, since they have no rule or border to set the tab against.
+   - 2.5.5 / 2.5.8 Target Size: 48px. --sm is 32px with a 48px hit area
+     through ::after, unless the product opts into fine-pointer targets
+     (--spacing-target-min).
+   - 2.4.7 / 2.4.13 Focus Visible: an inset ring, so it isn't clipped by a
+     scrolling list.
+
+   Usage:
+   <nav class="tab-list" aria-label="Sections">
+     <a href="/code" class="tab" aria-current="page"><span class="tab__text">Code</span></a>
+   </nav>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Tab Primitive (:where(.tab))
+   1. Base Tab (:where(.tab))
    ========================================================================== */
 :where(.tab) {
-  --focus-ring-offset: var(--_tab-focus-ring-offset, calc(var(--border-width-2, 2px) * -1));
+  /* --------------------------------------------------------------------------
+     Tone: Underline Style (Default)
+     Rest: the text colour on no surface. Hover: a 3:1 line under the tab.
+     Selected: bold, with the list's indicator line.
+     -------------------------------------------------------------------------- */
+  --_tab-text: var(--foreground, CanvasText);
+  --_tab-bg: transparent;
+  --_tab-border-color: transparent;
+  --_tab-hover-bg: transparent;
+  --_tab-hover-line: var(--border-color-control, currentColor);
+  --_tab-selected-text: var(--foreground, CanvasText);
+  --_tab-selected-ring: var(--focus-ring-color, currentColor);
+  --_tab-selected-color-palette: initial;
+
+  /* Drawn by the tab only without anchor positioning (section 2) */
+  --_tab-indicator: var(--tab-list-indicator-color, var(--foreground, CanvasText));
+  --_tab-selected-bg: transparent;
+
+  /* The line under the tab: hover, or the fallback indicator */
+  --_tab-line: transparent;
 
   /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
+     Geometry (Tier 3 tokens, terminating in literal fallbacks)
+     Per-style values are kept apart so that size, corners and the list's
+     flush layout can each set one without knowing the style.
      -------------------------------------------------------------------------- */
-  --_tab-bg: var(--tab-bg, transparent);
-  --_tab-border-bottom-color: var(--tab-border-bottom-color, transparent);
-  --_tab-border-bottom-width: var(--tab-border-bottom-width, var(--border-width, 1px));
-  --_tab-border-color: var(--tab-border-color, var(--border-color-quiet, currentColor));
-  --_tab-border-width: var(--tab-border-width, 0px);
-  --_tab-button-bg: var(--tab-button-bg, transparent);
-  --_tab-button-border-color: var(--tab-button-border-color, var(--button-border-color, currentColor));
-  --_tab-button-border-width: var(--tab-button-border-width, var(--button-border-width, 1px));
-  --_tab-button-hover-bg: var(--tab-button-hover-bg, transparent);
-  --_tab-button-inner-gap: var(--tab-button-inner-gap, var(--spacing-12, 0.75rem));
-  --_tab-button-padding-block: var(--tab-button-padding-block, var(--button-padding-block, 0.5rem));
-  --_tab-button-padding-inline: var(--tab-button-padding-inline, var(--button-padding-inline, 0.5rem));
-  --_tab-button-radius: var(--tab-button-radius, var(--tabs-button-radius, var(--button-radius, 0.25rem)));
-  --_tab-button-selected-bg: var(--tab-button-selected-bg, var(--tab-button-selected-border-color, var(--foreground, transparent)));
-  --_tab-button-selected-border-color: var(--tab-button-selected-border-color, var(--foreground, currentColor));
-  --_tab-button-selected-color: var(--tab-button-selected-text, var(--foreground-inverted, currentColor));
-  --_tab-button-text: var(--tab-button-text, var(--foreground, currentColor));
-  --_tab-color: var(--tab-text, var(--tabs-color, var(--foreground, currentColor)));
-  --_tab-font-size: var(--tab-font-size, var(--tabs-font-size, inherit));
-  --_tab-font-weight: var(--tab-font-weight, var(--tabs-font-weight, inherit));
-  --_tab-hover-border-color: var(--tab-hover-border-color, currentColor);
-  --_tab-hover-color: var(--tab-hover-color, var(--tabs-hover-color, var(--foreground-accent, currentColor)));
-  --_tab-hover-icon-opacity: 1;
-  --_tab-icon-opacity: 1;
+  --_tab-border-width: 0px;
+  --_tab-font-size: var(--tab-font-size, var(--control-font-size, 1rem));
+  --_tab-font-weight: var(--tab-font-weight, var(--body-font-weight, 400));
+  --_tab-selected-font-weight: var(--tab-selected-font-weight, var(--font-weight-bold, 700));
+  --_tab-inner-gap: var(--tab-inner-gap, 0.5rem);
+  --_tab-line-height: var(--tab-line-height, var(--control-line-height, 1.25));
+  --_tab-line-width: var(--tab-list-indicator-width, 2px);
+  --_tab-min-size: var(--tab-min-size, var(--spacing-target, 3rem));
+  --_tab-padding-block: var(--tab-padding-block, 0.25rem);
+  --_tab-underline-padding-inline: 0px;
+  --_tab-segmented-padding-inline: var(--tab-padding-inline, 1rem);
+  --_tab-padding-inline: var(--_tab-underline-padding-inline);
+  --_tab-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
+  --_tab-radius: 0px;
   --_tab-icon-scale: 1;
-  --_tab-icon-only-icon-scale: 1.25;
-  --_tab-inner-gap: var(--tab-inner-gap, var(--tabs-inner-gap, var(--spacing-8, 0.5rem)));
-  --_tab-line-height: var(--tab-line-height, var(--tabs-line-height, 1));
-  --_tab-min-size: var(--tab-min-size, var(--button-min-size, var(--spacing-target, 3rem)));
-  --_tab-padding-block: var(--tab-padding-block, var(--tabs-padding-block, var(--button-padding-block, 0.5rem)));
-  --_tab-padding-inline: var(--tab-padding-inline, var(--tabs-padding-inline, 0));
-  --_tab-selected-border-color: var(--tab-selected-border-color, var(--tabs-selected-border-color, var(--foreground, currentColor)));
-  --_tab-selected-color: var(--tabs-selected-color, currentColor);
-  --_tab-selected-text: var(--tab-selected-text, var(--tabs-selected-color, currentColor));
-  --_tab-selected-icon-color: var(--tab-selected-icon-color, var(--tabs-selected-color, currentColor));
-  --_tab-selected-icon-opacity: 1;
-  --_tab-selected-font-weight: var(--tab-selected-font-weight, var(--tabs-selected-font-weight, var(--font-weight-bold, bold)));
-  --_tab-plain-hover-icon-opacity: var(--tab-plain-hover-icon-opacity, var(--tab-simple-hover-icon-opacity, 1));
-  --_tab-plain-icon-opacity: var(--tab-plain-icon-opacity, var(--tab-simple-icon-opacity, 0.5));
-  --_tab-plain-selected-icon-color: var(--tab-plain-selected-icon-color, var(--tab-simple-selected-icon-color, var(--tabs-selected-color, currentColor)));
-  --_tab-plain-selected-icon-opacity: var(--tab-plain-selected-icon-opacity, var(--tab-simple-selected-icon-opacity, 1));
-  --_tab-subtle-bg: var(--tab-subtle-bg, var(--button-subtle-bg, var(--surface-translucent, transparent)));
-  --_tab-subtle-border-color: var(--tab-subtle-border-color, transparent);
-  --_tab-subtle-color: var(--tab-subtle-text, var(--foreground, currentColor));
-  --_tab-subtle-hover-bg: var(--tab-subtle-hover-bg, var(--button-subtle-hover-bg, var(--surface-translucent-strong, transparent)));
-  --_tab-subtle-hover-color: var(--tab-subtle-hover-text, var(--foreground-strong, currentColor));
-  --_tab-vert-inner-gap: var(--tab-vert-inner-gap, var(--spacing-16, 1rem));
-  --_tab-vert-min-size: var(--tab-vert-min-size, var(--button-sm-min-size, 1.5rem));
-  --_tab-round-radius: var(--tabs-round-radius, var(--radius-round, 9999px));
+  --_tab-justify: center;
+  --_tab-text-align: center;
+  --_tab-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+  --_tab-transition: var(--tab-transition, var(--duration-sm, 150ms));
+  --_tab-ring-offset: calc(var(--focus-ring-width, 2px) * -1);
 
-  /* Prominence & Variation Container Queries */
-  @container style(--tabs-variation: plain) or style(--tab-variation: plain) or style(--tabs-variation: simple) or style(--tab-variation: simple) or style(--controls-variation: plain) {
-    --_tab-hover-border-color: transparent;
-    --_tab-hover-icon-opacity: var(--_tab-plain-hover-icon-opacity);
-    --_tab-icon-opacity: var(--_tab-plain-icon-opacity);
-    --_tab-selected-border-color: transparent;
-    --_tab-selected-icon-opacity: var(--_tab-plain-selected-icon-opacity);
-    --_tab-selected-icon-color: var(--_tab-plain-selected-icon-color);
-    --_tab-button-bg: var(--tab-plain-bg, transparent);
-    --_tab-button-border-color: transparent;
-    --_tab-button-border-width: 0px;
-    --_tab-button-hover-bg: var(--tab-plain-hover-bg, var(--surface-translucent, transparent));
+  /* ------------------------------------------------------------------------
+     List Flags (@container style(...))
+     They set private variables only: a declaration after a nested rule
+     keeps its source order, so it would override a property set here.
+     Set by the tab list's modifiers, or by any container:
+     e.g. .toolbar { --tab-list-style: segmented; --tab-list-size: sm; }
+     ------------------------------------------------------------------------ */
+
+  /* Size, and density from a compact container */
+  @container style(--tab-list-size: sm) or style(--ui-sizing: compact) {
+    --_tab-font-size: var(--tab-sm-font-size, var(--control-sm-font-size, 0.875rem));
+    --_tab-min-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
+    --_tab-padding-block: var(--tab-sm-padding-block, 0.125rem);
+    --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, 0.5rem);
   }
 
-  @container style(--tabs-variation: subtle) or style(--tab-variation: subtle) or style(--controls-variation: subtle) {
-    --_tab-button-bg: var(--_tab-subtle-bg);
-    --_tab-button-border-color: var(--_tab-subtle-border-color);
-    --_tab-button-border-width: 0px;
-    --_tab-button-hover-bg: var(--_tab-subtle-hover-bg);
-    --_tab-button-color: var(--_tab-subtle-color);
+  /* Type only: steps the label down without changing geometry */
+  @container style(--font-sizing: compact) {
+    --_tab-font-size: var(--tab-sm-font-size, var(--control-sm-font-size, 0.875rem));
   }
 
-  /* Spatial Density */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, 0.25rem));
-    --_tab-padding-inline: var(--tab-sm-padding-inline, 0);
-    --_tab-button-padding-inline: var(--tab-button-sm-padding-inline, var(--button-sm-padding-inline, 0.5rem));
-    --_tab-min-size: var(--tab-sm-min-size, 2rem);
+  /* Corners */
+  @container style(--tab-list-corners: round) {
+    --_tab-segmented-radius: var(--radius-round, 9999px);
   }
 
-  /* Typographic Scaling */
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_tab-font-size: var(--tab-sm-font-size, var(--typography-font-size--1, 0.875em));
+  /* Vertical: full-width tabs, start-aligned, with the line on the list's edge */
+  @container style(--_tab-list-orientation: vertical) {
+    --_tab-underline-padding-inline: var(--_tab-segmented-padding-inline);
+    --_tab-justify: flex-start;
+    --_tab-text-align: start;
   }
 
-  /* Layout and Sizing */
-  align-items: center;
+  /* Segmented: outlined tabs; the selected tab is filled */
+  @container style(--tab-list-style: segmented) {
+    --_tab-border-width: var(--tab-border-width, 1px);
+    --_tab-border-color: var(--border-color-muted, currentColor);
+    --_tab-hover-bg: var(--surface-translucent, transparent);
+    --_tab-hover-line: transparent;
+    --_tab-selected-text: var(--foreground-inverted-strong, Canvas);
+    --_tab-selected-ring: var(--foreground-inverted-strong, Canvas);
+    --_tab-selected-color-palette: inverted;
+    --_tab-selected-bg: var(--_tab-indicator);
+    --_tab-padding-inline: var(--_tab-segmented-padding-inline);
+    --_tab-radius: var(--_tab-segmented-radius);
+  }
+
+  /* Segmented, subtle: tinted tabs with no border */
+  @container style(--tab-list-style: segmented) and style(--tab-list-prominence: subtle) {
+    --_tab-bg: var(--surface-translucent, transparent);
+    --_tab-border-color: transparent;
+    --_tab-hover-bg: var(--surface-translucent-strong, transparent);
+  }
+
+  /* Plain: no rule or border, so the selected tab also takes the accent */
+  @container style(--tab-list-prominence: plain) {
+    --_tab-indicator: var(--foreground-accent, LinkText);
+    --_tab-selected-text: var(--foreground-accent, LinkText);
+  }
+
+  /* Segmented, plain: no border or fill. The selected tab sits on a tint,
+     where the rest accent falls under 4.5:1, so it takes the pressed tone. */
+  @container style(--tab-list-style: segmented) and style(--tab-list-prominence: plain) {
+    --_tab-border-color: transparent;
+    --_tab-indicator: var(--surface-translucent-strong, transparent);
+    --_tab-selected-text: var(--foreground-accent-pressed, var(--foreground-accent, LinkText));
+    --_tab-selected-ring: var(--focus-ring-color, currentColor);
+    --_tab-selected-color-palette: initial;
+    --_tab-selected-bg: var(--_tab-indicator);
+  }
+
+  /* Layout & Display */
   display: flex;
+  align-items: center;
+  justify-content: var(--_tab-justify);
   flex-shrink: 0;
-  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+
+  /* Sizing */
   min-block-size: var(--_tab-min-size);
   min-inline-size: var(--_tab-min-size);
-  position: relative;
 
-  /* Spacing and Typography */
+  /* Spacing */
   gap: var(--_tab-inner-gap);
   padding-block: var(--_tab-padding-block);
-  padding-block-end: calc(var(--_tab-padding-block) - var(--_tab-border-bottom-width));
   padding-inline: var(--_tab-padding-inline);
-  line-height: var(--_tab-line-height);
+
+  /* Typography */
   font-size: var(--_tab-font-size);
   font-weight: var(--_tab-font-weight);
-  color: var(--_tab-color);
-  text-align: center;
+  line-height: var(--_tab-line-height);
+  text-align: var(--_tab-text-align);
   text-decoration: none;
-  cursor: pointer;
 
-  /* Surface & Borders */
+  /* Surface, Border & Shape */
+  color: var(--_tab-text);
   background-color: var(--_tab-bg);
   border: var(--_tab-border-width) solid var(--_tab-border-color);
-  border-block-end: var(--_tab-border-bottom-width) solid var(--_tab-border-bottom-color);
+  border-radius: var(--_tab-radius);
+
+  /* Interaction */
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: background-color, border-color, color;
+  transition-duration: var(--_tab-transition);
+  transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
 
   :where(.icon) {
-    opacity: var(--_tab-icon-opacity, 1);
-    scale: var(--_tab-icon-scale, 1);
+    scale: var(--_tab-icon-scale);
   }
 
-  /* Hover State */
-  @media (hover: hover) {
-    &:hover:not(:is([aria-selected="true"], [aria-current="page"])) {
-      color: var(--_tab-hover-color);
-      border-color: var(--_tab-hover-border-color);
-      text-decoration: none;
+  /* ------------------------------------------------------------------------
+     Line (underline style)
+     Under the tab, or on the list's edge in a vertical list. Shows the hover
+     line, and the indicator when the list can't draw it.
+     ------------------------------------------------------------------------ */
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: var(--_tab-line-width);
+    background-color: var(--_tab-line);
+    pointer-events: none;
+  }
 
-      :where(.icon) {
-        opacity: var(--_tab-hover-icon-opacity);
-      }
+  @container style(--_tab-list-orientation: vertical) {
+    &::before {
+      inset-block: 0;
+      inset-inline: auto 0;
+      block-size: auto;
+      inline-size: var(--_tab-line-width);
     }
   }
 
-  /* Interactive Focus State (WCAG 2.4.7 / 2.4.13 Inset Focus Ring) */
-  &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
-    outline-offset: var(--focus-ring-offset, 2px);
+  @container style(--_tab-list-orientation: vertical) and style(--_tab-list-side: end) {
+    &::before {
+      inset-inline: 0 auto;
+    }
   }
 
-  /* Active / Selected State */
-  &:is([aria-selected="true"], [aria-current="page"], [aria-current="true"], [aria-current="location"], [aria-current]) {
+  /* ------------------------------------------------------------------------
+     Hit Area (WCAG 2.5.5 / 2.5.8)
+     Extends the target to --_tab-target-size when the visual size is
+     smaller. Collapses to the tab's own box when it is already larger.
+     ------------------------------------------------------------------------ */
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: min(0px, calc((100% - var(--_tab-target-size)) / 2));
+    inset-inline: min(0px, calc((100% - var(--_tab-target-size)) / 2));
+  }
+
+  /* Hover: the surface changes, never the text colour */
+  @media (hover: hover) {
+    &:where(:hover:not([aria-selected="true"], [aria-current]:not([aria-current="false"]))) {
+      --_tab-line: var(--_tab-hover-line);
+
+      background-color: var(--_tab-hover-bg);
+    }
+  }
+
+  &:where(a):focus {
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  /* Inset ring (WCAG 2.4.7 / 2.4.13) */
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: var(--_tab-ring-offset);
+  }
+
+  /* ------------------------------------------------------------------------
+     Selected
+     ------------------------------------------------------------------------ */
+  &:where([aria-selected="true"], [aria-current]:not([aria-current="false"])) {
+    --color-palette: var(--_tab-selected-color-palette);
+
     color: var(--_tab-selected-text);
     font-weight: var(--_tab-selected-font-weight);
-
-    :where(.icon) {
-      color: var(--_tab-selected-icon-color);
-      opacity: var(--_tab-selected-icon-opacity);
-    }
-
-    &:hover {
-      text-decoration: none;
-    }
+    outline-color: var(--_tab-selected-ring);
   }
-
-  /* Fallback without Anchor Positioning */
-  @supports not (position-anchor: --a) {
-    &:is([aria-selected="true"], [aria-current="page"], [aria-current="true"], [aria-current="location"], [aria-current]) {
-      border-color: var(--_tab-selected-border-color, var(--foreground, currentColor));
-    }
-  }
-
-  /* Anchor Positioning Attachment */
-  @supports (position-anchor: --a) {
-    &:is([aria-selected="true"], [aria-current="page"], [aria-current="true"], [aria-current="location"], [aria-current]) {
-      anchor-name: --tab-selected;
-    }
-  }
-}
-
-a:where(.tab):focus {
-  text-decoration: none;
 }
 
 :where(.tab__text) {
@@ -193,189 +280,49 @@ a:where(.tab):focus {
 }
 
 /* ==========================================================================
-   2. Tab Variations & Appearance Modes
+   2. Selection Indicator
+   With anchor positioning, the list draws one indicator that slides between
+   tabs, and the selected tab stays clear so it shows through. Without it,
+   the selected tab draws its own line or fill.
    ========================================================================== */
-
-:where(.tab--fill),
-:where(.tabs-fill) :where(.tab) {
-  flex: 1 0 auto;
-}
-
-/* --------------------------------------------------------------------------
-   2.1 Vertical Tab Orientation (.tab--vertical, .tabs-vertical, .tabs-on-right)
-   -------------------------------------------------------------------------- */
-:where(.tab--vertical),
-:where(.tabs-vertical) :where(.tab) {
-  justify-content: flex-start;
-  gap: var(--_tab-vert-inner-gap);
-  min-block-size: var(--_tab-vert-min-size);
-  padding-block: var(--_tab-padding-block);
-  padding-inline-start: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
-  padding-inline-end: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
-  border: var(--_tab-border-width) solid var(--_tab-border-color);
-  border-inline-end: var(--_tab-border-bottom-width) solid var(--_tab-border-bottom-color);
-  text-align: start;
-}
-
-:where(.tabs-on-right) :where(.tab) {
-  border-inline-start: var(--_tab-border-bottom-width) solid var(--_tab-border-bottom-color);
-  border-inline-end: 0;
-  padding-inline-start: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
-  padding-inline-end: var(--_tab-button-padding-inline, var(--spacing-16, 1rem));
-}
-
-/* --------------------------------------------------------------------------
-   2.2 Plain Tab Mode (.tab--plain, .tabs-plain)
-   -------------------------------------------------------------------------- */
-:where(.tabs-plain) {
-  --tabs-variation: plain;
-}
-
-:where(.tab--plain),
-:where(.tabs-plain) :where(.tab) {
-  --_tab-hover-border-color: transparent;
-  --_tab-hover-icon-opacity: var(--_tab-plain-hover-icon-opacity);
-  --_tab-icon-opacity: var(--_tab-plain-icon-opacity);
-  --_tab-selected-border-color: transparent;
-  --_tab-selected-icon-opacity: var(--_tab-plain-selected-icon-opacity);
-  --_tab-selected-icon-color: var(--_tab-plain-selected-icon-color);
-
-  /* Button Tab Plain Appearance */
-  --_tab-button-bg: var(--tab-plain-bg, transparent);
-  --_tab-button-border-color: transparent;
-  --_tab-button-border-width: 0px;
-  --_tab-button-hover-bg: var(--tab-plain-hover-bg, var(--surface-translucent, transparent));
-  --_tab-button-selected-bg: var(--tab-plain-selected-bg, var(--surface-translucent, transparent));
-  --_tab-button-selected-color: var(--tab-button-selected-text, var(--foreground, currentColor));
-}
-
-/* --------------------------------------------------------------------------
-   2.3 Subtle Tab Mode (.tab--subtle, .tabs-subtle)
-   -------------------------------------------------------------------------- */
-:where(.tabs-subtle) {
-  --tabs-variation: subtle;
-}
-
-:where(.tab--subtle),
-:where(.tabs-subtle) :where(.tab) {
-  /* Button Tab Subtle Appearance (matches .button--subtle) */
-  --_tab-button-bg: var(--_tab-subtle-bg);
-  --_tab-button-border-color: var(--_tab-subtle-border-color);
-  --_tab-button-border-width: 0px;
-  --_tab-button-hover-bg: var(--_tab-subtle-hover-bg);
-  --_tab-button-color: var(--_tab-subtle-color);
-}
-
-/* --------------------------------------------------------------------------
-   2.4 Small / Compact Sizing (.tab--sm, .tabs-sm)
-   -------------------------------------------------------------------------- */
-:where(.tab--sm),
-:where(.tabs-sm) :where(.tab) {
-  --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, 0.25rem));
-  --_tab-padding-inline: var(--tab-sm-padding-inline, 0);
-  --_tab-button-padding-inline: var(--tab-button-sm-padding-inline, var(--button-sm-padding-inline, 0.5rem));
-  --_tab-min-size: var(--tab-sm-min-size, 2rem);
-  --_tab-font-size: var(--tab-sm-font-size, var(--typography-font-size--1, 0.875em));
-}
-
-
-/* --------------------------------------------------------------------------
-   2.5 Button Style Tabs (.tab--button, .tabs-button)
-   -------------------------------------------------------------------------- */
-:where(.tabs-button) {
-  --tabs-style: button;
-}
-
-:where(.tab--button),
-:where(.tabs-button) :where(.tab) {
-  --focus-ring-color: var(--_tab-button-focus-color, var(--foreground-accent));
-
-  /* Sizing and Spacing */
-  column-gap: var(--_tab-button-inner-gap);
-  justify-content: center;
-  min-block-size: var(--_tab-min-size);
-  min-inline-size: var(--_tab-min-size);
-  padding-block: var(--_tab-padding-block);
-  padding-inline: var(--_tab-button-padding-inline);
-
-  /* Surface and Text */
-  border: var(--_tab-button-border-width) solid var(--_tab-button-border-color);
-  border-radius: var(--_tab-button-radius);
-  background-color: var(--_tab-button-bg);
-  color: var(--_tab-button-color, var(--_tab-button-text));
-
-  @media (hover: hover) {
-    &:hover:not(:is([aria-selected="true"], [aria-current="page"])) {
-      background-color: var(--_tab-button-hover-bg);
-    }
-  }
-
-  &:is([aria-selected="true"], [aria-current="page"]) {
-    border-color: var(--_tab-button-selected-border-color);
-    color: var(--_tab-button-selected-color);
-
-    .badge {
-      --foreground: var(--_tab-button-selected-color);
-    }
-  }
-}
-
-:where(.tab--button, .tabs-button .tab) {
-  &:is([aria-selected="true"], [aria-current="page"]) {
-    background-color: var(--_tab-button-selected-bg);
-  }
-}
-
-:where(.tabs-button .tab:not(a)) {
-  &:is([aria-selected="true"], [aria-current="page"]) {
+@supports (anchor-name: --a) {
+  :where(.tab):where([aria-selected="true"], [aria-current]:not([aria-current="false"])) {
+    anchor-name: --tab-selected;
     background-color: transparent;
+    border-color: transparent;
   }
 }
 
-:where(.tabs-flush .tab-button, .tabs-flush.tabs-button .tab) {
-  --_tab-button-radius: 0;
-}
+@supports not (anchor-name: --a) {
+  :where(.tab):where([aria-selected="true"], [aria-current]:not([aria-current="false"])) {
+    --_tab-line: var(--_tab-indicator);
 
-/* --------------------------------------------------------------------------
-   2.6 Round Tab Modifiers (.tab--round, .tabs-round)
-   -------------------------------------------------------------------------- */
-:where(.tabs-round) {
-  --tabs-shape: round;
-}
-
-:where(.tab--round),
-:where(.tabs-round) :where(.tab) {
-  --_tab-button-radius: var(--_tab-round-radius);
+    background-color: var(--_tab-selected-bg);
+    border-color: var(--_tab-selected-bg);
+  }
 }
 
 /* ==========================================================================
-   3. Icon-Only Tabs (.tab--icon, .tabs-icon) & Responsive Disclosure
+   3. Icon-Only Tabs (.tab--icon) & Responsive Label Collapsing
+   A tab whose only text is visually hidden is icon-only too. A tab with a
+   visible .tab__text is not, even if it also carries hidden text (such as
+   a badge count spelled out for screen readers).
    ========================================================================== */
-
-/* Explicit Icon-Only Tab Item */
-:where(.tab:has(:where(.visually-hidden, .sr-only, .sr))),
 :where(.tab--icon),
-:where(.tabs-icon) :where(.tab) {
-  --_tab-icon-scale: var(--_tab-icon-only-icon-scale, 1.25);
+:where(.tab:not(:has(.tab__text)):has(:where(.visually-hidden, .sr-only, .sr))) {
+  --_tab-icon-scale: 1.25;
   --_tab-inner-gap: 0px;
   --_tab-padding-inline: var(--_tab-padding-block);
-  --_tab-button-padding-inline: var(--_tab-button-padding-block, var(--_tab-padding-block));
 
-  gap: 0;
-  padding-inline: var(--_tab-padding-inline);
-}
-
-:where(.tab--button.tab--icon),
-:where(.tabs-button.tabs-icon) :where(.tab),
-:where(.tabs-button) :where(.tab--icon),
-:where(.tabs-icon) :where(.tab--button) {
-  aspect-ratio: 1;
-  min-inline-size: var(--_tab-min-size);
   justify-content: center;
+
+  /* Segmented icon tabs are square */
+  @container style(--tab-list-style: segmented) {
+    aspect-ratio: 1;
+  }
 }
 
-:where(.tab--icon),
-:where(.tabs-icon) :where(.tab) {
+:where(.tab--icon) {
   :where(.tab__text) {
     position: absolute;
     inline-size: 1px;
@@ -383,31 +330,23 @@ a:where(.tab):focus {
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
   }
 
-  :is(kbd,
-    .kbd,
-    .chip,
-    .badge:not(.badge--top-right-corner,
-      .badge--top-left-corner,
-      .badge--bottom-right-corner,
-      .badge--bottom-left-corner)) {
+  :is(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
     display: none;
   }
 }
 
-/* Responsive / Container-Adaptive Tab (:where(.tab:has(.icon))) */
+/* Labels hidden by a container (--ui-labels: hidden) or by .hide-labels */
 :where(.tab:has(.icon)) {
   @container style(--ui-labels: hidden) {
-    --_tab-inner-gap: 0;
+    --_tab-inner-gap: 0px;
     --_tab-padding-inline: var(--_tab-padding-block);
-    --_tab-button-padding-inline: var(--_tab-padding-block);
 
-    gap: var(--_tab-inner-gap);
-    padding-inline: var(--_tab-padding-inline);
+    justify-content: center;
 
     :where(.tab__text, .ui-label) {
       position: absolute;
@@ -416,12 +355,12 @@ a:where(.tab):focus {
       padding: 0;
       margin: -1px;
       overflow: hidden;
-      clip: rect(0, 0, 0, 0);
+      clip-path: inset(50%);
       white-space: nowrap;
       border: 0;
     }
 
-    :is(kbd, .kbd, .chip, .badge) {
+    :is(kbd, .kbd, .chip, .status, .badge) {
       display: none;
     }
   }
@@ -433,28 +372,12 @@ a:where(.tab):focus {
   }
 }
 
-:where(.tabs-vertical) :where(.tab:has(.icon)) {
-  @container style(--ui-labels: hidden) {
-    justify-content: center;
-    padding-inline-end: 0;
-  }
-}
-
-:where(.tabs-on-right) :where(.tab:has(.icon)) {
-  @container style(--ui-labels: hidden) {
-    justify-content: center;
-    padding-inline-start: 0;
-  }
-}
-
 :where(.hide-labels) :where(.tab:has(.icon)),
 :where(.tab:has(.icon).hide-labels) {
-  --_tab-inner-gap: 0;
+  --_tab-inner-gap: 0px;
   --_tab-padding-inline: var(--_tab-padding-block);
-  --_tab-button-padding-inline: var(--_tab-padding-block);
 
-  gap: var(--_tab-inner-gap);
-  padding-inline: var(--_tab-padding-inline);
+  justify-content: center;
 
   :where(.tab__text, .ui-label) {
     position: absolute;
@@ -463,12 +386,12 @@ a:where(.tab):focus {
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
   }
 
-  :is(kbd, .kbd, .chip, .badge) {
+  :is(kbd, .kbd, .chip, .status, .badge) {
     display: none;
   }
 }
@@ -481,25 +404,38 @@ a:where(.tab):focus {
 }
 
 /* ==========================================================================
-   4. Accessibility, High Contrast & Disabled States
+   4. Disabled, Forced Colours & Increased Contrast
    ========================================================================== */
-:where(.tab:where(:disabled, [aria-disabled="true"])) {
-  opacity: var(--opacity-muted, 0.5);
+:where(.tab):where(:disabled, [aria-disabled="true"]) {
+  opacity: var(--opacity-disabled, 0.5);
   cursor: not-allowed;
   pointer-events: none;
 }
 
-@media (prefers-contrast: more) {
-  :where(.tab):is([aria-selected="true"], [aria-current="page"]) {
-    font-weight: var(--font-weight-bold, 700);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
+/* The indicator is drawn in Highlight (tab-list.css); a selected segmented
+   tab sits on it, so its text is HighlightText. */
+@media (forced-colors: active) {
+  :where(.tab) {
+    --_tab-indicator: Highlight;
+    --_tab-hover-line: CanvasText;
 
-  :where(.tabs-button) :where(.tab):is([aria-selected="true"], [aria-current="page"]),
-  :where(.tab--button):is([aria-selected="true"], [aria-current="page"]) {
-    border-width: calc(var(--_tab-button-border-width, 1px) * 2);
-    border-color: currentColor;
-    text-decoration: none;
+    @container style(--tab-list-style: segmented) {
+      &:where([aria-selected="true"], [aria-current]:not([aria-current="false"])) {
+        forced-color-adjust: none;
+        color: HighlightText;
+        outline-color: HighlightText;
+
+        @supports not (anchor-name: --a) {
+          background-color: Highlight;
+          border-color: Highlight;
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.tab) {
+    --_tab-line-width: calc(var(--tab-list-indicator-width, 2px) * 2);
   }
 }

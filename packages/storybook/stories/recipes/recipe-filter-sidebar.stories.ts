@@ -50,7 +50,7 @@ The **Filter Sidebar & Catalog** recipe demonstrates a production-grade, accessi
                   <div class="combobox combobox--sm">
                     <div class="combobox__control">
                       <div class="combobox__tags">
-                        <span class="chip chip--sm"><span>TypeScript</span><button type="button" class="chip__remove"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button></span>
+                        <span class="chip chip--subtle chip--sm"><span class="chip__text">TypeScript</span><button type="button" class="chip__remove" aria-label="Remove TypeScript"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button></span>
                       </div>
                       <input type="text" class="combobox__input" role="combobox" placeholder="Add tag..." />
                     </div>
@@ -107,11 +107,11 @@ export const Standard: Story = {
       <header class="header header--sticky header--translucent padding-block-sm">
         <div class="wrapper inline justify-content-between align-items-center">
           <div class="inline gap-sm align-items-center">
-            <svg class="icon text-accent" width="24" height="24" aria-hidden="true"><use href="#Share"/></svg>
+            <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
             <h1 class="title font-size-lg margin-0">Component Catalog</h1>
           </div>
           <div class="inline gap-sm align-items-center">
-            <span class="badge badge--success"><span>36 Components</span></span>
+            <span class="status status--success"><span class="status__text">36 Components</span></span>
           </div>
         </div>
       </header>
@@ -139,13 +139,13 @@ export const Standard: Story = {
                         <div class="combobox combobox--sm">
                           <div class="combobox__control">
                             <div class="combobox__tags">
-                              <span class="chip chip--sm">
-                                <span>TypeScript</span>
-                                <button type="button" class="chip__remove" aria-label="Remove TypeScript filter"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button>
+                              <span class="chip chip--subtle chip--sm">
+                                <span class="chip__text">TypeScript</span>
+                                <button type="button" class="chip__remove" aria-label="Remove TypeScript filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
                               </span>
-                              <span class="chip chip--sm">
-                                <span>ARIA 1.2</span>
-                                <button type="button" class="chip__remove" aria-label="Remove ARIA 1.2 filter"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button>
+                              <span class="chip chip--subtle chip--sm">
+                                <span class="chip__text">ARIA 1.2</span>
+                                <button type="button" class="chip__remove" aria-label="Remove ARIA 1.2 filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
                               </span>
                             </div>
                             <input 
@@ -250,17 +250,17 @@ export const Standard: Story = {
                   <!-- Active Filter Dismissible Chips -->
                   <div class="cluster gap-xs align-items-center">
                     <span class="small-text text-color-muted">Active:</span>
-                    <span class="chip">
-                      <span>Level AA</span>
-                      <button type="button" class="chip__remove" aria-label="Remove Level AA filter"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button>
+                    <span class="chip chip--subtle">
+                      <span class="chip__text">Level AA</span>
+                      <button type="button" class="chip__remove" aria-label="Remove Level AA filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
                     </span>
-                    <span class="chip">
-                      <span>Form Controls</span>
-                      <button type="button" class="chip__remove" aria-label="Remove Form Controls filter"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button>
+                    <span class="chip chip--subtle">
+                      <span class="chip__text">Form Controls</span>
+                      <button type="button" class="chip__remove" aria-label="Remove Form Controls filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
                     </span>
-                    <span class="chip">
-                      <span>TypeScript</span>
-                      <button type="button" class="chip__remove" aria-label="Remove TypeScript filter"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button>
+                    <span class="chip chip--subtle">
+                      <span class="chip__text">TypeScript</span>
+                      <button type="button" class="chip__remove" aria-label="Remove TypeScript filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
                     </span>
                   </div>
 
@@ -287,13 +287,13 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title subheading"><a href="#" class="card__link">Combobox Primitive</a></h3>
-                      <span class="badge badge--success"><span>WCAG AAA</span></span>
+                      <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
                     </header>
                     <div class="card__body">
                       <p class="text">Searchable single and multi-select floating listboxes with focus delegation and chips.</p>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="chip">Forms</span>
+                      <span class="chip chip--subtle"><span class="chip__text">Forms</span></span>
                       <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
                     </footer>
                   </article>
@@ -306,13 +306,13 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title subheading"><a href="#" class="card__link">Empty State Primitive</a></h3>
-                      <span class="badge badge--success"><span>WCAG AAA</span></span>
+                      <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
                     </header>
                     <div class="card__body">
                       <p class="text">Communicates zero-data status, search misses, and system feedback with accessible recovery actions.</p>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="chip">Feedback</span>
+                      <span class="chip chip--subtle"><span class="chip__text">Feedback</span></span>
                       <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
                     </footer>
                   </article>
@@ -325,13 +325,13 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title subheading"><a href="#" class="card__link">Menu Primitive</a></h3>
-                      <span class="badge badge--success"><span>WCAG AAA</span></span>
+                      <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
                     </header>
                     <div class="card__body">
                       <p class="text">Dedicated action lists and context menus with keyboard shortcuts and anchored popover integration.</p>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="chip">Navigation</span>
+                      <span class="chip chip--subtle"><span class="chip__text">Navigation</span></span>
                       <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
                     </footer>
                   </article>
@@ -344,13 +344,13 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title subheading"><a href="#" class="card__link">Skeleton Primitive</a></h3>
-                      <span class="badge badge--success"><span>WCAG AAA</span></span>
+                      <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
                     </header>
                     <div class="card__body">
                       <p class="text">Accessible shimmer placeholders engineered to eliminate layout shift (CLS) during data loading.</p>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="chip">Feedback</span>
+                      <span class="chip chip--subtle"><span class="chip__text">Feedback</span></span>
                       <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
                     </footer>
                   </article>
@@ -363,13 +363,13 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title subheading"><a href="#" class="card__link">Segmented Switch</a></h3>
-                      <span class="badge badge--success"><span>WCAG AAA</span></span>
+                      <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
                     </header>
                     <div class="card__body">
                       <p class="text">Binary toggle switch with anchor-positioned sliding indicator and zero-JS state management.</p>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="chip">Forms</span>
+                      <span class="chip chip--subtle"><span class="chip__text">Forms</span></span>
                       <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
                     </footer>
                   </article>
@@ -382,13 +382,13 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title subheading"><a href="#" class="card__link">Modal Dialog</a></h3>
-                      <span class="badge badge--success"><span>WCAG AAA</span></span>
+                      <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
                     </header>
                     <div class="card__body">
                       <p class="text">Native top-layer dialog container with backdrop blur, discrete transitions, and escape traps.</p>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="chip">Overlays</span>
+                      <span class="chip chip--subtle"><span class="chip__text">Overlays</span></span>
                       <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
                     </footer>
                   </article>
@@ -419,11 +419,11 @@ export const EmptyFilterResults: Story = {
       <header class="header header--sticky header--translucent padding-block-sm">
         <div class="wrapper inline justify-content-between align-items-center">
           <div class="inline gap-sm align-items-center">
-            <svg class="icon text-accent" width="24" height="24" aria-hidden="true"><use href="#Share"/></svg>
+            <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
             <h1 class="title font-size-lg margin-0">Component Catalog</h1>
           </div>
           <div class="inline gap-sm align-items-center">
-            <span class="badge badge--warning"><span>0 Results</span></span>
+            <span class="status status--warning"><span class="status__text">0 Results</span></span>
           </div>
         </div>
       </header>
@@ -469,8 +469,8 @@ export const EmptyFilterResults: Story = {
               <div class="card__content">
                 <div class="cluster gap-xs align-items-center">
                   <span class="small-text text-color-muted">Active:</span>
-                  <span class="chip"><span>Strict Section 508</span><button type="button" class="chip__remove"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button></span>
-                  <span class="chip"><span>Audio / Video</span><button type="button" class="chip__remove"><svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg></button></span>
+                  <span class="chip chip--subtle"><span class="chip__text">Strict Section 508</span><button type="button" class="chip__remove" aria-label="Remove Strict Section 508"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button></span>
+                  <span class="chip chip--subtle"><span class="chip__text">Audio / Video</span><button type="button" class="chip__remove" aria-label="Remove Audio / Video"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button></span>
                 </div>
               </div>
             </div>
@@ -480,7 +480,7 @@ export const EmptyFilterResults: Story = {
               <article class="card__content">
                 <div class="empty-state empty-state--flush padding-block-xl" aria-labelledby="catalog-empty-title">
                   <div class="empty-state__visual" aria-hidden="true">
-                    <svg class="icon" width="32" height="32"><use href="#Search"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                   </div>
                   <div class="empty-state__content">
                     <h3 id="catalog-empty-title" class="empty-state__title">No matching components found</h3>
@@ -522,11 +522,11 @@ export const CatalogLoadingState: Story = {
       <header class="header header--sticky header--translucent padding-block-sm">
         <div class="wrapper inline justify-content-between align-items-center">
           <div class="inline gap-sm align-items-center">
-            <svg class="icon text-accent" width="24" height="24" aria-hidden="true"><use href="#Share"/></svg>
+            <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
             <h1 class="title font-size-lg margin-0">Component Catalog</h1>
           </div>
           <div class="inline gap-sm align-items-center">
-            <span class="skeleton skeleton--badge" style="inline-size: 5rem; block-size: 1.5rem;" aria-hidden="true"></span>
+            <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.5rem;"></span>
           </div>
         </div>
       </header>
@@ -567,16 +567,17 @@ export const CatalogLoadingState: Story = {
               <div class="card__content">
                 <div class="inline justify-content-between align-items-center">
                   <div class="cluster gap-xs align-items-center">
-                    <span class="skeleton skeleton--text" style="inline-size: 3rem; block-size: 1rem;" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--badge" style="inline-size: 4.5rem; block-size: 1.5rem;" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--badge" style="inline-size: 5.5rem; block-size: 1.5rem;" aria-hidden="true"></span>
+                    <span class="skeleton" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1rem;"></span>
+                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4.5rem; --skeleton-height: 1.5rem;"></span>
+                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 5.5rem; --skeleton-height: 1.5rem;"></span>
                   </div>
-                  <span class="skeleton skeleton--button" style="inline-size: 8rem; block-size: 2rem;" aria-hidden="true"></span>
+                  <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 8rem; --skeleton-height: 2rem;"></span>
                 </div>
               </div>
             </div>
 
             <!-- Auto-Filling Skeleton Card Grid -->
+            <p class="visually-hidden" role="status">Loading component catalog…</p>
             <ul class="grid grid--sm" aria-busy="true" aria-label="Loading component catalog">
               
               <!-- Skeleton Card 1 -->
@@ -585,15 +586,15 @@ export const CatalogLoadingState: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
                     </header>
                     <div class="card__body stack gap-xs">
                       <span class="skeleton skeleton--text" aria-hidden="true"></span>
                       <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--button" style="inline-size: 5rem; block-size: 1.75rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
+                      <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
                     </footer>
                   </article>
                 </div>
@@ -604,16 +605,16 @@ export const CatalogLoadingState: Story = {
                 <div class="card">
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--heading skeleton--w-66" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 66%;"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
                     </header>
                     <div class="card__body stack gap-xs">
                       <span class="skeleton skeleton--text" aria-hidden="true"></span>
                       <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--button" style="inline-size: 5rem; block-size: 1.75rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
+                      <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
                     </footer>
                   </article>
                 </div>
@@ -625,15 +626,15 @@ export const CatalogLoadingState: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
                     </header>
                     <div class="card__body stack gap-xs">
                       <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--text skeleton--w-66" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 66%;"></span>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--button" style="inline-size: 5rem; block-size: 1.75rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
+                      <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
                     </footer>
                   </article>
                 </div>
@@ -644,16 +645,16 @@ export const CatalogLoadingState: Story = {
                 <div class="card">
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--heading skeleton--w-33" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 33%;"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
                     </header>
                     <div class="card__body stack gap-xs">
                       <span class="skeleton skeleton--text" aria-hidden="true"></span>
                       <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--button" style="inline-size: 5rem; block-size: 1.75rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
+                      <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
                     </footer>
                   </article>
                 </div>
@@ -665,15 +666,15 @@ export const CatalogLoadingState: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
                     </header>
                     <div class="card__body stack gap-xs">
                       <span class="skeleton skeleton--text" aria-hidden="true"></span>
                       <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--button" style="inline-size: 5rem; block-size: 1.75rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
+                      <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
                     </footer>
                   </article>
                 </div>
@@ -684,16 +685,16 @@ export const CatalogLoadingState: Story = {
                 <div class="card">
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--heading skeleton--w-66" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--badge" style="inline-size: 4rem; block-size: 1.25rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 66%;"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
                     </header>
                     <div class="card__body stack gap-xs">
                       <span class="skeleton skeleton--text" aria-hidden="true"></span>
                       <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
                     </div>
                     <footer class="card__footer inline justify-content-between align-items-center">
-                      <span class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></span>
-                      <span class="skeleton skeleton--button" style="inline-size: 5rem; block-size: 1.75rem;" aria-hidden="true"></span>
+                      <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
+                      <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
                     </footer>
                   </article>
                 </div>

@@ -20,7 +20,7 @@ The **Application Header** recipe demonstrates how Design For Humans primitives 
 - **Brand Lockup:** Semantic link with vector mark and prominent site title.
 - **Primary Navigation:** Responsive \`<nav>\` with \`.button--subtle\` items and \`aria-current="page"\` for zero-JS active state styling.
 - **Spotlight Search Invoker:** Interactive search trigger with \`⌘K\` chip and declarative \`commandfor="cmd-header-dialog" command="show-modal"\` launching the Command Palette modal.
-- **Notifications Popover & Empty State:** Bell button with anchored \`.badge--top-right-corner\` and an anchored popover featuring the \`.empty-state.empty-state--compact\` primitive when all alerts are cleared.
+- **Notifications Popover & Empty State:** Bell button with anchored \`.badge--top-end\` and an anchored popover featuring the \`.empty-state.empty-state--compact\` primitive when all alerts are cleared.
 - **User Profile Menu Primitive:** Interactive avatar button with live \`[data-status="online"]\` ring, triggering an anchored CSS popover that renders the first-class \`.menu.menu--translucent\` primitive with keyboard shortcuts (\`⇧⌘P\`, \`⌘,\`), dark mode switch, and destructive sign-out action.
 - **Responsive Mobile Navigation:** Collapses inline navigation behind an accessible \`.md:hide\` menu button (\`#Navigation\` / \`#Close\` toggle pair) that reveals an anchored stacked \`.menu\` via native HTML \`popover\`.
 
@@ -38,7 +38,7 @@ The **Application Header** recipe demonstrates how Design For Humans primitives 
     
     <!-- Brand -->
     <a href="/" class="link inline gap-sm font-weight-bold font-size-lg underline-none">
-      <svg class="icon" width="20" height="20"><use href="#BrandDesignForHumans"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
       <span>Design For Humans</span>
     </a>
 
@@ -54,15 +54,15 @@ The **Application Header** recipe demonstrates how Design For Humans primitives 
     <div class="inline gap-sm align-items-center">
       <!-- Search Invoker -->
       <button type="button" class="button button--subtle" commandfor="cmd-dialog" command="show-modal">
-        <svg class="icon"><use href="#Search"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         <span>Search docs...</span>
         <kbd class="kbd">⌘K</kbd>
       </button>
 
       <!-- Notifications with Badge -->
       <button type="button" class="button button--icon" popovertarget="notif-popover" style="anchor-name: --notif-anchor;">
-        <svg class="icon"><use href="#BellFilled"/></svg>
-        <span class="badge badge--danger badge--sm badge--round badge--top-right-corner"><span>3</span></span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+        <span class="badge badge--danger badge--sm badge--top-end"><span class="badge__text">3</span></span>
       </button>
 
       <!-- User Profile Menu -->
@@ -74,7 +74,7 @@ The **Application Header** recipe demonstrates how Design For Humans primitives 
         <menu class="menu menu--translucent" aria-label="Account options">
           <header class="menu__heading">Alex Bennett</header>
           <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Profile</span><kbd class="kbd">⇧⌘P</kbd></button></li>
-          <hr class="menu__separator">
+          <li role="separator" class="divider"></li>
           <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><span>Sign Out</span></button></li>
         </menu>
       </div>
@@ -120,13 +120,13 @@ export const Standard: Story = {
             <div class="inline gap-sm align-items-center">
               <a href="/" class="link inline gap-sm font-weight-bold font-size-lg underline-none">
                 <span class="icon-box icon--lg" aria-hidden="true">
-                  <svg class="icon" width="20" height="20"><use href="#BrandDesignForHumans"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
                 </span>
-                <span class="white-space-nowrap max-lg:hide">Design For Humans</span>
+                <span class="white-space-nowrap max-lg:visually-hidden">Design For Humans</span>
               </a>
 
-              <span class="badge badge--accent badge--round badge--sm">
-                <span>v2.2</span>
+              <span class="chip chip--sm chip--round">
+                <span class="chip__text">v2.2</span>
               </span>
             </div>
 
@@ -169,7 +169,7 @@ export const Standard: Story = {
                 aria-haspopup="dialog"
                 aria-label="Search design system (Press Command+K)"
               >
-                <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false">
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#Search"/>
                 </svg>
                 <span class="button__text button__text--placeholder">
@@ -187,11 +187,11 @@ export const Standard: Story = {
                 aria-haspopup="dialog"
                 aria-label="Notifications (3 unread)"
               >
-                <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false">
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#BellFilled"/>
                 </svg>
-                <span class="badge badge--danger badge--sm badge--round badge--top-right-corner">
-                  <span>3</span>
+                <span class="badge badge--danger badge--sm badge--top-end">
+                  <span class="badge__text">3</span>
                 </span>
               </button>
 
@@ -206,25 +206,25 @@ export const Standard: Story = {
                   <article class="card__content">
                     <header class="card__header inline justify-content-between align-items-center">
                       <h3 class="card__title font-size-0">Notifications</h3>
-                      <span class="badge badge--accent badge--sm"><span>3 New</span></span>
+                      <span class="badge badge--accent badge--sm"><span class="badge__text">3 New</span></span>
                     </header>
                     <div class="card__body card__body--flush">
                       <div class="button-group button-group--tight button-group--stacked buttons-subtle">
                         <button type="button" class="button">
-                          <svg class="icon text-accent" width="18" height="18" aria-hidden="true"><use href="#Check"/></svg>
+                          <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                           <span class="button__text stack gap-0">
                             <span class="font-size-sm font-weight-medium">Figma sync completed</span>
-                            <span class="micro-text text-color-muted">746 native variables compiled</span>
+                            <span class="small-text text-color-muted">746 native variables compiled</span>
                           </span>
-                          <small class="micro-text text-color-muted">2m</small>
+                          <small class="small-text text-color-muted">2m</small>
                         </button>
                         <button type="button" class="button">
-                          <svg class="icon text-accent" width="18" height="18" aria-hidden="true"><use href="#Alert"/></svg>
+                          <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
                           <span class="button__text stack gap-0">
                             <span class="font-size-sm font-weight-medium">WCAG AAA review passed</span>
-                            <span class="micro-text text-color-muted">Zero axe-core violations found</span>
+                            <span class="small-text text-color-muted">Zero axe-core violations found</span>
                           </span>
-                          <small class="micro-text text-color-muted">1h</small>
+                          <small class="small-text text-color-muted">1h</small>
                         </button>
                       </div>
                     </div>
@@ -267,16 +267,16 @@ export const Standard: Story = {
                     </div>
                     <div class="stack gap-none flex-grow">
                       <span class="font-weight-medium">Alex Bennett</span>
-                      <span class="micro-text text-color-muted">alex.bennett@dfh.design</span>
+                      <span class="small-text text-color-muted">alex.bennett@dfh.design</span>
                     </div>
                   </header>
 
-                  <hr class="menu__separator">
+                  <li role="separator" class="divider"></li>
 
                   <!-- Menu Actions with Keyboard Shortcuts -->
                   <li role="none">
                     <button type="button" class="menu__item" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                       <span>Your Profile</span>
                       <kbd class="kbd">⇧⌘P</kbd>
                     </button>
@@ -284,7 +284,7 @@ export const Standard: Story = {
 
                   <li role="none">
                     <button type="button" class="menu__item" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                       <span>System Preferences</span>
                       <kbd class="kbd">⌘,</kbd>
                     </button>
@@ -292,12 +292,12 @@ export const Standard: Story = {
 
                   <li role="none">
                     <button type="button" class="menu__item" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="#Bookmarked"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bookmarked"/></svg>
                       <span>Saved Components</span>
                     </button>
                   </li>
 
-                  <hr class="menu__separator">
+                  <li role="separator" class="divider"></li>
 
                   <!-- Integrated Switch Toggle -->
                   <li role="none">
@@ -311,12 +311,12 @@ export const Standard: Story = {
                     </label>
                   </li>
 
-                  <hr class="menu__separator">
+                  <li role="separator" class="divider"></li>
 
                   <!-- Destructive Sign Out -->
                   <li role="none">
                     <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                       <span>Sign Out</span>
                     </button>
                   </li>
@@ -332,7 +332,7 @@ export const Standard: Story = {
           <div class="card card--flush card--ruled card--translucent wrapper wrapper--lg">
             <article class="card__content">
               <header class="card__header inline gap-sm focus-within">
-                <svg class="icon text-color-muted" width="22" height="22" aria-hidden="true"><use href="#Search"/></svg>
+                <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                 <input 
                   type="search" 
                   class="input input--flush focus-none flex-grow" 
@@ -343,7 +343,7 @@ export const Standard: Story = {
                 />
                 <form method="dialog">
                   <button type="submit" class="button button--subtle button--icon" commandfor="${cmdDialogId}" command="close" aria-label="Close command palette">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </form>
               </header>
@@ -351,18 +351,18 @@ export const Standard: Story = {
                 <div role="listbox" class="button-group button-group--stacked button-group--ruled buttons-subtle" aria-label="Suggestions">
                   <h3 class="button-group__content micro-heading text-color-muted">Recent Documents</h3>
                   <button type="button" class="button button--subtle is-active" role="option" aria-selected="true">
-                    <svg class="icon text-color-muted" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+                    <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
                     <span class="button__text stack gap-none text-align-start flex-grow">
                       <span class="font-weight-medium">Button Primitive</span>
-                      <span class="micro-text text-color-muted">Button states, sizes and accessible toggles</span>
+                      <span class="small-text text-color-muted">Button states, sizes and accessible toggles</span>
                     </span>
                     <kbd class="kbd">↵</kbd>
                   </button>
                   <button type="button" class="button button--subtle" role="option" aria-selected="false">
-                    <svg class="icon text-color-muted" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
+                    <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                     <span class="button__text stack gap-none text-align-start flex-grow">
                       <span class="font-weight-medium">Combobox Primitive</span>
-                      <span class="micro-text text-color-muted">Searchable single and multi-select floating listboxes</span>
+                      <span class="small-text text-color-muted">Searchable single and multi-select floating listboxes</span>
                     </span>
                     <kbd class="kbd">↵</kbd>
                   </button>
@@ -431,8 +431,8 @@ export const WithBreadcrumbSubnav: Story = {
             <div class="wrapper flex align-items-center justify-content-between padding-block-breathe">
               <div class="cluster align-items-center gap-sm">
                 <a href="/" class="link inline font-weight-bold font-size-lg underline-none">
-                  <svg class="icon icon--lg" width="20" height="20"><use href="#BrandDesignForHumans"/></svg>
-                  <span class="white-space-nowrap max-lg:hide">Design For Humans</span>
+                  <svg class="icon icon--lg" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
+                  <span class="white-space-nowrap max-lg:visually-hidden">Design For Humans</span>
                 </a>
               </div>
 
@@ -470,20 +470,20 @@ export const WithBreadcrumbSubnav: Story = {
                     <header class="menu__heading">Alex Bennett</header>
                     <li role="none">
                       <button type="button" class="menu__item" role="menuitem">
-                        <svg class="icon" aria-hidden="true"><use href="#User"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                         <span>Profile</span>
                       </button>
                     </li>
                     <li role="none">
                       <button type="button" class="menu__item" role="menuitem">
-                        <svg class="icon" aria-hidden="true"><use href="#Settings"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                         <span>Preferences</span>
                       </button>
                     </li>
-                    <hr class="menu__separator">
+                    <li role="separator" class="divider"></li>
                     <li role="none">
                       <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-                        <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                         <span>Sign Out</span>
                       </button>
                     </li>
@@ -506,11 +506,11 @@ export const WithBreadcrumbSubnav: Story = {
 
               <div class="cluster align-items-center gap-sm">
                 <button type="button" class="button button--subtle button--sm inline gap-sm">
-                  <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Duplicate"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                   <span>Clone Recipe</span>
                 </button>
                 <button type="button" class="button button--strong button--accent button--sm inline gap-sm">
-                  <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Download"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                   <span>Export CSS</span>
                 </button>
               </div>
@@ -577,13 +577,13 @@ export const ResponsiveCollapsibleNav: Story = {
             <div class="inline gap-sm align-items-center">
               <a href="/" class="link inline gap-sm font-weight-bold font-size-lg underline-none">
                 <span class="icon-box icon--lg" aria-hidden="true">
-                  <svg class="icon" width="20" height="20"><use href="#BrandDesignForHumans"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
                 </span>
                 <span class="white-space-nowrap max-md:visually-hidden">Design For Humans</span>
               </a>
 
-              <span class="badge badge--accent badge--round badge--sm max-md:hide">
-                <span>v2.2</span>
+              <span class="chip chip--sm chip--round max-md:hide">
+                <span class="chip__text">v2.2</span>
               </span>
             </div>
 
@@ -622,7 +622,7 @@ export const ResponsiveCollapsibleNav: Story = {
                 class="button button--subtle max-sm:hide"
                 aria-label="Search design system (Press Command+K)"
               >
-                <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false">
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#Search"/>
                 </svg>
                 <span class="button__text button__text--placeholder">
@@ -637,11 +637,11 @@ export const ResponsiveCollapsibleNav: Story = {
                 class="button button--icon" 
                 aria-label="Notifications (3 unread)"
               >
-                <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false">
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#BellFilled"/>
                 </svg>
-                <span class="badge badge--danger badge--sm badge--round badge--top-right-corner">
-                  <span>3</span>
+                <span class="badge badge--danger badge--sm badge--top-end">
+                  <span class="badge__text">3</span>
                 </span>
               </button>
 
@@ -669,20 +669,20 @@ export const ResponsiveCollapsibleNav: Story = {
                   <header class="menu__heading">Alex Bennett</header>
                   <li role="none">
                     <button type="button" class="menu__item" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#User"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                       <span>Your Profile</span>
                     </button>
                   </li>
                   <li role="none">
                     <button type="button" class="menu__item" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Settings"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                       <span>System Preferences</span>
                     </button>
                   </li>
-                  <hr class="menu__separator">
+                  <li role="separator" class="divider"></li>
                   <li role="none">
                     <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Close"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                       <span>Sign Out</span>
                     </button>
                   </li>
@@ -699,10 +699,10 @@ export const ResponsiveCollapsibleNav: Story = {
                 aria-controls="${mobileNavId}"
                 aria-expanded="false"
               >
-                <svg class="icon icon--off" width="24" height="24" aria-hidden="true" focusable="false">
+                <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#Navigation"/>
                 </svg>
-                <svg class="icon icon--on" width="24" height="24" aria-hidden="true" focusable="false">
+                <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#Close"/>
                 </svg>
               </button>
@@ -718,32 +718,32 @@ export const ResponsiveCollapsibleNav: Story = {
                   <header class="menu__heading font-size-sm text-color-muted">Navigation Menu</header>
                   <li role="none">
                     <a href="#dashboard" class="menu__item" aria-current="page">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Home"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
                       <span>Dashboard</span>
                     </a>
                   </li>
                   <li role="none">
                     <a href="#components" class="menu__item">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Duplicate"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                       <span>Components</span>
                     </a>
                   </li>
                   <li role="none">
                     <a href="#tokens" class="menu__item">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Point"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Point"/></svg>
                       <span>Design Tokens</span>
                     </a>
                   </li>
                   <li role="none">
                     <a href="#audit" class="menu__item">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Progress"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
                       <span>A11y Audit</span>
                     </a>
                   </li>
-                  <hr class="menu__separator">
+                  <li role="separator" class="divider"></li>
                   <li role="none">
                     <button type="button" class="menu__item">
-                      <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Search"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                       <span>Search Documentation</span>
                     </button>
                   </li>

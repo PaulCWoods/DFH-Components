@@ -42,8 +42,8 @@ const {
       <div class="inline align-items-center gap-xs">
         {code && <code class="small-text">{code}</code>}
         {badge && (
-          <span class:list={['badge badge--sm', `badge--${badgeTone}`]}>
-            <span>{badge}</span>
+          <span class:list={['status status--sm', `status--${badgeTone}`]}>
+            <span class="status__text">{badge}</span>
           </span>
         )}
         <slot name="meta" />

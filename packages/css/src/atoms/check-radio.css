@@ -1,96 +1,70 @@
 /* ==========================================================================
    Design For Humans: Checkbox & Radio Primitives
    --------------------------------------------------------------------------
-   Accessible native checkboxes and radio buttons utilizing browser-native
-   accessibility mechanics, enhanced with accent-color and high-contrast focus rings:
-   - 4.1.2 Name, Role, Value (Native checkbox and radio mechanics)
-   - 2.5.5 / 2.5.8 Target Size (Enclosed by .choice touch wrapper or standalone)
-   - 1.4.3 & 1.4.11 Contrast (3:1 graphical boundaries and accent indicator)
-   - 2.4.7 & 2.4.13 Focus Visible (3:1 contrast focus ring with 2px offset)
-   - Modern Web Guidance (:user-invalid / :user-valid validation states)
+   Native checkboxes and radios, coloured with accent-color. The browser
+   draws the box, so it stays legible in forced colours.
+
+   | Axis | Modifiers     | Container flag                                   |
+   | ---- | ------------- | ------------------------------------------------ |
+   | Size | (20px) --lg   | --check-size: lg (--ui-sizing: compact steps lg to default) |
+
+   No intent: a checkbox has a state, not a status. Invalid
+   (:user-invalid, [aria-invalid="true"]) turns it danger.
+
+   Accessibility:
+   - 2.5.8 Target Size: the box is 20px or 24px. Wrap it in a .choice label,
+     so the whole label row is the target.
+   - 2.4.7 Focus Visible: ring with offset.
 
    Usage:
-   <input type="checkbox" class="checkbox-input" id="opt-1" />
-   <input type="radio" class="radio-input" name="grp" id="rad-1" />
+   <label class="choice">
+     <input type="checkbox" class="checkbox-input" />
+     <span>Keyboard review</span>
+   </label>
    ========================================================================== */
 
-/* ==========================================================================
-   Base Checkbox and Radio Primitives (:where(...))
-   ========================================================================== */
-:where(.checkbox-input,
-  .radio-input,
-  input:is([type="checkbox"], [type="radio"])) {
-  --_form-check-size: var(--form-check-size, var(--spacing-20, 1.25rem));
-  --_form-check-accent: var(--form-check-accent, var(--foreground-accent, #008076));
+:where(.checkbox-input, .radio-input) {
+  --_check-size: var(--check-box-size, 1.25rem);
+  --_check-accent: var(--foreground-accent, AccentColor);
 
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes
-     -------------------------------------------------------------------------- */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--check-size: sm) {
-    --_form-check-size: var(--form-check-sm-size, var(--spacing-16, 1rem));
-  }
-
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     ------------------------------------------------------------------------ */
   @container style(--check-size: lg) {
-    --_form-check-size: var(--form-check-lg-size, var(--spacing-24, 1.5rem));
-  }
-
-  /* Size Modifiers (.checkbox-input--sm, .radio-input--sm, .checkbox-input--lg, .radio-input--lg) */
-  :where(.controls-sm) &,
-  &:where(.checkbox-input--sm, .radio-input--sm, .check--sm) {
-    --_form-check-size: var(--form-check-sm-size, var(--spacing-16, 1rem));
-  }
-
-  :where(.controls-lg) &,
-  &:where(.checkbox-input--lg, .radio-input--lg, .check--lg) {
-    --_form-check-size: var(--form-check-lg-size, var(--spacing-24, 1.5rem));
+    --_check-size: var(--check-lg-box-size, 1.5rem);
   }
 
   /* Layout & Sizing */
-  all: revert;
   box-sizing: border-box;
-  inline-size: var(--_form-check-size);
-  block-size: var(--_form-check-size);
+  inline-size: var(--_check-size);
+  block-size: var(--_check-size);
+  flex-shrink: 0;
   margin: 0;
   cursor: pointer;
+  accent-color: var(--_check-accent);
 
-  /* Color & Accent */
-  accent-color: var(--_form-check-accent);
-
-  /* Focus Visible (High Contrast 3:1 Ring with Offset) */
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
     outline-offset: var(--focus-ring-offset, 2px);
   }
 
-  /* Modern Validation States (:user-invalid / [aria-invalid="true"]) */
   &:where(:user-invalid, [aria-invalid="true"]) {
-    --_form-check-accent: var(--border-color-danger, var(--foreground-danger, #d32f2f));
+    --_check-accent: var(--border-color-danger, AccentColor);
 
     &:focus-visible {
-      outline-color: var(--border-color-danger, var(--foreground-danger, #d32f2f));
+      outline-color: var(--border-color-danger, Highlight);
     }
   }
 
-  /* Tone Modifiers */
-  &:where(.checkbox-input--danger, .radio-input--danger, .check--danger) {
-    --_form-check-accent: var(--foreground-danger, #d32f2f);
-  }
-
-  &:where(.checkbox-input--success, .radio-input--success, .check--success) {
-    --_form-check-accent: var(--foreground-success, #00875a);
-  }
-
-  &:where(.checkbox-input--warning, .radio-input--warning, .check--warning) {
-    --_form-check-accent: var(--foreground-warning, #b06000);
-  }
-
-  /* Disabled State */
   &:where(:disabled, [aria-disabled="true"]) {
     cursor: not-allowed;
   }
 }
 
-:where(.checkbox-input, input[type="checkbox"]) {
-  border-radius: 0;
+:where(.checkbox-input--lg, .radio-input--lg) {
+  --_check-size: var(--check-lg-box-size, 1.5rem);
+
+  @container style(--ui-sizing: compact) {
+    --_check-size: var(--check-box-size, 1.25rem);
+  }
 }

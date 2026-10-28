@@ -42,7 +42,7 @@ Unlike flat \`.tab-list\` switchers, \`.navigation-tree\` natively embraces mult
     <li class="navigation-tree__item">
       <a href="#accessibility" class="navigation-tree__link">
         <span class="navigation-tree__text">Accessibility & WCAG 2.2</span>
-        <span class="badge badge--success badge--sm"><span>AAA</span></span>
+        <span class="status status--success status--sm"><span class="status__text">AAA</span></span>
       </a>
     </li>
   </ol>
@@ -217,19 +217,19 @@ export const WithBadgesAndMetadata: Story = {
           <li class="navigation-tree__item">
             <a href="#atoms" class="navigation-tree__link">
               <span class="navigation-tree__text">Atoms</span>
-              <span class="badge badge--sm badge--subtle"><span>17</span></span>
+              <span class="badge badge--sm"><span class="badge__text">17</span></span>
             </a>
             <ul class="navigation-tree__list">
               <li class="navigation-tree__item">
                 <a href="#button" class="navigation-tree__link" aria-current="true">
                   <span class="navigation-tree__text">Button</span>
-                  <span class="badge badge--sm badge--success"><span>AAA</span></span>
+                  <span class="status status--success status--sm"><span class="status__text">AAA</span></span>
                 </a>
               </li>
               <li class="navigation-tree__item">
                 <a href="#input" class="navigation-tree__link">
                   <span class="navigation-tree__text">Input</span>
-                  <span class="badge badge--sm badge--subtle"><span>v2.2</span></span>
+                  <span class="chip chip--subtle chip--sm"><span class="chip__text">v2.2</span></span>
                 </a>
               </li>
             </ul>
@@ -237,7 +237,7 @@ export const WithBadgesAndMetadata: Story = {
           <li class="navigation-tree__item">
             <a href="#molecules" class="navigation-tree__link">
               <span class="navigation-tree__text">Molecules</span>
-              <span class="badge badge--sm badge--accent"><span>New</span></span>
+              <span class="status status--accent status--sm"><span class="status__text">New</span></span>
             </a>
           </li>
         </ul>

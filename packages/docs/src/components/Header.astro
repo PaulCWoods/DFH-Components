@@ -37,13 +37,13 @@ const { currentSection = '' } = Astro.props;
         </div>
       </div>
 
-      <span class="badge badge--accent badge--subtle badge--sm md:show">
-        <span>WCAG AAA</span>
+      <span class="status status--accent status--subtle status--sm md:show">
+        <span class="status__text">WCAG AAA</span>
       </span>
     </div>
 
     <!-- Center: Primary Nav Links (Tab List Navigation Pattern) -->
-    <nav class="tab-list tabs-subtle tabs-scrollable xl:show" aria-label="Main Navigation">
+    <nav class="tab-list tab-list--plain tab-list--scrollable xl:show" aria-label="Main Navigation">
       <ul>
         <li>
           <a
@@ -104,8 +104,8 @@ const { currentSection = '' } = Astro.props;
         href="http://localhost:6006"
         target="_blank"
         rel="noopener noreferrer"
-        class="block-link block-link--plain block-link--icon max-sm:hide"
-        aria-label="Storybook Component Explorer"
+        class="button button--plain button--icon max-sm:hide"
+        aria-label="Storybook component explorer (opens in a new tab)"
         title="Open Storybook Sandbox (Port 6006)"
       >
         <Icon name="Code" size={20} />

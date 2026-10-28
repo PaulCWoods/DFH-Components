@@ -1,22 +1,38 @@
 /* ==========================================================================
-   Skip Link Primitive
+   Design For Humans: Skip Link Primitive
    --------------------------------------------------------------------------
-   Accessible bypass mechanism allowing keyboard and screen reader users to
-   skip repetitive navigation and jump directly to landmark page content
-   (WCAG 2.4.1 Bypass Blocks).
+   Lets keyboard and screen reader users jump past repeated navigation to
+   the page's main content (WCAG 2.4.1 Bypass Blocks). Place it first in
+   <body> and point it at a landmark, such as <main id="main">.
+
+   | Variant              | Behaviour                                         |
+   | -------------------- | ------------------------------------------------- |
+   | .skip-link           | Full-width bar that opens in the flow on focus    |
+   | .skip-link--floating | Card in the top-start corner; doesn't move layout |
+   | .skip-links          | A <nav> of several skip links, open while focused |
+
+   Accessibility:
+   - 2.5.8 Target Size: the focused link is at least --skip-link-min-size
+     (48px) tall.
+   - 2.4.7 / 2.4.13 Focus Visible: the ring uses the link's text colour, so
+     it stands out against the accent fill when moving through a group.
+   - Forced colours: drawn in Highlight and HighlightText.
 
    Usage:
-   <a href="#main" class="skip-link"><span>Skip to main content</span></a>
+   <a href="#main" class="skip-link">Skip to main content</a>
    ========================================================================== */
 
 /* ==========================================================================
-   Base Skip Link Primitive (:where(.skip-link))
+   1. Skip Link (:where(.skip-link))
    ========================================================================== */
 :where(.skip-link) {
-  --_skip-link-background-color: var(--skip-link-background-color, var(--surface-accent-strong, #008076));
-  --_skip-link-color: var(--skip-link-text, var(--foreground-inverted, #ffffff));
+  --_skip-link-bg: var(--skip-link-background-color, var(--surface-accent-strong, Highlight));
+  --_skip-link-color: var(--skip-link-text, var(--foreground-inverted, HighlightText));
+  --_skip-link-min-size: var(--skip-link-min-size, 3rem);
+  --_skip-link-padding-inline: var(--skip-link-padding-inline, 1rem);
+  --_skip-link-transition: var(--skip-link-transition, 150ms);
 
-  /* Layout & Sizing */
+  /* Collapsed until focused */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,123 +40,116 @@
   inline-size: 100%;
   block-size: 0;
   overflow: hidden;
+  padding-inline:
+    calc(var(--_skip-link-padding-inline) + env(safe-area-inset-left, 0px))
+    calc(var(--_skip-link-padding-inline) + env(safe-area-inset-right, 0px));
   text-align: center;
   white-space: nowrap;
 
-  /* Spacing & Safe Area Insets */
-  padding-inline-start: calc(var(--site-block-padding, var(--spacing-16, 1rem)) + env(safe-area-inset-left, 0px));
-  padding-inline-end: calc(var(--site-block-padding, var(--spacing-16, 1rem)) + env(safe-area-inset-right, 0px));
-
-  /* Typography */
   font-family: var(--skip-link-font-family, var(--body-font-family, inherit));
-  font-size: var(--skip-link-font-size, var(--control-font-size, var(--typography-font-size-0, 1rem)));
-  font-weight: var(--skip-link-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
-  line-height: var(--control-line-height, 1);
-
-  /* Link Underline Metrics */
+  font-size: var(--skip-link-font-size, 1rem);
+  font-weight: var(--skip-link-font-weight, 700);
+  line-height: 1;
   text-decoration: none;
-  text-decoration-color: var(--skip-link-underline-color, var(--foreground-inverted, currentColor));
-  text-decoration-thickness: var(--skip-link-underline-thickness, var(--link-underline-thickness, var(--underline-thickness, 1px)));
-  text-underline-offset: var(--skip-link-underline-offset, var(--link-underline-offset, var(--underline-offset, 0.25em)));
+  text-decoration-color: var(--skip-link-underline-color, currentColor);
+  text-decoration-thickness: var(--skip-link-underline-thickness, 1px);
+  text-underline-offset: var(--skip-link-underline-offset, 0.25em);
 
-  /* Surface & Text Colors */
-  background-color: var(--_skip-link-background-color);
   color: var(--_skip-link-color);
+  background-color: var(--_skip-link-bg);
 
-  /* Transitions */
   transition-property: block-size, min-block-size;
-  transition-duration: var(--skip-link-transition, var(--duration-sm, 150ms));
-  transition-timing-function: var(--skip-link-timefunc, var(--timefunc-ease-out, ease-out));
+  transition-duration: var(--_skip-link-transition);
+  transition-timing-function: var(--timefunc-ease-out, ease-out);
 
-  /* Interactive Hover & Active States */
+  &:visited {
+    color: var(--_skip-link-color);
+  }
+
   @media (hover: hover) {
     &:hover {
-      text-decoration: underline;
+      text-decoration-line: underline;
     }
   }
 
-  &:active {
-    text-decoration: underline;
-  }
-
-  /* Focused State (Expands to full accessible touch target size) */
-  &:where(:focus, :focus-visible) {
-    min-block-size: var(--skip-link-min-size, var(--spacing-target, 3rem));
+  &:focus {
     block-size: auto;
+    min-block-size: var(--_skip-link-min-size);
   }
 
-  /* Focus Visible (Inset 3:1 Focus Ring) */
+  /* Inset ring in the text colour: visible on the accent fill */
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
-    outline-offset: calc(var(--focus-ring-offset, 2px) * -2);
+    outline: var(--focus-ring-width, 2px) solid var(--_skip-link-color);
+    outline-offset: calc(var(--focus-ring-width, 2px) * -2);
+    text-decoration-line: underline;
   }
 
-  /* Prevent browser default link purple/blue on visited state */
-  &:visited {
-    color: var(--_skip-link-color);
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (forced-colors: active) {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+
+    &:focus-visible {
+      outline-color: HighlightText;
+    }
   }
 }
 
 /* ==========================================================================
-   Floating Round Skip Link Modifier (:where(.skip-link--floating))
+   2. Floating Skip Link (:where(.skip-link--floating))
+   Pinned to the top-start corner; slides in on focus without moving layout.
    ========================================================================== */
 :where(.skip-link--floating) {
-  /* Layout & Positioning */
-  inline-size: auto;
+  --_skip-link-inset: var(--skip-link-floating-inset, 1rem);
+
   position: fixed;
-  inset-block-start: var(--spacing-16, 1rem);
-  inset-inline-start: var(--spacing-16, 1rem);
+  inset-block-start: var(--_skip-link-inset);
+  inset-inline-start: var(--_skip-link-inset);
   z-index: var(--z-index-tooltip, 1000);
-  pointer-events: none;
-
-  /* Sizing & Spacing */
-  padding-block: var(--spacing-8, 0.5rem);
-  padding-inline: var(--spacing-16, 1rem);
-
-  /* Surface, Border & Shape */
-  border-radius: var(--ui-radius, var(--radius, 0.25rem));
-  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1));
-
-  /* Hidden Transformation */
-  transform: translateY(calc(-100% - var(--spacing-16, 1rem) - 1.5rem));
+  inline-size: auto;
+  padding-block: var(--skip-link-floating-padding-block, 0.5rem);
+  padding-inline: var(--skip-link-floating-padding-inline, 1rem);
+  border-radius: var(--skip-link-radius, var(--radius, 0.25rem));
+  box-shadow: var(--shadow-lg, none);
   opacity: 0;
+  pointer-events: none;
+  translate: 0 calc(-100% - var(--_skip-link-inset) - var(--_skip-link-min-size));
+  transition-property: translate, opacity;
 
-  transition-property: transform, opacity;
-  transition-duration: var(--skip-link-transition, var(--duration-sm, 150ms));
-  transition-timing-function: var(--skip-link-timefunc, var(--timefunc-ease-out, ease-out));
-
-  &:where(:focus, :focus-visible, :active) {
-    transform: translateY(0);
+  &:focus {
     opacity: 1;
     pointer-events: auto;
-    block-size: auto;
-    min-block-size: var(--skip-link-min-size, var(--spacing-target, 3rem));
+    translate: 0 0;
   }
 
+  /* Outset ring: the card floats over the page */
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
-    outline-color: var(--_skip-link-background-color);
+    outline-color: var(--focus-ring-color, currentColor);
     outline-offset: var(--focus-ring-offset, 2px);
   }
 }
 
 /* ==========================================================================
-   Grouped Skip Links Container (:where(.skip-links))
+   3. Skip Link Group (:where(.skip-links))
+   A <nav> of skip links that opens while any of them has focus.
    ========================================================================== */
 :where(.skip-links) {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   block-size: 0;
+  overflow: hidden;
   margin: 0;
   padding: 0;
-  list-style: none;
 
   &:focus-within {
     block-size: auto;
   }
 
-  & :where(ul) {
+  :where(ul) {
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -148,34 +157,15 @@
     list-style: none;
   }
 
-  & :where(li) {
+  :where(li) {
     display: flex;
     margin: 0;
     padding: 0;
-    list-style: none;
   }
-}
 
-/* ==========================================================================
-   Accessibility & Media Queries
-   ========================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  :where(.skip-link, .skip-link--floating) {
-    transition: none !important;
-  }
-}
-
-@media (prefers-contrast: more) {
-  :where(.skip-link) {
-    outline-width: calc(var(--border-width, 1px) * 2);
-  }
-}
-
-@media (forced-colors: active) {
-  :where(.skip-link) {
-    forced-color-adjust: none;
-    background-color: Highlight;
-    color: HighlightText;
-    outline: 2px solid Highlight;
+  /* Every link shows while the group is open */
+  &:focus-within :where(.skip-link) {
+    block-size: auto;
+    min-block-size: var(--_skip-link-min-size, 3rem);
   }
 }

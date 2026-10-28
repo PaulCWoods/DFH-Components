@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Design For Humans: Range Lockup Molecule
+   --------------------------------------------------------------------------
+   One row pairing an optional button, a .range and an <output> readout.
+   The range takes the remaining width.
+
+   | Axis    | Modifiers           | Container flag                         |
+   | ------- | ------------------- | -------------------------------------- |
+   | Size    | (default) --sm --lg | --range-size (passed on to the range)  |
+   | Surface | --bordered          |                                        |
+   | Corners | --round             |                                        |
+
+   Also: --fill stretches the lockup to the full inline size.
+
+   Usage:
+   <div class="range-lockup range-lockup--sm">
+     <button type="button" class="button button--subtle button--icon button--sm" aria-label="Mute">…</button>
+     <input type="range" class="range" aria-label="Volume" value="85" style="--value: 85%;" />
+     <output class="range-lockup__output">85%</output>
+   </div>
+   ========================================================================== */
+
+:where(.range-lockup) {
+  --_range-lockup-gap: var(--range-lockup-gap, 0.5rem);
+  --_range-lockup-output-font-size: var(--body-sm-font-size, 0.875rem);
+  --_range-lockup-bg: transparent;
+  --_range-lockup-border-color: transparent;
+  --_range-lockup-padding-inline: 0px;
+  --_range-lockup-radius: var(--radius, 0.25rem);
+
+  @container style(--range-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
+    --_range-lockup-gap: var(--range-lockup-sm-gap, 0.25rem);
+    --_range-lockup-output-font-size: var(--body-sm-compact-font-size, 0.75rem);
+  }
+
+  @container style(--range-size: lg) or style(--controls-size: lg) {
+    --_range-lockup-gap: var(--range-lockup-lg-gap, 0.75rem);
+    --_range-lockup-output-font-size: var(--body-fixed-font-size, 1rem);
+  }
+
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  max-inline-size: 100%;
+  gap: var(--_range-lockup-gap);
+  padding-inline: var(--_range-lockup-padding-inline);
+  background-color: var(--_range-lockup-bg);
+  border: var(--border-width, 1px) solid var(--_range-lockup-border-color);
+  border-radius: var(--_range-lockup-radius);
+
+  > :where(.range) {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  > :where(.button) {
+    flex-shrink: 0;
+  }
+
+  > :where(.range-lockup__output) {
+    flex-shrink: 0;
+    min-inline-size: 3ch;
+    font-family: var(--code-font-family, monospace);
+    font-size: var(--_range-lockup-output-font-size);
+    font-variant-numeric: tabular-nums;
+    color: var(--foreground-muted, currentColor);
+    text-align: end;
+    white-space: nowrap;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Modifiers
+   -------------------------------------------------------------------------- */
+:where(.range-lockup--sm) {
+  --range-size: sm;
+  --_range-lockup-gap: var(--range-lockup-sm-gap, 0.25rem);
+  --_range-lockup-output-font-size: var(--body-sm-compact-font-size, 0.75rem);
+}
+
+:where(.range-lockup--lg) {
+  --range-size: lg;
+  --_range-lockup-gap: var(--range-lockup-lg-gap, 0.75rem);
+  --_range-lockup-output-font-size: var(--body-fixed-font-size, 1rem);
+}
+
+:where(.range-lockup--fill) {
+  display: flex;
+  inline-size: 100%;
+}
+
+/* A 3:1 boundary that lights up while any child has focus */
+:where(.range-lockup--bordered) {
+  --_range-lockup-bg: var(--surface-card, Canvas);
+  --_range-lockup-border-color: var(--border-color-control, currentColor);
+  --_range-lockup-padding-inline: var(--range-lockup-padding-inline, 0.5rem);
+
+  &:focus-within {
+    --_range-lockup-border-color: var(--border-color-accent, currentColor);
+  }
+}
+
+:where(.range-lockup--round) {
+  --_range-lockup-radius: var(--radius-round, 9999px);
+  --button-corners: round;
+}

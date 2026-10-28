@@ -176,7 +176,7 @@ export const Playground: Story = {
       return `
         <div class="sb-demo-box ${tintClass} padding">
           <p class="font-weight-bold">Cell ${idx}</p>
-          <p class="font-size-xs color-muted">Fluid auto-fill cell (min ${args.size}).</p>
+          <p class="font-size-xs text-muted">Fluid auto-fill cell (min ${args.size}).</p>
         </div>
       `;
     }).join('');
@@ -352,19 +352,19 @@ export const RuledDividers: Story = {
         <div class="grid grid--xs grid--ruled">
           <div class="padding-block-xs">
             <p class="font-weight-bold font-size-sm">Phase 1: Architecture</p>
-            <p class="font-size-xs color-muted">Foundational tokens & primitives.</p>
+            <p class="font-size-xs text-muted">Foundational tokens & primitives.</p>
           </div>
           <div class="padding-block-xs">
             <p class="font-weight-bold font-size-sm">Phase 2: Components</p>
-            <p class="font-size-xs color-muted">Accessible native controls.</p>
+            <p class="font-size-xs text-muted">Accessible native controls.</p>
           </div>
           <div class="padding-block-xs">
             <p class="font-weight-bold font-size-sm">Phase 3: Integration</p>
-            <p class="font-size-xs color-muted">Figma & agent workflow sync.</p>
+            <p class="font-size-xs text-muted">Figma & agent workflow sync.</p>
           </div>
           <div class="padding-block-xs">
             <p class="font-weight-bold font-size-sm">Phase 4: Auditing</p>
-            <p class="font-size-xs color-muted">Automated axe-core compliance.</p>
+            <p class="font-size-xs text-muted">Automated axe-core compliance.</p>
           </div>
         </div>
       </div>
@@ -439,7 +439,7 @@ export const CardCatalog: Story = {
                   <h4 class="card__title small-heading">Design Tokens</h4>
                   <p class="card__subtitle">DTCG Specification</p>
                 </hgroup>
-                <span class="badge badge--accent"><span>Tier 1-3</span></span>
+                <span class="chip"><span class="chip__text">Tier 1-3</span></span>
               </header>
               <div class="card__body">
                 <p class="font-size-sm">
@@ -461,7 +461,7 @@ export const CardCatalog: Story = {
                   <h4 class="card__title small-heading">WCAG 2.2 Level AAA</h4>
                   <p class="card__subtitle">Digital Accessibility</p>
                 </hgroup>
-                <span class="badge badge--success"><span>Compliant</span></span>
+                <span class="status status--success"><span class="status__text">Compliant</span></span>
               </header>
               <div class="card__body">
                 <p class="font-size-sm">
@@ -483,7 +483,7 @@ export const CardCatalog: Story = {
                   <h4 class="card__title small-heading">Layout Primitives</h4>
                   <p class="card__subtitle">Compositional 1D/2D</p>
                 </hgroup>
-                <span class="badge badge--warning"><span>Modern CSS</span></span>
+                <span class="chip"><span class="chip__text">Modern CSS</span></span>
               </header>
               <div class="card__body">
                 <p class="font-size-sm">
@@ -516,26 +516,26 @@ export const MetricTiles: Story = {
 
       <div class="grid grid--xs">
         <div class="card card--bordered padding">
-          <p class="font-size-xs color-muted font-weight-bold">AXE RULE COVERAGE</p>
+          <p class="font-size-xs text-muted font-weight-bold">AXE RULE COVERAGE</p>
           <div class="inline" style="justify-content: space-between; align-items: baseline; margin-top: var(--spacing-8);">
             <p class="font-size-2 font-weight-bold">92 / 92</p>
-            <span class="badge badge--success"><span>100%</span></span>
+            <span class="status status--success"><span class="status__text">100%</span></span>
           </div>
         </div>
 
         <div class="card card--bordered padding">
-          <p class="font-size-xs color-muted font-weight-bold">FOCUS CLEARANCE</p>
+          <p class="font-size-xs text-muted font-weight-bold">FOCUS CLEARANCE</p>
           <div class="inline" style="justify-content: space-between; align-items: baseline; margin-top: var(--spacing-8);">
             <p class="font-size-2 font-weight-bold">4.8 : 1</p>
-            <span class="badge badge--accent"><span>AAA</span></span>
+            <span class="status status--accent"><span class="status__text">AAA</span></span>
           </div>
         </div>
 
         <div class="card card--bordered padding">
-          <p class="font-size-xs color-muted font-weight-bold">FIGMA TOKEN SYNC</p>
+          <p class="font-size-xs text-muted font-weight-bold">FIGMA TOKEN SYNC</p>
           <div class="inline" style="justify-content: space-between; align-items: baseline; margin-top: var(--spacing-8);">
             <p class="font-size-2 font-weight-bold">489</p>
-            <span class="badge badge--subtle"><span>Synced</span></span>
+            <span class="status status--subtle"><span class="status__text">Synced</span></span>
           </div>
         </div>
       </div>
@@ -617,7 +617,7 @@ export const GridCarousel: Story = {
                 <h4 class="card__title subheading">Plot Occupancy</h4>
                 <p class="card__subtitle text-muted">Spring 2026</p>
               </hgroup>
-              <span class="badge badge--success"><span>87.5%</span></span>
+              <span class="status status--success"><span class="status__text">87.5%</span></span>
             </header>
             <div class="card__body">
               <div class="font-size-2 font-weight-bold font-mono">42 / 48</div>
@@ -633,7 +633,7 @@ export const GridCarousel: Story = {
                 <h4 class="card__title subheading">Pending Renewals</h4>
                 <p class="card__subtitle text-muted">Action Required</p>
               </hgroup>
-              <span class="badge badge--warning"><span>7 Due</span></span>
+              <span class="status status--warning"><span class="status__text">7 Due</span></span>
             </header>
             <div class="card__body">
               <div class="font-size-2 font-weight-bold font-mono">7 Plots</div>
@@ -649,7 +649,7 @@ export const GridCarousel: Story = {
                 <h4 class="card__title subheading">Tool Locker</h4>
                 <p class="card__subtitle text-muted">Communal Shed</p>
               </hgroup>
-              <span class="badge badge--danger"><span>2 Overdue</span></span>
+              <span class="status status--danger"><span class="status__text">2 Overdue</span></span>
             </header>
             <div class="card__body">
               <div class="font-size-2 font-weight-bold font-mono">5 Out</div>
@@ -665,7 +665,7 @@ export const GridCarousel: Story = {
                 <h4 class="card__title subheading">Cistern Reserve</h4>
                 <p class="card__subtitle text-muted">Rainwater Collection</p>
               </hgroup>
-              <span class="badge badge--accent"><span>78%</span></span>
+              <span class="status status--accent"><span class="status__text">78%</span></span>
             </header>
             <div class="card__body">
               <div class="font-size-2 font-weight-bold font-mono">7,850 L</div>
@@ -681,7 +681,7 @@ export const GridCarousel: Story = {
                 <h4 class="card__title subheading">Compost Station</h4>
                 <p class="card__subtitle text-muted">Bay 3 Aeration</p>
               </hgroup>
-              <span class="badge badge--success"><span>Hot</span></span>
+              <span class="status status--success"><span class="status__text">Hot</span></span>
             </header>
             <div class="card__body">
               <div class="font-size-2 font-weight-bold font-mono">140°F</div>

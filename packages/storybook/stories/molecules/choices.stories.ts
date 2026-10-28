@@ -127,7 +127,7 @@ export const Default: Story = {
     const layoutClass = args.layout === 'inline' ? ' choices--inline' : '';
     const densityClass = args.density === 'compact' ? ' choices--compact' : '';
     const sizeClass = args.size === 'sm' ? ' choice--sm' : args.size === 'lg' ? ' choice--lg' : '';
-    const inputSizeClass = args.size === 'sm' ? ' checkbox-input--sm' : args.size === 'lg' ? ' checkbox-input--lg' : '';
+    const inputSizeClass = args.size === 'sm' ? '' : args.size === 'lg' ? ' checkbox-input--lg' : '';
     const disabledAttr = args.disabled ? ' disabled' : '';
 
     return `
@@ -216,7 +216,7 @@ export const MultiLineDescriptions: Story = {
 };
 
 /**
- * 4. Semantic List Markup (<ul class="choices">)
+ * 4. Semantic List Markup (`<ul class="choices">`)
  */
 export const SemanticList: Story = {
   render: () => `
@@ -256,14 +256,14 @@ export const SizingTiers: Story = {
         <legend class="legend">Small Choices (.choice--sm / .choices--compact)</legend>
         <div class="choices choices--compact">
           <label class="choice choice--sm">
-            <input type="checkbox" class="checkbox-input checkbox-input--sm" checked />
+            <input type="checkbox" class="checkbox-input" checked />
             <span class="choice__label">
               <span>Compact Option One</span>
               <small>Space-constrained interfaces and data grids</small>
             </span>
           </label>
           <label class="choice choice--sm">
-            <input type="checkbox" class="checkbox-input checkbox-input--sm" />
+            <input type="checkbox" class="checkbox-input" />
             <span class="choice__label">
               <span>Compact Option Two</span>
               <small>Minimal vertical row height</small>

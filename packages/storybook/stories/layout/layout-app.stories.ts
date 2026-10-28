@@ -165,7 +165,7 @@ export const Playground: Story = {
           </aside>
           <div class="padding stack" style="--gap: var(--spacing-16);">
             <h3 class="font-size-md font-weight-bold">Primary Application Workspace</h3>
-            <p class="font-size-sm color-muted">Nested .split sidebar inside .main--flush application shell.</p>
+            <p class="font-size-sm text-muted">Nested .split sidebar inside .main--flush application shell.</p>
           </div>
         </div>
       `
@@ -173,7 +173,7 @@ export const Playground: Story = {
         <div class="stack" style="--gap: var(--spacing-16);">
           <div>
             <h3 class="font-size-md font-weight-bold">Dashboard Main Workspace</h3>
-            <p class="font-size-sm color-muted">Main application area with automatic token cushion padding.</p>
+            <p class="font-size-sm text-muted">Main application area with automatic token cushion padding.</p>
           </div>
           <div class="grid grid--xs">
             <div class="sb-demo-box sb-demo-box--sm"><p class="font-weight-bold">Widget A</p></div>
@@ -184,7 +184,7 @@ export const Playground: Story = {
 
     const footerElement = args.hasFooter
       ? `
-        <footer class="footer font-size-xs color-muted" style="text-align: center;">
+        <footer class="footer font-size-xs text-muted" style="text-align: center;">
           <span>Design For Humans &middot; WCAG 2.2 AA / AAA Certified Application Shell</span>
         </footer>
       `
@@ -240,20 +240,20 @@ export const HolyGrailShell: Story = {
           <header class="padding-sm" style="background: var(--surface-card); border-bottom: 1px solid var(--border-color-quiet);">
             <div class="inline" style="justify-content: space-between;">
               <span class="font-weight-bold font-size-sm">Header Landmark (auto height)</span>
-              <span class="badge badge--success"><span>Live</span></span>
+              <span class="status status--success"><span class="status__text">Live</span></span>
             </div>
           </header>
 
           <main class="main">
             <div class="stack" style="--gap: var(--spacing-16);">
               <h4 class="font-weight-bold font-size-md">Central Main Landmark (1fr height)</h4>
-              <p class="font-size-sm color-muted">
+              <p class="font-size-sm text-muted">
                 Main workspace automatically absorbs all available vertical height using CSS Grid (<code>grid-template-rows: auto 1fr auto</code>).
               </p>
             </div>
           </main>
 
-          <footer class="padding-sm font-size-xs color-muted" style="background: var(--surface-card); border-top: 1px solid var(--border-color-quiet); text-align: center;">
+          <footer class="padding-sm font-size-xs text-muted" style="background: var(--surface-card); border-top: 1px solid var(--border-color-quiet); text-align: center;">
             Footer Landmark (auto height)
           </footer>
         </div>
@@ -297,7 +297,7 @@ export const ShellWithSplitSidebar: Story = {
 
               <div class="padding stack" style="--gap: var(--spacing-16);">
                 <h4 class="font-weight-bold font-size-md">Workspace Panel</h4>
-                <p class="font-size-sm color-muted">
+                <p class="font-size-sm text-muted">
                   Full-height content area with independent scroll capabilities.
                 </p>
               </div>
@@ -331,7 +331,7 @@ export const FullBleedCanvas: Story = {
           <main class="main main--flush" style="display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 10px, var(--surface-card) 10px, var(--surface-card) 20px);">
             <div class="card card--bordered padding stack" style="text-align: center; max-inline-size: 20rem;">
               <h4 class="font-weight-bold font-size-sm">Edge-to-Edge Canvas</h4>
-              <p class="font-size-xs color-muted">Zero margin/padding restrictions.</p>
+              <p class="font-size-xs text-muted">Zero margin/padding restrictions.</p>
             </div>
           </main>
         </div>
@@ -394,11 +394,11 @@ export const WorkspaceShell: Story = {
           <div class="inline justify-content-between align-items-center inline-full">
             <div class="inline align-items-center gap-xs">
               <div class="avatar avatar--sm radius-sm" style="--avatar-bg: var(--foreground-accent); --avatar-text: #fff;">
-                <svg class="icon"><use href="#BrandDesignForHumans"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
               </div>
               <strong class="font-size-sm">Console Workspace</strong>
             </div>
-            <span class="badge badge--success badge--sm" data-status="online"><span>Live</span></span>
+            <span class="status status--success status--sm"><span class="status__text">Live</span></span>
           </div>
         </header>
 
@@ -407,11 +407,11 @@ export const WorkspaceShell: Story = {
           <!-- Primary Navigation Rail -->
           <aside class="sidebar sidebar--rail" aria-label="Main Navigation">
             <div class="sidebar__scroller">
-              <nav class="tab-list tabs-vertical tabs-plain tabs-sm">
+              <nav class="tab-list tab-list--vertical tab-list--plain tab-list--sm" aria-label="Primary">
                 <ul>
-                  <li><button type="button" class="tab is-active" aria-current="page" aria-label="Dashboard"><svg class="icon"><use href="#Radio"/></svg></button></li>
-                  <li><button type="button" class="tab" aria-label="Analytics"><svg class="icon"><use href="#ChartBar"/></svg></button></li>
-                  <li><button type="button" class="tab" aria-label="Settings"><svg class="icon"><use href="#Settings"/></svg></button></li>
+                  <li><a href="#dashboard" class="tab tab--icon" aria-current="page" onclick="event.preventDefault();"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Radio"/></svg><span class="tab__text">Dashboard</span></a></li>
+                  <li><a href="#analytics" class="tab tab--icon" onclick="event.preventDefault();"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg><span class="tab__text">Analytics</span></a></li>
+                  <li><a href="#settings" class="tab tab--icon" onclick="event.preventDefault();"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg><span class="tab__text">Settings</span></a></li>
                 </ul>
               </nav>
             </div>
@@ -423,9 +423,9 @@ export const WorkspaceShell: Story = {
               <span class="micro-heading text-muted">Studio Sections</span>
             </header>
             <div class="sidebar__scroller">
-              <nav class="tab-list tabs-vertical tabs-plain tabs-flush tabs-sm">
+              <nav class="tab-list tab-list--vertical tab-list--plain tab-list--flush tab-list--sm" aria-label="Studio sections">
                 <ul>
-                  <li><a href="#overview" class="tab is-active" aria-current="page" onclick="event.preventDefault();"><span class="tab__text">Live Feed</span></a></li>
+                  <li><a href="#overview" class="tab" aria-current="page" onclick="event.preventDefault();"><span class="tab__text">Live Feed</span></a></li>
                   <li><a href="#channels" class="tab" onclick="event.preventDefault();"><span class="tab__text">Channels</span></a></li>
                   <li><a href="#logs" class="tab" onclick="event.preventDefault();"><span class="tab__text">System Logs</span></a></li>
                 </ul>

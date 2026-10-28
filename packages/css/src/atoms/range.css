@@ -1,405 +1,268 @@
 /* ==========================================================================
-   Range Primitive Component
+   Design For Humans: Range Primitive
    --------------------------------------------------------------------------
-   Accessible HTML5 <input type="range"> slider control styled with design
-   tokens, cross-engine support (WebKit/Blink & Gecko), custom track & thumb,
-   keyboard accessibility, and WCAG 2.2 AA / AAA compliance.
+   An <input type="range"> slider with a token-driven track, fill and thumb,
+   for Blink, WebKit and Gecko.
+
+   | Axis   | Modifiers                                   | Container flags              |
+   | ------ | ------------------------------------------- | ---------------------------- |
+   | Size   | (default) --sm --lg                         | --range-size, --controls-size |
+   | Intent | (accent) --info --success --warning --danger | --range-intent               |
+
+   A compact container (--ui-sizing: compact) steps the range to --sm.
+
+   Blink and WebKit draw the fill from --value (a percentage set by script
+   on input, e.g. style="--value: 65%"). Gecko draws it natively.
+
+   Accessibility:
+   - 2.5.8 Target Size: the slider is at least --spacing-target-min tall,
+     whatever the visual size of the track and thumb.
+   - 1.4.1: pair intent with an output or label that states the value.
+   - The fill follows the text direction.
+
+   Usage:
+   <input type="range" class="range" id="volume" min="0" max="100" value="65" style="--value: 65%;" />
    ========================================================================== */
 
-/* ==========================================================================
-   1. Base Range Input (:where(.range, input[type="range"]))
-   ========================================================================== */
-:where(.range, input[type="range"]) {
-  --_range-track-height: var(--range-track-height, var(--spacing-8, 0.5rem));
-  --_range-track-bg: var(--range-track-bg, var(--surface-muted, #E6E4DF));
+:where(.range) {
+  --_range-track-height: var(--range-track-height, 0.5rem);
+  --_range-track-bg: var(--range-track-bg, var(--surface-muted, transparent));
   --_range-track-radius: var(--range-track-radius, var(--radius, 0.25rem));
-  --_range-thumb-size: var(--range-thumb-size, var(--spacing-24, 1.5rem));
+  --_range-thumb-size: var(--range-thumb-size, 1.5rem);
   --_range-thumb-radius: var(--range-thumb-radius, var(--radius-round, 9999px));
-  --_range-thumb-bg: var(--range-thumb-bg, var(--foreground-accent, currentColor));
-  --_range-thumb-border-width: var(--range-thumb-border-width, var(--border-width, 1px));
+  --_range-thumb-border-width: var(--range-thumb-border-width, 1px);
   --_range-thumb-border-color: var(--range-thumb-border-color, var(--surface-card, Canvas));
-  --_range-thumb-shadow: var(--range-thumb-shadow, var(--shadow-sm, none));
-  --_range-fill-bg: var(--range-fill-bg, var(--foreground-accent, currentColor));
-  --_range-transition: var(--range-transition, var(--duration-sm, 200ms));
-
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes:
-     e.g., .audio-deck { --range-size: sm; --range-variant: success; }
-     -------------------------------------------------------------------------- */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--range-size: sm) {
-    --_range-track-height: var(--range-track-sm-height, var(--spacing-4, 0.25rem));
-    --_range-thumb-size: var(--range-thumb-sm-size, var(--spacing-16, 1rem));
-  }
-
-  @container style(--range-size: lg) {
-    --_range-track-height: var(--range-track-lg-height, var(--spacing-12, 0.75rem));
-    --_range-thumb-size: var(--range-thumb-lg-size, var(--spacing-32, 2rem));
-  }
-
-  @container style(--range-variant: success) or style(--range-tone: success) {
-    --_range-fill-bg: var(--foreground-success, #00875a);
-    --_range-thumb-bg: var(--foreground-success, #00875a);
-  }
-
-  @container style(--range-variant: warning) or style(--range-tone: warning) {
-    --_range-fill-bg: var(--foreground-warning, #b06000);
-    --_range-thumb-bg: var(--foreground-warning, #b06000);
-  }
-
-  @container style(--range-variant: danger) or style(--range-tone: danger) {
-    --_range-fill-bg: var(--foreground-danger, #d32f2f);
-    --_range-thumb-bg: var(--foreground-danger, #d32f2f);
-  }
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  display: block;
-  inline-size: 100%;
-  block-size: max(var(--_range-track-height), var(--_range-thumb-size));
-  background: transparent;
-  cursor: pointer;
-  touch-action: manipulation;
-  vertical-align: middle;
-  padding: 0;
-  margin: 0;
-  border: none;
+  --_range-thumb-shadow: var(--range-thumb-shadow, none);
+  --_range-tone: var(--foreground-accent, AccentColor);
+  --_range-tone-pressed: var(--foreground-accent-pressed, var(--_range-tone));
+  --_range-transition: var(--range-transition, 150ms);
+  --_range-fill-direction: to right;
 
   /* ------------------------------------------------------------------------
-     WebKit & Blink (Chrome, Edge, Safari) Track & Thumb
+     Container Flags (@container style(...))
+     Declared before the modifier classes, so a modifier on the range beats
+     a flag inherited from a container.
+     ------------------------------------------------------------------------ */
+  @container style(--range-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
+    --_range-track-height: var(--range-track-sm-height, 0.25rem);
+    --_range-thumb-size: var(--range-thumb-sm-size, 1rem);
+  }
+
+  @container style(--range-size: lg) or style(--controls-size: lg) {
+    --_range-track-height: var(--range-track-lg-height, 0.75rem);
+    --_range-thumb-size: var(--range-thumb-lg-size, 2rem);
+  }
+
+  @container style(--range-intent: info) {
+    --_range-tone: var(--foreground-info, AccentColor);
+    --_range-tone-pressed: var(--foreground-info-pressed, var(--_range-tone));
+  }
+
+  @container style(--range-intent: success) {
+    --_range-tone: var(--foreground-success, AccentColor);
+    --_range-tone-pressed: var(--foreground-success-pressed, var(--_range-tone));
+  }
+
+  @container style(--range-intent: warning) {
+    --_range-tone: var(--foreground-warning, AccentColor);
+    --_range-tone-pressed: var(--foreground-warning-pressed, var(--_range-tone));
+  }
+
+  @container style(--range-intent: danger) {
+    --_range-tone: var(--foreground-danger, AccentColor);
+    --_range-tone-pressed: var(--foreground-danger-pressed, var(--_range-tone));
+  }
+
+  /* Layout: the input box is the hit area; the track is centred in it */
+  appearance: none;
+  display: block;
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: max(var(--_range-thumb-size), var(--spacing-target-min, 3rem));
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  accent-color: var(--_range-tone);
+
+  &:dir(rtl) {
+    --_range-fill-direction: to left;
+  }
+
+  /* ------------------------------------------------------------------------
+     Blink & WebKit
      ------------------------------------------------------------------------ */
   &::-webkit-slider-runnable-track {
-    inline-size: 100%;
     block-size: var(--_range-track-height);
-    background: var(--_range-track-fill,
-        linear-gradient(to right,
-          var(--_range-fill-bg) 0%,
-          var(--_range-fill-bg) var(--value, 0%),
-          var(--_range-track-bg) var(--value, 0%),
-          var(--_range-track-bg) 100%));
+    background: linear-gradient(var(--_range-fill-direction),
+        var(--_range-tone) var(--value, 0%),
+        var(--_range-track-bg) var(--value, 0%));
+    border: 0;
     border-radius: var(--_range-track-radius);
-    border: none;
-    transition: background-color var(--_range-transition) ease;
   }
 
   &::-webkit-slider-thumb {
-    -webkit-appearance: none;
     appearance: none;
+    box-sizing: border-box;
     inline-size: var(--_range-thumb-size);
     block-size: var(--_range-thumb-size);
-    border-radius: var(--_range-thumb-radius);
-    background-color: var(--_range-thumb-bg);
-    border: var(--_range-thumb-border-width) solid var(--_range-thumb-border-color);
-    box-shadow: var(--_range-thumb-shadow);
     margin-block-start: calc((var(--_range-track-height) - var(--_range-thumb-size)) / 2);
+    background-color: var(--_range-tone);
+    border: var(--_range-thumb-border-width) solid var(--_range-thumb-border-color);
+    border-radius: var(--_range-thumb-radius);
+    box-shadow: var(--_range-thumb-shadow);
     cursor: grab;
-    transition: transform var(--_range-transition) cubic-bezier(0.2, 0, 0, 1),
-      background-color var(--_range-transition) ease,
-      box-shadow var(--_range-transition) ease;
-
-    &:hover {
-      transform: scale(1.12);
-      box-shadow: var(--shadow-md, none);
-    }
-
-    &:active {
-      cursor: grabbing;
-      transform: scale(1.05);
-      background-color: var(--foreground-accent-pressed, currentColor);
-
-      @media (hover: none) and (pointer: coarse) {
-        box-shadow: var(--shadow-md, none);
-        transform: scale(1.12);
-      }
-    }
+    transition: scale var(--_range-transition) ease, background-color var(--_range-transition) ease;
   }
 
   /* ------------------------------------------------------------------------
-     Gecko (Firefox) Track, Progress Fill, & Thumb
+     Gecko
      ------------------------------------------------------------------------ */
   &::-moz-range-track {
-    inline-size: 100%;
     block-size: var(--_range-track-height);
     background-color: var(--_range-track-bg);
+    border: 0;
     border-radius: var(--_range-track-radius);
-    border: none;
-    transition: background-color var(--_range-transition) ease;
   }
 
   &::-moz-range-progress {
     block-size: var(--_range-track-height);
-    background-color: var(--_range-fill-bg);
+    background-color: var(--_range-tone);
     border-radius: var(--_range-track-radius);
   }
 
   &::-moz-range-thumb {
+    box-sizing: border-box;
     inline-size: var(--_range-thumb-size);
     block-size: var(--_range-thumb-size);
-    border-radius: var(--_range-thumb-radius);
-    background-color: var(--_range-thumb-bg);
+    background-color: var(--_range-tone);
     border: var(--_range-thumb-border-width) solid var(--_range-thumb-border-color);
+    border-radius: var(--_range-thumb-radius);
     box-shadow: var(--_range-thumb-shadow);
     cursor: grab;
-    transition: transform var(--_range-transition) cubic-bezier(0.2, 0, 0, 1),
-      background-color var(--_range-transition) ease,
-      box-shadow var(--_range-transition) ease;
+    transition: scale var(--_range-transition) ease, background-color var(--_range-transition) ease;
+  }
 
-    &:hover {
-      transform: scale(1.12);
-      box-shadow: var(--shadow-md, none);
-    }
+  /* ------------------------------------------------------------------------
+     States
+     ------------------------------------------------------------------------ */
+  @media (hover: hover) {
+    &:hover:not(:disabled, [aria-disabled="true"]) {
+      &::-webkit-slider-thumb {
+        scale: 1.12;
+      }
 
-    &:active {
-      cursor: grabbing;
-      transform: scale(1.05);
-      background-color: var(--foreground-accent-pressed, currentColor);
-
-      @media (hover: none) and (pointer: coarse) {
-        box-shadow: var(--shadow-md, none);
-        transform: scale(1.12);
+      &::-moz-range-thumb {
+        scale: 1.12;
       }
     }
   }
 
-  /* ------------------------------------------------------------------------
-     Focus Indicator (WCAG 2.4.7 / 2.4.13)
-     ------------------------------------------------------------------------ */
+  &:active:not(:disabled, [aria-disabled="true"]) {
+    &::-webkit-slider-thumb {
+      cursor: grabbing;
+      background-color: var(--_range-tone-pressed);
+    }
+
+    &::-moz-range-thumb {
+      cursor: grabbing;
+      background-color: var(--_range-tone-pressed);
+    }
+  }
+
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
-    outline-offset: var(--focus-ring-offset, 2px);
-    border-radius: var(--radius-sm, 0.125rem);
+    outline: none;
 
     &::-webkit-slider-thumb {
-      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
       outline-offset: var(--focus-ring-offset, 2px);
     }
 
     &::-moz-range-thumb {
-      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
       outline-offset: var(--focus-ring-offset, 2px);
     }
   }
 
-  /* ------------------------------------------------------------------------
-     Disabled State (WCAG 4.1.2)
-     ------------------------------------------------------------------------ */
-  &:disabled,
-  &[aria-disabled="true"] {
+  &:where(:disabled, [aria-disabled="true"]) {
     opacity: var(--opacity-disabled, 0.4);
     cursor: not-allowed;
-    pointer-events: none;
 
     &::-webkit-slider-thumb {
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
     }
 
     &::-moz-range-thumb {
       cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
     }
   }
 
-  /* ------------------------------------------------------------------------
-     Size Modifiers
-     ------------------------------------------------------------------------ */
-  :where(.controls-sm) &,
-  &:where(.range--sm) {
-    --_range-track-height: var(--range-track-sm-height, var(--spacing-4, 0.25rem));
-    --_range-thumb-size: var(--range-thumb-sm-size, var(--spacing-16, 1rem));
+  @media (prefers-contrast: more) {
+    &::-webkit-slider-runnable-track {
+      outline: 1px solid currentColor;
+    }
+
+    &::-moz-range-track {
+      outline: 1px solid currentColor;
+    }
   }
 
-  :where(.controls-lg) &,
-  &:where(.range--lg) {
-    --_range-track-height: var(--range-track-lg-height, var(--spacing-12, 0.75rem));
-    --_range-thumb-size: var(--range-thumb-lg-size, var(--spacing-32, 2rem));
-  }
+  @media (prefers-reduced-motion: reduce) {
+    &::-webkit-slider-thumb {
+      transition: none;
+    }
 
-  /* ------------------------------------------------------------------------
-     Semantic Tone Modifiers
-     ------------------------------------------------------------------------ */
-  &:where(.range--success) {
-    --_range-fill-bg: var(--foreground-success, #00875a);
-    --_range-thumb-bg: var(--foreground-success, #00875a);
-  }
-
-  &:where(.range--warning) {
-    --_range-fill-bg: var(--foreground-warning, #b06000);
-    --_range-thumb-bg: var(--foreground-warning, #b06000);
-  }
-
-  &:where(.range--danger) {
-    --_range-fill-bg: var(--foreground-danger, #d32f2f);
-    --_range-thumb-bg: var(--foreground-danger, #d32f2f);
+    &::-moz-range-thumb {
+      transition: none;
+    }
   }
 }
 
+/* ==========================================================================
+   Modifiers
+   ========================================================================== */
+:where(.range--sm) {
+  --_range-track-height: var(--range-track-sm-height, 0.25rem);
+  --_range-thumb-size: var(--range-thumb-sm-size, 1rem);
+}
+
+:where(.range--lg) {
+  --_range-track-height: var(--range-track-lg-height, 0.75rem);
+  --_range-thumb-size: var(--range-thumb-lg-size, 2rem);
+
+  @container style(--ui-sizing: compact) {
+    --_range-track-height: var(--range-track-height, 0.5rem);
+    --_range-thumb-size: var(--range-thumb-size, 1.5rem);
+  }
+}
+
+:where(.range--info) {
+  --_range-tone: var(--foreground-info, AccentColor);
+  --_range-tone-pressed: var(--foreground-info-pressed, var(--_range-tone));
+}
+
+:where(.range--success) {
+  --_range-tone: var(--foreground-success, AccentColor);
+  --_range-tone-pressed: var(--foreground-success-pressed, var(--_range-tone));
+}
+
+:where(.range--warning) {
+  --_range-tone: var(--foreground-warning, AccentColor);
+  --_range-tone-pressed: var(--foreground-warning-pressed, var(--_range-tone));
+}
+
+:where(.range--danger) {
+  --_range-tone: var(--foreground-danger, AccentColor);
+  --_range-tone-pressed: var(--foreground-danger-pressed, var(--_range-tone));
+}
+
+/* Optional scale labels under a range */
 :where(.range__scale-ticks) {
   display: flex;
   justify-content: space-between;
   inline-size: 100%;
-  font-size: var(--micro-text-font-size);
-  color: var(--foreground-muted);
-}
-
-/* ==========================================================================
-   2. Range Lockup Primitive (:where(.range-lockup, .range-group))
-   Unified composite pairing an optional action button, slider, and readout
-   with inline layout and seamless focus-within styling.
-   Note: Renamed from .range-group to .range-lockup to avoid collision with
-   the emerging native <rangegroup> specification.
-   ========================================================================== */
-:where(.range-lockup, .range-group) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables
-     -------------------------------------------------------------------------- */
-  --_range-lockup-gap: var(--range-lockup-gap, var(--range-group-gap, var(--spacing-8, 0.5rem)));
-  --_range-lockup-bg: var(--range-lockup-bg, var(--range-group-bg, transparent));
-  --_range-lockup-border-color: var(--range-lockup-border-color, var(--range-group-border-color, transparent));
-  --_range-lockup-border-width: var(--range-lockup-border-width, var(--range-group-border-width, 0px));
-  --_range-lockup-radius: var(--range-lockup-radius, var(--range-group-radius, var(--radius, 0.25rem)));
-  --_range-lockup-padding-inline: var(--range-lockup-padding-inline, var(--range-group-padding-inline, 0px));
-  --_range-lockup-padding-block: var(--range-lockup-padding-block, var(--range-group-padding-block, 0px));
-  --_range-lockup-output-font-size: var(--range-lockup-output-font-size, var(--range-group-output-font-size, var(--typography-font-size--1, 0.875rem)));
-  --_range-lockup-output-color: var(--range-lockup-output-color, var(--range-group-output-color, var(--foreground-muted, currentColor)));
-  --_range-lockup-output-min-width: var(--range-lockup-output-min-width, var(--range-group-output-min-width, 3ch));
-
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     -------------------------------------------------------------------------- */
-  /* Spatial Gap & Size */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--range-size: sm) or style(--control-density: dense) or style(--control-density: dense) {
-    --_range-lockup-gap: var(--range-lockup-sm-gap, var(--range-group-sm-gap, var(--spacing-4, 0.25rem)));
-    --range-size: sm;
-  }
-
-  /* Typographic Scaling */
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--range-size: sm) or style(--control-density: dense) or style(--control-density: dense) {
-    --_range-lockup-output-font-size: var(--typography-font-size--2, 0.75rem);
-  }
-
-  @container style(--range-size: lg) {
-    --_range-lockup-gap: var(--range-lockup-lg-gap, var(--range-group-lg-gap, var(--spacing-12, 0.75rem)));
-    --_range-lockup-output-font-size: var(--typography-font-size-0, 1rem);
-    --range-size: lg;
-  }
-
-  /* Layout & Sizing */
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  box-sizing: border-box;
-  max-inline-size: 100%;
-  gap: var(--_range-lockup-gap);
-  padding-inline: var(--_range-lockup-padding-inline);
-  padding-block: var(--_range-lockup-padding-block);
-  background-color: var(--_range-lockup-bg);
-  border: var(--_range-lockup-border-width) solid var(--_range-lockup-border-color);
-  border-radius: var(--_range-lockup-radius);
-
-  /* Full Width Modifier */
-  &:where(.range-lockup--fill, .range-lockup--block, .range-group--fill, .range-group--block) {
-    display: flex;
-    inline-size: 100%;
-  }
-
-  /* Range Slider child stretches to absorb remaining width */
-  > :where(.range, input[type="range"]) {
-    flex: 1 1 auto;
-    min-inline-size: 0;
-  }
-
-  /* Action Button child stays compact */
-  > :where(.button, button) {
-    flex-shrink: 0;
-  }
-
-  /* Numerical Readout / Output Display */
-  > :where(.range-lockup__output, .range-group__output, output) {
-    flex-shrink: 0;
-    font-variant-numeric: tabular-nums lining-nums;
-    font-family: var(--range-lockup-font-family, var(--range-group-font-family, var(--typography-font-family-mono, monospace)));
-    font-size: var(--_range-lockup-output-font-size);
-    color: var(--_range-lockup-output-color);
-    text-align: end;
-    min-inline-size: var(--_range-lockup-output-min-width);
-    white-space: nowrap;
-    user-select: none;
-  }
-
-  /* --------------------------------------------------------------------------
-     Size Modifiers
-     -------------------------------------------------------------------------- */
-  :where(.controls-sm) &,
-  &:where(.range-lockup--sm, .range-group--sm) {
-    --_range-lockup-gap: var(--range-lockup-sm-gap, var(--range-group-sm-gap, var(--spacing-4, 0.25rem)));
-    --_range-lockup-output-font-size: var(--typography-font-size--2, 0.75rem);
-    --range-size: sm;
-  }
-
-  :where(.controls-lg) &,
-  &:where(.range-lockup--lg, .range-group--lg) {
-    --_range-lockup-gap: var(--range-lockup-lg-gap, var(--range-group-lg-gap, var(--spacing-12, 0.75rem)));
-    --_range-lockup-output-font-size: var(--typography-font-size-0, 1rem);
-    --range-size: lg;
-  }
-
-  /* --------------------------------------------------------------------------
-     Surface & Bordered Variants with :focus-within delegation
-     -------------------------------------------------------------------------- */
-  &:where(.range-lockup--surface, .range-lockup--bordered, .range-lockup--pill, .range-group--surface, .range-group--bordered, .range-group--pill) {
-    --_range-lockup-bg: var(--range-lockup-bg, var(--range-group-bg, var(--surface-card, Canvas)));
-    --_range-lockup-border-color: var(--range-lockup-border-color, var(--range-group-border-color, var(--border-color-quiet, currentColor)));
-    --_range-lockup-border-width: var(--border-width, 1px);
-    --_range-lockup-padding-inline: var(--spacing-8, 0.5rem);
-    --_range-lockup-padding-block: var(--spacing-4, 0.25rem);
-    --_range-lockup-radius: var(--radius-round, 9999px);
-    transition: border-color var(--duration-sm, 150ms) ease,
-      box-shadow var(--duration-sm, 150ms) ease;
-
-    &:focus-within {
-      --_range-lockup-border-color: var(--border-color-accent, var(--foreground-accent, currentColor));
-      box-shadow: 0 0 0 var(--focus-ring-width, 2px) var(--focus-ring-color, AccentColor);
-    }
-  }
-}
-
-/* ==========================================================================
-   3. High Contrast & Reduced Motion Overrides
-   ========================================================================== */
-@media (prefers-contrast: more) {
-  :where(.range, input[type="range"]) {
-    &::-webkit-slider-runnable-track {
-      outline: 1px solid var(--border-color, currentColor);
-    }
-
-    &::-webkit-slider-thumb {
-      outline: 2px solid var(--border-color, currentColor);
-    }
-
-    &::-moz-range-track {
-      outline: 1px solid var(--border-color, currentColor);
-    }
-
-    &::-moz-range-thumb {
-      outline: 2px solid var(--border-color, currentColor);
-    }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :where(.range, input[type="range"]) {
-    transition: none !important;
-
-    &::-webkit-slider-runnable-track,
-    &::-webkit-slider-thumb,
-    &::-moz-range-track,
-    &::-moz-range-thumb {
-      transition: none !important;
-      transform: none !important;
-    }
-  }
+  font-size: var(--body-sm-font-size, 0.875rem);
+  color: var(--foreground-muted, currentColor);
 }

@@ -92,7 +92,7 @@ AI agents and developers MUST use the following markup structures:
 | \`--field-inner-gap\` | \`--spacing-8\` (0.5rem) | Spacing between label, hint, control, and error within a field |
 | \`--label-font-size\` | \`--typography-font-size-0\` (1rem) | Label typography step |
 | \`--label-font-weight\` | \`--font-weight-bold\` (700) | Label font weight |
-| \`--micro-text-font-size\` | \`--typography-font-size--1\` (0.875rem) | Hint and validation error typography size |
+| \`--body-sm-font-size\` | \`--typography-font-size--1\` | Hint and validation error typography size |
 | \`--field-error-color\` | \`--foreground-danger\` (#d32f2f) | Live error alert text and icon color |
 | \`--form-gap\` | \`--spacing-16\` (1rem) | Vertical gap between successive fields in a form |
 | \`--form-submission-gap\` | \`--spacing-16\` (1rem) | Top margin separating fields from the action bar |

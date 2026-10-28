@@ -172,7 +172,7 @@ export const Playground: Story = {
 
 /**
  * 2. Anatomy & Structure Breakdown
- * Shows <details>, <summary>, orthogonal plus/minus indicator icon, and ::details-content body.
+ * Shows `<details>`, `<summary>`, orthogonal plus/minus indicator icon, and ::details-content body.
  */
 export const Anatomy: Story = {
   render: () => `

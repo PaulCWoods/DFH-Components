@@ -34,7 +34,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
       <p><strong>Scheduled Maintenance:</strong> Services will undergo maintenance on Sunday from 02:00 to 04:00 UTC.</p>
     </div>
     <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       <span class="visually-hidden">Dismiss</span>
     </button>
   </div>
@@ -60,7 +60,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
       <p>Account verification email sent successfully.</p>
     </div>
     <button type="button" class="button button--subtle button--icon banner__action" aria-label="Close">
-      <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
     </button>
   </div>
 </aside>
@@ -139,7 +139,7 @@ export const Playground: Story = {
             ${args.hasAction
         ? `
                   <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert" onclick="this.closest('.alert').classList.add('alert--dismissing')">
-                    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                     <span class="visually-hidden">Dismiss</span>
                   </button>
                 `
@@ -149,7 +149,7 @@ export const Playground: Story = {
         </aside>
 
         <div style="padding: 5rem 2rem 2rem 2rem;">
-          <p class="micro-text" style="color: var(--foreground-muted);">
+          <p class="small-text" style="color: var(--foreground-muted);">
             Main viewport page content area rendered underneath alert container.
           </p>
         </div>
@@ -178,29 +178,29 @@ export const Anatomy: Story = {
             <!-- Viewport Positioning Host Spec -->
             <div class="demo-box demo-box--pink demo-constrained--xs">
               <span class="demo-label">1. Viewport Layer (.alert)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Controls <code>position: sticky</code> or <code>fixed</code>, stacking context (<code>z-index: 100</code>), and edge pinning.
               </p>
               <div style="border: 1px dashed var(--accent); padding: var(--spacing-8); border-radius: var(--radius-sm); text-align: center;">
-                <span class="micro-text">Viewport Pin Host</span>
+                <span class="small-text">Viewport Pin Host</span>
               </div>
             </div>
 
             <!-- Composed Banner Spec -->
             <div class="demo-box demo-box--blue demo-constrained--xs">
               <span class="demo-label">2. Composed Banner (.banner)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Under edge-to-edge alerts, <code>.banner</code> automatically resets border-radius to 0 and removes side borders.
               </p>
               <div style="border: 1px dashed #2d4268; padding: var(--spacing-8); border-radius: var(--radius-sm); text-align: center;">
-                <span class="micro-text">Edge-to-Edge Banner</span>
+                <span class="small-text">Edge-to-Edge Banner</span>
               </div>
             </div>
 
             <!-- Dismissal State Spec -->
             <div class="demo-box demo-box--green demo-constrained--xs">
               <span class="demo-label">3. Dismissal State (.alert--dismissing)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Smoothly slides upward (or downward for bottom alerts) via <code>transform: translateY(-100%)</code> with 0 opacity.
               </p>
               <div style="margin-block-start: var(--spacing-8); text-align: center;">
@@ -229,17 +229,17 @@ export const Variants: Story = {
             <div class="demo-frame" style="block-size: 12rem; position: relative; overflow: hidden;">
               <aside class="alert alert--top" style="position: absolute;" role="region" aria-label="Maintenance Notice">
                 <div class="banner banner--warning buttons-sm" role="none">
-                  <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Warning"/></svg></span>
+                  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
                   <div class="banner__inner">
                     <p><strong>Scheduled Maintenance:</strong> Cloud databases will upgrade Sunday at 02:00 UTC.</p>
                   </div>
                   <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert">
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                     <span class="visually-hidden">Dismiss</span>
                   </button>
                 </div>
               </aside>
-              <div style="padding: 4rem 1.5rem 1rem 1.5rem;"><p class="micro-text">Scrolling page body...</p></div>
+              <div style="padding: 4rem 1.5rem 1rem 1.5rem;"><p class="small-text">Scrolling page body...</p></div>
             </div>
           </div>
 
@@ -249,17 +249,17 @@ export const Variants: Story = {
             <div class="demo-frame" style="block-size: 12rem; position: relative; overflow: hidden;">
               <aside class="alert alert--top" style="position: absolute;" role="region" aria-label="Release Notice">
                 <div class="banner banner--info buttons-sm" role="none">
-                  <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Info"/></svg></span>
+                  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
                   <div class="banner__inner">
                     <p><strong>New Release:</strong> DFH Components v2.4 with automated axe-core compliance.</p>
                   </div>
                   <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert">
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                     <span class="visually-hidden">Dismiss</span>
                   </button>
                 </div>
               </aside>
-              <div style="padding: 4rem 1.5rem 1rem 1.5rem;"><p class="micro-text">Scrolling page body...</p></div>
+              <div style="padding: 4rem 1.5rem 1rem 1.5rem;"><p class="small-text">Scrolling page body...</p></div>
             </div>
           </div>
 
@@ -267,7 +267,7 @@ export const Variants: Story = {
           <div class="demo-box demo-box--neutral">
             <span class="demo-label" style="margin-block-end: var(--spacing-8);">3. Bottom Fixed Consent Bar (.alert--bottom)</span>
             <div class="demo-frame" style="block-size: 14rem; position: relative; overflow: hidden;">
-              <div style="padding: 1.5rem;"><p class="micro-text">Main viewport content area...</p></div>
+              <div style="padding: 1.5rem;"><p class="small-text">Main viewport content area...</p></div>
               <aside class="alert alert--bottom" style="position: absolute;" role="region" aria-label="Cookie Preferences">
                 <div class="banner buttons-sm" role="none">
                   <div class="banner__inner">
@@ -288,12 +288,12 @@ export const Variants: Story = {
             <div class="demo-frame" style="block-size: 12rem; position: relative; overflow: hidden;">
               <aside class="alert alert--floating" style="position: absolute; inset-block-start: 0; inset-inline: 0;" role="status">
                 <div class="banner banner--success buttons-sm" style="box-shadow: var(--shadow-md);" role="none">
-                  <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+                  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
                   <div class="banner__inner">
                     <p>Audit results synchronized to production repository.</p>
                   </div>
                   <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert">
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                     <span class="visually-hidden">Dismiss</span>
                   </button>
                 </div>
@@ -336,7 +336,7 @@ export const StateMatrix: Story = {
                     aria-label="Dismiss"
                     onclick="document.getElementById('demo-alert-dismiss').classList.add('alert--dismissing')"
                   >
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </div>
               </aside>
@@ -376,7 +376,7 @@ export const SizesAndDensity: Story = {
             <aside class="alert" style="margin-block-start: var(--spacing-8);" role="region" aria-label="Edge to edge">
               <div class="banner banner--info buttons-sm">
                 <div class="banner__inner">
-                  <p class="micro-text">Fills 100% of viewport width without perimeter rounding.</p>
+                  <p class="small-text">Fills 100% of viewport width without perimeter rounding.</p>
                 </div>
               </div>
             </aside>
@@ -388,7 +388,7 @@ export const SizesAndDensity: Story = {
             <aside class="alert alert--floating" style="margin-block-start: var(--spacing-8);" role="region" aria-label="Constrained">
               <div class="banner banner--success buttons-sm demo-constrained--sm" style="margin-inline: auto;">
                 <div class="banner__inner">
-                  <p class="micro-text">Constrained width with perimeter rounding and drop shadow.</p>
+                  <p class="small-text">Constrained width with perimeter rounding and drop shadow.</p>
                 </div>
               </div>
             </aside>
@@ -416,11 +416,11 @@ export const RealWorldRecipes: Story = {
           <div class="demo-frame" style="block-size: 12rem; position: relative; overflow: hidden;">
             <aside class="alert alert--top" style="position: absolute;" role="alert">
               <div class="banner banner--error buttons-sm" role="none">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Warning"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
                 <div class="banner__inner">
                   <p><strong>Partial Outage:</strong> Payment processing is currently degraded. Engineers are investigating.</p>
                 </div>
-                <a href="#status" class="link micro-text banner__action" style="align-self: center;"><span>Status Page</span></a>
+                <a href="#status" class="link small-text banner__action" style="align-self: center;"><span>Status Page</span></a>
               </div>
             </aside>
           </div>

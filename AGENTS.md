@@ -19,31 +19,36 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 | :--- | :--- | :--- |
 | Pointer | Everything | Touch (48px targets, default), fine (32px targets, opt-in by the product via a root token only) |
 | Size | Atoms & interactive controls only | default, `--sm`, `--lg` |
-| Density | Containers & layout only | default, `--compact` (sets `--ui-sizing: compact`; nested gaps, type and controls step down) |
+| Density | Containers & layout only | default, `--compact` (sets `--ui-sizing: compact`; nested gaps, type and controls step down). `.ui-compact` sets it on any region; `.fine:ui-compact` sets it only where the primary pointer is fine |
 | Presentation | Everything | Normal (text + icon), minimal (icon only) |
 | Prominence | Everything with a surface | default, `--strong`, `--subtle`, `--plain` |
 | Intent | Status or consequence | neutral (default), `--accent`, `--danger`, `--warning`, `--success`, `--info` |
 
 - **Intent never relies on colour alone** (WCAG 1.4.1): pair every non-neutral intent with an icon, a role (`role="alert"`, `role="status"`) or descriptive text.
-- **Smaller size never shrinks the hit area:** `--sm` controls (and controls stepped down by a compact container) keep a 48px target unless the product has opted into fine-pointer targets, and never drop below 24px (WCAG 2.5.8). The library never switches fine-pointer mode on automatically with `@media (pointer: fine)`.
+- **Smaller size never shrinks the hit area:** `--sm` controls (and controls stepped down by a compact container) keep a 48px target unless the product has opted into fine-pointer targets, and never drop below 24px (WCAG 2.5.8). Text fields can't take a buffer, so `--sm` text controls are 32px. The library never switches fine-pointer mode on automatically with `@media (pointer: fine)`; `fine:ui-compact` is the product's opt-in.
 
 ### Legacy → Canonical Names
 | Current class (use until migrated) | Target | Notes |
 | :--- | :--- | :--- |
-| `.button--primary` | `.button--strong.button--accent` | Already supported. Do not write `--primary` in new markup. |
-| `.button--secondary` | `.button` (default) | Not a button modifier; never use it. |
-| `.button--destructive` | `.button--danger` | Keep `--destructive` until button is migrated. |
-| `.button--subtle-primary`, `.button--plain-primary`, `.button--plain-destructive`, `.button--subtle-tint`, `.button--ghost` | Combine single-axis modifiers | Compound or duplicate prominence names; remove. |
+| `.button--primary`, `.button--secondary`, `.button--danger`, `.button--selected`, `.button--subtle-tint`, `.button--ghost`, compound `.button--*-primary` / `--*-destructive` | `.button--strong.button--accent`, `.button`, `.button--danger`, `.is-active`, `.button--subtle`, `.button--plain`, single-axis pairs | **Removed** in the button pass. These classes no longer exist. |
+| `--button-variation`, `--button-appearance`, `--button-tone` (flag), `--button-density`, `.buttons-dense`, `.buttons-regular`, `.buttons-primary`, `.buttons-destructive` | `--button-prominence`, `--button-intent`, `--ui-sizing: compact` | **Removed** in the button pass. |
+| `.badge--strong`, `--subtle`, `--plain`, `--round`, `--contrast`; badges used as labels; `.badge--top-right-corner` and the other physical corners; `.chip--simple`, `.chip--status`, `.chip--color-*`; `[data-status]` on badge, chip or status; `--badge-variation`, `--badge-tone`, `--badge-appearance`, `--chip-variation` | `.status` with a prominence and intent, `.chip`, `.badge--top-end` / `--top-start` / `--bottom-end` / `--bottom-start`, `.chip--plain`, `.status--plain.status--{intent}`, `--status-*` / `--chip-*` / `--badge-intent` flags | **Removed** in the badge pass. See §5. |
+| `.icon--xs`, `--md`, `--xl`, `--2xl`, `--scale-*`, `--muted`, `--destructive`, bare `.dir`; `.icon-box--surface`, `.icon-boxes-*`, `.icon-box-compact`, `.icon-box-lg`, `--icon-box-density`; `--icon-scale` | `--icon-size`, `.icon--danger`, `.text-color-muted`, `.icon--dir`, `.icon-box--subtle`, `--icon-box-size: sm`, `--ui-sizing: compact` | **Removed** in the icon pass. See §9. |
 | `--dense` modifiers (`.card--dense`, `.field--dense`, `.banner--dense`, etc.) | `--compact` | One density modifier only. |
 | `.ui-dense`, `style(--ui-density: dense)`, `--control-density`, `--menu-density`, `--combobox-density`, `--textarea-density`, `--telemetry-density` | `.ui-compact`, `style(--ui-sizing: compact)` | One density flag. Migrate in each component's pass. |
-| `.banner--info` | Undecided | Currently maps to accent; settled in the banner pass. |
 | `.alert` styling | `.banner` + `role` | `.alert` is a placement container only (see §21). |
-| `.range-group` | `.range-lockup` | Do not use. |
-| `.tabs`, `.tabs__panel`, `.tab--simple`, `.workspace` | `.tabbed-content`, `.tab-panel`, `.tab--plain`, `.app__workspace` | Do not use. |
+| `.range-group`, `--surface`, `--pill`; `.input--ghost`, `.inputs-*`, `.selects-*`, `.textareas-*`, `.controls-dense`; `.checkbox-input--sm` and intents, `.check--*`; `.switch--destructive`; `--controls-variation`, `--*-variation`, `--*-density`, `--range-variant`, `--range-tone`, `--switch-shape`, `--form-check-size`; bare `input`/`select`/`textarea` styling; `:user-valid` styling | `.range-lockup`, `--bordered`, `--bordered --round`; `.input--plain`, `.controls-*`, `.ui-compact`; `.checkbox-input--lg`; `.switch--danger`; `--controls-prominence`, `--*-prominence`, `--ui-sizing: compact`, `--range-intent`, `--switch-corners`, `--check-box-size`; classes only | **Removed** in the form-controls pass. See §7. |
+| Bare `progress`/`meter` styling, `.progress--subtle`, `.progress--accent`, `.meter--success`/`--warning`/`--danger`, `--progress-variant`, `--progress-tone`, `.controls-sm`/`-lg` on bars | `.progress`/`.meter` classes, `.progress--{intent}` or `--progress-intent`, meter thresholds (`low`/`high`/`optimum`), `--progress-size`/`--meter-size` | **Removed** in the progress and meter pass. See §25. |
+| `.link--accent`, `--danger`, `--destructive`, `--success`, `--muted`, `--sm`, `--lg`, `--inline-flex`, `--underline(d)`, `--stretch`, `--inverted`, `--on-dark`; `.block-link--compact`, `--ghost`, `--icon`, `--inline`, `--flex`; `--link-hover-color`, `--link-active-color` | `.link`, `.link--subtle`, `.button--danger` for actions, `.color-scheme-dark` on dark bands, `.link--stretched`; `.block-link--sm`, `--plain`, `.button--icon` on an `<a>` | **Removed** in the link pass. See §8. |
+| `.tabs`, `.tabs__panel`, `.tabbed-content__panel`; per-tab `.tab--button`, `--subtle`, `--plain`, `--simple`, `--sm`, `--round`, `--vertical`, `--fill`; `.tabs-button`, `.tabs-subtle`, `.tabs-plain`, `.tabs-sm`, `.tabs-round`, `.tabs-icon`, `.tabs-vertical`, `.tabs-on-right`, `.tabs-flush`, `.tabs-scrollable`, `.tabs-wrap`, `.tabs-fill`, `.tabs-floating`, `.tabs-docked`, `.tabs-docked-top`; `--tabs-variation`, `--tab-variation`, `--tabs-style`, `--tabs-shape`; `--tabs-*` tokens | `.tabbed-content`, `.tab-panel`; axes on the list: `.tab-list--segmented`, `--subtle`, `--plain`, `--sm`, `--round`, `--vertical`, `--end`, `--flush`, `--scrollable`, `--fill`, `--floating`, `--docked`; `.tab--icon`; `--tab-list-style`, `--tab-list-prominence`, `--tab-list-size`, `--tab-list-corners`; `--tab-*`, `--tab-list-*` tokens | **Removed** in the tab pass. See §24. |
+| `.micro-text`, `.caption`, `.nano-heading`, `.nano-text`, `.strong-text`, `.alt-text`, `.code-text`, `.code`, `.color-muted`; `--micro-text-*`, `--nano-*`, `--small-text-*`, `--large-text-*`, `--body-font-size` | `.small-text`, `.font-bold`, `.font-serif`, `.font-mono`, `.text-muted`; `--body-sm-*`, `--body-lg-*`, `--body-fixed-font-size` | **Removed** in the text pass. Text atoms are fixed by default; see §20. |
+| `.divider--vertical`, `--subtle`, `--quiet`, `--accent`, `--dotted`, `--sm`, `--md`, `--lg`; `.menu__separator`, `.batch-actions__separator`, `.combobox__separator`; `--divider-border-*`; styling of bare `hr` | `aria-orientation="vertical"`, `.divider`, `.divider--strong`, `.divider--dashed`; `.divider` (`<li role="separator">` in lists); `--divider-width`, `--divider-style`, `--divider-color` | **Removed** in the divider pass. See §15. |
+| `.skeleton--title`, `--circle`, `--round`, `--chip`, `--rect`, `--inline`, `--static`, `--sm`, `--md`, `--lg`, `--w-25`, `--w-33`, `--w-40`, `--w-60`, `--w-66`; `.card.skeleton`, `.card--skeleton`; `--skeleton-animation`, `--skeleton-bg` | `--heading`, `--avatar`, `--badge`, `--media`, `--skeleton-width`; a card with `aria-busy` and shapes inside; `--skeleton-motion`, `--skeleton-color` | **Removed** in the skeleton pass. See §26. |
+| `.workspace` | `.app__workspace` | Do not use. |
 | Responsive visibility synonyms (§31D) | First name in each row | Do not use synonyms. |
 
 ### v1 Scope
-- **In core:** `telemetry` (to be refactored onto badge, text and icon atoms), `batch-actions`.
+- **In core:** `telemetry` (to be refactored onto status, text and icon atoms), `batch-actions`.
 - **Out of core:** `deck` is a stress-test showcase moving to `packages/storybook/stories/recipes/`. Do not use it in new library work or treat it as a pattern to copy.
 
 ---
@@ -153,9 +158,10 @@ The component library operates in tandem with the live site repository:
 
 ### Synchronization Conventions:
 1. **Utility & Atom Parity:** When modifying CSS utilities or atoms in `packages/css/src/utilities/`, mirror corresponding changes into `designforhumans-blog/web/styles/scss/library/utilities/`.
+1b. **Component Overview Page:** Each component pass also updates `designforhumans-blog/templates/_component-library.twig`, the one-page overview, to the new markup. Blog Tier 3 tokens live in `web/styles/scss/library/theme/_tier3.scss` and are kept in step by hand.
 2. **Sass Recompilation:** After updating SCSS in `designforhumans-blog`, recompile shared stylesheets using:
    ```bash
-   /opt/homebrew/bin/sass web/styles/scss/dfh-shared.scss web/styles/dfh-shared.css && /opt/homebrew/bin/sass web/styles/scss/dfh-blog.scss web/styles/dfh-blog.css
+   /opt/homebrew/bin/sass web/styles/scss/dfh-shared.scss web/styles/css/dfh-shared.css && /opt/homebrew/bin/sass web/styles/scss/dfh-blog.scss web/styles/css/dfh-blog.css
    ```
 3. **Icon Propagation:** `DFH-Components/icons/icons.svg` is the single source of truth. Running `npm run sync:icons` automatically writes updated sprites to `designforhumans-blog/templates/_icons.twig` and `designforhumans-blog/web/web/symbol-defs.svg`.
 
@@ -212,7 +218,7 @@ with every stylesheet in its layer. Until then the order above is enforced by im
 
 > **Fundamental Axiom:** *Organisms orchestrate layout geometry; Atoms dictate elemental styling.*
 
-In Design For Humans, complex assemblies (`.card`, `.dialog`, `.empty-state`, `.table`, `.tabbed-content`) are **Organisms** that compose foundational **Atoms** (`.button`, `.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.text`, `.caption`, `.badge`, `.chip`, `.icon`).
+In Design For Humans, complex assemblies (`.card`, `.dialog`, `.empty-state`, `.table`, `.tabbed-content`) are **Organisms** that compose foundational **Atoms** (`.button`, `.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.text`, `.caption`, `.badge`, `.status`, `.chip`, `.kbd`, `.icon`).
 
 ### 1. The Zero-Specificity Cascade Rule
 All component primitives are wrapped in `:where(...)` to ensure a level playing field with zero specificity `(0, 0, 0)`. Because organisms are imported downstream from atoms in the stylesheet cascade, **any typography property declared on an organism hook (even `inherit` or `font-size: 1rem`) will clobber atom utility classes placed on that element**.
@@ -230,20 +236,24 @@ Organism sub-element hooks (`.card__title`, `.card__subtitle`, `.card__band`, `.
 - **ALLOWED declarations:** `margin: 0; min-inline-size: 0; text-wrap: balance; flex: 1; align-self: stretch; color: var(--_...-color); user-select: none;`
 - **FORBIDDEN declarations:** `font-size`, `font-family`, `font-weight`, `line-height`, `letter-spacing`, `text-transform`, or `inherit`.
 
-### 3. Container-Adaptive Typography Mode (`--font-sizing: cq`)
-Organism and structural molecule containers (`.card__content`, `.empty-state`, `.stepper`, `.dialog`, `.menu`, `.combobox`) establish container query contexts and enable container query font sizing:
-```css
-container-type: inline-size;
---font-sizing: cq;
-```
-This enables all typography atoms placed inside (`.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.small-text`, `.micro-text`) to scale adaptively with container query units (`cqi`), remaining perfectly proportioned across any container width without breakpoint micro-management.
+### 3. Typography Sizing Modes (`--font-sizing`)
+Text atoms are **fixed** by default: each takes one step of the scale at every width. A container chooses another mode for everything inside it with `--font-sizing`, normally through the appearance-mode classes:
+
+| Mode | Set with | Effect |
+| :--- | :--- | :--- |
+| fixed | (default), `.font-sizing-fixed` | One step at every width |
+| fluid | `.font-sizing-fluid` | Grows with the viewport |
+| cq | `.font-sizing-cq` on a container with `container-type: inline-size` | Grows with the container (`cqi`) |
+| compact | `.font-sizing-compact`, `.ui-compact`, any `--compact` container | One step down |
+
+Some organisms set the mode themselves: `.dialog`, `.menu`, `.combobox`, `.empty-state` and `.stepper` use `cq` (with `container-type: inline-size`); `.card`, `.table`, `.banner` and `.accordion` reset to fixed. The docs site puts `.font-sizing-fluid` on its article.
 
 ### 4. Container Density & Sizing Orchestration (`--ui-sizing: compact` & `--font-sizing: compact`)
 When an organism or molecule enters compact density (the only density modifier is `--compact`; `--dense` is legacy) (`.stepper--compact`, `.card--compact`, `.menu--compact`, `.table--compact`, `.combobox--compact`), declare:
 ```css
 --ui-sizing: compact;
 ```
-This enables nested text atoms (`.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.micro-text`, etc.) to automatically step down to their compact scale variants (`--micro-heading-compact-font-size`, `--micro-text-compact-font-size`, `--title-compact-font-size`, etc.) via `@container style(--ui-sizing: compact) or style(--font-sizing: compact)` container style queries without manual utility overrides or invasive class juggling.
+This steps every nested text atom (`.display-title` through `.small-text`) down to its compact size (`--title-compact-font-size`, `--body-sm-compact-font-size` and so on) via `@container style(--ui-sizing: compact) or style(--font-sizing: compact)` container style queries without manual utility overrides or invasive class juggling.
 
 To step down typography alone without changing container geometry, set `--font-sizing: compact` on the region instead. Size modifiers (`--sm`, `--lg`) belong to atoms and controls only; containers never take a size modifier.
 
@@ -256,13 +266,15 @@ Never create redundant Tier 3 component tokens for heading or description typogr
 When generating or authoring HTML markup for Design For Humans components, strictly use the following semantic patterns:
 
 ### 1. Button Primitive
+Reference implementation of the shared axes. Intent (`--accent`, `--danger`) sets a tone; prominence (`--strong`, `--subtle`, `--plain`, default outline) decides where the tone is applied, so any pairing works from two single-axis classes. Container flags: `--button-prominence`, `--button-intent`, `--button-size`, `--button-corners`; group classes `.buttons-strong|subtle|plain|sm|lg|round` set them. The shared `--controls-prominence`, `--controls-size` and `--controls-corners` flags (and `.controls-*` classes) also reach buttons (§7). A compact container (`--ui-sizing: compact`) steps buttons to `--sm`. Every size keeps a 48px hit area via `::after` unless the product opts into fine-pointer targets with `:root { --spacing-target-min: var(--spacing-target-sm); }`. Recolour hooks (undefined by default): `--button-color`, `--button-color-hover`, `--button-color-pressed`, `--button-color-border`, `--button-on-color`.
+
 ```html
 <!-- Default Button (Outline Neutral) -->
 <button type="button" class="button">
   <span>Action Label</span>
 </button>
 
-<!-- Strong Button (High-emphasis filled neutral, synonym: .button--selected, .is-active) -->
+<!-- Strong Button (High-emphasis filled neutral; selected states .is-active and :checked render as strong) -->
 <button type="button" class="button button--strong">
   <span>Strong Action</span>
 </button>
@@ -282,18 +294,18 @@ When generating or authoring HTML markup for Design For Humans components, stric
   <span>Plain Action</span>
 </button>
 
-<!-- Destructive Button (Outlined danger) -->
-<button type="button" class="button button--destructive">
+<!-- Danger Button (Outlined danger; always pair with an icon or text) -->
+<button type="button" class="button button--danger">
   <span>Delete Item</span>
 </button>
 
-<!-- Strong Destructive Button (High-emphasis solid danger) -->
-<button type="button" class="button button--strong button--destructive">
+<!-- Strong Danger Button (High-emphasis solid danger) -->
+<button type="button" class="button button--strong button--danger">
   <span>Delete Record</span>
 </button>
 
-<!-- Subtle Destructive Button -->
-<button type="button" class="button button--subtle button--destructive">
+<!-- Subtle Danger Button -->
+<button type="button" class="button button--subtle button--danger">
   <span>Remove</span>
 </button>
 
@@ -305,7 +317,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
 <!-- With Icon (Trailing) -->
 <button type="button" class="button button--strong button--accent">
   <span>Get Started</span>
-  <svg class="icon icon--dir" aria-hidden="true" focusable="false">
+  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
     <use href="#ArrowRight"/>
   </svg>
 </button>
@@ -313,7 +325,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
 <!-- Icon-Only Button (MANDATORY: use .visually-hidden text for translation & voice control) -->
 <button type="button" class="button button--icon">
   <span class="visually-hidden">Search site</span>
-  <svg class="icon" aria-hidden="true" focusable="false">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
     <use href="#Search"/>
   </svg>
 </button>
@@ -326,8 +338,8 @@ When generating or authoring HTML markup for Design For Humans components, stric
 <!-- Button-Like Checkbox Toggle Switch (Zero-JS state management) -->
 <label class="button">
   <input type="checkbox" class="visually-hidden" />
-  <svg class="icon icon--off" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-  <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+  <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   <span>Switch</span>
 </label>
 
@@ -336,12 +348,12 @@ When generating or authoring HTML markup for Design For Humans components, stric
   <label class="button">
     <input type="radio" name="choice-demo" class="visually-hidden" checked />
     <span>Choice 1</span>
-    <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+    <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   </label>
   <label class="button">
     <input type="radio" name="choice-demo" class="visually-hidden" />
     <span>Choice 2</span>
-    <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+    <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   </label>
 </div>
 
@@ -352,7 +364,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
 
 <!-- Persistently Labeled Button (Opts out of container style(--ui-labels: hidden) text collapsing) -->
 <button type="button" class="button button--labeled">
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
   <span>Add Record</span>
 </button>
 ```
@@ -376,9 +388,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
         <form method="dialog">
           <button type="submit" class="button button--subtle button--icon" commandfor="my-dialog" command="close">
             <span class="visually-hidden">Close dialog</span>
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </button>
         </form>
       </header>
@@ -433,7 +443,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
   aria-haspopup="dialog"
 >
   <span>Actions</span>
-  <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
     <use href="#ChevronDown"/>
   </svg>
 </button>
@@ -453,16 +463,16 @@ When generating or authoring HTML markup for Design For Humans components, stric
       <div class="card__body card__body--flush">
         <div class="button-group button-group--tight button-group--stacked buttons-subtle">
           <button type="button" class="button">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
             <span>Duplicate</span>
           </button>
           <button type="button" class="button">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
             <span>Export JSON</span>
           </button>
           <hr class="divider">
-          <button type="button" class="button button--destructive">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+          <button type="button" class="button button--danger">
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
             <span>Delete Item</span>
           </button>
         </div>
@@ -479,22 +489,22 @@ When generating or authoring HTML markup for Design For Humans components, stric
   <header class="menu__heading">Document Actions</header>
   <li role="none">
     <button type="button" class="menu__item" role="menuitem">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
       <span>Duplicate</span>
       <kbd class="kbd">⌘D</kbd>
     </button>
   </li>
   <li role="none">
     <button type="button" class="menu__item" role="menuitem">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
       <span>Export JSON</span>
       <kbd class="kbd">⇧⌘E</kbd>
     </button>
   </li>
-  <hr class="menu__separator">
+  <li role="separator" class="divider"></li>
   <li role="none">
     <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
       <span>Delete Item</span>
       <kbd class="kbd">⌫</kbd>
     </button>
@@ -510,7 +520,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
   aria-haspopup="menu"
 >
   <span>Options</span>
-  <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
 </button>
 
 <div 
@@ -522,20 +532,20 @@ When generating or authoring HTML markup for Design For Humans components, stric
   <menu class="menu menu--translucent" aria-label="Options menu">
     <li role="none">
       <button type="button" class="menu__item" role="menuitem">
-        <svg class="icon" aria-hidden="true"><use href="#Edit"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
         <span>Rename</span>
       </button>
     </li>
     <li role="none">
       <button type="button" class="menu__item" role="menuitem">
-        <svg class="icon" aria-hidden="true"><use href="#Share"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
         <span>Share Link</span>
       </button>
     </li>
-    <hr class="menu__separator">
+    <li role="separator" class="divider"></li>
     <li role="none">
       <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-        <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
         <span>Delete</span>
       </button>
     </li>
@@ -545,7 +555,7 @@ When generating or authoring HTML markup for Design For Humans components, stric
 <!-- Button-Group Companion Compatibility (using .button inside .menu) -->
 <menu class="menu menu--compact">
   <button type="button" class="button">
-    <svg class="icon" aria-hidden="true"><use href="#Copy"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Copy"/></svg>
     <span>Copy Path</span>
     <kbd class="kbd">⌥⌘C</kbd>
   </button>
@@ -604,77 +614,68 @@ When generating or authoring HTML markup for Design For Humans components, stric
 </div>
 ```
 
-### 5. Badge Primitive
-Badges convey passive status, metadata counters, and keyboard keys. They follow the same orthogonal prominence matrix as buttons:
-- **Default:** 1px border with a subtle translucent tinted background.
-- **Strong (`.badge--strong`):** High-emphasis solid tone fill with inverted high-contrast white text.
-- **Subtle (`.badge--subtle`):** Translucent tinted background with no border.
-- **Plain (`.badge--plain`):** Borderless and background-free, displaying only colored text.
-- **Tones:** `.badge--accent`, `.badge--success`, `.badge--warning`, `.badge--danger` (use `badge--danger`, NOT destructive, as badges indicate passive status rather than destructive user actions).
+### 5. Badge, Status, Chip & Kbd Primitives
+Four atoms, chosen by **job**, not by look:
+- If it's attached to something, it's a **badge**.
+- If it sits in the flow and says what state something is in, it's a **status**.
+- If it's a value someone chose or could remove, it's a **chip**.
+- If it's a key, it's a **kbd**.
+
+The inventory and migration are recorded in `docs/audit/badge-chip.md`.
+
+| Atom | Job | Axes |
+| :--- | :--- | :--- |
+| `.badge` | Count or dot attached to a host (tab, button, nav item, icon), inline after its label or in a corner | Intent, size, presentation (`--dot`). Prominence fixed at strong. |
+| `.status` | State of a thing: text with an optional dot or icon | Prominence (default outline pill, `--strong`, `--subtle`, `--plain` dot and text), intent, size, `--round` |
+| `.chip` | Value token: selected option, active filter, category or tag; optionally removable | Prominence (default outline, `--subtle`, `--plain`), size, `--round`. No intent. |
+| `.kbd` | Keyboard key or shortcut | Size only |
+
+- Intents: `--accent`, `--info`, `--danger`, `--warning` and `--success`. Info is aqua, with its own Tier 2 roles.
+- Container flags: `--badge-intent`, `--badge-size`; `--status-prominence`, `--status-intent`, `--status-size`, `--status-corners`; `--chip-prominence`, `--chip-size`, `--chip-corners`; `--kbd-size`.
+- A compact container (`--ui-sizing: compact`) steps all four to `--sm`.
+- `data-status` (online, away, busy) is presence and belongs on `.avatar` only. Never put it on these atoms.
+- Story captions are not components: in Storybook, label demo regions with `.sb-demo-tag`, never with a badge.
+- Wrap the text in `.badge__text`, `.status__text` or `.chip__text`. It trims the text box to cap height (`text-box: trim-both cap alphabetic`) so the text centres optically; padding-block is sized for trimmed text. Bare text still renders, just slightly off-centre and shorter. Scripts that change the text must update the `__text` span, not the parent.
 
 ```html
-<!-- Default Badge (1px border + subtle translucent tint) -->
-<span class="badge"><span>Neutral</span></span>
-<span class="badge badge--accent"><span>Accent</span></span>
-<span class="badge badge--success" data-status="online"><span>Online</span></span>
-<span class="badge badge--warning" data-status="away"><span>Pending</span></span>
-<span class="badge badge--danger" data-status="busy"><span>Danger</span></span>
-
-<!-- Strong Badge (Solid tone fill + inverted text) -->
-<span class="badge badge--strong"><span>Strong Neutral</span></span>
-<span class="badge badge--accent badge--strong"><span>Strong Accent</span></span>
-<span class="badge badge--danger badge--strong"><span>Failed</span></span>
-
-<!-- Subtle Badge (Translucent tint, borderless) -->
-<span class="badge badge--subtle"><span>Subtle Neutral</span></span>
-<span class="badge badge--accent badge--subtle"><span>Subtle Accent</span></span>
-
-<!-- Plain Badge (Borderless, transparent) -->
-<span class="badge badge--plain"><span>Plain Neutral</span></span>
-<span class="badge badge--accent badge--plain"><span>Plain Accent</span></span>
-
-<!-- Round & Small Badges -->
-<span class="badge badge--accent badge--round"><span>New Release</span></span>
-<span class="badge badge--danger badge--strong badge--sm badge--round"><span>3</span></span>
-
-<!-- Keyboard Key Primitive (.kbd) -->
-<kbd class="kbd">⌘K</kbd>
-<kbd class="kbd">Esc</kbd>
-
-<!-- Corner Notification Badges (Anchored to relative buttons or action containers) -->
-<!-- NOTE: Do NOT place corner badges inside .avatar (which uses overflow: hidden). For avatars, use [data-status] color rings -->
-<button type="button" class="button button--icon" style="position: relative;" aria-label="Notifications (1 unread)">
-  <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#BellFilled"/></svg>
-  <span class="badge badge--danger badge--strong badge--sm badge--round badge--top-right-corner">
-    <span>1</span>
-  </span>
+<!-- Badge: count attached to a host; the host's name carries the count -->
+<button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+  <span class="badge badge--danger badge--sm badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
 </button>
-```
+<a href="/issues" class="tab">
+  <span class="tab__text">Issues</span>
+  <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span>
+  <span class="visually-hidden">, 14 open</span>
+</a>
 
-### 5b. Chip & Live Status Primitives
-Chips represent metadata tags and dismissible filter tokens. Unlike badges, chips remain simple (no `--strong` or `--subtle` variations):
-```html
-<!-- Padded Chip with Background (Tags & Comboboxes) -->
-<span class="chip"><span>TypeScript</span></span>
-
-<!-- Dismissible Chip (Tags in Combobox / Active Filters) -->
-<span class="chip">
-  <span>TypeScript</span>
-  <button type="button" class="chip__remove" aria-label="Remove TypeScript tag">
-    <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
-  </button>
+<!-- Status: the text carries the state (WCAG 1.4.1) -->
+<span class="status status--success"><span class="status__text">Passed</span></span>
+<span class="status status--strong status--danger"><span class="status__text">Failed</span></span>
+<span class="status status--subtle status--accent status--round"><span class="status__text">New</span></span>
+<span class="status status--plain status--warning"><span class="status__text">Degraded</span></span>
+<span class="status status--strong status--warning status--round">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+  <span class="status__text">Action required</span>
 </span>
 
-<!-- Plain Frameless Chip (No Background or Padding) -->
-<span class="chip chip--plain">Lesson 04</span>
-<span class="chip chip--plain chip--status" data-status="online">Online</span>
+<!-- Chip: static tag, and removable token -->
+<span class="chip"><span class="chip__text">TypeScript</span></span>
+<span class="chip chip--subtle">
+  <span class="chip__text">TypeScript</span>
+  <button type="button" class="chip__remove" aria-label="Remove TypeScript">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+  </button>
+</span>
+<span class="chip chip--plain"><span class="chip__text">Lesson 04</span></span>
 
-<!-- Live Status Indicators (with zero-JS indicator dot) -->
-<span class="status" data-status="online">Online</span>
-<span class="status" data-status="away">Away</span>
-<span class="status" data-status="busy">Do Not Disturb</span>
-<span class="status" data-status="offline">Offline</span>
+<!-- Kbd: single key and combination; mirror the shortcut in aria-keyshortcuts on its control -->
+<kbd class="kbd">Esc</kbd>
+<kbd class="kbd"><kbd>⌘</kbd><kbd>K</kbd></kbd>
 ```
+
+- **Corner badges and avatars:** do not put a corner badge inside `.avatar`, which clips with `overflow: hidden`. Use `[data-status]` on the avatar, or wrap the avatar.
+- **Removing a chip:** after removal, move focus to the next chip or back to the input that created it.
 
 ### 6. Avatar Primitive & Avatar Groups
 ```html
@@ -695,12 +696,12 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 
 <!-- Icon Fallback Avatar -->
 <div class="avatar" aria-label="User profile">
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
 </div>
 
 <!-- Placeholder / Add User Avatar -->
 <div class="avatar avatar--placeholder" aria-label="Add team member">
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
 </div>
 
 <!-- Custom Colored Avatar via inline tokens -->
@@ -751,97 +752,76 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 ```
 
 ### 7. Input & Form Control Primitives
+Six atoms: input (with colour and file), select, textarea, checkbox and radio, switch, range. The audit is in `docs/audit/form-controls.md`.
 
-#### A. Text, Color, and File Inputs
+- **Classes only.** Bare `<input>`, `<select>` and `<textarea>` keep browser styling; the reset gives them back their native rendering.
+- **One base for text controls.** `.input`, `.select` and `.textarea` share `atoms/input.css` section 1: the same size, prominence, corners, flags and states.
+
+| Atom | Axes | Container flags |
+| :--- | :--- | :--- |
+| `.input`, `.select`, `.textarea` | Size (`--sm`, `--lg`), prominence (outline, `--subtle`, `--plain`), corners (`--round`) | `--input-*`, `--select-*`, `--textarea-*` (`size`, `prominence`, `corners`) |
+| `.checkbox-input`, `.radio-input` | Size (20px, `--lg` 24px) | `--check-size: lg` |
+| `.switch` | Size, prominence (`--subtle`), intent (`--danger`), corners | `--switch-size`, `--switch-prominence`, `--switch-intent`, `--switch-corners` |
+| `.range` | Size, intent (`--info`, `--success`, `--warning`, `--danger`) | `--range-size`, `--range-intent` |
+
+- Group flags `--controls-size`, `--controls-prominence` and `--controls-corners` reach every control, buttons included. Group classes: `.controls-sm`, `.controls-lg`, `.controls-subtle`, `.controls-plain`, `.controls-round`. A compact container (`--ui-sizing: compact`) steps controls to `--sm`.
+- **Every prominence keeps a 3:1 edge** (`--border-color-control`). Outline has a full border; subtle and plain keep the bottom border.
+- **`--flush`** (text controls) drops the inline padding and the boundary. Use it only inside a bar that draws both, such as a command palette header with `.focus-within`.
+- **Hit area:** `--sm` text controls are 32px, matching small buttons; a field can't take a hit-area buffer, so this is also its target (above the 24px minimum). Put touch-facing forms in `fine:ui-compact` rather than using `--sm` directly. Switch and range keep a hit area of at least `--spacing-target-min` whatever their visual size. Put checkboxes and radios in a `.choice` label.
+- **Validation:** invalid styling follows `:user-invalid` and `aria-invalid="true"`; always pair it with a `.field__error` message. Valid fields are not recoloured.
+- Checkboxes have no intent: a checkbox has a state, not a status.
+
+#### A. Text, Colour and File Inputs
 ```html
-<!-- Base Text Input with Field Wrapper, Label, and Hint -->
 <div class="field">
   <label for="user-email" class="field__label">Email Address</label>
   <p id="user-email-hint" class="field__hint">We will never share your email address.</p>
-  <input 
-    id="user-email" 
-    type="email" 
-    class="input" 
-    placeholder="you@domain.com"
-    aria-describedby="user-email-hint"
-  />
+  <input id="user-email" type="email" class="input" autocomplete="email" aria-describedby="user-email-hint" />
 </div>
 
-<!-- Modern Web Validation: :user-invalid triggers only after interaction/blur -->
-<div class="field">
-  <label for="user-password" class="field__label">Password</label>
-  <input 
-    id="user-password" 
-    type="password" 
-    class="input" 
-    required
-    placeholder="••••••••••••"
-  />
-</div>
-
-<!-- Explicit Error State (Accessible ARIA Association) -->
+<!-- Error state -->
 <div class="field">
   <label for="account-id" class="field__label">Account ID</label>
-  <input 
-    id="account-id" 
-    type="text" 
-    class="input" 
-    aria-invalid="true" 
-    aria-describedby="account-id-error"
-    value="INVALID-ID"
-  />
-  <p id="account-id-error" class="field__error" role="alert">
-    Account ID must start with "DFH-" followed by 6 digits.
-  </p>
+  <input id="account-id" type="text" class="input" aria-invalid="true" aria-describedby="account-id-error" value="INVALID-ID" />
+  <p id="account-id-error" class="field__error">Account ID must start with "DFH-" followed by 6 digits.</p>
 </div>
 
-<!-- Input Sizes (sm: 24px WCAG 2.5.8, md: 48px WCAG 2.5.5, lg: 56px) -->
-<input type="text" class="input input--sm" placeholder="Compact filter..." />
-<input type="text" class="input" placeholder="Standard size..." />
-<input type="text" class="input input--lg" placeholder="Large search..." />
+<!-- Size, prominence and corners -->
+<input type="search" class="input input--sm" aria-label="Filter" />
+<input type="text" class="input input--lg" aria-label="Title" />
+<input type="text" class="input input--subtle" aria-label="Name" />
+<input type="text" class="input input--plain" aria-label="Name" />
+<input type="search" class="input input--round" aria-label="Search" />
 
-<!-- Input Variations (Plain & Subtle) -->
-<input type="text" class="input input--plain" placeholder="Plain input (transparent, borderless)..." />
-<input type="text" class="input input--subtle" placeholder="Subtle input (translucent, borderless)..." />
-
-<!-- Color & File Inputs -->
-<input type="color" class="color-input" value="#00d2c4" />
-<input type="file" class="file-input" />
+<!-- Colour and file -->
+<input type="color" class="color-input" value="#00a39a" aria-label="Brand colour" />
+<input type="file" class="file-input" aria-label="Attachment" />
 ```
 
-#### B. Zero-JS Auto-Growing Textarea (`field-sizing: content`)
+#### B. Textarea (grows with `field-sizing: content`)
 ```html
 <div class="field">
   <label for="feedback" class="field__label">Feedback</label>
-  <textarea 
-    id="feedback" 
-    class="textarea" 
-    rows="3" 
-    placeholder="Tell us what you think..."
-  ></textarea>
+  <textarea id="feedback" class="textarea"></textarea>
 </div>
 
-<!-- Textarea starting as single-line and expanding dynamically -->
-<textarea class="textarea textarea--one-line" placeholder="Quick comment..."></textarea>
+<!-- Starts at one line and grows; cap the height with --textarea-lines-max -->
+<textarea class="textarea textarea--one-line" aria-label="Comment"></textarea>
 ```
 
-#### C. Native & Customizable Select
+#### C. Select
 ```html
-<!-- Native Accessible Select -->
 <div class="field">
   <label for="role-select" class="field__label">Primary Role</label>
   <select id="role-select" class="select">
-    <option value="">Select role...</option>
+    <option value="">Choose a role</option>
     <option value="lead">Accessibility Lead</option>
-    <option value="eng">Design Engineer</option>
   </select>
 </div>
 
-<!-- Modern Customizable Select (appearance: base-select) -->
-<select class="select select--custom">
-  <button type="button">
-    <selectedcontent></selectedcontent>
-  </button>
+<!-- Customizable select (appearance: base-select; other browsers show the native select) -->
+<select class="select select--custom" aria-label="Conformance target">
+  <button type="button"><selectedcontent></selectedcontent></button>
   <option value="aa" selected>WCAG 2.2 AA</option>
   <option value="aaa">WCAG 2.2 AAA</option>
 </select>
@@ -849,116 +829,80 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 
 #### D. Checkboxes, Radios, Choices & Fieldset
 ```html
-<!-- Choice Items Grouped in Choices Container -->
 <fieldset class="fieldset">
-  <legend class="legend">Accessible Audit Deliverables</legend>
+  <legend class="legend">Audit deliverables</legend>
   <div class="choices">
-    <label class="choice" for="cb-axe">
-      <input type="checkbox" id="cb-axe" class="checkbox-input" checked />
-      <span>Automated axe-core compliance scanner</span>
+    <label class="choice">
+      <input type="checkbox" class="checkbox-input" checked />
+      <span>Automated axe scan</span>
     </label>
-    <label class="choice" for="cb-keyboard">
-      <input type="checkbox" id="cb-keyboard" class="checkbox-input" />
-      <span>Keyboard navigation review</span>
+    <label class="choice">
+      <input type="checkbox" class="checkbox-input checkbox-input--lg" />
+      <span>Keyboard review</span>
     </label>
   </div>
 </fieldset>
 
-<!-- Horizontal Radio Group -->
 <div class="choices choices--inline">
-  <label class="choice" for="freq-daily">
-    <input type="radio" id="freq-daily" name="frequency" class="radio-input" checked />
+  <label class="choice">
+    <input type="radio" name="frequency" class="radio-input" checked />
     <span>Daily</span>
   </label>
-  <label class="choice" for="freq-weekly">
-    <input type="radio" id="freq-weekly" name="frequency" class="radio-input" />
+  <label class="choice">
+    <input type="radio" name="frequency" class="radio-input" />
     <span>Weekly</span>
   </label>
 </div>
 ```
 
-#### E. Segmented Toggle Switch Primitive (`role="switch"`)
+#### E. Switch (`role="switch"`)
 ```html
-<!-- Default Switch (Zero-JS state management via CSS :has(:checked)) -->
 <label class="switch">
-  <span class="switch__label">Notifications</span>
+  <span class="switch__label">Notifications <small>Email and push</small></span>
+  <input type="checkbox" role="switch" class="visually-hidden" checked />
+  <span class="switch__control" aria-hidden="true">
+    <span class="switch__option switch__option--off">Off</span>
+    <span class="switch__option switch__option--on">On</span>
+  </span>
+</label>
+
+<!-- Small, round, danger -->
+<label class="switch switch--sm switch--round switch--danger">
+  <span class="switch__label">Auto-delete</span>
   <input type="checkbox" role="switch" class="visually-hidden" />
   <span class="switch__control" aria-hidden="true">
     <span class="switch__option switch__option--off">Off</span>
     <span class="switch__option switch__option--on">On</span>
   </span>
 </label>
-
-<!-- Active / Checked Switch -->
-<label class="switch">
-  <span class="switch__label">Dark Mode</span>
-  <input type="checkbox" role="switch" class="visually-hidden" checked />
-  <span class="switch__control" aria-hidden="true">
-    <span class="switch__option switch__option--off">Off</span>
-    <span class="switch__option switch__option--on">On</span>
-  </span>
-</label>
-
-<!-- Compact Switch -->
-<label class="switch switch--sm">
-  <span class="switch__label">Compact Filter</span>
-  <input type="checkbox" role="switch" class="visually-hidden" checked />
-  <span class="switch__control" aria-hidden="true">
-    <span class="switch__option switch__option--off">Off</span>
-    <span class="switch__option switch__option--on">On</span>
-  </span>
-</label>
 ```
 
-#### F. Range Slider Input Primitive (`<input type="range">`)
+#### F. Range & Range Lockup
+`--value` drives the fill in Blink and WebKit; update it on `input`. Gecko draws the fill natively.
 ```html
-<!-- Interactive Range Slider with Output Readout -->
 <div class="field">
   <div class="field__header">
-    <label for="volume-control" class="field__label">Volume Level</label>
-    <output for="volume-control" class="field__output" id="vol-readout">65%</output>
+    <label for="volume-control" class="field__label">Volume</label>
+    <output for="volume-control" class="field__output">65%</output>
   </div>
-  <input 
-    id="volume-control" 
-    type="range" 
-    class="range" 
-    min="0" 
-    max="100" 
-    value="65" 
-    style="--value: 65%;"
-    aria-describedby="vol-readout"
-  />
+  <input id="volume-control" type="range" class="range" min="0" max="100" value="65" style="--value: 65%;" />
 </div>
 
-<!-- Range Sizing (.range--sm: 4px/16px, .range--lg: 12px/32px) -->
-<input type="range" class="range range--sm" value="30" min="0" max="100" style="--value: 30%;" />
-<input type="range" class="range" value="50" min="0" max="100" style="--value: 50%;" />
-<input type="range" class="range range--lg" value="75" min="0" max="100" style="--value: 75%;" />
+<!-- Size and intent: pair intent with an output that states the value -->
+<input type="range" class="range range--sm" min="0" max="100" value="30" style="--value: 30%;" aria-label="Balance" />
+<input type="range" class="range range--danger" min="0" max="100" value="92" style="--value: 92%;" aria-label="Disk use" />
 
-<!-- Semantic Color Range Sliders -->
-<input type="range" class="range range--success" value="85" min="0" max="100" style="--value: 85%;" />
-<input type="range" class="range range--warning" value="45" min="0" max="100" style="--value: 45%;" />
-<input type="range" class="range range--danger" value="20" min="0" max="100" style="--value: 20%;" />
-
-<!-- Range Lockup Primitive (.range-lockup; legacy .range-group is pending removal, never use it) -->
-<!-- Unified composite pairing an action button, slider, and numerical readout -->
-<!-- Note: Renamed from .range-group to avoid collision with emerging native <rangegroup> -->
+<!-- Range lockup (molecule): button + range + readout -->
 <div class="range-lockup range-lockup--sm">
-  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Toggle mute">
-    <svg class="icon" aria-hidden="true"><use href="#VolumeOn"/></svg>
+  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Mute">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
   </button>
-  <input type="range" class="range range--sm" value="85" min="0" max="100" style="--value: 85%;" aria-label="Volume slider" />
-  <output class="range-lockup__output">85%</output>
+  <input id="lockup-vol" type="range" class="range" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume" />
+  <output for="lockup-vol" class="range-lockup__output">85%</output>
 </div>
 
-<!-- Surface Pill Range Lockup with Focus Delegation (:focus-within) -->
-<div class="range-lockup range-lockup--sm range-lockup--pill range-lockup--bordered">
-  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Toggle mute">
-    <svg class="icon" aria-hidden="true"><use href="#VolumeOn"/></svg>
-  </button>
-  <input type="range" class="range range--sm" value="50" min="0" max="100" style="--value: 50%;" aria-label="Volume slider" />
-  <output class="range-lockup__output">50%</output>
-</div>
+<!-- Bordered and round (the boundary lights up while a child has focus) -->
+<div class="range-lockup range-lockup--bordered range-lockup--round range-lockup--fill">…</div>
 ```
 
 #### G. Complete Form Layout & Submission Bar
@@ -981,112 +925,115 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 ```
 
 ### 7. Skip Link Primitive (WCAG 2.4.1 Bypass Blocks)
+Put the skip link first in `<body>` and point it at a landmark (`<main id="main">`). It is collapsed until focused, then opens to at least 48px. The focus ring uses the link's text colour, so it shows on the accent fill. `.skip-link--floating` slides in from the top-start corner without moving the layout. In a `.skip-links` group, every link shows while one has focus. The audit is in `docs/audit/link.md`.
+
 ```html
-<!-- Canonical Top Banner Skip Link (Placed at the very top of <body>) -->
-<a href="#main" class="skip-link">
-  <span>Skip to main content</span>
-</a>
+<!-- In-flow bar, first in <body> -->
+<a href="#main" class="skip-link">Skip to main content</a>
 
-<!-- Floating Round Skip Link Variant -->
-<a href="#main" class="skip-link skip-link--floating">
-  <span>Skip to main content</span>
-</a>
+<!-- Floating card -->
+<a href="#main" class="skip-link skip-link--floating">Skip to main content</a>
 
-<!-- Grouped Multiple Destinations (Semantic <nav> and <ul>/<li> list) -->
+<!-- Several destinations -->
 <nav class="skip-links" aria-label="Skip links">
   <ul>
-    <li>
-      <a href="#main" class="skip-link">
-        <span>Skip to main content</span>
-      </a>
-    </li>
-    <li>
-      <a href="#navigation" class="skip-link">
-        <span>Skip to navigation</span>
-      </a>
-    </li>
-    <li>
-      <a href="#footer" class="skip-link">
-        <span>Skip to footer</span>
-      </a>
-    </li>
+    <li><a href="#main" class="skip-link">Skip to main content</a></li>
+    <li><a href="#navigation" class="skip-link">Skip to navigation</a></li>
+    <li><a href="#footer" class="skip-link">Skip to footer</a></li>
   </ul>
 </nav>
+
+<main id="main">…</main>
 ```
 
 ### 8. Link & Block Link Primitives
+| Atom | Axes | Container flags |
+| :--- | :--- | :--- |
+| `.link` | Prominence: default (accent, underlined), `--subtle` (text colour, underlined), `--plain` (underline on hover and focus only) | `--link-prominence` |
+| `.block-link` | Prominence: outline (default), `--strong`, `--subtle`, `--plain`; size: default, `--sm` | `--block-link-prominence`, `--block-link-size` |
 
-#### A. Inline Hyperlinks
+- **The underline marks the link** (WCAG 1.4.1). It is drawn at the full link colour and thickens on hover; there is no hover colour.
+- **`--plain` never goes in running text.** Use it where context already marks the link: navigation, a list of links, a card title.
+- **No intent or size on links.** A destructive action is a `.button--danger`; an inline link takes the size of its text.
+- **On a dark band**, put `.color-scheme-dark` on the band. Every token inside flips, links included. There is no inverted link class.
+- **Bare `<a>`** (no class) keeps an underline and the text colour, from the reset.
+- `.link--stretched` makes the link's `::after` cover its nearest positioned ancestor, for a whole-row or whole-card target.
+- Block link `--sm` keeps a 48px hit area unless the product opts into fine-pointer targets; a compact container steps it to `--sm`. Its label wraps, which is why it isn't a button.
+
+#### A. Inline Links
 ```html
-<!-- Default Inline Link -->
-<a href="/accessibility" class="link">
-  <span>Accessibility Standards</span>
-</a>
+<!-- In running text -->
+<p>Read the <a href="/accessibility" class="link">accessibility standards</a> first.</p>
 
-<!-- Inverted Context Link -->
-<a href="/report" class="link link--inverted">
-  <span>Conformance Report</span>
-</a>
+<!-- Subtle: the text colour, still underlined -->
+<a href="/category/design" class="link link--subtle">Design systems</a>
 
-<!-- On-Dark Context Link -->
-<a href="/github" class="link link--on-dark">
-  <span>GitHub Repository</span>
-</a>
+<!-- Plain: navigation only -->
+<nav aria-label="Footer">
+  <a href="/privacy" class="link link--plain">Privacy</a>
+</nav>
 
-<!-- Subtle Link (inherits color at rest, lights up on interaction) -->
-<a href="/category/design" class="link link--subtle">
-  <span>Design Systems</span>
-</a>
+<!-- External: no space between text and icon; say it opens a new tab -->
+<a href="https://www.w3.org" class="link" target="_blank" rel="noopener noreferrer">W3C guidelines<span class="visually-hidden"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a>
 
-<!-- External Link (MANDATORY: .visually-hidden disclaimer + aria-hidden .icon) -->
-<a href="https://www.w3.org" class="link" target="_blank" rel="noopener noreferrer">
-  <span>W3C Guidelines</span>
-  <span class="visually-hidden"> (opens in a new tab)</span>
-  <svg class="icon icon--dir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-    <polyline points="15 3 21 3 21 9"></polyline>
-    <line x1="10" y1="14" x2="21" y2="3"></line>
-  </svg>
-</a>
+<!-- On a dark band -->
+<section class="color-scheme-dark">
+  <p>Follow the <a href="/rss" class="link">RSS feed</a>.</p>
+</section>
 ```
 
-#### B. Block Links (Cards & Directory Callouts)
+#### B. Block Links
 ```html
-<!-- Standalone Block Link Callout with micro-animated trailing arrow -->
 <a href="/case-studies/contrast" class="block-link">
-  <span class="block-link__text">Color Contrast Beyond 4.5:1</span>
-  <svg class="block-link__arrow icon icon--dir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-    <line x1="7" y1="17" x2="17" y2="7"></line>
-    <polyline points="7 7 17 7 17 17"></polyline>
-  </svg>
+  <span class="block-link__text">Colour contrast beyond 4.5:1</span>
+  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
 </a>
 
-<!-- Category / Resource List of Block Links -->
-<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-8);">
+<!-- Prominence and size -->
+<a href="/start" class="block-link block-link--strong">…</a>
+<a href="/topics/wcag" class="block-link block-link--subtle block-link--sm">…</a>
+
+<!-- A list of block links, set once on the container -->
+<ul class="stack list-none padding-0 margin-0" style="--block-link-prominence: subtle;">
   <li>
     <a href="/topics/wcag" class="block-link">
-      <span class="block-link__text">WCAG 2.2 Guidelines</span>
-      <svg class="block-link__arrow icon icon--dir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-        <line x1="7" y1="17" x2="17" y2="7"></line>
-        <polyline points="7 7 17 7 17 17"></polyline>
-      </svg>
+      <span class="block-link__text">WCAG 2.2 guidelines</span>
+      <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
     </a>
   </li>
 </ul>
 ```
 
-### 9. Icon Primitive
-```html
-<!-- Standard Inline Icon (scales dynamically with surrounding text font-size) -->
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-  <circle cx="12" cy="12" r="10"></circle>
-</svg>
+### 9. Icon & Icon Box Primitives
+An icon is a glyph from the sprite (`icons/icons.svg`, one filled family), sized in `em` so it follows its text and coloured by the text (`currentColor`). Use one only where it speeds recognition (PRINCIPLES §6). The audit is in `docs/audit/icon.md`.
 
-<!-- Directional Icon (automatically mirrors with scale: -1 1 in [dir="rtl"] contexts) -->
-<svg class="icon icon--dir" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-  <line x1="5" y1="12" x2="19" y2="12"></line>
-  <polyline points="12 5 19 12 12 19"></polyline>
-</svg>
+| Atom | Axes | Notes |
+| :--- | :--- | :--- |
+| `.icon` | Size (`1em`, `--sm`, `--lg`); intent (`--accent`, `--info`, `--danger`, `--warning`, `--success`) | `--dir` mirrors in right-to-left text; `--disclosure` rotates with the nearest `[aria-expanded]`. Any other size: set `--icon-size` or the font size. |
+| `.icon-box` | Size (48px, `--sm` 32px, `--lg` 64px); prominence (plain, `--subtle`); corners (`--round`) | A fixed square frame that lines icons up with controls. Not interactive. Flags: `--icon-box-size`, `--icon-box-prominence`, `--icon-box-corners`; a compact container steps it to `--sm`. |
+
+- Every icon carries `width="1em" height="1em"`, so it stays text-sized if CSS fails to load.
+- Decorative icons (beside text, or inside a named control) carry `aria-hidden="true" focusable="false"`. A meaningful standalone icon takes `role="img"` and `aria-label`, or its control carries the name.
+- Intent colours an icon but never carries meaning alone (WCAG 1.4.1). For muted icons, use the text colour utilities (`.text-color-muted`).
+- Never draw icons inline with `stroke` paths. If the sprite lacks a glyph, add it to `icons/icons.svg` and run `npm run sync:icons`.
+
+```html
+<!-- Decorative icon beside text -->
+<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+
+<!-- Directional icon: mirrors in right-to-left text -->
+<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+
+<!-- Size and intent -->
+<svg class="icon icon--lg icon--success" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+
+<!-- Meaningful standalone icon -->
+<svg class="icon icon--warning" width="1em" height="1em" role="img" aria-label="Warning"><use href="#Warning"/></svg>
+
+<!-- Icon box -->
+<span class="icon-box icon-box--subtle icon-box--round" aria-hidden="true">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+</span>
 ```
 
 ### 10. Card Primitive
@@ -1120,7 +1067,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 </div>
 ```
 
-#### B. Content Card with Badge & Action Button
+#### B. Content Card with Status & Action Button
 ```html
 <div class="card">
   <article class="card__content">
@@ -1131,7 +1078,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
         </h3>
         <p class="card__subtitle">Two-Factor Authentication</p>
       </hgroup>
-      <span class="badge badge--success"><span>Active</span></span>
+      <span class="status status--success"><span class="status__text">Active</span></span>
     </header>
     <div class="card__body">
       <p>Manage passkeys, hardware tokens, and two-factor authentication.</p>
@@ -1201,7 +1148,7 @@ Chips represent metadata tags and dismissible filter tokens. Unlike badges, chip
 
     <!-- Interstitial Band (supports .card__band--subtle, .card__band--ruled, .card__band--flush) -->
     <div class="card__band card__band--subtle">
-      <span class="badge badge--accent badge--round"><span>Step 2 of 4</span></span>
+      <span class="status status--accent status--round"><span class="status__text">Step 2 of 4</span></span>
       <div class="button-group button-group--tight buttons-sm buttons-subtle">
         <button type="button" class="button"><span>Back</span></button>
         <button type="button" class="button button--strong button--accent"><span>Proceed</span></button>
@@ -1293,7 +1240,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
     <p>This is a success banner message.</p>
   </div>
   <button type="button" class="button button--subtle banner__action">
-    <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
       <use href="#Check" />
     </svg>
     <span class="visually-hidden">Action</span>
@@ -1306,7 +1253,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
     <p>This is a warning banner message.</p>
   </div>
   <button type="button" class="button button--subtle banner__action">
-    <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
       <use href="#Check" />
     </svg>
     <span class="visually-hidden">Action</span>
@@ -1319,7 +1266,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
     <p>This is an error banner message.</p>
   </div>
   <button type="button" class="button button--strong button--accent banner__action">
-    <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
       <use href="#Close" />
     </svg>
     <span class="visually-hidden">Close</span>
@@ -1354,7 +1301,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
     <p style="font-size: var(--typography-font-size-1); font-weight: var(--font-weight-bold);">Continue?</p>
   </div>
   <button type="button" class="button banner__action">
-    <svg class="icon" width="32" height="32" aria-hidden="true" focusable="false">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
       <use href="#Check" />
     </svg>
     <span class="visually-hidden">Action</span>
@@ -1507,7 +1454,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
           <tr>
             <th scope="row" class="table__cell--fit">Paul Woods</th>
             <td>Design Engineer</td>
-            <td class="table__cell--fit"><span class="badge badge--success"><span>Active</span></span></td>
+            <td class="table__cell--fit"><span class="status status--success"><span class="status__text">Active</span></span></td>
           </tr>
         </tbody>
       </table>
@@ -1525,17 +1472,13 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
         <th scope="col">
           <button type="button" class="table__sort-button" aria-sort="ascending" aria-label="Sort by package name">
             <span>Package</span>
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
           </button>
         </th>
         <th scope="col" class="table__cell--numeric">
           <button type="button" class="table__sort-button" aria-sort="descending" aria-label="Sort by downloads">
             <span>Downloads</span>
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
           </button>
         </th>
       </tr>
@@ -1569,7 +1512,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
         <th scope="row" class="table__cell--fit">Modal Dialog</th>
         <td class="table__cell--long">2.1.2 No Keyboard Trap</td>
         <td class="table__cell--long">Modal dialogs must not trap keyboard focus when cycling elements.</td>
-        <td class="table__cell--fit"><span class="badge"><span>Level A</span></span></td>
+        <td class="table__cell--fit"><span class="status"><span class="status__text">Level A</span></span></td>
         <td class="table__cell--fit table__cell--center">
           <button type="button" class="button button--subtle button--sm"><span>Inspect</span></button>
         </td>
@@ -1579,7 +1522,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
       <tr>
         <th scope="row" class="table__cell--fit">Summary</th>
         <td colspan="3" class="table__cell--long">All core components passing compliance</td>
-        <td class="table__cell--fit table__cell--center"><span class="badge badge--success"><span>Passed</span></span></td>
+        <td class="table__cell--fit table__cell--center"><span class="status status--success"><span class="status__text">Passed</span></span></td>
       </tr>
     </tfoot>
   </table>
@@ -1629,12 +1572,12 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
         <td class="table__col--index text-muted">1</td>
         <td class="table__col--sm font-mono text-muted">10:45 AM</td>
         <td class="table__col--fill">Solaris Horizon</td>
-        <td class="table__col--sm"><span class="chip chip--sm"><span>Music</span></span></td>
+        <td class="table__col--sm"><span class="chip chip--subtle chip--sm"><span class="chip__text">Music</span></span></td>
         <td class="table__col--num font-mono text-muted">03:52</td>
-        <td class="table__col--md"><span class="badge badge--success badge--sm"><span>Live</span></span></td>
+        <td class="table__col--md"><span class="status status--success status--sm"><span class="status__text">Live</span></span></td>
         <td class="table__col--actions">
           <button type="button" class="button button--subtle button--icon button--sm" aria-label="Options">
-            <svg class="icon"><use href="#ChevronDown"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
           </button>
         </td>
       </tr>
@@ -1650,7 +1593,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
 <div class="button-group">
   <a href="/prev" class="button"><span>Previous</span></a>
   <span class="button-group__content button-group__fill">Step 2 of 4</span>
-  <hr class="divider">
+  <hr class="divider" aria-orientation="vertical">
   <button type="button" class="button button--strong button--accent"><span>Next</span></button>
 </div>
 ```
@@ -1668,38 +1611,60 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
 <div class="button-group button-group--stacked button-group--ruled buttons-subtle" role="listbox" aria-label="Action Menu">
   <h3 class="button-group__content micro-heading text-muted">Primary Actions</h3>
   <button type="button" class="button" role="option">
-    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
     <span class="button__text">Share Document</span>
-    <span class="badge badge--sm"><span>New</span></span>
+    <span class="status status--sm"><span class="status__text">New</span></span>
   </button>
   <button type="button" class="button" role="option">
-    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Duplicate"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
     <span class="button__text">Duplicate</span>
     <kbd class="kbd">⌘D</kbd>
   </button>
   <h3 class="button-group__content micro-heading text-muted">Danger Zone</h3>
-  <button type="button" class="button button--destructive" role="option">
-    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
+  <button type="button" class="button button--danger" role="option">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
     <span class="button__text">Delete Permanently</span>
   </button>
 </div>
 ```
 
 ### 15. Divider Primitive
+A rule between groups. Organisms (menu, combobox, batch actions, button group) place it; they never restyle it. Classes only: a bare `<hr>` gets a quiet rule from the reset. The audit is in `docs/audit/divider.md`.
 
-#### A. Horizontal Divider (Default Stack/Block Context)
+| Axis | Values |
+| :--- | :--- |
+| Orientation | Horizontal (default); vertical when the **direct parent** sets `--direction: row` (`.inline`, `.cluster`, `.button-group`, `.batch-actions`), or anywhere with `aria-orientation="vertical"` |
+| Prominence | Default (quiet, decorative), `--strong` (at least 3:1, for a rule that is the only boundary) |
+| Style | Solid (default), `--dashed` |
+
+- `--direction` doesn't inherit, so a divider nested deeper inside a row stays horizontal.
+- Put `aria-orientation="vertical"` on every vertical divider: assistive technology hears it, and it forces the orientation. A purely decorative divider can take `aria-hidden="true"` instead.
+- Inside `<menu>`, `<ul>` or `<ol>`, use `<li role="separator" class="divider"></li>`. In a listbox, where a separator isn't allowed, use `role="none"`.
+- Theming: `--divider-width`, `--divider-style`, `--divider-color`, `--divider-strong-color`.
+
+#### A. Horizontal
 ```html
 <hr class="divider">
+<hr class="divider divider--strong">
+<hr class="divider divider--dashed">
 ```
 
-#### B. Vertical Divider (Inside Row Container via Container Style Queries)
+#### B. Vertical (in a row)
 ```html
-<!-- Automatically adopts vertical border-inline-start when container has --direction: row -->
 <div class="button-group">
   <button type="button" class="button button--subtle"><span>Dashboard</span></button>
-  <hr class="divider">
+  <hr class="divider" aria-orientation="vertical">
   <button type="button" class="button button--subtle"><span>Settings</span></button>
 </div>
+```
+
+#### C. In a Menu
+```html
+<menu class="menu" role="menu" aria-label="Document options">
+  <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Duplicate</span></button></li>
+  <li role="separator" class="divider"></li>
+  <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><span>Delete</span></button></li>
+</menu>
 ```
 
 ### 16. Breadcrumb Primitive
@@ -1719,10 +1684,10 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
 #### A. Numbered Pagination Cluster (.pagination + .button-group)
 ```html
 <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
-  <span class="button button--selected" aria-current="page"><span>1</span></span>
+  <span class="button is-active" aria-current="page"><span>1</span></span>
   <a class="button" href="/page/2"><span>2</span></a>
   <a class="button" href="/page/3"><span>3</span></a>
-  <hr class="divider">
+  <hr class="divider" aria-orientation="vertical">
   <a class="button" href="/page/10"><span>10</span></a>
 </nav>
 ```
@@ -1731,16 +1696,16 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
 ```html
 <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
   <span aria-disabled="true" class="button">
-    <svg class="icon dir" width="24" height="24" aria-hidden="true" focusable="false">
+    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
       <use href="#ChevronLeft"/>
     </svg>
     <span class="visually-hidden">Previous page</span>
   </span>
-  <hr class="divider">
+  <hr class="divider" aria-orientation="vertical">
   <span class="button-group__content">Page 1 of 10</span>
-  <hr class="divider">
+  <hr class="divider" aria-orientation="vertical">
   <a class="button" href="/page/2">
-    <svg class="icon dir" width="24" height="24" aria-hidden="true" focusable="false">
+    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
       <use href="#ChevronRight"/>
     </svg>
     <span class="visually-hidden">Next page</span>
@@ -1792,9 +1757,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
         <p>Your preferences have been updated successfully.</p>
       </div>
       <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss notification">
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-          <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-        </svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
     </div>
   </div>
@@ -1810,9 +1773,7 @@ In Design For Humans, `.card` is an **Organism** that composes **Typography Atom
       <p>Unable to sync changes to server.</p>
     </div>
     <button type="button" class="button button--strong button--accent button--icon banner__action" aria-label="Dismiss error">
-      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-        <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-      </svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
     </button>
   </div>
 </div>
@@ -1838,43 +1799,43 @@ Composes Badge, Button, Button Group, and Icon atoms into structural hook classe
 - `.batch-actions__summary`: Count badge and selection description label.
 - `.batch-actions__actions`: Button-group containing bulk operations.
 - `.batch-actions__dismiss`: Action to clear or cancel the selection.
-- `.batch-actions__separator`: Vertical divider rule.
+- `.divider` between groups: vertical, because the bar sets `--direction: row`. Decorative here, so `aria-hidden="true"`.
 
 ```html
 <!-- Floating Batch Actions Bar -->
 <aside class="batch-actions" role="toolbar" aria-label="Batch operations">
   <!-- Summary Hook -->
   <div class="batch-actions__summary">
-    <span class="badge badge--accent badge--round"><span>3</span></span>
+    <span class="badge badge--accent"><span class="badge__text">3</span></span>
     <span class="micro-heading">3 items selected</span>
   </div>
 
-  <hr class="batch-actions__separator" aria-hidden="true" />
+  <hr class="divider" aria-hidden="true" />
 
   <!-- Actions Hook -->
   <div class="batch-actions__actions">
     <div class="button-group button-group--tight buttons-sm buttons-subtle">
       <button type="button" class="button">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
         <span>Export</span>
       </button>
       <button type="button" class="button">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
         <span>Edit</span>
       </button>
-      <button type="button" class="button button--destructive">
-        <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+      <button type="button" class="button button--danger">
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
         <span>Delete</span>
       </button>
     </div>
   </div>
 
-  <hr class="batch-actions__separator" aria-hidden="true" />
+  <hr class="divider" aria-hidden="true" />
 
   <!-- Dismiss Hook -->
   <div class="batch-actions__dismiss">
     <button type="button" class="button button--subtle button--icon button--sm" aria-label="Clear selection">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       <span class="visually-hidden">Clear selection</span>
     </button>
   </div>
@@ -1883,7 +1844,7 @@ Composes Badge, Button, Button Group, and Icon atoms into structural hook classe
 <!-- Docked Variant (Embedded inside Card or Table container) -->
 <aside class="batch-actions batch-actions--docked" role="toolbar" aria-label="Table batch actions">
   <div class="batch-actions__summary">
-    <span class="badge badge--accent badge--round"><span>5</span></span>
+    <span class="badge badge--accent"><span class="badge__text">5</span></span>
     <span>5 selected</span>
   </div>
   <div class="batch-actions__actions">
@@ -1963,9 +1924,9 @@ The canonical Holy Grail application shell. Grid rows: `auto minmax(0, 1fr) auto
     <!-- Slim Navigation Rail (4.5rem) -->
     <aside class="sidebar sidebar--rail" aria-label="Primary Navigation">
       <div class="sidebar__scroller">
-        <nav class="tab-list tabs-vertical tabs-plain tabs-sm">
+        <nav class="tab-list tab-list--vertical tab-list--plain tab-list--sm" aria-label="Primary">
           <ul>
-            <li><button type="button" class="tab is-active" aria-current="page" aria-label="Studio"><svg class="icon"><use href="#Radio"/></svg></button></li>
+            <li><a href="/studio" class="tab tab--icon" aria-current="page"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Radio"/></svg><span class="tab__text">Studio</span></a></li>
           </ul>
         </nav>
       </div>
@@ -1974,9 +1935,9 @@ The canonical Holy Grail application shell. Grid rows: `auto minmax(0, 1fr) auto
     <!-- Contextual Submenu Sidebar -->
     <aside class="sidebar sidebar--flush" aria-label="Sub-navigation">
       <div class="sidebar__scroller">
-        <nav class="tab-list tabs-vertical tabs-plain tabs-flush tabs-sm">
+        <nav class="tab-list tab-list--vertical tab-list--plain tab-list--flush tab-list--sm" aria-label="Sub-navigation">
           <ul>
-            <li><a href="#feed" class="tab is-active" aria-current="page"><span class="tab__text">Live Feed</span></a></li>
+            <li><a href="#feed" class="tab" aria-current="page"><span class="tab__text">Live Feed</span></a></li>
           </ul>
         </nav>
       </div>
@@ -2001,34 +1962,32 @@ The canonical Holy Grail application shell. Grid rows: `auto minmax(0, 1fr) auto
 <aside class="sidebar sidebar--sticky" aria-label="Docs Nav">
   <header class="sidebar__header"><h3 class="small-heading">Sections</h3></header>
   <div class="sidebar__scroller">...</div>
-  <footer class="sidebar__footer"><span class="micro-text">v2.4.0</span></footer>
+  <footer class="sidebar__footer"><span class="small-text">v2.4.0</span></footer>
 </aside>
 
 <!-- 2. Flush Sidebar for Edge-to-Edge Tabs -->
 <aside class="sidebar sidebar--flush" aria-label="File Tree">
   <div class="sidebar__scroller">
-    <nav class="tab-list tabs-flush tabs-vertical">...</nav>
+    <nav class="tab-list tab-list--flush tab-list--vertical" aria-label="Files">...</nav>
   </div>
 </aside>
 
 <!-- 3. Slim Navigation Rail -->
 <aside class="sidebar sidebar--rail" aria-label="Global Rail">
   <div class="sidebar__scroller">
-    <nav class="tab-list tabs-vertical tabs-plain tabs-sm">...</nav>
+    <nav class="tab-list tab-list--vertical tab-list--plain tab-list--sm" aria-label="Global">...</nav>
   </div>
 </aside>
 ```
 
-#### F. Mobile Floating Bottom Tab Dock (`.tabs-docked`)
-Fixed floating bottom navigation bar for mobile viewports (`md:hide`), elevating `tab-list` primitives:
+#### F. Mobile Bottom Tab Dock (`.tab-list--docked`)
+A floating tab list fixed to the bottom of the viewport on small screens (`md:hide`). See §24.
 ```html
-<div class="tabs-docked md:hide" style="z-index: var(--z-index-sticky, 100);">
-  <nav class="tab-list tabs-button tabs-round tabs-floating" aria-label="Mobile Bottom Navigation">
-    <button type="button" class="tab is-active" aria-current="page" aria-label="Home"><svg class="icon"><use href="#Home"/></svg></button>
-    <button type="button" class="tab" aria-label="Schedule"><svg class="icon"><use href="#Calendar"/></svg></button>
-    <button type="button" class="tab" aria-label="Settings"><svg class="icon"><use href="#Settings"/></svg></button>
-  </nav>
-</div>
+<nav class="tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked md:hide" aria-label="Mobile">
+  <a href="/" class="tab tab--icon" aria-current="page"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg><span class="tab__text">Home</span></a>
+  <a href="/schedule" class="tab tab--icon"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#List"/></svg><span class="tab__text">Schedule</span></a>
+  <a href="/settings" class="tab tab--icon"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg><span class="tab__text">Settings</span></a>
+</nav>
 ```
 
 ### 19b. Grid & Grid Carousel Primitives (`.grid`, `.grid--carousel`)
@@ -2068,41 +2027,64 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
 
 ### 20. Text & Heading Primitives (Typography Presets)
 
-#### A. Standalone Headings Hierarchy
+Nine atoms, one step of the scale each. The class sets the look; choose the element for its meaning (an `h2` can look like a `.small-heading`). The audit is in `docs/audit/text.md`.
+
+| Class | Job | Step |
+| :--- | :--- | :--- |
+| `.display-title` | Hero and cover titles | 5 (fluid 5–8) |
+| `.title` | Page titles | 3 (fluid 3–5) |
+| `.heading` | Section headings | 2 (fluid 2–3) |
+| `.subheading` | Sub-section headings | 1 |
+| `.small-heading` | Card and panel headings | 0 |
+| `.micro-heading` | Uppercase eyebrow and group labels | −1 |
+| `.large-text` | Lead paragraphs | 1 |
+| `.text` | Body copy | 0 |
+| `.small-text` | Hints, captions, metadata | −1 |
+
+- **Fixed by default.** Fluid, `cq` and compact sizing come from the container (§ Core Law 3).
+- Headings balance their lines; body text uses `text-wrap: pretty`.
+- `.text` and `.large-text` stop at `--body-measure` (66ch). Set `--body-measure: none` on a container to lift it.
+- No literal fallbacks: if tokens fail to load, text inherits its parent's size and stays legible.
+- Colour and weight come from utilities: `.text-muted` (or `.text-color-muted`), `.font-bold`, `.font-serif`, `.font-mono`. There is no `.strong-text`, `.alt-text`, `.micro-text`, `.caption` or `.nano-*`.
+
+#### A. Headings
 ```html
 <h1 class="display-title">Display Title</h1>
-<h2 class="title">Editorial Title</h2>
-<h3 class="heading">Section Heading</h3>
-<h4 class="subheading">Article Subheading</h4>
-<h5 class="small-heading">Card Subheading</h5>
-<span class="micro-heading">Category Eyebrow</span>
+<h1 class="title">Page Title</h1>
+<h2 class="heading">Section Heading</h2>
+<h3 class="subheading">Sub-section Heading</h3>
+<h4 class="small-heading">Card Heading</h4>
+<p class="micro-heading text-muted">Category Eyebrow</p>
 ```
 
-#### B. Block Text Styles
+#### B. Body Text
 ```html
-<p class="large-text">Editorial lead-in paragraph text.</p>
-<p class="text">Standard body paragraph styled with design system line-height and font scale.</p>
-<p class="strong-text text">Emphasized body text with strong token weight.</p>
-<p class="small-text">Secondary caption, timestamp, or form hint.</p>
-<p class="micro-text">Compact legal disclaimer or fine-print.</p>
+<p class="large-text">Editorial lead-in paragraph.</p>
+<p class="text">Body copy for reading.</p>
+<p class="small-text text-muted">Updated 2 days ago</p>
 ```
 
-#### C. Adaptive & Fixed Scaling via Utilities
+#### C. Sizing Modes
 ```html
-<!-- Container-adaptive scaling (cqi units via .font-sizing-cq) -->
+<!-- Fluid: headings and body grow with the viewport -->
+<article class="font-sizing-fluid">
+  <h1 class="title">Fluid Title</h1>
+  <p class="text">Fluid body copy.</p>
+</article>
+
+<!-- Container: sized to the container's width -->
 <div class="font-sizing-cq" style="container-type: inline-size;">
-  <h2 class="title">Container Adaptive Title</h2>
-  <h3 class="heading">Container Adaptive Heading</h3>
-  <p class="text">Container Adaptive Body</p>
+  <h2 class="heading">Container Heading</h2>
+  <p class="text">Container body copy.</p>
 </div>
 
-<!-- Locked fixed scale steps (via .font-sizing-fixed) -->
-<div class="font-sizing-fixed">
-  <h2 class="title">Fixed Scale Title</h2>
-  <h3 class="heading">Fixed Scale Heading</h3>
-  <p class="text">Fixed Scale Body</p>
+<!-- Compact: one step down -->
+<div class="font-sizing-compact">
+  <h2 class="heading">Compact Heading</h2>
 </div>
 ```
+
+---
 
 ### 21. Alert Placement (Full-Width Site Announcements & Pinned Banners)
 `banner` is the only visual component for announcements. An alert is a banner with `role="alert"` (urgent) or `role="status"` (non-critical). `.alert` is a placement container only (sticky, top, bottom); it must not restyle the banner or define its own `--alert-*` tokens. Duplicate alert tokens and styles are pending removal.
@@ -2117,9 +2099,7 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
         <p>Services will undergo maintenance on Sunday from 02:00 to 04:00 UTC.</p>
       </div>
       <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss alert">
-        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-          <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-        </svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
     </div>
   </div>
@@ -2134,9 +2114,7 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
       <p><strong>New Release:</strong> Component library v2.0 is now available.</p>
     </div>
     <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss announcement">
-      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-        <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-      </svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
     </button>
   </div>
 </aside>
@@ -2181,9 +2159,9 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
 #### C. Cluster Primitive (.cluster)
 ```html
 <div class="cluster">
-  <span class="badge badge--accent">Design Tokens</span>
-  <span class="badge badge--success">WCAG AAA</span>
-  <span class="chip">v2.0</span>
+  <span class="chip"><span class="chip__text">Design Tokens</span></span>
+  <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
+  <span class="chip chip--subtle"><span class="chip__text">v2.0</span></span>
 </div>
 ```
 
@@ -2214,12 +2192,8 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
   popovertarget="tip-save"
   style="anchor-name: --anchor-save;"
 >
-  <span class="visually-hidden">Save Document</span>
-  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-    <polyline points="7 3 7 8 15 8"></polyline>
-  </svg>
+  <span class="visually-hidden">Duplicate document</span>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
 </button>
 
 <!-- Native Inverted Popover Tooltip -->
@@ -2229,7 +2203,7 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
   class="tooltip"
   style="position-anchor: --anchor-save;"
 >
-  Save document (⌘S)
+  Duplicate document (⌘D)
 </div>
 ```
 
@@ -2256,306 +2230,245 @@ Switches to horizontal snap-scroller below `md` (<= 768px), while expanding into
 </div>
 ```
 
-### 24. Tabs System (Tab Atom, Tab List Molecule & Tabbed Content Organism)
+### 24. Tabs (Tab Atom, Tab List Molecule & Tabbed Content Organism)
+Three tiers that work as one. The audit is in `docs/audit/tab.md`.
+1. **`.tab` (atom):** one tab: a `<button role="tab">` in a tablist, or an `<a>` in navigation. Its only modifier is `.tab--icon`.
+2. **`.tab-list` (molecule):** owns every axis of its tabs and draws one selection indicator that slides to the selected tab (anchor positioning, scoped to the list). It works on its own as site navigation, a sub-nav or a floating dock.
+3. **`.tabbed-content` (organism):** lays out a tab list and its `.tab-panel`s.
 
-The tabs system in Design For Humans is decomposed across three distinct architectural tiers:
-1. **Atom (`.tab`):** Individual interactive trigger (button or link).
-   - **Flavours:** Regular Tab (default underline indicator) and Button Tab (`.tab--button`).
-   - **Variations:** Default (outline / underline), Subtle (`.tab--subtle`, matching `.button--subtle` with translucent tinted surface and borderless treatment), Plain (`.tab--plain`, borderless and transparent), and Round (`.tab--round`).
-   - Registers `anchor-name: --tab-selected` when selected.
-2. **Molecule (`.tab-list`):** Collection container for tabs with `anchor-scope: --tab-selected` and a shared sliding indicator (`::before`). Can live **standalone** as a top-level site nav bar, sub-nav, or floating dock without any organism wrapper. Supports `.tabs-subtle` and `.tabs-plain` container variations.
-3. **Organism (`.tabbed-content`):** Spatial layout coordinator between a `.tab-list` and content panels (`.tab-panel`).
-*Legacy aliases pending removal (never use):* `.tabs` (use `.tabbed-content`) and `.tabs__panel` (use `.tab-panel`).
+| Axis | List modifiers | Flag |
+| :--- | :--- | :--- |
+| Style | (underline), `--segmented` | `--tab-list-style` |
+| Prominence | (default), `--subtle` (segmented only), `--plain` | `--tab-list-prominence` |
+| Size | (default), `--sm` | `--tab-list-size`; a compact container steps to `--sm` |
+| Corners | (default), `--round` | `--tab-list-corners` |
 
-#### A. Standalone Navigation Tab List (Molecule + Atom)
+Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scrollable` (one row that scrolls; lists wrap by default), `--fill`, `--floating`, `--docked` (fixed to the bottom of the viewport), `--flush`, `--tight`. Organism: `.tabbed-content--vertical` and `--end` put the list beside the panels and make it vertical.
+
+- **Selected state is ARIA only:** `aria-selected="true"` in a tablist, `aria-current` (any value but `"false"`) in navigation. No class.
+- **Every variant marks the selected tab at 3:1 or more** with a line (underline) or a fill (segmented), plus bold. Plain lists have no rule or border, so the selected tab also takes the accent colour.
+- **Underline is for navigation and sections; segmented switches a view.**
+- **Hover changes the surface, never the text colour.**
+- **Size:** tabs are 48px in every orientation. `--sm` is 32px with a 48px hit area, unless the product opts into fine-pointer targets.
+- **Flush:** in a flush card body or flush sidebar, `--flush` runs tabs edge to edge and lines their labels up with the content through `--tab-list-inset`, which those containers set.
+- **Keyboard:** for `role="tablist"`, the product supplies the WAI-ARIA tabs pattern: roving `tabindex` (only the selected tab is in the tab order), arrow keys between tabs (up and down when vertical), Home and End. Each panel has `tabindex="0"`. Navigation lists of links need none of this.
+- **Icon-only tabs:** `.tab--icon`, with the label kept in `.tab__text`. `.hide-labels` on the list, or `--ui-labels: hidden` on a container, collapses labels to icons.
+- **Counts:** hide a badge from assistive technology and spell the count out in visually hidden text.
+
+#### A. Navigation
 ```html
-<!-- Standalone Navigation Bar (No organism wrapper needed) -->
 <nav class="tab-list" aria-label="Repository sections">
   <a href="/repo/code" class="tab" aria-current="page"><span class="tab__text">Code</span></a>
-  <a href="/repo/issues" class="tab"><span class="tab__text">Issues</span> <span class="badge badge--subtle"><span>14</span></span></a>
-  <a href="/repo/pulls" class="tab"><span class="tab__text">Pull Requests</span></a>
+  <a href="/repo/issues" class="tab">
+    <span class="tab__text">Issues</span>
+    <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span>
+    <span class="visually-hidden">, 14 open</span>
+  </a>
+  <a href="/repo/pulls" class="tab"><span class="tab__text">Pull requests</span></a>
 </nav>
 
-<!-- Semantic <ul> navigation tabs (display: contents preserves layout & anchor tracking) -->
-<nav class="tab-list" aria-label="Site Navigation">
+<!-- As a list: <ul> and <li> take display: contents -->
+<nav class="tab-list tab-list--plain" aria-label="Site">
   <ul>
     <li><a href="/docs" class="tab" aria-current="page"><span class="tab__text">Docs</span></a></li>
     <li><a href="/components" class="tab"><span class="tab__text">Components</span></a></li>
-    <li><a href="/showcase" class="tab"><span class="tab__text">Showcase</span></a></li>
   </ul>
 </nav>
 ```
 
-#### B. Tabbed Content with Panels (Organism + Molecule + Atom)
+#### B. Tabbed Content
 ```html
-<!-- Interactive WAI-ARIA Tabbed Content -->
 <div class="tabbed-content">
-  <div class="tab-list" role="tablist" aria-label="Account Settings">
-    <button type="button" role="tab" id="tab-1" class="tab" aria-selected="true" aria-controls="panel-1" tabindex="0">
+  <div class="tab-list" role="tablist" aria-label="Account settings">
+    <button type="button" role="tab" id="tab-1" class="tab" aria-selected="true" aria-controls="panel-1">
       <span class="tab__text">Overview</span>
     </button>
     <button type="button" role="tab" id="tab-2" class="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
       <span class="tab__text">Security</span>
-      <span class="badge badge--round badge--accent"><span>2</span></span>
     </button>
   </div>
-
-  <div id="panel-1" role="tabpanel" class="tab-panel" aria-labelledby="tab-1" tabindex="0">
-    <p>Overview panel content.</p>
-  </div>
-  <div id="panel-2" role="tabpanel" class="tab-panel" aria-labelledby="tab-2" tabindex="0" hidden>
-    <p>Security panel content.</p>
-  </div>
+  <div id="panel-1" role="tabpanel" class="tab-panel" aria-labelledby="tab-1" tabindex="0">…</div>
+  <div id="panel-2" role="tabpanel" class="tab-panel" aria-labelledby="tab-2" tabindex="0" hidden>…</div>
 </div>
+
+<!-- Beside the panels: the list becomes vertical -->
+<div class="tabbed-content tabbed-content--vertical">…</div>
 ```
 
-#### C. Button / Segmented Tabs: Default, Subtle & Round
+#### C. Segmented
 ```html
-<!-- Default Outline Segmented Tabs -->
-<nav class="tab-list tabs-button" aria-label="View Modes">
-  <a href="/grid" class="tab" aria-current="page"><span class="tab__text">Grid</span></a>
-  <a href="/list" class="tab"><span class="tab__text">List</span></a>
-</nav>
-
-<!-- Subtle Segmented Pill Tabs (.tab-list.tabs-button.tabs-round.tabs-subtle) -->
-<!-- Gives tabs the same subtle translucent appearance as .button--subtle -->
-<div class="tab-list tabs-button tabs-round tabs-subtle" role="tablist" aria-label="Frequency Switcher">
-  <button type="button" class="tab tab--button tab--subtle" role="tab" aria-selected="true" tabindex="0">
+<div class="tab-list tab-list--segmented tab-list--subtle tab-list--round" role="tablist" aria-label="Billing period">
+  <button type="button" role="tab" class="tab" aria-selected="true">
     <span class="tab__text">Monthly</span>
   </button>
-  <button type="button" class="tab tab--button tab--subtle" role="tab" aria-selected="false" tabindex="-1">
+  <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1">
     <span class="tab__text">Annual</span>
-    <span class="badge badge--sm badge--accent"><span>Save 20%</span></span>
+    <span class="status status--accent status--sm"><span class="status__text">Save 20%</span></span>
   </button>
 </div>
-```
 
-#### D. Vertical Tabbed Content (.tabs-vertical)
-```html
-<div class="tabbed-content tabs-vertical">
-  <div class="tab-list tabs-vertical" role="tablist" aria-label="Settings Categories">
-    <button type="button" role="tab" id="vtab-general" class="tab" aria-selected="true" aria-controls="vpanel-general">
-      <span class="tab__text">General</span>
-    </button>
-    <button type="button" role="tab" id="vtab-security" class="tab" aria-selected="false" aria-controls="vpanel-security">
-      <span class="tab__text">Security</span>
-    </button>
-  </div>
-
-  <div id="vpanel-general" role="tabpanel" class="tab-panel" aria-labelledby="vtab-general" tabindex="0">
-    <p>General configuration settings.</p>
-  </div>
-  <div id="vpanel-security" role="tabpanel" class="tab-panel" aria-labelledby="vtab-security" tabindex="0" hidden>
-    <p>Passkeys and security controls.</p>
-  </div>
-</div>
-```
-
-#### E. Plain Horizontal Navigation (.tab-list.tabs-plain, .tab--plain)
-```html
-<!-- Clean Navigation Bar without Bottom Border Shadow or Underline Indicator -->
-<nav class="tab-list tabs-plain" aria-label="Main Navigation">
-  <a href="/articles" class="tab tab--plain" aria-current="page"><span class="tab__text">Articles</span></a>
-  <a href="/components" class="tab tab--plain"><span class="tab__text">Components</span></a>
-  <a href="/tokens" class="tab tab--plain"><span class="tab__text">Tokens</span></a>
-  <a href="/about" class="tab tab--plain"><span class="tab__text">About</span></a>
-</nav>
-```
-
-#### F. Responsive Icon Tabs (.tab--icon, .hide-labels)
-```html
-<!-- Icon-Only Tabs (MANDATORY: use .visually-hidden or .tab__text inside tab for screen readers) -->
-<div class="tab-list tabs-button tabs-round" role="tablist" aria-label="Editor View Modes">
-  <button type="button" role="tab" class="tab tab--icon" aria-selected="true" tabindex="0">
-    <span class="visually-hidden">Code View</span>
-    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
+<!-- Icon-only -->
+<div class="tab-list tab-list--segmented tab-list--round" role="tablist" aria-label="Editor view">
+  <button type="button" role="tab" class="tab tab--icon" aria-selected="true">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
+    <span class="tab__text">Code</span>
   </button>
   <button type="button" role="tab" class="tab tab--icon" aria-selected="false" tabindex="-1">
-    <span class="visually-hidden">Design Canvas</span>
-    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
+    <span class="tab__text">Design</span>
   </button>
 </div>
+```
 
-<!-- Container-Adaptive Responsive Tab List (Collapses text labels automatically in narrow containers) -->
-<nav class="tab-list hide-labels" aria-label="Responsive Navigation">
-  <a href="#feed" class="tab" aria-current="page">
-    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Home"/></svg>
-    <span class="tab__text">Feed</span>
+#### D. Container Flags
+```html
+<!-- Every tab list inside follows; a modifier on a list beats the flag -->
+<aside class="toolbar" style="--tab-list-style: segmented; --tab-list-size: sm;">…</aside>
+```
+
+#### E. Layout
+```html
+<!-- One row that scrolls, edges fading while there is more -->
+<nav class="tab-list tab-list--scrollable" aria-label="Filters">…</nav>
+
+<!-- Vertical, flush in a flush sidebar -->
+<aside class="sidebar sidebar--flush" aria-label="Settings">
+  <div class="sidebar__scroller">
+    <nav class="tab-list tab-list--vertical tab-list--flush" aria-label="Settings sections">…</nav>
+  </div>
+</aside>
+
+<!-- Floating bar docked to the bottom of the viewport -->
+<nav class="tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked md:hide" aria-label="App">
+  <a href="/" class="tab tab--icon" aria-current="page">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
+    <span class="tab__text">Home</span>
   </a>
-  <a href="#explore" class="tab">
-    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
-    <span class="tab__text">Explore</span>
+  <a href="/search" class="tab tab--icon">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+    <span class="tab__text">Search</span>
   </a>
-</nav>
-```
-
-#### G. Floating Glassmorphic Dock (.tab-list.tabs-floating, .tabs-docked)
-```html
-<!-- Centered Floating Pill Navigation with Backdrop Blur and Sliding Pill Indicator -->
-<nav class="tab-list tabs-floating" aria-label="Floating Navigation">
-  <a href="#overview" class="tab" aria-current="page"><span class="tab__text">Overview</span></a>
-  <a href="#analytics" class="tab"><span class="tab__text">Analytics</span></a>
-  <a href="#reports" class="tab"><span class="tab__text">Reports</span></a>
-</nav>
-
-<!-- Pinned Bottom Dock (.tabs-docked) -->
-<div class="tab-list tabs-floating tabs-button tabs-round tabs-docked" role="tablist" aria-label="Quick Actions">
-  <button type="button" role="tab" class="tab tab--icon" aria-selected="true" tabindex="0">
-    <span class="visually-hidden">Search</span>
-    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-  </button>
-  <button type="button" role="tab" class="tab tab--icon" aria-selected="false" tabindex="-1">
-    <span class="visually-hidden">Code</span>
-    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
-  </button>
-  <button type="button" role="tab" class="tab tab--icon" aria-selected="false" tabindex="-1">
-    <span class="visually-hidden">Notifications</span>
-    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
-  </button>
-</div>
-
-#### H. Tab-List Wrapping & Horizontal Scrolling (.tabs-scrollable, .tabs-wrap)
-By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visible`).
-- `.tabs-scrollable`: Constrains tabs to a single row (`flex-wrap: nowrap; overflow-x: auto; max-inline-size: stretch; scrollbar-width: none;`). Perfect for mobile category strips and dense horizontal navigation bars.
-- `.tabs-wrap`: Explicitly reinforces multi-row wrapping when nested inside scrollable parent containers.
-
-```html
-<!-- Scrollable Single-Row Tabs with Hidden Scrollbar -->
-<nav class="tab-list tabs-scrollable tabs-button tabs-round tabs-sm" aria-label="Filter Tags">
-  <button type="button" class="tab is-active" aria-current="page"><span>All Projects</span></button>
-  <button type="button" class="tab"><span>Design Tokens</span></button>
-  <button type="button" class="tab"><span>Accessibility</span></button>
-  <button type="button" class="tab"><span>Web Standards</span></button>
-  <button type="button" class="tab"><span>Performance</span></button>
-</nav>
-
-<!-- Explicit Multi-Row Wrapping Tabs -->
-<nav class="tab-list tabs-wrap tabs-button tabs-subtle" aria-label="Topic Tags">
-  <button type="button" class="tab"><span>Typography</span></button>
-  <button type="button" class="tab"><span>Color Palette</span></button>
-  <button type="button" class="tab"><span>Elevation</span></button>
 </nav>
 ```
 
 ### 25. Progress & Meter Primitives
+`<progress>` shows how far a task has got; `<meter>` shows a measurement within a known range. Both live in `atoms/progress.css` and are styled by class only (bare elements keep browser rendering). The audit is in `docs/audit/progress-meter.md`.
 
-#### A. Progress Primitive (Task Completion Indicator)
+| Atom | Axes | Container flags |
+| :--- | :--- | :--- |
+| `.progress` | Size (8px, `--sm` 4px, `--lg` 16px); intent (accent default, `--info`, `--success`, `--warning`, `--danger`); corners (`--round`) | `--progress-size`, `--progress-intent`, `--progress-corners` |
+| `.meter` | Size (as progress); corners (`--round`) | `--meter-size`, `--meter-corners` |
+
+- **Name every bar and state its value as text beside it.** The bar backs up the text, so colour never carries the meaning alone (WCAG 1.4.1) and the empty track needn't reach 3:1.
+- **Meter colour follows the value.** With `low`, `high` and `optimum` set, the browser picks the region: optimum is success, the next warning, the worst danger. With none set, the meter fills in accent. Meter has no intent classes.
+- **Indeterminate progress** has no `value`. Put `aria-busy="true"` on the region being loaded, never on the progress. Under reduced motion the sweep becomes a static hatch.
+- A compact container (`--ui-sizing: compact`) steps both to `--sm`.
+
+#### A. Progress
 ```html
-<!-- Determinate Progress in Field Wrapper with Label and Readout -->
+<!-- Determinate, labelled, with a readout -->
 <div class="field">
   <div class="field__header">
-    <label for="upload-progress" class="field__label">Uploading asset...</label>
-    <span class="field__result" id="upload-val">68%</span>
+    <label for="upload-progress" class="field__label">Uploading asset</label>
+    <span class="field__result">68%</span>
   </div>
-  <progress 
-    id="upload-progress" 
-    class="progress" 
-    value="68" 
-    max="100" 
-    aria-describedby="upload-val"
-  >
-    68%
-  </progress>
+  <progress id="upload-progress" class="progress" value="68" max="100">68%</progress>
 </div>
 
-<!-- Small / Compact Progress -->
-<progress class="progress progress--sm" value="45" max="100">45%</progress>
+<!-- Size, intent and corners -->
+<progress class="progress progress--sm" value="45" max="100" aria-label="Lesson progress">45%</progress>
+<progress class="progress progress--lg progress--round" value="85" max="100" aria-label="Course progress">85%</progress>
+<progress class="progress progress--success" value="100" max="100" aria-label="Backup complete">100%</progress>
+<progress class="progress progress--danger" value="30" max="100" aria-label="Upload failed at 30%">30%</progress>
 
-<!-- Large Progress -->
-<progress class="progress progress--lg" value="85" max="100">85%</progress>
-
-<!-- Indeterminate Animated Progress (Background Task / Live Region) -->
-<div class="field">
-  <label for="sync-progress" class="field__label">Syncing data with cloud...</label>
-  <progress id="sync-progress" class="progress" aria-busy="true">Syncing...</progress>
-</div>
-
-<!-- Semantic Status Variants -->
-<progress class="progress progress--success" value="100" max="100">100%</progress>
-<progress class="progress progress--warning" value="40" max="100">40%</progress>
-<progress class="progress progress--danger" value="20" max="100">20%</progress>
+<!-- Indeterminate: aria-busy on the region being loaded -->
+<section aria-busy="true" aria-labelledby="sync-label">
+  <div class="field">
+    <label id="sync-label" for="sync-progress" class="field__label">Syncing data</label>
+    <progress id="sync-progress" class="progress">Syncing</progress>
+  </div>
+</section>
 ```
 
-#### B. Meter Primitive (Scalar Range & Gauge Measurement)
+#### B. Meter
 ```html
-<!-- Storage Quota Gauge (Native Optimum / Safe Range) -->
+<!-- With thresholds: colour follows the region the value falls in -->
 <div class="field">
   <div class="field__header">
-    <label for="disk-meter" class="field__label">Server Disk Usage</label>
-    <span class="field__result" id="disk-val">25 GB of 100 GB</span>
+    <label for="disk-meter" class="field__label">Disk use</label>
+    <span class="field__result">72 GB of 100 GB</span>
   </div>
-  <meter 
-    id="disk-meter" 
-    class="meter" 
-    value="25" 
-    min="0" 
-    max="100" 
-    low="60" 
-    high="85" 
-    optimum="20"
-    aria-describedby="disk-val"
-  >
-    25 GB
-  </meter>
+  <meter id="disk-meter" class="meter" value="72" min="0" max="100" low="60" high="85" optimum="20">72 GB</meter>
 </div>
 
-<!-- Sub-Optimum Warning Range (Automatic color calculation) -->
-<meter class="meter" value="72" min="0" max="100" low="60" high="85" optimum="20">72 GB</meter>
+<!-- Without thresholds: a plain measurement, filled in accent -->
+<meter class="meter meter--sm" value="12" min="0" max="40" aria-label="Seats booked: 12 of 40">12 of 40</meter>
 
-<!-- Critical Danger Range (Automatic color calculation) -->
-<meter class="meter" value="94" min="0" max="100" low="60" high="85" optimum="20">94 GB</meter>
-
-<!-- Password Strength Meter -->
+<!-- Password strength -->
 <div class="field">
   <label for="pwd-field" class="field__label">Password</label>
-  <input id="pwd-field" type="password" class="input" value="SuperSecure#Pass2026!" />
-  <div style="inline-size: 100%; margin-block-start: var(--spacing-4);">
-    <span class="field__hint" id="pwd-strength">Strength: Strong</span>
-    <meter id="pwd-meter" class="meter meter--sm" value="4" min="0" max="4" low="2" high="3" optimum="4" aria-labelledby="pwd-strength">4 of 4</meter>
-  </div>
+  <input id="pwd-field" type="password" class="input" aria-describedby="pwd-strength" />
+  <p id="pwd-strength" class="field__hint">Strength: strong</p>
+  <meter class="meter meter--sm" value="4" min="0" max="4" low="2" high="3" optimum="4" aria-labelledby="pwd-strength">4 of 4</meter>
 </div>
 ```
 
 ### 26. Skeleton Primitive (Content Loading Placeholders)
+A placeholder that holds the space of content still loading, so nothing moves when it arrives. The audit is in `docs/audit/skeleton.md`.
+
+| Use | Markup |
+| :--- | :--- |
+| Shape | `.skeleton` with `--text`, `--heading`, `--avatar`, `--button`, `--input`, `--badge` or `--media`. A bare `.skeleton` is a block sized by `--skeleton-width` and `--skeleton-height`. |
+| Companion | `.skeleton` on `.avatar`, `.button`, `.input`, `.textarea`, `.select`, `.badge`, `.chip`, `.status` or `.kbd`. The atom keeps its own box; the skeleton replaces the paint. |
+| Width | `--w-50`, `--w-75`, `--w-90`; any other with `--skeleton-width` (per element, not inherited) |
+| Motion | Shimmer (default), `--pulse`; `--skeleton-motion: shimmer \| pulse \| none` on a container |
+
+- **Text lines size from the text atom they sit in.** `--text` and `--heading` are one line box (`1lh`) high with the bar at cap height. Put them inside the atom the loaded text will use; `--heading` differs only in width (60%). Hold a heading's place with the atom class on a `div`, not on an `h1`–`h6`: a heading with only hidden content is an empty heading.
+- **The fill mixes the text colour** (`--skeleton-color`), so it shows the same on any surface. Increased contrast uses `--skeleton-color-strong`; reduced motion stops the animation; forced colours fill in `GrayText`.
+- **Announce loading.** Every shape takes `aria-hidden="true"`. The region takes `aria-busy="true"` and a `role="status"` message ("Loading activity…"). When loading ends, set `aria-busy="false"` and update or remove the message.
+- A companion control is `disabled` (or not focusable) as well as `aria-hidden`.
+- There is no `.card.skeleton`: a loading card is a card with `aria-busy` and shapes inside.
+
 ```html
-<!-- 1. Text & Heading Placeholders (Mandatory: aria-hidden="true" on decorative shapes) -->
-<span class="skeleton skeleton--heading" aria-hidden="true"></span>
-<span class="skeleton skeleton--text" aria-hidden="true"></span>
-<span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+<!-- Text lines inside text atoms -->
+<div class="small-heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
+<p class="text">
+  <span class="skeleton skeleton--text" aria-hidden="true"></span>
+  <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+</p>
 
-<!-- 2. Shape Placeholders -->
-<div class="skeleton skeleton--avatar" aria-hidden="true"></div>
-<div class="skeleton skeleton--button" aria-hidden="true"></div>
-<div class="skeleton skeleton--badge" aria-hidden="true"></div>
-<div class="skeleton skeleton--media" aria-hidden="true"></div>
+<!-- Shapes -->
+<span class="skeleton skeleton--avatar" aria-hidden="true"></span>
+<span class="skeleton skeleton--button" aria-hidden="true"></span>
+<span class="skeleton skeleton--badge" aria-hidden="true"></span>
+<span class="skeleton skeleton--media" aria-hidden="true"></span>
+<span class="skeleton" aria-hidden="true" style="--skeleton-width: 12rem; --skeleton-height: 2rem;"></span>
 
-<!-- 3. Companion Modifier on Existing Primitives -->
-<div class="avatar skeleton" aria-hidden="true"></div>
-<button type="button" class="button skeleton" aria-hidden="true" disabled>
-  <span>Submit</span>
-</button>
-<span class="badge skeleton" aria-hidden="true">
-  <span>Status</span>
-</span>
+<!-- Companions -->
+<div class="avatar skeleton" aria-hidden="true"><span>AB</span></div>
+<button type="button" class="button skeleton" aria-hidden="true" disabled><span>Submit</span></button>
+<span class="status skeleton" aria-hidden="true"><span class="status__text">Active</span></span>
 
-<!-- 4. Async Loading Container with aria-busy="true" (Zero-CLS Card Composite) -->
-<article class="card card--bordered bg-card" aria-busy="true" aria-label="Loading card content">
+<!-- Loading card -->
+<article class="card card--bordered" aria-busy="true" aria-labelledby="activity-title">
   <div class="card__content">
-    <div class="skeleton skeleton--media" aria-hidden="true"></div>
-    <header class="card__header inline gap-sm align-items-center">
-      <div class="skeleton skeleton--avatar" aria-hidden="true"></div>
-      <div class="stack gap-xs flex-grow">
-        <span class="skeleton skeleton--heading skeleton--w-75" style="margin: 0;" aria-hidden="true"></span>
-        <span class="skeleton skeleton--text skeleton--w-40" style="margin: 0;" aria-hidden="true"></span>
-      </div>
+    <header class="card__header">
+      <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
+      <hgroup class="card__hgroup">
+        <h3 id="activity-title" class="card__title small-heading">Team activity</h3>
+        <p class="card__subtitle small-text"><span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 8rem;"></span></p>
+      </hgroup>
     </header>
-    <div class="card__body stack gap-xs">
-      <span class="skeleton skeleton--text" aria-hidden="true"></span>
-      <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+    <div class="card__body">
+      <p class="visually-hidden" role="status">Loading team activity…</p>
+      <span class="skeleton skeleton--media" aria-hidden="true"></span>
+      <p class="text">
+        <span class="skeleton skeleton--text" aria-hidden="true"></span>
+        <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+      </p>
     </div>
-    <footer class="card__footer split align-items-center">
-      <div class="skeleton skeleton--badge" aria-hidden="true"></div>
-      <div class="skeleton skeleton--button" style="inline-size: 6rem; min-block-size: 2.25rem;" aria-hidden="true"></div>
+    <footer class="card__footer">
+      <button type="button" class="button button--subtle skeleton" aria-hidden="true" disabled><span>Open</span></button>
     </footer>
   </div>
 </article>
@@ -2566,7 +2479,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 <!-- 1. Standalone Empty State (Search / Filter Miss) -->
 <section class="empty-state" aria-labelledby="empty-search-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="empty-search-title" class="empty-state__title heading">No items found</h3>
@@ -2584,7 +2497,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 <!-- 2. Onboarding / Initial Setup with Primary & Secondary Actions -->
 <section class="empty-state empty-state--bordered" aria-labelledby="empty-setup-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="empty-setup-title" class="empty-state__title heading">Create your first project</h3>
@@ -2594,7 +2507,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   </div>
   <div class="empty-state__actions">
     <button type="button" class="button button--strong button--accent">
-      <svg class="icon" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
       <span>New Project</span>
     </button>
     <button type="button" class="button">
@@ -2608,16 +2521,16 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <div class="card__content">
     <header class="card__header split align-items-center">
       <h4 class="card__title font-size-0 font-bold">Activity</h4>
-      <span class="badge badge--sm">Zero</span>
+      <span class="status status--sm"><span class="status__text">Zero</span></span>
     </header>
     <div class="card__body">
       <div class="empty-state empty-state--flush empty-state--compact" aria-labelledby="card-empty-title">
         <div class="empty-state__visual" aria-hidden="true">
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         </div>
         <div class="empty-state__content">
           <h5 id="card-empty-title" class="empty-state__title small-heading">All caught up!</h5>
-          <p class="empty-state__description text-muted micro-text">
+          <p class="empty-state__description text-muted small-text">
             No pending tasks or unread notifications in this view.
           </p>
         </div>
@@ -2633,7 +2546,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
       <td colspan="100%">
         <div class="empty-state empty-state--compact" aria-labelledby="tbl-empty-title">
           <div class="empty-state__visual" aria-hidden="true">
-            <svg class="icon" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
           </div>
           <div class="empty-state__content">
             <h4 id="tbl-empty-title" class="empty-state__title small-heading">No matching records</h4>
@@ -2648,7 +2561,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 <!-- 5. Semantic Status Variants (Success, Warning, Error / Danger) -->
 <section class="empty-state empty-state--success" aria-labelledby="success-empty-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="success-empty-title" class="empty-state__title">Sync complete</h3>
@@ -2658,7 +2571,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 
 <section class="empty-state empty-state--warning" aria-labelledby="warn-empty-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="warn-empty-title" class="empty-state__title">Subscription expiring</h3>
@@ -2668,7 +2581,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 
 <section class="empty-state empty-state--error" aria-labelledby="err-empty-title">
   <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
   </div>
   <div class="empty-state__content">
     <h3 id="err-empty-title" class="empty-state__title">Connection failed</h3>
@@ -2684,7 +2597,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <label for="framework-combo" class="field__label">Framework</label>
   <div class="combobox">
     <div class="combobox__control" style="anchor-name: --combo-framework;">
-      <svg class="icon combobox__icon-start" width="18" height="18" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+      <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
       <input 
         id="framework-combo"
         type="text" 
@@ -2696,7 +2609,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
         placeholder="Search or select..."
       />
       <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
       </button>
     </div>
 
@@ -2709,7 +2622,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     >
       <li role="option" class="combobox__option" aria-selected="true">
         <span>Web Components</span>
-        <svg class="icon combobox__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
       </li>
       <li role="option" class="combobox__option" aria-selected="false">
         <span>Svelte</span>
@@ -2727,12 +2640,12 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <div class="combobox">
     <div class="combobox__control">
       <div class="combobox__tags">
-        <span class="chip">
-          <span>TypeScript</span>
+        <span class="chip chip--subtle">
+          <span class="chip__text">TypeScript</span>
           <button type="button" class="chip__remove" aria-label="Remove TypeScript">×</button>
         </span>
-        <span class="chip">
-          <span>Design Tokens</span>
+        <span class="chip chip--subtle">
+          <span class="chip__text">Design Tokens</span>
           <button type="button" class="chip__remove" aria-label="Remove Design Tokens">×</button>
         </span>
       </div>
@@ -2745,7 +2658,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
         placeholder="Add tag..."
       />
       <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-        <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
       </button>
     </div>
   </div>
@@ -2756,7 +2669,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <div class="combobox__control">
     <input type="text" class="combobox__input" placeholder="Quick filter..." />
     <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-      <svg class="icon" width="14" height="14" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
     </button>
   </div>
 </div>
@@ -2772,12 +2685,12 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     <!-- Deck Header -->
     <header class="deck__header">
       <div class="deck__status">
-        <span class="status" data-status="online" aria-hidden="true"></span>
+        <span class="status status--success status--plain" aria-hidden="true"></span>
         <h2 class="deck__channel">Deck A • On Air</h2>
       </div>
       <div class="deck__header-actions">
         <button type="button" class="button button--subtle button--icon button--sm" aria-label="Deck options">
-          <svg class="icon"><use href="#Info"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
         </button>
       </div>
     </header>
@@ -2789,13 +2702,13 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
       <div class="deck__track">
         <div class="deck__art-frame" aria-hidden="true">
           <div class="deck__art">
-            <svg class="icon"><use href="#Disc"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg>
           </div>
-          <span class="badge badge--accent badge--sm badge--round deck__badge"><span>LIVE</span></span>
+          <span class="status status--accent status--sm status--round deck__badge"><span class="status__text">LIVE</span></span>
         </div>
         <div class="deck__identity">
           <div class="deck__tags">
-            <span class="chip chip--sm"><span>Heavy Rotation</span></span>
+            <span class="chip chip--subtle chip--sm"><span class="chip__text">Heavy Rotation</span></span>
           </div>
           <h3 class="deck__title">Celestial Horizon</h3>
           <p class="deck__artist">Aura & Tycho — Continuum LP</p>
@@ -2822,13 +2735,13 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
       <!-- Playback Transport Controls -->
       <div class="deck__transport" role="toolbar" aria-label="Playback transport">
         <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
-          <svg class="icon"><use href="#ChevronStart"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
         </button>
         <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback">
-          <svg class="icon"><use href="#Pause"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg>
         </button>
         <button type="button" class="button button--subtle button--icon deck__skip" aria-label="Skip to next track">
-          <svg class="icon"><use href="#ChevronEnd"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg>
         </button>
       </div>
 
@@ -2840,7 +2753,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
         </div>
         <div class="deck__volume-controls">
           <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Toggle mute">
-            <svg class="icon"><use href="#VolumeOn"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
           </button>
           <input type="range" class="range range--sm deck__fader" id="deck-vol" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume level" />
         </div>
@@ -2852,7 +2765,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     <div class="deck__meters" role="region" aria-label="Stereo Master Peak Meters">
       <div class="deck__meters-header">
         <span class="deck__meters-title">Stereo Peak (dBFs)</span>
-        <span class="badge badge--success badge--sm"><span>-1.8 dB Headroom</span></span>
+        <span class="status status--success status--sm"><span class="status__text">-1.8 dB Headroom</span></span>
       </div>
       <div class="deck__channel-meter">
         <span class="deck__meter-ch">L</span>
@@ -2875,7 +2788,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     <div class="deck__body">
       <div class="deck__track">
         <div class="deck__art-frame" aria-hidden="true">
-          <div class="deck__art"><svg class="icon"><use href="#Disc"/></svg></div>
+          <div class="deck__art"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Disc"/></svg></div>
         </div>
         <div class="deck__identity">
           <h3 class="deck__title">Celestial Horizon</h3>
@@ -2884,9 +2797,9 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
       </div>
       <div class="deck__timeline-transport-group">
         <div class="deck__transport" role="toolbar" aria-label="Dock controls">
-          <button type="button" class="button button--subtle button--icon button--sm deck__cue" aria-label="Cue"><svg class="icon"><use href="#ChevronStart"/></svg></button>
-          <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon"><use href="#Pause"/></svg></button>
-          <button type="button" class="button button--subtle button--icon button--sm deck__skip" aria-label="Skip"><svg class="icon"><use href="#ChevronEnd"/></svg></button>
+          <button type="button" class="button button--subtle button--icon button--sm deck__cue" aria-label="Cue"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
+          <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
+          <button type="button" class="button button--subtle button--icon button--sm deck__skip" aria-label="Skip"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
         </div>
         <div class="deck__timeline">
           <input type="range" class="range range--sm deck__scrubber" min="0" max="232" value="134" style="--value: 58%;" aria-label="Seek" />
@@ -2894,7 +2807,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
       </div>
       <div class="deck__volume-meters-group">
         <div class="deck__volume-controls">
-          <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Mute"><svg class="icon"><use href="#VolumeOn"/></svg></button>
+          <button type="button" class="button button--subtle button--icon button--sm deck__mute" aria-label="Mute"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg></button>
           <input type="range" class="range range--sm deck__fader" value="85" style="--value: 85%;" aria-label="Volume" />
         </div>
       </div>
@@ -2907,7 +2820,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 ```html
 <!-- 1. Standard Telemetry Metric Pill -->
 <div class="telemetry">
-  <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
   <div class="telemetry__content">
     <span class="telemetry__label">Listeners</span>
     <strong class="telemetry__value">14,820</strong>
@@ -2929,21 +2842,21 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 <dl class="telemetry-group telemetry-strip--ruled" aria-label="Station live telemetry">
   <div class="telemetry">
     <dt class="telemetry__label">
-      <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+      <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
       Listeners
     </dt>
     <dd class="telemetry__value">14,820</dd>
   </div>
   <div class="telemetry">
     <dt class="telemetry__label">
-      <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Progress"/></svg>
+      <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
       Peak Today
     </dt>
     <dd class="telemetry__value">28,450</dd>
   </div>
   <div class="telemetry" data-status="online">
     <dt class="telemetry__label">
-      <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Circle"/></svg>
+      <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Circle"/></svg>
       Uptime
     </dt>
     <dd class="telemetry__value">99.98%</dd>
@@ -2952,7 +2865,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
 
 <!-- 4. Dashboard KPI Stat Card (.telemetry--card .telemetry--stacked) -->
 <div class="telemetry telemetry--card telemetry--stacked">
-  <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Progress"/></svg>
+  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
   <div class="telemetry__content">
     <span class="telemetry__label">Total Listen Hours</span>
     <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">128,450<span class="telemetry__unit">hrs</span></strong>
@@ -2979,7 +2892,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
     <li class="stepper__item is-complete">
       <div class="stepper__step">
         <span class="stepper__indicator" aria-hidden="true">
-          <svg class="icon"><use href="#Check"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         </span>
         <div class="stepper__content">
           <span class="stepper__title">Personal Details</span>
@@ -3019,7 +2932,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <ol class="stepper__list">
     <li class="stepper__item is-complete">
       <button type="button" class="stepper__step">
-        <span class="stepper__indicator" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+        <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
         <span class="stepper__title">Shipping</span>
       </button>
     </li>
@@ -3045,7 +2958,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <ol class="stepper__list">
     <li class="stepper__item is-complete">
       <div class="stepper__step">
-        <span class="stepper__indicator" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+        <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
         <div class="stepper__content">
           <span class="stepper__title">Profile Setup</span>
           <span class="stepper__description text-muted">Verified</span>
@@ -3080,7 +2993,7 @@ By default, `.tab-list` wraps items naturally (`flex-wrap: wrap; overflow: visib
   <ol class="stepper__list">
     <li class="stepper__item is-complete">
       <div class="stepper__step">
-        <span class="stepper__indicator" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+        <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
         <span class="stepper__title">Details</span>
       </div>
     </li>
@@ -3143,7 +3056,7 @@ The stylesheet still contains synonyms for these helpers. They are removed befor
 When building complex UI features (menus, settings panels, user cards, notifications, search palettes, and catalog filters), AI agents MUST compose primitive components instead of introducing custom inline styles or bespoke wrappers.
 
 #### A. Anchored Context Menu Recipe
-Composes `.popover.popover--anchored` + `.menu.menu--translucent` + `.menu__item` + `.menu__separator` + `<kbd class="kbd">`:
+Composes `.popover.popover--anchored` + `.menu.menu--translucent` + `.menu__item` + `.divider` (`<li role="separator">`) + `<kbd class="kbd">`:
 ```html
 <button 
   type="button" 
@@ -3153,7 +3066,7 @@ Composes `.popover.popover--anchored` + `.menu.menu--translucent` + `.menu__item
   aria-haspopup="menu"
 >
   <span>Options</span>
-  <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
 </button>
 
 <div id="menu-popover" popover class="popover popover--anchored" style="position-anchor: --menu-anchor; min-inline-size: 16rem;">
@@ -3161,22 +3074,22 @@ Composes `.popover.popover--anchored` + `.menu.menu--translucent` + `.menu__item
     <header class="menu__heading">Document Options</header>
     <li role="none">
       <button type="button" class="menu__item" role="menuitem">
-        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Duplicate"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
         <span>Duplicate</span>
         <kbd class="kbd">⌘D</kbd>
       </button>
     </li>
     <li role="none">
       <button type="button" class="menu__item" role="menuitem">
-        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Download"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
         <span>Export JSON</span>
         <kbd class="kbd">⇧⌘E</kbd>
       </button>
     </li>
-    <hr class="menu__separator">
+    <li role="separator" class="divider"></li>
     <li role="none">
       <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Delete"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
         <span>Delete Item</span>
         <kbd class="kbd">⌫</kbd>
       </button>
@@ -3186,7 +3099,7 @@ Composes `.popover.popover--anchored` + `.menu.menu--translucent` + `.menu__item
 ```
 
 #### B. User Profile Card & Status Flyout Recipe
-Composes `.avatar` with `data-status`, `.badge`, `.status`, and `.button-group--space-between`:
+Composes `.avatar` with `data-status`, `.chip`, `.status`, and `.button-group--space-between`:
 ```html
 <div class="card card--compact card--bordered card--translucent">
   <article class="card__content">
@@ -3202,10 +3115,10 @@ Composes `.avatar` with `data-status`, `.badge`, `.status`, and `.button-group--
     <div class="card__body">
       <div class="stack">
         <div class="cluster">
-          <span class="badge badge--subtle"><span>Design Lead</span></span>
-          <span class="status" data-status="online">Online</span>
+          <span class="chip chip--subtle"><span class="chip__text">Design Lead</span></span>
+          <span class="status status--success status--plain"><span class="status__text">Online</span></span>
         </div>
-        <p class="micro-text">
+        <p class="small-text">
           Lead accessibility auditor for WCAG 2.2 Level AA / AAA design systems.
         </p>
       </div>
@@ -3231,7 +3144,7 @@ Composes `.switch.switch--sm`, `.range.range--sm`, `.field`, and `.button-group-
     <div class="card__body">
       <div class="stack">
         <label class="switch switch--sm" style="inline-size: 100%;">
-          <span class="switch__label micro-text">High Contrast Mode</span>
+          <span class="switch__label small-text">High Contrast Mode</span>
           <input type="checkbox" role="switch" class="visually-hidden" />
           <span class="switch__control" aria-hidden="true">
             <span class="switch__option switch__option--off">Off</span>
@@ -3257,7 +3170,7 @@ Composes `.switch.switch--sm`, `.range.range--sm`, `.field`, and `.button-group-
 ```
 
 #### D. Application Header & Global Navigation Landmark Recipe
-Composes `.skip-link` + `.header.header--sticky.header--translucent` + `.wrapper.flex.justify-content-between` + `.button--subtle` (`aria-current="page"`) + `.badge--top-right-corner` + `button.button--avatar` (`[data-status]`) + `.menu.menu--translucent` inside anchored `.popover` + Command Palette invoker:
+Composes `.skip-link` + `.header.header--sticky.header--translucent` + `.wrapper.flex.justify-content-between` + `.button--subtle` (`aria-current="page"`) + `.badge--top-end` + `button.button--avatar` (`[data-status]`) + `.menu.menu--translucent` inside anchored `.popover` + Command Palette invoker:
 ```html
 <!-- In-Flow Landmark Skip Link -->
 <a href="#main" class="skip-link"><span>Skip to main content</span></a>
@@ -3267,7 +3180,7 @@ Composes `.skip-link` + `.header.header--sticky.header--translucent` + `.wrapper
   <div class="wrapper flex align-items-center justify-content-between flex-wrap gap-sm">
     <!-- Brand -->
     <a href="/" class="link inline gap-sm font-weight-bold font-size-lg underline-none">
-      <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#BrandDesignForHumans"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
       <span>Design For Humans</span>
     </a>
 
@@ -3284,14 +3197,14 @@ Composes `.skip-link` + `.header.header--sticky.header--translucent` + `.wrapper
     <div class="cluster align-items-center gap-sm">
       <!-- Search Invoker (Launches Command Palette) -->
       <button type="button" class="button button--subtle" commandfor="cmd-palette" command="show-modal" aria-haspopup="dialog" aria-label="Search (Press Cmd+K)">
-        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         <span class="button__text button__text--placeholder">Search docs... <kbd class="kbd">⌘K</kbd></span>
       </button>
 
       <!-- Notifications with Corner Badge -->
       <button type="button" class="button button--icon" popovertarget="header-notifs" style="anchor-name: --header-notif-anchor;" aria-haspopup="dialog" aria-label="Notifications (3 unread)">
-        <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#BellFilled"/></svg>
-        <span class="badge badge--danger badge--sm badge--round badge--top-right-corner"><span>3</span></span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+        <span class="badge badge--danger badge--sm badge--top-end"><span class="badge__text">3</span></span>
       </button>
 
       <!-- User Avatar Trigger & Anchored Menu -->
@@ -3305,14 +3218,14 @@ Composes `.skip-link` + `.header.header--sticky.header--translucent` + `.wrapper
             <div class="avatar avatar--sm" data-status="online"><span>AB</span></div>
             <div class="stack gap-none">
               <span class="font-weight-medium">Alex Bennett</span>
-              <span class="micro-text text-color-muted">alex.bennett@dfh.design</span>
+              <span class="small-text text-color-muted">alex.bennett@dfh.design</span>
             </div>
           </header>
-          <hr class="menu__separator">
-          <li role="none"><button type="button" class="menu__item" role="menuitem"><svg class="icon" width="18" height="18"><use href="#User"/></svg><span>Profile</span><kbd class="kbd">⇧⌘P</kbd></button></li>
-          <li role="none"><button type="button" class="menu__item" role="menuitem"><svg class="icon" width="18" height="18"><use href="#Settings"/></svg><span>Preferences</span><kbd class="kbd">⌘,</kbd></button></li>
-          <hr class="menu__separator">
-          <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><svg class="icon" width="18" height="18"><use href="#Close"/></svg><span>Sign Out</span></button></li>
+          <li role="separator" class="divider"></li>
+          <li role="none"><button type="button" class="menu__item" role="menuitem"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg><span>Profile</span><kbd class="kbd">⇧⌘P</kbd></button></li>
+          <li role="none"><button type="button" class="menu__item" role="menuitem"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg><span>Preferences</span><kbd class="kbd">⌘,</kbd></button></li>
+          <li role="separator" class="divider"></li>
+          <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg><span>Sign Out</span></button></li>
         </menu>
       </div>
     </div>
@@ -3329,7 +3242,7 @@ Composes `.dialog` + `.card.card--flush.card--ruled.card--translucent` + `.card_
       
       <!-- Search Header with Focus Delegation -->
       <header class="card__header inline gap-sm focus-within">
-        <svg class="icon text-color-muted" width="22" height="22" aria-hidden="true"><use href="#Search"/></svg>
+        <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         <input 
           type="search" 
           class="input input--flush focus-none flex-grow" 
@@ -3342,7 +3255,7 @@ Composes `.dialog` + `.card.card--flush.card--ruled.card--translucent` + `.card_
           autofocus
         />
         <button type="button" class="button button--subtle button--icon" commandfor="cmd-palette" command="close" aria-label="Close command palette">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Close"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
         </button>
       </header>
 
@@ -3352,28 +3265,28 @@ Composes `.dialog` + `.card.card--flush.card--ruled.card--translucent` + `.card_
           <h3 class="button-group__content micro-heading text-color-muted">UI Components</h3>
           
           <button type="button" class="button button--subtle is-active" role="option" id="cmd-opt-1" aria-selected="true">
-            <svg class="icon text-color-muted" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+            <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
             <span class="button__text stack gap-none text-align-start flex-grow">
               <span class="font-weight-medium">Button Primitive</span>
-              <span class="micro-text text-color-muted">Accessible interactive buttons, states & toggles</span>
+              <span class="small-text text-color-muted">Accessible interactive buttons, states & toggles</span>
             </span>
-            <span class="badge badge--sm"><span>Component</span></span>
+            <span class="chip chip--sm"><span class="chip__text">Component</span></span>
             <kbd class="kbd">↵</kbd>
           </button>
 
           <button type="button" class="button button--subtle" role="option" id="cmd-opt-2" aria-selected="false">
-            <svg class="icon text-color-muted" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
+            <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             <span class="button__text stack gap-none text-align-start flex-grow">
               <span class="font-weight-medium">Combobox Primitive</span>
-              <span class="micro-text text-color-muted">Searchable single and multi-select floating listboxes</span>
+              <span class="small-text text-color-muted">Searchable single and multi-select floating listboxes</span>
             </span>
-            <span class="badge badge--sm"><span>Component</span></span>
+            <span class="chip chip--sm"><span class="chip__text">Component</span></span>
           </button>
         </div>
 
         <!-- Zero-Results Search Miss State -->
         <div class="empty-state empty-state--compact empty-state--flush padding-block-lg" hidden aria-labelledby="cmd-empty-title">
-          <div class="empty-state__visual" aria-hidden="true"><svg class="icon" width="28" height="28"><use href="#Search"/></svg></div>
+          <div class="empty-state__visual" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg></div>
           <div class="empty-state__content">
             <h3 id="cmd-empty-title" class="empty-state__title">No matching commands</h3>
             <p class="empty-state__description">No results found for your query. Try searching for "button" or "tokens".</p>
@@ -3421,7 +3334,7 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
                   <div class="combobox combobox--sm">
                     <div class="combobox__control">
                       <div class="combobox__tags">
-                        <span class="chip chip--sm"><span>TypeScript</span><button type="button" class="chip__remove">×</button></span>
+                        <span class="chip chip--subtle chip--sm"><span class="chip__text">TypeScript</span><button type="button" class="chip__remove" aria-label="Remove TypeScript">×</button></span>
                       </div>
                       <input type="text" class="combobox__input" role="combobox" placeholder="Add tag..." />
                     </div>
@@ -3456,7 +3369,7 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
         <div class="card__content">
           <div class="cluster gap-xs align-items-center">
             <span class="small-text text-color-muted">Active:</span>
-            <span class="chip"><span>TypeScript</span><button type="button" class="chip__remove">×</button></span>
+            <span class="chip chip--subtle"><span class="chip__text">TypeScript</span><button type="button" class="chip__remove" aria-label="Remove TypeScript">×</button></span>
           </div>
         </div>
       </div>
@@ -3467,13 +3380,13 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
             <article class="card__content">
               <header class="card__header inline justify-content-between align-items-center">
                 <h3 class="card__title"><a href="#" class="card__link">Button Primitive</a></h3>
-                <span class="badge badge--success"><span>WCAG AAA</span></span>
+                <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
               </header>
               <div class="card__body">
                 <p class="text">Accessible button component supporting primary, subtle, and icon variants.</p>
               </div>
               <footer class="card__footer inline justify-content-between align-items-center">
-                <span class="chip">Forms</span>
+                <span class="chip chip--subtle"><span class="chip__text">Forms</span></span>
                 <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
               </footer>
             </article>
@@ -3551,7 +3464,8 @@ Composes `.wrapper.wrapper--2xl` + `.split.split--sm` + `.accordion` (with multi
 
 ### 6. Container Style Queries (`@container style(...)`)
 - Support zero-class contextual styling by declaring `@container style(--<component>-variation: ...)` and `@container style(--<component>-corners: ...)` directly in the base component.
-- Enables parent containers to orchestrate children cleanly: `.navigation { --button-variation: subtle; --button-corners: round; }`.
+- Enables parent containers to orchestrate children cleanly: `.navigation { --button-prominence: subtle; --button-corners: round; }`.
+- Name flags after the PRINCIPLES axis they set: `--<component>-prominence`, `--<component>-intent`, `--<component>-size`, `--<component>-corners`. Density is never a per-component flag; use `--ui-sizing: compact`. Button is the reference implementation; older `--<component>-variation` flags are migrated in each component's pass.
 
 ---
 

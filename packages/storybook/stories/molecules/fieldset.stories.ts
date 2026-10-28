@@ -198,11 +198,11 @@ export const DensityTiers: Story = {
         <legend class="legend">Compact Fieldset (.fieldset--compact)</legend>
         <div class="choices choices--compact">
           <label class="choice choice--sm">
-            <input type="checkbox" class="checkbox-input checkbox-input--sm" checked />
+            <input type="checkbox" class="checkbox-input" checked />
             <span>Compact Option 1</span>
           </label>
           <label class="choice choice--sm">
-            <input type="checkbox" class="checkbox-input checkbox-input--sm" />
+            <input type="checkbox" class="checkbox-input" />
             <span>Compact Option 2</span>
           </label>
         </div>

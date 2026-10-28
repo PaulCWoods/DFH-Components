@@ -164,93 +164,160 @@
     }
   },
   "badge": {
-    "font-family": {
-      "$value": "{typography.font-family.sans}",
-      "$type": "fontFamilies"
-    },
+    "$description": "Count or dot attached to a host element. Colour comes from the Tier 2 intent roles.",
     "font-size": {
-      "$value": "{typography.font-size.minus-1}",
+      "$value": "{body-sm.font-size}",
       "$type": "dimension"
     },
     "font-weight": {
-      "$value": "{body-strong.font-weight}",
+      "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
-    "letter-spacing": {
-      "$value": "0px",
+    "size": {
+      "$value": "1.25rem",
+      "$type": "dimension",
+      "$description": "Minimum block and inline size of a count badge"
+    },
+    "padding-inline": {
+      "$value": "{spacing.4}",
       "$type": "dimension"
+    },
+    "dot-size": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Diameter of a dot badge"
+    },
+    "sm-font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    },
+    "sm-size": {
+      "$value": "1rem",
+      "$type": "dimension"
+    }
+  },
+  "status": {
+    "$description": "State of a thing: text with an optional dot or icon. Colour comes from the Tier 2 intent roles.",
+    "font-size": {
+      "$value": "{body-sm.font-size}",
+      "$type": "dimension"
+    },
+    "font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight"
     },
     "text-transform": {
-      "$value": "uppercase",
+      "$value": "none",
       "$type": "other"
     },
-    "border-width": {
-      "$value": "{border.width.1}",
+    "padding-block": {
+      "$value": "{spacing.8}",
       "$type": "dimension"
     },
-    "padding": {
-      "$value": "0.5em",
+    "padding-inline": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    },
+    "gap": {
+      "$value": "{spacing.8}",
       "$type": "dimension"
     },
     "radius": {
-      "$value": "{radius}",
+      "$value": "{radius.sm}",
       "$type": "dimension"
     },
-    "round-radius": {
-      "$value": "{radius.round}",
+    "border-width": {
+      "$value": "{border-width.1}",
       "$type": "dimension"
-    },
-    "border-color": {
-      "$value": "{border.color.muted}",
-      "$type": "color"
-    },
-    "bg-color": {
-      "$value": "{surface.subtle}",
-      "$type": "color"
-    },
-    "color": {
-      "$value": "{foreground}",
-      "$type": "color"
-    },
-    "strong-text": {
-      "$value": "{foreground.inverted-strong}",
-      "$type": "color"
-    },
-    "accent-bg-color": {
-      "$value": "{surface.accent}",
-      "$type": "color"
-    },
-    "accent-color": {
-      "$value": "{foreground.accent}",
-      "$type": "color"
-    },
-    "success-bg-color": {
-      "$value": "{surface.success}",
-      "$type": "color"
-    },
-    "success-color": {
-      "$value": "{foreground.success}",
-      "$type": "color"
-    },
-    "warning-bg-color": {
-      "$value": "{surface.warning}",
-      "$type": "color"
-    },
-    "warning-color": {
-      "$value": "{foreground.warning}",
-      "$type": "color"
-    },
-    "danger-bg-color": {
-      "$value": "{surface.danger}",
-      "$type": "color"
-    },
-    "danger-color": {
-      "$value": "{foreground.danger}",
-      "$type": "color"
     },
     "translucency": {
       "$value": "{translucency.quiet}",
-      "$type": "other"
+      "$type": "other",
+      "$description": "How far the tint surface fades on the default (outline) prominence"
+    },
+    "dot-size": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    },
+    "sm-font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    },
+    "sm-padding-block": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
+    },
+    "sm-padding-inline": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
+    }
+  },
+  "kbd": {
+    "$description": "Keyboard key or shortcut.",
+    "font-family": {
+      "$value": "{code.font-family}",
+      "$type": "fontFamilies"
+    },
+    "font-size": {
+      "$value": "{body-sm.font-size}",
+      "$type": "dimension"
+    },
+    "padding-block": {
+      "$value": "{spacing.2}",
+      "$type": "dimension"
+    },
+    "padding-inline": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension"
+    },
+    "border-width": {
+      "$value": "{border-width.1}",
+      "$type": "dimension"
+    },
+    "border-block-end-width": {
+      "$value": "{border-width.2}",
+      "$type": "dimension",
+      "$description": "Heavier lower edge that reads as a physical key"
+    },
+    "sm-font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    }
+  },
+  "icon": {
+    "$description": "Inline SVG glyph sized in em, so it follows the text around it.",
+    "size-sm": {
+      "$value": "0.875em",
+      "$type": "dimension",
+      "$description": "Small icon (.icon--sm)"
+    },
+    "size-lg": {
+      "$value": "1.25em",
+      "$type": "dimension",
+      "$description": "Large icon (.icon--lg)"
+    }
+  },
+  "icon-box": {
+    "$description": "Fixed square frame around an icon, aligned with control sizes.",
+    "min-size": {
+      "$value": "{spacing.48}",
+      "$type": "dimension"
+    },
+    "sm-min-size": {
+      "$value": "{spacing.32}",
+      "$type": "dimension"
+    },
+    "lg-min-size": {
+      "$value": "{spacing.64}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius.md}",
+      "$type": "dimension"
     }
   },
   "banner": {
@@ -370,55 +437,14 @@
     }
   },
   "block-link": {
-    "background-color": {
-      "$value": "transparent",
-      "$type": "color",
-      "$description": "Resting background color for block link card"
-    },
-    "border": {
-      "$value": "{border.default}",
-      "$type": "border",
-      "$description": "Resting border shorthand for block link"
-    },
-    "border-color": {
-      "$value": "{border.color}",
-      "$type": "color",
-      "$description": "Resting border color for block link"
-    },
     "color": {
       "$value": "{foreground.accent}",
       "$type": "color",
-      "$description": "Resting text color for block link"
+      "$description": "Tone: text and border at rest, fill on hover"
     },
-    "hover-background-color": {
-      "$value": "{surface.accent-strong}",
-      "$type": "color",
-      "$description": "Hover background fill for block link"
-    },
-    "hover-color": {
-      "$value": "{foreground.inverted}",
-      "$type": "color",
-      "$description": "Hover text color for block link"
-    },
-    "hover-border": {
-      "$value": "{surface.accent-strong}",
-      "$type": "color",
-      "$description": "Hover border stroke color for block link"
-    },
-    "active-background-color": {
-      "$value": "{surface.inverted}",
-      "$type": "color",
-      "$description": "Active pressed background fill for block link"
-    },
-    "active-color": {
-      "$value": "{foreground.inverted}",
-      "$type": "color",
-      "$description": "Active pressed text color for block link"
-    },
-    "active-border": {
-      "$value": "{surface.inverted}",
-      "$type": "color",
-      "$description": "Active pressed border stroke color for block link"
+    "min-size": {
+      "$value": "{spacing.target}",
+      "$type": "dimension"
     },
     "padding-inline": {
       "$value": "{spacing}",
@@ -429,6 +455,10 @@
       "$value": "{spacing}",
       "$type": "dimension",
       "$description": "Vertical block padding for block link"
+    },
+    "gap": {
+      "$value": "{spacing}",
+      "$type": "dimension"
     },
     "font-weight": {
       "$value": "{body-strong.font-weight}",
@@ -449,6 +479,24 @@
       "$value": "{duration.sm}",
       "$type": "duration",
       "$description": "Smooth transition duration for surface and color changes"
+    },
+    "sm": {
+      "min-size": {
+        "$value": "{spacing.target-sm}",
+        "$type": "dimension"
+      },
+      "padding-inline": {
+        "$value": "{spacing.12}",
+        "$type": "dimension"
+      },
+      "padding-block": {
+        "$value": "{spacing.8}",
+        "$type": "dimension"
+      },
+      "font-size": {
+        "$value": "{control-sm.font-size}",
+        "$type": "dimension"
+      }
     }
   },
   "breadcrumb": {
@@ -573,16 +621,6 @@
       "$value": "{spacing.8}",
       "$type": "dimension",
       "$description": "Gap between items in a button group"
-    },
-    "divider-width": {
-      "$value": "{spacing.1}",
-      "$type": "dimension",
-      "$description": "Divider thickness"
-    },
-    "divider-color": {
-      "$value": "{border.color.quiet}",
-      "$type": "border",
-      "$description": "Divider colour"
     }
   },
   "card": {
@@ -747,17 +785,17 @@
       },
       "subtitle": {
         "font-size": {
-          "$value": "{micro-text.font-size}",
+          "$value": "{body-sm.font-size}",
           "$type": "dimension",
           "$description": "Compact card subtitle font size"
         },
         "line-height": {
-          "$value": "{micro-text.line-height}",
+          "$value": "{body-sm.line-height}",
           "$type": "number",
           "$description": "Compact card subtitle line height"
         },
         "font-weight": {
-          "$value": "{micro-text.font-weight}",
+          "$value": "{body.font-weight}",
           "$type": "fontWeight",
           "$description": "Compact card subtitle font weight"
         }
@@ -765,25 +803,55 @@
     }
   },
   "chip": {
-    "bg": {
-      "$value": "{surface.translucent}",
-      "$type": "color"
-    },
-    "font-family": {
-      "$value": "{typography.font-family.sans}",
-      "$type": "fontFamilies"
-    },
+    "$description": "Token representing a value: a selected option, an active filter, a category or tag.",
     "font-size": {
-      "$value": "{typography.font-size.minus-2}",
+      "$value": "{body-sm.font-size}",
       "$type": "dimension"
     },
     "font-weight": {
-      "$value": "{body-strong.font-weight}",
+      "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
     "text-transform": {
-      "$value": "uppercase",
+      "$value": "none",
       "$type": "other"
+    },
+    "padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    },
+    "padding-inline": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    },
+    "gap": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension"
+    },
+    "border-width": {
+      "$value": "{border-width.1}",
+      "$type": "dimension"
+    },
+    "remove-target": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "$description": "Minimum hit area of the remove button (WCAG 2.5.8)"
+    },
+    "sm-font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension"
+    },
+    "sm-padding-block": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
+    },
+    "sm-padding-inline": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
     }
   },
   "deck": {
@@ -898,16 +966,26 @@
   },
   "divider": {
     "$type": "component",
-    "$description": "Divider rule and separator tokens",
+    "$description": "Divider rule tokens. Organisms place the divider; they don't restyle it.",
     "width": {
-      "$value": "{border.width.1}",
+      "$value": "{rule.width}",
       "$type": "dimension",
-      "$description": "Divider line stroke thickness"
+      "$description": "Line thickness"
+    },
+    "style": {
+      "$value": "{rule.style}",
+      "$type": "strokeStyle",
+      "$description": "Line style"
     },
     "color": {
-      "$value": "{border.color.quiet}",
+      "$value": "{rule.color}",
       "$type": "color",
-      "$description": "Divider stroke color"
+      "$description": "Default (decorative) line colour"
+    },
+    "strong-color": {
+      "$value": "{border.color.control}",
+      "$type": "color",
+      "$description": "--strong line colour, at least 3:1, for a rule that is the only boundary"
     }
   },
   "empty-state": {
@@ -1047,10 +1125,18 @@
     "choices-col-gap": {
       "$value": "{spacing.24}",
       "$type": "dimension"
+    }
+  },
+  "check": {
+    "box-size": {
+      "$value": "{spacing.20}",
+      "$type": "dimension",
+      "$description": "Checkbox and radio box size"
     },
-    "check-size": {
-      "$value": "1.25rem",
-      "$type": "dimension"
+    "lg-box-size": {
+      "$value": "{spacing.24}",
+      "$type": "dimension",
+      "$description": "Large checkbox and radio box size"
     }
   },
   "header": {
@@ -1117,10 +1203,6 @@
       "$value": "{border.color.danger}",
       "$type": "color"
     },
-    "border-color-valid": {
-      "$value": "{border.color.success}",
-      "$type": "color"
-    },
     "border-width": {
       "$value": "{control.border-width}",
       "$type": "dimension"
@@ -1171,11 +1253,11 @@
         "$type": "dimension"
       },
       "padding-block": {
-        "$value": "calc({input.sm.min-size} / {input.min-size} * {input.padding-block})",
+        "$value": "{spacing.2}",
         "$type": "dimension"
       },
       "padding-inline": {
-        "$value": "calc({input.sm.min-size} / {input.min-size} * {input.padding-inline})",
+        "$value": "{spacing.12}",
         "$type": "dimension"
       }
     },
@@ -1193,11 +1275,11 @@
         "$type": "dimension"
       },
       "padding-block": {
-        "$value": "calc({input.lg.min-size} / {input.min-size} * {input.padding-block})",
+        "$value": "{spacing.8}",
         "$type": "dimension"
       },
       "padding-inline": {
-        "$value": "calc({input.lg.min-size} / {input.min-size} * {input.padding-inline})",
+        "$value": "{spacing.24}",
         "$type": "dimension"
       }
     }
@@ -1208,20 +1290,10 @@
       "$type": "color",
       "$description": "Standard link foreground text color"
     },
-    "hover-color": {
-      "$value": "{foreground.accent-hover}",
-      "$type": "color",
-      "$description": "Link foreground color on hover"
-    },
-    "active-color": {
-      "$value": "{foreground.accent-pressed}",
-      "$type": "color",
-      "$description": "Link foreground color when clicked / active"
-    },
     "underline-color": {
-      "$value": "{underline.color}",
+      "$value": "currentColor",
       "$type": "color",
-      "$description": "Default text underline decoration color"
+      "$description": "Underline at the full link colour, so it carries the link cue at the same contrast as the text (WCAG 1.4.1)"
     },
     "underline-thickness": {
       "$value": "{underline.thickness}",
@@ -1237,6 +1309,11 @@
       "$value": "{duration.sm}",
       "$type": "duration",
       "$description": "Transition duration for link color states"
+    },
+    "hover-underline-thickness": {
+      "$value": "{border.width.2}",
+      "$type": "dimension",
+      "$description": "Underline thickness on hover: the hover cue, with no second colour"
     }
   },
   "pagination": {
@@ -1319,7 +1396,7 @@
       "$description": "Hyphenation rules for prose body text"
     },
     "body-line-length": {
-      "$value": "66ch",
+      "$value": "{body.measure}",
       "$type": "dimension",
       "$description": "Max optimal line length for readable prose body text"
     },
@@ -1427,6 +1504,16 @@
       "$type": "dimension",
       "$description": "Standard meter bar height"
     },
+    "sm-height": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Small meter bar height"
+    },
+    "lg-height": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Large meter bar height"
+    },
     "radius": {
       "$value": "{radius}",
       "$type": "dimension",
@@ -1451,6 +1538,11 @@
       "$value": "{foreground.danger}",
       "$type": "color",
       "$description": "Fill color for critical / danger range in meter"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Transition speed for meter value changes"
     }
   },
   "progress": {
@@ -1480,11 +1572,6 @@
       "$value": "{surface.muted}",
       "$type": "color",
       "$description": "Background track fill for progress bar"
-    },
-    "fill-bg": {
-      "$value": "{foreground.accent}",
-      "$type": "color",
-      "$description": "Fill color for completed progress"
     },
     "transition": {
       "$value": "{duration.sm}",
@@ -1566,114 +1653,37 @@
       "$description": "Transition speed for hover and active thumb states"
     }
   },
-  "select": {
-    "background-color": {
-      "$value": "{surface.card}",
-      "$type": "color"
-    },
-    "border-color": {
-      "$value": "{control.border-color}",
-      "$type": "color"
-    },
-    "border-color-invalid": {
-      "$value": "{border.color.danger}",
-      "$type": "color"
-    },
-    "border-color-valid": {
-      "$value": "{border.color.success}",
-      "$type": "color"
-    },
-    "border-width": {
-      "$value": "{control.border-width}",
+  "range-lockup": {
+    "gap": {
+      "$value": "{spacing.8}",
       "$type": "dimension"
     },
-    "font-size": {
-      "$value": "{control.font-size}",
-      "$type": "dimension"
-    },
-    "inner-gap": {
-      "$value": "{spacing.12}",
-      "$type": "dimension"
-    },
-    "min-size": {
-      "$value": "{spacing.target}",
-      "$type": "dimension"
-    },
-    "line-height": {
-      "$value": "{control.line-height}",
-      "$type": "number"
-    },
-    "padding-block": {
+    "sm-gap": {
       "$value": "{spacing.4}",
       "$type": "dimension"
     },
+    "lg-gap": {
+      "$value": "{spacing.12}",
+      "$type": "dimension"
+    },
     "padding-inline": {
-      "$value": "{spacing.16}",
+      "$value": "{spacing.8}",
       "$type": "dimension"
-    },
-    "radius": {
-      "$value": "{radius}",
-      "$type": "dimension"
-    },
-    "transition": {
-      "$value": "{duration.sm}",
-      "$type": "duration"
-    },
-    "picker-icon": {
-      "$value": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23757575' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3C/svg%3E\")",
-      "$type": "other"
-    },
-    "picker-icon-pos": {
-      "$value": "right 1em",
-      "$type": "other"
-    },
+    }
+  },
+  "select": {
     "picker-icon-size": {
-      "$value": "0.66em",
+      "$value": "0.75em",
+      "$type": "dimension",
+      "$description": "Chevron size, relative to the select text"
+    },
+    "option-gap": {
+      "$value": "{spacing.8}",
       "$type": "dimension"
     },
-    "sm": {
-      "font-size": {
-        "$value": "{control-sm.font-size}",
-        "$type": "dimension"
-      },
-      "line-height": {
-        "$value": "{control-sm.line-height}",
-        "$type": "number"
-      },
-      "min-size": {
-        "$value": "{spacing.target-sm}",
-        "$type": "dimension"
-      },
-      "padding-block": {
-        "$value": "calc({select.sm.min-size} / {select.min-size} * {select.padding-block})",
-        "$type": "dimension"
-      },
-      "padding-inline": {
-        "$value": "calc({select.sm.min-size} / {select.min-size} * {select.padding-inline})",
-        "$type": "dimension"
-      }
-    },
-    "lg": {
-      "font-size": {
-        "$value": "{control-lg.font-size}",
-        "$type": "dimension"
-      },
-      "line-height": {
-        "$value": "{control-lg.line-height}",
-        "$type": "number"
-      },
-      "min-size": {
-        "$value": "{spacing.target-lg}",
-        "$type": "dimension"
-      },
-      "padding-block": {
-        "$value": "calc({select.lg.min-size} / {select.min-size} * {select.padding-block})",
-        "$type": "dimension"
-      },
-      "padding-inline": {
-        "$value": "calc({select.lg.min-size} / {select.min-size} * {select.padding-inline})",
-        "$type": "dimension"
-      }
+    "picker-padding": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
     }
   },
   "skip-link": {
@@ -1721,6 +1731,27 @@
       "$value": "{duration.sm}",
       "$type": "duration",
       "$description": "Smooth expansion transition duration when focused"
+    },
+    "padding-inline": {
+      "$value": "{spacing.16}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension"
+    },
+    "floating-inset": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Distance of the floating skip link from the viewport corner"
+    },
+    "floating-padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    },
+    "floating-padding-inline": {
+      "$value": "{spacing.16}",
+      "$type": "dimension"
     }
   },
   "table": {
@@ -1878,9 +1909,8 @@
       "$description": "Border width for switch control container"
     },
     "border-color": {
-      "$value": "{border.color}",
-      "$type": "color",
-      "$description": "Border stroke color for switch control"
+      "$value": "{border.color.control}",
+      "$type": "color"
     },
     "radius": {
       "$value": "{radius}",
@@ -1936,149 +1966,207 @@
       "$value": "{ease.bounce}",
       "$type": "other",
       "$description": "Time function for switch"
+    },
+    "sm-height": {
+      "$value": "{spacing.32}",
+      "$type": "dimension"
+    },
+    "sm-font-size": {
+      "$value": "{control-sm.font-size}",
+      "$type": "dimension"
+    },
+    "sm-padding-inline": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    },
+    "lg-height": {
+      "$value": "{spacing.64}",
+      "$type": "dimension"
+    },
+    "lg-font-size": {
+      "$value": "{control-lg.font-size}",
+      "$type": "dimension"
+    },
+    "lg-padding-inline": {
+      "$value": "{spacing.24}",
+      "$type": "dimension"
+    },
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension"
+    },
+    "label-gap": {
+      "$value": "{spacing.4}",
+      "$type": "dimension"
+    },
+    "option-min-size": {
+      "$value": "{spacing.48}",
+      "$type": "dimension"
+    },
+    "sm-option-min-size": {
+      "$value": "{spacing.32}",
+      "$type": "dimension"
     }
   },
-  "tabs": {
+  "tab": {
     "$type": "component",
-    "$description": "Accessible tablist and navigation tab tokens",
-    "block-gap": {
-      "$value": "{spacing.default}",
-      "$type": "dimension",
-      "$description": "Gap between tablist and tab panels"
-    },
-    "list-gap": {
-      "$value": "{spacing.breathe}",
-      "$type": "dimension",
-      "$description": "Gap between tab items in the tablist"
-    },
-    "list-border-width": {
-      "$value": "{border.width.0}",
-      "$type": "dimension",
-      "$description": "Tablist container border width"
-    },
-    "list-border-color": {
-      "$value": "{border.color.quiet}",
-      "$type": "color",
-      "$description": "Tablist container border stroke color"
-    },
-    "list-border-end-width": {
-      "$value": "{border.width.1}",
-      "$type": "dimension",
-      "$description": "Tablist inset box-shadow baseline border width"
-    },
-    "indicator-width": {
-      "$value": "{border.width.2}",
-      "$type": "dimension",
-      "$description": "Active indicator border stroke width"
-    },
-    "indicator-color": {
-      "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Active tab indicator highlight color"
-    },
+    "$description": "Tab atom: one tab in a tab list",
     "font-size": {
       "$value": "{control.font-size}",
       "$type": "dimension",
-      "$description": "Tab label typography font size"
+      "$description": "Tab label font size"
     },
     "font-weight": {
       "$value": "{body.font-weight}",
       "$type": "fontWeight",
-      "$description": "Tab label typography font weight"
+      "$description": "Unselected tab label weight"
     },
     "selected-font-weight": {
       "$value": "{font-weight.bold}",
       "$type": "fontWeight",
-      "$description": "Active tab typography font weight"
+      "$description": "Selected tab label weight"
     },
     "line-height": {
       "$value": "{control.line-height}",
       "$type": "number",
       "$description": "Tab label line height"
     },
+    "min-size": {
+      "$value": "{spacing.target}",
+      "$type": "dimension",
+      "$description": "Tab height and minimum width: the 48px target"
+    },
     "padding-block": {
       "$value": "{button.padding-block}",
       "$type": "dimension",
-      "$description": "Tab item vertical padding"
+      "$description": "Tab vertical padding"
     },
     "padding-inline": {
-      "$value": "0px",
+      "$value": "{button.padding-inline}",
       "$type": "dimension",
-      "$description": "Tab item horizontal padding"
+      "$description": "Inline padding of segmented and vertical tabs; horizontal underline tabs have none"
     },
     "inner-gap": {
       "$value": "{spacing.8}",
       "$type": "dimension",
-      "$description": "Inner gap between tab text and badges"
+      "$description": "Gap between a tab's icon, label and badge"
     },
-    "color": {
-      "$value": "{foreground.default}",
-      "$type": "color",
-      "$description": "Resting tab label text color"
+    "border-width": {
+      "$value": "{border.width}",
+      "$type": "dimension",
+      "$description": "Border width of outline segmented tabs"
     },
-    "hover-color": {
-      "$value": "{foreground.accent}",
-      "$type": "color",
-      "$description": "Hover tab label text color"
-    },
-    "selected-color": {
-      "$value": "{foreground.default}",
-      "$type": "color",
-      "$description": "Selected tab label text color"
-    },
-    "button-radius": {
+    "radius": {
       "$value": "{button.radius}",
       "$type": "dimension",
-      "$description": "Corner radius for button style tabs"
-    },
-    "round-radius": {
-      "$value": "{radius.round}",
-      "$type": "dimension",
-      "$description": "Round corner radius for round button tabs"
-    },
-    "floating": {
-      "border-width": {
-        "$value": "{panel.border-width}",
-        "$type": "dimension",
-        "$description": "Floating tab border width"
-      },
-      "border-color": {
-        "$value": "{panel.border-color}",
-        "$type": "border",
-        "$description": "Floating tab border color"
-      }
+      "$description": "Corner radius of segmented tabs"
     },
     "transition": {
       "$value": "{duration.sm}",
       "$type": "duration",
-      "$description": "Transition duration for tab state changes"
+      "$description": "Duration of tab colour and fill changes"
     },
     "sm": {
-      "list-gap": {
-        "$value": "{spacing.16}",
-        "$type": "dimension",
-        "$description": "Compact tablist gap"
-      },
       "font-size": {
-        "$value": "{typography.font-size.minus-1}",
+        "$value": "{control-sm.font-size}",
         "$type": "dimension",
-        "$description": "Compact tab font size"
+        "$description": "Small tab label font size"
+      },
+      "min-size": {
+        "$value": "{spacing.target-sm}",
+        "$type": "dimension",
+        "$description": "Small tab height; the hit area stays at the target size"
       },
       "padding-block": {
         "$value": "{button.sm.padding-block}",
         "$type": "dimension",
-        "$description": "Compact tab vertical padding"
+        "$description": "Small tab vertical padding"
       },
       "padding-inline": {
-        "$value": "0px",
+        "$value": "{button.sm.padding-inline}",
         "$type": "dimension",
-        "$description": "Compact tab horizontal padding"
-      },
-      "min-size": {
-        "$value": "2rem",
-        "$type": "dimension",
-        "$description": "Compact tab minimum target size"
+        "$description": "Small segmented and vertical tab inline padding"
       }
+    }
+  },
+  "tab-list": {
+    "$type": "component",
+    "$description": "Tab list molecule: owns the axes and the sliding selection indicator",
+    "gap": {
+      "$value": "{spacing.breathe}",
+      "$type": "dimension",
+      "$description": "Gap between underline tabs"
+    },
+    "segmented-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Gap between segmented tabs"
+    },
+    "tight-gap": {
+      "$value": "{spacing.2}",
+      "$type": "dimension",
+      "$description": "Gap in a tight tab list"
+    },
+    "rule-width": {
+      "$value": "{border.width.1}",
+      "$type": "dimension",
+      "$description": "Rule under (or beside) an underline tab list"
+    },
+    "rule-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color",
+      "$description": "Rule colour; decorative, the indicator carries the state"
+    },
+    "indicator-width": {
+      "$value": "{border.width.2}",
+      "$type": "dimension",
+      "$description": "Selection line width on underline tabs"
+    },
+    "indicator-color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "Selection line and segmented fill colour"
+    },
+    "content-padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Vertical padding of non-tab content in a list item"
+    },
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration",
+      "$description": "Indicator slide duration"
+    },
+    "floating": {
+      "padding": {
+        "$value": "{spacing.8}",
+        "$type": "dimension",
+        "$description": "Padding inside a floating tab list"
+      },
+      "border-width": {
+        "$value": "{panel.border-width}",
+        "$type": "dimension",
+        "$description": "Floating tab list border width"
+      },
+      "border-color": {
+        "$value": "{panel.border-color}",
+        "$type": "color",
+        "$description": "Floating tab list border colour"
+      }
+    },
+    "docked-offset": {
+      "$value": "{spacing.24}",
+      "$type": "dimension",
+      "$description": "Distance of a docked tab list from the viewport's bottom edge"
+    }
+  },
+  "tabbed-content": {
+    "$type": "component",
+    "$description": "Tabbed content organism: a tab list and its panels",
+    "gap": {
+      "$value": "{spacing.default}",
+      "$type": "dimension",
+      "$description": "Gap between the tab list and the panels"
     }
   },
   "telemetry": {
@@ -2130,17 +2218,17 @@
       "$description": "Gap between telemetry label and value"
     },
     "label-font-family": {
-      "$value": "{nano-heading.font-family}",
+      "$value": "{micro-heading.font-family}",
       "$type": "fontFamilies",
       "$description": "Telemetry metric label font family"
     },
     "label-font-size": {
-      "$value": "{nano-heading.font-size}",
+      "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
       "$description": "Telemetry metric label font size (Step -2: 0.64rem / 10px)"
     },
     "label-font-weight": {
-      "$value": "{nano-heading.font-weight}",
+      "$value": "{body.font-weight}",
       "$type": "fontWeight",
       "$description": "Telemetry metric label font weight"
     },
@@ -2150,12 +2238,12 @@
       "$description": "Telemetry metric label line height"
     },
     "label-letter-spacing": {
-      "$value": "{nano-heading.letter-spacing}",
+      "$value": "{typography.spacing.loose}",
       "$type": "dimension",
       "$description": "Telemetry metric label letter spacing"
     },
     "label-text-transform": {
-      "$value": "{nano-heading.text-transform}",
+      "$value": "{micro-heading.text-transform}",
       "$type": "other",
       "$description": "Telemetry metric label text transform"
     },
@@ -2260,11 +2348,11 @@
         "$type": "number"
       },
       "padding-block": {
-        "$value": "calc({input.sm.min-size} / {input.min-size} * {textarea.padding-block})",
+        "$value": "{spacing.4}",
         "$type": "dimension"
       },
       "padding-inline": {
-        "$value": "calc({input.sm.min-size} / {input.min-size} * {textarea.padding-inline})",
+        "$value": "{spacing.12}",
         "$type": "dimension"
       }
     },
@@ -2278,11 +2366,11 @@
         "$type": "number"
       },
       "padding-block": {
-        "$value": "calc({input.lg.min-size} / {input.min-size} * {textarea.padding-block})",
+        "$value": "{spacing.12}",
         "$type": "dimension"
       },
       "padding-inline": {
-        "$value": "calc({input.lg.min-size} / {input.min-size} * {textarea.padding-inline})",
+        "$value": "{spacing.24}",
         "$type": "dimension"
       }
     }
@@ -2481,31 +2569,36 @@
   },
   "skeleton": {
     "$type": "component",
-    "$description": "Loading skeleton placeholder tokens for layout shift reduction (CLS)",
-    "bg": {
-      "$value": "{surface.muted}",
+    "$description": "Loading placeholder shapes. The fill mixes the text colour so it shows the same on any surface.",
+    "color": {
+      "$value": "color-mix(in srgb, {foreground} 20%, transparent)",
       "$type": "color",
-      "$description": "Skeleton base surface fill"
+      "$description": "Skeleton fill"
+    },
+    "color-strong": {
+      "$value": "color-mix(in srgb, {foreground} 35%, transparent)",
+      "$type": "color",
+      "$description": "Skeleton fill under increased contrast"
     },
     "shimmer": {
-      "$value": "light-dark(color-mix(in srgb, {color.white} 75%, transparent), color-mix(in srgb, {color.white} 12%, transparent))",
+      "$value": "color-mix(in srgb, {surface} 60%, transparent)",
       "$type": "color",
-      "$description": "Skeleton moving highlight shimmer tone"
+      "$description": "Shimmer sweep: the page surface passing over the fill"
     },
     "radius": {
       "$value": "{radius.sm}",
       "$type": "dimension",
-      "$description": "Skeleton default corner radius"
+      "$description": "Default corner radius"
     },
     "radius-round": {
       "$value": "{radius.round}",
       "$type": "dimension",
-      "$description": "Skeleton circular radius for avatars, badges, and icons"
+      "$description": "Radius for avatar and badge shapes"
     },
     "duration": {
       "$value": "1.6s",
       "$type": "duration",
-      "$description": "Skeleton shimmer animation cycle duration"
+      "$description": "One cycle of the shimmer or pulse"
     }
   },
   "combobox": {

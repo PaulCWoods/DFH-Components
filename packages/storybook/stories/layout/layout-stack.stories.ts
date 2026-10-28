@@ -155,7 +155,7 @@ export const Playground: Story = {
       return `
         <div class="sb-demo-box ${tintClass} padding">
           <p class="font-weight-bold">Stack Item ${idx}</p>
-          <p class="font-size-xs color-muted">In-flow stacked element with automatic token spacing.</p>
+          <p class="font-size-xs text-muted">In-flow stacked element with automatic token spacing.</p>
         </div>
       `;
     }).join('');
@@ -278,15 +278,15 @@ export const RuledDividers: Story = {
         <div class="stack stack--ruled">
           <div class="padding-block-sm">
             <p class="font-weight-bold">Section 1: Architectural Foundations</p>
-            <p class="font-size-xs color-muted">Design token scales and zero-specificity resets.</p>
+            <p class="font-size-xs text-muted">Design token scales and zero-specificity resets.</p>
           </div>
           <div class="padding-block-sm">
             <p class="font-weight-bold">Section 2: Component Primitives</p>
-            <p class="font-size-xs color-muted">Accessible native controls and top-layer dialogues.</p>
+            <p class="font-size-xs text-muted">Accessible native controls and top-layer dialogues.</p>
           </div>
           <div class="padding-block-sm">
             <p class="font-weight-bold">Section 3: Composite Recipes</p>
-            <p class="font-size-xs color-muted">Command palettes, filter sidebars, and app headers.</p>
+            <p class="font-size-xs text-muted">Command palettes, filter sidebars, and app headers.</p>
           </div>
         </div>
       </div>
@@ -419,7 +419,7 @@ export const CardContentComposition: Story = {
               <h4 class="card__title small-heading">Design System Tokens</h4>
               <p class="card__subtitle">DTCG 3-Tier Architecture</p>
             </hgroup>
-            <span class="badge badge--success"><span>Stable</span></span>
+            <span class="status status--success"><span class="status__text">Stable</span></span>
           </header>
 
           <div class="card__body stack" style="--gap: var(--spacing-12);">
@@ -427,9 +427,9 @@ export const CardContentComposition: Story = {
               Tokens synchronize typography, colors, and spatial units between Figma Variables, Tokens Studio, and native CSS custom properties.
             </p>
             <div class="cluster">
-              <span class="chip">Tier 1: Global</span>
-              <span class="chip">Tier 2: Semantic</span>
-              <span class="chip">Tier 3: Component</span>
+              <span class="chip chip--subtle"><span class="chip__text">Tier 1: Global</span></span>
+              <span class="chip chip--subtle"><span class="chip__text">Tier 2: Semantic</span></span>
+              <span class="chip chip--subtle"><span class="chip__text">Tier 3: Component</span></span>
             </div>
           </div>
 
@@ -463,15 +463,15 @@ export const SemanticLists: Story = {
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Ordered Steps (<code>&lt;ol class="stack"&gt;</code>)</h4>
           <ol class="stack" style="--gap: var(--spacing-8);">
             <li class="sb-demo-box sb-demo-box--row">
-              <span class="badge badge--accent badge--round">1</span>
+              <span class="sb-demo-tag">1</span>
               <span>Define Design Tokens</span>
             </li>
             <li class="sb-demo-box sb-demo-box--row">
-              <span class="badge badge--accent badge--round">2</span>
+              <span class="sb-demo-tag">2</span>
               <span>Compile CSS Custom Properties</span>
             </li>
             <li class="sb-demo-box sb-demo-box--row">
-              <span class="badge badge--accent badge--round">3</span>
+              <span class="sb-demo-tag">3</span>
               <span>Test with Automated axe Scanner</span>
             </li>
           </ol>

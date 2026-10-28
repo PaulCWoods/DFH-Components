@@ -38,9 +38,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         <p>Your changes are now live to all reviewers.</p>
       </div>
       <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss notification">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-          <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-        </svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
         <span class="visually-hidden">Dismiss</span>
       </button>
     </div>
@@ -136,7 +134,7 @@ export const Playground: Story = {
     return `
       <div class="demo-frame" style="block-size: 20rem; position: relative; overflow: hidden;">
         <div style="padding: 2rem;">
-          <p class="micro-text" style="color: var(--foreground-muted);">
+          <p class="small-text" style="color: var(--foreground-muted);">
             Interactive page content area underneath the toast stack.
           </p>
         </div>
@@ -151,9 +149,7 @@ export const Playground: Story = {
               ${args.hasAction
         ? `
                     <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss notification" onclick="this.closest('.toast').classList.add('toast--dismissing'); setTimeout(() => this.closest('.toast').remove(), 150);">
-                      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                        <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-                      </svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                       <span class="visually-hidden">Dismiss</span>
                     </button>
                   `
@@ -186,34 +182,34 @@ export const Anatomy: Story = {
             <!-- Viewport Stack Spec -->
             <div class="demo-box demo-box--pink demo-constrained--xs">
               <span class="demo-label">1. Viewport Stack (.toast-stack)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Fixed viewport anchor with <code>pointer-events: none;</code>, safe area offsets, and automated flex vertical stacking.
               </p>
               <div style="border: 1px dashed var(--accent); padding: var(--spacing-8); border-radius: var(--radius-sm); text-align: center;">
-                <span class="micro-text">Transparent Fixed Host</span>
+                <span class="small-text">Transparent Fixed Host</span>
               </div>
             </div>
 
             <!-- Toast Item Spec -->
             <div class="demo-box demo-box--blue demo-constrained--xs">
               <span class="demo-label">2. Toast Item (.toast)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Interactive node (<code>pointer-events: auto;</code>) declaring <code>role="status"</code> and slide-in keyframes.
               </p>
               <div style="border: 1px dashed #2d4268; padding: var(--spacing-8); border-radius: var(--radius-sm); text-align: center;">
-                <span class="micro-text">Interactive Live Node</span>
+                <span class="small-text">Interactive Live Node</span>
               </div>
             </div>
 
             <!-- Composed Banner Spec -->
             <div class="demo-box demo-box--green demo-constrained--xs">
               <span class="demo-label">3. Composed Banner (.banner)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Renders typography, status themes, drop shadow, and dismiss buttons with concentric curvature.
               </p>
               <div style="margin-block-start: var(--spacing-8);">
                 <div class="banner banner--success buttons-sm" style="pointer-events: none;">
-                  <div class="banner__inner"><p class="micro-text">Success Banner</p></div>
+                  <div class="banner__inner"><p class="small-text">Success Banner</p></div>
                 </div>
               </div>
             </div>
@@ -232,7 +228,7 @@ export const Variants: Story = {
     return `
       <div class="demo-frame" style="block-size: 28rem; position: relative; overflow: hidden;">
         <div style="padding: 2rem;">
-          <p class="micro-text" style="color: var(--foreground-muted);">
+          <p class="small-text" style="color: var(--foreground-muted);">
             Stacked multi-toast notifications preview:
           </p>
         </div>
@@ -246,7 +242,7 @@ export const Variants: Story = {
                 <p>Your changes are now live to all viewers.</p>
               </div>
               <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss" onclick="this.closest('.toast').remove()">
-                <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               </button>
             </div>
           </div>
@@ -259,7 +255,7 @@ export const Variants: Story = {
                 <p>Consider archiving older files to free space.</p>
               </div>
               <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss" onclick="this.closest('.toast').remove()">
-                <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               </button>
             </div>
           </div>
@@ -272,7 +268,7 @@ export const Variants: Story = {
                 <p>Unable to connect to the automated verification endpoint.</p>
               </div>
               <button type="button" class="button button--danger button--icon banner__action" aria-label="Dismiss error" onclick="this.closest('.toast').remove()">
-                <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               </button>
             </div>
           </div>
@@ -302,7 +298,7 @@ export const StateMatrix: Story = {
             <div style="margin-block-start: var(--spacing-8);">
               <div class="toast" style="max-inline-size: 24rem;">
                 <div class="banner banner--info buttons-sm">
-                  <div class="banner__inner"><p class="micro-text">Standard resting toast notification.</p></div>
+                  <div class="banner__inner"><p class="small-text">Standard resting toast notification.</p></div>
                 </div>
               </div>
             </div>
@@ -310,13 +306,13 @@ export const StateMatrix: Story = {
 
           <div class="demo-box demo-box--neutral">
             <span class="demo-label">2. Dismissing State (.toast--dismissing)</span>
-            <p class="micro-text" style="margin-block: var(--spacing-4);">
+            <p class="small-text" style="margin-block: var(--spacing-4);">
               Fades out and scales down via <code>transform: scale(0.95); opacity: 0;</code> before removal.
             </p>
             <div style="margin-block-start: var(--spacing-8);">
               <div class="toast toast--dismissing" style="max-inline-size: 24rem; display: inline-block;">
                 <div class="banner banner--warning buttons-sm">
-                  <div class="banner__inner"><p class="micro-text">Dismissing toast collapsing.</p></div>
+                  <div class="banner__inner"><p class="small-text">Dismissing toast collapsing.</p></div>
                 </div>
               </div>
             </div>
@@ -327,7 +323,7 @@ export const StateMatrix: Story = {
             <div style="margin-block-start: var(--spacing-8);">
               <div class="toast" style="max-inline-size: 24rem; outline: 1px solid currentColor;">
                 <div class="banner banner--success buttons-sm">
-                  <div class="banner__inner"><p class="micro-text">High-contrast explicit perimeter outline.</p></div>
+                  <div class="banner__inner"><p class="small-text">High-contrast explicit perimeter outline.</p></div>
                 </div>
               </div>
             </div>
@@ -355,7 +351,7 @@ export const PlacementModes: Story = {
           <div class="demo-frame demo-constrained--xs" style="block-size: 14rem; position: relative;">
             <span class="demo-label" style="padding: var(--spacing-8);">.toast-stack--top-center</span>
             <aside class="toast-stack toast-stack--top-center" style="position: absolute; inline-size: 90%;">
-              <div class="toast"><div class="banner banner--info buttons-sm"><div class="banner__inner"><p class="micro-text">Top Center Notice</p></div></div></div>
+              <div class="toast"><div class="banner banner--info buttons-sm"><div class="banner__inner"><p class="small-text">Top Center Notice</p></div></div></div>
             </aside>
           </div>
 
@@ -363,7 +359,7 @@ export const PlacementModes: Story = {
           <div class="demo-frame demo-constrained--xs" style="block-size: 14rem; position: relative;">
             <span class="demo-label" style="padding: var(--spacing-8);">.toast-stack--top-end</span>
             <aside class="toast-stack toast-stack--top-end" style="position: absolute; inline-size: 90%;">
-              <div class="toast"><div class="banner banner--success buttons-sm"><div class="banner__inner"><p class="micro-text">Top End Notice</p></div></div></div>
+              <div class="toast"><div class="banner banner--success buttons-sm"><div class="banner__inner"><p class="small-text">Top End Notice</p></div></div></div>
             </aside>
           </div>
 
@@ -371,7 +367,7 @@ export const PlacementModes: Story = {
           <div class="demo-frame demo-constrained--xs" style="block-size: 14rem; position: relative;">
             <span class="demo-label" style="padding: var(--spacing-8);">.toast-stack--bottom-end</span>
             <aside class="toast-stack toast-stack--bottom-end" style="position: absolute; inline-size: 90%;">
-              <div class="toast"><div class="banner banner--warning buttons-sm"><div class="banner__inner"><p class="micro-text">Bottom End Notice</p></div></div></div>
+              <div class="toast"><div class="banner banner--warning buttons-sm"><div class="banner__inner"><p class="small-text">Bottom End Notice</p></div></div></div>
             </aside>
           </div>
         </div>
@@ -407,7 +403,7 @@ export const RealWorldRecipes: Story = {
                 <span>Trigger Info</span>
               </button>
             </div>
-            <p class="micro-text" style="color: var(--foreground-muted);">
+            <p class="small-text" style="color: var(--foreground-muted);">
               Clicking a button adds a live toast to the stack. Toasts auto-dismiss after 5 seconds or on close.
             </p>
           </div>
@@ -415,7 +411,7 @@ export const RealWorldRecipes: Story = {
           <!-- Simulated Viewport Frame for Toast Stack -->
           <div class="demo-frame demo-constrained--md" style="block-size: 18rem; position: relative; overflow: hidden;">
             <div style="padding: 1.5rem;">
-              <p class="micro-text" style="color: var(--foreground-muted);">Simulated browser viewport:</p>
+              <p class="small-text" style="color: var(--foreground-muted);">Simulated browser viewport:</p>
             </div>
             <aside id="live-demo-stack" class="toast-stack toast-stack--bottom-end" style="position: absolute;" aria-label="Notifications"></aside>
           </div>
@@ -441,9 +437,7 @@ export const RealWorldRecipes: Story = {
                       <p style="margin: 0;">\${msg}</p>
                     </div>
                     <button type="button" class="\${btnClass} banner__action" aria-label="Dismiss notification">
-                      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                        <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-                      </svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                     </button>
                   </div>
                 \`;

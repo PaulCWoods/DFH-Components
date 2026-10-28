@@ -28,7 +28,7 @@ Built to fulfill strict **WCAG 2.2 AA / AAA** touch target and visual contrast r
 - **Status Indicator Rings:** Uses color-coded outer perimeter borders via \`[data-status="online|away|busy|offline"]\`.
 
 > [!IMPORTANT]
-> **Corner Badges & Avatars:** Do NOT place corner badge elements (e.g. \`.badge--top-right-corner\`) inside \`.avatar\`, because \`.avatar\` requires \`overflow: hidden\` to clip user photos cleanly. To indicate live status on avatars, use the semantic \`[data-status]\` border ring pattern or wrap the avatar in a relative container.
+> **Corner Badges & Avatars:** Do NOT place corner badge elements (e.g. \`.badge--top-end\`) inside \`.avatar\`, because \`.avatar\` requires \`overflow: hidden\` to clip user photos cleanly. To indicate live status on avatars, use the semantic \`[data-status]\` border ring pattern or wrap the avatar in a relative container.
 
 ---
 
@@ -53,7 +53,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 
 <!-- 4. Placeholder / Add Team Member Slot -->
 <div class="avatar avatar--placeholder" aria-label="Add team member">
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
 </div>
 
 <!-- 5. Inline Avatar Group with Counter -->
@@ -174,7 +174,7 @@ export const Playground: Story = {
       <div class="demo-stage demo-stage--lg demo-stage--card" style="display: flex; justify-content: center; align-items: center; min-block-size: 10rem;">
         <div class="${classes}" ${statusAttr} aria-label="${args.altText || 'User'}">
           ${args.isPlaceholder
-        ? `<svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>`
+        ? `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>`
         : `<span>${args.initials || 'AB'}</span>`
       }
         </div>
@@ -202,7 +202,7 @@ export const Anatomy: Story = {
             <!-- Clipping Frame Spec -->
             <div class="demo-box demo-box--pink demo-constrained--xs">
               <span class="demo-label">1. Clipping Host (.avatar)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Circular container with <code>overflow: hidden</code>, 1:1 aspect-ratio, and 48px AAA touch diameter.
               </p>
               <div style="margin-block-start: var(--spacing-8); display: flex; justify-content: center;">
@@ -213,7 +213,7 @@ export const Anatomy: Story = {
             <!-- Status Ring Spec -->
             <div class="demo-box demo-box--green demo-constrained--xs">
               <span class="demo-label">2. Status Ring ([data-status])</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Outer ring border automatically switches token colors (Green: online, Amber: away, Red: busy).
               </p>
               <div style="margin-block-start: var(--spacing-8); display: flex; justify-content: center;">
@@ -224,7 +224,7 @@ export const Anatomy: Story = {
             <!-- Interactive Trigger Spec -->
             <div class="demo-box demo-box--blue demo-constrained--xs">
               <span class="demo-label">3. Avatar Button (.button--avatar)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Interactive trigger with focus rings and hover transitions for profile menus and popovers.
               </p>
               <div style="margin-block-start: var(--spacing-8); display: flex; justify-content: center;">
@@ -276,12 +276,12 @@ export const Variants: Story = {
 
               <!-- Icon Fallback -->
               <div class="avatar" aria-label="Anonymous User">
-                <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
               </div>
 
               <!-- Placeholder / Add Member -->
               <div class="avatar avatar--placeholder" aria-label="Add new team member">
-                <svg class="icon" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
               </div>
 
               <!-- Square / Squircle Shape -->
@@ -445,7 +445,7 @@ export const AvatarGroups: Story = {
           <!-- 3. Interactive Expand-on-Hover Group -->
           <div class="demo-box demo-box--neutral">
             <span class="demo-label" style="margin-block-end: var(--spacing-8);">3. Interactive Expand on Hover (.avatar-group--stackable)</span>
-            <p class="micro-text" style="margin-block: var(--spacing-4);">Hover over the stack below to expand the overlapping avatars.</p>
+            <p class="small-text" style="margin-block: var(--spacing-4);">Hover over the stack below to expand the overlapping avatars.</p>
             <div class="avatar-group avatar-group--stacked avatar-group--stackable" aria-label="Interactive team group">
               <div class="avatar" aria-label="Alex Bennett"><span>AB</span></div>
               <div class="avatar" aria-label="Taylor Smith"><span>TS</span></div>
@@ -476,7 +476,7 @@ export const RealWorldRecipes: Story = {
           <div class="demo-box demo-box--neutral demo-constrained--sm">
             <span class="demo-label" style="margin-block-end: var(--spacing-8);">App Header User Profile Trigger</span>
             <div class="cluster" style="justify-content: space-between; align-items: center;">
-              <span class="micro-text">Alex Bennett (Online)</span>
+              <span class="small-text">Alex Bennett (Online)</span>
               <button 
                 type="button" 
                 class="button button--avatar button--round"
@@ -501,7 +501,7 @@ export const RealWorldRecipes: Story = {
                 </hgroup>
               </header>
               <div class="card__body">
-                <p class="micro-text">Design System auditor for WCAG 2.2 AA / AAA compliance.</p>
+                <p class="small-text">Design System auditor for WCAG 2.2 AA / AAA compliance.</p>
               </div>
             </article>
           </div>

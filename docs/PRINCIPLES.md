@@ -65,13 +65,14 @@ A variant exists only if it serves a different need, not a different taste. Vari
 - They must not share modifier names. There is one density modifier, `--compact`; `--dense` is not used.
 - `--compact` sets `--ui-sizing: compact` on the container, so nested layout primitives tighten their gaps, typography atoms step down, and nested controls step down to their `--sm` size, all through `@container style(--ui-sizing: compact)`. This is the one density flag; per-component density flags (`--ui-density`, `--control-density`, `--menu-density` and similar) are migrated to it.
 - To step down type alone without changing geometry or controls, set `--font-sizing: compact` on the region.
-- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8).
+- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8). Text fields are the one exception (see §9): they can't take a buffer, so `--sm` text controls are 32px, visual and target alike.
 
 **Pointer is opt-in**
 
 - The library defaults to 48px targets on every device, which meets WCAG 2.5.5 (AAA) everywhere.
 - A product that knows its users are on mouse or trackpad may opt into fine-pointer targets (32px) with a single root token. It may set that token inside `@media (pointer: fine)` itself, but the library never does so automatically.
 - Fine-pointer mode changes the minimum target only. It never shrinks visual sizes on its own.
+- To shrink visual sizes only for mouse and trackpad users, a product puts `fine:ui-compact` on a region. It applies compact density inside `@media (pointer: fine)`; touch screens keep the default size. Like the target token, it is the product's choice, never a library default.
 
 **Intent**
 
@@ -100,7 +101,7 @@ Structural components (layout, bands, headers) and content components (prose, me
 - Tier 1 (global) tokens hold raw values (colour ramps, the spacing scale). Components must never reference them directly, including `--spacing-*` steps and raw `--color-*` ramps.
 - Tier 2 (semantic) tokens hold meaning (surface, foreground, border, accent, danger). Components reference only these.
 - Semantic tokens are added when a component needs one, not in advance. When a refactor replaces a Tier 1 reference (such as `--spacing-8`), it adds the semantic token that names the role (such as a spacing step for the gap between related items), and later components reuse it.
-- Tier 3 (component) tokens are optional and exist only to expose a documented customisation point.
+- Tier 3 (component) tokens are optional and exist only to expose a documented customisation point. A Tier 3 token may alias a Tier 1 scale step in the token JSON (`button.padding-inline` → `{spacing.12}`): choosing a step is the component's decision to make. The Tier 1 ban applies to component CSS, which reads the Tier 3 token, never the step itself.
 - Every tier must export cleanly to Tokens Studio and Figma Variables; a token that cannot be represented in Figma needs a documented reason.
 
 **Component contract**
@@ -114,6 +115,14 @@ Every component must document:
 - Its dependencies, so a molecule can be traced to its atoms.
 
 Naming follows one convention across the library (block, element, modifier), and a modifier describes an axis value, not a visual (`--compact`, not `--tight-padding-2`).
+
+**Utility names**
+
+- A utility has at most two names: a verbose one and a shorthand.
+- The verbose name is the CSS property followed by the value: `.font-weight-bold`, `.text-align-center`, `.text-color-muted`, `.white-space-nowrap`.
+- The shorthand is Tailwind's name for the same declaration, with the same meaning: `.font-bold`, `.text-center`, `.text-muted`. Where Tailwind has no name, or its name means something else, there is no shorthand.
+- No bare single words that could clash with a component (`.bold`, `.mono`, `.pre`, `.title`, `.inline`).
+- Examples in AGENTS, stories and docs use the shorthand.
 
 **Scope for v1**
 
@@ -138,6 +147,7 @@ Structure comes first from type, space and alignment, and only then from borders
 - Containers (borders, fills, shadows) are used to separate interactive regions, show elevation, or hold a distinct object such as a card. They must not be added only to fill space.
 - Where a boundary is needed for accessibility and a box would clutter, use a rule, a tint or an underline instead, and keep contrast at 3:1 or better.
 - Typography respects user settings: sizes in relative units, no fixed heights on text, and layouts that tolerate larger text.
+- Text atoms are fixed by default: each takes one step of the scale at every width. Fluid (grows with the viewport), container (`cq`, grows with the container) and compact sizing apply only where a container sets `--font-sizing` or `--ui-sizing: compact`, through the appearance-mode classes (`.font-sizing-fluid`, `.font-sizing-cq`, `.font-sizing-compact`, `.ui-compact`) or an organism that sets the mode itself.
 
 **Fonts**
 
@@ -205,7 +215,7 @@ Accessibility wins every conflict. Beyond that, these rules settle the common on
 | Typography over boxes vs. visible boundaries | Use a rule, tint or underline that meets 3:1. Remove the box, not the boundary. |
 | Less is more vs. a requested variant | Add it only if it fits an existing axis and serves a named user need. Otherwise decline or split the component. |
 | Icon-only minimal vs. touch and tooltips | Keep the accessible name and a visible label path on touch. Minimal is allowed only where meaning is obvious. |
-| Small size vs. touch targets | Shrink the visual, not the hit area. Targets stay 48px unless the product opts into fine pointer; nothing drops below 24px. |
+| Small size vs. touch targets | Shrink the visual, not the hit area. Targets stay 48px unless the product opts into fine pointer; nothing drops below 24px. Text fields, which can't take a buffer, are the exception: `--sm` is 32px. |
 | Intent colour vs. colour-only meaning | Pair every non-neutral intent with an icon, role or text. |
 | Innovative use of space vs. predictability | Allowed only if it passes keyboard, zoom, reflow and forced-colors testing and does not move content unexpectedly. |
 | Content first vs. needed chrome | Chrome appears on demand and collapses first, but never hides a primary action from keyboard or assistive technology. |
@@ -223,10 +233,34 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | Dense or compact? | Compact only. `--compact` sets `--ui-sizing: compact`; `--font-sizing: compact` steps down type alone. |
 | Do controls step down in a compact container? | Yes, to their `--sm` size, keeping the hit-area rule. |
 | Does fine pointer switch on automatically? | No. Fine-pointer targets are opt-in by the product through a root token, and change the minimum target only. |
-| Is info its own intent? | Undecided; settle during the banner pass, its first consumer. Until then `--info` maps to accent. |
+| Is info its own intent? | Yes, from the icon pass: info uses the Tier 1 aqua ramp through its own Tier 2 roles (`foreground-info`, `surface-info`, `surface-info-strong`, `border-color-info`). Accent stays the brand colour. |
 | Are deck, telemetry and batch-actions in v1? | Telemetry and batch-actions are in core. Deck moves to recipes. |
 | Are alert and banner separate? | No. Banner is the visual; alert is a role on it. |
 | Does the Google Fonts import stay? | No. System stacks by default; fonts load in Storybook and docs heads only. |
+| May Tier 3 tokens reference Tier 1? | Yes, in token JSON, to choose a scale step. Component CSS still never references Tier 1. |
+| Should tight groups of small controls avoid overlapping hit areas? | No. WCAG 2.5.8 allows overlap; the later control wins. Dense toolbars that need exact targets opt into fine-pointer targets. |
+| Does each prominence need an explicit modifier, such as `--outline`? | Not yet. Add one only when a real case needs to override a container's prominence back to the default. |
+| How are badge, chip, status and kbd told apart? | By job. Attached count or dot: badge. State of a thing: status. Value or tag, optionally removable: chip. Key: kbd. There is no separate "label" atom. |
+| What is a status's default look? | The outline pill, like every other default prominence. `--strong`, `--subtle` and `--plain` (dot and text) follow the shared axis. |
+| Must a badge sit in a corner? | No. It can sit inline after its host's label or in a logical corner, as long as it belongs to a host. |
+| Is `data-status` an intent? | No. It is presence (online, away, busy) and belongs on avatar only. Other components use intent modifiers. |
+| Can Storybook demos use library components as captions? | No. Demo captions use the Storybook-only `.sb-demo-tag`. |
+| How is text centred in badge, status and chip? | Wrap the text in `.badge__text`, `.status__text` or `.chip__text`, which sets `text-box: trim-both cap alphabetic`. Trimming has no effect on the flex container itself, and padding-block is sized for trimmed text. |
+| Are form controls styled by element or by class? | By class only (`.input`, `.select`, `.textarea`, `.checkbox-input`, `.radio-input`, `.range`). The reset gives bare fields their browser rendering back. |
+| How does a small text control meet the hit-area rule? | Text fields can't take a `::after` buffer, so `--sm` is 32px, matching a small button: above the 24px minimum (WCAG 2.5.8), below the 48px touch target. Use it where the pointer is fine, or scope it with `fine:ui-compact` so touch screens keep the default size. |
+| Do valid fields get a success colour? | No. Only invalid fields are styled, always with an error message. |
+| Does the empty track of a progress bar or meter need 3:1? | No, provided every bar has a name and states its value as text beside it. The bar then backs up the text instead of carrying the information alone. High-contrast mode adds an outline. |
+| Can a meter take an intent class? | No. Its colour follows its value through `low`, `high` and `optimum`, so a class could make the colour disagree with the value. Without thresholds it fills in accent. |
+| How is a link marked, and what changes on hover? | By an underline at the full link colour; link colour alone is too close to body text (WCAG 1.4.1). Hover thickens the underline. There is no hover colour, so nothing else has to reach 4.5:1. |
+| Where can a link drop its underline? | Only with `.link--plain`, and only where context already marks it as a link: navigation, a list of links, a card title. Never in running text. It underlines on hover and focus. |
+| Do links take intent or size? | No. A link navigates; an action with consequences is a button. An inline link takes the size of its text. |
+| How do links work on a dark band? | Put `.color-scheme-dark` on the band. Every `light-dark()` token inside flips, links included. |
+| How are bare links styled? | The reset gives an unclassed `<a>` an underline and the surrounding text colour, so it reads as a link without a class. |
+| Do checkboxes and radios take an intent? | No. A checkbox has a state, not a status. Invalid turns it danger. |
+| What boundary do borderless controls keep? | Subtle and plain controls keep a 3:1 bottom border (`--border-color-control`). `--flush` drops it only inside a bar that draws the boundary itself. |
+| What size does a text atom take by default? | Its fixed step, at every width, headings included. A container chooses fluid, `cq` or compact sizing through `--font-sizing` (or `--ui-sizing: compact`); the appearance-mode classes set it. |
+| How many names can a utility have? | Two at most: a verbose name (property and value) and Tailwind's shorthand where Tailwind has one with the same meaning. |
+| How many small text steps are there? | One: `.small-text` (step −1). `.micro-text` is removed. `.micro-heading` is the uppercase eyebrow, a separate job. |
 
 ## 10. Refinement checklist
 

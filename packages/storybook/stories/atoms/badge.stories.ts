@@ -1,12 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
+type Intent = 'neutral' | 'accent' | 'info' | 'danger' | 'warning' | 'success';
+type Placement = 'inline' | 'top-end' | 'top-start' | 'bottom-end' | 'bottom-start';
+
 interface BadgeArgs {
-  label: string;
-  tone: 'neutral' | 'accent' | 'success' | 'warning' | 'danger';
-  prominence: 'default' | 'strong' | 'subtle' | 'plain';
-  size: 'default' | 'sm';
-  round: boolean;
+  count: string;
+  intent: Intent;
+  small: boolean;
+  dot: boolean;
+  placement: Placement;
 }
+
+const INTENTS: Intent[] = ['neutral', 'accent', 'info', 'danger', 'warning', 'success'];
+
+const badgeClasses = (intent: Intent, small = false, dot = false, placement: Placement = 'inline') =>
+  [
+    'badge',
+    intent !== 'neutral' ? `badge--${intent}` : '',
+    small ? 'badge--sm' : '',
+    dot ? 'badge--dot' : '',
+    placement !== 'inline' ? `badge--${placement}` : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
 const meta: Meta<BadgeArgs> = {
   title: 'Atoms/Badge',
@@ -15,87 +31,62 @@ const meta: Meta<BadgeArgs> = {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Badge Primitive
+### Badge
 
-The **Badge** primitive provides accessible status indicators, notification counters, and keyboard key callouts (\`.kbd\`).
-Designed to comply with **WCAG 2.2 Level AA / AAA** standards:
-- **1.4.3 Contrast (Minimum):** Every semantic tone variant (neutral, accent, success, warning, danger) delivers high contrast against its matching text color.
-- **1.4.11 Non-Text Contrast:** Explicit borders adapt in \`@media (prefers-contrast: more)\` to maintain 3:1 graphical boundaries.
-- **Typographic Precision:** Uses CSS \`text-box: trim-both cap alphabetic\` to vertically center badge copy without ad-hoc line-height hacks.
-- **Keyboard Keys (\`.kbd\`):** Built directly into the badge primitive with monospaced subtle styling for hotkeys and shortcut sequences.
+A count or dot **attached to a host**: a tab, button, nav item or icon. It sits inline after the host's label or in one of its corners.
 
----
+- State of a thing ("Passed", "Live") is a **Status**.
+- A value or tag ("TypeScript") is a **Chip**.
+- A keyboard shortcut is a **Kbd**.
 
-#### 1. Prominence × Tone Orthogonal Matrix
-Badges follow the same orthogonal design language as buttons:
-- **Default:** 1px border with a subtle translucent tinted background.
-- **Strong (\`.badge--strong\`):** High-emphasis solid tone fill with inverted high-contrast white text.
-- **Subtle (\`.badge--subtle\`):** Translucent tinted background with no border.
-- **Plain (\`.badge--plain\`):** Borderless and background-free, displaying only the colored typography.
+| Axis | Modifiers | Container flag |
+| :--- | :--- | :--- |
+| Intent | neutral (default), \`--accent\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` | \`--badge-intent\` |
+| Size | default, \`--sm\` | \`--badge-size\` |
+| Density | none on the badge; a compact container steps it to \`--sm\` | \`--ui-sizing: compact\` |
+| Presentation | \`--dot\` (no count) | |
+| Prominence | fixed: always a solid fill | |
+
+Placement: inline by default; \`--top-end\`, \`--top-start\`, \`--bottom-end\`, \`--bottom-start\` pin it to a corner. The corners are logical, so they mirror in right-to-left layouts.
 
 \`\`\`html
-<!-- Default Prominence (1px border + subtle translucent tint) -->
-<span class="badge"><span>Neutral</span></span>
-<span class="badge badge--accent"><span>Accent</span></span>
-<span class="badge badge--success"><span>Success</span></span>
-<span class="badge badge--warning"><span>Warning</span></span>
-<span class="badge badge--danger"><span>Danger</span></span>
+<!-- Corner count on an icon button -->
+<button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+  <span class="badge badge--danger badge--sm badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
+</button>
 
-<!-- Strong Prominence (Solid fill) -->
-<span class="badge badge--strong"><span>Strong Neutral</span></span>
-<span class="badge badge--accent badge--strong"><span>Strong Accent</span></span>
-<span class="badge badge--success badge--strong"><span>Strong Success</span></span>
-<span class="badge badge--warning badge--strong"><span>Strong Warning</span></span>
-<span class="badge badge--danger badge--strong"><span>Strong Danger</span></span>
-
-<!-- Subtle Prominence (No border, retains translucent background) -->
-<span class="badge badge--subtle"><span>Subtle Neutral</span></span>
-<span class="badge badge--accent badge--subtle"><span>Subtle Accent</span></span>
-<span class="badge badge--danger badge--subtle"><span>Subtle Danger</span></span>
-
-<!-- Plain Prominence (No border, no background) -->
-<span class="badge badge--plain"><span>Plain Neutral</span></span>
-<span class="badge badge--accent badge--plain"><span>Plain Accent</span></span>
-
-<!-- Pill / Round & Small Modifiers -->
-<span class="badge badge--accent badge--round"><span>New Feature</span></span>
-<span class="badge badge--danger badge--sm badge--round"><span>3</span></span>
-
-<!-- Keyboard Key Primitive (.kbd) -->
-<kbd class="kbd">⌘K</kbd>
-<kbd class="kbd">Esc</kbd>
+<!-- Inline count after a tab label -->
+<a href="/issues" class="tab">
+  <span class="tab__text">Issues</span>
+  <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span>
+  <span class="visually-hidden">, 14 open</span>
+</a>
 \`\`\`
+
+#### Accessibility
+- The count must be part of the host's accessible name (\`aria-label\` or visually hidden text). Hide the badge itself with \`aria-hidden="true"\` so it isn't announced twice.
+- Intent colour carries no meaning alone (WCAG 1.4.1): the host's name says what the count is.
+- In forced-colours mode the fill is replaced with an outline.
 `,
       },
     },
   },
-  args: {
-    label: 'Verified',
-    tone: 'accent',
-    prominence: 'default',
-    size: 'default',
-    round: false,
-  },
   argTypes: {
-    tone: {
-      control: 'select',
-      options: ['neutral', 'accent', 'success', 'warning', 'danger'],
-      description: 'Semantic status color theme',
-    },
-    prominence: {
-      control: 'select',
-      options: ['default', 'strong', 'subtle', 'plain'],
-      description: 'Visual weight and surface treatment',
-    },
-    size: {
-      control: 'select',
-      options: ['default', 'sm'],
-      description: 'Size scaling tier',
-    },
-    round: {
-      control: 'boolean',
-      description: 'Pill / rounded corner geometry',
-    },
+    count: { control: 'text', description: 'Count shown in the badge' },
+    intent: { control: 'select', options: INTENTS, description: 'Intent axis' },
+    small: { control: 'boolean', description: 'Size: --sm' },
+    dot: { control: 'boolean', description: 'Presentation: --dot (no count)' },
+    placement: { control: 'select', options: ['inline', 'top-end', 'top-start', 'bottom-end', 'bottom-start'], description: 'Inline or a corner' },
+  },
+  render: (args) => {
+    const badge = `<span class="${badgeClasses(args.intent, args.small, args.dot, args.placement)}" aria-hidden="true">${args.dot ? '' : `<span class="badge__text">${args.count}</span>`}</span>`;
+    const name = args.dot ? 'Messages, new' : `Messages, ${args.count} unread`;
+    const host =
+      args.placement === 'inline'
+        ? `<button type="button" class="button" aria-label="${name}"><span>Messages</span>${badge}</button>`
+        : `<button type="button" class="button button--icon" aria-label="${name}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Email"/></svg>${badge}</button>`;
+    return `<div class="demo-stage">${host}</div>`;
   },
 };
 
@@ -103,199 +94,96 @@ export default meta;
 type Story = StoryObj<BadgeArgs>;
 
 /**
- * 1. Playground (Interactive Sandbox)
+ * Interactive sandbox for every axis.
  */
 export const Playground: Story = {
-  render: (args) => {
-    const toneClass = args.tone !== 'neutral' ? `badge--${args.tone}` : '';
-    const prominenceClass = args.prominence !== 'default' ? `badge--${args.prominence}` : '';
-    const sizeClass = args.size === 'sm' ? 'badge--sm' : '';
-    const roundClass = args.round ? 'badge--round' : '';
-
-    const classes = ['badge', toneClass, prominenceClass, sizeClass, roundClass].filter(Boolean).join(' ');
-
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card" style="display: flex; justify-content: center; align-items: center; min-block-size: 10rem;">
-        <span class="${classes}">
-          <span>${args.label || 'Badge'}</span>
-        </span>
-      </div>
-    `;
-  },
+  args: { count: '3', intent: 'danger', small: false, dot: false, placement: 'top-end' },
 };
 
 /**
- * 2. Prominence Matrix (Strong, Default, Subtle, Plain × All Tones)
+ * Every intent, at both sizes and as a dot. Each sits on a host whose accessible name states the count.
  */
-export const ProminenceMatrix: Story = {
-  render: () => {
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card">
-        <div class="demo-title-group" style="margin-block-end: var(--spacing-24);">
-          <h4 class="demo-heading">Orthogonal Prominence × Tone Matrix</h4>
-          <p class="demo-desc">
-            Badges share the exact same prominence vocabulary as buttons: <code>--strong</code>, default, <code>--subtle</code>, and <code>--plain</code>.
-          </p>
-        </div>
-
-        <div class="stack" style="gap: var(--spacing-24);">
-          <!-- 1. Strong Badges -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">1. Strong Prominence (.badge--strong — Solid tone fill)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-              <span class="badge badge--strong"><span>Neutral</span></span>
-              <span class="badge badge--accent badge--strong"><span>Accent</span></span>
-              <span class="badge badge--success badge--strong"><span>Success</span></span>
-              <span class="badge badge--warning badge--strong"><span>Warning</span></span>
-              <span class="badge badge--danger badge--strong"><span>Danger</span></span>
-            </div>
-          </div>
-
-          <!-- 2. Default Badges -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">2. Default Prominence (1px border + translucent tint)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-              <span class="badge"><span>Neutral</span></span>
-              <span class="badge badge--accent"><span>Accent</span></span>
-              <span class="badge badge--success"><span>Success</span></span>
-              <span class="badge badge--warning"><span>Warning</span></span>
-              <span class="badge badge--danger"><span>Danger</span></span>
-            </div>
-          </div>
-
-          <!-- 3. Subtle Badges -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">3. Subtle Prominence (.badge--subtle — Borderless translucent tint)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-              <span class="badge badge--subtle"><span>Neutral</span></span>
-              <span class="badge badge--accent badge--subtle"><span>Accent</span></span>
-              <span class="badge badge--success badge--subtle"><span>Success</span></span>
-              <span class="badge badge--warning badge--subtle"><span>Warning</span></span>
-              <span class="badge badge--danger badge--subtle"><span>Danger</span></span>
-            </div>
-          </div>
-
-          <!-- 4. Plain Badges -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">4. Plain Prominence (.badge--plain — Borderless, transparent fill)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-              <span class="badge badge--plain"><span>Neutral</span></span>
-              <span class="badge badge--accent badge--plain"><span>Accent</span></span>
-              <span class="badge badge--success badge--plain"><span>Success</span></span>
-              <span class="badge badge--warning badge--plain"><span>Warning</span></span>
-              <span class="badge badge--danger badge--plain"><span>Danger</span></span>
-            </div>
-          </div>
-        </div>
+export const IntentsAndSizes: Story = {
+  render: () => `
+    <div class="demo-stage stack">
+      ${[false, true]
+        .map(
+          (small) => `
+        <div class="cluster align-items-center">
+          ${INTENTS.map(
+            (intent, i) => `
+            <button type="button" class="button" aria-label="Inbox, ${i + 2} unread">
+              <span>Inbox</span>
+              <span class="${badgeClasses(intent, small)}" aria-hidden="true"><span class="badge__text">${i + 2}</span></span>
+            </button>`
+          ).join('')}
+        </div>`
+        )
+        .join('')}
+      <div class="cluster align-items-center">
+        ${INTENTS.map(
+          (intent) => `
+          <button type="button" class="button button--icon" aria-label="Updates, new">
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+            <span class="${badgeClasses(intent, false, true, 'top-end')}" aria-hidden="true"></span>
+          </button>`
+        ).join('')}
       </div>
-    `;
-  },
+    </div>
+  `,
 };
 
 /**
- * 3. Round & Pill Shapes (.badge--round)
+ * The four logical corners, and inline placement after a label. Large counts are capped by the author ("99+").
  */
-export const RoundPills: Story = {
-  render: () => {
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card">
-        <div class="demo-title-group" style="margin-block-end: var(--spacing-16);">
-          <h4 class="demo-heading">Pill & Circular Badges (.badge--round)</h4>
-          <p class="demo-desc">High-contrast notification indicators and feature labels.</p>
-        </div>
-
-        <div class="stack" style="gap: var(--spacing-16);">
-          <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-            <span class="badge badge--round"><span>Standard Pill</span></span>
-            <span class="badge badge--accent badge--round"><span>New Feature</span></span>
-            <span class="badge badge--success badge--strong badge--round"><span>Audit Passed</span></span>
-            <span class="badge badge--warning badge--subtle badge--round"><span>In Review</span></span>
-            <span class="badge badge--danger badge--strong badge--round"><span>3 Blockers</span></span>
-          </div>
-
-          <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-            <span class="badge badge--sm badge--round"><span>1</span></span>
-            <span class="badge badge--sm badge--accent badge--strong badge--round"><span>12</span></span>
-            <span class="badge badge--sm badge--danger badge--strong badge--round"><span>99+</span></span>
-          </div>
-        </div>
-      </div>
-    `;
-  },
+export const Placement: Story = {
+  render: () => `
+    <div class="demo-stage cluster align-items-center" style="gap: var(--spacing-32);">
+      ${(['top-end', 'top-start', 'bottom-end', 'bottom-start'] as Placement[])
+        .map(
+          (p) => `
+        <button type="button" class="button button--icon" aria-label="Notifications, 99 or more unread">
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+          <span class="badge badge--danger badge--sm badge--${p}" aria-hidden="true"><span class="badge__text">99+</span></span>
+        </button>`
+        )
+        .join('')}
+      <button type="button" class="button button--subtle" aria-label="Drafts, 12">
+        <span>Drafts</span>
+        <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">12</span></span>
+      </button>
+    </div>
+  `,
 };
 
 /**
- * 4. Keyboard Key Primitive (<kbd class="kbd">)
+ * Counts in context: tabs, a nav list and a selection summary.
  */
-export const KeyboardKeys: Story = {
-  render: () => {
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card">
-        <div class="demo-title-group" style="margin-block-end: var(--spacing-16);">
-          <h4 class="demo-heading">Keyboard Key Primitive (&lt;kbd class="kbd"&gt;)</h4>
-          <p class="demo-desc">Integrated monospaced key indicator sharing badge layout geometry.</p>
-        </div>
-
-        <div class="stack" style="gap: var(--spacing-12);">
-          <div class="cluster" style="align-items: center; gap: var(--spacing-8);">
-            <kbd class="kbd">⌘</kbd>
-            <kbd class="kbd">K</kbd>
-            <span class="micro-text">Open Command Palette</span>
-          </div>
-          <div class="cluster" style="align-items: center; gap: var(--spacing-8);">
-            <kbd class="kbd">⌘</kbd>
-            <kbd class="kbd">Shift</kbd>
-            <kbd class="kbd">P</kbd>
-            <span class="micro-text">Show All Commands</span>
-          </div>
-          <div class="cluster" style="align-items: center; gap: var(--spacing-8);">
-            <kbd class="kbd">Esc</kbd>
-            <span class="micro-text">Dismiss Active Top Layer</span>
-          </div>
-        </div>
+export const InContext: Story = {
+  render: () => `
+    <div class="demo-stage stack">
+      <nav class="tab-list" aria-label="Repository sections">
+        <a href="#code" class="tab" aria-current="page"><span class="tab__text">Code</span></a>
+        <a href="#issues" class="tab"><span class="tab__text">Issues</span> <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="visually-hidden">, 14 open</span></a>
+        <a href="#pulls" class="tab"><span class="tab__text">Pull requests</span> <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="visually-hidden">, 3 open</span></a>
+      </nav>
+      <div class="cluster align-items-center">
+        <span class="badge badge--accent" aria-hidden="true"><span class="badge__text">3</span></span>
+        <span>3 items selected</span>
       </div>
-    `;
-  },
+    </div>
+  `,
 };
 
 /**
- * 5. Corner Notification Badges
+ * Container flags set intent and size for every badge inside, with no classes on the badges.
  */
-export const CornerBadges: Story = {
-  render: () => {
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card">
-        <div class="demo-title-group" style="margin-block-end: var(--spacing-16);">
-          <h4 class="demo-heading">Corner Notification Anchors</h4>
-          <p class="demo-desc">Pill badges pinned to corners of relative action buttons.</p>
-        </div>
-
-        <div class="cluster" style="gap: var(--spacing-32); justify-content: center; padding-block: var(--spacing-16);">
-          <!-- Bell with Danger Count -->
-          <button type="button" class="button button--icon" style="position: relative;" aria-label="Notifications (3 unread)">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
-            <span class="badge badge--danger badge--strong badge--sm badge--round badge--top-right-corner">
-              <span>3</span>
-            </span>
-          </button>
-
-          <!-- Cart with Accent Count -->
-          <button type="button" class="button button--icon" style="position: relative;" aria-label="Shopping Cart (12 items)">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Cart"/></svg>
-            <span class="badge badge--accent badge--strong badge--sm badge--round badge--top-right-corner">
-              <span>12</span>
-            </span>
-          </button>
-
-          <!-- Mail with Subtle Count -->
-          <button type="button" class="button button--icon" style="position: relative;" aria-label="Inbox (1 new alert)">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Email"/></svg>
-            <span class="badge badge--success badge--strong badge--sm badge--round badge--bottom-left-corner">
-              <span>1</span>
-            </span>
-          </button>
-        </div>
-      </div>
-    `;
-  },
+export const ContainerFlags: Story = {
+  render: () => `
+    <div class="demo-stage cluster align-items-center" style="--badge-intent: success; --badge-size: sm;">
+      <button type="button" class="button" aria-label="Approved, 4"><span>Approved</span><span class="badge" aria-hidden="true"><span class="badge__text">4</span></span></button>
+      <button type="button" class="button" aria-label="Merged, 9"><span>Merged</span><span class="badge" aria-hidden="true"><span class="badge__text">9</span></span></button>
+      <button type="button" class="button" aria-label="Failed, 1"><span>Failed</span><span class="badge badge--danger" aria-hidden="true"><span class="badge__text">1</span></span></button>
+    </div>
+  `,
 };

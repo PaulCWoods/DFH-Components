@@ -33,7 +33,7 @@ The **Command Palette** recipe demonstrates a production-grade, accessible quick
       
       <!-- Search Bar Header with Focus Delegation -->
       <header class="card__header inline gap-sm focus-within">
-        <svg class="icon" width="22" height="22" aria-hidden="true"><use href="#Search"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         <input 
           type="search" 
           class="input input--flush focus-none flex-grow" 
@@ -47,7 +47,7 @@ The **Command Palette** recipe demonstrates a production-grade, accessible quick
         />
         <form method="dialog">
           <button type="submit" class="button button--subtle button--icon" commandfor="cmd-dialog" command="close">
-            <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </button>
         </form>
       </header>
@@ -58,12 +58,12 @@ The **Command Palette** recipe demonstrates a production-grade, accessible quick
           <h3 class="button-group__content micro-heading text-color-muted">UI Components</h3>
           
           <button type="button" class="button is-active" role="option" id="cmd-opt-1" aria-selected="true">
-            <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
             <div class="lockup">
               <b>Button Primitive</b>
               <small class="opacity-muted">Accessible interactive buttons & toggles</small>
             </div>
-            <span class="badge badge--sm"><span>Component</span></span>
+            <span class="chip chip--sm"><span class="chip__text">Component</span></span>
             <kbd class="kbd">↵</kbd>
           </button>
         </div>
@@ -264,11 +264,11 @@ export const Interactive: Story = {
                 onclick="document.getElementById('${dialogId}').showModal(); document.getElementById('${inputId}').focus();"
                 aria-haspopup="dialog"
               >
-                <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false">
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#Search"/>
                 </svg>
                 <span>Open Command Palette</span>
-                <span class="badge badge--round badge--sm max-sm:hide"><span>⌘K</span></span>
+                <kbd class="kbd max-sm:hide"><kbd>⌘</kbd><kbd>K</kbd></kbd>
               </button>
             </footer>
           </article>
@@ -282,7 +282,7 @@ export const Interactive: Story = {
               <!-- Search Bar Header with Focus Delegation -->
               <header class="card__header inline gap-sm">
                 <span class="icon-box icon--lg" aria-hidden="true">
-                  <svg class="icon text-color-muted flex-shrink-0" width="22" height="22" focusable="false">
+                  <svg class="icon text-color-muted flex-shrink-0" width="1em" height="1em" focusable="false" aria-hidden="true">
                     <use href="#Search"/>
                   </svg>
                 </span>
@@ -301,7 +301,7 @@ export const Interactive: Story = {
                 />
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false">
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
                       <use href="#Close"/>
                     </svg>
                     <span>Close command palette</span>
@@ -323,77 +323,77 @@ export const Interactive: Story = {
                   <h3 class="button-group__content micro-heading text-color-muted">UI Components</h3>
 
                   <button type="button" class="button is-active" role="option" id="cmd-opt-button" aria-selected="true">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
                     <span class="lockup">
                       <b>Button Primitive</b>
                       <small class="opacity-muted">Accessible interactive buttons, variants & zero-JS toggles</small>
                     </span>
-                    <span class="badge badge--sm"><span>Component</span></span>
+                    <span class="chip chip--sm"><span class="chip__text">Component</span></span>
                     <kbd class="kbd">↵</kbd>
                   </button>
 
                   <button type="button" class="button" role="option" id="cmd-opt-combobox" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                     <span class="lockup">
                       <b>Combobox Primitive</b>
                       <small class="opacity-muted">Searchable single and multi-select floating listboxes</small>
                     </span>
-                    <span class="badge badge--sm"><span>Component</span></span>
+                    <span class="chip chip--sm"><span class="chip__text">Component</span></span>
                   </button>
 
                   <button type="button" class="button" role="option" id="cmd-opt-empty" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Warning"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
                     <span class="lockup">
                       <b>Empty State Primitive</b>
                       <small class="opacity-muted">Accessible zero-data views, feedback & recovery actions</small>
                     </span>
-                    <span class="badge badge--sm"><span>Component</span></span>
+                    <span class="chip chip--sm"><span class="chip__text">Component</span></span>
                   </button>
 
                   <button type="button" class="button" role="option" id="cmd-opt-skeleton" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Progress"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
                     <span class="lockup">
                       <b>Skeleton Primitive</b>
                       <small class="opacity-muted">Loading placeholders engineered to eliminate layout shift (CLS)</small>
                     </span>
-                    <span class="badge badge--sm"><span>Component</span></span>
+                    <span class="chip chip--sm"><span class="chip__text">Component</span></span>
                   </button>
 
                   <button type="button" class="button" role="option" id="cmd-opt-menu" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Navigation"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
                     <span class="lockup">
                       <b>Menu Primitive</b>
                       <small class="opacity-muted">Action lists, anchored context menus & keyboard shortcuts</small>
                     </span>
-                    <span class="badge badge--sm"><span>Component</span></span>
+                    <span class="chip chip--sm"><span class="chip__text">Component</span></span>
                   </button>
 
                   <!-- Group 2: Design Tokens -->
                   <h3 class="button-group__content micro-heading text-color-muted">Design Tokens</h3>
 
                   <button type="button" class="button" role="option" id="cmd-opt-colors" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                     <span class="lockup">
                       <b>Color Palettes & Semantic Schemes</b>
                       <small class="opacity-muted">Tier 2 semantic surfaces, light-dark(), contrast ratios</small>
                     </span>
-                    <span class="chip">Tier 2</span>
+                    <span class="chip chip--subtle"><span class="chip__text">Tier 2</span></span>
                   </button>
 
                   <button type="button" class="button" role="option" id="cmd-opt-spacing" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                     <span class="lockup">
                       <b>Spacing Block Scale (--spacing-block-*)</b>
                       <small class="opacity-muted">Progressive clamp scales for responsive layouts</small>
                     </span>
-                    <span class="chip">Tier 2</span>
+                    <span class="chip chip--subtle"><span class="chip__text">Tier 2</span></span>
                   </button>
 
                   <!-- Group 3: Quick Actions -->
                   <h3 class="button-group__content micro-heading text-color-muted">Quick Actions</h3>
 
                   <button type="button" class="button" role="option" id="cmd-opt-figma" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Upload"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Upload"/></svg>
                     <span class="lockup">
                       <b>Export Figma Variables</b>
                       <small class="opacity-muted">Compile DTCG JSON to Native Variables format</small>
@@ -402,7 +402,7 @@ export const Interactive: Story = {
                   </button>
 
                   <button type="button" class="button" role="option" id="cmd-opt-audit" aria-selected="false">
-                    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Point"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Point"/></svg>
                     <span class="lockup">
                       <b>Run WCAG Accessibility Audit</b>
                       <small class="opacity-muted">Execute automated axe-core compliance scanner</small>
@@ -414,7 +414,7 @@ export const Interactive: Story = {
                 <!-- 2. Zero-Results Empty State (Toggled dynamically when 0 matches) -->
                 <div id="${emptyStateId}" class="empty-state empty-state--compact empty-state--flush padding-block-lg" hidden aria-labelledby="cmd-empty-title">
                   <div class="empty-state__visual" aria-hidden="true">
-                    <svg class="icon" width="28" height="28"><use href="#Search"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                   </div>
                   <div class="empty-state__content">
                     <h3 id="cmd-empty-title" class="empty-state__title">No matching commands</h3>
@@ -465,7 +465,7 @@ export const SearchMissEmptyState: Story = {
             <!-- Search Bar Header with active search term -->
             <header class="card__header inline gap-sm">
               <span class="icon-box" aria-hidden="true">
-                <svg class="icon text-color-muted flex-shrink-0" width="22" height="22"><use href="#Search"/></svg>
+                <svg class="icon text-color-muted flex-shrink-0" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
               </span>
               <input 
                 type="search" 
@@ -477,7 +477,7 @@ export const SearchMissEmptyState: Story = {
                 placeholder="Search components, tokens, documentation..." 
               />
               <button type="button" class="button button--subtle button--icon" aria-label="Clear input">
-                <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               </button>
             </header>
 
@@ -485,7 +485,7 @@ export const SearchMissEmptyState: Story = {
             <div class="card__body card__body--flush padding-block-lg">
               <div class="empty-state empty-state--compact empty-state--flush" aria-labelledby="miss-empty-title">
                 <div class="empty-state__visual" aria-hidden="true">
-                  <svg class="icon" width="28" height="28"><use href="#Search"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                 </div>
                 <div class="empty-state__content">
                   <h3 id="miss-empty-title" class="empty-state__title">No matching commands or components</h3>
@@ -534,7 +534,7 @@ export const LoadingState: Story = {
             <!-- Search Bar Header -->
             <header class="card__header inline gap-sm focus-within">
               <span class="icon-box" aria-hidden="true">
-                <svg class="icon text-color-muted flex-shrink-0" width="22" height="22"><use href="#Search"/></svg>
+                <svg class="icon text-color-muted flex-shrink-0" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
               </span>
               <input 
                 type="search" 
@@ -546,7 +546,7 @@ export const LoadingState: Story = {
                 placeholder="Search components, tokens, documentation..." 
               />
               <button type="button" class="button button--subtle button--icon" aria-label="Close command palette">
-                <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Close"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
               </button>
             </header>
 
@@ -557,52 +557,53 @@ export const LoadingState: Story = {
               aria-busy="true" 
               aria-label="Loading search results"
             >
+              <p class="visually-hidden" role="status">Loading search results…</p>
               <div class="stack gap-sm padding-inline-md padding-block-sm">
                 
                 <!-- Skeleton Section Header -->
-                <span class="skeleton skeleton--heading skeleton--w-25" aria-hidden="true" style="block-size: 0.75rem;"></span>
+                <span class="skeleton" aria-hidden="true" style="--skeleton-width: 25%; --skeleton-height: 0.75rem;"></span>
 
                 <!-- Skeleton Option Row 1 -->
                 <div class="inline gap-sm align-items-center padding-block-xs">
-                  <div class="skeleton skeleton--avatar" style="inline-size: 1.5rem; block-size: 1.5rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--avatar" aria-hidden="true" style="--skeleton-width: 1.5rem;"></div>
                   <div class="stack gap-xs flex-grow">
                     <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
                     <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
                   </div>
-                  <div class="skeleton skeleton--badge" style="inline-size: 4.5rem; block-size: 1.25rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4.5rem; --skeleton-height: 1.25rem;"></div>
                 </div>
 
                 <!-- Skeleton Option Row 2 -->
                 <div class="inline gap-sm align-items-center padding-block-xs">
-                  <div class="skeleton skeleton--avatar" style="inline-size: 1.5rem; block-size: 1.5rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--avatar" aria-hidden="true" style="--skeleton-width: 1.5rem;"></div>
                   <div class="stack gap-xs flex-grow">
-                    <span class="skeleton skeleton--heading skeleton--w-33" aria-hidden="true"></span>
+                    <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 33%;"></span>
                     <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
                   </div>
-                  <div class="skeleton skeleton--badge" style="inline-size: 4.5rem; block-size: 1.25rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4.5rem; --skeleton-height: 1.25rem;"></div>
                 </div>
 
                 <!-- Skeleton Option Row 3 -->
                 <div class="inline gap-sm align-items-center padding-block-xs">
-                  <div class="skeleton skeleton--avatar" style="inline-size: 1.5rem; block-size: 1.5rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--avatar" aria-hidden="true" style="--skeleton-width: 1.5rem;"></div>
                   <div class="stack gap-xs flex-grow">
                     <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text skeleton--w-66" aria-hidden="true"></span>
+                    <span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 66%;"></span>
                   </div>
-                  <div class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></div>
                 </div>
 
                 <!-- Skeleton Section Header 2 -->
-                <span class="skeleton skeleton--heading skeleton--w-25 margin-top-sm" aria-hidden="true" style="block-size: 0.75rem;"></span>
+                <span class="skeleton margin-top-sm" aria-hidden="true" style="--skeleton-width: 25%; --skeleton-height: 0.75rem;"></span>
 
                 <!-- Skeleton Option Row 4 -->
                 <div class="inline gap-sm align-items-center padding-block-xs">
-                  <div class="skeleton skeleton--avatar" style="inline-size: 1.5rem; block-size: 1.5rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--avatar" aria-hidden="true" style="--skeleton-width: 1.5rem;"></div>
                   <div class="stack gap-xs flex-grow">
                     <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
                     <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
                   </div>
-                  <div class="skeleton skeleton--badge" style="inline-size: 3rem; block-size: 1.25rem;" aria-hidden="true"></div>
+                  <div class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></div>
                 </div>
 
               </div>

@@ -57,7 +57,7 @@ AI agents and developers MUST use the following semantic patterns:
 \`\`\`html
 <!-- 1. Compound Search Bar with Delegated Container Focus -->
 <div class="inline align-items-center gap-sm pd-sm rounded-md border focus-within" style="background-color: var(--surface);">
-  <svg class="icon text-color-muted" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+  <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
   <input type="search" class="input input--plain flex-1" placeholder="Search documentation..." />
   <button type="button" class="button button--subtle button--sm"><span>Search</span></button>
 </div>
@@ -72,7 +72,7 @@ AI agents and developers MUST use the following semantic patterns:
 <div class="card card--compact card--bordered focus-within focus-within--inset">
   <div class="card__body inline align-items-center justify-content-between">
     <span>Enable Analytics</span>
-    <input type="checkbox" role="switch" class="switch" />
+    <input type="checkbox" role="switch" class="checkbox-input" aria-label="Enable Analytics" />
   </div>
 </div>
 \`\`\`
@@ -181,10 +181,7 @@ export const Playground: Story = {
           "
         >
           <span style="display: flex; align-items: center; justify-content: center; color: var(--foreground-muted);">
-            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
           </span>
 
           <input 
@@ -233,10 +230,7 @@ export const CompoundSearchBar: Story = {
 
       <div class="inline align-items-center gap-sm pd-sm rounded-md border focus-within" style="background-color: var(--surface);">
         <span style="display: flex; align-items: center; color: var(--foreground-muted);">
-          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         </span>
         <input 
           type="search" 
@@ -245,10 +239,7 @@ export const CompoundSearchBar: Story = {
           aria-label="Documentation search"
         />
         <button type="button" class="button button--subtle button--sm" aria-label="Clear search input">
-          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
         </button>
         <button type="button" class="button button--strong button--accent button--sm">
           <span>Search</span>
@@ -274,7 +265,7 @@ export const TargetedInputContainer: Story = {
       <div class="field">
         <label for="cdn-url" class="field__label">Production CDN Endpoint</label>
         <div class="inline align-items-center gap-sm pd-sm rounded-md border focus-within--input" style="background-color: var(--surface);">
-          <svg class="icon text-color-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+          <svg class="icon text-color-muted" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
             <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
             <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
             <line x1="6" y1="6" x2="6.01" y2="6"></line>
@@ -288,10 +279,7 @@ export const TargetedInputContainer: Story = {
             readonly 
           />
           <button type="button" class="button button--sm">
-            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Copy"/></svg>
             <span>Copy</span>
           </button>
         </div>
@@ -319,7 +307,7 @@ export const InsetFocusContainer: Story = {
               <p class="font-size-xs text-color-muted" style="margin: 0;">Execute WCAG checks on CI build</p>
             </div>
             <label class="switch">
-              <input type="checkbox" role="switch" class="visually-hidden" checked />
+              <input type="checkbox" role="switch" class="visually-hidden" aria-label="Automated axe scans" checked />
               <span class="switch__control" aria-hidden="true">
                 <span class="switch__option switch__option--off">Off</span>
                 <span class="switch__option switch__option--on">On</span>
@@ -335,7 +323,7 @@ export const InsetFocusContainer: Story = {
               <p class="font-size-xs text-color-muted" style="margin: 0;">Emulate Windows High Contrast Mode</p>
             </div>
             <label class="switch">
-              <input type="checkbox" role="switch" class="visually-hidden" />
+              <input type="checkbox" role="switch" class="visually-hidden" aria-label="Forced colours simulation" />
               <span class="switch__control" aria-hidden="true">
                 <span class="switch__option switch__option--off">Off</span>
                 <span class="switch__option switch__option--on">On</span>
@@ -361,10 +349,7 @@ export const BorderHighlightContainer: Story = {
 
       <div class="inline align-items-center gap-sm pd-sm rounded-md border-md focus-within--border focus-within" style="background-color: var(--surface);">
         <span style="display: flex; align-items: center; color: var(--foreground-muted);">
-          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-          </svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Email"/></svg>
         </span>
         <input 
           type="email" 
@@ -394,7 +379,7 @@ export const CompositeCardDelegation: Story = {
       <article class="card card--bordered padding focus-within rounded-md" style="transition: border-color var(--transition-fast);">
         <header class="stack gap-xs">
           <div class="inline align-items-center justify-content-between">
-            <span class="badge badge--accent">WCAG 2.2 AAA</span>
+            <span class="status status--accent"><span class="status__text">WCAG 2.2 AAA</span></span>
             <span class="font-size-xs text-color-muted">Updated 2h ago</span>
           </div>
           <h3 class="card__title font-size-md" style="margin-block-start: var(--spacing-4);">
@@ -431,7 +416,7 @@ export const StandaloneFocusUtilities: Story = {
           style="background: var(--surface); cursor: pointer;"
         >
           <div class="inline align-items-center gap-sm">
-            <svg class="icon text-color-accent" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+            <svg class="icon text-color-accent" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
               <polyline points="9 11 12 14 22 4"></polyline>
               <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
             </svg>
@@ -484,7 +469,7 @@ export const StateMatrix: Story = {
         <!-- Matrix Item 1: .focus-within -->
         <div class="card card--bordered padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
-            <span class="badge">.focus-within</span>
+            <span class="sb-demo-tag">.focus-within</span>
             <span class="font-size-xs text-color-muted">Universal Delegation</span>
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border focus-within" style="background: var(--surface);">
@@ -496,7 +481,7 @@ export const StateMatrix: Story = {
         <!-- Matrix Item 2: .focus-within--input -->
         <div class="card card--bordered padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
-            <span class="badge">.focus-within--input</span>
+            <span class="sb-demo-tag">.focus-within--input</span>
             <span class="font-size-xs text-color-muted">Input Scoped Only</span>
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border focus-within--input" style="background: var(--surface);">
@@ -508,7 +493,7 @@ export const StateMatrix: Story = {
         <!-- Matrix Item 3: .focus-within--inset -->
         <div class="card card--bordered padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
-            <span class="badge">.focus-within--inset</span>
+            <span class="sb-demo-tag">.focus-within--inset</span>
             <span class="font-size-xs text-color-muted">Inset -2px Offset</span>
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border focus-within focus-within--inset" style="background: var(--surface);">
@@ -520,7 +505,7 @@ export const StateMatrix: Story = {
         <!-- Matrix Item 4: .focus-within--border -->
         <div class="card card--bordered padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
-            <span class="badge">.focus-within--border</span>
+            <span class="sb-demo-tag">.focus-within--border</span>
             <span class="font-size-xs text-color-muted">Border Color Elevation</span>
           </div>
           <div class="inline align-items-center gap-xs pd-xs rounded-md border-md focus-within--border focus-within" style="background: var(--surface);">

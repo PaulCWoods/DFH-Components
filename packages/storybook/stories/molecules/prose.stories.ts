@@ -209,7 +209,7 @@ export const Anatomy: Story = {
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 52rem; margin-inline: auto;">
       <div class="card card--bordered" style="padding: var(--spacing-24);">
         <header style="margin-block-end: var(--spacing-16);">
-          <span class="badge badge--accent">Prose Anatomy</span>
+          <span class="sb-demo-tag">Prose Anatomy</span>
           <h3 class="heading" style="margin-block-start: var(--spacing-8);">Semantic Hierarchy Breakdown</h3>
           <p class="text" style="color: var(--foreground-muted); margin: 0;">
             The <code>.prose</code> primitive automatically formats native HTML semantic elements with zero utility classes needed on children.
@@ -255,7 +255,7 @@ export const Variants: Story = {
     <div class="stack" style="gap: var(--spacing-32); max-inline-size: 54rem; margin-inline: auto;">
       <!-- Variant 1: Default Fixed Scale Prose -->
       <section class="card card--bordered" style="padding: var(--spacing-24);">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">1. Default Fixed Rhythm (.prose)</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">1. Default Fixed Rhythm (.prose)</span>
         <article class="prose">
           <h2>Fixed Scale Rhythm (Default)</h2>
           <p>
@@ -270,7 +270,7 @@ export const Variants: Story = {
 
       <!-- Variant 2: Fluid Scaled Prose -->
       <section class="card card--bordered font-sizing-fluid" style="padding: var(--spacing-24);">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">2. Fluid Scaling (.font-sizing-fluid)</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">2. Fluid Scaling (.font-sizing-fluid)</span>
         <article class="prose">
           <h2>Fluid Viewport Scaling</h2>
           <p>
@@ -285,7 +285,7 @@ export const Variants: Story = {
 
       <!-- Variant 3: Container Query Adaptive -->
       <section class="card card--bordered font-sizing-cq" style="padding: var(--spacing-24); container-type: inline-size;">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">3. Container Adaptive (.font-sizing-cq)</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">3. Container Adaptive (.font-sizing-cq)</span>
         <article class="prose">
           <h2>Container Query Sizing</h2>
           <p>
@@ -300,7 +300,7 @@ export const Variants: Story = {
 
       <!-- Variant 4: Tight Spacing -->
       <section class="card card--bordered" style="padding: var(--spacing-24);">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">4. Compact Rhythm (.prose--tight)</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">4. Compact Rhythm (.prose--tight)</span>
         <article class="prose prose--tight">
           <h2>Compact Spacing for Cards & Drawers</h2>
           <p>
@@ -311,7 +311,7 @@ export const Variants: Story = {
 
       <!-- Variant 5: Accessible Emoji Markers -->
       <section class="card card--bordered" style="padding: var(--spacing-24);">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">5. Accessible Emoji Callouts</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">5. Accessible Emoji Callouts</span>
         <article class="prose">
           <p class="emoji check">Audit completed with 100% WCAG 2.2 AA / AAA conformance.</p>
           <p class="emoji idea">Tip: Leverage native CSS container queries for component-level responsiveness.</p>
@@ -322,7 +322,7 @@ export const Variants: Story = {
 
       <!-- Variant 6: Scoped Boundary Cancellation (.prose-end) -->
       <section class="card card--bordered" style="padding: var(--spacing-24);">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">6. Scoped Boundary Cancellation (.prose-end)</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">6. Scoped Boundary Cancellation (.prose-end)</span>
         <article class="prose">
           <h2>Active Prose Section</h2>
           <p>
@@ -332,7 +332,7 @@ export const Variants: Story = {
           <!-- Cancelled sub-tree -->
           <div class="prose-end" style="margin-block: var(--spacing-16); padding: var(--spacing-16); background-color: var(--surface); border: 1px dashed var(--border-quiet); border-radius: var(--radius-md);">
             <div class="cluster" style="align-items: center; justify-content: space-between;">
-              <span class="badge badge--sm">Opt-Out Sub-tree: .prose-end</span>
+              <span class="sb-demo-tag">Opt-Out Sub-tree: .prose-end</span>
               <button type="button" class="button button--sm button--strong button--accent"><span>Interactive Action</span></button>
             </div>
             <p style="margin: var(--spacing-8) 0 0 0; font-size: 0.875rem; color: var(--foreground-muted);">
@@ -358,7 +358,7 @@ export const StateMatrix: Story = {
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
       <!-- Context 1: Dark Surface Container -->
       <div class="card card--bordered" style="padding: var(--spacing-24); background-color: var(--surface-dark); color: var(--foreground-on-dark);">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">Context: Dark Surface Container</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">Context: Dark Surface Container</span>
         <article class="prose" style="color: inherit;">
           <h2 style="color: inherit;">High Contrast Dark Mode</h2>
           <p style="color: inherit;">
@@ -371,7 +371,7 @@ const mode = "dark";</code></pre>
 
       <!-- Context 2: Right-to-Left (RTL) Layout -->
       <div dir="rtl" class="card card--bordered" style="padding: var(--spacing-24); text-align: right;">
-        <span class="badge badge--accent" style="margin-block-end: var(--spacing-8);">Context: dir="rtl" Bidirectional</span>
+        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">Context: dir="rtl" Bidirectional</span>
         <article class="prose">
           <h2>تصميم للإنسان: المعايير القياسية للويب</h2>
           <p>
@@ -397,7 +397,7 @@ export const SizesAndDensity: Story = {
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
       <div class="card card--bordered" style="padding: var(--spacing-24);">
         <header style="margin-block-end: var(--spacing-16);">
-          <span class="badge badge--accent">Ordered & Unordered Markers</span>
+          <span class="sb-demo-tag">Ordered & Unordered Markers</span>
           <h3 class="heading" style="margin-block-start: var(--spacing-8);">Proportional List Hierarchy</h3>
           <p class="text" style="color: var(--foreground-muted); margin: 0;">
             Nested ordered lists cycle through decimal, lower-latin, and lower-roman sequences with lining numerals.
@@ -437,7 +437,7 @@ export const ZeroClassOrchestration: Story = {
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
       <div class="card card--bordered" style="padding: var(--spacing-24);">
         <header style="margin-block-end: var(--spacing-16);">
-          <span class="badge badge--accent">Zero-Class Orchestration</span>
+          <span class="sb-demo-tag">Zero-Class Orchestration</span>
           <h3 class="heading" style="margin-block-start: var(--spacing-8);">Pure Semantic HTML Formatting</h3>
           <p class="text" style="color: var(--foreground-muted); margin: 0;">
             No helper classes are required on headings, paragraphs, lists, quotes, or code. Container queries and <code>:where()</code> orchestrate everything automatically.

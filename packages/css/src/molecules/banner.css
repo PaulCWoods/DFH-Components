@@ -25,7 +25,7 @@
      -------------------------------------------------------------------------- */
   --button-size: sm;
   --button-prominence: subtle;
-  --icon-box-density: compact;
+  --icon-box-size: sm;
   --font-sizing: fixed;
   --vert-spacing: tight;
 
@@ -220,8 +220,22 @@
   }
 }
 
-/* Info / Accent Variant */
-:where(.banner--info),
+/* Info Variant */
+:where(.banner--info) {
+  --link-color: var(--foreground-info, currentColor);
+  --link-hover-color: var(--foreground-info-hover, currentColor);
+  --link-pressed-color: var(--foreground-info-pressed, currentColor);
+  --icon-color: var(--foreground-info, currentColor);
+  --banner-bg: var(--surface-info, transparent);
+  --banner-border-color: var(--border-color-info, currentColor);
+
+  &:where(.banner--strong) {
+    --_banner-bg: var(--banner-info-strong-bg, var(--surface-info-strong, var(--foreground-info, Canvas)));
+    --icon-color: var(--foreground-inverted-strong);
+  }
+}
+
+/* Accent Variant */
 :where(.banner--accent) {
   --link-color: var(--foreground-accent, currentColor);
   --link-hover-color: var(--foreground-accent-hover, currentColor);

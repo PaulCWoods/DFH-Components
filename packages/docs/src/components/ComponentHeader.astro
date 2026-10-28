@@ -31,13 +31,13 @@ const {
   <nav class="breadcrumb margin-bottom prose-end" aria-label="Breadcrumbs">
     <ol class="inline align-items-center gap-xs list-none padding-0 margin-0">
       <li>
-        <a href="/" class="link link--plain link--muted small-text">Docs</a>
+        <a href="/" class="link link--plain small-text text-color-muted">Docs</a>
       </li>
       <li>
-        <a href="/components" class="link link--plain link--muted small-text">Components</a>
+        <a href="/components" class="link link--plain small-text text-color-muted">Components</a>
       </li>
       <li>
-        <a href={categoryHref} class="link link--plain link--muted small-text">{category}</a>
+        <a href={categoryHref} class="link link--plain small-text text-color-muted">{category}</a>
       </li>
       <li aria-current="page" class="small-text font-weight-bold">
         <span>{title}</span>
@@ -50,14 +50,14 @@ const {
     <div class="stack gap-0">
       <h1 class="title margin-0">{title}</h1>
       <div class="inline align-items-center gap-sm">
-      <span class="badge badge--accent badge--sm">
-        <span>{type}</span>
+      <span class="chip chip--sm">
+        <span class="chip__text">{type}</span>
       </span>
-      <span class="badge badge--success badge--subtle badge--sm">
-        <span>WCAG {wcagLevel}</span>
+      <span class="status status--success status--subtle status--sm">
+        <span class="status__text">WCAG {wcagLevel}</span>
       </span>
-      <span class="badge badge--subtle badge--sm">
-        <span>{status}</span>
+      <span class="status status--subtle status--sm">
+        <span class="status__text">{status}</span>
       </span>
       </div>
     </div>

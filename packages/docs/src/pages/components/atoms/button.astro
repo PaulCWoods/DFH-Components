@@ -244,7 +244,7 @@ const buttonTokens: TokenRow[] = [
 
 <!-- Low-friction table row removal -->
 <button type="button" class="button button--subtle button--danger">
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
   <span>Remove</span>
 </button>`}
     />
@@ -348,7 +348,7 @@ const buttonTokens: TokenRow[] = [
       code={`<!-- Accessible Icon-Only Button -->
 <button type="button" class="button button--icon">
   <span class="visually-hidden">Search site contents</span>
-  <svg class="icon" aria-hidden="true" focusable="false">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
     <use href="#Search"/>
   </svg>
 </button>`}
@@ -393,8 +393,8 @@ const buttonTokens: TokenRow[] = [
       code={`<!-- Native Checkbox styled as Button Switch -->
 <label class="button">
   <input type="checkbox" class="visually-hidden" checked />
-  <svg class="icon icon--off" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-  <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+  <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   <span>Notifications Enabled</span>
 </label>`}
     />
@@ -464,37 +464,37 @@ const buttonTokens: TokenRow[] = [
           <tr>
             <td class="font-weight-bold table__cell--fit">2.5.5 Target Size</td>
             <td class="table__cell--fit">Level AAA</td>
-            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td>
             <td>Default block size is <code>48×48px</code> (3rem) via <code>--button-min-size: var(--spacing-target)</code>.</td>
           </tr>
           <tr>
             <td class="font-weight-bold table__cell--fit">2.5.8 Target Size (Minimum)</td>
             <td class="table__cell--fit">Level AA</td>
-            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td>
             <td>Compact size is <code>32×32px</code>, well above the 24×24px AA threshold.</td>
           </tr>
           <tr>
             <td class="font-weight-bold table__cell--fit">1.4.3 Contrast (Minimum)</td>
             <td class="table__cell--fit">Level AA</td>
-            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td>
             <td>Minimum 4.5:1 text-to-surface contrast across all light and dark palettes.</td>
           </tr>
           <tr>
             <td class="font-weight-bold table__cell--fit">1.4.6 Contrast (Enhanced)</td>
             <td class="table__cell--fit">Level AAA</td>
-            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td>
             <td>7:1+ contrast achieved on strong actions with inverted dark/light palettes.</td>
           </tr>
           <tr>
             <td class="font-weight-bold table__cell--fit">2.4.7 & 2.4.13 Focus Appearance</td>
             <td class="table__cell--fit">Level AAA</td>
-            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td>
             <td>Dual-ring high-contrast <code>:focus-visible</code> indicator with 3:1 contrast and 2px offset.</td>
           </tr>
           <tr>
             <td class="font-weight-bold table__cell--fit">2.3.3 Reduced Motion</td>
             <td class="table__cell--fit">Level AAA</td>
-            <td><span class="badge badge--success badge--sm"><span>Passed</span></span></td>
+            <td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td>
             <td><code>@media (prefers-reduced-motion: reduce)</code> collapses transition duration to 0s.</td>
           </tr>
         </tbody>
@@ -556,10 +556,10 @@ const buttonTokens: TokenRow[] = [
     <GuidelineCard
       doTitle="Provide hidden text for icon buttons"
       doDescription="Use <span class='visually-hidden'> to give icon-only buttons accessible names that work across browser translation tools and voice control."
-      doCode={`<button type="button" class="button button--icon">\n  <span class="visually-hidden">Search records</span>\n  <svg class="icon"><use href="#Search"/></svg>\n</button>`}
+      doCode={`<button type="button" class="button button--icon">\n  <span class="visually-hidden">Search records</span>\n  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>\n</button>`}
       dontTitle="Don't rely solely on title or aria-label"
       dontDescription="Avoid leaving icon buttons without DOM text. Title tooltips do not appear on touch screens and aria-label is often skipped by translation tools."
-      dontCode={`<!-- ❌ Inaccessible to voice control & translation -->\n<button type="button" class="button button--icon" title="Search">\n  <svg class="icon"><use href="#Search"/></svg>\n</button>`}
+      dontCode={`<!-- ❌ Inaccessible to voice control & translation -->\n<button type="button" class="button button--icon" title="Search">\n  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>\n</button>`}
     />
 
     <GuidelineCard

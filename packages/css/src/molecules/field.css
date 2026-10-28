@@ -43,7 +43,7 @@
     content: " (Required)";
     font-weight: var(--font-weight-regular, 400);
     margin-inline-start: var(--spacing-8, 0.5rem);
-    font-size: var(--micro-text-font-size, 0.875em);
+    font-size: var(--body-sm-font-size, 0.875em);
     color: var(--foreground-muted, currentColor);
   }
 }
@@ -154,7 +154,7 @@
   color: var(--label-color, var(--foreground, currentColor));
   cursor: pointer;
 
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
     --_label-font-size: var(--label-compact-font-size, var(--typography-font-size--1, 0.875rem));
     --_label-font-weight: var(--label-compact-font-weight, var(--font-weight-medium, 500));
     --_label-line-height: var(--label-compact-line-height, var(--typography-line-height--1, 1.4));
@@ -162,13 +162,13 @@
 }
 
 :where(.field__hint, .hint) {
-  --_field-hint-font-family: var(--micro-text-font-family, var(--body-font-family, inherit));
-  --_field-hint-font-size: var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem));
-  --_field-hint-font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
-  --_field-hint-line-height: var(--micro-text-line-height, var(--typography-line-height-4, 1.4));
+  --_field-hint-font-family: var(--body-font-family, inherit);
+  --_field-hint-font-size: var(--body-sm-font-size, var(--typography-font-size--1, 0.875rem));
+  --_field-hint-font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
+  --_field-hint-line-height: var(--body-sm-line-height, var(--typography-line-height-4, 1.4));
 
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
-    --_field-hint-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    --_field-hint-font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.75rem));
   }
 
   margin: 0;
@@ -180,13 +180,13 @@
 }
 
 :where(.field__output, .field__result, .output) {
-  --_field-output-font-family: var(--output-font-family, var(--micro-text-font-family, var(--body-font-family, inherit)));
-  --_field-output-font-size: var(--output-font-size, var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem)));
-  --_field-output-font-weight: var(--output-font-weight, var(--micro-text-font-weight, var(--font-weight-regular, 400)));
-  --_field-output-line-height: var(--output-line-height, var(--micro-text-line-height, var(--typography-line-height-4, 1.4)));
+  --_field-output-font-family: var(--output-font-family, var(--body-font-family, inherit));
+  --_field-output-font-size: var(--output-font-size, var(--body-sm-font-size, var(--typography-font-size--1, 0.875rem)));
+  --_field-output-font-weight: var(--output-font-weight, var(--body-font-weight, var(--font-weight-regular, 400)));
+  --_field-output-line-height: var(--output-line-height, var(--body-sm-line-height, var(--typography-line-height-4, 1.4)));
 
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
-    --_field-output-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    --_field-output-font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.75rem));
   }
 
   margin: 0;
@@ -197,13 +197,13 @@
 }
 
 :where(.field__errors, .field__error, .field .errors, .error-message) {
-  --_field-error-font-family: var(--micro-text-font-family, var(--body-font-family, inherit));
-  --_field-error-font-size: var(--micro-text-font-size, var(--typography-font-size--1, 0.875rem));
-  --_field-error-font-weight: var(--micro-text-font-weight, var(--font-weight-regular, 400));
-  --_field-error-line-height: var(--micro-text-line-height, var(--typography-line-height-4, 1.4));
+  --_field-error-font-family: var(--body-font-family, inherit);
+  --_field-error-font-size: var(--body-sm-font-size, var(--typography-font-size--1, 0.875rem));
+  --_field-error-font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
+  --_field-error-line-height: var(--body-sm-line-height, var(--typography-line-height-4, 1.4));
 
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
-    --_field-error-font-size: var(--nano-text-font-size, var(--typography-font-size--2, 0.75rem));
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    --_field-error-font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.75rem));
   }
 
   margin: 0;

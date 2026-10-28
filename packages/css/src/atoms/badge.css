@@ -1,296 +1,195 @@
 /* ==========================================================================
    Design For Humans: Badge Primitive
    --------------------------------------------------------------------------
-   Accessible status indicators, tags, notification counts, and keyboard keys
-   conforming to WCAG 2.2 AA / AAA contrast standards (1.4.3 & 1.4.11).
+   A count or dot attached to a host element: a tab, button, nav item or icon.
+   A badge sits inline after its host's label, or in one of its corners.
+   Not for state ("Passed", "Live"): use .status. Not for values or tags:
+   use .chip. Not for keys: use .kbd.
 
-   Prominence Matrix:
-   - Default: 1px border, subtle translucent tinted background
-   - .badge--strong: Solid tone fill, high-contrast inverted text
-   - .badge--subtle: Translucent tinted fill, borderless
-   - .badge--plain: Borderless, transparent fill
+   | Axis         | Modifiers                                        | Container flag |
+   | ------------ | ------------------------------------------------ | -------------- |
+   | Intent       | (neutral) --accent --danger --warning --success --info | --badge-intent |
+   | Size         | --sm                                             | --badge-size   |
+   | Density      | (none: --ui-sizing: compact steps to sm)          |                |
+   | Presentation | --dot (no text)                                   |                |
+   | Prominence   | Fixed at strong (solid fill)                      |                |
+
+   Placement: inline by default; --top-end, --top-start, --bottom-end and
+   --bottom-start pin it to a corner of the nearest positioned ancestor.
+
+   Accessibility:
+   - The count must be part of the host's accessible name, e.g.
+     aria-label="Notifications, 3 unread". Hide the badge itself with
+     aria-hidden="true" so it isn't announced twice.
+   - 1.4.1 Use of Color: intent alone carries no meaning; the host's name
+     says what the count is.
 
    Usage:
-   <span class="badge">Default</span>
-   <span class="badge badge--accent">Accent</span>
-   <span class="badge badge--accent badge--strong">Strong Accent</span>
-   <span class="badge badge--accent badge--subtle">Subtle Accent</span>
-   <span class="badge badge--accent badge--plain">Plain Accent</span>
-   <kbd class="kbd">⌘K</kbd>
+   <button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
+     <svg class="icon" aria-hidden="true"><use href="#Bell"/></svg>
+     <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
+   </button>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Badge Primitive (:where(.badge, .kbd))
+   1. Base Badge (:where(.badge))
    ========================================================================== */
-:where(.badge, .kbd) {
+:where(.badge) {
   /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
+     Tone (Neutral Intent)
      -------------------------------------------------------------------------- */
-  --_badge-color: var(--badge-color, var(--foreground, currentColor));
-  --_badge-bg-color: var(--badge-bg-color, var(--surface-subtle, Canvas));
-  --_badge-translucency: var(--badge-translucency, var(--translucency-quiet, 33%));
-  --_badge-bg: var(--badge-bg, color-mix(in srgb, var(--_badge-bg-color), transparent var(--_badge-translucency)));
-  --_badge-border-color: var(--badge-border-color, var(--border-color-muted, currentColor));
-  --_badge-border-width: var(--badge-border-width, var(--border-width-1, 1px));
-  --_badge-filter: var(--badge-filter, var(--blur-lg));
-  --_badge-font-family: var(--badge-font-family, var(--typography-font-family-sans, sans-serif));
-  --_badge-font-size: var(--badge-font-size, var(--typography-font-size--1, 0.875rem));
-  --_badge-font-weight: var(--badge-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
-  --_badge-gap: var(--badge-gap, var(--_badge-padding));
-  --_badge-letter-spacing: var(--badge-letter-spacing, 0px);
-  --_badge-padding: var(--badge-padding, 0.5em);
-  --_badge-padding-block: var(--badge-padding-block, 0.25em);
-  --_badge-radius: var(--badge-radius, var(--ui-radius, var(--radius, 0.25rem)));
-  --_badge-text: var(--badge-text, var(--_badge-color));
-  --_badge-text-transform: var(--badge-text-transform, uppercase);
+  --_badge-tone: var(--badge-color, var(--foreground, CanvasText));
+  --_badge-on-tone: var(--badge-on-color, var(--foreground-inverted-strong, Canvas));
 
   /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes:
-     e.g., .user-card { --badge-variation: strong; --badge-tone: accent; }
+     Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
+  --_badge-font-size: var(--badge-font-size, 0.875rem);
+  --_badge-font-weight: var(--badge-font-weight, 700);
+  --_badge-size: var(--badge-size, 1.25rem);
+  --_badge-padding-inline: var(--badge-padding-inline, 0.25rem);
+  --_badge-dot-size: var(--badge-dot-size, 0.5rem);
 
-  /* Spatial Density & Size */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--badge-size: sm) {
-    --_badge-padding: var(--badge-sm-padding, 0.25em);
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifier classes, so a modifier on the badge beats a
+     flag inherited from a container.
+     ------------------------------------------------------------------------ */
+  @container style(--badge-intent: accent) {
+    --_badge-tone: var(--badge-color, var(--foreground-accent, CanvasText));
   }
 
-  /* Typographic Scaling */
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--badge-size: sm) {
-    --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2, 0.75em));
+  @container style(--badge-intent: info) {
+    --_badge-tone: var(--badge-color, var(--foreground-info, CanvasText));
   }
 
-  /* Prominence Styles */
-  @container style(--badge-variation: strong) or style(--badge-appearance: strong) {
-    --_badge-bg: var(--_badge-color);
-    --_badge-border-color: var(--_badge-color);
-    --_badge-text: var(--badge-strong-text, var(--foreground-inverted-strong, var(--surface, #ffffff)));
+  @container style(--badge-intent: danger) {
+    --_badge-tone: var(--badge-color, var(--foreground-danger, CanvasText));
   }
 
-  @container style(--badge-variation: subtle) or style(--badge-appearance: subtle) {
-    --_badge-border-color: transparent;
+  @container style(--badge-intent: warning) {
+    --_badge-tone: var(--badge-color, var(--foreground-warning, CanvasText));
   }
 
-  @container style(--badge-variation: plain) or style(--badge-appearance: plain) {
-    --_badge-bg: transparent;
-    --_badge-border-color: transparent;
+  @container style(--badge-intent: success) {
+    --_badge-tone: var(--badge-color, var(--foreground-success, CanvasText));
   }
 
-  /* Tone Styles */
-  @container style(--badge-tone: accent) or style(--badge-variation: accent) {
-    --_badge-bg-color: var(--badge-bg-color, var(--surface-accent, #75f5ea));
-    --_badge-color: var(--badge-accent-color, var(--foreground-accent, #008076));
-    --_badge-border-color: var(--_badge-color);
-  }
-
-  @container style(--badge-tone: success) or style(--badge-variation: success) {
-    --_badge-bg-color: var(--badge-bg-color, var(--surface-success, #63e9bc));
-    --_badge-color: var(--badge-success-color, var(--foreground-success, #00875a));
-    --_badge-border-color: var(--_badge-color);
-  }
-
-  @container style(--badge-tone: warning) or style(--badge-variation: warning) {
-    --_badge-bg-color: var(--badge-bg-color, var(--surface-warning, #f5c875));
-    --_badge-color: var(--badge-warning-color, var(--foreground-warning, #b06000));
-    --_badge-border-color: var(--_badge-color);
-  }
-
-  @container style(--badge-tone: danger) or style(--badge-variation: danger) {
-    --_badge-bg-color: var(--badge-bg-color, var(--surface-danger, #f59375));
-    --_badge-color: var(--badge-danger-color, var(--foreground-danger, #b01e00));
-    --_badge-border-color: var(--_badge-color);
-  }
-
-  /* Corner Shapes */
-  @container style(--badge-corners: round) {
-    --_badge-radius: var(--badge-round-radius, var(--radius-round, 9999px));
+  @container style(--badge-size: sm) or style(--ui-sizing: compact) {
+    --_badge-font-size: var(--badge-sm-font-size, 0.75rem);
+    --_badge-size: var(--badge-sm-size, 1rem);
   }
 
   /* Layout & Display */
   display: inline-flex;
   align-items: center;
-  flex-shrink: 0;
-  gap: var(--_badge-gap);
   justify-content: center;
-  block-size: calc(1lh + var(--_badge-padding) * 2);
-  min-inline-size: calc(1lh + var(--_badge-padding) * 2);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  min-block-size: var(--_badge-size);
+  min-inline-size: var(--_badge-size);
+  padding-inline: var(--_badge-padding-inline);
   vertical-align: middle;
   white-space: nowrap;
-  box-sizing: border-box;
-
-  /* Sizing & Spacing */
-  padding: var(--_badge-padding);
-  border-radius: var(--_badge-radius);
-  border: var(--_badge-border-width) solid var(--_badge-border-color);
 
   /* Typography */
-  font-family: var(--_badge-font-family);
   font-size: var(--_badge-font-size);
   font-weight: var(--_badge-font-weight);
+  font-variant-numeric: tabular-nums;
   line-height: 1;
-  text-transform: var(--_badge-text-transform);
-  letter-spacing: var(--_badge-letter-spacing);
+
+  /* Surface */
+  border-radius: var(--radius-round, 9999px);
+  background-color: var(--_badge-tone);
+  color: var(--_badge-on-tone);
+
+  /* Forced colors: a filled shape loses its fill, so draw an outline. */
+  @media (forced-colors: active) {
+    outline: 1px solid CanvasText;
+  }
+}
+
+:where(.badge__text) {
   text-box: trim-both cap alphabetic;
-
-  /* Colors & Surfaces */
-  background-color: var(--_badge-bg);
-  backdrop-filter: var(--_badge-filter);
-  color: var(--_badge-text);
-
-  /* High Contrast Mode (WCAG 1.4.11) */
-  @media (prefers-contrast: more) {
-    border-color: currentColor;
-    border-width: calc(var(--_badge-border-width) * 2);
-  }
-
-  :where(span, kbd, .badge__text, .kbd__text) {
-    text-box: trim-both cap alphabetic;
-  }
-
-  /* Interactive button inside badge */
-  button {
-    cursor: pointer;
-    line-height: 0;
-    padding: var(--_badge-padding);
-    margin: calc(var(--_badge-padding) * -1);
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: color-mix(in srgb, var(--_badge-text), transparent var(--translucency-stronger, 90%));
-      }
-    }
-
-    &:active {
-      background-color: color-mix(in srgb, var(--_badge-text), transparent var(--translucency-strong, 70%));
-    }
-  }
-
-  button:has(+ *) {
-    margin-inline-end: 0;
-  }
-
-  *+button {
-    margin-inline-start: 0;
-  }
 }
 
 /* ==========================================================================
-   2. Badge Tone Modifiers (:where(.badge--[tone]))
+   2. Intent Modifiers
    ========================================================================== */
-
-/* Accent Tone */
 :where(.badge--accent) {
-  --_badge-bg-color: var(--badge-accent-bg-color, var(--surface-accent, #75f5ea));
-  --_badge-color: var(--badge-accent-color, var(--foreground-accent, #008076));
-  --_badge-border-color: var(--_badge-color);
+  --_badge-tone: var(--badge-color, var(--foreground-accent, CanvasText));
 }
 
-/* Success Tone */
-:where(.badge):where([data-status="online"], [data-status="positive"]),
-:where(.badge--success) {
-  --_badge-bg-color: var(--badge-success-bg-color, var(--surface-success, #63e9bc));
-  --_badge-color: var(--badge-success-color, var(--foreground-success, #00875a));
-  --_badge-border-color: var(--_badge-color);
+:where(.badge--info) {
+  --_badge-tone: var(--badge-color, var(--foreground-info, CanvasText));
 }
 
-/* Warning Tone */
-:where(.badge):where([data-status="away"], [data-status="warning"]),
-:where(.badge--warning) {
-  --_badge-bg-color: var(--badge-warning-bg-color, var(--surface-warning, #f5c875));
-  --_badge-color: var(--badge-warning-color, var(--foreground-warning, #b06000));
-  --_badge-border-color: var(--_badge-color);
-}
-
-/* Danger Tone */
-:where(.badge):where([data-status="busy"], [data-status="negative"]),
 :where(.badge--danger) {
-  --_badge-bg-color: var(--badge-danger-bg-color, var(--surface-danger, #f59375));
-  --_badge-color: var(--badge-danger-color, var(--foreground-danger, #d32f2f));
-  --_badge-border-color: var(--_badge-color);
+  --_badge-tone: var(--badge-color, var(--foreground-danger, CanvasText));
+}
+
+:where(.badge--warning) {
+  --_badge-tone: var(--badge-color, var(--foreground-warning, CanvasText));
+}
+
+:where(.badge--success) {
+  --_badge-tone: var(--badge-color, var(--foreground-success, CanvasText));
 }
 
 /* ==========================================================================
-   3. Badge Prominence Modifiers (:where(.badge--[prominence]))
+   3. Size & Presentation Modifiers
    ========================================================================== */
-
-/* Strong Prominence (Solid fill) */
-:where(.badge--strong) {
-  --_badge-bg: var(--_badge-color);
-  --_badge-border-color: var(--_badge-color);
-  --_badge-filter: none;
-  --_badge-text: var(--badge-strong-text, var(--foreground-inverted-strong, var(--surface, #ffffff)));
-}
-
-/* Subtle Prominence (Translucent fill, no border) */
-:where(.badge--subtle) {
-  --_badge-border-color: transparent;
-}
-
-/* Plain Prominence (No background, no border) */
-:where(.badge--plain) {
-  --_badge-bg: transparent;
-  --_badge-border-color: transparent;
-  --_badge-filter: none;
-}
-
-/* ==========================================================================
-   4. Shape & Size Modifiers
-   ========================================================================== */
-
-/* Round / Pill Shape Modifier */
-:where(.badge--round) {
-  --_badge-radius: var(--badge-round-radius, var(--radius-round, 9999px));
-
-  span {
-    padding-inline: calc(var(--_badge-padding) / 3);
-  }
-}
-
-/* Small Badge Size */
 :where(.badge--sm) {
-  --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2, 0.75em));
-  --_badge-padding: var(--badge-sm-padding, 0.25em);
+  --_badge-font-size: var(--badge-sm-font-size, 0.75rem);
+  --_badge-size: var(--badge-sm-size, 1rem);
+}
+
+/* Dot: presence of something new, without a count. */
+:where(.badge--dot) {
+  --_badge-size: var(--_badge-dot-size);
+  padding: 0;
+  font-size: 0;
 }
 
 /* ==========================================================================
-   5. Badge Corner Placement
+   4. Corner Placement (logical, so it mirrors in right-to-left layouts)
    ========================================================================== */
-
-:where(.badge--top-left-corner) {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  transform: translate(-50%, -50%);
+:where(:has(> :is(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start))) {
+  position: relative;
 }
 
-:where(.badge--top-right-corner) {
+:where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
+  --_badge-shift-inline: 50%;
+  --_badge-shift-block: -50%;
   position: absolute;
+  translate: var(--_badge-shift-inline) var(--_badge-shift-block);
+}
+
+:where(.badge--top-end) {
   inset-block-start: 0;
   inset-inline-end: 0;
-  transform: translate(50%, -50%);
 }
 
-:where(.badge--bottom-right-corner) {
-  position: absolute;
+:where(.badge--top-start) {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  --_badge-shift-inline: -50%;
+}
+
+:where(.badge--bottom-end) {
   inset-block-end: 0;
   inset-inline-end: 0;
-  transform: translate(50%, 50%);
+  --_badge-shift-block: 50%;
 }
 
-:where(.badge--bottom-left-corner) {
-  position: absolute;
+:where(.badge--bottom-start) {
   inset-block-end: 0;
   inset-inline-start: 0;
-  transform: translate(-50%, 50%);
+  --_badge-shift-inline: -50%;
+  --_badge-shift-block: 50%;
 }
 
-/* ==========================================================================
-   6. Keyboard Key Variant (:where(.kbd))
-   ========================================================================== */
-:where(.kbd) {
-  --_badge-bg: transparent;
-  --_badge-border-color: var(--kbd-border-color, var(--border-color-muted, currentColor));
-  --_badge-padding: var(--badge-sm-padding, 0.25em);
-  --_badge-text: var(--kbd-text, currentColor);
-  vertical-align: middle;
+/* Physical translate does not flip with direction, so mirror it. */
+:where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start):where(:dir(rtl)) {
+  translate: calc(var(--_badge-shift-inline) * -1) var(--_badge-shift-block);
 }

@@ -28,7 +28,7 @@ Composable container foundation providing container-query driven fluid typograph
         </h3>
         <p class="card__subtitle subheading text-muted">Supporting Subtitle</p>
       </hgroup>
-      <span class="badge badge--success"><span>Live</span></span>
+      <span class="status status--success"><span class="status__text">Live</span></span>
     </header>
     <div class="card__body">
       <p>Card body copy formatted at stable 1rem base size.</p>
@@ -201,7 +201,7 @@ export const Anatomy: Story = {
             src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" 
             alt="Source code representation" 
           />
-          <span class="badge badge--accent" style="position: absolute; inset-block-start: var(--spacing-8); inset-inline-start: var(--spacing-8);">
+          <span class="sb-demo-tag" style="position: absolute; inset-block-start: var(--spacing-8); inset-inline-start: var(--spacing-8);">
             <span>.card__thumb</span>
           </span>
         </div>
@@ -209,17 +209,17 @@ export const Anatomy: Story = {
         <article class="card__content" style="background: color-mix(in srgb, var(--surface-card), transparent 20%);">
           <header class="card__header" style="border-block-end: 1px dashed var(--border-color);">
             <hgroup class="card__hgroup">
-              <span class="badge badge--sm" style="align-self: flex-start;"><span>header.card__header</span></span>
+              <span class="sb-demo-tag" style="align-self: flex-start;"><span>header.card__header</span></span>
               <h3 class="card__title heading">
                 <a href="#" class="card__link">.card__title with .card__link</a>
               </h3>
               <p class="card__subtitle subheading text-muted">p.card__subtitle</p>
             </hgroup>
-            <span class="badge badge--success"><span>Live</span></span>
+            <span class="status status--success"><span class="status__text">Live</span></span>
           </header>
 
           <div class="card__body" style="padding-block: var(--spacing-16); border-block-end: 1px dashed var(--border-color);">
-            <span class="badge badge--sm" style="display: inline-block; margin-block-end: var(--spacing-8);"><span>div.card__body</span></span>
+            <span class="sb-demo-tag" style="display: inline-block; margin-block-end: var(--spacing-8);"><span>div.card__body</span></span>
             <p style="margin: 0;">
               Container query fluid body container. Negative margins on header and footer ensure flush bleeding edge to edge.
             </p>
@@ -227,7 +227,7 @@ export const Anatomy: Story = {
 
           <footer class="card__footer" style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <span class="badge badge--sm"><span>footer.card__footer</span></span>
+              <span class="sb-demo-tag"><span>footer.card__footer</span></span>
               <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-start: var(--spacing-4);">time.card__date</span>
             </div>
             <button type="button" class="button button--sm">
@@ -261,7 +261,7 @@ export const Variants: Story = {
             <p>Uses <code>--card-shadow</code> with subtle border for high-depth interfaces.</p>
           </div>
           <footer class="card__footer">
-            <span class="badge"><span>Default</span></span>
+            <span class="status"><span class="status__text">Default</span></span>
           </footer>
         </article>
       </div>
@@ -279,7 +279,7 @@ export const Variants: Story = {
             <p>Explicit 1px perimeter border without relying on elevation shadows.</p>
           </div>
           <footer class="card__footer">
-            <span class="badge badge--accent"><span>.card--bordered</span></span>
+            <span class="sb-demo-tag"><span>.card--bordered</span></span>
           </footer>
         </article>
       </div>
@@ -297,7 +297,7 @@ export const Variants: Story = {
             <p>Divider lines automatically separate header, body, and footer compartments.</p>
           </div>
           <footer class="card__footer">
-            <span class="badge badge--success"><span>.card--ruled</span></span>
+            <span class="sb-demo-tag"><span>.card--ruled</span></span>
           </footer>
         </article>
       </div>
@@ -316,7 +316,7 @@ export const Variants: Story = {
               <p>Uses <code>backdrop-filter</code> and <code>color-mix()</code> for layered depth.</p>
             </div>
             <footer class="card__footer">
-              <span class="badge badge--accent"><span>.card--translucent</span></span>
+              <span class="sb-demo-tag"><span>.card--translucent</span></span>
             </footer>
           </article>
         </div>
@@ -335,7 +335,7 @@ export const Variants: Story = {
             <p>Stripped of outer border-radius and shadow to sit edge-to-edge in sidebars.</p>
           </div>
           <footer class="card__footer">
-            <span class="badge"><span>.card--flush</span></span>
+            <span class="sb-demo-tag"><span>.card--flush</span></span>
           </footer>
         </article>
       </div>
@@ -388,7 +388,7 @@ export const StateMatrix: Story = {
               <p>Spans clickable area across the card via <code>.card__link::after</code>.</p>
             </div>
             <footer class="card__footer">
-              <span class="status" data-status="online">Resting</span>
+              <span class="status status--success status--plain"><span class="status__text">Resting</span></span>
             </footer>
           </article>
         </div>
@@ -410,7 +410,7 @@ export const StateMatrix: Story = {
               <p>When link is focused via keyboard, the outline encompasses the outer card border.</p>
             </div>
             <footer class="card__footer">
-              <span class="badge badge--accent"><span>Focus Active</span></span>
+              <span class="sb-demo-tag"><span>Focus Active</span></span>
             </footer>
           </article>
         </div>
@@ -452,7 +452,7 @@ export const StateMatrix: Story = {
               <p>Elevations are removed, borders are reinforced to guarantee WCAG 1.4.11 contrast.</p>
             </div>
             <footer class="card__footer">
-              <span class="badge badge--contrast"><span>3:1 Border</span></span>
+              <span class="sb-demo-tag"><span>3:1 Border</span></span>
             </footer>
           </article>
         </div>
@@ -472,7 +472,7 @@ export const StateMatrix: Story = {
               <p>Derives <code>--card-bg</code> directly from Tier 3 inverted palette token, preserving clean token inheritance.</p>
             </div>
             <footer class="card__footer">
-              <span class="badge badge--accent"><span>Inverted</span></span>
+              <span class="sb-demo-tag"><span>Inverted</span></span>
             </footer>
           </article>
         </div>
@@ -663,7 +663,7 @@ export const RealWorldRecipes: Story = {
               </div>
               <footer class="card__footer" style="display: flex; justify-content: space-between; align-items: center;">
                 <time class="card__date" datetime="2026-10-13">13 Oct 2026</time>
-                <span class="chip">Design Systems</span>
+                <span class="chip chip--subtle"><span class="chip__text">Design Systems</span></span>
               </footer>
             </article>
           </div>
@@ -726,7 +726,7 @@ export const CardWithBand: Story = {
           <div class="card__band card__band--subtle">
             <div class="cluster" style="align-items: center; justify-content: space-between; inline-size: 100%;">
               <div class="cluster" style="gap: var(--spacing-8);">
-                <span class="badge badge--accent badge--round"><span>Step 2 of 4</span></span>
+                <span class="status status--accent status--round"><span class="status__text">Step 2 of 4</span></span>
                 <span class="micro-heading">Environment Provisioning</span>
               </div>
               <div class="button-group button-group--tight buttons-sm buttons-subtle">
@@ -744,7 +744,7 @@ export const CardWithBand: Story = {
           <!-- Second Band before Footer -->
           <div class="card__band">
             <span class="small-text text-muted">Estimated completion: 3 minutes remaining</span>
-            <span class="status" data-status="online">Runner active</span>
+            <span class="status status--success status--plain"><span class="status__text">Runner active</span></span>
           </div>
 
           <footer class="card__footer" style="display: flex; justify-content: flex-end;">

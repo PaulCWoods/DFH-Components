@@ -19,11 +19,11 @@ Semantic top-level header and navigation landmark with sticky positioning (\`pos
 <header class="header header--sticky header--translucent" style="padding-block: var(--spacing-8);">
   <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center;">
     <div style="display: flex; gap: var(--spacing-12); align-items: center;">
-      <span class="badge badge--round badge--accent"><span>DFH</span></span>
+      <span class="avatar avatar--sm" aria-hidden="true"><span>DFH</span></span>
       <strong style="font-size: var(--typography-font-size-1);">Design For Humans</strong>
     </div>
 
-    <nav class="tabs" aria-label="Main Navigation">
+    <nav class="tabbed-content" aria-label="Main Navigation">
       <ul class="tab-list">
         <li><a href="/docs" class="tab" aria-current="page"><span class="tab__text">Docs</span></a></li>
         <li><a href="/components" class="tab"><span class="tab__text">Components</span></a></li>
@@ -33,7 +33,7 @@ Semantic top-level header and navigation landmark with sticky positioning (\`pos
 
     <div style="display: flex; gap: var(--spacing-8); align-items: center;">
       <button type="button" class="button button--subtle button--icon" aria-label="Search">
-        <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
       </button>
       <button type="button" class="button button--strong button--accent button--sm">
         <span>Get Started</span>
@@ -129,7 +129,7 @@ export const Playground: Story = {
         <header class="${classes}" style="padding-block: var(--spacing-12);">
           <div class="wrapper" style="display: flex; justify-content: space-between; align-items: center; max-inline-size: 72rem; margin-inline: auto; padding-inline: var(--spacing-16);">
             <div style="display: flex; gap: var(--spacing-12); align-items: center;">
-              <span class="badge badge--round badge--accent"><span>DFH</span></span>
+              <span class="avatar avatar--sm" aria-hidden="true"><span>DFH</span></span>
               <strong style="font-size: var(--typography-font-size-1);">${args.siteTitle}</strong>
             </div>
 
@@ -193,7 +193,7 @@ export const Anatomy: Story = {
         </header>
 
         <div style="padding: var(--spacing-16); background: var(--surface-card);">
-          <span class="badge badge--sm"><span>Page Body Flow</span></span>
+          <span class="sb-demo-tag"><span>Page Body Flow</span></span>
           <p style="margin: var(--spacing-8) 0 0; color: var(--foreground-muted); font-size: var(--typography-font-size--1);">
             Header automatically stacks above body landmarks with sticky z-index.
           </p>
@@ -282,7 +282,7 @@ export const StateMatrix: Story = {
         <header class="header" style="padding-block: var(--spacing-12);">
           <div style="display: flex; justify-content: space-between; align-items: center; padding-inline: var(--spacing-16);">
             <span>Resting</span>
-            <span class="status" data-status="online">Online</span>
+            <span class="status status--success status--plain"><span class="status__text">Online</span></span>
           </div>
         </header>
       </div>
@@ -310,7 +310,7 @@ export const StateMatrix: Story = {
         <header class="header" style="padding-block: var(--spacing-12); border-block-end: 2px solid currentColor;">
           <div style="display: flex; justify-content: space-between; align-items: center; padding-inline: var(--spacing-16);">
             <strong style="font-weight: 800;">High Contrast Header</strong>
-            <span class="badge badge--contrast"><span>3:1</span></span>
+            <span class="sb-demo-tag"><span>3:1</span></span>
           </div>
         </header>
       </div>
@@ -403,16 +403,13 @@ export const RealWorldRecipes: Story = {
           <header class="header header--sticky header--translucent" style="padding-block: var(--spacing-12);">
             <div style="display: flex; justify-content: space-between; align-items: center; padding-inline: var(--spacing-16);">
               <div style="display: flex; gap: var(--spacing-16); align-items: center;">
-                <span class="badge badge--round badge--accent"><span>DFH</span></span>
+                <span class="avatar avatar--sm" aria-hidden="true"><span>DFH</span></span>
                 <strong style="font-size: var(--typography-font-size-1);">Cloud Console</strong>
               </div>
 
               <div style="display: flex; gap: var(--spacing-8); align-items: center;">
                 <button type="button" class="button button--subtle button--icon" aria-label="Search items">
-                  <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                 </button>
                 <button type="button" class="button button--avatar button--round" data-status="online" aria-label="User profile">
                   <span style="font-weight: bold; font-size: 0.75rem;">PW</span>
@@ -437,7 +434,7 @@ export const RealWorldRecipes: Story = {
             <header class="header" style="padding-block: var(--spacing-12);">
               <div style="display: flex; justify-content: space-between; align-items: center; padding-inline: var(--spacing-16);">
                 <strong>Enterprise Hub</strong>
-                <span class="chip chip--status" data-status="online">System Operational</span>
+                <span class="status status--success status--plain"><span class="status__text">System Operational</span></span>
               </div>
             </header>
             

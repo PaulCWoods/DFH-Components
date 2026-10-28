@@ -133,7 +133,7 @@
     word-spacing: var(--small-heading-word-spacing, 0em);
 
     @container style(--font-sizing: fluid) {
-      font-size: var(--small-heading-fluid-font-size, var(--body-font-size, 1rem));
+      font-size: var(--small-heading-fluid-font-size, var(--typography-font-size-fluid-0, 1rem));
     }
 
     @container style(--font-sizing: cq) {
@@ -173,7 +173,7 @@
     max-inline-size: min(var(--prose-body-line-length, 66ch), var(--prose-block-width, none));
 
     @container style(--font-sizing: fluid) {
-      font-size: var(--body-font-size, var(--typography-font-size-fluid-0, 1rem));
+      font-size: var(--body-fluid-font-size, var(--typography-font-size-fluid-0, 1rem));
     }
 
     @container style(--font-sizing: cq) {
@@ -184,7 +184,7 @@
       font-size: var(--body-compact-font-size, var(--typography-font-size-compact--1, 0.8rem));
     }
 
-    &:is(.large-text, .small-text, .strong-text) {
+    &:is(.large-text, .small-text) {
       font-family: var(--prose-body-font-family, inherit);
     }
 
@@ -205,21 +205,21 @@
    4. Small Text & Captions (small, figcaption)
    ========================================================================== */
   :where(small, figcaption) {
-    font-family: var(--small-text-font-family, var(--body-font-family, var(--typography-font-family-sans, sans-serif)));
-    font-size: var(--body-sm-fixed-font-size, var(--small-text-fixed-font-size, var(--typography-font-size--1, 0.8rem)));
-    font-weight: var(--small-text-font-weight, var(--body-font-weight, var(--font-weight-regular, 400)));
-    line-height: var(--small-text-line-height, var(--body-sm-line-height, var(--typography-line-height--1, 1.4)));
+    font-family: var(--body-font-family, var(--typography-font-family-sans, sans-serif));
+    font-size: var(--body-sm-fixed-font-size, var(--typography-font-size--1, 0.8rem));
+    font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
+    line-height: var(--body-sm-line-height, var(--typography-line-height--1, 1.4));
 
     @container style(--font-sizing: fluid) {
-      font-size: var(--small-text-font-size, var(--body-sm-fluid-font-size, var(--typography-font-size-fluid--1, 0.8rem)));
+      font-size: var(--body-sm-fluid-font-size, var(--typography-font-size-fluid--1, 0.8rem));
     }
 
     @container style(--font-sizing: cq) {
-      font-size: var(--small-text-cq-font-size, var(--typography-font-size-cq--1, 0.8rem));
+      font-size: var(--body-sm-cq-font-size, var(--typography-font-size-cq--1, 0.8rem));
     }
 
     @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
-      font-size: var(--small-text-compact-font-size, var(--typography-font-size--1, 0.7rem));
+      font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.7rem));
     }
   }
 
@@ -227,7 +227,7 @@
    5. Strong, Code & Block Rhythm
    ========================================================================== */
   :where(strong, b) {
-    font-weight: var(--strong-text-font-weight, var(--body-strong-font-weight, var(--font-weight-bold, 700)));
+    font-weight: var(--body-strong-font-weight, var(--font-weight-bold, 700));
   }
 
   :where(code, pre) {

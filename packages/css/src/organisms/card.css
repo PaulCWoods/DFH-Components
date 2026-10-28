@@ -472,6 +472,9 @@
 }
 
 :where(.card__body--flush) {
+  /* A flush tab list lines its labels up with the card's content */
+  --tab-list-inset: var(--_card-padding);
+
   padding-inline: 0;
 
   :where(.card__content) & {

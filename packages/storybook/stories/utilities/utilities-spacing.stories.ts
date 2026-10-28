@@ -181,7 +181,7 @@ export const Playground: Story = {
           <div class="card card--bordered ${activeClass}" style="${boxModelStyles}; position: relative;">
             <div style="background: var(--surface-card); padding: var(--spacing-8); border-radius: var(--radius-sm); text-align: center;">
               <p class="font-weight-bold font-size-sm">Active Class: <code>.${activeClass}</code></p>
-              <p class="font-size-xs color-muted margin-top-xs">
+              <p class="font-size-xs text-muted margin-top-xs">
                 Property: <code>${args.property}</code> &middot; Step: <code>${args.step}</code>
               </p>
             </div>
@@ -332,7 +332,7 @@ export const MarginOffsets: Story = {
 
       <div class="card card--bordered padding">
         <div style="background: light-dark(#fef7e0, #382e18); padding: var(--spacing-8); outline: 1px dashed #fbbc04;">
-          <p class="font-size-xs color-muted font-weight-bold">Amber Zone = Outer Margin Clearance</p>
+          <p class="font-size-xs text-muted font-weight-bold">Amber Zone = Outer Margin Clearance</p>
           <div class="card card--bordered margin-top-lg margin-bottom-sm padding-sm" style="background: var(--surface-card);">
             <p class="font-size-xs"><code>.margin-top-lg.margin-bottom-sm</code> (<code>.mt-lg.mb-sm</code>)</p>
           </div>
@@ -358,7 +358,7 @@ export const BidirectionalRTLDemo: Story = {
       <div class="grid grid--sm">
         <!-- LTR -->
         <div class="card card--bordered padding stack" dir="ltr">
-          <span class="badge badge--accent font-size-xs">LTR Mode</span>
+          <span class="sb-demo-tag font-size-xs">LTR Mode</span>
           <div class="card card--bordered padding-inline-lg padding-block-sm">
             <p class="font-size-sm"><strong>Left-To-Right:</strong> Start is on the left.</p>
           </div>
@@ -366,7 +366,7 @@ export const BidirectionalRTLDemo: Story = {
 
         <!-- RTL -->
         <div class="card card--bordered padding stack" dir="rtl">
-          <span class="badge badge--warning font-size-xs">RTL Mode (dir="rtl")</span>
+          <span class="sb-demo-tag font-size-xs">RTL Mode (dir="rtl")</span>
           <div class="card card--bordered padding-inline-lg padding-block-sm">
             <p class="font-size-sm"><strong>Right-To-Left:</strong> Start is on the right.</p>
           </div>
@@ -395,10 +395,10 @@ export const CardDensityVariations: Story = {
           <article class="card__content stack" style="--gap: var(--spacing-4);">
             <header class="card__header">
               <h4 class="card__title font-size-sm">Compact Density</h4>
-              <span class="badge badge--subtle badge--sm">Dense</span>
+              <span class="sb-demo-tag">Dense</span>
             </header>
             <div class="card__body">
-              <p class="font-size-xs color-muted">Using .padding-sm for data-dense grids.</p>
+              <p class="font-size-xs text-muted">Using .padding-sm for data-dense grids.</p>
             </div>
           </article>
         </div>
@@ -408,10 +408,10 @@ export const CardDensityVariations: Story = {
           <article class="card__content stack" style="--gap: var(--spacing-8);">
             <header class="card__header">
               <h4 class="card__title font-size-sm">Standard Density</h4>
-              <span class="badge badge--accent badge--sm">Default</span>
+              <span class="status status--accent status--sm"><span class="status__text">Default</span></span>
             </header>
             <div class="card__body">
-              <p class="font-size-xs color-muted">Using .padding for general application content.</p>
+              <p class="font-size-xs text-muted">Using .padding for general application content.</p>
             </div>
           </article>
         </div>
@@ -421,10 +421,10 @@ export const CardDensityVariations: Story = {
           <article class="card__content stack" style="--gap: var(--spacing-12);">
             <header class="card__header">
               <h4 class="card__title font-size-sm">Spacious Density</h4>
-              <span class="badge badge--success badge--sm">Relaxed</span>
+              <span class="sb-demo-tag">Relaxed</span>
             </header>
             <div class="card__body">
-              <p class="font-size-xs color-muted">Using .padding-lg for editorial highlights.</p>
+              <p class="font-size-xs text-muted">Using .padding-lg for editorial highlights.</p>
             </div>
           </article>
         </div>

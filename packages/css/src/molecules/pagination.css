@@ -100,12 +100,8 @@
   inline-size: 100%;
 
   /* Dynamic Form Field Sizing */
-  :where(input[type="text"], input[type="number"]) {
+  :where(.input) {
     field-sizing: content;
-
-    @supports not (field-sizing: content) {
-      inline-size: var(--_input-min-inline-size, auto);
-    }
   }
 
   /* Alignment Modifiers */

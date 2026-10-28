@@ -238,7 +238,7 @@ export const InProseContext: Story = {
           <div class="prose-end card card--bordered padding-md margin-block-md">
             <div class="inline inline--between align-items-center margin-bottom-sm">
               <span class="font-weight-bold">Breakout Component Stage</span>
-              <span class="badge badge--accent badge--sm"><span>Isolated with .prose-end</span></span>
+              <span class="sb-demo-tag"><span>Isolated with .prose-end</span></span>
             </div>
             <div class="cluster gap-sm align-items-center">
               <button type="button" class="button button--strong button--accent">

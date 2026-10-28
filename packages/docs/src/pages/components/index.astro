@@ -7,19 +7,19 @@ const categories = [
     title: 'Atoms',
     description: 'Foundational, indivisible primitives adhering to zero-specificity :where() and fluid typography.',
     items: [
-      { name: 'Button', href: '/components/atoms/button', badge: 'Prototype Active', badgeClass: 'badge--accent badge--strong', desc: 'Bedrock interactive control with 48px WCAG AAA target sizing and container queries.' },
-      { name: 'Tab Primitive', href: '/components/atoms/tab', badge: 'Updated', badgeClass: 'badge--subtle', desc: 'Single-source interactive tab trigger for tab lists and navigation bars.' },
+      { name: 'Button', href: '/components/atoms/button', badge: 'Prototype Active', badgeClass: 'status--accent status--strong', desc: 'Bedrock interactive control with 48px WCAG AAA target sizing and container queries.' },
+      { name: 'Tab Primitive', href: '/components/atoms/tab', badge: 'Updated', badgeClass: 'status--subtle', desc: 'Single-source interactive tab trigger for tab lists and navigation bars.' },
       { name: 'Badge & Chip', href: '/components/atoms/badge', desc: 'Status counters, semantic pills, and removable filter tags.' },
       { name: 'Input & Textarea', href: '/components/atoms/input', desc: 'Accessible text inputs with floating labels and error states.' },
       { name: 'Switch & Checkbox', href: '/components/atoms/switch', desc: 'Accessible zero-JS toggle switches and radio choice controls.' },
-      { name: 'Typography Atoms', href: '/components/atoms/text', desc: 'Semantic headings, subheadings, micro-text, and body typography.' },
+      { name: 'Typography Atoms', href: '/components/atoms/text', desc: 'Semantic headings, subheadings, small-text, and body typography.' },
     ],
   },
   {
     title: 'Molecules',
     description: 'Composed combinations of 2–3 atoms orchestrating local state and compound layout.',
     items: [
-      { name: 'Tab List', href: '/components/molecules/tab-list', badge: 'New', badgeClass: 'badge--accent', desc: 'Semantic tabs navigation with horizontal and vertical orientations.' },
+      { name: 'Tab List', href: '/components/molecules/tab-list', badge: 'New', badgeClass: 'status--accent', desc: 'Semantic tabs navigation with horizontal and vertical orientations.' },
       { name: 'Button Group', href: '/components/molecules/button-group', desc: 'Clustered, segmented, and stacked action groups with auto-rule separators.' },
       { name: 'Field & Fieldset', href: '/components/molecules/field', desc: 'Label, input, helper text, and validation message lockup.' },
       { name: 'Banner & Alert', href: '/components/molecules/banner', desc: 'Prominent contextual system notifications with status icons.' },
@@ -31,7 +31,7 @@ const categories = [
     description: 'Complex composite assemblies that orchestrate layout geometry without clobbering nested atoms.',
     items: [
       { name: 'Card & Deck', href: '/components/organisms/card', desc: 'Multi-region content containers with ruled headers, bodies, and footers.' },
-      { name: 'Dialog', href: '/components/organisms/dialog', badge: 'HTML5', badgeClass: 'badge--subtle', desc: 'Native HTML5 dialog with declarative Invoker Commands.' },
+      { name: 'Dialog', href: '/components/organisms/dialog', badge: 'HTML5', badgeClass: 'status--subtle', desc: 'Native HTML5 dialog with declarative Invoker Commands.' },
       { name: 'Menu & Context Menu', href: '/components/organisms/menu', desc: 'Keyboard-navigable action menus and dropdown option lists.' },
       { name: 'Table', href: '/components/organisms/table', desc: 'Dense data grids with sticky headers, numeric alignments, and sortable columns.' },
     ],
@@ -43,7 +43,7 @@ const categories = [
   <div class="margin-bottom-xl">
     <div class="inline align-items-center gap-sm margin-bottom-xs">
       <h1 class="display-title margin-0">Component Library</h1>
-      <span class="badge badge--accent badge--sm"><span>WCAG 2.2 Ready</span></span>
+      <span class="status status--accent status--sm"><span class="status__text">WCAG 2.2 Ready</span></span>
     </div>
     <p class="lede text-muted">
       Explore the modular, token-driven component architecture of Design For Humans. Built on Web Standards, native HTML primitives, zero-specificity cascade rules, and container style queries.
@@ -55,7 +55,7 @@ const categories = [
         <div class="split split--end align-items-center gap-md">
           <div class="stack gap-xs">
             <div class="inline align-items-center gap-xs">
-              <span class="badge badge--accent badge--strong badge--sm"><span>Featured Prototype</span></span>
+              <span class="status status--accent status--strong status--sm"><span class="status__text">Featured Prototype</span></span>
               <span class="micro-heading text-muted">Atom Primitive</span>
             </div>
             <h2 class="heading margin-0">Button Component Prototype</h2>
@@ -90,8 +90,8 @@ const categories = [
                 <div class="inline inline--between align-items-center">
                   <span class="font-weight-bold text-accent">{item.name}</span>
                   {item.badge && (
-                    <span class:list={['badge', 'badge--sm', item.badgeClass || 'badge--subtle']}>
-                      <span>{item.badge}</span>
+                    <span class:list={['status', 'status--sm', item.badgeClass || 'status--subtle']}>
+                      <span class="status__text">{item.badge}</span>
                     </span>
                   )}
                 </div>

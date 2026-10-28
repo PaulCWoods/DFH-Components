@@ -35,7 +35,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <label for="framework-combo" class="field__label">Primary Framework</label>
   <div class="combobox">
     <div class="combobox__control" style="anchor-name: --combo-framework;">
-      <svg class="icon combobox__icon-start" width="18" height="18" aria-hidden="true"><use href="#Search"/></svg>
+      <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
       <input 
         id="framework-combo"
         type="text" 
@@ -47,7 +47,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         placeholder="Search frameworks..."
       />
       <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-        <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
       </button>
     </div>
 
@@ -60,7 +60,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     >
       <li role="option" class="combobox__option" aria-selected="true">
         <span>Web Components</span>
-        <svg class="icon combobox__check" aria-hidden="true"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
       </li>
       <li role="option" class="combobox__option" aria-selected="false">
         <span>Svelte</span>
@@ -78,12 +78,12 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <div class="combobox">
     <div class="combobox__control">
       <div class="combobox__tags">
-        <span class="chip">
-          <span>TypeScript</span>
+        <span class="chip chip--subtle">
+          <span class="chip__text">TypeScript</span>
           <button type="button" class="chip__remove" aria-label="Remove TypeScript">×</button>
         </span>
-        <span class="chip">
-          <span>Accessibility</span>
+        <span class="chip chip--subtle">
+          <span class="chip__text">Accessibility</span>
           <button type="button" class="chip__remove" aria-label="Remove Accessibility">×</button>
         </span>
       </div>
@@ -203,7 +203,7 @@ export const Default: Story = {
         <label for="demo-combo-input" class="field__label">${args.label}</label>
         <div class="${getComboboxClasses(args)}" ${args.expanded ? 'data-expanded="true"' : ''}>
           <div class="combobox__control" style="anchor-name: --combo-demo;">
-            ${args.withIcons ? '<svg class="icon combobox__icon-start" width="18" height="18" aria-hidden="true"><use href="#Search"/></svg>' : ''}
+            ${args.withIcons ? '<svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>' : ''}
             <input 
               id="demo-combo-input"
               type="text" 
@@ -218,7 +218,7 @@ export const Default: Story = {
             />
             ${args.withIcons ? `
               <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-                <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
               </button>
             ` : ''}
           </div>
@@ -232,7 +232,7 @@ export const Default: Story = {
           >
             <li role="option" class="combobox__option" aria-selected="true">
               <span>Web Components</span>
-              <svg class="icon combobox__check" aria-hidden="true"><use href="#Check"/></svg>
+              <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             </li>
             <li role="option" class="combobox__option" aria-selected="false">
               <span>Svelte</span>
@@ -261,7 +261,7 @@ export const OpenListbox: Story = {
         <p class="field__hint">Select standard for automated auditing scanner.</p>
         <div class="combobox" data-expanded="true">
           <div class="combobox__control" style="anchor-name: --combo-open;">
-            <svg class="icon combobox__icon-start" width="18" height="18" aria-hidden="true"><use href="#Search"/></svg>
+            <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             <input 
               id="open-combo-input"
               type="text" 
@@ -273,10 +273,10 @@ export const OpenListbox: Story = {
               value="WCAG"
             />
             <button type="button" class="combobox__clear" aria-label="Clear filter">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
             </button>
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
 
@@ -292,7 +292,7 @@ export const OpenListbox: Story = {
                 <span class="combobox__option-text">WCAG 2.2 Level AA</span>
                 <span class="combobox__option-desc">Recommended baseline standard for public web applications</span>
               </div>
-              <svg class="icon combobox__check" aria-hidden="true"><use href="#Check"/></svg>
+              <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             </li>
             <li role="option" class="combobox__option is-active" aria-selected="false">
               <div class="combobox__option-main">
@@ -322,22 +322,22 @@ export const MultiSelectWithTags: Story = {
         <div class="combobox">
           <div class="combobox__control">
             <div class="combobox__tags">
-              <span class="chip">
-                <span>Accessibility</span>
+              <span class="chip chip--subtle">
+                <span class="chip__text">Accessibility</span>
                 <button type="button" class="chip__remove" aria-label="Remove Accessibility">
-                  <svg class="icon" width="12" height="12" aria-hidden="true"><use href="#Close"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 </button>
               </span>
-              <span class="chip">
-                <span>Design Tokens</span>
+              <span class="chip chip--subtle">
+                <span class="chip__text">Design Tokens</span>
                 <button type="button" class="chip__remove" aria-label="Remove Design Tokens">
-                  <svg class="icon" width="12" height="12" aria-hidden="true"><use href="#Close"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 </button>
               </span>
-              <span class="chip">
-                <span>Figma Sync</span>
+              <span class="chip chip--subtle">
+                <span class="chip__text">Figma Sync</span>
                 <button type="button" class="chip__remove" aria-label="Remove Figma Sync">
-                  <svg class="icon" width="12" height="12" aria-hidden="true"><use href="#Close"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 </button>
               </span>
             </div>
@@ -350,7 +350,7 @@ export const MultiSelectWithTags: Story = {
               placeholder="Add more..."
             />
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
         </div>
@@ -366,7 +366,7 @@ export const GroupedCategories: Story = {
         <label for="grouped-input" class="field__label">Design System Catalog</label>
         <div class="combobox" data-expanded="true">
           <div class="combobox__control" style="anchor-name: --combo-grouped;">
-            <svg class="icon combobox__icon-start" width="18" height="18" aria-hidden="true"><use href="#Search"/></svg>
+            <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             <input 
               id="grouped-input"
               type="text" 
@@ -377,7 +377,7 @@ export const GroupedCategories: Story = {
               placeholder="Search components or tokens..."
             />
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
 
@@ -390,7 +390,7 @@ export const GroupedCategories: Story = {
             <li role="presentation" class="combobox__group-header">Primitives</li>
             <li role="option" class="combobox__option" aria-selected="true">
               <span>Button Primitive</span>
-              <svg class="icon combobox__check" aria-hidden="true"><use href="#Check"/></svg>
+              <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             </li>
             <li role="option" class="combobox__option" aria-selected="false">
               <span>Dialog Primitive</span>
@@ -399,7 +399,7 @@ export const GroupedCategories: Story = {
               <span>Empty State Primitive</span>
             </li>
 
-            <hr class="combobox__separator" role="separator">
+            <li role="none" class="divider"></li>
 
             <li role="presentation" class="combobox__group-header">Design Tokens</li>
             <li role="option" class="combobox__option" aria-selected="false">
@@ -425,7 +425,7 @@ export const EmptyFilterState: Story = {
         <label for="empty-combo-input" class="field__label">Assigned Member</label>
         <div class="combobox" data-expanded="true">
           <div class="combobox__control" style="anchor-name: --combo-empty;">
-            <svg class="icon combobox__icon-start" width="18" height="18" aria-hidden="true"><use href="#Search"/></svg>
+            <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             <input 
               id="empty-combo-input"
               type="text" 
@@ -436,7 +436,7 @@ export const EmptyFilterState: Story = {
               value="xyz-nobody"
             />
             <button type="button" class="combobox__clear" aria-label="Clear filter">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
             </button>
           </div>
 
@@ -464,7 +464,7 @@ export const Sizes: Story = {
           <div class="combobox__control">
             <input id="combo-sm" type="text" class="combobox__input" placeholder="Compact filter..." />
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="14" height="14" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
         </div>
@@ -476,7 +476,7 @@ export const Sizes: Story = {
           <div class="combobox__control">
             <input id="combo-md" type="text" class="combobox__input" placeholder="Standard size..." />
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
         </div>
@@ -488,7 +488,7 @@ export const Sizes: Story = {
           <div class="combobox__control">
             <input id="combo-lg" type="text" class="combobox__input" placeholder="Large search..." />
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
         </div>
@@ -514,7 +514,7 @@ export const ValidationState: Story = {
               value="Unverified User"
             />
             <button type="button" class="combobox__toggle" aria-label="Toggle options" tabindex="-1">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
         </div>

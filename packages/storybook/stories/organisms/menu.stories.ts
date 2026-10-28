@@ -31,22 +31,22 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <menu class="menu" aria-label="Document options">
   <li role="none">
     <button type="button" class="menu__item" role="menuitem">
-      <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
       <span>Duplicate File</span>
       <kbd class="kbd">⌘D</kbd>
     </button>
   </li>
   <li role="none">
     <button type="button" class="menu__item" role="menuitem">
-      <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
       <span>Export JSON</span>
       <kbd class="kbd">⇧⌘E</kbd>
     </button>
   </li>
-  <hr class="menu__separator">
+  <li role="separator" class="divider"></li>
   <li role="none">
     <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-      <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
       <span>Delete Item</span>
       <kbd class="kbd">⌫</kbd>
     </button>
@@ -62,7 +62,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   aria-haspopup="menu"
 >
   <span>Options</span>
-  <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
 </button>
 
 <div 
@@ -74,13 +74,13 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <menu class="menu menu--translucent" aria-label="Quick actions">
     <li role="none">
       <button type="button" class="menu__item" role="menuitem">
-        <svg class="icon" aria-hidden="true"><use href="#Edit"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
         <span>Rename</span>
       </button>
     </li>
     <li role="none">
       <button type="button" class="menu__item" role="menuitem">
-        <svg class="icon" aria-hidden="true"><use href="#Share"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
         <span>Share Link</span>
       </button>
     </li>
@@ -90,7 +90,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <!-- 3. Button-Group Companion Compatibility (using .button inside .menu) -->
 <menu class="menu menu--compact">
   <button type="button" class="button">
-    <svg class="icon" aria-hidden="true"><use href="#Copy"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Copy"/></svg>
     <span>Copy Path</span>
     <kbd class="kbd">⌥⌘C</kbd>
   </button>
@@ -175,31 +175,31 @@ export const Default: Story = {
         <header class="menu__heading">File Operations</header>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Duplicate"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
             <span class="menu__text">Duplicate File</span>
             <kbd class="kbd">⌘D</kbd>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Download"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
             <span class="menu__text">Export Manifest</span>
             <kbd class="kbd">⇧⌘E</kbd>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Share"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
             <span class="menu__text">Share Link</span>
           </button>
         </li>
 
-        <hr class="menu__separator">
+        <li role="separator" class="divider"></li>
 
         <header class="menu__heading">Danger Zone</header>
         <li role="none">
           <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Delete"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
             <span class="menu__text">Delete File</span>
             <kbd class="kbd">⌫</kbd>
           </button>
@@ -220,7 +220,7 @@ export const AnchoredDropdown: Story = {
         aria-haspopup="menu"
       >
         <span>Actions</span>
-        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
       </button>
 
       <div 
@@ -233,28 +233,28 @@ export const AnchoredDropdown: Story = {
           <header class="menu__heading micro-heading">Document</header>
           <li role="none">
             <button type="button" class="menu__item" role="menuitem">
-              <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Edit"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
               <span class="menu__text">Edit Metadata</span>
               <kbd class="kbd">⌘E</kbd>
             </button>
           </li>
           <li role="none">
             <button type="button" class="menu__item" role="menuitem">
-              <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Duplicate"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
               <span class="menu__text">Make a Copy</span>
               <kbd class="kbd">⌘D</kbd>
             </button>
           </li>
           <li role="none">
             <button type="button" class="menu__item" role="menuitem" disabled>
-              <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Lock"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Lock"/></svg>
               <span class="menu__text">Lock Editing</span>
             </button>
           </li>
-          <hr class="menu__separator">
+          <li role="separator" class="divider"></li>
           <li role="none">
             <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-              <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Delete"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
               <span class="menu__text">Move to Trash</span>
               <kbd class="kbd">⌫</kbd>
             </button>
@@ -272,21 +272,21 @@ export const CompactDensity: Story = {
         <header class="menu__heading">Editor Tools</header>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="16" height="16"><use href="#Code"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
             <span class="menu__text">Format Code</span>
             <kbd class="kbd">⇧⌥F</kbd>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="16" height="16"><use href="#Search"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             <span class="menu__text">Find & Replace</span>
             <kbd class="kbd">⌘F</kbd>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="16" height="16"><use href="#Settings"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
             <span class="menu__text">Preferences</span>
             <kbd class="kbd">⌘,</kbd>
           </button>
@@ -302,26 +302,26 @@ export const RuledSeparators: Story = {
       <menu class="menu menu--ruled" aria-label="Account actions">
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#User"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
             <span class="menu__text">View Profile</span>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Bell"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
             <span class="menu__text">Notifications</span>
-            <span class="badge badge--sm badge--accent"><span>3</span></span>
+            <span class="badge badge--accent badge--sm"><span class="badge__text">3</span></span>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Settings"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
             <span class="menu__text">Settings</span>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item menu__item--destructive" role="menuitem">
-            <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
             <span class="menu__text">Sign Out</span>
           </button>
         </li>
@@ -337,19 +337,19 @@ export const CheckableItems: Story = {
         <header class="menu__heading micro-heading">View Options</header>
         <li role="none">
           <button type="button" class="menu__item" role="menuitemcheckbox" aria-checked="true">
-            <svg class="icon icon--check text-accent" width="18" height="18" aria-hidden="true"><use href="#Check"/></svg>
+            <svg class="icon icon--check text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             <span class="menu__text">Show Line Numbers</span>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitemcheckbox" aria-checked="true">
-            <svg class="icon icon--check text-accent" width="18" height="18" aria-hidden="true"><use href="#Check"/></svg>
+            <svg class="icon icon--check text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             <span class="menu__text">Word Wrap</span>
           </button>
         </li>
         <li role="none">
           <button type="button" class="menu__item" role="menuitemcheckbox" aria-checked="false">
-            <svg class="icon icon--check text-accent" width="18" height="18" aria-hidden="true"><use href="#Check"/></svg>
+            <svg class="icon icon--check text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             <span class="menu__text">Minimap</span>
           </button>
         </li>
@@ -365,17 +365,17 @@ export const ButtonCompanionCompatibility: Story = {
       <menu class="menu" aria-label="Companion menu">
         <header class="menu__heading">Card + Button Group Companion</header>
         <button type="button" class="button">
-          <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Duplicate"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
           <span>Clone Branch</span>
           <kbd class="kbd">⌘B</kbd>
         </button>
         <button type="button" class="button">
-          <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Download"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
           <span>Fetch Origin</span>
         </button>
-        <hr class="menu__separator">
+        <li role="separator" class="divider"></li>
         <button type="button" class="button button--danger">
-          <svg class="icon" aria-hidden="true" width="20" height="20"><use href="#Delete"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
           <span>Discard Changes</span>
         </button>
       </menu>

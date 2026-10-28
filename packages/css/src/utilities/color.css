@@ -185,7 +185,7 @@
     color: var(--foreground-warning, Yellow);
 }
 
-:where(.text-color-muted, .text-muted, .color-muted) {
+:where(.text-color-muted, .text-muted) {
     color: var(--foreground-muted, GrayText);
 }
 

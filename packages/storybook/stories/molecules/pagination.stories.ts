@@ -133,7 +133,7 @@ export const Playground: Story = {
       <div style="max-inline-size: 46rem; margin-inline: auto; display: flex; flex-direction: column; gap: var(--spacing-16);">
         <nav class="pagination ${grpClass}" aria-label="Pagination demo" style="--pagination-justify-content: ${args.alignment};">
           <a class="${btnClass}" href="#prev" aria-label="Previous page">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronLeft"/>
             </svg>
             <span class="visually-hidden">Previous page</span>
@@ -145,7 +145,7 @@ export const Playground: Story = {
           <hr class="divider">
           ${renderPageBtn(args.totalPages)}
           <a class="${btnClass}" href="#next" aria-label="Next page">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronRight"/>
             </svg>
             <span class="visually-hidden">Next page</span>
@@ -185,7 +185,7 @@ export const Anatomy: Story = {
       <div style="padding: var(--spacing-24); border: 2px dashed var(--color-accent); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: var(--spacing-16);">
         <nav class="pagination button-group buttons-subtle" aria-label="Anatomy breakdown">
           <span class="button" aria-disabled="true" style="outline: 1px dashed var(--color-danger);">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronLeft"/>
             </svg>
             <span class="visually-hidden">Previous (disabled)</span>
@@ -204,7 +204,7 @@ export const Anatomy: Story = {
           <a class="button" href="#10"><span>10</span></a>
 
           <a class="button" href="#next">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronRight"/>
             </svg>
             <span class="visually-hidden">Next</span>
@@ -245,7 +245,7 @@ export const Variants: Story = {
         </span>
         <nav class="pagination button-group buttons-subtle" aria-label="Directional stepper">
           <span class="button" aria-disabled="true">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronLeft"/>
             </svg>
             <span class="visually-hidden">Previous page</span>
@@ -254,7 +254,7 @@ export const Variants: Story = {
             Page 1 of 12
           </span>
           <a class="button" href="#next">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronRight"/>
             </svg>
             <span class="visually-hidden">Next page</span>
@@ -334,7 +334,7 @@ export const StateMatrix: Story = {
         </span>
         <div class="pagination button-group buttons-subtle">
           <span class="button" aria-disabled="true" style="opacity: 0.5; pointer-events: none;">
-            <svg class="icon dir" aria-hidden="true" focusable="false">
+            <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#ChevronLeft"/>
             </svg>
             <span class="visually-hidden">Previous</span>
@@ -447,7 +447,7 @@ export const RealWorldRecipes: Story = {
 
             <nav class="pagination button-group button-group--sm buttons-subtle" aria-label="Table pagination">
               <a class="button button--sm" href="#prev" aria-label="Previous">
-                <svg class="icon dir" aria-hidden="true" focusable="false">
+                <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#ChevronLeft"/>
                 </svg>
                 <span class="visually-hidden">Previous</span>
@@ -459,7 +459,7 @@ export const RealWorldRecipes: Story = {
               <hr class="divider">
               <a class="button button--sm" href="#14"><span>14</span></a>
               <a class="button button--sm" href="#next" aria-label="Next">
-                <svg class="icon dir" aria-hidden="true" focusable="false">
+                <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
                   <use href="#ChevronRight"/>
                 </svg>
                 <span class="visually-hidden">Next</span>
@@ -485,7 +485,7 @@ export const RealWorldRecipes: Story = {
         <div style="max-inline-size: 20rem; padding: var(--spacing-12); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <button type="button" class="button button--subtle button--sm">
-              <svg class="icon dir" aria-hidden="true" focusable="false">
+              <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
                 <use href="#ChevronLeft"/>
               </svg>
               <span>Prev</span>
@@ -495,7 +495,7 @@ export const RealWorldRecipes: Story = {
             </span>
             <button type="button" class="button button--subtle button--sm">
               <span>Next</span>
-              <svg class="icon dir" aria-hidden="true" focusable="false">
+              <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">
                 <use href="#ChevronRight"/>
               </svg>
             </button>

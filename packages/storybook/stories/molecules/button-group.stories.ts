@@ -41,16 +41,16 @@ AI agents and developers MUST strictly use the following semantic patterns:
 <!-- Stacked Column Menu (Dropdowns, Context Menus, and Drawers) -->
 <div class="button-group button-group--tight button-group--stacked buttons-subtle">
   <button type="button" class="button">
-    <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
     <span>Duplicate</span>
   </button>
   <button type="button" class="button">
-    <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
     <span>Export JSON</span>
   </button>
   <hr class="divider">
   <button type="button" class="button button--subtle button--danger">
-    <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
     <span>Delete</span>
   </button>
 </div>
@@ -221,16 +221,16 @@ export const Variants: Story = {
             <div class="card__body card__body--flush">
               <div class="button-group button-group--tight button-group--stacked buttons-subtle">
                 <button type="button" class="button">
-                  <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                   <span>Duplicate Item</span>
                 </button>
                 <button type="button" class="button">
-                  <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                   <span>Export Report</span>
                 </button>
                 <hr class="divider">
                 <button type="button" class="button button--subtle button--danger">
-                  <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                   <span>Delete Permanently</span>
                 </button>
               </div>
@@ -295,7 +295,7 @@ export const SizesAndDensity: Story = {
 
       <!-- Dense Container Query -->
       <div style="--ui-sizing: compact;">
-        <div class="demo-label">Dense Container (--ui-sizing: compact / 32px Touch Targets)</div>
+        <div class="demo-label">Compact Container (--ui-sizing: compact / 32px visual, 48px hit area)</div>
         <div class="button-group">
           <button type="button" class="button"><span>Action 1</span></button>
           <button type="button" class="button button--strong button--accent"><span>Action 2</span></button>
@@ -353,20 +353,20 @@ export const RealWorldRecipes: Story = {
           <div class="card__body card__body--flush">
             <div class="button-group button-group--tight button-group--stacked buttons-subtle">
               <button type="button" class="button">
-                <svg class="icon" aria-hidden="true"><use href="#Duplicate"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                 <span>Make a Copy</span>
               </button>
               <button type="button" class="button">
-                <svg class="icon" aria-hidden="true"><use href="#Download"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
                 <span>Download Archive</span>
               </button>
               <button type="button" class="button">
-                <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                 <span>Mark as Reviewed</span>
               </button>
               <hr class="divider">
               <button type="button" class="button button--subtle button--danger">
-                <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                 <span>Move to Trash</span>
               </button>
             </div>

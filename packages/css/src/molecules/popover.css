@@ -47,7 +47,7 @@
   --_popover-color: var(--popover-color, var(--foreground, currentColor));
   --_popover-cushion: var(--popover-cushion, var(--spacing-cushion, 2rem));
   --_popover-font-family: var(--popover-font-family, var(--typography-font-family-sans, sans-serif));
-  --_popover-font-size: var(--popover-font-size, var(--body-font-size, 1rem));
+  --_popover-font-size: var(--popover-font-size, var(--body-fixed-font-size, 1rem));
   --_popover-line-height: var(--popover-line-height, var(--body-line-height, 1.5));
   --_popover-max-height: var(--popover-max-height, 90vb);
   --_popover-max-width: var(--popover-max-width, var(--spacing-block-xs, 16rem));

@@ -1,271 +1,49 @@
 /* ==========================================================================
-   Textarea Primitive
+   Design For Humans: Textarea Primitive
    --------------------------------------------------------------------------
-   Accessible auto-growing multiline text input using native CSS
-   field-sizing: content with WCAG 2.2 AA / AAA contrast and validation states.
+   A multi-line text field that grows with its content (field-sizing:
+   content) between a minimum and maximum number of lines. Size, prominence,
+   corners, flags and states come from the text control base in input.css;
+   this file sets the textarea's own spacing and line limits.
+
+   Modifiers: --one-line starts at one line and grows.
+   Hooks: --textarea-lines-min, --textarea-lines-max.
 
    Usage:
-   <textarea class="textarea" rows="3" placeholder="Tell us what you think..."></textarea>
+   <textarea class="textarea" id="feedback" rows="3"></textarea>
    ========================================================================== */
 
-/* ==========================================================================
-   Base Textarea Primitive (:where(.textarea, textarea))
-   ========================================================================== */
-:where(.textarea, textarea) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_textarea-bg: var(--textarea-bg, var(--input-background-color, var(--surface-card, #ffffff)));
-  --_textarea-border-color: var(--textarea-border-color, var(--input-border-color, var(--control-border-color, currentColor)));
-  --_textarea-border-width: var(--textarea-border-width, var(--input-border-width, var(--control-border-width, 1px)));
-  --_textarea-color: var(--textarea-color, var(--foreground, currentColor));
-  --_textarea-font-family: var(--textarea-font-family, var(--body-font-family, inherit));
-  --_textarea-font-size: var(--textarea-font-size, var(--typography-font-size-0, 1rem));
-  --_textarea-line-height: var(--textarea-line-height, var(--typography-line-height-4, 1.5));
+:where(.textarea) {
+  /* Size sources (the base picks one set by size) */
+  --_control-default-padding-block: var(--textarea-padding-block, 0.5rem);
+  --_control-default-padding-inline: var(--textarea-padding-inline, 1rem);
+  --_control-default-font-size: var(--textarea-font-size, 1rem);
+  --_control-default-line-height: var(--textarea-line-height, 1.5);
+  --_control-sm-padding-block: var(--textarea-sm-padding-block, 0.25rem);
+  --_control-sm-padding-inline: var(--textarea-sm-padding-inline, 0.75rem);
+  --_control-sm-font-size: var(--textarea-sm-font-size, 0.875rem);
+  --_control-sm-line-height: var(--textarea-sm-line-height, 1.4);
+  --_control-lg-padding-block: var(--textarea-lg-padding-block, 0.75rem);
+  --_control-lg-padding-inline: var(--textarea-lg-padding-inline, 1.5rem);
+  --_control-lg-font-size: var(--textarea-lg-font-size, 1.125rem);
+  --_control-lg-line-height: var(--textarea-lg-line-height, 1.6);
+
   --_textarea-lines-min: var(--textarea-lines-min, 3);
   --_textarea-lines-max: var(--textarea-lines-max, 16);
-  --_textarea-min-size: var(--input-min-size, var(--spacing-target, 3rem));
-  --_textarea-padding-block: var(--textarea-padding-block, var(--spacing-8, 0.5rem));
-  --_textarea-padding-inline: var(--textarea-padding-inline, var(--spacing-16, 1rem));
-  --_textarea-placeholder-color: var(--textarea-placeholder-color, var(--input-placeholder-color, var(--foreground-muted, currentColor)));
-  --_textarea-radius: var(--textarea-radius, var(--input-radius, var(--ui-radius, var(--radius, 0.25rem))));
-  --_textarea-shadow: var(--textarea-shadow, none);
-  --_textarea-timefunc: var(--textarea-timefunc, var(--input-timefunc, var(--timefunc-ease-in-out, ease-in-out)));
-  --_textarea-transition: var(--textarea-transition, var(--input-transition, var(--duration-sm, 150ms)));
 
-  /* Interactive & Validation State Contract */
-  --_textarea-hover-bg: var(--textarea-hover-bg, var(--_textarea-bg));
-  --_textarea-hover-border-color: var(--textarea-hover-border-color, var(--input-hover-border, var(--border-color-accent, var(--border-accent, var(--foreground-accent, currentColor)))));
-  --_textarea-focus-border-color: var(--textarea-focus-border-color, var(--border-color-accent, var(--border-accent, var(--foreground-accent, currentColor))));
-  --_textarea-invalid-border-color: var(--textarea-border-color-invalid, var(--border-color-danger, var(--border-danger, #d32f2f)));
-  --_textarea-valid-border-color: var(--textarea-border-color-valid, var(--border-color-success, var(--border-success, #00875a)));
-  --_textarea-disabled-border-color: var(--textarea-disabled-border-color, var(--border-quiet, currentColor));
-
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes:
-     e.g., .form-row { --textarea-variation: plain; --ui-density: dense; }
-     -------------------------------------------------------------------------- */
-
-  /* Density & Size */
-  @container style(--ui-density: dense) or style(--control-density: dense) or style(--textarea-density: compact) {
-    --_textarea-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_textarea-padding-block: var(--textarea-sm-padding-block, var(--spacing-4, 0.25rem));
-    --_textarea-padding-inline: var(--textarea-sm-padding-inline, var(--spacing-12, 0.75rem));
-  }
-
-  @container style(--font-sizing: compact) {
-    --_textarea-font-size: var(--textarea-sm-font-size, var(--typography-font-size--1, 0.875rem));
-  }
-
-  @container style(--ui-sizing: compact) or style(--controls-size: sm) or style(--textarea-size: sm) {
-    --_textarea-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_textarea-padding-block: var(--textarea-sm-padding-block, var(--spacing-4, 0.25rem));
-    --_textarea-padding-inline: var(--textarea-sm-padding-inline, var(--spacing-12, 0.75rem));
-    --_textarea-font-size: var(--textarea-sm-font-size, var(--typography-font-size--1, 0.875rem));
-  }
-
-  @container style(--textarea-size: lg) {
-    --_textarea-min-size: var(--input-lg-min-size, var(--spacing-target-lg, 3.5rem));
-    --_textarea-padding-block: var(--textarea-lg-padding-block, var(--spacing-12, 0.75rem));
-    --_textarea-padding-inline: var(--textarea-lg-padding-inline, var(--spacing-24, 1.5rem));
-    --_textarea-font-size: var(--textarea-lg-font-size, var(--typography-font-size-1, 1.125rem));
-  }
-
-  /* Variation Orchestration */
-  @container style(--controls-variation: plain) or style(--textarea-variation: plain) {
-    --_textarea-bg: transparent;
-    --_textarea-border-color: transparent;
-    --_textarea-hover-border-color: transparent;
-    --_textarea-valid-border-color: transparent;
-    --_textarea-shadow: none;
-  }
-
-  @container style(--controls-variation: subtle) or style(--textarea-variation: subtle) {
-    --_textarea-bg: var(--textarea-subtle-bg, var(--surface-translucent, transparent));
-    --_textarea-hover-bg: var(--textarea-subtle-hover-bg, var(--surface-translucent-strong, transparent));
-    --_textarea-border-color: transparent;
-    --_textarea-hover-border-color: transparent;
-    --_textarea-valid-border-color: transparent;
-    --_textarea-shadow: none;
-  }
-
-  @container style(--control-variation: flush) or style(--textarea-variation: flush) {
-    --_textarea-focus-border-color: transparent;
-    --_textarea-padding-inline: 0;
-  }
-
-  /* Corner Shapes */
-  @container style(--control-corners: round) or style(--textarea-corners: round) {
-    --_textarea-radius: var(--radius-round, 9999px);
-  }
-
-  /* Modern Web Standards: Auto-growth without JavaScript */
+  /* Grows with its content, without script */
   field-sizing: content;
 
-  /* Layout & Sizing */
-  box-sizing: border-box;
-  flex: 1 1 auto;
-  max-inline-size: 100%;
   min-inline-size: 0;
-  min-block-size: calc(var(--_textarea-lines-min) * 1lh + var(--_textarea-padding-block) * 2);
-  max-block-size: calc(var(--_textarea-lines-max) * 1lh + var(--_textarea-padding-block) * 2);
+  min-block-size: max(
+    calc(var(--_textarea-lines-min) * 1lh + var(--_control-padding-block) * 2 + var(--_control-border-width) * 2),
+    var(--_control-min-size)
+  );
+  max-block-size: calc(var(--_textarea-lines-max) * 1lh + var(--_control-padding-block) * 2 + var(--_control-border-width) * 2);
   resize: vertical;
-
-  /* Spacing */
-  padding-block: var(--_textarea-padding-block);
-  padding-inline: var(--_textarea-padding-inline);
-
-  /* Typography */
-  font-family: var(--_textarea-font-family);
-  font-size: var(--_textarea-font-size);
-  line-height: var(--_textarea-line-height);
-  color: var(--_textarea-color);
-
-  /* Surface, Border & Shape */
-  background-color: var(--_textarea-bg);
-  border-radius: var(--_textarea-radius);
-  border: var(--_textarea-border-width) solid var(--_textarea-border-color);
-  box-shadow: var(--_textarea-shadow);
-
-  /* Transitions */
-  transition-property: border-color,
-  background-color,
-  color,
-  box-shadow,
-  outline-color;
-  transition-duration: var(--_textarea-transition);
-  transition-timing-function: var(--_textarea-timefunc);
-
-  /* Placeholder Styling */
-  &::placeholder {
-    color: var(--_textarea-placeholder-color);
-    opacity: 1;
-  }
-
-  /* Single-Source Interactive States */
-  @media (hover: hover) {
-    &:hover:not(:disabled, [readonly], [aria-disabled="true"]) {
-      background-color: var(--_textarea-hover-bg);
-      border-color: var(--_textarea-hover-border-color);
-    }
-  }
-
-  /* Focus Visible (High Contrast 3:1 Ring with Offset) */
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
-    outline-offset: var(--focus-ring-offset, 2px);
-    border-color: var(--_textarea-focus-border-color);
-  }
-
-  /* Validation States (:user-invalid / :user-valid) */
-  &:where(:user-invalid, [aria-invalid="true"]) {
-    border-color: var(--_textarea-invalid-border-color);
-
-    &:focus-visible {
-      outline-color: var(--_textarea-invalid-border-color);
-    }
-  }
-
-  &:user-valid:not(:placeholder-shown) {
-    border-color: var(--_textarea-valid-border-color);
-  }
-
-  /* Disabled & Readonly States */
-  &:where(:disabled, [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled, 0.4);
-    cursor: not-allowed;
-    background-color: var(--surface-translucent, transparent);
-    border-color: var(--_textarea-disabled-border-color);
-  }
-
-  &:read-only:not(:disabled, [aria-disabled="true"]) {
-    cursor: default;
-    background-color: var(--surface-translucent, transparent);
-    border-style: dashed;
-  }
-
-  /* Size Modifiers (.textarea--sm, .textarea--lg, .textarea--one-line) */
-  :where(.textareas-dense) {
-    --textarea-density: dense;
-  }
-
-  :where(.controls-sm, .textareas-sm) &,
-  &:where(.textarea--sm) {
-    --_textarea-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_textarea-padding-block: var(--textarea-sm-padding-block, var(--spacing-4, 0.25rem));
-    --_textarea-padding-inline: var(--textarea-sm-padding-inline, var(--spacing-12, 0.75rem));
-    --_textarea-font-size: var(--textarea-sm-font-size, var(--typography-font-size--1, 0.875rem));
-  }
-
-  :where(.controls-lg, .textareas-lg) &,
-  &:where(.textarea--lg) {
-    --_textarea-min-size: var(--input-lg-min-size, var(--spacing-target-lg, 3.5rem));
-    --_textarea-padding-block: var(--textarea-lg-padding-block, var(--spacing-12, 0.75rem));
-    --_textarea-padding-inline: var(--textarea-lg-padding-inline, var(--spacing-24, 1.5rem));
-    --_textarea-font-size: var(--textarea-lg-font-size, var(--typography-font-size-1, 1.125rem));
-
-    @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-      --_textarea-min-size: var(--input-min-size, var(--spacing-target, 3rem));
-      --_textarea-padding-block: var(--textarea-padding-block, var(--spacing-8, 0.5rem));
-      --_textarea-padding-inline: var(--textarea-padding-inline, var(--spacing-16, 1rem));
-    }
-  }
-
-  &:where(.textarea--one-line) {
-    --_textarea-lines-min: 1;
-  }
-
-  /* Plain / Flush Textarea Modifier */
-  :where(.textareas-plain) {
-    --textarea-variation: plain;
-  }
-
-  :where(.controls-plain, .textareas-plain, .inputs-plain) &,
-  &:where(.textarea--flush, .textarea--plain, .textarea--ghost) {
-    --_textarea-bg: transparent;
-    --_textarea-border-color: transparent;
-    --_textarea-hover-border-color: transparent;
-    --_textarea-valid-border-color: transparent;
-    --_textarea-shadow: none;
-  }
-
-  /* Subtle Textarea Modifier (Translucent background, no border) */
-  :where(.textareas-subtle) {
-    --textarea-variation: subtle;
-  }
-
-  :where(.controls-subtle, .textareas-subtle, .inputs-subtle) &,
-  &:where(.textarea--subtle) {
-    --_textarea-bg: var(--textarea-subtle-bg, var(--surface-translucent, transparent));
-    --_textarea-hover-bg: var(--textarea-subtle-hover-bg, var(--surface-translucent-strong, transparent));
-    --_textarea-border-color: transparent;
-    --_textarea-hover-border-color: transparent;
-    --_textarea-valid-border-color: transparent;
-    --_textarea-shadow: none;
-  }
-
-  &:where(.textarea--flush) {
-    --_textarea-focus-border-color: transparent;
-    --_textarea-padding-inline: 0;
-  }
+  white-space: revert;
 }
 
-/* ==========================================================================
-   Accessibility & Media Queries
-   ========================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  :where(.textarea, textarea) {
-    transition: none !important;
-  }
-}
-
-@media (prefers-contrast: more) {
-  :where(.textarea, textarea) {
-    border-width: calc(var(--input-border-width, var(--border-width, 1px)) * 2);
-  }
+:where(.textarea--one-line) {
+  --_textarea-lines-min: 1;
 }

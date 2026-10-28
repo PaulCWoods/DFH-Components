@@ -1,14 +1,40 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
+type Prominence = 'default' | 'strong' | 'subtle' | 'plain';
+type Intent = 'neutral' | 'accent' | 'danger';
+type Size = 'sm' | 'default' | 'lg';
+
 interface ButtonArgs {
   label: string;
-  variant?: 'default' | 'primary' | 'plain' | 'subtle' | 'destructive' | 'placeholder';
-  size: 'sm' | 'md' | 'lg';
+  prominence: Prominence;
+  intent: Intent;
+  size: Size;
+  round?: boolean;
   disabled?: boolean;
   ariaDisabled?: boolean;
   isLink?: boolean;
   hasIcon?: boolean;
 }
+
+const PROMINENCES: Prominence[] = ['default', 'strong', 'subtle', 'plain'];
+const INTENTS: Intent[] = ['neutral', 'accent', 'danger'];
+
+const INTENT_ICON: Record<Intent, string> = {
+  neutral: '',
+  accent: '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>',
+  danger: '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>',
+};
+
+const buttonClasses = (prominence: Prominence, intent: Intent, size: Size = 'default', round = false) =>
+  [
+    'button',
+    prominence !== 'default' ? `button--${prominence}` : '',
+    intent !== 'neutral' ? `button--${intent}` : '',
+    size !== 'default' ? `button--${size}` : '',
+    round ? 'button--round' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
 const meta: Meta<ButtonArgs> = {
   title: 'Atoms/Button',
@@ -17,227 +43,79 @@ const meta: Meta<ButtonArgs> = {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Button Primitive
+### Button
 
-The **Button** primitive is the fundamental interactive action element in Design For Humans.
-Built with zero-specificity \`:where()\`, a local private variable manifest (\`--_button-*\`), single-source interactive state resolution, and native style container queries.
+The fundamental action control. Variation is expressed on the library's shared axes (PRINCIPLES §2); each modifier sets exactly one axis, so any combination works without extra classes.
 
----
+| Axis | Modifiers | Container flag |
+| :--- | :--- | :--- |
+| Prominence | default (outline), \`--strong\`, \`--subtle\`, \`--plain\` | \`--button-prominence\` |
+| Intent | neutral (default), \`--accent\`, \`--danger\` | \`--button-intent\` |
+| Size | \`--sm\`, default, \`--lg\` | \`--button-size\` |
+| Density | none on the button; a compact container steps it to \`--sm\` | \`--ui-sizing: compact\` |
+| Corners | \`--round\` | \`--button-corners\` |
 
-#### 1. Canonical Semantic Markup Signatures
-AI agents and developers MUST strictly use the following semantic patterns:
+Selected states (\`.is-active\`, a checked input inside a \`<label class="button">\`) render as strong.
 
 \`\`\`html
-<!-- Default Secondary Button (Neutral Outline) -->
-<button type="button" class="button">
-  <span>Action Label</span>
-</button>
-
-<!-- Strong Action Button (High-emphasis filled neutral) -->
-<button type="button" class="button button--strong">
-  <span>Strong Neutral</span>
-</button>
-
-<!-- Strong Accent / Primary Action Button -->
+<!-- Primary action: strong prominence + accent intent -->
 <button type="button" class="button button--strong button--accent">
-  <span>Primary Action</span>
+  <span>Save Changes</span>
 </button>
 
-<!-- Plain Action Button (Transparent background, no border) -->
-<button type="button" class="button button--plain">
-  <span>Plain Action</span>
-</button>
-
-<!-- Subtle Action Button (Translucent background, no border) -->
-<button type="button" class="button button--subtle">
-  <span>Subtle Action</span>
-</button>
-
-<!-- Destructive Action Button (Outlined danger) -->
+<!-- Danger: always pair intent with an icon or text (WCAG 1.4.1) -->
 <button type="button" class="button button--danger">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
   <span>Delete Item</span>
 </button>
 
-<!-- Strong Destructive Action Button (High-emphasis solid danger) -->
-<button type="button" class="button button--strong button--danger">
-  <span>Delete Record</span>
-</button>
-
-<!-- Placeholder / Dashed Outline Action -->
-<button type="button" class="button button--placeholder">
-  <span>+ Add Item</span>
-</button>
-
-<!-- Icon Button (Trailing) -->
-<button type="button" class="button button--strong button--accent">
-  <span>Get Started</span>
-  <svg class="icon icon--dir" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
-</button>
-
-<!-- Icon-Only Button (MANDATORY: use .visually-hidden text for translation & voice control) -->
+<!-- Icon-only: keep an accessible name -->
 <button type="button" class="button button--icon">
   <span class="visually-hidden">Search site</span>
-  <svg class="icon" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
 </button>
-
-<!-- Avatar Button -->
-<button type="button" class="button button--avatar button--round" aria-label="Alex Morgan profile">
-  <img src="https://example.com/avatar.jpg" alt="" width="40" height="40" style="object-fit: cover; border-radius: inherit;" />
-</button>
-
-<!-- Button-Like Checkbox Toggle Switch (Zero-JS state management) -->
-<label class="button">
-  <input type="checkbox" class="visually-hidden" />
-  <svg class="icon icon--off" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-  <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-  <span>Switch</span>
-</label>
-
-<!-- Link Styled as Button (MANDATORY: role="button") -->
-<a href="/login" class="button button--strong button--accent" role="button">
-  <span>Log In</span>
-</a>
 \`\`\`
 
----
-
-#### 2. WCAG 2.2 Conformance Matrix
-
-| Criterion | Level | Implementation Strategy |
-| :--- | :---: | :--- |
-| **2.5.5 Target Size (Enhanced)** | **AAA** | Standard (\`md\`) buttons meet **48x48px** minimum block & inline bounds via \`--button-min-size: var(--spacing-target, 3rem)\`. |
-| **2.5.8 Target Size (Minimum)** | **AA** | Compact (\`button--sm\`) controls maintain **32px** height, safely exceeding the 24x24px minimum touch target threshold. |
-| **1.4.3 / 1.4.11 Contrast** | **AA** | 4.5:1 text contrast for labels and 3:1 graphical boundaries for resting borders and focus rings. |
-| **2.4.7 / 2.4.13 Focus Visible** | **AA/AAA** | High-contrast \`:focus-visible\` ring with a 2px offset (\`--focus-ring-offset: 2px\`) providing at least 3:1 contrast against adjacent backgrounds. |
-| **4.1.2 Name, Role, Value** | **A** | Icon-only buttons mandate \`<span class="visually-hidden">\` child text for screen readers and speech recognition. |
-| **Single-Source State Engine** | **Standard** | Hover, active, focus, and disabled transitions are resolved strictly once in the base primitive using private state variables (\`--_button-hover-*\`, \`--_button-active-*\`). Variants are pure token maps that never duplicate pseudo-classes. |
-
----
-
-#### 3. CSS Custom Property Contract Table
-
-| Custom Property | Fallback | Intended Purpose |
-| :--- | :--- | :--- |
-| \`--button-min-size\` | \`--spacing-target\` (3rem / 48px) | Minimum block and inline target size |
-| \`--button-bg\` | \`transparent\` | Resting button canvas fill |
-| \`--button-border-color\` | \`--border-color-muted\` (\`currentColor\`) | Resting border stroke color |
-| \`--button-border-width\` | \`--border-width\` (1px) | Border stroke thickness |
-| \`--button-text\` | \`--foreground\` (\`currentColor\`) | Button label text color |
-| \`--button-hover-bg\` | \`--foreground\` (\`currentColor\`) | Hover background fill |
-| \`--button-hover-border-color\` | \`--foreground\` (\`currentColor\`) | Hover border stroke color |
-| \`--button-hover-text\` | \`--surface\` (#ffffff) | Hover label text color |
-| \`--button-active-bg\` | \`--foreground-accent-pressed\` (#005f57) | Pressed/active background fill |
-| \`--button-active-border-color\` | \`--foreground-accent-pressed\` (#005f57) | Pressed/active border stroke color |
-| \`--button-active-text\` | \`--surface\` (#ffffff) | Pressed/active label text color |
-| \`--button-padding-block\` | \`--spacing-4\` (0.25rem) | Vertical inner clearance |
-| \`--button-padding-inline\` | \`--spacing-16\` (1rem) | Horizontal inner clearance |
-| \`--button-radius\` | \`--radius\` (0.25rem) | Corner curvature |
-| \`--button-inner-gap\` | \`--spacing-12\` (0.75rem) | Spacing between icon and label |
-| \`--button-transition\` | \`--duration-sm\` (150ms) | Hover, focus, and active transition duration |
-
----
-
-#### 4. Zero-Class Container Style Queries (\`@container style(...)\`)
-Parents can declaratively orchestrate button styling across entire sub-trees without adding modifier classes to individual button elements:
+#### Targets (WCAG 2.5.5 / 2.5.8)
+Every size keeps a 48px hit area. \`--sm\` (32px) and buttons stepped down by a compact container extend their hit area invisibly through \`::after\`. A product whose users are on mouse or trackpad may opt into 32px targets with one root token; the library never does this automatically:
 
 \`\`\`css
-/* Example: Contextual navigation bar orchestration */
-.app-header__actions {
-  --button-variation: subtle;
-  --button-corners: round;
-  --ui-density: dense;
-}
+:root { --spacing-target-min: var(--spacing-target-sm); }
 \`\`\`
+
+#### Customisation hooks
+Undefined by default. Set on a button or a container to recolour every prominence consistently: \`--button-color\`, \`--button-color-hover\`, \`--button-color-pressed\`, \`--button-color-border\`, \`--button-on-color\`. Geometry uses the Tier 3 tokens \`--button-padding-*\`, \`--button-min-size\`, \`--button-radius\`, \`--button-inner-gap\`, \`--button-font-*\`, and their \`-sm-\` / \`-lg-\` variants.
+
+#### Keyboard
+Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as buttons activate with Enter only. \`aria-disabled="true"\` keeps the button focusable for screen readers but blocks activation.
 `,
       },
     },
   },
   argTypes: {
-    label: {
-      description: 'Button text label',
-      control: 'text',
-      defaultValue: 'Action Label',
-    },
-    variant: {
-      description: 'Cosmetic button variant',
-      control: 'select',
-      options: ['default', 'primary', 'plain', 'subtle', 'destructive', 'placeholder'],
-      defaultValue: 'primary',
-    },
-    size: {
-      description: 'Button sizing variant',
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
-      defaultValue: 'md',
-    },
-    disabled: {
-      description: 'Native HTML disabled state',
-      control: 'boolean',
-      defaultValue: false,
-    },
-    ariaDisabled: {
-      description: 'Accessible aria-disabled state',
-      control: 'boolean',
-      defaultValue: false,
-    },
-    isLink: {
-      description: 'Render as anchor link with role="button"',
-      control: 'boolean',
-      defaultValue: false,
-    },
-    hasIcon: {
-      description: 'Include trailing action icon',
-      control: 'boolean',
-      defaultValue: false,
-    },
+    label: { control: 'text', description: 'Visible label' },
+    prominence: { control: 'select', options: PROMINENCES, description: 'Prominence axis' },
+    intent: { control: 'select', options: INTENTS, description: 'Intent axis' },
+    size: { control: 'select', options: ['sm', 'default', 'lg'], description: 'Size axis' },
+    round: { control: 'boolean', description: 'Round corners' },
+    disabled: { control: 'boolean', description: 'Native disabled' },
+    ariaDisabled: { control: 'boolean', description: 'aria-disabled="true"' },
+    isLink: { control: 'boolean', description: 'Render as a link' },
+    hasIcon: { control: 'boolean', description: 'Trailing icon' },
   },
   render: (args) => {
-    const variantClass = args.variant && args.variant !== 'default' ? `button--${args.variant}` : '';
-    const sizeClass = args.size && args.size !== 'md' ? `button--${args.size}` : '';
-    const classes = [
-      'button',
-      variantClass,
-      sizeClass,
-    ].filter(Boolean).join(' ');
-
-    const iconSvg = `
-      <svg class="icon icon--dir" aria-hidden="true" focusable="false">
-        <use href="#ArrowRight"/>
-      </svg>
-    `;
-
+    const classes = buttonClasses(args.prominence, args.intent, args.size, args.round);
     const content = `
+      ${INTENT_ICON[args.intent]}
       <span>${args.label || 'Action'}</span>
-      ${args.hasIcon ? iconSvg : ''}
+      ${args.hasIcon ? '<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>' : ''}
     `;
 
-    if (args.isLink) {
-      return `
-        <div class="demo-stage demo-constrained--md">
-          <a 
-            href="#" 
-            class="${classes}" 
-            ${args.ariaDisabled ? 'aria-disabled="true" tabindex="-1"' : ''}
-            role="button"
-          >
-            ${content}
-          </a>
-        </div>
-      `;
-    }
+    const control = args.isLink
+      ? `<a href="#" class="${classes}" role="button" ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</a>`
+      : `<button type="button" class="${classes}" ${args.disabled ? 'disabled' : ''} ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</button>`;
 
-    return `
-      <div class="demo-stage demo-constrained--md">
-        <button 
-          type="button" 
-          class="${classes}" 
-          ${args.disabled ? 'disabled' : ''}
-          ${args.ariaDisabled ? 'aria-disabled="true"' : ''}
-        >
-          ${content}
-        </button>
-      </div>
-    `;
+    return `<div class="demo-stage demo-constrained--md">${control}</div>`;
   },
 };
 
@@ -245,43 +123,116 @@ export default meta;
 type Story = StoryObj<ButtonArgs>;
 
 /**
- * 1. Playground (Interactive Sandbox)
- * Adjust variants, sizes, disabled states, links, and icons via Storybook controls.
+ * Interactive sandbox for every axis.
  */
 export const Playground: Story = {
   args: {
-    label: 'Primary Action',
-    variant: 'primary',
-    size: 'md',
+    label: 'Save Changes',
+    prominence: 'strong',
+    intent: 'accent',
+    size: 'default',
+    round: false,
     disabled: false,
     ariaDisabled: false,
     isLink: false,
-    hasIcon: true,
+    hasIcon: false,
   },
 };
 
 /**
- * 2. Anatomy & Structure Breakdown
- * Shows the accessible relationship between Touch Target, Inner Label, Trailing Icon, and Focus Ring.
+ * Prominence × intent. Every pairing comes from two single-axis modifiers.
  */
-export const Anatomy: Story = {
+export const ProminenceAndIntent: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
-      <div class="demo-label">1. Target Bounds (48px) &rarr; 2. Label Text &rarr; 3. Trailing Icon (aria-hidden) &rarr; 4. High-Contrast Focus Ring</div>
-      
-      <div class="cluster" style="display: flex; gap: var(--spacing-16); align-items: center;">
-        <button type="button" class="button button--strong button--accent">
-          <span>Continue Checkout</span>
-          <svg class="icon icon--dir" aria-hidden="true" focusable="false">
-            <use href="#ArrowRight"/>
-          </svg>
-        </button>
+    <div class="demo-stage stack">
+      ${INTENTS.map(
+        (intent) => `
+        <div class="demo-label">Intent: ${intent}${intent === 'neutral' ? ' (default)' : ` (.button--${intent})`}</div>
+        <div class="cluster">
+          ${PROMINENCES.map(
+            (prominence) => `
+            <button type="button" class="${buttonClasses(prominence, intent)}">
+              ${INTENT_ICON[intent]}
+              <span>${prominence === 'default' ? 'Outline' : prominence[0].toUpperCase() + prominence.slice(1)}</span>
+            </button>`,
+          ).join('')}
+        </div>`,
+      ).join('<hr class="divider" />')}
+      <hr class="divider" />
+      <div class="demo-label">Placeholder (dashed, for "add" affordances)</div>
+      <div class="cluster">
+        <button type="button" class="button button--placeholder"><span>+ Add Item</span></button>
+      </div>
+    </div>
+  `,
+};
 
-        <button type="button" class="button button--icon">
-          <span class="visually-hidden">Search accessibility database</span>
-          <svg class="icon" aria-hidden="true" focusable="false">
-            <use href="#Search"/>
-          </svg>
+/**
+ * Resting, selected, disabled and aria-disabled. Hover, active and focus are
+ * exercised by interacting; the focus ring uses the tone colour on filled buttons.
+ */
+export const States: Story = {
+  render: () => `
+    <div class="demo-stage stack">
+      ${(['default', 'strong', 'subtle'] as Prominence[])
+        .map(
+          (prominence) => `
+        <div class="demo-label">${prominence === 'default' ? 'Outline' : prominence}</div>
+        <div class="cluster">
+          <button type="button" class="${buttonClasses(prominence, 'accent')}"><span>Resting</span></button>
+          <button type="button" class="${buttonClasses(prominence, 'accent')} is-active" aria-pressed="true"><span>Selected</span></button>
+          <button type="button" class="${buttonClasses(prominence, 'accent')}" disabled><span>Disabled</span></button>
+          <button type="button" class="${buttonClasses(prominence, 'accent')}" aria-disabled="true"><span>Aria Disabled</span></button>
+        </div>`,
+        )
+        .join('')}
+      <div class="demo-label">Link styled as a button</div>
+      <div class="cluster">
+        <a href="#" class="button" role="button"><span>Link Button</span></a>
+        <a href="#" class="button" role="button" aria-disabled="true"><span>Link Aria Disabled</span></a>
+      </div>
+    </div>
+  `,
+};
+
+/**
+ * Size axis. The dashed boxes mark the 48px hit area that small buttons keep.
+ */
+export const SizesAndTargets: Story = {
+  render: () => `
+    <div class="demo-stage stack">
+      <div class="demo-label">.button--sm (32px) · default (48px) · .button--lg (64px)</div>
+      <div class="cluster align-items-center">
+        <button type="button" class="button button--strong button--accent button--sm"><span>Small</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Default</span></button>
+        <button type="button" class="button button--strong button--accent button--lg"><span>Large</span></button>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="demo-label">Small icon buttons keep a 48px hit area (dashed outline shows it)</div>
+      <div class="cluster align-items-center">
+        ${['Search', 'Edit', 'Delete']
+          .map(
+            (icon) => `
+          <span style="display: inline-grid; place-items: center; inline-size: var(--spacing-target); block-size: var(--spacing-target); outline: 1px dashed var(--border-color-muted);">
+            <button type="button" class="button button--subtle button--icon button--sm">
+              <span class="visually-hidden">${icon}</span>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${icon}"/></svg>
+            </button>
+          </span>`,
+          )
+          .join('')}
+      </div>
+
+      <hr class="divider" />
+
+      <div class="demo-label">Fine-pointer opt-in (style="--spacing-target-min: var(--spacing-target-sm)"): hit area matches the 32px visual</div>
+      <div class="cluster align-items-center" style="--spacing-target-min: var(--spacing-target-sm);">
+        <button type="button" class="button button--sm"><span>Small</span></button>
+        <button type="button" class="button button--subtle button--icon button--sm">
+          <span class="visually-hidden">Search</span>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         </button>
       </div>
     </div>
@@ -289,154 +240,117 @@ export const Anatomy: Story = {
 };
 
 /**
- * 3. Variants & Hierarchy (Prominence × Tone Matrix)
- * Demonstrates orthogonal axes: Prominence (Default, Strong, Subtle, Plain) × Tone (Neutral, Accent, Destructive).
+ * Container flags. A parent sets the axis once; a modifier on an individual
+ * button still wins. A compact container steps buttons down to --sm.
  */
-export const Variants: Story = {
+export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="demo-label">1. Prominence Scale (Neutral Tone)</div>
-      <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
-        <button type="button" class="button">
-          <span>Default (Outline)</span>
-        </button>
-        <button type="button" class="button button--strong">
-          <span>button--strong</span>
-        </button>
-        <button type="button" class="button button--subtle">
-          <span>button--subtle</span>
-        </button>
-        <button type="button" class="button button--plain">
-          <span>button--plain</span>
-        </button>
-        <button type="button" class="button button--placeholder">
-          <span>+ Placeholder</span>
-        </button>
+    <div class="demo-stage stack">
+      <div class="demo-label">Parent: style="--button-prominence: subtle; --button-corners: round;"</div>
+      <nav class="cluster" style="--button-prominence: subtle; --button-corners: round;" aria-label="Demo navigation">
+        <a href="#" class="button is-active" aria-current="page"><span>Overview</span></a>
+        <a href="#" class="button"><span>Analytics</span></a>
+        <a href="#" class="button"><span>Reports</span></a>
+      </nav>
+
+      <div class="demo-label">Parent: style="--button-intent: danger;" (one child overrides with .button--strong)</div>
+      <div class="cluster" style="--button-intent: danger;">
+        <button type="button" class="button"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Remove</span></button>
+        <button type="button" class="button button--strong"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete All</span></button>
       </div>
 
-      <hr class="divider" />
-
-      <div class="demo-label">2. Tone / Intent (Standard Outline Weight)</div>
-      <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
-        <button type="button" class="button">
-          <span>Neutral Tone</span>
-        </button>
-        <button type="button" class="button button--accent">
-          <span>button--accent</span>
-        </button>
-        <button type="button" class="button button--danger">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
-          <span>button--danger</span>
-        </button>
+      <div class="demo-label">Parent: style="--ui-sizing: compact;" (density steps controls to --sm; --lg steps to default)</div>
+      <div class="cluster align-items-center" style="--ui-sizing: compact;">
+        <button type="button" class="button"><span>Cancel</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Save</span></button>
+        <button type="button" class="button button--lg"><span>Large</span></button>
       </div>
 
-      <hr class="divider" />
-
-      <div class="demo-label">3. High Prominence (Strong) Combinations</div>
-      <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
-        <button type="button" class="button button--strong button--accent">
-          <span>Strong + Accent (.button--strong button--accent)</span>
-        </button>
-        <button type="button" class="button button--strong button--danger">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
-          <span>Strong + Destructive</span>
-        </button>
-        <button type="button" class="button button--strong">
-          <span>Strong Neutral</span>
-        </button>
-      </div>
-
-      <hr class="divider" />
-
-      <div class="demo-label">4. Subtle & Plain Combinations</div>
-      <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
-        <button type="button" class="button button--subtle button--accent">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Check"/></svg>
-          <span>Subtle + Accent</span>
-        </button>
-        <button type="button" class="button button--subtle button--danger">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
-          <span>Subtle + Destructive</span>
-        </button>
-        <button type="button" class="button button--plain button--accent">
-          <span>Plain + Accent</span>
-        </button>
-        <button type="button" class="button button--plain button--danger">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
-          <span>Plain + Destructive</span>
-        </button>
+      <div class="demo-label">Group classes: .buttons-subtle .buttons-sm</div>
+      <div class="cluster buttons-subtle buttons-sm">
+        <button type="button" class="button"><span>Copy</span></button>
+        <button type="button" class="button"><span>Paste</span></button>
+        <button type="button" class="button button--danger"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete</span></button>
       </div>
     </div>
   `,
 };
 
 /**
- * 4. State Matrix
- * Side-by-side verification of Resting, Hover, Active, Focus-Visible, Native Disabled, and ARIA Disabled.
+ * Icon-only (minimal presentation), round shapes and avatar buttons.
  */
-export const StateMatrix: Story = {
+export const IconOnlyAndShapes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="demo-label">Interactive States (Resting, Active, Disabled, Aria-Disabled)</div>
-      <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
-        <!-- Resting -->
-        <button type="button" class="button button--strong button--accent">
-          <span>Resting</span>
-        </button>
-
-        <!-- Selected Toggle -->
-        <button type="button" class="button button--strong button--accent is-active">
-          <span>Selected / Active</span>
-        </button>
-
-        <!-- Native Disabled -->
-        <button type="button" class="button button--strong button--accent" disabled>
-          <span>Native Disabled</span>
-        </button>
-
-        <!-- Aria Disabled (Still focusable for screen readers) -->
-        <button type="button" class="button button--strong button--accent" aria-disabled="true">
-          <span>Aria Disabled</span>
-        </button>
-
-        <!-- Link Button Aria Disabled -->
-        <a href="#" class="button" aria-disabled="true" tabindex="-1" role="button">
-          <span>Link Aria Disabled</span>
-        </a>
-      </div>
+    <div class="demo-stage cluster align-items-center">
+      <button type="button" class="button button--icon">
+        <span class="visually-hidden">Search records</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+      </button>
+      <button type="button" class="button button--icon button--round button--subtle">
+        <span class="visually-hidden">Notifications</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+      </button>
+      <button type="button" class="button button--strong button--accent button--round">
+        <span>Get Started</span>
+        <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+      </button>
+      <button type="button" class="button button--avatar button--round" data-status="online" aria-label="Alex Morgan profile (online)">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="" width="40" height="40" />
+      </button>
     </div>
   `,
 };
 
 /**
- * 5. Sizes & Density (WCAG Target Compliance)
- * Small (32px, meets WCAG 2.5.8), Medium (48px, meets WCAG 2.5.5 AAA), and Large (56px).
+ * Native checkbox and radio inputs inside `<label class="button">`. Checked
+ * renders as strong, with no JavaScript.
  */
-export const SizesAndDensity: Story = {
+export const Toggles: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="cluster" style="display: flex; gap: var(--spacing-16); align-items: center; flex-wrap: wrap;">
-        <!-- Small -->
-        <div class="stack" style="align-items: center;">
-          <div class="demo-label">Small (.button--sm / 32px height)</div>
-          <button type="button" class="button button--strong button--accent button--sm">
-            <span>Small Action</span>
+    <div class="demo-stage cluster">
+      <label class="button">
+        <input type="checkbox" class="visually-hidden" />
+        <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <span>Notifications</span>
+      </label>
+      <fieldset class="cluster" style="border: 0; margin: 0; padding: 0;">
+        <legend class="visually-hidden">View</legend>
+        <label class="button">
+          <input type="radio" name="button-toggle-demo" class="visually-hidden" checked />
+          <span>Grid</span>
+          <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        </label>
+        <label class="button">
+          <input type="radio" name="button-toggle-demo" class="visually-hidden" />
+          <span>List</span>
+          <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        </label>
+      </fieldset>
+    </div>
+  `,
+};
+
+/**
+ * Labels collapse to icon-only in narrow containers (@max-md:hide-labels).
+ * Drag the container edge to resize.
+ */
+export const ContainerAdaptive: Story = {
+  render: () => `
+    <div class="demo-stage">
+      <div class="container-type-inline-size" style="resize: horizontal; overflow: auto; inline-size: 34rem; min-inline-size: 10rem; max-inline-size: 100%; padding: var(--spacing-default); outline: 1px dashed var(--border-color-muted);">
+        <div class="cluster @max-md:hide-labels">
+          <button type="button" class="button">
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+            <span class="button__text">Search</span>
           </button>
-        </div>
-
-        <!-- Medium (Default) -->
-        <div class="stack" style="align-items: center;">
-          <div class="demo-label">Standard (.button / 48px WCAG AAA)</div>
           <button type="button" class="button button--strong button--accent">
-            <span>Standard Action</span>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+            <span class="button__text">Create</span>
           </button>
-        </div>
-
-        <!-- Large -->
-        <div class="stack" style="align-items: center;">
-          <div class="demo-label">Large (.button--lg / 56px height)</div>
-          <button type="button" class="button button--strong button--accent button--lg">
-            <span>Large Action</span>
+          <button type="button" class="button button--subtle">
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+            <span class="button__text">Export</span>
           </button>
         </div>
       </div>
@@ -445,205 +359,30 @@ export const SizesAndDensity: Story = {
 };
 
 /**
- * 6. Icon Buttons, Round Shapes & Avatar Buttons
- * Icon-only with accessible hidden text, trailing/leading icons, rounded pills, and avatar actions.
+ * Light, dark and reversed surfaces. Reversed remaps the semantic roles, so
+ * the same markup stays legible with no changes.
  */
-export const IconButtonsAndShapes: Story = {
-  render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="cluster" style="display: flex; gap: var(--spacing-16); align-items: center; flex-wrap: wrap;">
-        <!-- Icon-only with .visually-hidden -->
-        <button type="button" class="button button--icon">
-          <span class="visually-hidden">Search records</span>
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-        </button>
-
-        <!-- Round Action Pill -->
-        <button type="button" class="button button--strong button--accent button--round">
-          <span>Rounded Pill</span>
-        </button>
-
-        <!-- Round Icon Button -->
-        <button type="button" class="button button--icon button--round">
-          <span class="visually-hidden">Notifications</span>
-          <svg class="icon" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
-        </button>
-
-        <!-- Avatar Button with Status -->
-        <button type="button" class="button button--avatar button--round" data-status="online" aria-label="Alex Morgan profile (online)">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="" width="40" height="40" style="object-fit: cover; border-radius: inherit;" />
-        </button>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 7. Button-Like Form Controls (Zero-JS Switches & Choices)
- * Native checkboxes and radio choices styled as buttons with zero JavaScript overhead.
- */
-export const ButtonLikeFormSwitches: Story = {
-  render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="demo-label">Zero-JS Checkbox Switch & Radio Choices</div>
-      <div class="cluster" style="display: flex; gap: var(--spacing-12); flex-wrap: wrap;">
-        <!-- Checkbox switch with icon transition -->
-        <label class="button">
-          <input type="checkbox" class="visually-hidden" />
-          <svg class="icon icon--off" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-          <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-          <span>Toggle Switch</span>
-        </label>
-
-        <!-- Segmented choice radio buttons -->
-        <label class="button">
-          <input type="radio" name="choice-demo-btn" class="visually-hidden" checked />
-          <span>Option A</span>
-          <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-        </label>
-        <label class="button">
-          <input type="radio" name="choice-demo-btn" class="visually-hidden" />
-          <span>Option B</span>
-          <svg class="icon icon--on" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-        </label>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 8. Zero-Class Container Style Queries (@container style(...))
- * Demonstrating parent container orchestration for button variations, shapes, and density without utility classes.
- */
-export const ZeroClassOrchestration: Story = {
-  render: () => `
-    <div class="stack demo-constrained--md">
-      <!-- Subtle & Round Navigation -->
-      <div class="demo-label">Parent: style="--button-variation: subtle; --button-corners: round;"</div>
-      <div class="demo-stage" style="--button-variation: subtle; --button-corners: round;">
-        <nav class="cluster" style="display: flex; gap: var(--spacing-8); align-items: center;" aria-label="Demo Navigation">
-          <button type="button" class="button"><span>Overview</span></button>
-          <button type="button" class="button"><span>Analytics</span></button>
-          <button type="button" class="button"><span>Reports</span></button>
-          <button type="button" class="button"><span>Settings</span></button>
-        </nav>
-      </div>
-
-      <!-- Dense Action Toolbar -->
-      <div class="demo-label">Parent: style="--ui-density: dense;"</div>
-      <div class="demo-stage" style="--ui-density: dense;">
-        <div class="cluster" style="display: flex; gap: var(--spacing-8); align-items: center;">
-          <button type="button" class="button"><span>Cancel</span></button>
-          <button type="button" class="button button--strong button--accent"><span>Save Changes</span></button>
+export const Surfaces: Story = {
+  render: () => {
+    const row = PROMINENCES.map(
+      (prominence) =>
+        `<button type="button" class="${buttonClasses(prominence, 'accent')}"><span>${prominence === 'default' ? 'Outline' : prominence}</span></button>`,
+    ).join('');
+    return `
+      <div class="stack">
+        <div class="demo-stage stack" style="color-scheme: light; background: var(--surface); color: var(--foreground);">
+          <div class="demo-label">Light</div>
+          <div class="cluster">${row}</div>
+        </div>
+        <div class="demo-stage stack" style="color-scheme: dark; background: var(--surface); color: var(--foreground);">
+          <div class="demo-label">Dark</div>
+          <div class="cluster">${row}</div>
+        </div>
+        <div class="demo-stage stack color-palette-inverted" style="background: var(--surface); color: var(--foreground);">
+          <div class="demo-label">Reversed (.color-palette-inverted)</div>
+          <div class="cluster">${row}</div>
         </div>
       </div>
-    </div>
-  `,
-};
-
-/**
- * 9. Responsive Adaptive Container Queries
- * Toolbar buttons that automatically collapse into icon-only buttons as container inline width shrinks.
- */
-export const ResponsiveAdaptive: Story = {
-  render: () => `
-    <div class="stack demo-constrained--lg">
-      <div class="card card--bordered">
-        <article class="card__content">
-          <header class="card__header">
-            <h3 class="card__title subheading">Interactive Responsive Toolbar</h3>
-            <p class="card__subtitle">Drag the resize handle on the container below to see buttons collapse labels below 768px</p>
-          </header>
-          <div class="card__body">
-            <div 
-              class="container-type-inline-size"
-              style="
-                resize: horizontal; 
-                overflow: auto; 
-                border: 2px dashed var(--border-color-accent, #008076); 
-                padding: var(--spacing-16); 
-                border-radius: var(--radius, 0.25rem); 
-                background-color: var(--surface-muted);
-                max-inline-size: 100%; 
-                min-inline-size: 12rem; 
-                inline-size: 34rem;
-              "
-            >
-              <div class="cluster align-items-center justify-content-between" style="display: flex; justify-content: space-between; align-items: center;">
-                <strong>Toolbar Actions</strong>
-                <div class="cluster align-items-center @max-md:hide-labels" style="display: flex; gap: var(--spacing-8); align-items: center;">
-                  <button type="button" class="button" aria-label="Search documentation">
-                    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-                    <span class="button__text">Search</span>
-                  </button>
-                  <button type="button" class="button button--strong button--accent" aria-label="Create component">
-                    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-                    <span class="button__text">Create</span>
-                  </button>
-                  <button type="button" class="button button--subtle" aria-label="Export file">
-                    <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-                    <span class="button__text">Export</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 10. Real-World Recipes & UI Compositions
- * Common production patterns: Dialog footer action bar & Card header action cluster.
- */
-export const RealWorldRecipes: Story = {
-  render: () => `
-    <div class="stack demo-constrained--lg">
-      <!-- Recipe A: Modal Dialog Action Bar -->
-      <div class="card card--bordered">
-        <article class="card__content">
-          <header class="card__header">
-            <h3 class="card__title heading">Publish Verification Report</h3>
-            <p class="card__subtitle">Ready to publish WCAG 2.2 Level AA compliance findings?</p>
-          </header>
-          <div class="card__body">
-            <p>Publishing will notify 14 subscribed team members and generate an immutable audit manifest.</p>
-          </div>
-          <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
-            <button type="button" class="button button--subtle">
-              <span>Discard</span>
-            </button>
-            <button type="button" class="button">
-              <span>Save as Draft</span>
-            </button>
-            <button type="button" class="button button--strong button--accent">
-              <span>Publish Report</span>
-              <svg class="icon icon--dir" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
-            </button>
-          </footer>
-        </article>
-      </div>
-
-      <!-- Recipe B: Destructive Confirmation Action Bar -->
-      <div class="card card--bordered card--translucent">
-        <article class="card__content">
-          <header class="card__header">
-            <h3 class="card__title heading" style="color: var(--foreground-danger);">Permanently Delete Project</h3>
-            <p class="card__subtitle">This action cannot be undone. All audit runs and history will be deleted.</p>
-          </header>
-          <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
-            <button type="button" class="button button--subtle">
-              <span>Cancel</span>
-            </button>
-            <button type="button" class="button button--danger">
-              <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Delete"/></svg>
-              <span>Delete Permanently</span>
-            </button>
-          </footer>
-        </article>
-      </div>
-    </div>
-  `,
+    `;
+  },
 };

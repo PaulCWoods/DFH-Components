@@ -78,9 +78,9 @@
 }
 
 /* --------------------------------------------------------------------------
-   Container Density Mode (--ui-sizing: compact / --control-density: dense)
+   Container Density Mode (--ui-sizing: compact)
    -------------------------------------------------------------------------- */
-@container style(--ui-sizing: compact) or style(--control-density: dense) {
+@container style(--ui-sizing: compact) {
   :where(.navigation-tree, .nav-tree) {
     --_nav-tree-gap: var(--spacing-2, 0.125rem);
     --_nav-tree-indent: var(--spacing-8, 0.5rem);

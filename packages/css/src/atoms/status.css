@@ -1,0 +1,265 @@
+/* ==========================================================================
+   Design For Humans: Status Primitive
+   --------------------------------------------------------------------------
+   The state of a thing ("Passed", "Live", "2 Overdue"): text with an
+   optional dot or icon, in tables, lists, cards and headers. Not for counts
+   attached to a host: use .badge. Not for values or tags: use .chip.
+
+   | Axis       | Modifiers                                         | Container flag      |
+   | ---------- | ------------------------------------------------- | ------------------- |
+   | Prominence | (outline pill) --strong --subtle --plain           | --status-prominence |
+   | Intent     | (neutral) --accent --danger --warning --success --info | --status-intent |
+   | Size       | --sm                                              | --status-size       |
+   | Density    | (none: --ui-sizing: compact steps to sm)           |                     |
+   | Corners    | --round                                           | --status-corners    |
+
+   Intent sets a tone (foreground role) and a tint (surface role);
+   prominence decides where they go. --plain renders a dot and text with no
+   surface; the dot is replaced by an icon when one is present.
+
+   Accessibility:
+   - 1.4.1 Use of Color: the text carries the state. A status with no text
+     (dot only) is valid only next to text that says the same thing; give it
+     aria-hidden="true".
+   - Presence (online, away, busy) belongs to avatar's data-status, not here.
+
+   Usage:
+   <span class="status status--success"><span class="status__text">Passed</span></span>
+   <span class="status status--plain status--danger"><span class="status__text">Failed</span></span>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Status (:where(.status))
+   ========================================================================== */
+:where(.status) {
+  /* --------------------------------------------------------------------------
+     Tone (Neutral Intent)
+     -------------------------------------------------------------------------- */
+  --_status-tone: var(--status-color, var(--foreground, CanvasText));
+  --_status-tint: var(--status-tint, var(--surface-translucent-strong, Canvas));
+  --_status-tone-border: var(--status-color-border, var(--border-color-muted, currentColor));
+  --_status-on-tone: var(--status-on-color, var(--foreground-inverted-strong, Canvas));
+
+  /* --------------------------------------------------------------------------
+     Prominence: Default (Outline Pill)
+     -------------------------------------------------------------------------- */
+  --_status-translucency: var(--status-translucency, 33%);
+  --_status-bg: color-mix(in oklch, var(--_status-tint), transparent var(--_status-translucency));
+  --_status-text: var(--_status-tone);
+  --_status-border-color: var(--_status-tone-border);
+  --_status-dot: none;
+
+  /* --------------------------------------------------------------------------
+     Geometry (Tier 3 tokens, terminating in literal fallbacks)
+     -------------------------------------------------------------------------- */
+  --_status-font-size: var(--status-font-size, 0.875rem);
+  --_status-font-weight: var(--status-font-weight, 700);
+  --_status-text-transform: var(--status-text-transform, none);
+  --_status-padding-block: var(--status-padding-block, 0.125rem);
+  --_status-padding-inline: var(--status-padding-inline, 0.5rem);
+  --_status-gap: var(--status-gap, 0.25rem);
+  --_status-radius: var(--status-radius, 0.125rem);
+  --_status-border-width: var(--status-border-width, 1px);
+  --_status-dot-size: var(--status-dot-size, 0.5rem);
+
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifier classes, so a modifier on the status beats
+     a flag inherited from a container.
+     ------------------------------------------------------------------------ */
+
+  /* Intent */
+  @container style(--status-intent: accent) {
+    --_status-tone: var(--status-color, var(--foreground-accent, CanvasText));
+    --_status-tint: var(--status-tint, var(--surface-accent, Canvas));
+    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  }
+
+  @container style(--status-intent: info) {
+    --_status-tone: var(--status-color, var(--foreground-info, CanvasText));
+    --_status-tint: var(--status-tint, var(--surface-info, Canvas));
+    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  }
+
+  @container style(--status-intent: danger) {
+    --_status-tone: var(--status-color, var(--foreground-danger, CanvasText));
+    --_status-tint: var(--status-tint, var(--surface-danger, Canvas));
+    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  }
+
+  @container style(--status-intent: warning) {
+    --_status-tone: var(--status-color, var(--foreground-warning, CanvasText));
+    --_status-tint: var(--status-tint, var(--surface-warning, Canvas));
+    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  }
+
+  @container style(--status-intent: success) {
+    --_status-tone: var(--status-color, var(--foreground-success, CanvasText));
+    --_status-tint: var(--status-tint, var(--surface-success, Canvas));
+    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  }
+
+  /* Prominence */
+  @container style(--status-prominence: strong) {
+    --_status-bg: var(--_status-tone);
+    --_status-text: var(--_status-on-tone);
+    --_status-border-color: var(--_status-tone);
+  }
+
+  @container style(--status-prominence: subtle) {
+    --_status-border-color: transparent;
+  }
+
+  @container style(--status-prominence: plain) {
+    --_status-bg: transparent;
+    --_status-border-color: transparent;
+    --_status-padding-inline: 0;
+    --_status-dot: "";
+  }
+
+  /* Size */
+  @container style(--status-size: sm) or style(--ui-sizing: compact) {
+    --_status-font-size: var(--status-sm-font-size, 0.75rem);
+    --_status-padding-block: var(--status-sm-padding-block, 0.125rem);
+    --_status-padding-inline: var(--status-sm-padding-inline, 0.25rem);
+  }
+
+  /* Corners */
+  @container style(--status-corners: round) {
+    --_status-radius: var(--radius-round, 9999px);
+  }
+
+  /* Layout & Display */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_status-gap);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding-block: var(--_status-padding-block);
+  padding-inline: var(--_status-padding-inline);
+  vertical-align: middle;
+  white-space: nowrap;
+
+  /* Typography */
+  font-size: var(--_status-font-size);
+  font-weight: var(--_status-font-weight);
+  line-height: 1.25;
+  text-transform: var(--_status-text-transform);
+
+  /* Surface */
+  border: var(--_status-border-width) solid var(--_status-border-color);
+  border-radius: var(--_status-radius);
+  background-color: var(--_status-bg);
+  color: var(--_status-text);
+
+  --icon-size: 1em;
+
+  /* Indicator dot (plain prominence). An icon replaces it. */
+  &::before {
+    content: var(--_status-dot);
+    flex-shrink: 0;
+    inline-size: var(--_status-dot-size);
+    block-size: var(--_status-dot-size);
+    border-radius: var(--radius-round, 9999px);
+    background-color: currentColor;
+
+    @media (forced-colors: active) {
+      forced-color-adjust: none;
+      background-color: CanvasText;
+    }
+  }
+
+  &:has(> .icon)::before {
+    content: none;
+  }
+
+  /* An empty status is a bare dot. */
+  &:empty {
+    padding: 0;
+    gap: 0;
+  }
+
+  @media (prefers-contrast: more) {
+    border-width: calc(var(--_status-border-width) * 2);
+  }
+}
+
+:where(.status__text) {
+  text-box: trim-both cap alphabetic;
+}
+
+/* ==========================================================================
+   2. Intent Modifiers
+   ========================================================================== */
+:where(.status--accent) {
+  --_status-tone: var(--status-color, var(--foreground-accent, CanvasText));
+  --_status-tint: var(--status-tint, var(--surface-accent, Canvas));
+  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+}
+
+:where(.status--info) {
+  --_status-tone: var(--status-color, var(--foreground-info, CanvasText));
+  --_status-tint: var(--status-tint, var(--surface-info, Canvas));
+  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+}
+
+:where(.status--danger) {
+  --_status-tone: var(--status-color, var(--foreground-danger, CanvasText));
+  --_status-tint: var(--status-tint, var(--surface-danger, Canvas));
+  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+}
+
+:where(.status--warning) {
+  --_status-tone: var(--status-color, var(--foreground-warning, CanvasText));
+  --_status-tint: var(--status-tint, var(--surface-warning, Canvas));
+  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+}
+
+:where(.status--success) {
+  --_status-tone: var(--status-color, var(--foreground-success, CanvasText));
+  --_status-tint: var(--status-tint, var(--surface-success, Canvas));
+  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+}
+
+/* ==========================================================================
+   3. Prominence Modifiers
+   Each resets everything the others set, so the last class wins cleanly.
+   ========================================================================== */
+:where(.status--subtle) {
+  --_status-bg: color-mix(in oklch, var(--_status-tint), transparent var(--_status-translucency));
+  --_status-text: var(--_status-tone);
+  --_status-border-color: transparent;
+  --_status-dot: none;
+}
+
+:where(.status--plain) {
+  --_status-bg: transparent;
+  --_status-text: var(--_status-tone);
+  --_status-border-color: transparent;
+  --_status-padding-inline: 0;
+  --_status-dot: "";
+}
+
+:where(.status--strong) {
+  --_status-bg: var(--_status-tone);
+  --_status-text: var(--_status-on-tone);
+  --_status-border-color: var(--_status-tone);
+  --_status-dot: none;
+}
+
+/* ==========================================================================
+   4. Size & Corner Modifiers
+   ========================================================================== */
+:where(.status--sm) {
+  --_status-font-size: var(--status-sm-font-size, 0.75rem);
+  --_status-padding-block: var(--status-sm-padding-block, 0.125rem);
+  --_status-padding-inline: var(--status-sm-padding-inline, 0.25rem);
+}
+
+:where(.status--plain.status--sm) {
+  --_status-padding-inline: 0;
+}
+
+:where(.status--round) {
+  --_status-radius: var(--radius-round, 9999px);
+}

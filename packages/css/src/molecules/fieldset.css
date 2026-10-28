@@ -78,7 +78,7 @@
     content: " (Required)";
     font-weight: var(--font-weight-regular, 400);
     margin-inline-start: var(--spacing-8, 0.5rem);
-    font-size: var(--micro-text-font-size, 0.875em);
+    font-size: var(--body-sm-font-size, 0.875em);
     color: var(--foreground-muted, currentColor);
   }
 }
@@ -97,7 +97,7 @@
   --_legend-color: var(--legend-color, var(--foreground, currentColor));
 
   /* Container Style Queries */
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) or style(--control-density: dense) {
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
     --_legend-font-size: var(--label-compact-font-size, var(--typography-font-size--1, 0.875rem));
   }
 

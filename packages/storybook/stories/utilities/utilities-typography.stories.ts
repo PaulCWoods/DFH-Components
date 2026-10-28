@@ -166,37 +166,37 @@ export const TypeScaleLadder: Story = {
 
       <div class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
-          <span class="font-size-xs color-muted font-weight-bold">.font-size-xs (Step -2 / 0.75rem / 12px)</span>
+          <span class="font-size-xs text-muted font-weight-bold">.font-size-xs (Step -2 / 0.75rem / 12px)</span>
           <span class="font-size-xs">The quick brown fox jumps over the lazy dog.</span>
         </div>
         <hr class="divider" />
 
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
-          <span class="font-size-xs color-muted font-weight-bold">.font-size-sm (Step -1 / 0.875rem / 14px)</span>
+          <span class="font-size-xs text-muted font-weight-bold">.font-size-sm (Step -1 / 0.875rem / 14px)</span>
           <span class="font-size-sm">The quick brown fox jumps over the lazy dog.</span>
         </div>
         <hr class="divider" />
 
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
-          <span class="font-size-xs color-muted font-weight-bold">.font-size-base (Step 0 / 1rem / 16px)</span>
+          <span class="font-size-xs text-muted font-weight-bold">.font-size-base (Step 0 / 1rem / 16px)</span>
           <span class="font-size-base">The quick brown fox jumps over the lazy dog.</span>
         </div>
         <hr class="divider" />
 
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
-          <span class="font-size-xs color-muted font-weight-bold">.font-size-lg (Step 1 / 1.25rem / 20px)</span>
+          <span class="font-size-xs text-muted font-weight-bold">.font-size-lg (Step 1 / 1.25rem / 20px)</span>
           <span class="font-size-lg font-weight-medium">The quick brown fox jumps over the lazy dog.</span>
         </div>
         <hr class="divider" />
 
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
-          <span class="font-size-xs color-muted font-weight-bold">.font-size-xl (Step 2 / 1.5rem / 24px)</span>
+          <span class="font-size-xs text-muted font-weight-bold">.font-size-xl (Step 2 / 1.5rem / 24px)</span>
           <span class="font-size-xl font-weight-semibold">The quick brown fox jumps over the lazy dog.</span>
         </div>
         <hr class="divider" />
 
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
-          <span class="font-size-xs color-muted font-weight-bold">.font-size-2xl (Step 3 / 1.75rem+ / 28px+)</span>
+          <span class="font-size-xs text-muted font-weight-bold">.font-size-2xl (Step 3 / 1.75rem+ / 28px+)</span>
           <span class="font-size-2xl font-weight-bold">The quick brown fox jumps over the lazy dog.</span>
         </div>
       </div>
@@ -220,22 +220,22 @@ export const ModernTextWrapping: Story = {
       <div class="grid grid--sm">
         <!-- text-wrap: balance -->
         <div class="card card--bordered padding stack" style="--gap: var(--spacing-12);">
-          <span class="badge badge--accent font-size-xs">.text-wrap-balance (Headlines)</span>
+          <span class="sb-demo-tag font-size-xs">.text-wrap-balance (Headlines)</span>
           <h4 class="font-size-lg font-weight-bold text-wrap-balance" style="max-inline-size: 20rem;">
             Ensuring Consistent Multi-Line Headline Balance Across Devices
           </h4>
-          <p class="font-size-xs color-muted">
+          <p class="font-size-xs text-muted">
             The browser calculates line lengths to produce visually balanced line breaks, preventing a single orphan word on the last line.
           </p>
         </div>
 
         <!-- text-wrap: pretty -->
         <div class="card card--bordered padding stack" style="--gap: var(--spacing-12);">
-          <span class="badge badge--success font-size-xs">.text-wrap-pretty (Body Paragraphs)</span>
+          <span class="sb-demo-tag font-size-xs">.text-wrap-pretty (Body Paragraphs)</span>
           <p class="font-size-sm text-wrap-pretty" style="max-inline-size: 20rem;">
             When rendering longer paragraph copy, text-wrap: pretty optimizes the trailing rag to avoid orphans on the final line without slowing down initial layout passes.
           </p>
-          <p class="font-size-xs color-muted">
+          <p class="font-size-xs text-muted">
             Optimized for fast paragraph rendering and clean editorial typography.
           </p>
         </div>
@@ -288,11 +288,11 @@ export const DensityModes: Story = {
         <div class="card card--bordered font-sizing-fixed padding">
           <article class="card__content stack" style="--gap: var(--spacing-8);">
             <div class="inline" style="justify-content: space-between;">
-              <span class="badge badge--accent badge--sm">.font-sizing-fixed</span>
-              <span class="font-size-xs color-muted">Dashboard</span>
+              <span class="sb-demo-tag">.font-sizing-fixed</span>
+              <span class="font-size-xs text-muted">Dashboard</span>
             </div>
             <h4 class="card__title font-size-sm font-weight-bold">Dense Fixed Typography</h4>
-            <p class="font-size-xs color-muted">
+            <p class="font-size-xs text-muted">
               Headings and text lock to exact fixed pixel steps, perfect for dense analytics tables and toolbars.
             </p>
           </article>
@@ -302,11 +302,11 @@ export const DensityModes: Story = {
         <div class="card card--bordered font-sizing-fluid padding">
           <article class="card__content stack" style="--gap: var(--spacing-8);">
             <div class="inline" style="justify-content: space-between;">
-              <span class="badge badge--success badge--sm">.font-sizing-fluid</span>
-              <span class="font-size-xs color-muted">Editorial</span>
+              <span class="sb-demo-tag">.font-sizing-fluid</span>
+              <span class="font-size-xs text-muted">Editorial</span>
             </div>
             <h4 class="card__title font-size-sm font-weight-bold">Fluid Reading Typography</h4>
-            <p class="font-size-xs color-muted">
+            <p class="font-size-xs text-muted">
               Font sizes scale smoothly with viewport width clamps for optimal long-form reading comfort.
             </p>
           </article>

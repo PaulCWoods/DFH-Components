@@ -38,7 +38,7 @@ Designed for high-density audio consoles, operational telemetry bars, and analyt
 \`\`\`html
 <!-- 1. Standard Telemetry Metric Pill -->
 <div class="telemetry">
-  <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
   <div class="telemetry__content">
     <span class="telemetry__label">Listeners</span>
     <strong class="telemetry__value">14,820</strong>
@@ -52,7 +52,7 @@ Designed for high-density audio consoles, operational telemetry bars, and analyt
     <strong class="telemetry__value">42<span class="telemetry__unit">ms</span></strong>
   </div>
   <span class="telemetry__trend" data-trend="positive" aria-label="Improved by 4 milliseconds">
-    <svg class="icon font-size-xs" aria-hidden="true"><use href="#ArrowDown"/></svg>
+    <svg class="icon font-size-xs" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowDown"/></svg>
     -4ms
   </span>
 </div>
@@ -75,7 +75,7 @@ Designed for high-density audio consoles, operational telemetry bars, and analyt
 
 <!-- 4. Dashboard KPI Stat Card (.telemetry--card .telemetry--stacked) -->
 <div class="telemetry telemetry--card telemetry--stacked">
-  <svg class="telemetry__icon icon" aria-hidden="true"><use href="#TrendUp"/></svg>
+  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg>
   <div class="telemetry__content">
     <span class="telemetry__label">Monthly Recurring Revenue</span>
     <strong class="telemetry__value">$48,290</strong>
@@ -162,7 +162,7 @@ export const Playground: Story = {
     return `
       <div style="padding: 2rem; display: flex; justify-content: center; align-items: center; background-color: var(--surface);">
         <div class="${classes}" ${statusAttr}>
-          ${hasIcon ? `<svg class="telemetry__icon icon" aria-hidden="true"><use href="#${args.icon}"/></svg>` : ''}
+          ${hasIcon ? `<svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${args.icon}"/></svg>` : ''}
           <div class="telemetry__content">
             <span class="telemetry__label">${args.label}</span>
             <strong class="telemetry__value">${args.value}${args.unit ? `<span class="telemetry__unit">${args.unit}</span>` : ''}</strong>
@@ -189,7 +189,7 @@ export const QuickMetricsStrip: Story = {
         
         <!-- Active Listeners -->
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#User"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Listeners</span>
             <strong class="telemetry__value">14,820</strong>
@@ -198,7 +198,7 @@ export const QuickMetricsStrip: Story = {
 
         <!-- Peak Today -->
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Progress"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Peak</span>
             <strong class="telemetry__value">28,450</strong>
@@ -207,7 +207,7 @@ export const QuickMetricsStrip: Story = {
 
         <!-- Broadcast Uptime -->
         <div class="telemetry" data-status="online">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Circle"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Circle"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Uptime</span>
             <strong class="telemetry__value">99.98%</strong>
@@ -216,7 +216,7 @@ export const QuickMetricsStrip: Story = {
 
         <!-- Buffer Latency with Unit -->
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Settings"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Latency</span>
             <strong class="telemetry__value">42<span class="telemetry__unit">ms</span></strong>
@@ -238,7 +238,7 @@ export const RuledTelemetryStrip: Story = {
       <div class="telemetry-strip telemetry-strip--ruled" role="region" aria-label="Server health telemetry">
         
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Progress"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">CPU Load</span>
             <strong class="telemetry__value">18.4%</strong>
@@ -246,7 +246,7 @@ export const RuledTelemetryStrip: Story = {
         </div>
 
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Upload"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Upload"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Memory</span>
             <strong class="telemetry__value">4.2<span class="telemetry__unit">GB</span></strong>
@@ -254,7 +254,7 @@ export const RuledTelemetryStrip: Story = {
         </div>
 
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#ArrowDown"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowDown"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Network In</span>
             <strong class="telemetry__value">142<span class="telemetry__unit">MB/s</span></strong>
@@ -262,7 +262,7 @@ export const RuledTelemetryStrip: Story = {
         </div>
 
         <div class="telemetry">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#ArrowUp"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Network Out</span>
             <strong class="telemetry__value">318<span class="telemetry__unit">MB/s</span></strong>
@@ -276,7 +276,7 @@ export const RuledTelemetryStrip: Story = {
 
 /**
  * 4. Semantic Definition List Semantics
- * Accessible key-value pairs using HTML5 <dl>, <dt>, and <dd>.
+ * Accessible key-value pairs using HTML5 `<dl>`, `<dt>`, and `<dd>`.
  */
 export const DefinitionListSemantics: Story = {
   render: () => `
@@ -285,7 +285,7 @@ export const DefinitionListSemantics: Story = {
         
         <div class="telemetry telemetry--pill">
           <dt class="telemetry__label">
-            <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Check"/></svg>
+            <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             Codec
           </dt>
           <dd class="telemetry__value">AAC-LC</dd>
@@ -349,7 +349,7 @@ export const WithTrendsAndStatuses: Story = {
       <!-- Semantic status ring variations -->
       <div class="telemetry-group">
         <div class="telemetry" data-status="online">
-          <span class="status" data-status="online"></span>
+          <span class="status status--success status--plain"></span>
           <div class="telemetry__content">
             <span class="telemetry__label">Primary Transcoder</span>
             <strong class="telemetry__value">Healthy</strong>
@@ -357,7 +357,7 @@ export const WithTrendsAndStatuses: Story = {
         </div>
 
         <div class="telemetry" data-status="warning">
-          <span class="status" data-status="away"></span>
+          <span class="status status--warning status--plain"></span>
           <div class="telemetry__content">
             <span class="telemetry__label">Secondary Sync</span>
             <strong class="telemetry__value">Syncing</strong>
@@ -365,7 +365,7 @@ export const WithTrendsAndStatuses: Story = {
         </div>
 
         <div class="telemetry" data-status="offline">
-          <span class="status" data-status="busy"></span>
+          <span class="status status--danger status--plain"></span>
           <div class="telemetry__content">
             <span class="telemetry__label">Tertiary Cart</span>
             <strong class="telemetry__value">Offline</strong>
@@ -387,7 +387,7 @@ export const CardMetricsDashboard: Story = {
       <div class="grid grid--3-col" style="--grid-gap: var(--spacing-16);">
         
         <div class="telemetry telemetry--card telemetry--stacked">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Progress"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Total Listen Hours</span>
             <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">128,450<span class="telemetry__unit">hrs</span></strong>
@@ -398,7 +398,7 @@ export const CardMetricsDashboard: Story = {
         </div>
 
         <div class="telemetry telemetry--card telemetry--stacked">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#Record"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Record"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">Avg Session Duration</span>
             <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">48.2<span class="telemetry__unit">mins</span></strong>
@@ -409,7 +409,7 @@ export const CardMetricsDashboard: Story = {
         </div>
 
         <div class="telemetry telemetry--card telemetry--stacked">
-          <svg class="telemetry__icon icon" aria-hidden="true"><use href="#ArrowUp"/></svg>
+          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
           <div class="telemetry__content">
             <span class="telemetry__label">CDN Bandwidth</span>
             <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">14.8<span class="telemetry__unit">TB</span></strong>

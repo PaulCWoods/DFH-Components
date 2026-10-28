@@ -1,12 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
+type Prominence = 'default' | 'subtle' | 'plain';
+
 interface ChipArgs {
   label: string;
-  variant: 'default' | 'plain';
-  size: 'default' | 'sm';
-  dismissible: boolean;
-  status?: 'online' | 'away' | 'busy' | 'none';
+  prominence: Prominence;
+  small: boolean;
+  round: boolean;
+  removable: boolean;
 }
+
+const PROMINENCES: Prominence[] = ['default', 'subtle', 'plain'];
+const TAGS = ['TypeScript', 'Design Tokens', 'WCAG 2.2', 'CSS'];
+
+const chipClasses = (prominence: Prominence, small = false, round = false) =>
+  ['chip', prominence !== 'default' ? `chip--${prominence}` : '', small ? 'chip--sm' : '', round ? 'chip--round' : '']
+    .filter(Boolean)
+    .join(' ');
+
+const chip = (label: string, classes: string, removable = false) =>
+  removable
+    ? `<span class="${classes}">
+        <span class="chip__text">${label}</span>
+        <button type="button" class="chip__remove" aria-label="Remove ${label}">
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        </button>
+      </span>`
+    : `<span class="${classes}"><span class="chip__text">${label}</span></span>`;
 
 const meta: Meta<ChipArgs> = {
   title: 'Atoms/Chip',
@@ -15,187 +35,101 @@ const meta: Meta<ChipArgs> = {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Chip & Live Status Primitives
+### Chip
 
-The **Chip & Status** primitives provide accessible metadata tags, removable filter chips, and live presence dots (\`.status\`).
-Designed to comply with **WCAG 2.2 Level AA / AAA** standards:
-- **1.4.3 Contrast (Minimum):** High contrast status colors and readable metadata copy.
-- **2.5.8 Target Size:** Dismiss triggers inside chips provide sufficient clickable area with clear focus rings.
-- **Semantic Separation:** Chips are dedicated tags and removable filter elements; unlike badges, chips stay simple without \`--strong\` or \`--subtle\` variants.
-- **Plain Modifier:** \`.chip--plain\` (with backward-compatible alias \`.chip--simple\`) removes padding and background for clean, unboxed text tags.
+A token that **represents a value**: a selected option in a combobox, an active filter, a category or tag. It can be removable.
 
----
+- State ("Passed") is a **Status**.
+- A count is a **Badge**.
 
-#### 1. Canonical Semantic Markup Signatures
+| Axis | Modifiers | Container flag |
+| :--- | :--- | :--- |
+| Prominence | default (outline), \`--subtle\`, \`--plain\` | \`--chip-prominence\` |
+| Size | default, \`--sm\` | \`--chip-size\` |
+| Density | none on the chip; a compact container steps it to \`--sm\` | \`--ui-sizing: compact\` |
+| Corners | \`--round\` | \`--chip-corners\` |
+| Intent | none: a chip is a value, not a state | |
+
 \`\`\`html
-<!-- 1. Standard Padded Tag Chip -->
-<span class="chip"><span>TypeScript</span></span>
+<span class="chip"><span class="chip__text">TypeScript</span></span>
 
-<!-- 2. Dismissible Chip (Combobox / Active Filters) -->
-<span class="chip">
-  <span>Design Systems</span>
-  <button type="button" class="chip__remove" aria-label="Remove Design Systems tag">
-    <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
+<span class="chip chip--subtle">
+  <span class="chip__text">TypeScript</span>
+  <button type="button" class="chip__remove" aria-label="Remove TypeScript">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
   </button>
 </span>
-
-<!-- 3. Plain Tag Chip (.chip--plain) -->
-<span class="chip chip--plain">Lesson 04</span>
-<span class="chip chip--plain chip--status" data-status="online">Online</span>
-
-<!-- 4. Standalone Live Status Indicator (.status) -->
-<span class="status" data-status="online">System Operational</span>
-<span class="status" data-status="away">Idle</span>
-<span class="status" data-status="busy">Do Not Disturb</span>
 \`\`\`
+
+#### Accessibility (removable chips)
+- \`.chip__remove\` is a real \`<button>\`, named for its value ("Remove TypeScript").
+- Its hit area is at least 24px (WCAG 2.5.8), extended invisibly through \`::after\`.
+- After removal, move focus to the next chip or back to the input that created it. Never leave focus on \`<body>\`.
 `,
       },
     },
   },
-  args: {
-    label: 'TypeScript',
-    variant: 'default',
-    size: 'default',
-    dismissible: false,
-    status: 'none',
-  },
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['default', 'plain'],
-      description: 'Chip visual format (padded background vs unboxed text)',
-    },
-    size: {
-      control: 'select',
-      options: ['default', 'sm'],
-      description: 'Chip sizing tier',
-    },
-    dismissible: {
-      control: 'boolean',
-      description: 'Whether chip contains a remove trigger button',
-    },
-    status: {
-      control: 'select',
-      options: ['none', 'online', 'away', 'busy'],
-      description: 'Live presence status indicator dot',
-    },
+    label: { control: 'text', description: 'Value' },
+    prominence: { control: 'select', options: PROMINENCES, description: 'Prominence axis' },
+    small: { control: 'boolean', description: 'Size: --sm' },
+    round: { control: 'boolean', description: 'Corners: --round' },
+    removable: { control: 'boolean', description: 'Adds a .chip__remove button' },
   },
+  render: (args) =>
+    `<div class="demo-stage">${chip(args.label, chipClasses(args.prominence, args.small, args.round), args.removable)}</div>`,
 };
 
 export default meta;
 type Story = StoryObj<ChipArgs>;
 
 /**
- * 1. Playground
+ * Interactive sandbox for every axis.
  */
 export const Playground: Story = {
-  render: (args) => {
-    const variantClass = args.variant === 'plain' ? 'chip--plain' : '';
-    const sizeClass = args.size === 'sm' ? 'chip--sm' : '';
-    const statusClass = args.status && args.status !== 'none' ? 'chip--status' : '';
-    const statusAttr = args.status && args.status !== 'none' ? `data-status="${args.status}"` : '';
-
-    const classes = ['chip', variantClass, sizeClass, statusClass].filter(Boolean).join(' ');
-
-    const removeBtn = args.dismissible
-      ? `<button type="button" class="chip__remove" aria-label="Remove ${args.label}">
-          <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
-        </button>`
-      : '';
-
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card" style="display: flex; justify-content: center; align-items: center; min-block-size: 10rem;">
-        <span class="${classes}" ${statusAttr}>
-          <span>${args.label || 'Chip'}</span>
-          ${removeBtn}
-        </span>
-      </div>
-    `;
-  },
+  args: { label: 'TypeScript', prominence: 'subtle', small: false, round: false, removable: true },
 };
 
 /**
- * 2. Variants (Padded, Dismissible, Plain)
+ * The three prominences, static and removable, at both sizes.
  */
-export const Variants: Story = {
-  render: () => {
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card">
-        <div class="demo-title-group" style="margin-block-end: var(--spacing-24);">
-          <h4 class="demo-heading">Chip Formats</h4>
-          <p class="demo-desc">Tags, removable filter chips, and plain text metadata indicators.</p>
-        </div>
-
-        <div class="stack" style="gap: var(--spacing-24);">
-          <!-- Padded Chips -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">1. Standard Padded Chips (.chip)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-8);">
-              <span class="chip"><span>TypeScript</span></span>
-              <span class="chip"><span>Design Systems</span></span>
-              <span class="chip"><span>WCAG 2.2 AAA</span></span>
-            </div>
-          </div>
-
-          <!-- Dismissible Filter Chips -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">2. Dismissible Chips with Remove Trigger (.chip__remove)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-8);">
-              <span class="chip">
-                <span>React Aria</span>
-                <button type="button" class="chip__remove" aria-label="Remove React Aria">
-                  <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
-                </button>
-              </span>
-              <span class="chip">
-                <span>Color Contrast</span>
-                <button type="button" class="chip__remove" aria-label="Remove Color Contrast">
-                  <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
-                </button>
-              </span>
-              <span class="chip">
-                <span>Section 508</span>
-                <button type="button" class="chip__remove" aria-label="Remove Section 508">
-                  <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
-                </button>
-              </span>
-            </div>
-          </div>
-
-          <!-- Plain Chips -->
-          <div>
-            <span class="demo-label" style="margin-block-end: var(--spacing-8);">3. Plain Chips (.chip--plain / .chip--simple)</span>
-            <div class="cluster" style="align-items: center; gap: var(--spacing-12);">
-              <span class="chip chip--plain">Lesson 04</span>
-              <span class="chip chip--plain">12 min read</span>
-              <span class="chip chip--plain chip--status" data-status="online">Synchronized</span>
-              <span class="chip chip--plain">WCAG 2.2 AA</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  },
+export const ProminenceAndSize: Story = {
+  render: () => `
+    <div class="demo-stage stack">
+      ${PROMINENCES.map(
+        (p) => `
+        <div class="cluster align-items-center">
+          <span class="sb-demo-label" style="inline-size: 6rem;">${p}</span>
+          ${TAGS.slice(0, 2).map((t) => chip(t, chipClasses(p))).join('')}
+          ${TAGS.slice(2).map((t) => chip(t, chipClasses(p), true)).join('')}
+          ${chip('Small', chipClasses(p, true))}
+          ${chip('Small', chipClasses(p, true), true)}
+        </div>`
+      ).join('')}
+    </div>
+  `,
 };
 
 /**
- * 3. Live Status Indicators (.status)
+ * Active filters: removable chips with a reset action. Tab through to see the remove buttons' focus rings.
  */
-export const LiveStatus: Story = {
-  render: () => {
-    return `
-      <div class="demo-stage demo-stage--lg demo-stage--card">
-        <div class="demo-title-group" style="margin-block-end: var(--spacing-16);">
-          <h4 class="demo-heading">Live Status Dot Indicators (.status)</h4>
-          <p class="demo-desc">Presence dots driven by <code>[data-status]</code> attributes.</p>
-        </div>
+export const ActiveFilters: Story = {
+  render: () => `
+    <div class="demo-stage cluster align-items-center">
+      <span class="small-text">Active filters:</span>
+      ${TAGS.map((t) => chip(t, 'chip chip--subtle chip--round', true)).join('')}
+      <button type="button" class="button button--plain button--sm"><span>Clear all</span></button>
+    </div>
+  `,
+};
 
-        <div class="cluster" style="align-items: center; gap: var(--spacing-24);">
-          <span class="status" data-status="online">Online</span>
-          <span class="status" data-status="away">Away</span>
-          <span class="status" data-status="busy">Busy / Do Not Disturb</span>
-        </div>
-      </div>
-    `;
-  },
+/**
+ * Container flags set prominence, size and corners for every chip inside.
+ */
+export const ContainerFlags: Story = {
+  render: () => `
+    <div class="demo-stage cluster" style="--chip-prominence: plain; --chip-size: sm;">
+      ${TAGS.map((t) => chip(t, 'chip')).join('')}
+    </div>
+  `,
 };

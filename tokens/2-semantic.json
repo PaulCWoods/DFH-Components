@@ -117,14 +117,26 @@
     "warning-light": {
       "$value": "{color.amber.100}"
     },
+    "info-light": {
+      "$value": "{color.aqua.100}"
+    },
     "warning-dark": {
       "$value": "{color.amber.900}"
+    },
+    "info-dark": {
+      "$value": "{color.aqua.900}"
     },
     "warning-strong-light": {
       "$value": "{color.amber.300}"
     },
+    "info-strong-light": {
+      "$value": "{color.aqua.300}"
+    },
     "warning-strong-dark": {
       "$value": "{color.amber.700}"
+    },
+    "info-strong-dark": {
+      "$value": "{color.aqua.700}"
     },
     "success-light": {
       "$value": "{color.green.100}"
@@ -238,9 +250,17 @@
       "$value": "light-dark({surface-color.warning-light}, {surface-color.warning-dark})",
       "$description": "Cautionary or pending review alert banner background"
     },
+    "info": {
+      "$value": "light-dark({surface-color.info-light}, {surface-color.info-dark})",
+      "$description": "Cautionary or pending review alert banner background"
+    },
     "warning-strong": {
       "$value": "light-dark({surface-color.warning-strong-dark}, {surface-color.warning-strong-light})",
       "$description": "High-contrast warning surface for strong alert banners and callouts"
+    },
+    "info-strong": {
+      "$value": "light-dark({surface-color.info-strong-dark}, {surface-color.info-strong-light})",
+      "$description": "High-contrast info surface for strong alert banners and callouts"
     },
     "success": {
       "$value": "light-dark({surface-color.success-light}, {surface-color.success-dark})",
@@ -329,20 +349,38 @@
     "warning-dark": {
       "$value": "{color.amber.700}"
     },
+    "info-dark": {
+      "$value": "{color.blue.700}"
+    },
     "warning-dark-hover": {
       "$value": "{color.amber.600}"
+    },
+    "info-dark-hover": {
+      "$value": "{color.blue.600}"
     },
     "warning-dark-pressed": {
       "$value": "{color.amber.800}"
     },
+    "info-dark-pressed": {
+      "$value": "{color.blue.800}"
+    },
     "warning-light": {
       "$value": "{color.amber.300}"
+    },
+    "info-light": {
+      "$value": "{color.blue.300}"
     },
     "warning-light-hover": {
       "$value": "{color.amber.200}"
     },
+    "info-light-hover": {
+      "$value": "{color.blue.200}"
+    },
     "warning-light-pressed": {
       "$value": "{color.amber.400}"
+    },
+    "info-light-pressed": {
+      "$value": "{color.blue.400}"
     },
     "success-dark": {
       "$value": "{color.green.700}"
@@ -446,13 +484,25 @@
       "$value": "light-dark({foreground-color.warning-dark}, {foreground-color.warning-light})",
       "$description": "Warning callout text and pending status icons"
     },
+    "info": {
+      "$value": "light-dark({foreground-color.info-dark}, {foreground-color.info-light})",
+      "$description": "info callout text and pending status icons"
+    },
     "warning-hover": {
       "$value": "light-dark({foreground-color.warning-dark-hover}, {foreground-color.warning-light-hover})",
       "$description": "Warning hover state"
     },
+    "info-hover": {
+      "$value": "light-dark({foreground-color.info-dark-hover}, {foreground-color.info-light-hover})",
+      "$description": "info hover state"
+    },
     "warning-pressed": {
       "$value": "light-dark({foreground-color.warning-dark-pressed}, {foreground-color.warning-light-pressed})",
       "$description": "Warning pressed state"
+    },
+    "info-pressed": {
+      "$value": "light-dark({foreground-color.info-dark-pressed}, {foreground-color.info-light-pressed})",
+      "$description": "info pressed state"
     }
   },
   "border-color": {
@@ -479,8 +529,14 @@
     "warning-dark": {
       "$value": "{color.amber.600}"
     },
+    "info-dark": {
+      "$value": "{color.aqua.600}"
+    },
     "warning-light": {
       "$value": "{color.amber.400}"
+    },
+    "info-light": {
+      "$value": "{color.aqua.400}"
     },
     "success-dark": {
       "$value": "{color.green.600}"
@@ -505,6 +561,10 @@
         "$value": "{color.quiet}",
         "$description": "Quiet border stroke color"
       },
+      "control": {
+        "$value": "color-mix(in srgb, currentColor, transparent {translucency.33})",
+        "$description": "Form control boundary: 67% of the text colour, at least 3:1 against the page in both schemes (WCAG 1.4.11)"
+      },
       "accent": {
         "$value": "light-dark({border-color.accent-light}, {border-color.accent-dark})",
         "$description": "Active interactive border color"
@@ -520,6 +580,10 @@
       "warning": {
         "$value": "light-dark({border-color.warning-light}, {border-color.warning-dark})",
         "$description": "Warning field border"
+      },
+      "info": {
+        "$value": "light-dark({border-color.info-light}, {border-color.info-dark})",
+        "$description": "info field border"
       },
       "success": {
         "$value": "light-dark({border-color.success-light}, {border-color.success-dark})",
@@ -695,6 +759,11 @@
     "line-height": {
       "$value": "{typography.line-height.0}",
       "$type": "number"
+    },
+    "measure": {
+      "$value": "66ch",
+      "$type": "dimension",
+      "$description": "Longest comfortable line for reading text (about 45 to 75 characters). Set to none on a container to lift it."
     }
   },
   "body-fixed": {
@@ -738,6 +807,11 @@
     }
   },
   "body-sm": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Small text: footnotes, hints and metadata (step -1)"
+    },
     "line-height": {
       "$value": "{typography.line-height.minus-1}",
       "$type": "number"
@@ -747,28 +821,28 @@
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+      "$description": "Small text size (step -1; compact steps to -2)"
     }
   },
   "body-sm-compact": {
     "font-size": {
-      "$value": "{typography.font-size.minus-1}",
+      "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+      "$description": "Small text size (step -1; compact steps to -2)"
     }
   },
   "body-sm-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.-1}",
       "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+      "$description": "Small text size (step -1; compact steps to -2)"
     }
   },
   "body-sm-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+      "$description": "Small text size (step -1; compact steps to -2)"
     }
   },
   "body-lg-fixed": {
@@ -797,49 +871,6 @@
       "$value": "{typography.font-size.cq.1}",
       "$type": "dimension",
       "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
-    }
-  },
-  "micro-text": {
-    "font-family": {
-      "$value": "{body.font-family}",
-      "$type": "fontFamilies"
-    },
-    "font-size": {
-      "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension"
-    },
-    "font-weight": {
-      "$value": "{font-weight.regular}",
-      "$type": "fontWeight"
-    },
-    "line-height": {
-      "$value": "{typography.line-height.minus-1}",
-      "$type": "number"
-    }
-  },
-  "micro-text-compact": {
-    "font-size": {
-      "$value": "{typography.font-size.minus-2}",
-      "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
-    }
-  },
-  "nano-text": {
-    "font-family": {
-      "$value": "{micro-text.font-family}",
-      "$type": "fontFamilies"
-    },
-    "font-size": {
-      "$value": "{typography.font-size.minus-2}",
-      "$type": "dimension"
-    },
-    "font-weight": {
-      "$value": "{micro-text.font-weight}",
-      "$type": "fontWeight"
-    },
-    "line-height": {
-      "$value": "{typography.line-height.minus-2}",
-      "$type": "number"
     }
   },
   "label": {
@@ -1005,9 +1036,9 @@
   },
   "small-heading-fluid": {
     "font-size": {
-      "$value": "{body.font-size}",
+      "$value": "{fluid.typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Viewport-fluid small heading typography size using cqi units (Step 0)"
+      "$description": "Viewport-fluid small heading size (step 0)"
     }
   },
   "micro-heading": {
@@ -1041,32 +1072,6 @@
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
       "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
-    }
-  },
-  "nano-heading": {
-    "font-family": {
-      "$value": "{micro-heading.font-family}",
-      "$type": "fontFamilies"
-    },
-    "font-size": {
-      "$value": "{typography.font-size.minus-2}",
-      "$type": "dimension"
-    },
-    "font-weight": {
-      "$value": "{body.font-weight}",
-      "$type": "fontWeight"
-    },
-    "line-height": {
-      "$value": "{typography.line-height.minus-3}",
-      "$type": "number"
-    },
-    "letter-spacing": {
-      "$value": "{typography.spacing.loose}",
-      "$type": "dimension"
-    },
-    "text-transform": {
-      "$value": "{micro-heading.text-transform}",
-      "$type": "other"
     }
   },
   "title": {
@@ -1162,6 +1167,13 @@
       "$description": "Hero display title typography size (fluid step 7: 57px Mobile to 114px Desktop)"
     }
   },
+  "display-title-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.5-8}",
+      "$type": "dimension",
+      "$description": "Container-fluid display title size using cqi units (steps 5 to 8)"
+    }
+  },
   "control": {
     "font-size": {
       "$value": "{typography.font-size.0}",
@@ -1178,7 +1190,7 @@
       "$type": "dimension"
     },
     "border-color": {
-      "$value": "{border.color.quiet}",
+      "$value": "{border.color.control}",
       "$type": "color"
     }
   },

@@ -13,7 +13,7 @@
    1. Base Deck Container (:where(.deck))
    ========================================================================== */
 :where(.deck) {
-  --chip-variation: simple;
+  --chip-prominence: plain;
   --font-sizing: cq;
 
   /* --------------------------------------------------------------------------

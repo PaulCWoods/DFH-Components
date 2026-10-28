@@ -8,7 +8,7 @@ import Icon from './Icon.astro';
   <header class="card__header playground-toolbar inline inline--between align-items-center">
     <div class="inline align-items-center">
       <h3 class="small-heading">Interactive Playground</h3>
-      <span class="badge badge--sm badge--accent"><span>Live Demo</span></span>
+      <span class="status status--accent status--sm"><span class="status__text">Live Demo</span></span>
     </div>
 
     <!-- Surface Background Switcher -->
@@ -161,7 +161,7 @@ import Icon from './Icon.astro';
     <div class="playground-code flex flex-dir-col justify-content-between">
       <div>
         <div class="inline inline--between align-items-center margin-bottom-sm">
-          <div class="tab-list tab-list--tight tabs-sm tabs-button tabs-subtle" role="tablist">
+          <div class="tab-list tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle" role="tablist">
             <button
               type="button"
               class="tab is-active"
@@ -441,14 +441,14 @@ import Icon from './Icon.astro';
         innerHtml = `<span>${labelText}</span>`;
         codeMarkup = `<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span>${labelText}</span>\n</button>`;
       } else if (icon === 'leading') {
-        innerHtml = `<svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#Plus"/></svg>\n<span>${labelText}</span>`;
-        codeMarkup = `<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <svg class="icon" aria-hidden="true" focusable="false">\n    <use href="#Plus"/>\n  </svg>\n  <span>${labelText}</span>\n</button>`;
+        innerHtml = `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="/icons.svg#Plus"/></svg>\n<span>${labelText}</span>`;
+        codeMarkup = `<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">\n    <use href="#Plus"/>\n  </svg>\n  <span>${labelText}</span>\n</button>`;
       } else if (icon === 'trailing') {
-        innerHtml = `<span>${labelText}</span>\n<svg class="icon icon--dir" aria-hidden="true" focusable="false"><use href="/icons.svg#ArrowRight"/></svg>`;
-        codeMarkup = `<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span>${labelText}</span>\n  <svg class="icon icon--dir" aria-hidden="true" focusable="false">\n    <use href="#ArrowRight"/>\n  </svg>\n</button>`;
+        innerHtml = `<span>${labelText}</span>\n<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="/icons.svg#ArrowRight"/></svg>`;
+        codeMarkup = `<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span>${labelText}</span>\n  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">\n    <use href="#ArrowRight"/>\n  </svg>\n</button>`;
       } else if (icon === 'icon-only') {
-        innerHtml = `<span class="visually-hidden">${labelText}</span>\n<svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#Search"/></svg>`;
-        codeMarkup = `<!-- Accessible Icon Button: .visually-hidden enables browser translation & voice control -->\n<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span class="visually-hidden">${labelText}</span>\n  <svg class="icon" aria-hidden="true" focusable="false">\n    <use href="#Search"/>\n  </svg>\n</button>`;
+        innerHtml = `<span class="visually-hidden">${labelText}</span>\n<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="/icons.svg#Search"/></svg>`;
+        codeMarkup = `<!-- Accessible Icon Button: .visually-hidden enables browser translation & voice control -->\n<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span class="visually-hidden">${labelText}</span>\n  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">\n    <use href="#Search"/>\n  </svg>\n</button>`;
       }
 
       stageBtn.innerHTML = innerHtml;

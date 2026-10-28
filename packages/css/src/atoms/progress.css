@@ -1,295 +1,307 @@
 /* ==========================================================================
-   Progress & Meter Primitives
+   Design For Humans: Progress & Meter Primitives
    --------------------------------------------------------------------------
-   Accessible HTML5 <progress> and <meter> elements styled with design tokens,
-   cross-engine support (WebKit/Blink & Gecko), responsive sizing, indeterminate
-   state animations, and WCAG 2.2 Level AA/AAA contrast compliance.
+   <progress> shows how far a task has got. <meter> shows a measurement
+   within a known range (disk use, battery, score). Neither is interactive.
+
+   | Atom      | Axes                                             | Container flags                                 |
+   | --------- | ------------------------------------------------ | ----------------------------------------------- |
+   | .progress | Size (--sm --lg); intent (accent, --info,        | --progress-size, --progress-intent,             |
+   |           | --success --warning --danger); corners (--round) | --progress-corners                              |
+   | .meter    | Size (--sm --lg); corners (--round)              | --meter-size, --meter-corners                   |
+
+   A compact container (--ui-sizing: compact) steps both to --sm.
+
+   Meter colour follows its value. With low, high and optimum set, the
+   browser picks the region: optimum is success, the next region warning,
+   the worst danger. With none set, the meter is a plain measurement and
+   fills in accent, like progress.
+
+   Accessibility:
+   - Name every bar (<label for>, aria-labelledby or aria-label) and show
+     its value as text beside it. The bar backs up the text; the empty
+     track is not required to reach 3:1 (WCAG 1.4.11), and colour never
+     carries the meaning alone (1.4.1).
+   - aria-busy belongs on the region being loaded, not on the progress.
+   - Under prefers-reduced-motion an indeterminate bar shows a static
+     hatch, which can't be mistaken for a complete one.
+
+   Usage:
+   <label for="upload" class="field__label">Uploading</label>
+   <progress id="upload" class="progress" value="68" max="100">68%</progress>
+
+   <meter class="meter" value="72" min="0" max="100" low="60" high="85" optimum="20" aria-label="Disk use">72%</meter>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Progress Primitive (:where(.progress, progress))
+   1. Shared Base (:where(.progress, .meter))
    ========================================================================== */
-:where(.progress, progress) {
-  --_progress-height: var(--progress-height, var(--spacing-8, 0.5rem));
-  --_progress-radius: var(--progress-radius, var(--radius, 0.25rem));
-  --_progress-track-bg: var(--progress-track-bg, var(--surface-muted, #E6E4DF));
-  --_progress-fill-bg: var(--progress-fill-bg, var(--foreground-accent, #008076));
-  --_progress-transition: var(--progress-transition, var(--duration-sm, 200ms));
-
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes
-     -------------------------------------------------------------------------- */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--progress-size: sm) {
-    --_progress-height: var(--progress-sm-height, var(--spacing-4, 0.25rem));
-  }
-
-  @container style(--progress-size: lg) {
-    --_progress-height: var(--progress-lg-height, var(--spacing-16, 1rem));
-  }
-
-  @container style(--progress-variant: success) or style(--progress-tone: success) {
-    --_progress-fill-bg: var(--foreground-success, #00875a);
-  }
-
-  @container style(--progress-variant: warning) or style(--progress-tone: warning) {
-    --_progress-fill-bg: var(--foreground-warning, #b06000);
-  }
-
-  @container style(--progress-variant: danger) or style(--progress-tone: danger) {
-    --_progress-fill-bg: var(--foreground-danger, #d32f2f);
-  }
+:where(.progress, .meter) {
+  --_bar-radius: var(--radius, 0.25rem);
+  --_bar-track-bg: var(--surface-muted, transparent);
+  --_bar-transition: 200ms;
 
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
   display: block;
+  box-sizing: border-box;
   inline-size: 100%;
-  block-size: var(--_progress-height);
-  border-radius: var(--_progress-radius);
-  background-color: var(--_progress-track-bg);
-  overflow: hidden;
-  vertical-align: middle;
-  color: var(--_progress-fill-bg);
-
-  /* WebKit & Blink Track */
-  &::-webkit-progress-bar {
-    background-color: var(--_progress-track-bg);
-    border-radius: var(--_progress-radius);
-    overflow: hidden;
-  }
-
-  /* WebKit & Blink Value Bar */
-  &::-webkit-progress-value {
-    background-color: var(--_progress-fill-bg);
-    border-radius: var(--_progress-radius);
-    transition: inline-size var(--_progress-transition) var(--timefunc-ease-in-out, ease-in-out),
-      width var(--_progress-transition) var(--timefunc-ease-in-out, ease-in-out);
-  }
-
-  /* Gecko (Firefox) Value Bar */
-  &::-moz-progress-bar {
-    background-color: var(--_progress-fill-bg);
-    border-radius: var(--_progress-radius);
-    transition: inline-size var(--_progress-transition) var(--timefunc-ease-in-out, ease-in-out),
-      width var(--_progress-transition) var(--timefunc-ease-in-out, ease-in-out);
-  }
-
-  /* ------------------------------------------------------------------------
-     Indeterminate State (no value attribute or :indeterminate)
-     ------------------------------------------------------------------------ */
-  &:indeterminate,
-  &:not([value]) {
-    background-color: var(--_progress-track-bg);
-    background-image: linear-gradient(90deg,
-        transparent 0%,
-        var(--_progress-fill-bg) 50%,
-        transparent 100%);
-    background-size: 200% 100%;
-    background-repeat: no-repeat;
-    animation: dfh-progress-indeterminate 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-
-    &::-webkit-progress-bar {
-      background-color: transparent;
-    }
-
-    &::-moz-progress-bar {
-      background-color: transparent;
-    }
-  }
-
-  /* ------------------------------------------------------------------------
-     Size Modifiers
-     ------------------------------------------------------------------------ */
-  :where(.controls-sm) &,
-  &:where(.progress--sm) {
-    --_progress-height: var(--progress-sm-height, var(--spacing-4, 0.25rem));
-  }
-
-  :where(.controls-lg) &,
-  &:where(.progress--lg) {
-    --_progress-height: var(--progress-lg-height, var(--spacing-16, 1rem));
-  }
-
-  /* ------------------------------------------------------------------------
-     Semantic Tone Modifiers
-     ------------------------------------------------------------------------ */
-  &:where(.progress--success) {
-    --_progress-fill-bg: var(--foreground-success, #00875a);
-  }
-
-  &:where(.progress--warning) {
-    --_progress-fill-bg: var(--foreground-warning, #b06000);
-  }
-
-  &:where(.progress--danger) {
-    --_progress-fill-bg: var(--foreground-danger, #d32f2f);
-  }
-
-  &:where(.progress--subtle) {
-    --_progress-fill-bg: var(--foreground-muted, #595856);
-  }
-}
-
-/* ==========================================================================
-   2. Meter Primitive (:where(.meter, meter))
-   ========================================================================== */
-:where(.meter, meter) {
-  --_meter-height: var(--meter-height, var(--spacing-8, 0.5rem));
-  --_meter-radius: var(--meter-radius, var(--radius, 0.25rem));
-  --_meter-track-bg: var(--meter-track-bg, var(--surface-muted, #E6E4DF));
-  --_meter-optimum-bg: var(--meter-optimum-bg, var(--foreground-success, #00875a));
-  --_meter-suboptimum-bg: var(--meter-suboptimum-bg, var(--foreground-warning, #b06000));
-  --_meter-critical-bg: var(--meter-critical-bg, var(--foreground-danger, #d32f2f));
-  --_meter-transition: var(--duration-sm, 200ms);
-
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes
-     -------------------------------------------------------------------------- */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) or style(--meter-size: sm) {
-    --_meter-height: var(--meter-sm-height, var(--spacing-4, 0.25rem));
-  }
-
-  @container style(--meter-size: lg) {
-    --_meter-height: var(--meter-lg-height, var(--spacing-16, 1rem));
-  }
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  display: block;
-  inline-size: 100%;
-  block-size: var(--_meter-height);
-  border-radius: var(--_meter-radius);
-  background: var(--_meter-track-bg);
+  block-size: var(--_bar-height);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--_bar-radius);
+  background: var(--_bar-track-bg);
   overflow: hidden;
   vertical-align: middle;
 
-  /* ------------------------------------------------------------------------
-     WebKit & Blink Meter Styling
-     ------------------------------------------------------------------------ */
-  &::-webkit-meter-bar {
-    background: var(--_meter-track-bg);
-    border: none;
-  }
-
-  &::-webkit-meter-value {
-    border-radius: var(--_meter-radius);
-    transition: inline-size var(--_meter-transition) var(--timefunc-ease-in-out, ease-in-out),
-      width var(--_meter-transition) var(--timefunc-ease-in-out, ease-in-out);
-  }
-
-  &::-webkit-meter-optimum-value {
-    background: var(--_meter-optimum-bg);
-  }
-
-  &::-webkit-meter-suboptimum-value {
-    background: var(--_meter-suboptimum-bg);
-  }
-
-  &::-webkit-meter-even-less-good-value {
-    background: var(--_meter-critical-bg);
-  }
-
-  /* ------------------------------------------------------------------------
-     Gecko (Firefox) Meter Styling
-     ------------------------------------------------------------------------ */
-  &::-moz-meter-bar {
-    background: var(--_meter-optimum-bg);
-    border-radius: var(--_meter-radius);
-    transition: inline-size var(--_meter-transition) var(--timefunc-ease-in-out, ease-in-out),
-      width var(--_meter-transition) var(--timefunc-ease-in-out, ease-in-out);
-  }
-
-  &:-moz-meter-optimum::-moz-meter-bar {
-    background: var(--_meter-optimum-bg);
-  }
-
-  &:-moz-meter-sub-optimum::-moz-meter-bar {
-    background: var(--_meter-suboptimum-bg);
-  }
-
-  &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
-    background: var(--_meter-critical-bg);
-  }
-
-  /* ------------------------------------------------------------------------
-     Size Modifiers
-     ------------------------------------------------------------------------ */
-  :where(.controls-sm) &,
-  &:where(.meter--sm) {
-    --_meter-height: var(--meter-sm-height, var(--spacing-4, 0.25rem));
-  }
-
-  :where(.controls-lg) &,
-  &:where(.meter--lg) {
-    --_meter-height: var(--meter-lg-height, var(--spacing-16, 1rem));
-  }
-
-  /* ------------------------------------------------------------------------
-     Explicit Semantic Color Overrides
-     ------------------------------------------------------------------------ */
-  &:where(.meter--success) {
-    --_meter-optimum-bg: var(--foreground-success, #00875a);
-    --_meter-suboptimum-bg: var(--foreground-success, #00875a);
-    --_meter-critical-bg: var(--foreground-success, #00875a);
-  }
-
-  &:where(.meter--warning) {
-    --_meter-optimum-bg: var(--foreground-warning, #b06000);
-    --_meter-suboptimum-bg: var(--foreground-warning, #b06000);
-    --_meter-critical-bg: var(--foreground-warning, #b06000);
-  }
-
-  &:where(.meter--danger) {
-    --_meter-optimum-bg: var(--foreground-danger, #d32f2f);
-    --_meter-suboptimum-bg: var(--foreground-danger, #d32f2f);
-    --_meter-critical-bg: var(--foreground-danger, #d32f2f);
-  }
-}
-
-/* ==========================================================================
-   3. Keyframe Animations & Media Overrides
-   ========================================================================== */
-@keyframes dfh-progress-indeterminate {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* High Contrast Mode (WCAG 1.4.11 / 2.4.7) */
-@media (prefers-contrast: more) {
-  :where(.progress, progress, .meter, meter) {
-    outline: 1px solid var(--border-color, currentColor);
+  /* Forced colours and high contrast: give the bar a visible boundary */
+  @media (prefers-contrast: more) {
+    outline: 1px solid var(--border-color-control, currentColor);
     outline-offset: 1px;
   }
 }
 
-/* Reduced Motion Override (WCAG 2.3.3) */
-@media (prefers-reduced-motion: reduce) {
-  :where(.progress, progress, .meter, meter) {
-    animation: none !important;
-    transition: none !important;
+/* ==========================================================================
+   2. Progress (:where(.progress))
+   ========================================================================== */
+:where(.progress) {
+  --_bar-height: var(--progress-height, 0.5rem);
+  --_bar-radius: var(--progress-radius, var(--radius, 0.25rem));
+  --_bar-track-bg: var(--progress-track-bg, var(--surface-muted, transparent));
+  --_bar-transition: var(--progress-transition, 200ms);
+  --_progress-tone: var(--foreground-accent, AccentColor);
+  --_progress-sweep-from: -100%;
+  --_progress-sweep-to: 200%;
 
-    &::-webkit-progress-value,
-    &::-moz-progress-bar,
-    &::-webkit-meter-value,
-    &::-moz-meter-bar {
-      transition: none !important;
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifier classes, so a modifier on the bar beats
+     a flag inherited from a container.
+     ------------------------------------------------------------------------ */
+  @container style(--progress-size: sm) or style(--ui-sizing: compact) {
+    --_bar-height: var(--progress-sm-height, 0.25rem);
+  }
+
+  @container style(--progress-size: lg) {
+    --_bar-height: var(--progress-lg-height, 1rem);
+  }
+
+  @container style(--progress-intent: info) {
+    --_progress-tone: var(--foreground-info, AccentColor);
+  }
+
+  @container style(--progress-intent: success) {
+    --_progress-tone: var(--foreground-success, AccentColor);
+  }
+
+  @container style(--progress-intent: warning) {
+    --_progress-tone: var(--foreground-warning, AccentColor);
+  }
+
+  @container style(--progress-intent: danger) {
+    --_progress-tone: var(--foreground-danger, AccentColor);
+  }
+
+  @container style(--progress-corners: round) {
+    --_bar-radius: var(--radius-round, 9999px);
+  }
+
+  accent-color: var(--_progress-tone);
+
+  &:dir(rtl) {
+    --_progress-sweep-from: 200%;
+    --_progress-sweep-to: -100%;
+  }
+
+  /* Blink & WebKit */
+  &::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  &::-webkit-progress-value {
+    background-color: var(--_progress-tone);
+    border-radius: var(--_bar-radius);
+    transition: inline-size var(--_bar-transition) var(--timefunc-ease-in-out, ease-in-out);
+  }
+
+  /* Gecko */
+  &::-moz-progress-bar {
+    background-color: var(--_progress-tone);
+    border-radius: var(--_bar-radius);
+  }
+
+  /* ------------------------------------------------------------------------
+     Indeterminate: a band sweeps across the track in the reading direction
+     ------------------------------------------------------------------------ */
+  &:indeterminate {
+    background-image: linear-gradient(to right, transparent, var(--_progress-tone), transparent);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    animation: dfh-progress-sweep 1.6s var(--timefunc-ease-in-out, ease-in-out) infinite;
+
+    &::-webkit-progress-value {
+      background: transparent;
     }
 
-    &:indeterminate,
-    &:not([value]) {
-      background-image: none !important;
-      background-color: var(--_progress-fill-bg);
-      opacity: 0.6;
+    &::-moz-progress-bar {
+      background: transparent;
     }
+
+    /* Static hatch: working, amount unknown */
+    @media (prefers-reduced-motion: reduce) {
+      background-image: repeating-linear-gradient(-45deg,
+          var(--_progress-tone) 0 calc(var(--_bar-height) / 2),
+          transparent calc(var(--_bar-height) / 2) var(--_bar-height));
+      background-size: auto;
+      animation: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::-webkit-progress-value {
+      transition: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   3. Meter (:where(.meter))
+   ========================================================================== */
+:where(.meter) {
+  --_bar-height: var(--meter-height, 0.5rem);
+  --_bar-radius: var(--meter-radius, var(--radius, 0.25rem));
+  --_bar-track-bg: var(--meter-track-bg, var(--surface-muted, transparent));
+  --_bar-transition: var(--meter-transition, 200ms);
+  --_meter-optimum: var(--meter-optimum-bg, var(--foreground-success, AccentColor));
+  --_meter-suboptimum: var(--meter-suboptimum-bg, var(--foreground-warning, AccentColor));
+  --_meter-critical: var(--meter-critical-bg, var(--foreground-danger, AccentColor));
+
+  @container style(--meter-size: sm) or style(--ui-sizing: compact) {
+    --_bar-height: var(--meter-sm-height, 0.25rem);
+  }
+
+  @container style(--meter-size: lg) {
+    --_bar-height: var(--meter-lg-height, 1rem);
+  }
+
+  @container style(--meter-corners: round) {
+    --_bar-radius: var(--radius-round, 9999px);
+  }
+
+  /* No thresholds: a plain measurement, not good or bad news */
+  &:where(:not([low], [high], [optimum])) {
+    --_meter-optimum: var(--foreground-accent, AccentColor);
+  }
+
+  /* Blink & WebKit. The bar needs an explicit length: its parent has no
+     definite height, so 100% would leave the value at half height. */
+  &::-webkit-meter-bar {
+    block-size: var(--_bar-height);
+    background: transparent;
+    border: 0;
+    border-radius: var(--_bar-radius);
+  }
+
+  &::-webkit-meter-optimum-value,
+  &::-webkit-meter-suboptimum-value,
+  &::-webkit-meter-even-less-good-value {
+    block-size: 100%;
+    border-radius: var(--_bar-radius);
+    transition: inline-size var(--_bar-transition) var(--timefunc-ease-in-out, ease-in-out);
+  }
+
+  &::-webkit-meter-optimum-value {
+    background: var(--_meter-optimum);
+  }
+
+  &::-webkit-meter-suboptimum-value {
+    background: var(--_meter-suboptimum);
+  }
+
+  &::-webkit-meter-even-less-good-value {
+    background: var(--_meter-critical);
+  }
+
+  /* Gecko */
+  &::-moz-meter-bar {
+    background: var(--_meter-optimum);
+    border-radius: var(--_bar-radius);
+  }
+
+  &:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: var(--_meter-suboptimum);
+  }
+
+  &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: var(--_meter-critical);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::-webkit-meter-optimum-value,
+    &::-webkit-meter-suboptimum-value,
+    &::-webkit-meter-even-less-good-value {
+      transition: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. Modifiers
+   ========================================================================== */
+:where(.progress--sm) {
+  --_bar-height: var(--progress-sm-height, 0.25rem);
+}
+
+:where(.meter--sm) {
+  --_bar-height: var(--meter-sm-height, 0.25rem);
+}
+
+/* A compact container steps large bars back to default */
+:where(.progress--lg) {
+  --_bar-height: var(--progress-lg-height, 1rem);
+
+  @container style(--ui-sizing: compact) {
+    --_bar-height: var(--progress-height, 0.5rem);
+  }
+}
+
+:where(.meter--lg) {
+  --_bar-height: var(--meter-lg-height, 1rem);
+
+  @container style(--ui-sizing: compact) {
+    --_bar-height: var(--meter-height, 0.5rem);
+  }
+}
+
+:where(.progress--round, .meter--round) {
+  --_bar-radius: var(--radius-round, 9999px);
+}
+
+:where(.progress--info) {
+  --_progress-tone: var(--foreground-info, AccentColor);
+}
+
+:where(.progress--success) {
+  --_progress-tone: var(--foreground-success, AccentColor);
+}
+
+:where(.progress--warning) {
+  --_progress-tone: var(--foreground-warning, AccentColor);
+}
+
+:where(.progress--danger) {
+  --_progress-tone: var(--foreground-danger, AccentColor);
+}
+
+/* ==========================================================================
+   5. Keyframes
+   ========================================================================== */
+@keyframes dfh-progress-sweep {
+  from {
+    background-position: var(--_progress-sweep-from) 0;
+  }
+
+  to {
+    background-position: var(--_progress-sweep-to) 0;
   }
 }

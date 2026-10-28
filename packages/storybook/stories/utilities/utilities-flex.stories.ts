@@ -52,7 +52,7 @@ AI agents and developers MUST use the following semantic patterns:
 <!-- 2. Split Space-Between Alignment -->
 <div class="flex justify-content-between align-items-center padding-sm">
   <span class="font-weight-bold">Status</span>
-  <span class="badge badge--success"><span>Live</span></span>
+  <span class="status status--success"><span class="status__text">Live</span></span>
 </div>
 
 <!-- 3. Vertical Centered Column -->
@@ -188,16 +188,16 @@ export const JustifyContentDistributions: Story = {
       <div class="stack gap">
         <!-- Between -->
         <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
-          <p class="font-size-xs font-weight-bold color-muted">.justify-content-between (Split extremes)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.justify-content-between (Split extremes)</p>
           <div class="flex justify-content-between align-items-center sb-demo-inspect-gap padding-sm">
-            <span class="badge badge--accent"><span>Start Edge</span></span>
-            <span class="badge badge--success"><span>End Edge</span></span>
+            <span class="sb-demo-tag"><span>Start Edge</span></span>
+            <span class="sb-demo-tag"><span>End Edge</span></span>
           </div>
         </div>
 
         <!-- Center -->
         <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
-          <p class="font-size-xs font-weight-bold color-muted">.justify-content-center (Centered group)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.justify-content-center (Centered group)</p>
           <div class="flex justify-content-center align-items-center gap-sm sb-demo-inspect-gap padding-sm">
             <button type="button" class="button button--subtle button--sm"><span>Prev</span></button>
             <button type="button" class="button button--subtle button--sm"><span>Next</span></button>
@@ -206,7 +206,7 @@ export const JustifyContentDistributions: Story = {
 
         <!-- End -->
         <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
-          <p class="font-size-xs font-weight-bold color-muted">.justify-content-end (Trailing action bar)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.justify-content-end (Trailing action bar)</p>
           <div class="flex justify-content-end align-items-center gap-sm sb-demo-inspect-gap padding-sm">
             <button type="button" class="button button--subtle button--sm"><span>Cancel</span></button>
             <button type="button" class="button button--strong button--accent button--sm"><span>Save</span></button>
@@ -215,11 +215,11 @@ export const JustifyContentDistributions: Story = {
 
         <!-- Evenly -->
         <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
-          <p class="font-size-xs font-weight-bold color-muted">.justify-content-evenly (Equal spacing around and between)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.justify-content-evenly (Equal spacing around and between)</p>
           <div class="flex justify-content-evenly align-items-center sb-demo-inspect-gap padding-sm">
-            <span class="chip">Col 1</span>
-            <span class="chip">Col 2</span>
-            <span class="chip">Col 3</span>
+            <span class="chip chip--subtle"><span class="chip__text">Col 1</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Col 2</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Col 3</span></span>
           </div>
         </div>
       </div>
@@ -243,7 +243,7 @@ export const CrossAxisAlignmentUtilities: Story = {
       <div class="grid grid--sm">
         <!-- Center -->
         <div class="card card--bordered padding stack">
-          <p class="font-size-xs font-weight-bold color-muted">.align-items-center (Default Centering)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.align-items-center (Default Centering)</p>
           <div class="flex align-items-center gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="avatar" data-status="online"><span>DF</span></div>
             <span class="font-size-sm font-weight-bold">Centered Label</span>
@@ -252,7 +252,7 @@ export const CrossAxisAlignmentUtilities: Story = {
 
         <!-- Start -->
         <div class="card card--bordered padding stack">
-          <p class="font-size-xs font-weight-bold color-muted">.align-items-start (Top Align)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.align-items-start (Top Align)</p>
           <div class="flex align-items-start gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="avatar" data-status="online"><span>DF</span></div>
             <span class="font-size-sm font-weight-bold">Top Aligned</span>
@@ -261,7 +261,7 @@ export const CrossAxisAlignmentUtilities: Story = {
 
         <!-- End -->
         <div class="card card--bordered padding stack">
-          <p class="font-size-xs font-weight-bold color-muted">.align-items-end (Bottom Align)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.align-items-end (Bottom Align)</p>
           <div class="flex align-items-end gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="avatar" data-status="online"><span>DF</span></div>
             <span class="font-size-sm font-weight-bold">Bottom Aligned</span>
@@ -270,7 +270,7 @@ export const CrossAxisAlignmentUtilities: Story = {
 
         <!-- Stretch -->
         <div class="card card--bordered padding stack">
-          <p class="font-size-xs font-weight-bold color-muted">.align-items-stretch (Full Height Stretch)</p>
+          <p class="font-size-xs font-weight-bold text-muted">.align-items-stretch (Full Height Stretch)</p>
           <div class="flex align-items-stretch gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="sb-demo-box sb-demo-box--sm flex align-items-center">Stretched 1</div>
             <div class="sb-demo-box sb-demo-box--sm flex align-items-center">Stretched 2</div>

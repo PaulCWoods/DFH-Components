@@ -24,7 +24,7 @@ Builds: `npm run build-storybook` and `npm run build:docs` both pass.
 | success | yes | yes | yes | yes |
 | info | no | no | no | no |
 
-- **info** is missing. `banner--info` aliases accent. Decide in the banner pass; the Tier 1 `aqua` ramp is unused and available.
+- **info** is missing. `banner--info` aliases accent. *Resolved in the icon pass:* info has its own Tier 2 roles on the aqua ramp.
 - **complementary** (olive) roles exist but sit outside the intent axis. Decide whether it is a brand colour or removed.
 - **No on-strong foreground.** Text on strong intent surfaces uses `--foreground-inverted-strong` by convention. Fine unless a contrast check fails.
 

@@ -14,6 +14,7 @@
      Contextual Control Orchestration
      -------------------------------------------------------------------------- */
   --button-size: sm;
+  --direction: row;
 
   /* --------------------------------------------------------------------------
      Local Variables & Fallback Ladder
@@ -128,17 +129,7 @@
   }
 }
 
-/* Vertical Separator Divider (:where(.batch-actions__separator)) */
-:where(.batch-actions__separator, :where(.batch-actions) > hr) {
-  align-self: center;
-  block-size: 1.25rem;
-  inline-size: 1px;
-  background-color: var(--border-color-quiet, currentColor);
-  opacity: 0.35;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
+/* Divider (.divider atom): vertical, because the bar sets --direction: row. */
 
 /* ==========================================================================
    3. Placement & Aesthetic Modifiers

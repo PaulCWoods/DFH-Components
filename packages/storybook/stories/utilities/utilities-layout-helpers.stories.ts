@@ -130,7 +130,7 @@ export const Playground: Story = {
         <div class="sb-demo-stage sb-demo-stage--lg" style="block-size: 14rem; position: relative;">
           <div class="${classes}" style="background: var(--surface-card); max-inline-size: 24rem;">
             <h4 class="font-size-sm font-weight-bold">Active Configuration</h4>
-            <p class="font-size-xs color-muted margin-top-xs">
+            <p class="font-size-xs text-muted margin-top-xs">
               Position: <code>${args.position}</code> &middot; Overflow: <code>${args.overflow}</code> &middot; Isolate: <code>${args.isolate}</code>
             </p>
           </div>
@@ -156,25 +156,25 @@ export const StickyPositioning: Story = {
       <div class="position-relative card card--bordered" style="block-size: 14rem; overflow-y: auto; padding: 0;">
         <div class="position-sticky padding-sm inline" style="top: 0; z-index: 1; background: var(--surface-card); border-bottom: 1px solid var(--border-color-quiet); justify-content: space-between; inline-size: 100%;">
           <span class="font-weight-bold font-size-xs">.position-sticky Header</span>
-          <span class="badge badge--accent badge--sm">Pinned</span>
+          <span class="sb-demo-tag">Pinned</span>
         </div>
 
         <div class="padding stack" style="--gap: var(--spacing-16);">
           <div class="card card--bordered padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 1: Foundations</h5>
-            <p class="font-size-xs color-muted">Global DTCG design tokens and fluid typography.</p>
+            <p class="font-size-xs text-muted">Global DTCG design tokens and fluid typography.</p>
           </div>
           <div class="card card--bordered padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 2: Layout Primitives</h5>
-            <p class="font-size-xs color-muted">Stack, Cluster, Inline, Grid, Split, and Wrapper.</p>
+            <p class="font-size-xs text-muted">Stack, Cluster, Inline, Grid, Split, and Wrapper.</p>
           </div>
           <div class="card card--bordered padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 3: Accessibility</h5>
-            <p class="font-size-xs color-muted">WCAG 2.2 AA / AAA automated verification.</p>
+            <p class="font-size-xs text-muted">WCAG 2.2 AA / AAA automated verification.</p>
           </div>
           <div class="card card--bordered padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 4: Deliverables</h5>
-            <p class="font-size-xs color-muted">Storybook stories and Figma synchronized tokens.</p>
+            <p class="font-size-xs text-muted">Storybook stories and Figma synchronized tokens.</p>
           </div>
         </div>
       </div>
@@ -200,7 +200,7 @@ export const OverflowStrategies: Story = {
         <div class="card card--bordered padding stack">
           <div>
             <h4 class="font-size-sm font-weight-bold">1. Strict Clipping: <code>.overflow-clip</code></h4>
-            <p class="font-size-xs color-muted margin-top-xs">
+            <p class="font-size-xs text-muted margin-top-xs">
               Clips content strictly at the border box without creating an unnecessary GPU scroll container.
             </p>
           </div>
@@ -216,7 +216,7 @@ export const OverflowStrategies: Story = {
         <div class="card card--bordered padding stack">
           <div>
             <h4 class="font-size-sm font-weight-bold">2. Horizontal Scroll: <code>.overflow-x-auto</code></h4>
-            <p class="font-size-xs color-muted margin-top-xs">
+            <p class="font-size-xs text-muted margin-top-xs">
               Includes <code>tabindex="0"</code> so keyboard users can scroll wide tables with arrow keys.
             </p>
           </div>
@@ -249,9 +249,9 @@ export const StackingContextIsolation: Story = {
         <div class="isolate card card--bordered padding" style="background: var(--surface-card); position: relative;">
           <div class="inline" style="justify-content: space-between;">
             <span class="font-size-sm font-weight-bold">Self-Contained Stacking Context</span>
-            <span class="badge badge--success badge--sm">.isolate</span>
+            <span class="sb-demo-tag">.isolate</span>
           </div>
-          <p class="font-size-xs color-muted margin-top-sm">
+          <p class="font-size-xs text-muted margin-top-sm">
             Any internal tooltips, menus, or badges rendered with high z-indices remain isolated inside this component boundary.
           </p>
         </div>

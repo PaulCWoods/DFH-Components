@@ -374,11 +374,8 @@
   user-select: none;
 }
 
-:where(.combobox__separator) {
-  block-size: 1px;
-  background-color: var(--border-color-quiet, currentColor);
-  border: none;
-  margin: 0;
+/* Divider (.divider atom) between groups of options: placed, not restyled. */
+:where(.combobox__listbox) > :where(.divider) {
   margin-block: var(--spacing-4, 0.25rem);
 }
 
@@ -509,21 +506,21 @@
   }
 
   /* Variation Orchestration */
-  @container style(--controls-variation: plain) or style(--combobox-variation: plain) {
+  @container style(--controls-prominence: plain) or style(--combobox-variation: plain) {
     :where(.combobox) {
       --_combobox-bg: transparent;
       --_combobox-border-color: transparent;
     }
   }
 
-  @container style(--controls-variation: subtle) or style(--combobox-variation: subtle) {
+  @container style(--controls-prominence: subtle) or style(--combobox-variation: subtle) {
     :where(.combobox) {
       --_combobox-bg: var(--_combobox-subtle-bg);
       --_combobox-border-color: transparent;
     }
   }
 
-  @container style(--control-variation: flush) or style(--combobox-variation: flush) {
+  @container style(--combobox-variation: flush) {
     :where(.combobox) {
       --_combobox-bg: transparent;
       --_combobox-border-color: transparent;

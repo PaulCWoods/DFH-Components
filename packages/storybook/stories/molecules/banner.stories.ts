@@ -37,7 +37,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     <p>Scheduled maintenance window begins tonight at 22:00 UTC.</p>
   </div>
   <button type="button" class="button button--subtle banner__action">
-    <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
     <span class="visually-hidden">Dismiss notice</span>
   </button>
 </div>
@@ -60,7 +60,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
     <p class="heading">Proceed with audit synchronization?</p>
   </div>
   <button type="button" class="button button--strong button--accent banner__action">
-    <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
     <span class="visually-hidden">Confirm action</span>
   </button>
 </div>
@@ -72,7 +72,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   </div>
   <div class="banner__inner">
     <h4 class="card__title small-heading">Accessible Typography Guide</h4>
-    <p class="micro-text">Techniques for fluid font scaling without breaking WCAG 1.4.4.</p>
+    <p class="small-text">Techniques for fluid font scaling without breaking WCAG 1.4.4.</p>
   </div>
 </div>
 \`\`\`
@@ -181,7 +181,7 @@ export const Playground: Story = {
       } else {
         actionMarkup = `
           <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss banner">
-            <svg class="icon" width="24" height="24" aria-hidden="true" focusable="false">
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
               <use href="#Close"/>
             </svg>
             <span class="visually-hidden">Dismiss</span>
@@ -226,29 +226,29 @@ export const Anatomy: Story = {
             <!-- Outer Shell Spec -->
             <div class="demo-box demo-box--pink demo-constrained--xs">
               <span class="demo-label">1. Container (.banner)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Flexbox orchestrator controlling background fill, border frame, padding, and semantic token cascading.
               </p>
               <div style="border: 1px dashed var(--accent); padding: var(--spacing-8); border-radius: var(--radius-sm);">
-                <span class="micro-text">Outer Host Shell</span>
+                <span class="small-text">Outer Host Shell</span>
               </div>
             </div>
 
             <!-- Inner Body Spec -->
             <div class="demo-box demo-box--blue demo-constrained--xs">
               <span class="demo-label">2. Content Flow (.banner__inner)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Vertical flex container resetting default child margins and managing spacing via <code>--banner-gap</code>.
               </p>
               <div style="border: 1px dashed #2d4268; padding: var(--spacing-8); border-radius: var(--radius-sm);">
-                <span class="micro-text">Title & Body Paragraphs</span>
+                <span class="small-text">Title & Body Paragraphs</span>
               </div>
             </div>
 
             <!-- Action Trigger Spec -->
             <div class="demo-box demo-box--green demo-constrained--xs">
               <span class="demo-label">3. Action (.banner__action)</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Positioned with <code>--banner-action-align</code> (top or center). Inherits semantic button tokens.
               </p>
               <div style="margin-block-start: var(--spacing-8);">
@@ -260,7 +260,7 @@ export const Anatomy: Story = {
           <!-- Dynamic Concentric Geometry Explanation -->
           <div class="demo-box demo-box--neutral">
             <span class="demo-label">Dynamic Concentric Corners Formula</span>
-            <p class="micro-text" style="margin-block-start: var(--spacing-4);">
+            <p class="small-text" style="margin-block-start: var(--spacing-4);">
               When <code>.banner--dynamic-corners</code> is paired with <code>buttons-round</code>, the outer radius is dynamically computed:
               <code>--banner-radius: calc(min(var(--button-radius), var(--button-min-size) / 2) + var(--_banner-outer-padding) + var(--banner-border-width));</code>
               This guarantees mathematically concentric curvature without corner pinching.
@@ -288,7 +288,7 @@ export const Variants: Story = {
                 <p>Standard neutral announcement banner for informational notices.</p>
               </div>
               <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss">
-                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Close"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 <span class="visually-hidden">Dismiss</span>
               </button>
             </div>
@@ -300,7 +300,7 @@ export const Variants: Story = {
                 <p>Design token exports have been refreshed across all Figma variable collections.</p>
               </div>
               <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss info">
-                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Close"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 <span class="visually-hidden">Dismiss</span>
               </button>
             </div>
@@ -312,7 +312,7 @@ export const Variants: Story = {
                 <p>All automated and keyboard axe-core checks passed with 0 violations.</p>
               </div>
               <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss success">
-                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Check"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                 <span class="visually-hidden">Acknowledge</span>
               </button>
             </div>
@@ -324,7 +324,7 @@ export const Variants: Story = {
                 <p>Deployment servers will be offline on Sunday from 02:00 to 04:00 UTC.</p>
               </div>
               <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss warning">
-                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Close"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 <span class="visually-hidden">Dismiss</span>
               </button>
             </div>
@@ -336,7 +336,7 @@ export const Variants: Story = {
                 <p>3 components violate WCAG 2.5.8 target size requirements. Deployment blocked.</p>
               </div>
               <button type="button" class="button button--strong button--accent button--icon banner__action" aria-label="Dismiss error">
-                <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Close"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                 <span class="visually-hidden">Dismiss</span>
               </button>
             </div>
@@ -368,25 +368,25 @@ export const ProminenceMatrix: Story = {
             <h5 class="subheading" style="margin-block-end: var(--spacing-12);">1. Default Prominence (1px Bordered Translucent)</h5>
             <div class="stack" style="gap: var(--spacing-12);">
               <div class="banner" role="region" aria-label="Default Neutral">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Bell"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg></span>
                 <div class="banner__inner"><p>Neutral Default: Standard card surface with subtle outline.</p></div>
-                <button type="button" class="button button--subtle button--icon"><svg class="icon"><use href="#Close"/></svg><span class="visually-hidden">Dismiss</span></button>
+                <button type="button" class="button button--subtle button--icon"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg><span class="visually-hidden">Dismiss</span></button>
               </div>
               <div class="banner banner--info" role="region" aria-label="Info Default">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Info"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
                 <div class="banner__inner"><p>Info Default: Translucent accent tint with accent border.</p></div>
                 <button type="button" class="button button--subtle button--sm banner__action"><span>Action</span></button>
               </div>
               <div class="banner banner--success" role="status" aria-label="Success Default">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
                 <div class="banner__inner"><p>Success Default: Translucent green tint with success border.</p></div>
               </div>
               <div class="banner banner--warning" role="region" aria-label="Warning Default">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Warning"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
                 <div class="banner__inner"><p>Warning Default: Translucent amber tint with warning border.</p></div>
               </div>
               <div class="banner banner--error" role="alert" aria-label="Error Default">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Close"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></span>
                 <div class="banner__inner"><p>Error Default: Translucent red tint with danger border.</p></div>
               </div>
             </div>
@@ -397,23 +397,23 @@ export const ProminenceMatrix: Story = {
             <h5 class="subheading" style="margin-block-end: var(--spacing-12);">2. Subtle Prominence (.banner--subtle: Borderless Soft Tint)</h5>
             <div class="stack" style="gap: var(--spacing-12);">
               <div class="banner banner--subtle" role="region" aria-label="Neutral Subtle">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Bell"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg></span>
                 <div class="banner__inner"><p>Neutral Subtle: Borderless resting surface blend.</p></div>
               </div>
               <div class="banner banner--subtle banner--info" role="region" aria-label="Info Subtle">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Info"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
                 <div class="banner__inner"><p>Info Subtle: Borderless soft accent wash.</p></div>
               </div>
               <div class="banner banner--subtle banner--success" role="status" aria-label="Success Subtle">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
                 <div class="banner__inner"><p>Success Subtle: Borderless soft positive wash.</p></div>
               </div>
               <div class="banner banner--subtle banner--warning" role="region" aria-label="Warning Subtle">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Warning"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
                 <div class="banner__inner"><p>Warning Subtle: Borderless soft warning wash.</p></div>
               </div>
               <div class="banner banner--subtle banner--error" role="alert" aria-label="Error Subtle">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Close"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></span>
                 <div class="banner__inner"><p>Error Subtle: Borderless soft error wash.</p></div>
               </div>
             </div>
@@ -424,29 +424,29 @@ export const ProminenceMatrix: Story = {
             <h5 class="subheading" style="margin-block-end: var(--spacing-12);">3. Strong Prominence (.banner--strong: High-Emphasis Solid Fill)</h5>
             <div class="stack" style="gap: var(--spacing-12);">
               <div class="banner banner--strong" role="region" aria-label="Neutral Strong">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Bell"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg></span>
                 <div class="banner__inner"><p>Neutral Strong: High-emphasis solid neutral fill with inverted text.</p></div>
-                <button type="button" class="button button--subtle button--icon"><svg class="icon"><use href="#Close"/></svg><span class="visually-hidden">Dismiss</span></button>
+                <button type="button" class="button button--subtle button--icon"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg><span class="visually-hidden">Dismiss</span></button>
               </div>
               <div class="banner banner--strong banner--info" role="region" aria-label="Info Strong">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Info"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
                 <div class="banner__inner"><p>Info Strong: Solid accent fill with high-contrast inverted text.</p></div>
                 <button type="button" class="button button--strong button--accent button--sm banner__action"><span>Update</span></button>
               </div>
               <div class="banner banner--strong banner--success" role="status" aria-label="Success Strong">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Check"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
                 <div class="banner__inner"><p>Success Strong: Solid success fill with high-contrast inverted text.</p></div>
                 <button type="button" class="button button--subtle button--sm banner__action"><span>View</span></button>
               </div>
               <div class="banner banner--strong banner--warning" role="region" aria-label="Warning Strong">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Warning"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
                 <div class="banner__inner"><p>Warning Strong: Solid warning fill with high-contrast inverted text.</p></div>
                 <button type="button" class="button button--subtle button--sm banner__action"><span>Resolve</span></button>
               </div>
               <div class="banner banner--strong banner--error" role="alert" aria-label="Error Strong">
-                <span class="icon-box" aria-hidden="true"><svg class="icon"><use href="#Close"/></svg></span>
+                <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></span>
                 <div class="banner__inner"><p>Error Strong: Solid danger fill with high-contrast inverted text.</p></div>
-                <button type="button" class="button button--subtle button--icon"><svg class="icon"><use href="#Close"/></svg><span class="visually-hidden">Dismiss</span></button>
+                <button type="button" class="button button--subtle button--icon"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg><span class="visually-hidden">Dismiss</span></button>
               </div>
             </div>
           </div>
@@ -489,7 +489,7 @@ export const StateMatrix: Story = {
 
           <div class="demo-box demo-box--neutral">
             <span class="demo-label">High-Contrast Mode (@media (prefers-contrast: more))</span>
-            <p class="micro-text" style="margin-block: var(--spacing-4);">
+            <p class="small-text" style="margin-block: var(--spacing-4);">
               Translucency drops to 0% and border width scales to 2px for strong visual framing.
             </p>
             <div class="banner banner--info" style="border-width: 2px; margin-block-start: var(--spacing-8);">
@@ -519,8 +519,8 @@ export const SizesAndDensity: Story = {
               <span class="demo-label" style="margin-block-end: var(--spacing-8);">Compact Single-Line Banner</span>
               <div class="banner banner--info">
                 <div class="banner__inner" style="flex-direction: row; align-items: center; justify-content: space-between; inline-size: 100%;">
-                  <span class="micro-text">Quick status update: 4 tests pending review.</span>
-                  <a href="#view" class="link micro-text"><span>Review</span></a>
+                  <span class="small-text">Quick status update: 4 tests pending review.</span>
+                  <a href="#view" class="link small-text"><span>Review</span></a>
                 </div>
               </div>
             </div>
@@ -545,11 +545,11 @@ export const SizesAndDensity: Story = {
               <span class="demo-label" style="margin-block-end: var(--spacing-8);">Media Thumbnail Callout (.banner__thumb)</span>
               <div class="banner banner--dynamic-corners">
                 <div class="banner__thumb" style="inline-size: 8rem; background-color: var(--surface-accent); display: flex; align-items: center; justify-content: center;">
-                  <svg class="icon" width="32" height="32" aria-hidden="true"><use href="#Info"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
                 </div>
                 <div class="banner__inner">
                   <h4 class="card__title small-heading">Design System 2026</h4>
-                  <p class="micro-text">Modern Web Standards and WCAG 2.2 Level AA / AAA accessible primitives.</p>
+                  <p class="small-text">Modern Web Standards and WCAG 2.2 Level AA / AAA accessible primitives.</p>
                 </div>
               </div>
             </div>
@@ -579,7 +579,7 @@ export const GeometryModifiers: Story = {
                   <p class="heading" style="margin: 0;">Publish to Production?</p>
                 </div>
                 <button type="button" class="button button--strong button--accent banner__action">
-                  <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                   <span class="visually-hidden">Confirm Publish</span>
                 </button>
               </div>
@@ -590,7 +590,7 @@ export const GeometryModifiers: Story = {
               <span class="demo-label" style="margin-block-end: var(--spacing-8);">Round Pill Geometry (.banner--round)</span>
               <div class="banner banner--info banner--round">
                 <div class="banner__inner">
-                  <p class="micro-text" style="margin: 0;">New version released — click to reload application.</p>
+                  <p class="small-text" style="margin: 0;">New version released — click to reload application.</p>
                 </div>
                 <button type="button" class="button button--strong button--accent button--sm banner__action">
                   <span>Reload</span>
@@ -623,7 +623,7 @@ export const RealWorldRecipes: Story = {
             <div class="banner banner--dynamic-corners buttons-round" role="region" aria-label="Privacy settings">
               <div class="banner__inner">
                 <h4 class="subheading">Privacy & Cookies</h4>
-                <p class="micro-text">
+                <p class="small-text">
                   We use cookies and telemetry strictly to verify accessible design system performance.
                 </p>
                 <div class="button-group" style="margin-block-start: var(--spacing-4);">
@@ -638,8 +638,8 @@ export const RealWorldRecipes: Story = {
               <div class="banner__inner">
                 <h4 class="subheading">There were 2 errors with your submission</h4>
                 <ul style="margin: 0; padding-inline-start: var(--spacing-16);">
-                  <li class="micro-text"><a href="#email-field" class="link">Email address is not formatted correctly</a></li>
-                  <li class="micro-text"><a href="#terms-field" class="link">You must accept the terms of service</a></li>
+                  <li class="small-text"><a href="#email-field" class="link">Email address is not formatted correctly</a></li>
+                  <li class="small-text"><a href="#terms-field" class="link">You must accept the terms of service</a></li>
                 </ul>
               </div>
             </div>
@@ -648,11 +648,11 @@ export const RealWorldRecipes: Story = {
             <div class="banner banner--success" role="status">
               <div class="banner__inner" style="flex-direction: row; align-items: center; justify-content: space-between; inline-size: 100%;">
                 <div class="cluster" style="align-items: center; gap: var(--spacing-8);">
-                  <svg class="icon" aria-hidden="true"><use href="#Check"/></svg>
-                  <span class="micro-text"><strong>Build Successful:</strong> Artifact deployed to CDN.</span>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+                  <span class="small-text"><strong>Build Successful:</strong> Artifact deployed to CDN.</span>
                 </div>
                 <button type="button" class="button button--subtle button--icon" aria-label="Close notification">
-                  <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Close"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   <span class="visually-hidden">Dismiss</span>
                 </button>
               </div>

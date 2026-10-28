@@ -49,7 +49,7 @@
   --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion, 2rem));
   --_dialog-drawer-max-width: var(--dialog-drawer-max-width, 28rem);
   --_dialog-font-family: var(--dialog-font-family, var(--typography-font-family-sans, sans-serif));
-  --_dialog-font-size: var(--dialog-font-size, var(--body-font-size, 1rem));
+  --_dialog-font-size: var(--dialog-font-size, var(--body-fixed-font-size, 1rem));
   --_dialog-line-height: var(--dialog-line-height, var(--body-line-height, 1.5));
   --_dialog-max-height: var(--dialog-max-height, 90vb);
   --_dialog-padding: var(--dialog-padding, var(--spacing-16, 1rem));

@@ -1,278 +1,304 @@
 /* ==========================================================================
-   Design For Humans: Input Primitive
+   Design For Humans: Text Control Base & Input Primitive
    --------------------------------------------------------------------------
-   Accessible text-like form inputs, color pickers, and file inputs conforming
-   to WCAG 2.2 AA / AAA standards:
-   - 2.5.5 Target Size (48px default minimum touch target)
-   - 2.5.8 Target Size (Minimum 24x24px / 32px for compact controls)
-   - 1.4.3 & 1.4.11 Contrast (4.5:1 text, 3:1 borders and focus rings)
-   - Modern Web Guidance (:user-invalid / :user-valid interaction validation)
+   Section 1 is the base shared by every text control: .input, .select and
+   .textarea. select.css and textarea.css add only what differs. Section 6 on
+   is input's own: date and time alignment, colour and file inputs.
+
+   | Axis       | Modifiers                 | Container flags                                   |
+   | ---------- | ------------------------- | ------------------------------------------------- |
+   | Size       | (default) --sm --lg       | --{input,select,textarea}-size, --controls-size    |
+   | Prominence | (outline) --subtle --plain | --{input,select,textarea}-prominence, --controls-prominence |
+   | Corners    | --round                   | --{input,select,textarea}-corners, --controls-corners |
+
+   A compact container (--ui-sizing: compact) steps controls to --sm.
+   --flush is layout, not prominence: no inline padding and no boundary, for
+   a field inside a bar that draws the boundary and focus ring itself.
+
+   Classes only: bare <input>, <select> and <textarea> keep browser styling.
+
+   Accessibility:
+   - 1.4.11 Non-text Contrast: every prominence keeps a 3:1 edge. Outline has
+     a full border; subtle and plain keep the bottom border.
+   - 2.5.8 Target Size: --sm is 32px, the same as a small button. A field
+     can't take an ::after buffer, so that is also its hit area: above the
+     24px minimum, below the 48px touch target. Use --sm where the pointer
+     is fine (or scope it with fine:ui-compact).
+   - Invalid state follows :user-invalid and [aria-invalid="true"]. Pair it
+     with a .field__error message (WCAG 1.4.1, 3.3.1).
 
    Usage:
-   <input type="text" class="input" placeholder="Enter full name" />
+   <input type="email" class="input" id="email" autocomplete="email" />
+   <input type="search" class="input input--sm input--subtle" aria-label="Filter" />
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Text-Like Inputs (:where(.input, input:is(...)))
+   1. Text Control Base (:where(.input, .select, .textarea))
    ========================================================================== */
+:where(.input, .select, .textarea) {
+  /* ------------------------------------------------------------------------
+     Size sources. Each control may redefine these at its own root; the
+     effective values below pick one set by size.
+     ------------------------------------------------------------------------ */
+  --_control-default-min-size: var(--input-min-size, 3rem);
+  --_control-default-padding-block: var(--input-padding-block, 0.25rem);
+  --_control-default-padding-inline: var(--input-padding-inline, 1rem);
+  --_control-default-font-size: var(--input-font-size, 1rem);
+  --_control-default-line-height: var(--input-line-height, 1.25);
 
-:where(.input) {
-  --_input-icon-space: var(--input-picker-icon-space, 0px);
-}
+  --_control-sm-min-size: var(--input-sm-min-size, 2rem);
+  --_control-sm-padding-block: var(--input-sm-padding-block, 0.125rem);
+  --_control-sm-padding-inline: var(--input-sm-padding-inline, 0.75rem);
+  --_control-sm-font-size: var(--input-sm-font-size, 0.875rem);
+  --_control-sm-line-height: var(--input-sm-line-height, 1.25);
 
-:where(input:is([type="number"], [type="time"], [type="datetime-local"], [type="month"], [type="week"], [type="date"]):not([class*="__input"], .input--bare, .input--unstyled)) {
-  --_input-icon-space: var(--input-picker-icon-space, 1rem);
-}
+  --_control-lg-min-size: var(--input-lg-min-size, 4rem);
+  --_control-lg-padding-block: var(--input-lg-padding-block, 0.5rem);
+  --_control-lg-padding-inline: var(--input-lg-padding-inline, 1.5rem);
+  --_control-lg-font-size: var(--input-lg-font-size, 1.125rem);
+  --_control-lg-line-height: var(--input-lg-line-height, 1.25);
 
-:where(.input, input:is([type="email"],
-    [type="password"],
-    [type="number"],
-    [type="tel"],
-    [type="text"],
-    [type="time"],
-    [type="datetime-local"],
-    [type="month"],
-    [type="week"],
-    [type="date"],
-    [type="url"],
-    [type="search"]):not([class*="__input"], .input--bare, .input--unstyled)) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_input-bg: var(--input-bg, var(--input-background-color, var(--surface-card, Canvas)));
-  --_input-border-color: var(--input-border-color, var(--control-border-color, currentColor));
-  --_input-border-width: var(--input-border-width, var(--control-border-width, 1px));
-  --_input-color: var(--input-color, var(--foreground, currentColor));
-  --_input-font-family: var(--input-font-family, var(--body-font-family, inherit));
-  --_input-font-size: var(--input-font-size, var(--control-font-size, var(--typography-font-size-0, 1rem)));
-  --_input-line-height: var(--input-line-height, var(--control-line-height, 1.25));
-  --_input-min-chars: var(--input-min-chars, 3);
-  --_input-min-size: var(--input-min-size, var(--spacing-target, 3rem));
-  --_input-min-inline-size: var(--input-min-inline-size, calc(var(--_input-min-chars) * 1ch + var(--_input-padding-inline) * 2 + var(--_input-icon-space)));
-  --_input-padding-block: var(--input-padding-block, var(--spacing-8, 0.5rem));
-  --_input-padding-inline: var(--input-padding-inline, var(--spacing-16, 1rem));
-  --_input-placeholder-color: var(--input-placeholder-color, var(--foreground-muted, currentColor));
-  --_input-radius: var(--input-radius, var(--ui-radius, var(--radius, 0.25rem)));
-  --_input-shadow: var(--input-shadow, none);
-  --_input-timefunc: var(--input-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-  --_input-transition: var(--input-transition, var(--duration-sm, 150ms));
+  /* Effective size */
+  --_control-min-size: var(--_control-default-min-size);
+  --_control-padding-block: var(--_control-default-padding-block);
+  --_control-padding-inline: var(--_control-default-padding-inline);
+  --_control-font-size: var(--_control-default-font-size);
+  --_control-line-height: var(--_control-default-line-height);
 
-  /* Interactive & Validation State Contract */
-  --_input-hover-bg: var(--input-hover-bg, var(--_input-bg));
-  --_input-hover-border-color: var(--input-hover-border-color, var(--input-hover-border, var(--border-color-accent, var(--foreground-accent, currentColor))));
-  --_input-focus-border-color: var(--input-focus-border-color, var(--border-color-accent, var(--foreground-accent, currentColor)));
-  --_input-invalid-border-color: var(--input-border-color-invalid, var(--border-color-danger, #d32f2f));
-  --_input-valid-border-color: var(--input-border-color-valid, var(--border-color-success, #00875a));
-  --_input-disabled-border-color: var(--input-disabled-border-color, var(--border-color-quiet, currentColor));
+  /* Surface & edge */
+  --_control-bg: var(--input-background-color, var(--surface-card, Canvas));
+  --_control-color: var(--foreground, CanvasText);
+  --_control-placeholder-color: var(--foreground-muted, GrayText);
+  --_control-border-width: var(--input-border-width, 1px);
+  --_control-radius: var(--input-radius, var(--radius, 0.25rem));
+  --_control-edge-color: var(--input-border-color, currentColor);
+  --_control-sides-transparency: 0%;
 
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     Enables contextual DX orchestration without per-element utility classes:
-     e.g., .form-row { --input-variation: plain; --ui-density: dense; }
-     -------------------------------------------------------------------------- */
+  /* State contract */
+  --_control-hover-bg: var(--_control-bg);
+  --_control-hover-edge-color: var(--border-color-accent, currentColor);
+  --_control-focus-edge-color: var(--border-color-accent, currentColor);
+  --_control-invalid-edge-color: var(--input-border-color-invalid, var(--border-color-danger, currentColor));
+  --_control-transition: var(--input-transition, 150ms);
+  --_control-timefunc: var(--timefunc-ease-in-out, ease-in-out);
 
-  /* Density & Size */
-  @container style(--ui-density: dense) or style(--control-density: dense) or style(--input-density: compact) {
-    --_input-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_input-padding-block: var(--input-sm-padding-block, var(--spacing-4, 0.25rem));
-    --_input-padding-inline: var(--input-sm-padding-inline, var(--spacing-12, 0.75rem));
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifier classes, so a modifier on the control beats
+     a flag inherited from a container.
+     ------------------------------------------------------------------------ */
+  @container style(--controls-size: sm) or style(--ui-sizing: compact) {
+    --_control-min-size: var(--_control-sm-min-size);
+    --_control-padding-block: var(--_control-sm-padding-block);
+    --_control-padding-inline: var(--_control-sm-padding-inline);
+    --_control-font-size: var(--_control-sm-font-size);
+    --_control-line-height: var(--_control-sm-line-height);
   }
 
-  @container style(--font-sizing: compact) {
-    --_input-font-size: var(--input-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
+  @container style(--controls-size: lg) {
+    --_control-min-size: var(--_control-lg-min-size);
+    --_control-padding-block: var(--_control-lg-padding-block);
+    --_control-padding-inline: var(--_control-lg-padding-inline);
+    --_control-font-size: var(--_control-lg-font-size);
+    --_control-line-height: var(--_control-lg-line-height);
   }
 
-  @container style(--ui-sizing: compact) or style(--controls-size: sm) or style(--input-size: sm) {
-    --_input-font-size: var(--input-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
-    --_input-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_input-padding-block: var(--input-sm-padding-block, var(--spacing-4, 0.25rem));
-    --_input-padding-inline: var(--input-sm-padding-inline, var(--spacing-12, 0.75rem));
+  @container style(--controls-prominence: subtle) {
+    --_control-bg: var(--surface-translucent, transparent);
+    --_control-hover-bg: var(--surface-translucent-strong, transparent);
+    --_control-border-width: 0px;
   }
 
-  @container style(--input-size: lg) {
-    --_input-min-size: var(--input-lg-min-size, var(--spacing-target-lg, 3.5rem));
-    --_input-padding-block: var(--input-lg-padding-block, var(--spacing-12, 0.75rem));
-    --_input-padding-inline: var(--input-lg-padding-inline, var(--spacing-24, 1.5rem));
-    --_input-font-size: var(--input-lg-font-size, var(--control-lg-font-size, var(--typography-font-size-1, 1.125rem)));
+  @container style(--controls-prominence: plain) {
+    --_control-bg: transparent;
+    --_control-hover-bg: var(--surface-translucent, transparent);
+    --_control-sides-transparency: 100%;
   }
 
-  /* Variation Orchestration */
-  @container style(--controls-variation: plain) or style(--input-variation: plain) {
-    --_input-bg: transparent;
-    --_input-border-color: transparent;
-    --_input-hover-border-color: transparent;
-    --_input-shadow: none;
-    --_input-valid-border-color: transparent;
+  @container style(--controls-corners: round) {
+    --_control-radius: var(--radius-round, 9999px);
   }
 
-  @container style(--controls-variation: subtle) or style(--input-variation: subtle) {
-    --_input-border-color: transparent;
-    --_input-hover-bg: var(--input-subtle-hover-bg, var(--surface-translucent-strong, transparent));
-    --_input-hover-border-color: transparent;
-    --_input-shadow: none;
-    --_input-valid-border-color: transparent;
+  /* Per-control flags */
+  &:where(.input) {
+    @container style(--input-size: sm) {
+      --_control-min-size: var(--_control-sm-min-size);
+      --_control-padding-block: var(--_control-sm-padding-block);
+      --_control-padding-inline: var(--_control-sm-padding-inline);
+      --_control-font-size: var(--_control-sm-font-size);
+      --_control-line-height: var(--_control-sm-line-height);
+    }
+
+    @container style(--input-size: lg) {
+      --_control-min-size: var(--_control-lg-min-size);
+      --_control-padding-block: var(--_control-lg-padding-block);
+      --_control-padding-inline: var(--_control-lg-padding-inline);
+      --_control-font-size: var(--_control-lg-font-size);
+      --_control-line-height: var(--_control-lg-line-height);
+    }
+
+    @container style(--input-prominence: subtle) {
+      --_control-bg: var(--surface-translucent, transparent);
+      --_control-hover-bg: var(--surface-translucent-strong, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--input-prominence: plain) {
+      --_control-bg: transparent;
+      --_control-hover-bg: var(--surface-translucent, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--input-corners: round) {
+      --_control-radius: var(--radius-round, 9999px);
+    }
   }
 
-  @container style(--controls-variation: flush) or style(--input-variation: flush) {
-    --_input-bg: transparent;
-    --_input-border-color: transparent;
-    --_input-focus-border-color: transparent;
-    --_input-hover-border-color: transparent;
-    --_input-padding-inline: 0;
-    --_input-shadow: none;
-    --_input-valid-border-color: transparent;
+  &:where(.select) {
+    @container style(--select-size: sm) {
+      --_control-min-size: var(--_control-sm-min-size);
+      --_control-padding-block: var(--_control-sm-padding-block);
+      --_control-padding-inline: var(--_control-sm-padding-inline);
+      --_control-font-size: var(--_control-sm-font-size);
+      --_control-line-height: var(--_control-sm-line-height);
+    }
+
+    @container style(--select-size: lg) {
+      --_control-min-size: var(--_control-lg-min-size);
+      --_control-padding-block: var(--_control-lg-padding-block);
+      --_control-padding-inline: var(--_control-lg-padding-inline);
+      --_control-font-size: var(--_control-lg-font-size);
+      --_control-line-height: var(--_control-lg-line-height);
+    }
+
+    @container style(--select-prominence: subtle) {
+      --_control-bg: var(--surface-translucent, transparent);
+      --_control-hover-bg: var(--surface-translucent-strong, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--select-prominence: plain) {
+      --_control-bg: transparent;
+      --_control-hover-bg: var(--surface-translucent, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--select-corners: round) {
+      --_control-radius: var(--radius-round, 9999px);
+    }
   }
 
-  /* Corner Shapes */
-  @container style(--controls-corners: round) or style(--input-corners: round) {
-    --_input-radius: var(--radius-round, 9999px);
+  &:where(.textarea) {
+    @container style(--textarea-size: sm) {
+      --_control-padding-block: var(--_control-sm-padding-block);
+      --_control-padding-inline: var(--_control-sm-padding-inline);
+      --_control-font-size: var(--_control-sm-font-size);
+      --_control-line-height: var(--_control-sm-line-height);
+    }
+
+    @container style(--textarea-size: lg) {
+      --_control-padding-block: var(--_control-lg-padding-block);
+      --_control-padding-inline: var(--_control-lg-padding-inline);
+      --_control-font-size: var(--_control-lg-font-size);
+      --_control-line-height: var(--_control-lg-line-height);
+    }
+
+    @container style(--textarea-prominence: subtle) {
+      --_control-bg: var(--surface-translucent, transparent);
+      --_control-hover-bg: var(--surface-translucent-strong, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--textarea-prominence: plain) {
+      --_control-bg: transparent;
+      --_control-hover-bg: var(--surface-translucent, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--textarea-corners: round) {
+      --_control-radius: var(--radius-round, 9999px);
+    }
   }
 
   /* Layout & Sizing */
   box-sizing: border-box;
   flex: 1 1 auto;
   max-inline-size: 100%;
-  min-block-size: var(--_input-min-size);
-  min-inline-size: var(--_input-min-inline-size);
-
-  /* Spacing */
-  padding-block: var(--_input-padding-block);
-  padding-inline: var(--_input-padding-inline);
+  min-block-size: var(--_control-min-size);
+  margin: 0;
+  padding-block: var(--_control-padding-block);
+  padding-inline: var(--_control-padding-inline);
 
   /* Typography */
-  font-family: var(--_input-font-family);
-  font-size: var(--_input-font-size);
-  line-height: var(--_input-line-height);
-  color: var(--_input-color);
-  -webkit-appearance: none;
+  font-family: var(--body-font-family, inherit);
+  font-size: var(--_control-font-size);
+  line-height: var(--_control-line-height);
+  color: var(--_control-color);
   appearance: none;
 
-  /* Surface, Border & Shape */
-  background-color: var(--_input-bg);
-  border-radius: var(--_input-radius);
-  border: var(--_input-border-width) solid var(--_input-border-color);
-  box-shadow: var(--_input-shadow);
+  /* Surface & Edge: the sides fade out for subtle and plain; the bottom edge
+     always stays, so the field keeps a 3:1 boundary. */
+  background-color: var(--_control-bg);
+  border: var(--_control-border-width) solid;
+  border-color: color-mix(in srgb, var(--_control-edge-color), transparent var(--_control-sides-transparency));
+  border-block-end-color: var(--_control-edge-color);
+  border-radius: var(--_control-radius);
 
   /* Transitions */
   transition-property: border-color,
   background-color,
   color,
-  box-shadow,
   outline-color;
-  transition-duration: var(--_input-transition);
-  transition-timing-function: var(--_input-timefunc);
+  transition-duration: var(--_control-transition);
+  transition-timing-function: var(--_control-timefunc);
 
-  /* Placeholder Styling */
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (prefers-contrast: more) {
+    --_control-border-width: 2px;
+  }
+
   &::placeholder {
-    color: var(--_input-placeholder-color);
+    color: var(--_control-placeholder-color);
     opacity: 1;
   }
 
-  /* Single-Source Interactive States */
+  /* ------------------------------------------------------------------------
+     States: each sets the edge colour; the border rules above apply it.
+     ------------------------------------------------------------------------ */
   @media (hover: hover) {
-    &:hover:not(:disabled, [readonly], [aria-disabled="true"]) {
-      background-color: var(--_input-hover-bg);
-      border-color: var(--_input-hover-border-color);
-    }
-  }
 
-  /* Focus Visible (High Contrast 3:1 Ring with Offset) */
-  &:focus {
-    outline: none;
+    /* select always matches :read-only, so only text fields are excluded */
+    &:hover:not(:disabled, [aria-disabled="true"], :where(input, textarea):read-only) {
+      --_control-edge-color: var(--_control-hover-edge-color);
+      background-color: var(--_control-hover-bg);
+    }
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    --_control-edge-color: var(--_control-focus-edge-color);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
     outline-offset: var(--focus-ring-offset, 2px);
-    border-color: var(--_input-focus-border-color);
   }
 
-  /* Modern Validation States (:user-invalid / :user-valid) */
   &:where(:user-invalid, [aria-invalid="true"]) {
-    border-color: var(--_input-invalid-border-color);
+    --_control-edge-color: var(--_control-invalid-edge-color);
 
     &:focus-visible {
-      outline-color: var(--_input-invalid-border-color);
+      outline-color: var(--_control-invalid-edge-color);
     }
   }
 
-  &:user-valid:not(:placeholder-shown) {
-    border-color: var(--_input-valid-border-color);
-  }
-
-  /* Disabled & Readonly States */
   &:where(:disabled, [aria-disabled="true"]) {
     opacity: var(--opacity-disabled, 0.4);
     cursor: not-allowed;
-    background-color: var(--surface-translucent, transparent);
-    border-color: var(--_input-disabled-border-color);
   }
 
-  &:read-only:not(:disabled, [aria-disabled="true"]) {
-    cursor: default;
-    background-color: var(--surface-translucent, transparent);
+  &:where(:read-only:not(:disabled, [aria-disabled="true"], select)) {
     border-style: dashed;
-  }
-
-  /* Size Modifiers (.input--sm, .input--lg) */
-  :where(.inputs-dense) {
-    --input-density: dense;
-  }
-
-  :where(.controls-sm, .inputs-sm) &,
-  &:where(.input--sm) {
-    --_input-min-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_input-padding-block: var(--input-sm-padding-block, var(--spacing-4, 0.25rem));
-    --_input-padding-inline: var(--input-sm-padding-inline, var(--spacing-12, 0.75rem));
-    --_input-font-size: var(--input-sm-font-size, var(--control-sm-font-size, var(--typography-font-size--1, 0.875rem)));
-  }
-
-  :where(.controls-lg, .inputs-lg) &,
-  &:where(.input--lg) {
-    --_input-min-size: var(--input-lg-min-size, var(--spacing-target-lg, 3.5rem));
-    --_input-padding-block: var(--input-lg-padding-block, var(--spacing-12, 0.75rem));
-    --_input-padding-inline: var(--input-lg-padding-inline, var(--spacing-24, 1.5rem));
-    --_input-font-size: var(--input-lg-font-size, var(--control-lg-font-size, var(--typography-font-size-1, 1.125rem)));
-
-    @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-      --_input-min-size: var(--input-min-size, var(--spacing-target, 3rem));
-      --_input-padding-block: var(--input-padding-block, var(--spacing-8, 0.5rem));
-      --_input-padding-inline: var(--input-padding-inline, var(--spacing-16, 1rem));
-    }
-  }
-
-  /* Plain / Flush Input Modifier */
-  :where(.inputs-plain) {
-    --input-variation: plain;
-  }
-
-  :where(.controls-plain, .inputs-plain) &,
-  &:where(.input--flush, .input--plain, .input--ghost) {
-    --_input-bg: transparent;
-    --_input-border-color: transparent;
-    --_input-hover-border-color: transparent;
-    --_input-valid-border-color: transparent;
-    --_input-shadow: none;
-  }
-
-  /* Subtle Input Modifier (Translucent background, no border) */
-  :where(.inputs-subtle) {
-    --input-variation: subtle;
-  }
-
-  :where(.controls-subtle, .inputs-subtle) &,
-  &:where(.input--subtle) {
-    --_input-bg: var(--input-subtle-bg, var(--surface-translucent, transparent));
-    --_input-hover-bg: var(--input-subtle-hover-bg, var(--surface-translucent-strong, transparent));
-    --_input-border-color: transparent;
-    --_input-hover-border-color: transparent;
-    --_input-valid-border-color: transparent;
-    --_input-shadow: none;
-  }
-
-  &:where(.input--flush) {
-    --_input-focus-border-color: transparent;
-    --_input-padding-inline: 0;
+    cursor: default;
   }
 
   :where(.inline-form, .inline-field) & {
@@ -281,106 +307,170 @@
 }
 
 /* ==========================================================================
-   2. Date/Time Value Alignment
+   2. Size Modifiers
    ========================================================================== */
-:where(.input, input):is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
-  &::-webkit-date-and-time-value {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: 1lh;
-    text-align: start;
-    margin: 0;
-    padding: 0;
-  }
+:where(.input--sm, .select--sm, .textarea--sm) {
+  --_control-min-size: var(--_control-sm-min-size);
+  --_control-padding-block: var(--_control-sm-padding-block);
+  --_control-padding-inline: var(--_control-sm-padding-inline);
+  --_control-font-size: var(--_control-sm-font-size);
+  --_control-line-height: var(--_control-sm-line-height);
+}
 
-  &::-webkit-datetime-edit {
-    display: inline-flex;
-    align-items: center;
-    padding: 0;
-  }
+:where(.input--lg, .select--lg, .textarea--lg) {
+  --_control-min-size: var(--_control-lg-min-size);
+  --_control-padding-block: var(--_control-lg-padding-block);
+  --_control-padding-inline: var(--_control-lg-padding-inline);
+  --_control-font-size: var(--_control-lg-font-size);
+  --_control-line-height: var(--_control-lg-line-height);
 
-  &::-webkit-calendar-picker-indicator {
-    margin: 0;
-    padding: 0;
-    align-self: center;
+  /* A compact container steps large controls back to default */
+  @container style(--ui-sizing: compact) {
+    --_control-min-size: var(--_control-default-min-size);
+    --_control-padding-block: var(--_control-default-padding-block);
+    --_control-padding-inline: var(--_control-default-padding-inline);
+    --_control-font-size: var(--_control-default-font-size);
+    --_control-line-height: var(--_control-default-line-height);
   }
 }
 
 /* ==========================================================================
-   3. Color Input Primitive (:where(.color-input, input[type="color"]))
+   3. Prominence Modifiers
    ========================================================================== */
-:where(.color-input, input[type="color"]) {
-  --_input-min-size: var(--input-min-size, var(--spacing-target, 3rem));
+:where(.input--subtle, .select--subtle, .textarea--subtle) {
+  --_control-bg: var(--surface-translucent, transparent);
+  --_control-hover-bg: var(--surface-translucent-strong, transparent);
+  --_control-border-width: 0px;
+}
 
-  /* Layout & Sizing */
+:where(.input--plain, .select--plain, .textarea--plain) {
+  --_control-bg: transparent;
+  --_control-hover-bg: var(--surface-translucent, transparent);
+  --_control-sides-transparency: 100%;
+}
+
+/* ==========================================================================
+   4. Corners
+   ========================================================================== */
+:where(.input--round, .select--round, .textarea--round) {
+  --_control-radius: var(--radius-round, 9999px);
+}
+
+/* ==========================================================================
+   5. Flush (.input--flush, .select--flush, .textarea--flush)
+   Only inside a container that draws a 3:1 boundary and the focus ring
+   (for example .focus-within on a card header).
+   ========================================================================== */
+:where(.input--flush, .select--flush, .textarea--flush) {
+  --_control-bg: transparent;
+  --_control-hover-bg: transparent;
+  --_control-edge-color: transparent;
+  --_control-hover-edge-color: transparent;
+  --_control-focus-edge-color: transparent;
+  --_control-padding-inline: 0;
+}
+
+/* ==========================================================================
+   6. Input (:where(.input))
+   ========================================================================== */
+:where(.input) {
+  --_input-min-chars: var(--input-min-chars, 3);
+  --_input-icon-space: 0px;
+
+  min-inline-size: calc(var(--_input-min-chars) * 1ch + var(--_control-padding-inline) * 2 + var(--_input-icon-space));
+
+  /* Date and time pickers reserve room for the browser's picker icon */
+  &:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"], [type="number"]) {
+    --_input-icon-space: var(--input-picker-icon-space, 1rem);
+  }
+
+  &:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
+    &::-webkit-date-and-time-value {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: 1lh;
+      margin: 0;
+      padding: 0;
+      text-align: start;
+    }
+
+    &::-webkit-datetime-edit {
+      display: inline-flex;
+      align-items: center;
+      padding: 0;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      align-self: center;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. Colour Input (:where(.color-input))
+   A swatch button. Sized like the other controls; --sm follows the same
+   hit-area rule.
+   ========================================================================== */
+:where(.color-input) {
+  --_color-input-size: var(--input-min-size, 3rem);
+
   box-sizing: border-box;
-  flex: 1 1 auto;
-  block-size: var(--_input-min-size);
-  min-inline-size: var(--_input-min-size);
+  inline-size: var(--_color-input-size);
+  block-size: var(--_color-input-size);
+  padding: 0;
   cursor: pointer;
-
-  /* Surface & Border */
-  background-color: ButtonFace;
-  border-radius: var(--input-radius, var(--ui-radius, var(--radius, 0.25rem)));
-  border: var(--input-border-width, var(--border-width, 1px)) solid var(--input-border-color, var(--border-color-muted, currentColor));
+  background-color: transparent;
+  border: var(--input-border-width, 1px) solid var(--input-border-color, currentColor);
+  border-radius: var(--input-radius, var(--radius, 0.25rem));
 
   &::-webkit-color-swatch-wrapper {
     padding: 0;
+    border-radius: var(--input-radius, var(--radius, 0.25rem));
   }
 
   &::-webkit-color-swatch {
     border: 0;
-    border-radius: calc(var(--input-radius, var(--ui-radius, var(--radius, 0.25rem))) - 1px);
+  }
+
+  &::-moz-color-swatch {
+    border: 0;
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
     outline-offset: var(--focus-ring-offset, 2px);
-  }
-
-  &:where(.color-input--square) {
-    inline-size: var(--_color-input-block-size);
-  }
-
-  &:where(.color-input--sm) {
-    --_color-input-block-size: var(--input-sm-min-size, var(--spacing-target-sm, 2rem));
-  }
-
-  &:where(.color-input--lg) {
-    --_color-input-block-size: var(--input-lg-min-size, var(--spacing-target-lg, 3.5rem));
   }
 }
 
+:where(.color-input--sm) {
+  --_color-input-size: var(--input-sm-min-size, 2rem);
+}
+
+:where(.color-input--lg) {
+  --_color-input-size: var(--input-lg-min-size, 4rem);
+}
+
 /* ==========================================================================
-   4. File Input Primitive (:where(.file-input, input[type="file"]))
+   8. File Input (:where(.file-input))
+   The "Choose file" button inherits the font; the browser draws the rest.
    ========================================================================== */
-:where(.file-input, input[type="file"]) {
-  /* Layout & Sizing */
+:where(.file-input) {
   box-sizing: border-box;
-  inline-size: 100%;
+  max-inline-size: 100%;
+  font: inherit;
+  color: var(--foreground, CanvasText);
 
-  /* Typography */
-  font-family: var(--input-font-family, var(--body-font-family, inherit));
-  font-size: var(--input-font-size, var(--control-font-size, var(--typography-font-size-0, 1rem)));
-  color: var(--input-color, var(--foreground, currentColor));
+  &::file-selector-button {
+    min-block-size: var(--spacing-target-min, 3rem);
+    margin-inline-end: var(--input-inner-gap, 0.75rem);
+    font: inherit;
+    cursor: pointer;
+  }
 
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
     outline-offset: var(--focus-ring-offset, 2px);
-  }
-}
-
-/* ==========================================================================
-   5. Accessibility & Media Queries
-   ========================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  :where(.input, input:is([type="email"], [type="password"], [type="number"], [type="tel"], [type="text"], [type="url"], [type="search"]):not([class*="__input"], .input--bare, .input--unstyled)) {
-    transition: none !important;
-  }
-}
-
-@media (prefers-contrast: more) {
-  :where(.input, input:is([type="email"], [type="password"], [type="number"], [type="tel"], [type="text"], [type="url"], [type="search"]):not([class*="__input"], .input--bare, .input--unstyled)) {
-    border-width: calc(var(--input-border-width, var(--border-width, 1px)) * 2);
   }
 }

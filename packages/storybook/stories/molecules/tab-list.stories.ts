@@ -1,487 +1,278 @@
 import type { Meta, StoryObj } from '@storybook/html';
+import { icon, listClasses, navList, withTabBehaviour, type TabProminence, type TabStyle } from '../_shared/tabs';
 
-const meta: Meta = {
+interface ListArgs {
+  style: TabStyle;
+  prominence: TabProminence;
+  sm: boolean;
+  round: boolean;
+  orientation: 'horizontal' | 'vertical' | 'end';
+}
+
+const ITEMS = ['Overview', 'Activity', 'Settings', 'Members'];
+
+const orientationClass = (orientation: ListArgs['orientation']) =>
+  orientation === 'vertical' ? 'tab-list--vertical' : orientation === 'end' ? 'tab-list--end' : '';
+
+const meta: Meta<ListArgs> = {
   title: 'Molecules/Tab List',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Tab List Primitive (Molecule)
+### Tab List
 
-The **Tab List** molecule is a cohesive group container for interactive tabs and navigation links.
-It orchestrates:
-- **Anchor Scope:** Establishes \`anchor-scope: --tab-selected\` so the active tab's anchor is encapsulated within the list.
-- **Sliding Indicator Transition:** Animates a hardware-accelerated indicator pseudo-element (\`::before\`) via CSS Anchor Positioning without requiring manual JavaScript dimension measurement.
-- **Standalone Navigation:** Can function completely independently from panels as a site header navigation, sub-navigation, or filter toolbar.
-- **Semantic Flexibility:** Supports both \`<div class="tab-list" role="tablist">\` and semantic \`<nav class="tab-list"><ul class="tab-list__items"><li><a class="tab">...\` structures with \`display: contents\` list-item transparency.
-- **Floating & Docked Modes:** Translucent floating pill bar (\`.tabs-floating\`) with backdrop blur and fixed bottom viewport dock (\`.tabs-docked\`).
-        `,
+A row or column of tabs: a \`role="tablist"\` that switches panels (see **Organisms/Tabbed Content**), or a \`<nav>\` of links. The list owns every axis of its tabs and draws one selection indicator that slides to the selected tab.
+
+| Axis | Modifiers | Flag |
+| :--- | :--- | :--- |
+| Style | (underline), \`--segmented\` | \`--tab-list-style\` |
+| Prominence | (default), \`--subtle\` (segmented only), \`--plain\` | \`--tab-list-prominence\` |
+| Size | (default), \`--sm\` | \`--tab-list-size\`; a compact container steps to \`--sm\` |
+| Corners | (default), \`--round\` | \`--tab-list-corners\` |
+
+Layout: \`--vertical\`, \`--end\` (vertical, on the inline end), \`--scrollable\`, \`--fill\`, \`--floating\`, \`--docked\`, \`--flush\`, \`--tight\`.
+
+**Every variant marks the selected tab at 3:1 or more** (WCAG 1.4.11):
+
+| Style | Default | \`--subtle\` | \`--plain\` |
+| :--- | :--- | :--- | :--- |
+| Underline | Rule under the list; line indicator | – | No rule; accent line, accent bold text |
+| Segmented | Outlined tabs; filled indicator | Tinted tabs; filled indicator | Bare tabs; tint, accent bold text |
+
+- Underline is for navigation and sections; segmented switches a view.
+- **Hover** changes the surface, never the text colour.
+- **Size:** tabs are 48px. \`--sm\` is 32px with a 48px hit area, unless the product opts into fine-pointer targets.
+- **Semantic lists:** \`<ul>\` and \`<li>\` inside the list take \`display: contents\`, so the tabs stay flex items.
+- **Without anchor positioning**, the selected tab draws its own line or fill. In forced colours the indicator is \`Highlight\`.
+
+\`\`\`html
+<nav class="tab-list tab-list--segmented tab-list--round" aria-label="View">
+  <a href="/grid" class="tab" aria-current="page"><span class="tab__text">Grid</span></a>
+  <a href="/list" class="tab"><span class="tab__text">List</span></a>
+</nav>
+\`\`\`
+`,
       },
     },
   },
+  argTypes: {
+    style: { control: 'inline-radio', options: ['underline', 'segmented'] },
+    prominence: { control: 'inline-radio', options: ['default', 'subtle', 'plain'], description: '--subtle applies to segmented only' },
+    sm: { control: 'boolean', description: '--sm' },
+    round: { control: 'boolean', description: '--round' },
+    orientation: { control: 'inline-radio', options: ['horizontal', 'vertical', 'end'] },
+  },
+  args: { style: 'underline', prominence: 'default', sm: false, round: false, orientation: 'horizontal' },
+  render: (args) =>
+    withTabBehaviour(`
+    <div class="demo-stage">
+      ${navList('Playground', ITEMS, { ...args, extra: [orientationClass(args.orientation)] })}
+    </div>
+  `),
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<ListArgs>;
 
-const createInteractiveList = (html: string) => {
-  const container = document.createElement('div');
-  container.innerHTML = html;
+/**
+ * Interactive sandbox. Click a tab to move the indicator.
+ */
+export const Playground: Story = {};
 
-  requestAnimationFrame(() => {
-    const tablists = container.querySelectorAll<HTMLElement>('.tab-list, .tab-list');
-    tablists.forEach((tablist) => {
-      const tabs = tablist.querySelectorAll<HTMLElement>('[role="tab"]');
-      tabs.forEach((tab) => {
-        tab.addEventListener('click', () => {
-          tabs.forEach((t) => {
-            t.setAttribute('aria-selected', 'false');
-            t.setAttribute('tabindex', '-1');
-          });
-          tab.setAttribute('aria-selected', 'true');
-          tab.setAttribute('tabindex', '0');
-        });
-      });
-    });
-  });
-
-  return container;
+/**
+ * Every style and prominence. The selected tab is always marked at 3:1;
+ * plain lists add the accent colour.
+ */
+export const StyleAndProminence: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage stack">
+      <span class="sb-demo-tag">underline (default)</span>
+      ${navList('Underline', ITEMS)}
+      <span class="sb-demo-tag">underline --plain</span>
+      ${navList('Underline plain', ITEMS, { prominence: 'plain' })}
+      <span class="sb-demo-tag">--segmented</span>
+      ${navList('Segmented', ITEMS, { style: 'segmented' })}
+      <span class="sb-demo-tag">--segmented --subtle</span>
+      ${navList('Segmented subtle', ITEMS, { style: 'segmented', prominence: 'subtle' })}
+      <span class="sb-demo-tag">--segmented --plain</span>
+      ${navList('Segmented plain', ITEMS, { style: 'segmented', prominence: 'plain' })}
+    </div>
+  `),
 };
 
-export const StandaloneUnderlineNav: Story = {
+/**
+ * Round corners on a segmented list; the indicator follows them.
+ */
+export const Round: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage stack">
+      ${(['default', 'subtle', 'plain'] as TabProminence[])
+        .map((prominence) => navList(`Round ${prominence}`, ITEMS.slice(0, 3), { style: 'segmented', prominence, round: true }))
+        .join('')}
+    </div>
+  `),
+};
+
+/**
+ * --sm is 32px with a 48px hit area. A compact container (.ui-compact) steps tabs to --sm.
+ */
+export const Sizes: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage stack">
+      <span class="sb-demo-tag">default (48px)</span>
+      ${navList('Default size', ITEMS)}
+      ${navList('Default size segmented', ITEMS, { style: 'segmented' })}
+      <span class="sb-demo-tag">--sm (32px, 48px hit area)</span>
+      ${navList('Small', ITEMS, { sm: true })}
+      ${navList('Small segmented', ITEMS, { style: 'segmented', sm: true })}
+      <span class="sb-demo-tag">.ui-compact container</span>
+      <div class="ui-compact stack">
+        ${navList('Compact', ITEMS)}
+        ${navList('Compact segmented', ITEMS, { style: 'segmented' })}
+      </div>
+    </div>
+  `),
+};
+
+/**
+ * Vertical lists: the rule and indicator sit on the inline end, or on the
+ * start with --end (a list on the end side of a layout).
+ */
+export const Vertical: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage grid grid--auto-fit grid--2xs">
+      ${navList('Vertical', ITEMS, { extra: ['tab-list--vertical'] })}
+      ${navList('Vertical end', ITEMS, { extra: ['tab-list--end'] })}
+      ${navList('Vertical plain', ITEMS, { prominence: 'plain', extra: ['tab-list--vertical'] })}
+      ${navList('Vertical segmented subtle', ITEMS, { style: 'segmented', prominence: 'subtle', extra: ['tab-list--vertical'] })}
+    </div>
+  `),
+};
+
+/**
+ * Set the axes on any container with the flags, and every list inside follows.
+ * A modifier on a list beats the flag.
+ */
+export const ContainerFlags: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage stack" style="--tab-list-style: segmented; --tab-list-prominence: subtle; --tab-list-corners: round;">
+      <span class="sb-demo-tag">--tab-list-style: segmented; --tab-list-prominence: subtle; --tab-list-corners: round</span>
+      ${navList('Flagged', ITEMS.slice(0, 3))}
+      <span class="sb-demo-tag">.tab-list--plain beats the flag</span>
+      ${navList('Flagged with modifier', ITEMS.slice(0, 3), { prominence: 'plain' })}
+    </div>
+  `),
+};
+
+/**
+ * Nested navigation: <ul>/<li> with group labels (.tab-list__content) and
+ * disclosure buttons beside the tabs.
+ */
+export const NestedNavigation: Story = {
   render: () => `
-    <nav class="tab-list" aria-label="Site Sections">
-      <ul>
-        <li>
-          <a href="#overview" class="tab" aria-current="page">
-            <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#View"/></svg>
-            <span class="tab__text">Overview</span>
-          </a>
-        </li>
-        <li>
-          <a href="#components" class="tab">
-            <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
-            <span class="tab__text">Components</span>
-            <span class="badge badge--sm badge--accent"><span>42</span></span>
-          </a>
-        </li>
-        <li>
-          <a href="#tokens" class="tab">
-            <svg class="icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
-            <span class="tab__text">Tokens</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  `,
-};
-
-export const SegmentedButtonsList: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Interactive Segmented Pill List (.tab-list.tabs-button.tabs-round)</h4>
-      <div class="tab-list tabs-button" role="tablist" aria-label="Frequency Switcher">
-        <button type="button" class="tab tab--button" role="tab" aria-selected="true" tabindex="0">
-          <span class="tab__text">Monthly</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Quarterly</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Annual</span>
-          <span class="badge badge--sm badge--accent"><span>Save 20%</span></span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const VerticalList: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 20rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Vertical Tab List (.tab-list.tabs-vertical)</h4>
-      <div class="tab-list tabs-vertical" role="tablist" aria-label="Settings navigation">
-        <button type="button" class="tab" role="tab" aria-selected="true" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#User"/></svg>
-          <span class="tab__text">Profile</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Lock"/></svg>
-          <span class="tab__text">Security</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Bell"/></svg>
-          <span class="tab__text">Notifications</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const VerticalListReversed: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 20rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Reversed Vertical Tab List (.tab-list.tabs-vertical.tabs-on-right)</h4>
-      <div class="tab-list tabs-vertical tabs-on-right" role="tablist" aria-label="Settings navigation reversed">
-        <button type="button" class="tab" role="tab" aria-selected="true" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#User"/></svg>
-          <span class="tab__text">Profile</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Lock"/></svg>
-          <span class="tab__text">Security</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Bell"/></svg>
-          <span class="tab__text">Notifications</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const SubtleSegmentedButtons: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Subtle Segmented Pill List (.tab-list.tabs-button.tabs-round.tabs-subtle)</h4>
-      <div class="tab-list tabs-button tabs-subtle" role="tablist" aria-label="View Switcher">
-        <button type="button" class="tab tab--button" role="tab" aria-selected="true" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#View"/></svg>
-          <span class="tab__text">Overview</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Code"/></svg>
-          <span class="tab__text">Source</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
-          <span class="tab__text">Settings</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const PlainSegmentedButtons: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Subtle Segmented Pill List (.tab-list.tabs-button.tabs-round.tabs-subtle)</h4>
-      <div class="tab-list tabs-button tabs-plain" role="tablist" aria-label="View Switcher">
-        <button type="button" class="tab tab--button" role="tab" aria-selected="true" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#View"/></svg>
-          <span class="tab__text">Overview</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Code"/></svg>
-          <span class="tab__text">Source</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
-          <span class="tab__text">Settings</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const RoundSegmentedButtons: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Subtle Segmented Pill List (.tab-list.tabs-button.tabs-round.tabs-subtle)</h4>
-      <div class="tab-list tabs-button tabs-round" role="tablist" aria-label="View Switcher">
-        <button type="button" class="tab tab--button" role="tab" aria-selected="true" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#View"/></svg>
-          <span class="tab__text">Overview</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Code"/></svg>
-          <span class="tab__text">Source</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
-          <span class="tab__text">Settings</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const SmallSegmentedButtons: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Subtle Segmented Pill List (.tab-list.tabs-button.tabs-round.tabs-subtle)</h4>
-      <div class="tab-list tabs-button tabs-sm" role="tablist" aria-label="View Switcher">
-        <button type="button" class="tab tab--button" role="tab" aria-selected="true" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#View"/></svg>
-          <span class="tab__text">Overview</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Code"/></svg>
-          <span class="tab__text">Source</span>
-        </button>
-        <button type="button" class="tab tab--button" role="tab" aria-selected="false" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Settings"/></svg>
-          <span class="tab__text">Settings</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-export const PlainNavigationList: Story = {
-  render: () => `
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Plain Navigation Bar (.tab-list.tabs-plain)</h4>
-      <nav class="tab-list tabs-plain" aria-label="Documentation Sections">
+    <div class="demo-stage demo-constrained--sm">
+      <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical tab-list--sm" aria-label="Documentation">
         <ul>
           <li>
-            <a href="#articles" class="tab tab--plain" aria-current="page">
-              <span class="tab__text">Articles</span>
-            </a>
-          </li>
-          <li>
-            <a href="#components" class="tab tab--plain">
-              <span class="tab__text">Components</span>
-            </a>
-          </li>
-          <li>
-            <a href="#tokens" class="tab tab--plain">
-              <span class="tab__text">Tokens</span>
-            </a>
-          </li>
-          <li>
-            <a href="#about" class="tab tab--plain">
-              <span class="tab__text">About</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  `,
-};
-
-export const SubtleNavigationList: Story = {
-  render: () => `
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Plain Navigation Bar (.tab-list.tabs-plain)</h4>
-      <nav class="tab-list tabs-subtle" aria-label="Documentation Sections">
-        <ul>
-          <li>
-            <a href="#articles" class="tab" aria-current="page">
-              <span class="tab__text">Articles</span>
-            </a>
-          </li>
-          <li>
-            <a href="#components" class="tab">
-              <span class="tab__text">Components</span>
-            </a>
-          </li>
-          <li>
-            <a href="#tokens" class="tab">
-              <span class="tab__text">Tokens</span>
-            </a>
-          </li>
-          <li>
-            <a href="#about" class="tab">
-              <span class="tab__text">About</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  `,
-};
-
-export const FloatingPillDock: Story = {
-  render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="padding: var(--spacing-24); background: var(--surface-muted); border-radius: var(--radius-lg); text-align: center;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Floating Translucent Navigation Pill (.tab-list.tabs-floating.tabs-button.tabs-round)</h4>
-      <div class="tab-list tabs-floating tabs-button tabs-round" role="tablist" aria-label="Application Dock">
-        <button type="button" class="tab tab--button tab--icon" role="tab" aria-selected="true" aria-label="Home" tabindex="0">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Home"/></svg>
-          <span class="tab__text">Home</span>
-        </button>
-        <button type="button" class="tab tab--button tab--icon" role="tab" aria-selected="false" aria-label="Search" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Search"/></svg>
-          <span class="tab__text">Search</span>
-        </button>
-        <button type="button" class="tab tab--button tab--icon" role="tab" aria-selected="false" aria-label="Notifications" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Bell"/></svg>
-          <span class="tab__text">Notifications</span>
-        </button>
-        <button type="button" class="tab tab--button tab--icon" role="tab" aria-selected="false" aria-label="Profile" tabindex="-1">
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#User"/></svg>
-          <span class="tab__text">Profile</span>
-        </button>
-      </div>
-    </div>
-  `),
-};
-
-
-export const ComplexNavigationList: Story = {
-  render: () => `
-    <div class="stack gap-md" style="max-inline-size: 32rem;">
-      <h4 class="font-size-sm font-weight-bold text-color-muted">Complex Navigation List (.tab-list.tabs-button.tabs-subtle.tabs-vertical)</h4>
-      <nav class="tab-list tabs-button tabs-subtle tabs-vertical" aria-label="Documentation Sections">
-        <ul>
-          <li>
-            <button class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nav-getting-started">
-              <span class="visually-hidden">Toggle Getting Started</span>
-              <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#ChevronDown"/></svg>
+            <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nested-start">
+              <span class="visually-hidden">Getting started</span>${icon('ChevronDown')}
             </button>
-            <span class="tab-list__content small-heading">Getting Started</span>
-            <ul id="nav-getting-started">
-              <li>
-                <a href="#overview" class="tab" aria-current="page">
-                  <span class="tab__text">Overview</span>
-                </a>
-              </li>
-              <li>
-                <a href="#installation" class="tab">
-                  <span class="tab__text">Installation</span>
-                </a>
-              </li>
-              <li>
-                <a href="#design-tokens" class="tab">
-                  <span class="tab__text">Design Tokens</span>
-                </a>
-              </li>
-              <li>
-                <a href="#accessibility" class="tab">
-                  <span class="tab__text">Accessibility Principles</span>
-                </a>
-              </li>
+            <span class="tab-list__content small-heading">Getting started</span>
+            <ul id="nested-start">
+              <li><a href="#" class="tab" aria-current="page"><span class="tab__text">Overview</span></a></li>
+              <li><a href="#" class="tab"><span class="tab__text">Installation</span></a></li>
+              <li><a href="#" class="tab"><span class="tab__text">Design tokens</span></a></li>
             </ul>
           </li>
           <li>
-            <button class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nav-components">
-              <span class="visually-hidden">Toggle Components</span>
-              <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#ChevronDown"/></svg>
+            <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nested-components">
+              <span class="visually-hidden">Components</span>${icon('ChevronDown')}
             </button>
             <span class="tab-list__content small-heading">Components</span>
-            <ul id="nav-components">
-              <li>
-                <a href="#buttons" class="tab">
-                  <span class="tab__text">Buttons</span>
-                </a>
-              </li>
-              <li>
-                <a href="#tabs" class="tab">
-                  <span class="tab__text">Tabs & Navigation</span>
-                  <span class="badge badge--sm badge--accent"><span>Updated</span></span>
-                </a>
-              </li>
-              <li>
-                <a href="#dialogs" class="tab">
-                  <span class="tab__text">Dialogs & Sheets</span>
-                </a>
-              </li>
-              <li>
-                <a href="#forms" class="tab">
-                  <span class="tab__text">Form Controls</span>
-                </a>
-              </li>
+            <ul id="nested-components">
+              <li><a href="#" class="tab"><span class="tab__text">Buttons</span></a></li>
+              <li><a href="#" class="tab"><span class="tab__text">Tabs</span><span class="status status--sm"><span class="status__text">Updated</span></span></a></li>
             </ul>
           </li>
-          <li>
-            <button class="button button--plain button--sm button--icon" aria-expanded="false" aria-controls="nav-layout">
-              <span class="visually-hidden">Toggle Layout Primitives</span>
-              <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#ChevronRight"/></svg>
-            </button>
-            <span class="tab-list__content small-heading">Layout Primitives</span>
-          </li>
-          <li>
-            <a href="#figma" class="tab">
-              <span class="tab__text">Figma Libraries</span>
-            </a>
-          </li>
-          <li>
-            <a href="#changelog" class="tab">
-              <span class="tab__text">Changelog</span>
-              <span class="badge badge--sm badge--subtle"><span>v2.4</span></span>
-            </a>
-          </li>
+          <li><a href="#" class="tab"><span class="tab__text">Changelog</span></a></li>
         </ul>
       </nav>
     </div>
   `,
 };
 
-export const ScrollableHorizontalList: Story = {
+/**
+ * One row that scrolls, with edges that fade while there is more to see.
+ * Without --scrollable a list wraps.
+ */
+export const Scrollable: Story = {
   render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 28rem;">
-      <div>
-        <h4 class="font-size-sm font-weight-bold text-color-muted">Scrollable Single Row Tab List (.tabs-scrollable)</h4>
-        <p class="font-size-xs text-color-muted">Constrained to 28rem container. Tabs remain on a single line with smooth horizontal scrolling.</p>
-      </div>
-      <div class="tab-list tabs-scrollable" role="tablist" aria-label="Project Management Navigation">
-        <button type="button" class="tab" role="tab" aria-selected="true" tabindex="0">
-          <span class="tab__text">Overview</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Milestones</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Roadmap</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Analytics</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Team Members</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Integrations</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Audit Log</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Settings</span>
-        </button>
-      </div>
+    withTabBehaviour(`
+    <div class="demo-stage demo-constrained--sm stack">
+      <span class="sb-demo-tag">--scrollable</span>
+      ${navList('Scrollable', ['Overview', 'Milestones', 'Roadmap', 'Analytics', 'Team members', 'Integrations', 'Audit log', 'Settings'], { extra: ['tab-list--scrollable'] })}
+      <span class="sb-demo-tag">default: wraps</span>
+      ${navList('Wrapping', ['All topics', 'Accessibility', 'Design tokens', 'Architecture', 'Typography', 'WCAG 2.2'], { style: 'segmented', prominence: 'subtle' })}
     </div>
   `),
 };
 
-export const WrappingHorizontalList: Story = {
+/**
+ * --fill shares the row between the tabs; --tight closes the gap.
+ */
+export const FillAndTight: Story = {
   render: () =>
-    createInteractiveList(`
-    <div class="stack gap-md" style="max-inline-size: 28rem;">
-      <div>
-        <h4 class="font-size-sm font-weight-bold text-color-muted">Default Multi-Line Wrapping Tab List (or .tabs-wrap)</h4>
-        <p class="font-size-xs text-color-muted">Constrained to 28rem container. Tabs wrap naturally onto multiple rows without clipping.</p>
-      </div>
-      <div class="tab-list tabs-wrap" role="tablist" aria-label="Topic Filter Tags">
-        <button type="button" class="tab" role="tab" aria-selected="true" tabindex="0">
-          <span class="tab__text">All Topics</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Accessibility</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Design Tokens</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Component Architecture</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">Fluid Typography</span>
-        </button>
-        <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">
-          <span class="tab__text">WCAG 2.2</span>
-        </button>
+    withTabBehaviour(`
+    <div class="demo-stage demo-constrained--md stack">
+      <span class="sb-demo-tag">--fill</span>
+      ${navList('Fill', ['Day', 'Week', 'Month'], { extra: ['tab-list--fill'] })}
+      <span class="sb-demo-tag">--segmented --subtle --fill --tight</span>
+      ${navList('Fill tight', ['Day', 'Week', 'Month'], { style: 'segmented', prominence: 'subtle', extra: ['tab-list--fill', 'tab-list--tight'] })}
+    </div>
+  `),
+};
+
+/**
+ * A floating bar, with corners concentric with its tabs. Add --docked to fix
+ * it to the bottom of the viewport.
+ */
+export const Floating: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage stack">
+      ${navList('Floating', ['Overview', 'Analytics', 'Reports'], { extra: ['tab-list--floating'] })}
+      <nav class="${listClasses({ style: 'segmented', round: true, extra: ['tab-list--floating'] })}" aria-label="App">
+        <a href="#" class="tab tab--icon" aria-current="page">${icon('Home')}<span class="tab__text">Home</span></a>
+        <a href="#" class="tab tab--icon">${icon('Search')}<span class="tab__text">Search</span></a>
+        <a href="#" class="tab tab--icon">${icon('Bell')}<span class="tab__text">Notifications</span></a>
+        <a href="#" class="tab tab--icon">${icon('User')}<span class="tab__text">Profile</span></a>
+      </nav>
+    </div>
+  `),
+};
+
+/**
+ * In a flush card body or flush sidebar, --flush runs the tabs edge to edge
+ * and lines their labels up with the surrounding content (--tab-list-inset).
+ */
+export const Flush: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="demo-stage demo-constrained--sm">
+      <div class="card card--bordered">
+        <article class="card__content">
+          <header class="card__header"><h3 class="card__title small-heading">Workspace</h3></header>
+          <div class="card__body card__body--flush">
+            ${navList('Workspace', ['Projects', 'Members', 'Billing'], { style: 'segmented', prominence: 'subtle', extra: ['tab-list--vertical', 'tab-list--flush', 'tab-list--tight'] })}
+          </div>
+        </article>
       </div>
     </div>
   `),

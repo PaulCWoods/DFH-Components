@@ -52,12 +52,12 @@
   --_telemetry-gap: var(--telemetry-gap, var(--spacing-12, 0.75rem));
   --_telemetry-inner-gap: var(--telemetry-inner-gap, var(--spacing-4, 0.25rem));
 
-  --_telemetry-label-font-family: var(--telemetry-label-font-family, var(--nano-heading-font-family, inherit));
-  --_telemetry-label-font-size: var(--telemetry-label-font-size, var(--nano-heading-font-size, 0.625rem));
-  --_telemetry-label-font-weight: var(--telemetry-label-font-weight, var(--nano-heading-font-weight, 500));
+  --_telemetry-label-font-family: var(--telemetry-label-font-family, var(--micro-heading-font-family, inherit));
+  --_telemetry-label-font-size: var(--telemetry-label-font-size, var(--body-sm-compact-font-size, 0.625rem));
+  --_telemetry-label-font-weight: var(--telemetry-label-font-weight, var(--body-font-weight, 500));
   --_telemetry-label-line-height: var(--telemetry-label-line-height, 1);
-  --_telemetry-label-letter-spacing: var(--telemetry-label-letter-spacing, var(--nano-heading-letter-spacing, 0.05em));
-  --_telemetry-label-text-transform: var(--telemetry-label-text-transform, var(--nano-heading-text-transform, uppercase));
+  --_telemetry-label-letter-spacing: var(--telemetry-label-letter-spacing, 0.05em);
+  --_telemetry-label-text-transform: var(--telemetry-label-text-transform, var(--micro-heading-text-transform, uppercase));
   --_telemetry-label-color: var(--telemetry-label-color, var(--foreground, CanvasText));
 
   --_telemetry-value-font-family: var(--telemetry-value-font-family, var(--body-font-family, inherit));

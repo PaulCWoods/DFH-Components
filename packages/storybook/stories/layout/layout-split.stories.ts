@@ -168,36 +168,36 @@ export const Playground: Story = {
       ? `
         <div class="sb-demo-box sb-demo-box--start padding" style="min-inline-size: 10rem;">
           <p class="font-weight-bold font-size-sm">Start Column</p>
-          <p class="font-size-xs color-muted">Fixed / auto width</p>
+          <p class="font-size-xs text-muted">Fixed / auto width</p>
         </div>
         <div class="sb-demo-box sb-demo-box--center-tint padding">
           <p class="font-weight-bold font-size-sm">Center Main Pane</p>
-          <p class="font-size-xs color-muted">Fills remaining available width</p>
+          <p class="font-size-xs text-muted">Fills remaining available width</p>
         </div>
         <div class="sb-demo-box sb-demo-box--end-tint padding" style="min-inline-size: 10rem;">
           <p class="font-weight-bold font-size-sm">End Column</p>
-          <p class="font-size-xs color-muted">Fixed / auto width</p>
+          <p class="font-size-xs text-muted">Fixed / auto width</p>
         </div>
       `
       : args.placement === 'end'
         ? `
         <div class="sb-demo-box sb-demo-box--center-tint padding">
           <p class="font-weight-bold font-size-sm">Main Workspace Pane</p>
-          <p class="font-size-xs color-muted">Expands dynamically with flex-grow: 999.</p>
+          <p class="font-size-xs text-muted">Expands dynamically with flex-grow: 999.</p>
         </div>
         <div class="sb-demo-box sb-demo-box--end-tint padding">
           <p class="font-weight-bold font-size-sm">Trailing Sidebar</p>
-          <p class="font-size-xs color-muted">Basis: ${args.sidebarSize} tier</p>
+          <p class="font-size-xs text-muted">Basis: ${args.sidebarSize} tier</p>
         </div>
       `
         : `
         <div class="sb-demo-box sb-demo-box--start padding">
           <p class="font-weight-bold font-size-sm">Leading Sidebar</p>
-          <p class="font-size-xs color-muted">Basis: ${args.sidebarSize} tier</p>
+          <p class="font-size-xs text-muted">Basis: ${args.sidebarSize} tier</p>
         </div>
         <div class="sb-demo-box sb-demo-box--center-tint padding">
           <p class="font-weight-bold font-size-sm">Main Workspace Pane</p>
-          <p class="font-size-xs color-muted">Expands dynamically with flex-grow: 999.</p>
+          <p class="font-size-xs text-muted">Expands dynamically with flex-grow: 999.</p>
         </div>
       `;
 
@@ -326,10 +326,7 @@ export const TripleSplitLayout: Story = {
           <!-- End: Actions & Avatar -->
           <div class="cluster" style="justify-content: flex-end; --gap: var(--spacing-8);">
             <button type="button" class="button button--subtle button--icon" aria-label="Notifications">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
             </button>
             <button type="button" class="button button--strong button--accent button--sm">
               <span>Deploy</span>
@@ -365,7 +362,7 @@ export const RuledDividers: Story = {
 
           <div>
             <h4 class="font-weight-bold">Main Workspace Pane</h4>
-            <p class="font-size-sm color-muted margin-top-xs">
+            <p class="font-size-sm text-muted margin-top-xs">
               Notice the native vertical rule separator dividing the columns without extra border styles.
             </p>
           </div>
@@ -414,23 +411,23 @@ export const FilterSidebarRecipe: Story = {
         <!-- Main Catalog Results -->
         <main class="stack" style="--gap: var(--spacing-16);">
           <div class="cluster" style="justify-content: space-between; align-items: center;">
-            <p class="font-size-sm color-muted">Showing <strong>3</strong> matching deliverables</p>
+            <p class="font-size-sm text-muted">Showing <strong>3</strong> matching deliverables</p>
             <button type="button" class="button button--subtle button--sm"><span>Sort by Date</span></button>
           </div>
 
           <ul class="grid grid--xs" role="list">
             <li>
               <div class="card card--bordered padding stack" style="--gap: var(--spacing-8);">
-                <span class="badge badge--success"><span>Passing</span></span>
+                <span class="status status--success"><span class="status__text">Passing</span></span>
                 <h5 class="font-weight-bold font-size-sm">Color Contrast Matrix</h5>
-                <p class="font-size-xs color-muted">Zero failures across light-dark palettes.</p>
+                <p class="font-size-xs text-muted">Zero failures across light-dark palettes.</p>
               </div>
             </li>
             <li>
               <div class="card card--bordered padding stack" style="--gap: var(--spacing-8);">
-                <span class="badge badge--success"><span>Passing</span></span>
+                <span class="status status--success"><span class="status__text">Passing</span></span>
                 <h5 class="font-weight-bold font-size-sm">Focus Indicators</h5>
-                <p class="font-size-xs color-muted">High-contrast 3:1 focus ring clearance.</p>
+                <p class="font-size-xs text-muted">High-contrast 3:1 focus ring clearance.</p>
               </div>
             </li>
           </ul>

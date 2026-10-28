@@ -50,7 +50,7 @@ AI agents and developers MUST use the following semantic patterns:
 </div>
 
 <!-- 3. Pill / Full-Round Action Badge -->
-<span class="badge bd-sm rounded-full padding-inline-sm">
+<span class="sb-demo-tag bd-sm rounded-full padding-inline-sm">
   <span>Rounded Pill Badge</span>
 </span>
 \`\`\`
@@ -132,7 +132,7 @@ export const Playground: Story = {
         <div class="sb-demo-stage sb-demo-stage--lg" style="display: flex; justify-content: center; align-items: center; min-block-size: 10rem;">
           <div class="${classes}" style="background: var(--surface-card); text-align: center; min-inline-size: 16rem;">
             <p class="font-weight-bold font-size-sm">Active Border Box</p>
-            <p class="font-size-xs color-muted margin-top-xs">
+            <p class="font-size-xs text-muted margin-top-xs">
               Size: <code>${args.size}</code> &middot; Style: <code>${args.style}</code> &middot; Radius: <code>${args.radius}</code>
             </p>
           </div>
@@ -157,21 +157,21 @@ export const StrokeThicknessScale: Story = {
 
       <div class="grid grid--sm">
         <div class="card border-sm padding stack" style="--gap: var(--spacing-4);">
-          <span class="badge badge--subtle badge--sm">1px</span>
+          <span class="sb-demo-tag">1px</span>
           <h4 class="font-size-sm font-weight-bold">.border-sm (1px)</h4>
-          <p class="font-size-xs color-muted">Standard subtle perimeter stroke.</p>
+          <p class="font-size-xs text-muted">Standard subtle perimeter stroke.</p>
         </div>
 
         <div class="card border-md padding stack" style="--gap: var(--spacing-4);">
-          <span class="badge badge--accent badge--sm">2px</span>
+          <span class="sb-demo-tag">2px</span>
           <h4 class="font-size-sm font-weight-bold">.border-md (2px)</h4>
-          <p class="font-size-xs color-muted">Medium emphasize, tabs, selected states.</p>
+          <p class="font-size-xs text-muted">Medium emphasize, tabs, selected states.</p>
         </div>
 
         <div class="card border-lg padding stack" style="--gap: var(--spacing-4);">
-          <span class="badge badge--success badge--sm">4px</span>
+          <span class="sb-demo-tag">4px</span>
           <h4 class="font-size-sm font-weight-bold">.border-lg (4px)</h4>
-          <p class="font-size-xs color-muted">Heavy blockquote or callout stroke.</p>
+          <p class="font-size-xs text-muted">Heavy blockquote or callout stroke.</p>
         </div>
       </div>
     </div>
@@ -194,32 +194,32 @@ export const CornerRadiusScale: Story = {
       <div class="cluster" style="--gap: var(--spacing-16);">
         <div class="card border-sm radius-none padding-sm text-center" style="min-inline-size: 7rem;">
           <p class="font-size-xs font-weight-bold">.radius-none</p>
-          <span class="font-size-xs color-muted">0px</span>
+          <span class="font-size-xs text-muted">0px</span>
         </div>
 
         <div class="card border-sm radius-sm padding-sm text-center" style="min-inline-size: 7rem;">
           <p class="font-size-xs font-weight-bold">.radius-sm</p>
-          <span class="font-size-xs color-muted">2px</span>
+          <span class="font-size-xs text-muted">2px</span>
         </div>
 
         <div class="card border-sm radius padding-sm text-center" style="min-inline-size: 7rem;">
           <p class="font-size-xs font-weight-bold">.radius</p>
-          <span class="font-size-xs color-muted">4px</span>
+          <span class="font-size-xs text-muted">4px</span>
         </div>
 
         <div class="card border-sm radius-md padding-sm text-center" style="min-inline-size: 7rem;">
           <p class="font-size-xs font-weight-bold">.radius-md</p>
-          <span class="font-size-xs color-muted">6px</span>
+          <span class="font-size-xs text-muted">6px</span>
         </div>
 
         <div class="card border-sm radius-lg padding-sm text-center" style="min-inline-size: 7rem;">
           <p class="font-size-xs font-weight-bold">.radius-lg</p>
-          <span class="font-size-xs color-muted">8px</span>
+          <span class="font-size-xs text-muted">8px</span>
         </div>
 
         <div class="card border-sm radius-round padding-sm text-center" style="min-inline-size: 7rem;">
           <p class="font-size-xs font-weight-bold">.radius-round</p>
-          <span class="font-size-xs color-muted">Pill 9999px</span>
+          <span class="font-size-xs text-muted">Pill 9999px</span>
         </div>
       </div>
     </div>
@@ -242,22 +242,22 @@ export const StrokeStyleVariants: Story = {
       <div class="grid grid--xs">
         <div class="card border-sm border-solid padding-sm text-center">
           <p class="font-size-xs font-weight-bold">.border-solid</p>
-          <span class="font-size-xs color-muted">Standard</span>
+          <span class="font-size-xs text-muted">Standard</span>
         </div>
 
         <div class="card border-sm border-dashed padding-sm text-center">
           <p class="font-size-xs font-weight-bold">.border-dashed</p>
-          <span class="font-size-xs color-muted">Upload Dropzone</span>
+          <span class="font-size-xs text-muted">Upload Dropzone</span>
         </div>
 
         <div class="card border-sm border-dotted padding-sm text-center">
           <p class="font-size-xs font-weight-bold">.border-dotted</p>
-          <span class="font-size-xs color-muted">Tooltip Anchor</span>
+          <span class="font-size-xs text-muted">Tooltip Anchor</span>
         </div>
 
         <div class="card border-lg border-double padding-sm text-center">
           <p class="font-size-xs font-weight-bold">.border-double</p>
-          <span class="font-size-xs color-muted">Decorative</span>
+          <span class="font-size-xs text-muted">Decorative</span>
         </div>
       </div>
     </div>
@@ -281,14 +281,10 @@ export const CalloutBannerRecipe: Story = {
         <!-- Accent Info -->
         <div class="card border-none padding-sm" style="border-inline-start: 4px solid var(--border-color-accent); background: var(--surface-card);">
           <div class="inline" style="--gap: var(--spacing-8);">
-            <svg class="icon color-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
+            <svg class="icon color-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
             <p class="font-weight-bold font-size-sm">Figma Variables Sync</p>
           </div>
-          <p class="font-size-xs color-muted margin-top-xs">
+          <p class="font-size-xs text-muted margin-top-xs">
             Exported to both Tokens Studio and Native Figma Variables collections automatically.
           </p>
         </div>
@@ -296,12 +292,10 @@ export const CalloutBannerRecipe: Story = {
         <!-- Success Complete -->
         <div class="card border-none padding-sm" style="border-inline-start: 4px solid var(--border-color-success); background: var(--surface-card);">
           <div class="inline" style="--gap: var(--spacing-8);">
-            <svg class="icon color-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+            <svg class="icon color-success" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             <p class="font-weight-bold font-size-sm">WCAG 2.2 AAA Audit Passed</p>
           </div>
-          <p class="font-size-xs color-muted margin-top-xs">
+          <p class="font-size-xs text-muted margin-top-xs">
             All 92 automated axe rules evaluated with zero accessibility violations.
           </p>
         </div>

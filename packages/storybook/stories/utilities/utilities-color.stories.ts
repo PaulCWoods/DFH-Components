@@ -326,8 +326,8 @@ export const Playground: Story = {
             Demonstrates <code>.${bgClasses.replace(/ /g, ' .')}</code> combined with <code>.${textClass}</code>.
           </p>
           <div class="cluster" style="margin-block-start: var(--spacing-16);">
-            <span class="badge bd-sm">Canvas fallback</span>
-            <span class="badge bd-sm">WCAG 2.2 AAA</span>
+            <span class="sb-demo-tag bd-sm">Canvas fallback</span>
+            <span class="status bd-sm"><span class="status__text">WCAG 2.2 AAA</span></span>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   style="anchor-name: --anchor-save;"
 >
   <span class="visually-hidden">Save changes</span>
-  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
     <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
   </svg>
 </button>
@@ -63,7 +63,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <div class="card card--compact card--bordered">
     <article class="card__content">
       <header class="card__header"><h4 class="card__title small-heading">Author Bio</h4></header>
-      <div class="card__body"><p class="micro-text">Accessibility lead for Design For Humans.</p></div>
+      <div class="card__body"><p class="small-text">Accessibility lead for Design For Humans.</p></div>
     </article>
   </div>
 </div>
@@ -150,7 +150,7 @@ export const Playground: Story = {
         <div class="card card--compact card--bordered">
           <article class="card__content">
             <header class="card__header"><h4 class="card__title small-heading">Detailed Information</h4></header>
-            <div class="card__body"><p class="micro-text">${args.text}</p></div>
+            <div class="card__body"><p class="small-text">${args.text}</p></div>
           </article>
         </div>
       `
@@ -167,7 +167,7 @@ export const Playground: Story = {
           aria-describedby="${tipId}"
         >
           <span>Hover or Focus Trigger</span>
-          <svg class="icon" aria-hidden="true"><use href="#ChevronDown"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
         </button>
 
         <div 
@@ -203,18 +203,19 @@ export const Anatomy: Story = {
             <!-- Trigger Element Spec -->
             <div class="demo-box demo-box--pink demo-constrained--xs">
               <span class="demo-label">1. Invoker Element</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Button or input declaring <code>interestfor="tip-id"</code> and <code>style="anchor-name: --my-anchor;"</code>.
               </p>
               <button type="button" class="button button--icon" style="pointer-events: none;">
-                <svg class="icon" aria-hidden="true"><use href="#Settings"/></svg>
+                <span class="visually-hidden">Settings</span>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
               </button>
             </div>
 
             <!-- Tooltip Container Spec -->
             <div class="demo-box demo-box--blue demo-constrained--xs">
               <span class="demo-label">2. Hint Overlay Shell</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Native element with <code>popover="hint"</code>, inverted high-contrast background (12:1 contrast), and <code>text-wrap: balance</code>.
               </p>
               <div class="tooltip" style="position: static; opacity: 1; transform: none; display: inline-block;">
@@ -225,7 +226,7 @@ export const Anatomy: Story = {
             <!-- Position-Aware Arrow Spec -->
             <div class="demo-box demo-box--green demo-constrained--xs">
               <span class="demo-label">3. Dynamic Arrow</span>
-              <p class="micro-text" style="margin-block: var(--spacing-4);">
+              <p class="small-text" style="margin-block: var(--spacing-4);">
                 Generated via <code>::before</code> pseudo-element. Automatically adjusts coordinates and flips when the tooltip flips via container queries.
               </p>
               <div style="display: flex; justify-content: center; padding: var(--spacing-8);">
@@ -236,7 +237,7 @@ export const Anatomy: Story = {
 
           <div class="demo-box demo-box--neutral">
             <span class="demo-label">WCAG 1.4.13 Compliance Requirements</span>
-            <p class="micro-text" style="margin-block-start: var(--spacing-4);">
+            <p class="small-text" style="margin-block-start: var(--spacing-4);">
               Users must be able to dismiss the tooltip by pressing <kbd class="kbd">Esc</kbd> without moving the pointer.
               Tooltips must not obscure critical interactive controls without light-dismiss ability.
             </p>
@@ -266,9 +267,7 @@ export const Variants: Story = {
               style="anchor-name: --v-bm-anchor;"
               aria-label="Bookmark this article"
             >
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bookmark"/></svg>
             </button>
             <div id="v-tip-bookmark" popover="hint" class="tooltip" style="position-anchor: --v-bm-anchor;">
               Bookmark article
@@ -284,7 +283,7 @@ export const Variants: Story = {
               popovertarget="v-tip-search"
               style="anchor-name: --v-search-anchor;"
             >
-              <svg class="icon" aria-hidden="true"><use href="#Search"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
               <span>Search</span>
             </button>
             <div id="v-tip-search" popover="hint" class="tooltip" style="position-anchor: --v-search-anchor;">
@@ -331,7 +330,7 @@ export const Variants: Story = {
                     </hgroup>
                   </header>
                   <div class="card__body">
-                    <p class="micro-text">Author of 14 WCAG 2.2 audit design specs.</p>
+                    <p class="small-text">Author of 14 WCAG 2.2 audit design specs.</p>
                   </div>
                 </article>
               </div>
@@ -439,7 +438,7 @@ export const SizesAndDensity: Story = {
                 <div class="card card--compact card--bordered" style="inline-size: 16rem;">
                   <article class="card__content">
                     <header class="card__header"><h4 class="card__title small-heading">Repository Spec</h4></header>
-                    <div class="card__body"><p class="micro-text">WCAG 2.2 Level AA / AAA design system component.</p></div>
+                    <div class="card__body"><p class="small-text">WCAG 2.2 Level AA / AAA design system component.</p></div>
                   </article>
                 </div>
               </div>
@@ -537,10 +536,7 @@ export const RealWorldRecipes: Story = {
                 style="anchor-name: --rt-bold-anchor;"
                 aria-label="Format Bold (⌘B)"
               >
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                  <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
               </button>
               <div id="rt-bold" popover="hint" class="tooltip" style="position-anchor: --rt-bold-anchor;">
                 Bold (⌘B)
@@ -555,11 +551,7 @@ export const RealWorldRecipes: Story = {
                 style="anchor-name: --rt-italic-anchor;"
                 aria-label="Format Italic (⌘I)"
               >
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <line x1="19" y1="4" x2="10" y2="4"></line>
-                  <line x1="14" y1="20" x2="5" y2="20"></line>
-                  <line x1="15" y1="4" x2="9" y2="20"></line>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Italic"/></svg>
               </button>
               <div id="rt-italic" popover="hint" class="tooltip" style="position-anchor: --rt-italic-anchor;">
                 Italic (⌘I)
@@ -574,10 +566,7 @@ export const RealWorldRecipes: Story = {
                 style="anchor-name: --rt-code-anchor;"
                 aria-label="Inline Code (⌘&#96;)"
               >
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
               </button>
               <div id="rt-code" popover="hint" class="tooltip" style="position-anchor: --rt-code-anchor;">
                 Inline Code (⌘&#96;)
@@ -592,10 +581,7 @@ export const RealWorldRecipes: Story = {
                 style="anchor-name: --rt-link-anchor;"
                 aria-label="Insert Link (⌘K)"
               >
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Link"/></svg>
               </button>
               <div id="rt-link" popover="hint" class="tooltip" style="position-anchor: --rt-link-anchor;">
                 Insert Link (⌘K)
@@ -617,11 +603,7 @@ export const RealWorldRecipes: Story = {
                   style="anchor-name: --token-help-anchor; padding: 0; min-block-size: unset; min-inline-size: unset;"
                   aria-label="Token security information"
                 >
-                  <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                  </svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Help"/></svg>
                 </button>
                 <div id="token-help" popover="hint" class="tooltip" style="position-anchor: --token-help-anchor;">
                   Tokens require "repo:read" scope to authenticate automated audits.
@@ -636,15 +618,15 @@ export const RealWorldRecipes: Story = {
             <span class="demo-label" style="margin-block-end: var(--spacing-8);">Status Badge with Audit Readout</span>
             <div class="cluster" style="gap: var(--spacing-16);">
               <span 
-                class="status" 
-                data-status="online"
+                class="status status--success status--plain" 
+               
                 interestfor="audit-status"
                 popovertarget="audit-status"
                 style="anchor-name: --audit-status-anchor; cursor: help;"
                 tabindex="0"
                 role="status"
               >
-                WCAG 2.2 AAA Verified
+                <span class="status__text">WCAG 2.2 AAA Verified</span>
               </span>
               <div id="audit-status" popover="hint" class="tooltip" style="position-anchor: --audit-status-anchor;">
                 All 68 axe-core tests passed with 0 violations.

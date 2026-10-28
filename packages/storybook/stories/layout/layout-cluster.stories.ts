@@ -48,9 +48,9 @@ AI agents and developers MUST use the following semantic patterns:
 
 <!-- 2. Tag & Chip Cloud with Compact Gap -->
 <div class="cluster" style="--gap: var(--spacing-8);">
-  <span class="chip">Design Tokens</span>
-  <span class="chip">WCAG 2.2 AA</span>
-  <span class="chip">Accessibility</span>
+  <span class="chip chip--subtle"><span class="chip__text">Design Tokens</span></span>
+  <span class="chip chip--subtle"><span class="chip__text">WCAG 2.2 AA</span></span>
+  <span class="chip chip--subtle"><span class="chip__text">Accessibility</span></span>
 </div>
 
 <!-- 3. Button-Like Radio Group Choices (Zero-JS) -->
@@ -67,8 +67,8 @@ AI agents and developers MUST use the following semantic patterns:
 
 <!-- 4. Semantic Filter / Tag List -->
 <ul class="cluster" aria-label="Category tags">
-  <li><a href="/topics/css" class="badge badge--accent"><span>CSS</span></a></li>
-  <li><a href="/topics/html" class="badge badge--accent"><span>HTML5</span></a></li>
+  <li><a href="/topics/css" class="chip"><span class="chip__text">CSS</span></a></li>
+  <li><a href="/topics/html" class="chip"><span class="chip__text">HTML5</span></a></li>
 </ul>
 
 <!-- 5. Native Ruled Dividers Between Items -->
@@ -218,10 +218,10 @@ export const GapScaleHierarchy: Story = {
             </header>
             <div class="card__body">
               <div class="cluster cluster--tight sb-demo-inspect-gap">
-                <span class="badge badge--accent"><span>HTML5</span></span>
-                <span class="badge badge--success"><span>CSS3</span></span>
-                <span class="badge badge--warning"><span>ARIA</span></span>
-                <span class="badge badge--danger"><span>WCAG</span></span>
+                <span class="chip"><span class="chip__text">HTML5</span></span>
+                <span class="chip"><span class="chip__text">CSS3</span></span>
+                <span class="chip"><span class="chip__text">ARIA</span></span>
+                <span class="chip"><span class="chip__text">WCAG</span></span>
               </div>
             </div>
           </article>
@@ -236,10 +236,10 @@ export const GapScaleHierarchy: Story = {
             </header>
             <div class="card__body">
               <div class="cluster sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
-                <span class="chip">Tokens</span>
-                <span class="chip">Themes</span>
-                <span class="chip">Scales</span>
-                <span class="chip">Colors</span>
+                <span class="chip chip--subtle"><span class="chip__text">Tokens</span></span>
+                <span class="chip chip--subtle"><span class="chip__text">Themes</span></span>
+                <span class="chip chip--subtle"><span class="chip__text">Scales</span></span>
+                <span class="chip chip--subtle"><span class="chip__text">Colors</span></span>
               </div>
             </div>
           </article>
@@ -330,7 +330,7 @@ export const JustificationVariants: Story = {
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">space-between (Header / Toolbar Split)</h4>
           <div class="cluster" style="justify-content: space-between; align-items: center; inline-size: 100%;">
             <div class="cluster" style="--gap: var(--spacing-8);">
-              <span class="badge badge--accent"><span>Active</span></span>
+              <span class="status status--accent"><span class="status__text">Active</span></span>
               <span class="font-size-sm font-weight-bold">Audit 2026-Q4</span>
             </div>
             <div class="cluster" style="--gap: var(--spacing-8);">
@@ -398,9 +398,9 @@ export const ScopedModifiers: Story = {
         <div class="card card--bordered padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.cluster--tight</code></h4>
           <div class="cluster cluster--tight sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>HTML</span></span>
-            <span class="badge badge--success"><span>CSS</span></span>
-            <span class="badge badge--warning"><span>JS</span></span>
+            <span class="chip"><span class="chip__text">HTML</span></span>
+            <span class="chip"><span class="chip__text">CSS</span></span>
+            <span class="chip"><span class="chip__text">JS</span></span>
           </div>
         </div>
 
@@ -437,14 +437,14 @@ export const TagAndChipCloud: Story = {
           </div>
 
           <div class="cluster" style="--gap: var(--spacing-8);">
-            <span class="chip chip--status" data-status="online">Accessibility Lead</span>
-            <span class="chip">WCAG 2.2 AA</span>
-            <span class="chip">Figma Variables</span>
-            <span class="chip">Baseline 2026</span>
-            <span class="chip">Zero-Specificity</span>
-            <span class="chip">Tokens Studio</span>
-            <span class="chip">High Contrast Focus</span>
-            <span class="chip">Top-Layer Transitions</span>
+            <span class="status status--success status--plain"><span class="status__text">Accessibility Lead</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">WCAG 2.2 AA</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Figma Variables</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Baseline 2026</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Zero-Specificity</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Tokens Studio</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">High Contrast Focus</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Top-Layer Transitions</span></span>
           </div>
         </div>
       </div>
@@ -469,7 +469,7 @@ export const ActionToolbar: Story = {
         <div class="stack" style="--gap: var(--spacing-16);">
           <div>
             <h4 class="font-size-md font-weight-bold">Automated axe Conformance Scan</h4>
-            <p class="font-size-sm color-muted margin-top-xs">
+            <p class="font-size-sm text-muted margin-top-xs">
               Runs 92 automated accessibility rules against Storybook components to detect color contrast, missing labels, and ARIA role issues.
             </p>
           </div>
@@ -515,9 +515,7 @@ export const ButtonRadioGroup: Story = {
             <label class="button">
               <input type="radio" name="demo-audit-level" class="visually-hidden" checked />
               <span>WCAG 2.2 AA</span>
-              <svg class="icon icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
+              <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
             </label>
             <label class="button">
               <input type="radio" name="demo-audit-level" class="visually-hidden" />
@@ -575,18 +573,18 @@ export const StateMatrix: Story = {
         <div class="card card--bordered padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Cluster</h4>
           <div class="cluster sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
-            <span class="badge badge--warning"><span>Gamma</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
+            <span class="status status--warning"><span class="status__text">Gamma</span></span>
           </div>
         </div>
 
         <div class="card card--bordered padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Cluster</h4>
           <div class="cluster cluster--tight sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
-            <span class="badge badge--warning"><span>Gamma</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
+            <span class="status status--warning"><span class="status__text">Gamma</span></span>
           </div>
         </div>
 
@@ -602,9 +600,9 @@ export const StateMatrix: Story = {
         <div class="card card--bordered padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Cluster (Modifier)</h4>
           <div class="cluster cluster--tight sb-demo-inspect-gap">
-            <span class="badge badge--accent"><span>Alpha</span></span>
-            <span class="badge badge--success"><span>Beta</span></span>
-            <span class="badge badge--warning"><span>Gamma</span></span>
+            <span class="status status--accent"><span class="status__text">Alpha</span></span>
+            <span class="status status--success"><span class="status__text">Beta</span></span>
+            <span class="status status--warning"><span class="status__text">Gamma</span></span>
           </div>
         </div>
       </div>

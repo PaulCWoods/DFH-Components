@@ -66,7 +66,7 @@ AI agents and developers MUST use the following semantic patterns:
 <div class="container-inline">
   <div class="cluster gap-sm @max-md:hide-labels">
     <button type="button" class="button button--strong button--accent">
-      <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Check"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
       <span class="button__text">Approve Order</span>
     </button>
   </div>
@@ -76,7 +76,7 @@ AI agents and developers MUST use the following semantic patterns:
 <header class="header">
   <!-- Mobile drawer toggle: visible only on mobile screens <= 48em -->
   <button type="button" class="button button--icon md:hide" aria-label="Open menu">
-    <svg class="icon"><use href="#Menu"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
   </button>
   <!-- Desktop global nav: hidden on mobile screens <= 48em -->
   <nav class="max-md:hide" aria-label="Main navigation">...</nav>
@@ -197,7 +197,7 @@ export const Playground: Story = {
         <!-- Status Bar -->
         <div class="card card--bordered padding-sm inline align-items-center justify-content-between" style="background: var(--surface-muted);">
           <div class="inline align-items-center gap-sm">
-            <span class="badge badge--accent">${args.containerScoped ? '@container' : '@media'}</span>
+            <span class="chip"><span class="chip__text">${args.containerScoped ? '@container' : '@media'}</span></span>
             <span class="font-size-sm">Active Class: <code>.${appliedClass}</code></span>
           </div>
           <span class="font-size-xs text-color-muted">Container Target: <strong>${args.containerWidth}</strong></span>
@@ -224,7 +224,7 @@ export const Playground: Story = {
           <div class="card card--bordered padding stack gap-sm ${args.visibilityMode === 'icons-only' ? appliedClass : ''}">
             <div class="inline align-items-center justify-content-between">
               <h4 class="card__title font-size-md" style="margin: 0;">Responsive Action Toolbar</h4>
-              <span class="badge">Adaptive Component</span>
+              <span class="sb-demo-tag">Adaptive Component</span>
             </div>
 
             <p class="font-size-sm text-color-muted" style="margin: 0;">
@@ -234,16 +234,13 @@ export const Playground: Story = {
             <div class="cluster gap-sm align-items-center ${args.visibilityMode === 'icons-only' ? appliedClass : ''}">
               <!-- Always visible primary action -->
               <button type="button" class="button button--strong button--accent">
-                <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
                 <span class="button__text">Publish</span>
               </button>
 
               <!-- Conditionally hidden / adaptive action -->
               <button type="button" class="button ${args.visibilityMode !== 'icons-only' ? appliedClass : ''}">
-                <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
                   <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
                   <polyline points="17 21 17 13 7 13 7 21"></polyline>
                   <polyline points="7 3 7 8 15 8"></polyline>
@@ -253,10 +250,7 @@ export const Playground: Story = {
 
               <!-- Conditionally hidden tertiary action -->
               <button type="button" class="button button--subtle ${args.visibilityMode !== 'icons-only' ? appliedClass : ''}">
-                <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                  <polyline points="3 6 5 6 21 6"></polyline>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
                 <span class="button__text">Discard</span>
               </button>
             </div>
@@ -286,7 +280,7 @@ export const ContainerVsViewportComparison: Story = {
         <div class="container-inline stack gap-sm" style="flex: 1; max-inline-size: 22rem;">
           <div class="card card--bordered padding stack gap-sm" style="background: var(--surface);">
             <div class="inline align-items-center justify-content-between">
-              <span class="badge badge--success">Container Query (@container)</span>
+              <span class="sb-demo-tag">Container Query (@container)</span>
               <span class="font-size-xs text-color-muted">~20em width</span>
             </div>
             <p class="font-weight-bold font-size-sm" style="margin: 0;">Sidebar with .@max-md:hide</p>
@@ -305,7 +299,7 @@ export const ContainerVsViewportComparison: Story = {
         <div class="stack gap-sm" style="flex: 1; max-inline-size: 22rem;">
           <div class="card card--bordered padding stack gap-sm" style="background: var(--surface-muted);">
             <div class="inline align-items-center justify-content-between">
-              <span class="badge badge--danger">Viewport Media Query (@media)</span>
+              <span class="sb-demo-tag">Viewport Media Query (@media)</span>
               <span class="font-size-xs text-color-muted">Viewport > 48em</span>
             </div>
             <p class="font-weight-bold font-size-sm" style="margin: 0;">Sidebar with .max-md:hide</p>
@@ -344,24 +338,15 @@ export const ProgressiveDisclosureToolbar: Story = {
           <span class="font-size-xs font-weight-bold text-color-muted">1. WIDE CONTAINER (Above 48em threshold):</span>
           <div class="cluster gap-sm align-items-center @max-md:hide-labels">
             <button type="button" class="button button--strong button--accent">
-              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               <span class="button__text">Approve Audit</span>
             </button>
             <button type="button" class="button">
-              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
               <span class="button__text">Download Report</span>
             </button>
             <button type="button" class="button button--subtle">
-              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
               <span class="button__text">Configure</span>
             </button>
           </div>
@@ -372,24 +357,15 @@ export const ProgressiveDisclosureToolbar: Story = {
           <span class="font-size-xs font-weight-bold text-color-muted">2. NARROW CONTAINER (Below 48em threshold):</span>
           <div class="cluster gap-sm align-items-center @max-md:hide-labels">
             <button type="button" class="button button--strong button--accent" aria-label="Approve Audit">
-              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
               <span class="button__text">Approve Audit</span>
             </button>
             <button type="button" class="button" aria-label="Download Report">
-              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
               <span class="button__text">Download Report</span>
             </button>
             <button type="button" class="button button--subtle" aria-label="Configure">
-              <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-              </svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
               <span class="button__text">Configure</span>
             </button>
           </div>
@@ -424,21 +400,21 @@ export const ResponsiveTableColumns: Story = {
           <tbody>
             <tr style="border-block-end: 1px solid var(--border-color-muted);">
               <td style="padding: var(--spacing-12); font-weight: bold;">Dialog</td>
-              <td style="padding: var(--spacing-12);"><span class="badge badge--success">Passing</span></td>
+              <td style="padding: var(--spacing-12);"><span class="status status--success"><span class="status__text">Passing</span></span></td>
               <td class="@max-sm:hide" style="padding: var(--spacing-12);">Overlay</td>
               <td class="@max-md:hide" style="padding: var(--spacing-12);">WCAG 2.2 AAA</td>
               <td class="@max-lg:hide" style="padding: var(--spacing-12); color: var(--foreground-muted);">Today</td>
             </tr>
             <tr style="border-block-end: 1px solid var(--border-color-muted);">
               <td style="padding: var(--spacing-12); font-weight: bold;">Popover</td>
-              <td style="padding: var(--spacing-12);"><span class="badge badge--success">Passing</span></td>
+              <td style="padding: var(--spacing-12);"><span class="status status--success"><span class="status__text">Passing</span></span></td>
               <td class="@max-sm:hide" style="padding: var(--spacing-12);">Floating</td>
               <td class="@max-md:hide" style="padding: var(--spacing-12);">WCAG 2.2 AA</td>
               <td class="@max-lg:hide" style="padding: var(--spacing-12); color: var(--foreground-muted);">Yesterday</td>
             </tr>
             <tr>
               <td style="padding: var(--spacing-12); font-weight: bold;">Accordion</td>
-              <td style="padding: var(--spacing-12);"><span class="badge badge--success">Passing</span></td>
+              <td style="padding: var(--spacing-12);"><span class="status status--success"><span class="status__text">Passing</span></span></td>
               <td class="@max-sm:hide" style="padding: var(--spacing-12);">Disclosure</td>
               <td class="@max-md:hide" style="padding: var(--spacing-12);">WCAG 2.2 AAA</td>
               <td class="@max-lg:hide" style="padding: var(--spacing-12); color: var(--foreground-muted);">2 days ago</td>
@@ -465,11 +441,7 @@ export const ViewportLayoutShell: Story = {
         <!-- Brand Lockup -->
         <div class="inline align-items-center gap-sm">
           <button type="button" class="button button--subtle button--icon md:hide" aria-label="Open mobile navigation menu">
-            <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
           </button>
           <strong class="font-size-md">Design For Humans</strong>
         </div>
@@ -484,7 +456,7 @@ export const ViewportLayoutShell: Story = {
 
         <!-- Right Action Cluster -->
         <div class="inline align-items-center gap-xs">
-          <span class="badge badge--accent max-sm:hide">v2.4.0</span>
+          <span class="chip max-sm:hide"><span class="chip__text">v2.4.0</span></span>
           <button type="button" class="button button--strong button--accent button--sm">
             <span>Log In</span>
           </button>
@@ -513,23 +485,23 @@ export const StateMatrix: Story = {
         <div class="stack gap-xs">
           <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-2xs:hide">
             <code>.@max-2xs:hide</code>
-            <span class="badge">Above 20em (320px)</span>
+            <span class="sb-demo-tag">Above 20em (320px)</span>
           </div>
           <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-xs:hide">
             <code>.@max-xs:hide</code>
-            <span class="badge">Above 30em (480px)</span>
+            <span class="sb-demo-tag">Above 30em (480px)</span>
           </div>
           <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-sm:hide">
             <code>.@max-sm:hide</code>
-            <span class="badge">Above 40em (640px)</span>
+            <span class="sb-demo-tag">Above 40em (640px)</span>
           </div>
           <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-md:hide">
             <code>.@max-md:hide</code>
-            <span class="badge">Above 48em (768px)</span>
+            <span class="sb-demo-tag">Above 48em (768px)</span>
           </div>
           <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-lg:hide">
             <code>.@max-lg:hide</code>
-            <span class="badge">Above 60em (960px)</span>
+            <span class="sb-demo-tag">Above 60em (960px)</span>
           </div>
         </div>
       </div>
@@ -554,41 +526,41 @@ export const ViewportHeightShell: Story = {
         <!-- State Indicators -->
         <div class="inline align-items-center justify-content-between pd-sm bg-subtle rounded-sm">
           <span class="font-weight-bold">Current Screen Height State:</span>
-          <span class="badge badge--success short:hide">Tall Screen (> 36em / 576px)</span>
-          <span class="badge badge--warning tall:hide">Short Screen (&le; 36em / 576px)</span>
+          <span class="sb-demo-tag short:hide">Tall Screen (> 36em / 576px)</span>
+          <span class="sb-demo-tag tall:hide">Short Screen (&le; 36em / 576px)</span>
         </div>
 
         <!-- Demonstration Elements -->
         <div class="card card--bordered padding-sm inline align-items-center justify-content-between short:hide">
           <div class="inline align-items-center gap-xs">
-            <span class="badge badge--accent">.short:hide</span>
+            <span class="sb-demo-tag">.short:hide</span>
             <span>Desktop Expanded Panel (Hidden on Short Viewports &le; 36em)</span>
           </div>
-          <span class="badge badge--success">Visible Now</span>
+          <span class="sb-demo-tag">Visible Now</span>
         </div>
 
         <div class="card card--bordered padding-sm inline align-items-center justify-content-between short:show">
           <div class="inline align-items-center gap-xs">
-            <span class="badge badge--accent">.short:show</span>
+            <span class="sb-demo-tag">.short:show</span>
             <span>Compact Navigation Bar (Visible ONLY on Short Viewports &le; 36em)</span>
           </div>
-          <span class="badge badge--warning">Visible Now</span>
+          <span class="sb-demo-tag">Visible Now</span>
         </div>
 
         <div class="card card--bordered padding-sm inline align-items-center justify-content-between app-unlocked:show">
           <div class="inline align-items-center gap-xs">
-            <span class="badge badge--accent">.app-unlocked:show</span>
+            <span class="sb-demo-tag">.app-unlocked:show</span>
             <span>Adaptive Mobile/Short Topbar (Visible on Mobile OR Short Viewport)</span>
           </div>
-          <span class="badge badge--accent">Unlocked Mode</span>
+          <span class="sb-demo-tag">Unlocked Mode</span>
         </div>
 
         <div class="card card--bordered padding-sm inline align-items-center justify-content-between app-locked:show">
           <div class="inline align-items-center gap-xs">
-            <span class="badge badge--accent">.app-locked:show</span>
+            <span class="sb-demo-tag">.app-locked:show</span>
             <span>Desktop Locked Full Rail (Visible ONLY on Wide AND Tall Desktop)</span>
           </div>
-          <span class="badge badge--accent">Locked Mode</span>
+          <span class="sb-demo-tag">Locked Mode</span>
         </div>
       </div>
     </div>

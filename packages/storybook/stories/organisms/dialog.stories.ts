@@ -40,12 +40,12 @@ AI agents and developers MUST strictly use the following semantic patterns:
       <header class="card__header">
         <hgroup class="card__hgroup">
           <h2 id="dialog-title" class="card__title heading">Publish Verification Report</h2>
-          <p class="card__subtitle strong-text text-muted">Immutable Audit Manifest</p>
+          <p class="card__subtitle font-bold text-muted">Immutable Audit Manifest</p>
         </hgroup>
         <form method="dialog">
           <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="confirm-dialog" command="close">
             <span class="visually-hidden">Close dialog</span>
-            <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </button>
         </form>
       </header>
@@ -77,7 +77,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
         <form method="dialog">
           <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="settings-drawer" command="close">
             <span class="visually-hidden">Close drawer</span>
-            <svg class="icon" width="24" height="24" aria-hidden="true"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </button>
         </form>
       </header>
@@ -210,12 +210,12 @@ AI agents and developers MUST strictly use the following semantic patterns:
               <header class="card__header">
                 <hgroup class="card__hgroup">
                   <h2 id="${dialogId}-title" class="card__title heading">${args.title}</h2>
-                  ${args.subtitle ? `<p class="card__subtitle strong-text text-muted">${args.subtitle}</p>` : ''}
+                  ${args.subtitle ? `<p class="card__subtitle font-bold text-muted">${args.subtitle}</p>` : ''}
                 </hgroup>
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
                     <span class="visually-hidden">Close</span>
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </form>
               </header>
@@ -263,7 +263,7 @@ export const Playground: Story = {
 
 /**
  * 2. Anatomy & Structure Breakdown
- * Shows Trigger button, native <dialog>, frosted ::backdrop, composed Card, header, body, and footer.
+ * Shows Trigger button, native `<dialog>`, frosted ::backdrop, composed Card, header, body, and footer.
  */
 export const Anatomy: Story = {
   render: () => {
@@ -305,12 +305,12 @@ export const Anatomy: Story = {
               <header class="card__header">
                 <hgroup class="card__hgroup">
                   <h2 id="anatomy-title" class="card__title heading">WCAG 2.2 Modal Architecture</h2>
-                  <p class="card__subtitle strong-text text-muted">Native Top-Layer Focus Trapping</p>
+                  <p class="card__subtitle font-bold text-muted">Native Top-Layer Focus Trapping</p>
                 </hgroup>
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
                     <span class="visually-hidden">Close dialog</span>
-                    <svg class="icon" aria-hidden="true"><use href="#Close"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                   </button>
                 </form>
               </header>
@@ -342,7 +342,7 @@ export const Anatomy: Story = {
 
 /**
  * 3. Modal Confirmation Dialog
- * Standard confirmation dialog composed with Card primitive and native <form method="dialog">.
+ * Standard confirmation dialog composed with Card primitive and native `<form method="dialog">`.
  */
 export const ModalConfirmation: Story = {
   render: () => {
@@ -377,7 +377,7 @@ export const ModalConfirmation: Story = {
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
                     <span class="visually-hidden">Close</span>
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
                 </form>
               </header>
@@ -448,7 +448,7 @@ export const SlideOutDrawer: Story = {
                     command="close"
                   >
                     <span class="visually-hidden">Close drawer</span>
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
                 </form>
               </header>
@@ -529,7 +529,7 @@ export const WholeCardScrollable: Story = {
               <header class="card__header">
                 <hgroup class="card__hgroup">
                   <h3 id="${dialogId}-title" class="card__title heading">Whole-Card Scrollable Modal</h3>
-                  <p class="card__subtitle strong-text text-muted">Header scrolls with card content</p>
+                  <p class="card__subtitle font-bold text-muted">Header scrolls with card content</p>
                 </hgroup>
                 <form method="dialog">
                   <button 
@@ -539,7 +539,7 @@ export const WholeCardScrollable: Story = {
                     command="close"
                   >
                     <span class="visually-hidden">Close</span>
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
                 </form>
               </header>
@@ -627,7 +627,7 @@ export const RealWorldRecipes: Story = {
             command="show-modal"
             aria-haspopup="dialog"
           >
-            <svg class="icon" aria-hidden="true"><use href="#Delete"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
             <span>Delete Entire Project</span>
           </button>
         </div>
@@ -640,7 +640,7 @@ export const RealWorldRecipes: Story = {
                 <form method="dialog">
                   <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${deleteDialogId}" command="close">
                     <span class="visually-hidden">Cancel</span>
-                    <svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                   </button>
                 </form>
               </header>

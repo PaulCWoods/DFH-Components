@@ -35,7 +35,7 @@ Defined in \`packages/css/src/layout/sidebar.css\`.
    - \`.sidebar__scroller\`: Fluid middle viewport that scrolls independently. Automatically adjusts its block padding when headers or footers are present.
    - \`.sidebar__footer\`: Pinned trailing zone (\`margin-block-start: auto\`) with a subtle top border rule for user profile lockups, version tags, or status indicators.
 4. **Sticky Positioning Landmark (\`.sidebar--sticky\`)**: Automatically computes sticky height using modern dynamic viewport units: \`calc(100dvb - var(--_sidebar-header-height))\` with \`inset-block-start: var(--_sidebar-header-height)\`, pinning alongside long scrolling main content without clipping.
-5. **Flush Edge-to-Edge Navigation (\`.sidebar--flush\`)**: Removes scroller padding (\`padding: 0\`), allowing child navigation components (such as \`.tabs-flush\`) to render full-bleed active indicator bars and hover backgrounds against the sidebar border.
+5. **Flush Edge-to-Edge Navigation (\`.sidebar--flush\`)**: Removes scroller padding (\`padding: 0\`), allowing child navigation components (such as \`.tab-list--flush\`) to render full-bleed active indicator bars and hover backgrounds against the sidebar border.
 6. **Floating Translucent Dock (\`.sidebar--floating\`)**: Provides an elevated glassmorphic panel with \`backdrop-filter: blur(16px)\`, \`border-radius\`, and \`box-shadow\`.
 7. **Opposite Edge Anchor (\`.sidebar--end\` / \`.sidebar--right\`)**: Inverts borders from inline-end to inline-start for trailing inspector/properties panels.
 8. **Responsive Off-Canvas Drawer (\`< 48em\` / 768px)**: Automatically switches from an in-flow flex item to a fixed off-canvas drawer with smooth GPU transforms (\`transform: translateX(-100%)\` or \`+100%\`) toggled via the \`.is-open\` state class.
@@ -53,20 +53,20 @@ AI agents and developers MUST strictly use the following semantic patterns:
   </header>
 
   <div class="sidebar__scroller">
-    <nav class="tab-list tabs-button tabs-subtle tabs-vertical" aria-label="Main Sections">
+    <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Main Sections">
       <!-- Nav items -->
     </nav>
   </div>
 
   <footer class="sidebar__footer">
-    <span class="micro-text text-muted">v2.4.0</span>
+    <span class="small-text text-muted">v2.4.0</span>
   </footer>
 </aside>
 
 <!-- 2. Flush Navigation Sidebar with Edge-to-Edge Tabs -->
 <aside class="sidebar sidebar--sticky sidebar--flush" aria-label="Documentation Navigation">
   <div class="sidebar__scroller">
-    <nav class="tab-list tabs-flush tab-list--tight tabs-sm tabs-button tabs-subtle tabs-vertical" aria-label="Docs">
+    <nav class="tab-list tab-list--flush tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Docs">
       <ul>
         <li>
           <a href="#overview" class="tab" aria-current="page">
@@ -83,20 +83,20 @@ AI agents and developers MUST strictly use the following semantic patterns:
   <div class="sidebar__header">
     <a href="#home" class="link inline align-items-center justify-content-center" aria-label="Home">
       <div class="avatar avatar--sm radius-sm" style="--avatar-bg: var(--foreground-accent); --avatar-text: #fff;">
-        <svg class="icon"><use href="#BrandDesignForHumans"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
       </div>
     </a>
   </div>
   <div class="sidebar__scroller">
-    <nav class="tab-list tabs-vertical tabs-plain tabs-sm" aria-label="Navigation Tiers">
+    <nav class="tab-list tab-list--vertical tab-list--plain tab-list--sm" aria-label="Navigation Tiers">
       <ul>
-        <li><button type="button" class="tab is-active" aria-current="page" aria-label="Dashboard"><svg class="icon"><use href="#Home"/></svg><span class="visually-hidden">Dashboard</span></button></li>
-        <li><button type="button" class="tab" aria-label="Analytics"><svg class="icon"><use href="#ChartBar"/></svg><span class="visually-hidden">Analytics</span></button></li>
+        <li><button type="button" class="tab" aria-current="page" aria-label="Dashboard"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg><span class="visually-hidden">Dashboard</span></button></li>
+        <li><button type="button" class="tab" aria-label="Analytics"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg><span class="visually-hidden">Analytics</span></button></li>
       </ul>
     </nav>
   </div>
   <div class="sidebar__footer flex-direction-column gap-xs">
-    <button type="button" class="button button--plain button--icon button--sm" aria-label="Search"><svg class="icon"><use href="#Search"/></svg></button>
+    <button type="button" class="button button--plain button--icon button--sm" aria-label="Search"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg></button>
     <button type="button" class="button button--avatar button--round" aria-label="User Profile"><span class="avatar avatar--sm radius-round" data-status="online">AM</span></button>
   </div>
 </aside>
@@ -113,7 +113,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 | \`.sidebar__scroller\` / \`.sidebar__body\` | Dedicated scroll container with \`overscroll-behavior: contain\` and \`scrollbar-gutter: stable\`. |
 | \`.sidebar__footer\` | Fixed bottom section with top border rule and auto top-margin push. |
 | \`.sidebar--sticky\` | Pinned sticky landmark offset by \`--sidebar-header-height\` (\`calc(100dvb - var(--_sidebar-header-height))\`). |
-| \`.sidebar--flush\` | Clears padding in \`.sidebar__scroller\` for edge-to-edge child elements like \`.tabs-flush\`. |
+| \`.sidebar--flush\` | Clears padding in \`.sidebar__scroller\` for edge-to-edge child elements like \`.tab-list--flush\`. |
 | \`.sidebar--rail\` | Ultra-compact icon-first navigation rail (4.5rem / 72px) with centered header/footer and hidden scrollbar. |
 | \`.sidebar--end\` / \`.sidebar--right\` | Inverts border to \`border-inline-start\` for trailing tool/inspector panels. |
 | \`.sidebar--floating\` | Translucent glassmorphic floating panel with backdrop blur and rounded border. |
@@ -219,7 +219,7 @@ export const Playground: Story = {
             <header class="sidebar__header">
               <span class="micro-heading text-muted">${args.title}</span>
               <button type="button" class="button button--subtle button--icon button--sm" aria-label="Filter navigation">
-                <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
               </button>
             </header>
           `
@@ -227,27 +227,27 @@ export const Playground: Story = {
       }
 
           <div class="sidebar__scroller">
-            <nav class="tab-list ${args.isFlush ? 'tabs-flush tab-list--tight' : ''} tabs-button tabs-subtle tabs-vertical" aria-label="Sections">
+            <nav class="tab-list ${args.isFlush ? 'tab-list--flush tab-list--tight' : ''} tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Sections">
               <ul>
                 <li>
                   <span class="tab-list__content micro-heading text-muted">Core Overview</span>
                   <ul>
                     <li>
                       <a href="#intro" class="tab" aria-current="page" onclick="event.preventDefault();">
-                        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Compass"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Compass"/></svg>
                         <span class="tab__text">Introduction</span>
                       </a>
                     </li>
                     <li>
                       <a href="#tokens" class="tab" onclick="event.preventDefault();">
-                        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Sliders"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                         <span class="tab__text">Design Tokens</span>
-                        <span class="badge badge--sm badge--accent"><span>v2.0</span></span>
+                        <span class="chip chip--sm"><span class="chip__text">v2.0</span></span>
                       </a>
                     </li>
                     <li>
                       <a href="#accessibility" class="tab" onclick="event.preventDefault();">
-                        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Check"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                         <span class="tab__text">Accessibility (WCAG)</span>
                       </a>
                     </li>
@@ -258,20 +258,20 @@ export const Playground: Story = {
                   <ul>
                     <li>
                       <a href="#sidebar" class="tab" onclick="event.preventDefault();">
-                        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Layers"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Layers"/></svg>
                         <span class="tab__text">Sidebar (.sidebar)</span>
-                        <span class="badge badge--sm badge--success"><span>New</span></span>
+                        <span class="status status--success status--sm"><span class="status__text">New</span></span>
                       </a>
                     </li>
                     <li>
                       <a href="#app" class="tab" onclick="event.preventDefault();">
-                        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Home"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
                         <span class="tab__text">App Shell (.app)</span>
                       </a>
                     </li>
                     <li>
                       <a href="#split" class="tab" onclick="event.preventDefault();">
-                        <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Split"/></svg>
+                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Columns"/></svg>
                         <span class="tab__text">Split (.split)</span>
                       </a>
                     </li>
@@ -285,10 +285,10 @@ export const Playground: Story = {
         ? `
             <footer class="sidebar__footer">
               <div class="inline gap-sm" style="align-items: center;">
-                <span class="badge badge--round badge--sm badge--success"></span>
-                <span class="micro-text text-muted">Design For Humans</span>
+                <span class="status status--success status--plain status--sm status--round"></span>
+                <span class="small-text text-muted">Design For Humans</span>
               </div>
-              <span class="badge badge--subtle badge--sm"><span>v2.4</span></span>
+              <span class="chip chip--subtle chip--sm"><span class="chip__text">v2.4</span></span>
             </footer>
           `
         : ''
@@ -304,7 +304,7 @@ export const Playground: Story = {
 /**
  * 2. Hierarchical Documentation Navigation
  * Canonical documentation sidebar with collapsible groups and badges,
- * composed with .tab-list.tabs-button.tabs-subtle.tabs-vertical.
+ * composed with .tab-list.tab-list--segmented.tab-list--subtle.tab-list--vertical.
  */
 export const HierarchicalNavigation: Story = {
   render: () => `
@@ -319,14 +319,14 @@ export const HierarchicalNavigation: Story = {
         </header>
 
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-flush tab-list--tight tabs-sm tabs-button tabs-subtle tabs-vertical" aria-label="Documentation Sections">
+          <nav class="tab-list tab-list--flush tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Documentation Sections">
             <ul>
               
               <!-- Getting Started Section -->
               <li class="margin-bottom-sm">
                 <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="docs-nav-getting-started">
                   <span class="visually-hidden">Toggle Getting Started</span>
-                  <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                 </button>
                 <span class="tab-list__content micro-heading">Getting Started</span>
                 <ul id="docs-nav-getting-started">
@@ -338,13 +338,13 @@ export const HierarchicalNavigation: Story = {
                   <li>
                     <a href="#composition" class="tab" onclick="event.preventDefault();">
                       <span class="tab__text">Composition Law</span>
-                      <span class="badge badge--sm badge--subtle"><span>Core</span></span>
+                      <span class="chip chip--subtle chip--sm"><span class="chip__text">Core</span></span>
                     </a>
                   </li>
                   <li>
                     <a href="#accessibility" class="tab" onclick="event.preventDefault();">
                       <span class="tab__text">Accessibility (WCAG 2.2)</span>
-                      <span class="badge badge--sm badge--accent"><span>AAA</span></span>
+                      <span class="status status--accent status--sm"><span class="status__text">AAA</span></span>
                     </a>
                   </li>
                 </ul>
@@ -354,14 +354,14 @@ export const HierarchicalNavigation: Story = {
               <li class="margin-bottom-sm">
                 <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="docs-nav-layout">
                   <span class="visually-hidden">Toggle Layout Primitives</span>
-                  <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                 </button>
                 <span class="tab-list__content micro-heading">Layout Primitives</span>
                 <ul id="docs-nav-layout">
                   <li>
                     <a href="#sidebar" class="tab" onclick="event.preventDefault();">
                       <span class="tab__text">Sidebar (.sidebar)</span>
-                      <span class="badge badge--sm badge--success"><span>New</span></span>
+                      <span class="status status--success status--sm"><span class="status__text">New</span></span>
                     </a>
                   </li>
                   <li>
@@ -391,7 +391,7 @@ export const HierarchicalNavigation: Story = {
               <li class="margin-bottom-sm">
                 <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="docs-nav-components">
                   <span class="visually-hidden">Toggle Components</span>
-                  <svg class="icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                 </button>
                 <span class="tab-list__content micro-heading">Components</span>
                 <ul id="docs-nav-components">
@@ -403,7 +403,7 @@ export const HierarchicalNavigation: Story = {
                   <li>
                     <a href="#tab-list" class="tab" onclick="event.preventDefault();">
                       <span class="tab__text">Tab List (Navigation)</span>
-                      <span class="badge badge--sm badge--accent"><span>Updated</span></span>
+                      <span class="status status--accent status--sm"><span class="status__text">Updated</span></span>
                     </a>
                   </li>
                   <li>
@@ -425,10 +425,10 @@ export const HierarchicalNavigation: Story = {
 
         <footer class="sidebar__footer">
           <div class="inline gap-sm" style="align-items: center;">
-            <svg class="icon text-muted" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
-            <span class="micro-text text-muted">Branch: <code>main</code></span>
+            <svg class="icon text-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
+            <span class="small-text text-muted">Branch: <code>main</code></span>
           </div>
-          <a href="#" class="link micro-text" onclick="event.preventDefault();">GitHub &rarr;</a>
+          <a href="#" class="link small-text" onclick="event.preventDefault();">GitHub &rarr;</a>
         </footer>
 
       </aside>
@@ -436,7 +436,7 @@ export const HierarchicalNavigation: Story = {
       <main class="main padding" style="flex: 1; overflow-y: auto;">
         <div class="stack" style="--gap: var(--spacing-16, 1rem);">
           <h2 class="heading">Documentation Main Content</h2>
-          <p class="text color-muted">
+          <p class="text text-muted">
             The documentation sidebar uses <code>.sidebar.sidebar--flush</code> to ensure the vertical navigation tabs bleed seamlessly to the inline container edge. The scrollport operates with <code>overscroll-behavior: contain</code> and <code>scrollbar-gutter: stable</code>.
           </p>
         </div>
@@ -458,42 +458,42 @@ export const FlushEdgeToEdge: Story = {
           <span class="micro-heading text-muted">Explorer</span>
           <div class="inline gap-xs">
             <button type="button" class="button button--plain button--icon button--sm" aria-label="New file">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Plus"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
             </button>
             <button type="button" class="button button--plain button--icon button--sm" aria-label="Collapse all">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronStart"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
             </button>
           </div>
         </header>
 
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-flush tab-list--tight tabs-sm tabs-button tabs-subtle tabs-vertical" aria-label="Files">
+          <nav class="tab-list tab-list--flush tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Files">
             <ul>
               <li>
                 <span class="tab-list__content micro-heading text-muted">src/layout</span>
                 <ul>
                   <li>
                     <a href="#sidebar-css" class="tab" aria-current="page" onclick="event.preventDefault();">
-                      <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
                       <span class="tab__text">sidebar.css</span>
-                      <span class="badge badge--sm badge--success"><span>A</span></span>
+                      <span class="status status--success status--sm"><span class="status__text">A</span></span>
                     </a>
                   </li>
                   <li>
                     <a href="#app-css" class="tab" onclick="event.preventDefault();">
-                      <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
                       <span class="tab__text">app.css</span>
                     </a>
                   </li>
                   <li>
                     <a href="#grid-css" class="tab" onclick="event.preventDefault();">
-                      <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
                       <span class="tab__text">grid.css</span>
                     </a>
                   </li>
                   <li>
                     <a href="#split-css" class="tab" onclick="event.preventDefault();">
-                      <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
                       <span class="tab__text">split.css</span>
                     </a>
                   </li>
@@ -504,14 +504,14 @@ export const FlushEdgeToEdge: Story = {
                 <ul>
                   <li>
                     <a href="#tab-list-css" class="tab" onclick="event.preventDefault();">
-                      <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
                       <span class="tab__text">tab-list.css</span>
-                      <span class="badge badge--sm badge--accent"><span>M</span></span>
+                      <span class="status status--accent status--sm"><span class="status__text">M</span></span>
                     </a>
                   </li>
                   <li>
                     <a href="#field-css" class="tab" onclick="event.preventDefault();">
-                      <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Code"/></svg>
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
                       <span class="tab__text">field.css</span>
                     </a>
                   </li>
@@ -522,8 +522,8 @@ export const FlushEdgeToEdge: Story = {
         </div>
 
         <footer class="sidebar__footer">
-          <span class="micro-text text-muted">UTF-8</span>
-          <span class="micro-text text-muted">CSS3 Modules</span>
+          <span class="small-text text-muted">UTF-8</span>
+          <span class="small-text text-muted">CSS3 Modules</span>
         </footer>
 
       </aside>
@@ -549,54 +549,54 @@ export const WithHeaderAndFooter: Story = {
           <div class="inline" style="justify-content: space-between; align-items: center;">
             <div class="inline gap-xs" style="align-items: center;">
               <div style="inline-size: 24px; block-size: 24px; border-radius: 6px; background: var(--surface-accent, #6366f1); display: grid; place-items: center; color: white;">
-                <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Sparkle"/></svg>
+                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Star"/></svg>
               </div>
               <span class="small-heading" style="font-weight: 700;">Acme Cloud</span>
             </div>
             <button type="button" class="button button--subtle button--icon button--sm" aria-label="Switch organization">
-              <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#ChevronDown"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
             </button>
           </div>
 
           <div class="field" style="margin: 0;">
             <div class="input-lockup" style="position: relative;">
               <input type="search" class="input input--sm input--subtle" placeholder="Jump to..." aria-label="Quick search navigation" style="inline-size: 100%; padding-inline-start: 2rem;" />
-              <svg class="icon text-muted" width="14" height="14" style="position: absolute; inset-inline-start: 0.6rem; inset-block-start: 50%; transform: translateY(-50%); pointer-events: none;" aria-hidden="true"><use href="#Search"/></svg>
+              <svg class="icon text-muted" width="1em" height="1em" style="position: absolute; inset-inline-start: 0.6rem; inset-block-start: 50%; transform: translateY(-50%); pointer-events: none;" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             </div>
           </div>
         </header>
 
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-button tabs-subtle tabs-vertical" aria-label="Platform">
+          <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Platform">
             <ul>
               <li>
                 <a href="#dashboard" class="tab" aria-current="page" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Home"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
                   <span class="tab__text">Dashboard</span>
                 </a>
               </li>
               <li>
                 <a href="#analytics" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#ChartBar"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg>
                   <span class="tab__text">Analytics</span>
                 </a>
               </li>
               <li>
                 <a href="#deployments" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Rocket"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Rocket"/></svg>
                   <span class="tab__text">Deployments</span>
-                  <span class="badge badge--sm badge--warning"><span>2 Live</span></span>
+                  <span class="status status--warning status--sm"><span class="status__text">2 Live</span></span>
                 </a>
               </li>
               <li>
                 <a href="#security" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Shield"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Shield"/></svg>
                   <span class="tab__text">Security & Access</span>
                 </a>
               </li>
               <li>
                 <a href="#settings" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Settings"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                   <span class="tab__text">Settings</span>
                 </a>
               </li>
@@ -611,11 +611,11 @@ export const WithHeaderAndFooter: Story = {
             </div>
             <div class="stack" style="--gap: 0; min-inline-size: 0;">
               <span class="micro-heading text-ellipsis" style="font-weight: 600;">Paul Woods</span>
-              <span class="micro-text text-muted text-ellipsis">paul@designforhumans.io</span>
+              <span class="small-text text-muted text-ellipsis">paul@designforhumans.io</span>
             </div>
           </div>
           <button type="button" class="button button--plain button--icon button--sm" aria-label="User account actions">
-            <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#MoreVertical"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#More"/></svg>
           </button>
         </footer>
 
@@ -639,33 +639,33 @@ export const FloatingTranslucent: Story = {
         
         <header class="sidebar__header">
           <span class="micro-heading" style="color: currentColor; font-weight: 700;">Toolbox</span>
-          <span class="badge badge--sm badge--accent"><span>Active</span></span>
+          <span class="status status--accent status--sm"><span class="status__text">Active</span></span>
         </header>
 
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-button tabs-subtle tabs-vertical" aria-label="Tools">
+          <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Tools">
             <ul>
               <li>
                 <a href="#select" class="tab" aria-current="page" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Pointer"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Point"/></svg>
                   <span class="tab__text">Select Tool</span>
                 </a>
               </li>
               <li>
                 <a href="#pen" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Edit"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
                   <span class="tab__text">Vector Pen</span>
                 </a>
               </li>
               <li>
                 <a href="#shapes" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Box"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Box"/></svg>
                   <span class="tab__text">Shapes</span>
                 </a>
               </li>
               <li>
                 <a href="#typography" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Type"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Type"/></svg>
                   <span class="tab__text">Text Layer</span>
                 </a>
               </li>
@@ -675,7 +675,7 @@ export const FloatingTranslucent: Story = {
 
         <footer class="sidebar__footer">
           <button type="button" class="button button--subtle button--sm w-full" style="justify-content: center;">
-            <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Plus"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
             <span>Add Plugin</span>
           </button>
         </footer>
@@ -705,7 +705,7 @@ export const InspectorEndPanel: Story = {
           <h3 class="heading">Element Canvas</h3>
           <p class="text text-muted">Select an element to inspect and edit its geometry tokens in the trailing sidebar.</p>
           <div style="inline-size: 100%; block-size: 16rem; border: 2px dashed var(--border-color-quiet, #cbd5e1); border-radius: var(--radius-md, 8px); display: grid; place-items: center;">
-            <span class="badge badge--accent badge--strong">Selected: #card-hero-banner</span>
+            <span class="status status--accent status--strong"><span class="status__text">Selected: #card-hero-banner</span></span>
           </div>
         </div>
       </main>
@@ -715,7 +715,7 @@ export const InspectorEndPanel: Story = {
         <header class="sidebar__header">
           <span class="small-heading" style="font-weight: 700;">Properties</span>
           <button type="button" class="button button--plain button--icon button--sm" aria-label="Close inspector">
-            <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </button>
         </header>
 
@@ -726,11 +726,11 @@ export const InspectorEndPanel: Story = {
               <legend class="micro-heading text-muted margin-bottom-xs">Transform & Dimensions</legend>
               <div class="grid grid--2 gap-xs">
                 <div>
-                  <label for="prop-w" class="micro-text text-muted">Width</label>
+                  <label for="prop-w" class="small-text text-muted">Width</label>
                   <input id="prop-w" type="text" class="input input--sm" value="384px" />
                 </div>
                 <div>
-                  <label for="prop-h" class="micro-text text-muted">Height</label>
+                  <label for="prop-h" class="small-text text-muted">Height</label>
                   <input id="prop-h" type="text" class="input input--sm" value="auto" />
                 </div>
               </div>
@@ -740,9 +740,9 @@ export const InspectorEndPanel: Story = {
               <legend class="micro-heading text-muted margin-bottom-xs">Layout & Alignment</legend>
               <div class="stack gap-xs">
                 <div class="inline gap-xs">
-                  <button type="button" class="button button--subtle button--sm button--icon" aria-label="Align left"><svg class="icon" width="16" height="16"><use href="#AlignLeft"/></svg></button>
-                  <button type="button" class="button button--subtle button--sm button--icon is-active" aria-label="Align center"><svg class="icon" width="16" height="16"><use href="#AlignCenter"/></svg></button>
-                  <button type="button" class="button button--subtle button--sm button--icon" aria-label="Align right"><svg class="icon" width="16" height="16"><use href="#AlignRight"/></svg></button>
+                  <button type="button" class="button button--subtle button--sm button--icon" aria-label="Align left"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#AlignLeft"/></svg></button>
+                  <button type="button" class="button button--subtle button--sm button--icon is-active" aria-label="Align center"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#AlignCenter"/></svg></button>
+                  <button type="button" class="button button--subtle button--sm button--icon" aria-label="Align right"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#AlignRight"/></svg></button>
                 </div>
               </div>
             </fieldset>
@@ -761,7 +761,7 @@ export const InspectorEndPanel: Story = {
 
         <footer class="sidebar__footer">
           <button type="button" class="button button--danger button--subtle button--sm">
-            <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Delete"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
             <span>Delete Layer</span>
           </button>
           <button type="button" class="button button--strong button--accent button--sm">
@@ -786,7 +786,7 @@ export const AppShellIntegration: Story = {
       <!-- Pinned Top Header -->
       <header class="header padding" style="block-size: var(--sidebar-header-height, 3.75rem); display: flex; align-items: center; justify-content: space-between; border-block-end: 1px solid var(--border-color-quiet, #e2e8f0); background: var(--surface-card, #fff);">
         <div class="inline gap-sm" style="align-items: center;">
-          <svg class="icon text-accent" width="22" height="22" aria-hidden="true"><use href="#Sparkle"/></svg>
+          <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Star"/></svg>
           <span class="small-heading" style="font-weight: 700;">Design For Humans</span>
         </div>
         <div class="inline gap-sm">
@@ -800,29 +800,29 @@ export const AppShellIntegration: Story = {
         
         <aside class="sidebar sidebar--sticky sidebar--flush" aria-label="App Navigation" style="inline-size: 16rem;">
           <div class="sidebar__scroller">
-            <nav class="tab-list tabs-flush tab-list--tight tabs-sm tabs-button tabs-subtle tabs-vertical" aria-label="Primary">
+            <nav class="tab-list tab-list--flush tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Primary">
               <ul>
                 <li>
                   <a href="#overview" class="tab" aria-current="page" onclick="event.preventDefault();">
-                    <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Home"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
                     <span class="tab__text">Overview</span>
                   </a>
                 </li>
                 <li>
                   <a href="#activity" class="tab" onclick="event.preventDefault();">
-                    <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Telemetry"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg>
                     <span class="tab__text">Live Telemetry</span>
                   </a>
                 </li>
                 <li>
                   <a href="#clusters" class="tab" onclick="event.preventDefault();">
-                    <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Grid"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Grid"/></svg>
                     <span class="tab__text">Clusters</span>
                   </a>
                 </li>
                 <li>
                   <a href="#settings" class="tab" onclick="event.preventDefault();">
-                    <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Settings"/></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                     <span class="tab__text">Settings</span>
                   </a>
                 </li>
@@ -844,17 +844,17 @@ export const AppShellIntegration: Story = {
               <div class="card card--bordered padding stack gap-xs">
                 <span class="micro-heading text-muted">Requests / Sec</span>
                 <span class="heading" style="font-size: 1.75rem;">12,480</span>
-                <span class="badge badge--success badge--sm"><span>+14.2%</span></span>
+                <span class="status status--success status--sm"><span class="status__text">+14.2%</span></span>
               </div>
               <div class="card card--bordered padding stack gap-xs">
                 <span class="micro-heading text-muted">P99 Latency</span>
                 <span class="heading" style="font-size: 1.75rem;">18ms</span>
-                <span class="badge badge--accent badge--sm"><span>Optimal</span></span>
+                <span class="status status--accent status--sm"><span class="status__text">Optimal</span></span>
               </div>
               <div class="card card--bordered padding stack gap-xs">
                 <span class="micro-heading text-muted">Error Rate</span>
                 <span class="heading" style="font-size: 1.75rem;">0.002%</span>
-                <span class="badge badge--subtle badge--sm"><span>Nominal</span></span>
+                <span class="status status--subtle status--sm"><span class="status__text">Nominal</span></span>
               </div>
             </div>
 
@@ -862,10 +862,10 @@ export const AppShellIntegration: Story = {
               <h3 class="small-heading">System Log Stream</h3>
               <p class="text text-muted">Scroll down to observe independent main viewport scrolling alongside the pinned sidebar.</p>
               <div style="block-size: 20rem; background: var(--surface-card, #fff); border-radius: var(--radius-sm, 4px); border: 1px solid var(--border-color-quiet, #eee); padding: 1rem;">
-                <p class="micro-text text-muted">[2026-10-18T00:14:02Z] INFO worker-node-04: Health check passed (0ms)</p>
-                <p class="micro-text text-muted">[2026-10-18T00:14:15Z] INFO api-gateway: Handled 200 OK /v1/tokens</p>
-                <p class="micro-text text-muted">[2026-10-18T00:14:30Z] INFO sync-daemon: Figma design tokens synchronized</p>
-                <p class="micro-text text-muted">[2026-10-18T00:15:00Z] INFO audit-agent: WCAG 2.2 AAA checks completed</p>
+                <p class="small-text text-muted">[2026-10-18T00:14:02Z] INFO worker-node-04: Health check passed (0ms)</p>
+                <p class="small-text text-muted">[2026-10-18T00:14:15Z] INFO api-gateway: Handled 200 OK /v1/tokens</p>
+                <p class="small-text text-muted">[2026-10-18T00:14:30Z] INFO sync-daemon: Figma design tokens synchronized</p>
+                <p class="small-text text-muted">[2026-10-18T00:15:00Z] INFO audit-agent: WCAG 2.2 AAA checks completed</p>
               </div>
             </div>
 
@@ -894,7 +894,7 @@ export const MobileDrawerMode: Story = {
           aria-controls="demo-mobile-sidebar"
           aria-label="Open mobile navigation drawer"
         >
-          <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Menu"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
         </button>
         <span class="small-heading" style="font-weight: 700;">Mobile Viewport Demo</span>
         <div style="inline-size: 2.25rem;"></div>
@@ -936,34 +936,34 @@ export const MobileDrawerMode: Story = {
             id="demo-drawer-close"
             aria-label="Close navigation drawer"
           >
-            <svg class="icon" width="16" height="16" aria-hidden="true"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
           </button>
         </header>
 
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-button tabs-subtle tabs-vertical" aria-label="Mobile Sections">
+          <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical" aria-label="Mobile Sections">
             <ul>
               <li>
                 <a href="#home" class="tab" aria-current="page" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Home"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
                   <span class="tab__text">Home</span>
                 </a>
               </li>
               <li>
                 <a href="#components" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Layers"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Layers"/></svg>
                   <span class="tab__text">Components</span>
                 </a>
               </li>
               <li>
                 <a href="#tokens" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#Sliders"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                   <span class="tab__text">Design Tokens</span>
                 </a>
               </li>
               <li>
                 <a href="#docs" class="tab" onclick="event.preventDefault();">
-                  <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#FileText"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#FileText"/></svg>
                   <span class="tab__text">Documentation</span>
                 </a>
               </li>
@@ -972,7 +972,7 @@ export const MobileDrawerMode: Story = {
         </div>
 
         <footer class="sidebar__footer">
-          <span class="micro-text text-muted">Mobile Mode (48em)</span>
+          <span class="small-text text-muted">Mobile Mode (48em)</span>
         </footer>
       </aside>
 
@@ -1014,41 +1014,41 @@ export const NavigationRail: StoryObj<SidebarArgs> = {
         <header class="sidebar__header">
           <a href="#home" class="link inline align-items-center justify-content-center" aria-label="Home" onclick="event.preventDefault();">
             <div class="avatar avatar--sm radius-sm" style="--avatar-bg: var(--foreground-accent); --avatar-text: #fff;">
-              <svg class="icon"><use href="#BrandDesignForHumans"/></svg>
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
             </div>
           </a>
         </header>
 
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-vertical tabs-plain tabs-sm" aria-label="Navigation Tiers">
+          <nav class="tab-list tab-list--vertical tab-list--plain tab-list--sm" aria-label="Navigation Tiers">
             <ul>
               <li>
-                <button type="button" class="tab is-active" aria-current="page" aria-label="Broadcast Studio" title="Broadcast Studio">
-                  <svg class="icon"><use href="#Radio"/></svg>
+                <button type="button" class="tab" aria-current="page" aria-label="Broadcast Studio" title="Broadcast Studio">
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Radio"/></svg>
                   <span class="visually-hidden">Broadcast</span>
                 </button>
               </li>
               <li>
                 <button type="button" class="tab" aria-label="Broadcast Schedule" title="Broadcast Schedule">
-                  <svg class="icon"><use href="#Calendar"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Calendar"/></svg>
                   <span class="visually-hidden">Schedule</span>
                 </button>
               </li>
               <li>
                 <button type="button" class="tab" aria-label="Media Library" title="Media Library">
-                  <svg class="icon"><use href="#Folder"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Folder"/></svg>
                   <span class="visually-hidden">Library</span>
                 </button>
               </li>
               <li>
                 <button type="button" class="tab" aria-label="Telemetry & Analytics" title="Telemetry & Analytics">
-                  <svg class="icon"><use href="#ChartBar"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChartBar"/></svg>
                   <span class="visually-hidden">Analytics</span>
                 </button>
               </li>
               <li>
                 <button type="button" class="tab" aria-label="System Settings" title="System Settings">
-                  <svg class="icon"><use href="#Settings"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                   <span class="visually-hidden">Settings</span>
                 </button>
               </li>
@@ -1058,7 +1058,7 @@ export const NavigationRail: StoryObj<SidebarArgs> = {
 
         <footer class="sidebar__footer flex-direction-column gap-xs">
           <button type="button" class="button button--plain button--icon button--sm" aria-label="Quick Search">
-            <svg class="icon"><use href="#Search"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
           </button>
           <button type="button" class="button button--avatar button--round" aria-label="Alex Morgan profile" title="Station Manager Alex Morgan">
             <span class="avatar avatar--sm radius-round" data-status="online">AM</span>
@@ -1072,11 +1072,11 @@ export const NavigationRail: StoryObj<SidebarArgs> = {
           <h3 class="small-heading margin-0">Broadcast</h3>
         </header>
         <div class="sidebar__scroller">
-          <nav class="tab-list tabs-vertical tabs-plain tabs-flush tabs-sm" aria-label="Submenu">
+          <nav class="tab-list tab-list--vertical tab-list--plain tab-list--flush tab-list--sm" aria-label="Submenu">
             <ul>
-              <li><a href="#live" class="tab is-active" aria-current="page" onclick="event.preventDefault();"><span class="tab__text">Live Stream</span><span class="badge badge--success badge--sm"><span>On Air</span></span></a></li>
+              <li><a href="#live" class="tab" aria-current="page" onclick="event.preventDefault();"><span class="tab__text">Live Stream</span><span class="status status--success status--sm"><span class="status__text">On Air</span></span></a></li>
               <li><a href="#sched" class="tab" onclick="event.preventDefault();"><span class="tab__text">Schedule & Events</span></a></li>
-              <li><a href="#queues" class="tab" onclick="event.preventDefault();"><span class="tab__text">Playlists</span><span class="badge badge--subtle badge--sm"><span>8</span></span></a></li>
+              <li><a href="#queues" class="tab" onclick="event.preventDefault();"><span class="tab__text">Playlists</span><span class="badge badge--sm"><span class="badge__text">8</span></span></a></li>
               <li><a href="#automation" class="tab" onclick="event.preventDefault();"><span class="tab__text">Automation Carts</span></a></li>
             </ul>
           </nav>

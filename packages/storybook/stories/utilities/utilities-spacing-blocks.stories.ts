@@ -66,7 +66,7 @@ AI agents and developers MUST use the following semantic patterns:
 
 <!-- 3. Accessible Touch Target Bounding Box (48×48px, WCAG 2.5.5) -->
 <button type="button" class="button block-target button--icon" aria-label="Settings">
-  <svg class="icon"><use href="#Settings"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
 </button>
 
 <!-- 4. Blowout-Safe Sidebar Container -->
@@ -152,7 +152,7 @@ export const Playground: Story = {
         <!-- Status Bar -->
         <div class="card card--bordered padding-sm inline align-items-center justify-content-between" style="background: var(--surface-muted);">
           <div class="inline align-items-center gap-sm">
-            <span class="badge badge--accent">${args.dimensionType.toUpperCase()}</span>
+            <span class="chip"><span class="chip__text">${args.dimensionType.toUpperCase()}</span></span>
             <span class="font-size-sm">Active Class: <code>.${appliedClass}</code></span>
           </div>
           <span class="font-size-xs text-color-muted">Family: <strong>${args.dimensionType}</strong></span>
@@ -170,7 +170,7 @@ export const Playground: Story = {
           >
             <div class="inline align-items-center justify-content-between">
               <strong class="font-size-sm">.${appliedClass}</strong>
-              <span class="badge badge--sm">Live Element</span>
+              <span class="sb-demo-tag">Live Element</span>
             </div>
             <p class="font-size-xs text-color-muted" style="margin: 0;">
               Logical dimension dynamically applied via Design For Humans token scale.
@@ -207,7 +207,7 @@ export const SquareBlockScale: Story = {
         <!-- 2. Target (48px - WCAG 2.5.5 AAA) -->
         <div class="stack gap-xs align-items-center">
           <div class="block-target rounded-md border inline align-items-center justify-content-center" style="background: var(--surface-active);" title="48px">
-            <svg class="icon text-color-accent" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+            <svg class="icon text-color-accent" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
               <circle cx="12" cy="12" r="10"></circle>
               <circle cx="12" cy="12" r="3"></circle>
             </svg>
@@ -256,7 +256,7 @@ export const SemanticWidthHierarchy: Story = {
         <!-- 1. .width-popover (16rem / 256px) -->
         <div class="stack gap-xs">
           <div class="inline align-items-center gap-sm">
-            <span class="badge badge--accent">.width-popover / .width-xs</span>
+            <span class="sb-demo-tag">.width-popover / .width-xs</span>
             <span class="font-size-xs text-color-muted">16rem (256px) — Menus, Dropdowns, Flyouts</span>
           </div>
           <div class="card card--bordered width-popover padding-sm" style="background: var(--surface);">
@@ -272,7 +272,7 @@ export const SemanticWidthHierarchy: Story = {
         <!-- 2. .width-sidebar (24rem / 384px) -->
         <div class="stack gap-xs">
           <div class="inline align-items-center gap-sm">
-            <span class="badge badge--accent">.width-sidebar / .width-sm</span>
+            <span class="sb-demo-tag">.width-sidebar / .width-sm</span>
             <span class="font-size-xs text-color-muted">24rem (384px) — Navigation & Filter Sidebars</span>
           </div>
           <aside class="card card--bordered width-sidebar padding stack gap-sm" style="background: var(--surface);">
@@ -292,13 +292,13 @@ export const SemanticWidthHierarchy: Story = {
         <!-- 3. .width-dialog (36rem / 576px) -->
         <div class="stack gap-xs">
           <div class="inline align-items-center gap-sm">
-            <span class="badge badge--accent">.width-dialog / .width-md</span>
+            <span class="sb-demo-tag">.width-dialog / .width-md</span>
             <span class="font-size-xs text-color-muted">36rem (576px) — Modal Dialogs & Settings Cards</span>
           </div>
           <div class="card card--bordered width-dialog padding stack gap-md" style="background: var(--surface);">
             <header class="inline align-items-center justify-content-between border-b pb-sm">
               <h4 class="font-size-md font-weight-bold" style="margin: 0;">Confirm Deployment</h4>
-              <span class="badge badge--warning">Staging</span>
+              <span class="status status--warning"><span class="status__text">Staging</span></span>
             </header>
             <p class="font-size-sm text-color-muted" style="margin: 0;">
               Are you sure you want to deploy release v2.4.0 to the staging environment? All automated axe accessibility scans must pass before promoting to production.
@@ -313,7 +313,7 @@ export const SemanticWidthHierarchy: Story = {
         <!-- 4. .width-prose (48rem / 768px, WCAG 1.4.8 AAA) -->
         <div class="stack gap-xs">
           <div class="inline align-items-center gap-sm">
-            <span class="badge badge--accent">.width-prose / .width-lg</span>
+            <span class="sb-demo-tag">.width-prose / .width-lg</span>
             <span class="font-size-xs text-color-muted">48rem (768px) — Optimal Reading Column (~65-75ch, WCAG AAA)</span>
           </div>
           <article class="card card--bordered width-prose padding stack gap-sm" style="background: var(--surface);">
@@ -380,14 +380,14 @@ export const HeightAndFlexGrowth: Story = {
       <div class="inline gap-md" style="block-size: 12rem;">
         <!-- Fixed Height 2XS Block -->
         <div class="card card--bordered height-2xs width-xs padding-sm stack justify-content-between" style="background: var(--surface);">
-          <span class="badge">.height-2xs</span>
+          <span class="sb-demo-tag">.height-2xs</span>
           <span class="font-size-xs text-color-muted">Fixed 128px block-size</span>
         </div>
 
         <!-- Flex Growth (.size-grow) -->
         <div class="card card--bordered height-fill size-grow padding-sm stack justify-content-between" style="background: var(--surface-active); border-style: dashed;">
           <div class="inline align-items-center justify-content-between">
-            <span class="badge badge--accent">.size-grow</span>
+            <span class="sb-demo-tag">.size-grow</span>
             <span class="font-size-xs text-color-muted">flex-grow: 1</span>
           </div>
           <p class="font-size-xs text-color-muted" style="margin: 0;">
@@ -416,7 +416,7 @@ export const StateMatrix: Story = {
       <div class="grid gap-md" style="--grid-min-item-width: 16rem;">
         <!-- Matrix 1: block-target -->
         <div class="card card--bordered padding stack gap-xs">
-          <span class="badge">.block-target</span>
+          <span class="sb-demo-tag">.block-target</span>
           <div class="block-target border rounded-md inline align-items-center justify-content-center" style="background: var(--surface);">
             <span class="font-size-xs">48px</span>
           </div>
@@ -424,7 +424,7 @@ export const StateMatrix: Story = {
 
         <!-- Matrix 2: width-popover -->
         <div class="card card--bordered padding stack gap-xs">
-          <span class="badge">.width-popover</span>
+          <span class="sb-demo-tag">.width-popover</span>
           <div class="width-popover border padding-xs rounded-md" style="background: var(--surface); max-inline-size: 100%;">
             <span class="font-size-xs">256px / 16rem</span>
           </div>
@@ -432,7 +432,7 @@ export const StateMatrix: Story = {
 
         <!-- Matrix 3: width-sidebar -->
         <div class="card card--bordered padding stack gap-xs">
-          <span class="badge">.width-sidebar</span>
+          <span class="sb-demo-tag">.width-sidebar</span>
           <div class="width-sidebar border padding-xs rounded-md" style="background: var(--surface); max-inline-size: 100%;">
             <span class="font-size-xs">384px / 24rem</span>
           </div>
@@ -440,7 +440,7 @@ export const StateMatrix: Story = {
 
         <!-- Matrix 4: width-dialog -->
         <div class="card card--bordered padding stack gap-xs">
-          <span class="badge">.width-dialog</span>
+          <span class="sb-demo-tag">.width-dialog</span>
           <div class="width-dialog border padding-xs rounded-md" style="background: var(--surface); max-inline-size: 100%;">
             <span class="font-size-xs">576px / 36rem</span>
           </div>

@@ -1,8 +1,9 @@
 /* ==========================================================================
    Design For Humans: Font-size-mode Utilities
    --------------------------------------------------------------------------
-   Low-specificity ()) utility classes for font-size-mode control. Direct parity with
-   the Design For Humans blog architecture (_font-size-mode.scss).
+   Low-specificity (:where()) classes that set the sizing mode for everything inside:
+   text atoms are fixed by default, and these switch a region to fluid, cq or
+   compact. Direct parity with the Design For Humans blog (_font-size-mode.scss).
    ========================================================================== */
 :where(.font-sizing-fixed) {
     --font-sizing: fixed;
@@ -37,14 +38,6 @@
     --vert-spacing: tight;
     --prose-font-sizing: fixed;
     --prose-vert-spacing: tight;
-}
-
-:where(.font-sizing-compact) {
-    --font-sizing: compact;
-    --vert-spacing: tight;
-    --prose-font-sizing: compact;
-    --prose-vert-spacing: tight;
-
 }
 
 :where(.font-sizing-compact--on-desk) {
@@ -104,6 +97,21 @@
     font-size: var(--body-compact-font-size);
 }
 
+/* Compact only where the primary pointer is fine (mouse, trackpad).
+   Touch screens keep the default size. */
+@media (pointer: fine) {
+    :where(.fine\:ui-compact) {
+        --ui-sizing: compact;
+        --spacing-breathe: var(--spacing);
+        --spacing-cushion: var(--spacing);
+        --spacing-cq-breathe: var(--spacing);
+        --spacing-cq-cushion: var(--spacing);
+        --font-sizing: compact;
+        --vert-spacing: tight;
+        font-size: var(--body-compact-font-size);
+    }
+}
+
 :where(.ui-dense) {
     --ui-density: dense;
     --spacing-breathe: var(--spacing);
@@ -112,20 +120,24 @@
     --spacing-cq-cushion: var(--spacing);
 }
 
-:where(.controls-dense) {
-    --control-density: dense;
-}
-
 :where(.controls-plain) {
-    --controls-variation: plain;
+    --controls-prominence: plain;
 }
 
 :where(.controls-subtle) {
-    --controls-variation: subtle;
+    --controls-prominence: subtle;
 }
 
 :where(.controls-sm) {
     --controls-size: sm;
+}
+
+:where(.controls-lg) {
+    --controls-size: lg;
+}
+
+:where(.controls-round) {
+    --controls-corners: round;
 }
 
 :where(.viewport-fit-cover) {

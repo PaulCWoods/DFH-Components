@@ -1,18 +1,39 @@
 /* ==========================================================================
-   Design For Humans: Tab List Component (Molecule)
+   Design For Humans: Tab List (Molecule)
    --------------------------------------------------------------------------
-   Collection container for interactive tabs and navigation links.
-   Provides anchor-scoped transition indicators, button tab grouping,
-   horizontal smooth scrolling, and floating glassmorphic dock modes.
-   Can live standalone as a top-level site nav bar, sub-nav, or toolbar.
-   Complies with WCAG 2.2 AA/AAA (2.4.7 Focus Visible, 1.4.3 Contrast).
+   A row or column of tabs: a tablist that switches panels, or navigation.
+   Owns every axis of its tabs and draws one selection indicator that slides
+   to the selected tab (CSS anchor positioning, scoped to the list).
+
+   | Axis       | Modifiers                         | Flag                  |
+   | ---------- | --------------------------------- | --------------------- |
+   | Style      | (underline) --segmented           | --tab-list-style      |
+   | Prominence | (default) --subtle (segmented), --plain | --tab-list-prominence |
+   | Size       | (default) --sm                    | --tab-list-size       |
+   | Density    | (none: a compact container steps tabs to sm) | --ui-sizing  |
+   | Corners    | (default) --round                 | --tab-list-corners    |
+
+   Layout: --vertical, --end (vertical, on the inline end), --scrollable,
+   --fill, --floating, --docked, --flush, --tight.
+
+   Every variant marks the selected tab at 3:1 or more:
+   | Style     | Default             | --subtle           | --plain              |
+   | --------- | ------------------- | ------------------ | -------------------- |
+   | Underline | Rule; line indicator | –                 | No rule; accent line and text |
+   | Segmented | Outlined; filled    | Tinted; filled     | Bare; tint and accent text |
+
+   Modifiers on the list beat flags inherited from a container.
+
+   Usage:
+   <nav class="tab-list tab-list--segmented" aria-label="View">
+     <a href="/grid" class="tab" aria-current="page"><span class="tab__text">Grid</span></a>
+     <a href="/list" class="tab"><span class="tab__text">List</span></a>
+   </nav>
    ========================================================================== */
 
-
 /* ==========================================================================
-0. Properties and Keyframes
-========================================================================== */
-
+   0. Properties and Keyframes
+   ========================================================================== */
 @property --fade-length-start {
   syntax: "<length>";
   inherits: false;
@@ -44,75 +65,73 @@
 }
 
 /* ==========================================================================
-   1. Base Tab List Container (:where(.tab-list))
+   1. Base Tab List (:where(.tab-list))
    ========================================================================== */
 :where(.tab-list) {
   /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
+     Per-Axis Values
+     Each axis writes its own variable, so a flag from a container and a
+     modifier on the list combine without ordering rules.
      -------------------------------------------------------------------------- */
-  --_tabs-button-list-gap: var(--tabs-button-list-gap, var(--spacing-8, 0.5rem));
-  --_tabs-indicator-color: var(--tabs-indicator-color, var(--tab-indicator-color, var(--tab-selected-border-color, var(--foreground, currentColor))));
-  --_tabs-indicator-width: var(--tabs-indicator-width, var(--tab-indicator-width, var(--tab-border-end-width, var(--border-width-2, 2px))));
-  --_tabs-list-bg: var(--tabs-list-bg, transparent);
-  --_tabs-list-border-color: var(--tabs-list-border-color, var(--border-color-quiet, currentColor));
-  --_tabs-list-border-end-width: var(--tabs-list-border-end-width, var(--border-width, 1px));
-  --_tabs-list-border-width: var(--tabs-list-border-width, 0px);
-  --_tabs-list-gap: var(--tabs-list-gap, var(--spacing-breathe, 1rem));
-  --_tabs-list-radius: var(--tabs-list-radius, 0px);
-  --_tabs-list-shadow: var(--tabs-list-shadow, 0 0 0 transparent);
-  --_tabs-round-radius: var(--tabs-round-radius, var(--radius-round, 9999px));
-  --_tabs-transition: var(--tabs-transition, var(--duration-sm, 200ms));
+  --_tab-list-underline-gap: var(--tab-list-gap, 1rem);
+  --_tab-list-style-gap: var(--_tab-list-underline-gap);
+  --_tab-list-gap: var(--_tab-list-style-gap);
+  --_tab-list-rule-style: 1;
+  --_tab-list-rule-prominence: 1;
+  --_tab-list-rule-sign: -1;
+  --_tab-list-dir: 1;
+  --_tab-list-segmented-radius: 0px;
+  --_tab-list-floating-radius: calc(var(--_tab-list-segmented-radius) + var(--_tab-list-floating-padding) + var(--_tab-list-floating-border-width));
+  --_tab-list-floating-padding-inline: var(--_tab-list-gap);
 
-  --_tabs-floating-backdrop-filter: var(--tabs-floating-backdrop-filter, var(--surface-layer-filter, blur(16px)));
-  --_tabs-floating-bg: var(--tabs-floating-bg, var(--surface-layer, Canvas));
-  --_tabs-floating-border-color: var(--tabs-floating-border-color, var(--border-color-quiet, currentColor));
-  --_tabs-floating-border-width: var(--tabs-floating-border-width, var(--border-width, 1px));
-  --_tabs-floating-padding: var(--tabs-floating-padding, var(--spacing-8, 0.5rem));
-  --_tabs-floating-padding-ends: var(--tabs-floating-padding-inline, var(--_tabs-list-gap));
-  --_tabs-floating-radius: 0px;
-  --_tabs-floating-shadow: var(--tabs-floating-shadow, var(--shadow-lg, none));
+  /* Geometry & Colour */
+  --_tab-list-rule-color: var(--tab-list-rule-color, var(--border-color-quiet, currentColor));
+  --_tab-list-rule-width: var(--tab-list-rule-width, 1px);
+  --_tab-list-rule: calc(var(--_tab-list-rule-width) * var(--_tab-list-rule-style) * var(--_tab-list-rule-prominence));
+  --_tab-list-indicator: var(--tab-list-indicator-color, var(--foreground, CanvasText));
+  --_tab-list-indicator-width: var(--tab-list-indicator-width, 2px);
+  --_tab-list-transition: var(--tab-list-transition, var(--duration-sm, 150ms));
+  --_tab-list-floating-padding: var(--tab-list-floating-padding, 0.5rem);
+  --_tab-list-floating-border-width: var(--tab-list-floating-border-width, 1px);
+  --_tab-list-floating-border-color: var(--tab-list-floating-border-color, var(--border-color-quiet, currentColor));
 
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_tabs-list-gap: var(--tabs-sm-list-gap, var(--spacing-16, 1rem));
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifier classes below, so a modifier on the list
+     beats a flag inherited from a container.
+     ------------------------------------------------------------------------ */
+  @container style(--tab-list-style: segmented) {
+    --_tab-list-style-gap: var(--tab-list-segmented-gap, 0.5rem);
+    --_tab-list-rule-style: 0;
+    --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
+    --_tab-list-floating-padding-inline: var(--_tab-list-floating-padding);
   }
 
-  /* Anchor Scope & Geometry */
+  @container style(--tab-list-prominence: plain) {
+    --_tab-list-rule-prominence: 0;
+  }
+
+  @container style(--tab-list-corners: round) {
+    --_tab-list-floating-radius: var(--radius-round, 9999px);
+  }
+
+  /* Layout & Geometry */
   anchor-scope: --tab-selected;
-  display: flex;
-  flex-wrap: var(--_tabs-list-wrap, wrap);
-  gap: var(--_tabs-list-gap);
+  position: relative;
   isolation: isolate;
-  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_tab-list-gap);
+  min-inline-size: 0;
   margin: 0;
   padding: 0;
-  max-inline-size: var(--_tabs-list-max-size, none);
-  min-inline-size: 0;
-  overflow: var(--_tabs-list-overflow, visible);
-  scrollbar-gutter: var(--_tabs-list-scrollbar-gutter, auto);
-  scroll-padding: var(--spacing-8, 0.5rem);
-  background-color: var(--_tabs-list-bg);
-  border: var(--_tabs-list-border-width) solid var(--_tabs-list-border-color);
-  border-radius: var(--_tabs-list-radius);
-  box-shadow: inset 0 calc(var(--_tabs-list-border-end-width) * -1) 0 var(--_tabs-list-border-color),
-  var(--_tabs-list-shadow);
+  list-style: none;
+  scroll-padding: var(--_tab-list-gap);
 
-  /* Shared Sliding Indicator */
-  &::before {
-    content: "";
-    position: absolute;
-    position-anchor: --tab-selected;
-    inset-block-end: anchor(end);
-    inset-inline-start: anchor(start);
-    inset-inline-end: anchor(end);
-    block-size: var(--_tabs-indicator-width);
-    z-index: 1;
-    background-color: var(--_tabs-indicator-color);
-    transition:
-      inset-inline-start var(--_tabs-transition),
-      inset-inline-end var(--_tabs-transition);
-  }
+  /* Rule: under the list; none when segmented or plain */
+  box-shadow: inset 0 calc(var(--_tab-list-rule) * -1) 0 var(--_tab-list-rule-color);
 
-  /* List Item Transparency (for semantic <ul> / <ol> navigation tabs) */
+  /* Semantic <ul>/<li> navigation: the tabs stay flex items */
   :where(ul, li) {
     display: contents;
   }
@@ -122,44 +141,139 @@
   }
 }
 
+/* --------------------------------------------------------------------------
+   1.1 Selection Indicator
+   Follows the selected tab (anchor-name: --tab-selected, set in tab.css).
+   The pseudo-element queries the list's own flags. Kept as top-level rules:
+   an at-rule nested in a nested pseudo-element rule is dropped by the
+   Storybook build's CSS transform.
+   -------------------------------------------------------------------------- */
+:where(.tab-list)::before {
+  content: "";
+  position: absolute;
+  position-anchor: --tab-selected;
+  position-visibility: anchors-visible;
+  z-index: 1;
+  inset-block: auto anchor(end);
+  inset-inline: anchor(start) anchor(end);
+  block-size: var(--_tab-list-indicator-width);
+  background-color: var(--_tab-list-indicator);
+  pointer-events: none;
+  transition-property: inset-block-start, inset-block-end, inset-inline-start, inset-inline-end;
+  transition-duration: var(--_tab-list-transition);
+  transition-timing-function: var(--timefunc-ease-out, ease-out);
+}
+
+@container style(--tab-list-prominence: plain) {
+  :where(.tab-list)::before {
+    background-color: var(--foreground-accent, LinkText);
+  }
+}
+
+/* Vertical: a line on the tab's inline end (start for --end) */
+@container style(--_tab-list-orientation: vertical) {
+  :where(.tab-list)::before {
+    inset-block: anchor(start) anchor(end);
+    inset-inline: auto anchor(end);
+    block-size: auto;
+    inline-size: var(--_tab-list-indicator-width);
+  }
+}
+
+@container style(--_tab-list-orientation: vertical) and style(--_tab-list-side: end) {
+  :where(.tab-list)::before {
+    inset-inline: anchor(start) auto;
+  }
+}
+
+/* Segmented: a fill behind the selected tab */
+@container style(--tab-list-style: segmented) {
+  :where(.tab-list)::before {
+    z-index: -1;
+    inset-block: anchor(start) anchor(end);
+    inset-inline: anchor(start) anchor(end);
+    block-size: auto;
+    inline-size: auto;
+    border-radius: var(--_tab-list-segmented-radius);
+  }
+}
+
+@container style(--tab-list-style: segmented) and style(--tab-list-corners: round) {
+  :where(.tab-list)::before {
+    border-radius: var(--radius-round, 9999px);
+  }
+}
+
+@container style(--tab-list-style: segmented) and style(--tab-list-prominence: plain) {
+  :where(.tab-list)::before {
+    background-color: var(--surface-translucent-strong, transparent);
+  }
+}
+
+:where(.tab-list):dir(rtl) {
+  --_tab-list-dir: -1;
+}
+
 /* ==========================================================================
-   2. Tab List Variations & Modifiers
+   2. Axis Modifiers
+   Each sets its flag (read by the tabs and the indicator) and the list's
+   own values for that axis.
+   ========================================================================== */
+:where(.tab-list--segmented) {
+  --tab-list-style: segmented;
+  --_tab-list-style-gap: var(--tab-list-segmented-gap, 0.5rem);
+  --_tab-list-rule-style: 0;
+  --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
+  --_tab-list-floating-padding-inline: var(--_tab-list-floating-padding);
+}
+
+/* Segmented only: an underline list has no surface to tint */
+:where(.tab-list--subtle) {
+  --tab-list-prominence: subtle;
+  --_tab-list-rule-prominence: 1;
+}
+
+:where(.tab-list--plain) {
+  --tab-list-prominence: plain;
+  --_tab-list-rule-prominence: 0;
+}
+
+:where(.tab-list--sm) {
+  --tab-list-size: sm;
+}
+
+:where(.tab-list--round) {
+  --tab-list-corners: round;
+  --_tab-list-floating-radius: var(--radius-round, 9999px);
+}
+
+/* ==========================================================================
+   3. Layout Modifiers
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   2.1 Vertical Tab List (.tabs-vertical)
+   3.1 Vertical (.tab-list--vertical, .tab-list--end)
+   --end is vertical too, for a list on the inline end: the rule and the
+   indicator move to its start edge. Inside .tabbed-content--vertical or
+   --end the list takes the matching layout without a class.
    -------------------------------------------------------------------------- */
-:where(.tabbed-content--vertical, .tabs-vertical)> :where(.tab-list),
-:where(.tab-list):where(.tabs-vertical) {
-  --_tabs-list-nested-indent: var(--tab-list-nested-indent, 0px);
+:where(.tab-list--vertical, .tab-list--end, .tabbed-content--vertical > .tab-list, .tabbed-content--end > .tab-list) {
+  --_tab-list-orientation: vertical;
+  --_tab-list-underline-gap: 0px;
+  --_tab-list-nested-indent: var(--tab-list-nested-indent, 0px);
 
-  box-shadow:
-    inset calc(var(--_tabs-list-border-end-width) * -1) 0 0 var(--_tabs-list-border-color),
-    var(--_tabs-list-shadow);
   flex-direction: column;
-  flex-shrink: 0;
   flex-wrap: nowrap;
-  max-inline-size: none;
-  max-block-size: var(--_tabs-list-max-size, none);
+  flex-shrink: 0;
   min-block-size: 0;
+  box-shadow: inset calc(var(--_tab-list-rule) * var(--_tab-list-rule-sign) * var(--_tab-list-dir)) 0 0 var(--_tab-list-rule-color);
 
-  &::before {
-    block-size: unset;
-    inline-size: var(--_tabs-indicator-width);
-    inset-block-start: anchor(start);
-    inset-block-end: anchor(end);
-    inset-inline-start: auto;
-    inset-inline-end: anchor(end);
-    transition:
-      inset-block-start var(--_tabs-transition),
-      inset-block-end var(--_tabs-transition);
-  }
-
+  /* A tab beside a button or other content in a list item */
   :where(li:has(.button, .tab-list__content)) {
-    align-items: center;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--_tabs-list-gap);
+    align-items: center;
+    gap: var(--_tab-list-gap);
 
     > :where(.tab) {
       flex-grow: 1;
@@ -173,290 +287,169 @@
   :where(li ul) {
     display: flex;
     flex-direction: column;
+    row-gap: var(--_tab-list-gap);
     inline-size: stretch;
-    padding-inline-start: var(--_tabs-list-nested-indent);
-    row-gap: var(--_tabs-list-gap);
+    padding-inline-start: var(--_tab-list-nested-indent);
   }
 }
 
-/* --------------------------------------------------------------------------
-   2.1b Reversed Layout: Tabs On Right (.tabs-on-right)
-   -------------------------------------------------------------------------- */
-:where(.tabs-on-right)> :where(.tab-list),
-:where(.tab-list):where(.tabs-on-right) {
-  box-shadow:
-    inset var(--_tabs-list-border-end-width) 0 0 var(--_tabs-list-border-color),
-    var(--_tabs-list-shadow);
-
-  &::before {
-    inset-inline-start: anchor(start);
-    inset-inline-end: auto;
-  }
+:where(.tab-list--end, .tabbed-content--end > .tab-list) {
+  --_tab-list-side: end;
+  --_tab-list-rule-sign: 1;
 }
 
 :where(.tab-list__content) {
   display: block;
   flex: 1;
-  padding-block: var(--tab-list-content-padding-block, var(--spacing-8, 0.5rem));
+  padding-block: var(--tab-list-content-padding-block, 0.5rem);
 }
 
 /* --------------------------------------------------------------------------
-   2.2 Plain Tab List (.tabs-plain)
+   3.2 Fill (.tab-list--fill): tabs share the row
    -------------------------------------------------------------------------- */
-:where(.tabs-plain) {
-  --tabs-variation: plain;
-  --_tabs-indicator-color: var(--tab-plain-selected-bg, var(--surface-translucent, transparent));
-}
-
-:where(.tabs-plain),
-:where(.tabs-plain)> :where(.tab-list),
-:where(.tab-list):where(.tabs-plain) {
-  box-shadow: none;
-
-  &:not(:is(.tabs-button))::before {
-    display: none;
-  }
+:where(.tab-list--fill) :where(.tab) {
+  flex: 1 0 auto;
 }
 
 /* --------------------------------------------------------------------------
-   2.3 Subtle Tab List (.tabs-subtle)
+   3.3 Tight (.tab-list--tight): tabs nearly touch
    -------------------------------------------------------------------------- */
-:where(.tabs-subtle) {
-  --tabs-variation: subtle;
-  --_tabs-list-border-end-width: 0;
+:where(.tab-list--tight) {
+  --_tab-list-gap: var(--tab-list-tight-gap, 2px);
 }
 
 /* --------------------------------------------------------------------------
-   2.4 Small / Compact Tab List (.tabs-sm)
+   3.4 Flush (.tab-list--flush)
+   Tabs run edge to edge with square corners, and their labels line up with
+   the surrounding content. The container sets --tab-list-inset (card and
+   sidebar flush bodies do).
    -------------------------------------------------------------------------- */
-:where(.tabs-sm),
-:where(.tabs-sm)> :where(.tab-list) {
-  --_tabs-list-gap: var(--tabs-sm-list-gap, var(--spacing-16, 1rem));
-}
+:where(.tab-list--flush) {
+  --_tab-list-segmented-radius: 0px;
+  --_tab-list-inset: var(--tab-list-inset, var(--tab-padding-inline, 1rem));
 
-/* --------------------------------------------------------------------------
-   2.5 Button Style Tab List (.tabs-button)
-   -------------------------------------------------------------------------- */
-:where(.tabs-button),
-:where(.tabs-button)> :where(.tab-list),
-:where(.tabs-button) :where(.tab-list) {
-  --_tabs-list-shadow: 0 0 0 transparent;
-  --_tabs-list-gap: var(--_tabs-button-list-gap);
-  --_tab-button-radius: var(--tab-button-radius, var(--tabs-button-radius, var(--button-radius, 0.25rem)));
-  --_tabs-floating-padding-ends: var(--_tabs-floating-padding);
-  --_tabs-floating-radius: calc(min(var(--_tab-button-radius), var(--spacing-target, 3rem)/2) + var(--_tabs-floating-padding) + var(--_tabs-floating-border-width));
-
-  box-shadow: var(--_tabs-list-shadow);
-  gap: var(--_tabs-list-gap);
-
-  :where(.tabs-sm) {
-    --_tabs-list-gap: var(--_tabs-button-list-gap);
+  :where(.tab) {
+    --_tab-segmented-padding-inline: var(--_tab-list-inset);
+    --_tab-segmented-radius: 0px;
   }
 
-  &::before {
-    inset-block-start: anchor(start);
-    inset-inline-start: anchor(start);
-    border-radius: var(--_tab-button-radius);
-    block-size: anchor-size(block);
-    inline-size: anchor-size(inline);
-    z-index: 0;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   2.6 Round Tab List (.tabs-round)
-   -------------------------------------------------------------------------- */
-:where(.tabs-round) :where(.tab-list),
-:where(.tab-list):where(.tabs-round) {
-  --_tab-button-radius: var(--_tabs-round-radius);
-}
-
-
-/* --------------------------------------------------------------------------
-   2.7 Flush Tab List (.tabs-flush)
-   -------------------------------------------------------------------------- */
-
-:where(.tabs-flush) {
   :where(.tab-list__content) {
-    padding-inline: var(--tab-button-padding-inline, var(--button-padding-inline, 0.5rem));
+    padding-inline: var(--_tab-list-inset);
 
     &:has(+ :where(.button)) {
       padding-inline-end: 0px;
     }
   }
 
-  :where(.button)+ :where(.tab-list__content) {
+  :where(.button) + :where(.tab-list__content) {
     padding-inline-start: 0px;
   }
+}
 
-  :where(.card__body--flush)>& {
-    --_button-marg: calc(var(--_card-padding));
-    --tab-padding-inline: var(--_sidebar-padding);
-    --tab-sm-padding-inline: var(--_sidebar-padding);
-    --tab-button-padding-inline: var(--_card-padding);
-    --tab-sm-button-padding-inline: var(--_card-padding);
-  }
-
-  :where(.sidebar--flush) :where(.sidebar__scroller, .sidebar__body)>& {
-    --_button-marg: var(--_sidebar-padding);
-    --tab-padding-inline: var(--_sidebar-padding);
-    --tab-sm-padding-inline: var(--_sidebar-padding);
-    --tab-button-padding-inline: var(--_sidebar-padding);
-    --tab-button-sm-padding-inline: var(--_sidebar-padding);
-  }
+:where(.tab-list--flush)::before {
+  border-radius: 0;
 }
 
 /* --------------------------------------------------------------------------
-   2.8 Tight list
+   3.5 Scrollable (.tab-list--scrollable)
+   One row that scrolls, with edges that fade while there is more to see.
    -------------------------------------------------------------------------- */
+:where(.tab-list--scrollable) {
+  flex-wrap: nowrap;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  max-inline-size: 100%;
 
-:where(.tab-list--tight) {
-  --_tabs-button-list-gap: var(--tabs-button-list-tight-gap, var(--border-width, 2px));
-}
-
-/* ==========================================================================
-   3. Floating & Docked Tab Bars (.tabs-floating, .tabs-docked)
-   ========================================================================== */
-
-:where(.tabs-scrollable .tab-list),
-:where(.tabs-scrollable.tab-list) {
-  --_tabs-list-wrap: nowrap;
-  --_tabs-list-overflow: auto;
-  --_tabs-list-scrollbar-gutter: stable;
+  @supports (inline-size: stretch) {
+    max-inline-size: stretch;
+  }
 
   @supports (animation-timeline: scroll(root)) {
-    mask-image: linear-gradient(90deg,
-        transparent,
-        #000 var(--fade-length-start),
-        #000 calc(100% - var(--fade-length-end)),
-        transparent);
+    mask-image: linear-gradient(to right, transparent, #000 var(--fade-length-start), #000 calc(100% - var(--fade-length-end)), transparent);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     animation: --edge-fade linear both;
     animation-timeline: scroll(self inline);
     animation-range: 0% 12%, 88% 100%;
-
-  }
-
-
-  @supports not (width: stretch) {
-    --_tabs-list-max-size: 100%;
-  }
-
-  @supports (width: stretch) {
-    --_tabs-list-max-size: stretch;
   }
 }
 
-:where(.tabs-scrollable):where(.tabs-vertical),
-:where(.tabs-scrollable.tabs-vertical) :where(.tab-list) {
-
+:where(.tab-list--scrollable):where(.tab-list--vertical, .tab-list--end) {
   @supports (animation-timeline: scroll(root)) {
-    mask-image: linear-gradient(transparent,
-        #000 var(--fade-length-start),
-        #000 calc(100% - var(--fade-length-end)),
-        transparent);
-    animation: --edge-fade linear both;
+    mask-image: linear-gradient(transparent, #000 var(--fade-length-start), #000 calc(100% - var(--fade-length-end)), transparent);
     animation-timeline: scroll(self block);
   }
 }
 
-:where(.tabs-wrap .tab-list),
-:where(.tabs-wrap.tab-list) {
-  --_tabs-list-wrap: wrap;
-  --_tabs-list-overflow: visible;
-  --_tabs-list-scrollbar-gutter: auto;
-  --_tabs-list-max-size: none;
-}
-
-:where(.tabs-floating),
-:where(.tabs-floating, .tabs-docked) :where(.tab-list) {
-  --_tabs-list-shadow: 0 0 0 transparent;
-  --_tabs-list-border-end-width: 0px;
+/* --------------------------------------------------------------------------
+   3.6 Floating (.tab-list--floating) and Docked (.tab-list--docked)
+   Floating: a layered bar with corners concentric with its tabs.
+   Docked: fixed to the bottom of the viewport, centred.
+   -------------------------------------------------------------------------- */
+:where(.tab-list--floating) {
+  --_tab-list-rule-style: 0;
 
   inline-size: fit-content;
-  max-inline-size: min(100%, calc(100vw - var(--spacing-32, 2rem)));
+  max-inline-size: 100%;
   margin-inline: auto;
-  padding-block: var(--_tabs-floating-padding);
-  padding-inline: var(--_tabs-floating-padding-ends);
-  background-color: var(--_tabs-floating-bg);
-  border: var(--_tabs-floating-border-width) solid var(--_tabs-floating-border-color);
-  border-radius: var(--_tabs-floating-radius);
-  box-shadow: var(--_tabs-floating-shadow);
-  backdrop-filter: var(--_tabs-floating-backdrop-filter);
-  -webkit-backdrop-filter: var(--_tabs-floating-backdrop-filter);
-  isolation: isolate;
-
-  &> :where(.tab) {
-    z-index: 1;
-  }
+  padding-block: var(--_tab-list-floating-padding);
+  padding-inline: var(--_tab-list-floating-padding-inline);
+  background-color: var(--surface-layer, Canvas);
+  border: var(--_tab-list-floating-border-width) solid var(--_tab-list-floating-border-color);
+  border-radius: var(--_tab-list-floating-radius);
+  box-shadow: var(--shadow-lg, none);
+  backdrop-filter: var(--surface-layer-filter, none);
+  -webkit-backdrop-filter: var(--surface-layer-filter, none);
 }
 
-:where(.tabs-floating):where(.tabs-vertical),
-:where(.tabs-floating.tabs-vertical) :where(.tab-list) {
-  padding-block: var(--_tabs-floating-padding-ends);
+:where(.tab-list--floating):where(.tab-list--vertical, .tab-list--end) {
+  padding-block: var(--_tab-list-floating-padding-inline);
+  padding-inline: var(--_tab-list-floating-padding);
 }
 
-/* Bottom Floating Dock Modifier (.tabs-docked) */
-:where(.tabs-docked) {
+:where(.tab-list--docked) {
   position: fixed;
-  inset-block-end: calc(var(--spacing-24, 1.5rem) + var(--safe-area-inset-bottom, 0px));
+  inset-block-end: calc(var(--tab-list-docked-offset, 1.5rem) + env(safe-area-inset-bottom, 0px));
   inset-inline: 0;
   z-index: var(--z-index-sticky, 100);
-  pointer-events: none;
-  margin: 0;
-
-  &> :where(.tab-list) {
-    pointer-events: auto;
-  }
-}
-
-:where(.tabs-docked:not(.tabs, .tabbed-content)) {
-  pointer-events: auto;
-}
-
-/* Top Floating Dock Modifier (.tabs-docked-top) */
-:where(.tabs-docked-top) {
-  position: sticky;
-  inset-block-start: calc(var(--spacing-16, 1rem) + var(--safe-area-inset-top, 0px));
-  z-index: var(--z-index-sticky, 100);
-  pointer-events: none;
-
-  &> :where(.tab-list) {
-    pointer-events: auto;
-  }
-}
-
-:where(.tabs-docked-top:not(.tabs, .tabbed-content)) {
-  pointer-events: auto;
+  inline-size: fit-content;
+  max-inline-size: calc(100% - var(--tab-list-docked-offset, 1.5rem) * 2);
+  margin-inline: auto;
 }
 
 /* ==========================================================================
-   4. Accessibility, High Contrast & Reduced Motion
+   4. Fallbacks, Motion, Forced Colours & Increased Contrast
    ========================================================================== */
+
+/* Without anchor positioning the selected tab draws its own indicator */
+@supports not (anchor-name: --a) {
+  :where(.tab-list)::before {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where(.tab-list)::before {
     transition: none;
   }
 }
 
-@media (prefers-contrast: more) {
+@media (forced-colors: active) {
   :where(.tab-list)::before {
-    background-color: currentColor;
-    block-size: calc(var(--_tabs-list-border-end-width, 1px) * 2);
+    forced-color-adjust: none;
+    background-color: Highlight;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.tab-list) {
+    --_tab-list-indicator-width: calc(var(--tab-list-indicator-width, 2px) * 2);
   }
 
-  :where(.tabs-vertical .tab-list)::before {
-    inline-size: calc(var(--_tabs-list-border-end-width, 1px) * 2);
-  }
-
-  :where(.tabs-floating),
-  :where(.tabs-floating)> :where(.tab-list) {
+  :where(.tab-list--floating) {
     background-color: var(--surface, Canvas);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border-width: calc(var(--border-width, 1px) * 2);
-    border-color: currentColor;
     box-shadow: none;
   }
 }

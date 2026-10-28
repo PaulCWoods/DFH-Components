@@ -149,9 +149,12 @@
 
 /* --------------------------------------------------------------------------
    Flush Modifier (.sidebar--flush)
-   Removes padding to allow edge-to-edge list styling (e.g. .tabs-flush)
+   Removes padding to allow edge-to-edge list styling (e.g. .tab-list--flush)
    -------------------------------------------------------------------------- */
 :where(.sidebar--flush) :where(.sidebar__scroller, .sidebar__body) {
+  /* A flush tab list lines its labels up with the sidebar's header */
+  --tab-list-inset: var(--_sidebar-padding);
+
   padding: 0;
 }
 

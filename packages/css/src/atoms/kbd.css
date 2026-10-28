@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Design For Humans: Kbd Primitive
+   --------------------------------------------------------------------------
+   A keyboard key or shortcut. No intent and no prominence.
+
+   | Axis    | Modifiers | Container flag                          |
+   | ------- | --------- | --------------------------------------- |
+   | Size    | --sm      | --kbd-size (--ui-sizing: compact steps to sm) |
+
+   A combination nests one <kbd> per key inside an outer .kbd, which then
+   acts as a wrapper and draws no key of its own.
+
+   Accessibility:
+   - When the shortcut belongs to a control, also set aria-keyshortcuts on
+     the control so the shortcut is not only visual.
+
+   Usage:
+   <kbd class="kbd">Esc</kbd>
+   <kbd class="kbd"><kbd>⌘</kbd><kbd>K</kbd></kbd>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Key (:where(.kbd, .kbd > kbd))
+   ========================================================================== */
+:where(.kbd) {
+  --_kbd-font-family: var(--kbd-font-family, ui-monospace, monospace);
+  --_kbd-font-size: var(--kbd-font-size, 0.875rem);
+  --_kbd-padding-block: var(--kbd-padding-block, 0.125rem);
+  --_kbd-padding-inline: var(--kbd-padding-inline, 0.25rem);
+  --_kbd-radius: var(--kbd-radius, 0.125rem);
+  --_kbd-bg: var(--kbd-bg, transparent);
+  --_kbd-border-width: var(--kbd-border-width, 1px);
+  --_kbd-border-block-end-width: var(--kbd-border-block-end-width, 2px);
+  --_kbd-border-color: var(--kbd-color-border, var(--border-color-muted, currentColor));
+  --_kbd-text: var(--kbd-color, currentColor);
+
+  @container style(--kbd-size: sm) or style(--ui-sizing: compact) {
+    --_kbd-font-size: var(--kbd-sm-font-size, 0.75rem);
+  }
+
+  @container style(--kbd-prominence: subtle) {
+    --_kbd-border-block-end-width: var(--_kbd-border-width);
+  }
+
+  font-family: var(--_kbd-font-family);
+  font-size: var(--_kbd-font-size);
+  font-weight: inherit;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--_kbd-text);
+}
+
+:where(.kbd:not(:has(> kbd)), .kbd > kbd) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-inline-size: 1lh;
+  padding-block: var(--_kbd-padding-block);
+  padding-inline: var(--_kbd-padding-inline);
+  border: var(--_kbd-border-width) solid var(--_kbd-border-color);
+  border-block-end-width: var(--_kbd-border-block-end-width);
+  border-radius: var(--_kbd-radius);
+  background: var(--_kbd-bg);
+}
+
+/* Keys inside a combination take the wrapper's type. */
+:where(.kbd > kbd) {
+  font: inherit;
+  color: inherit;
+}
+
+/* Combination wrapper: keys sit side by side. */
+:where(.kbd:has(> kbd)) {
+  display: inline-flex;
+  gap: 0.125em;
+}
+
+/* ==========================================================================
+   2. Prominence Modifiers
+   Each resets everything the others set, so the last class wins cleanly.
+   ========================================================================== */
+
+:where(.kbd--subtle) {
+  --_kbd-border-block-end-width: var(--_kbd-border-width, 1px);
+}
+
+/* ==========================================================================
+   3. Size Modifier
+   ========================================================================== */
+:where(.kbd--sm) {
+  --_kbd-font-size: var(--kbd-sm-font-size, 0.75rem);
+}

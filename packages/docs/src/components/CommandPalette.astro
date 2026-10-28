@@ -74,11 +74,11 @@ const searchIndex = [
                 <Icon name={item.icon} size={18} class="text-muted flex-shrink-0" />
                 <div class="combobox__option-main">
                   <span class="font-weight-medium font-size-sm">{item.title}</span>
-                  <span class="combobox__option-desc micro-text">{item.desc}</span>
+                  <span class="combobox__option-desc small-text">{item.desc}</span>
                 </div>
               </div>
               <div class="cluster gap-xs align-items-center flex-shrink-0">
-                <span class="badge badge--sm badge--subtle"><span>{item.category}</span></span>
+                <span class="chip chip--subtle chip--sm"><span class="chip__text">{item.category}</span></span>
                 <kbd class="kbd">↵</kbd>
               </div>
             </li>
@@ -89,7 +89,7 @@ const searchIndex = [
         <div id="cmd-empty" class="combobox__empty" hidden>
           <div class="empty-state__content stack gap-xs align-items-center">
             <h3 class="empty-state__title micro-heading">No results found</h3>
-            <p class="empty-state__description micro-text text-muted">Try searching for "button", "tokens", "dialog", or "WCAG".</p>
+            <p class="empty-state__description small-text text-muted">Try searching for "button", "tokens", "dialog", or "WCAG".</p>
           </div>
         </div>
       </div>

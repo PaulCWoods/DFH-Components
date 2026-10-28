@@ -211,6 +211,13 @@ function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false, i
         const trimmed = rawVal.trim();
         if (TIER2_INVERTED_MAPPINGS[trimmed]) {
           invertedVars.push(`  --${baseName}: ${TIER2_INVERTED_MAPPINGS[trimmed]};`);
+        } else if (trimmed.includes('{')) {
+          // A composite value (such as color-mix()) is inverted when every
+          // reference inside it has an inverted counterpart.
+          const swapped = trimmed.replace(/\{[^}]+\}/g, (ref) => TIER2_INVERTED_MAPPINGS[ref] ?? ref);
+          if (swapped !== trimmed && !swapped.includes('{')) {
+            invertedVars.push(`  --${baseName}: ${swapped};`);
+          }
         }
       }
 

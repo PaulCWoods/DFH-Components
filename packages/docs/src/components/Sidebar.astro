@@ -100,7 +100,7 @@ const navSections = [
   </header>
 
   <div class="sidebar__band xl:hide">
-  <nav class="tab-list tabs-button tabs-fill tabs-sm tabs-subtle" aria-label="Main Navigation">
+  <nav class="tab-list tab-list--segmented tab-list--fill tab-list--sm tab-list--subtle" aria-label="Main Navigation">
       <ul>
         <li>
           <a
@@ -144,7 +144,7 @@ const navSections = [
 
   <!-- Dedicated Scroll Container (.sidebar__scroller) -->
   <div class="sidebar__scroller py">
-    <nav class="tab-list tabs-flush tab-list--tight tabs-sm tabs-button tabs-plain tabs-vertical overflow-visible" aria-label="Documentation Sections">
+    <nav class="tab-list tab-list--flush tab-list--tight tab-list--sm tab-list--segmented tab-list--plain tab-list--vertical overflow-visible" aria-label="Documentation Sections">
       <ul>
         {navSections.map((section, idx) => {
           const sectionId = `nav-sec-${idx}`;
@@ -172,8 +172,8 @@ const navSections = [
                       >
                         <span class="tab__text">{item.label}</span>
                         {item.badge && (
-                          <span class:list={['badge', 'badge--sm', isActive ? 'badge--accent' : 'badge--subtle']}>
-                            <span>{item.badge}</span>
+                          <span class:list={['status', 'status--sm', isActive ? 'status--accent' : 'status--subtle']}>
+                            <span class="status__text">{item.badge}</span>
                           </span>
                         )}
                       </a>

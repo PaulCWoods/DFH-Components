@@ -190,7 +190,7 @@ export const Playground: Story = {
                 <td class="table__cell--numeric">$540,200</td>
                 <td class="table__cell--numeric">$520,000</td>
                 <td class="table__cell--numeric">$565,100</td>
-                <td class="table__cell--center"><span class="badge badge--success"><span>Ahead</span></span></td>
+                <td class="table__cell--center"><span class="status status--success"><span class="status__text">Ahead</span></span></td>
               </tr>
               <tr>
                 <th scope="row" class="table__cell--fit">Europe & UK</th>
@@ -198,7 +198,7 @@ export const Playground: Story = {
                 <td class="table__cell--numeric">$415,800</td>
                 <td class="table__cell--numeric">$420,000</td>
                 <td class="table__cell--numeric">$430,400</td>
-                <td class="table__cell--center"><span class="badge badge--success"><span>Ahead</span></span></td>
+                <td class="table__cell--center"><span class="status status--success"><span class="status__text">Ahead</span></span></td>
               </tr>
               <tr>
                 <th scope="row" class="table__cell--fit">Asia Pacific</th>
@@ -206,7 +206,7 @@ export const Playground: Story = {
                 <td class="table__cell--numeric">$290,100</td>
                 <td class="table__cell--numeric">$320,000</td>
                 <td class="table__cell--numeric">$315,900</td>
-                <td class="table__cell--center"><span class="badge badge--warning"><span>On Track</span></span></td>
+                <td class="table__cell--center"><span class="status status--warning"><span class="status__text">On Track</span></span></td>
               </tr>
               <tr>
                 <th scope="row" class="table__cell--fit">Latin America</th>
@@ -214,7 +214,7 @@ export const Playground: Story = {
                 <td class="table__cell--numeric">$162,400</td>
                 <td class="table__cell--numeric">$160,000</td>
                 <td class="table__cell--numeric">$175,000</td>
-                <td class="table__cell--center"><span class="badge badge--success"><span>Ahead</span></span></td>
+                <td class="table__cell--center"><span class="status status--success"><span class="status__text">Ahead</span></span></td>
               </tr>
             </tbody>
             <tfoot>
@@ -224,7 +224,7 @@ export const Playground: Story = {
                 <td class="table__cell--numeric">$1,408,500</td>
                 <td class="table__cell--numeric">$1,420,000</td>
                 <td class="table__cell--numeric">$1,486,400</td>
-                <td class="table__cell--center"><span class="badge badge--accent"><span>Approved</span></span></td>
+                <td class="table__cell--center"><span class="status status--accent"><span class="status__text">Approved</span></span></td>
               </tr>
             </tfoot>
           </table>
@@ -338,12 +338,12 @@ export const Variants: Story = {
             <tbody>
               <tr>
                 <th scope="row">Production</th>
-                <td><span class="badge badge--success"><span>Healthy</span></span></td>
+                <td><span class="status status--success"><span class="status__text">Healthy</span></span></td>
                 <td class="table__cell--numeric">99.99%</td>
               </tr>
               <tr>
                 <th scope="row">Staging</th>
-                <td><span class="badge badge--accent"><span>Active</span></span></td>
+                <td><span class="status status--accent"><span class="status__text">Active</span></span></td>
                 <td class="table__cell--numeric">99.85%</td>
               </tr>
             </tbody>
@@ -417,7 +417,7 @@ export const StateMatrix: Story = {
                 <th scope="col">
                   <button type="button" class="table__sort-button" style="outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: -2px;">
                     <span>Sort Focused</span>
-                    <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="opacity: 1;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" style="opacity: 1;" focusable="false"><use href="#ChevronDown"/></svg>
                   </button>
                 </th>
               </tr>
@@ -673,7 +673,7 @@ export const RealWorldRecipes: Story = {
                 <td class="table__cell--numeric">$73,000</td>
                 <td class="table__cell--numeric">$77,500</td>
                 <td class="table__cell--fit table__cell--center">
-                  <span class="badge badge--success"><span>Closed</span></span>
+                  <span class="status status--success"><span class="status__text">Closed</span></span>
                 </td>
               </tr>
             </tfoot>
@@ -717,12 +717,12 @@ export const ColumnSizing: Story = {
                   <span class="font-size-xs text-muted">Aethelgard</span>
                 </div>
               </td>
-              <td><span class="chip chip--sm"><span>Music</span></span></td>
+              <td><span class="chip chip--subtle chip--sm"><span class="chip__text">Music</span></span></td>
               <td class="table__col--num font-mono font-size-xs text-muted">03:52</td>
-              <td><span class="badge badge--success badge--sm"><span>Live</span></span></td>
+              <td><span class="status status--success status--sm"><span class="status__text">Live</span></span></td>
               <td class="table__col--actions">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="More actions">
-                  <svg class="icon"><use href="#ChevronDown"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                 </button>
               </td>
             </tr>
@@ -735,12 +735,12 @@ export const ColumnSizing: Story = {
                   <span class="font-size-xs text-muted">WDFH Production</span>
                 </div>
               </td>
-              <td><span class="chip chip--sm"><span>Stager</span></span></td>
+              <td><span class="chip chip--subtle chip--sm"><span class="chip__text">Stager</span></span></td>
               <td class="table__col--num font-mono font-size-xs text-muted">00:15</td>
-              <td><span class="badge badge--accent badge--sm"><span>Next</span></span></td>
+              <td><span class="status status--accent status--sm"><span class="status__text">Next</span></span></td>
               <td class="table__col--actions">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="More actions">
-                  <svg class="icon"><use href="#ChevronDown"/></svg>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
                 </button>
               </td>
             </tr>
