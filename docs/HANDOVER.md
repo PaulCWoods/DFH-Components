@@ -5,7 +5,7 @@
 ## How a pass runs
 
 1. Usage inventory and audit (`docs/audit/<component>.md`), with questions for a decision.
-2. Implement: tokens, CSS, migration of every usage, stories, AGENTS.md section.
+2. Implement: tokens, CSS, migration of every usage, stories, its `docs/markup/` file (plus AGENTS.md if a project-wide rule changes).
 3. Verify: Storybook build, axe in light and dark, screenshots.
 4. Mirror to the blog: SCSS port, Tier 3 tokens, `templates/_component-library.twig`.
 
@@ -24,7 +24,17 @@
 | Text | Done | `audit/text.md` |
 | Divider | Done | `audit/divider.md` |
 | Skeleton | Done | `audit/skeleton.md` |
-| Remaining atoms, then molecules and organisms | To do | Order follows `audit/inventory.md` |
+| Surfaces: card (moved to molecules), section, dialog shell | Done | `audit/surfaces.md` |
+| Announcements: banner, banner dock, toast | Done | `audit/announcements.md` |
+| Floating layers: popover, tooltip | Done | `audit/floating-layers.md` |
+| Action sets: button-group, batch-actions, menu | Done | `audit/action-sets.md` |
+| Wayfinding: breadcrumb, navigation-tree, pagination, stepper | Done | `audit/wayfinding.md` |
+| Form composition: field, fieldset, choices, form | Audited, awaiting answers | [audit](audit/form-composition.md) |
+| Identity and values: avatar, lockup, telemetry | To do | |
+| Prose | To do | |
+| Remaining organisms (accordion, combobox, empty-state, header, table) | To do | |
+
+Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
 The blog's component library page (`_component-library.twig`) gets a proper rework once the atoms are finished.
 
@@ -46,6 +56,10 @@ Tier 3 `empty-state.title-color` and `combobox.color` reference `{foreground.def
 ### Tally Sprout loading table (found in the skeleton pass)
 
 The loading table in `recipe-tally-sprout` has header cells holding only skeletons, so axe reports empty table headers. Column names are known before the data loads: show them, and put skeletons in the body cells only.
+
+### Page-level size containers (found in the surfaces pass)
+
+Container-prefixed modifiers (`@max-sm:card--plain`, `@max-sm:hide`) need an ancestor with `container-type: inline-size`. Only `.split`, `.sidebar` and `.container-inline` provide one, so in most layouts these classes match nothing. Make `main` and `.app__workspace` inline-size containers by default. Don't do it on `.grid` or `.stack`: an inline-size container can't shrink to its content, which breaks them in flex rows. If the surfaces pass lands first, the card classes ship and work wherever a container exists.
 
 ### Sidebar story backgrounds
 

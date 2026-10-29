@@ -21,93 +21,91 @@ const searchIndex = [
 ---
 
 <dialog id="cmd-palette" class="dialog" aria-label="Global search and command palette">
-  <div class="card card--ruled">
-    <article class="card__content">
-      
-      <!-- Combobox Search Header -->
-      <header class="card__header card__header--flush">
-        <div class="combobox combobox--flush">
-          <div class="combobox__control gap-cushion">
-            <Icon name="Search" size={20} class="text-muted" />
-            <input
-              id="cmd-input"
-              type="search"
-              class="combobox__input"
-              role="combobox"
-              aria-expanded="true"
-              aria-autocomplete="list"
-              aria-controls="cmd-listbox"
-              placeholder="Search components, tokens, guidelines... (e.g. button, dialog, tokens)"
-              autocomplete="off"
-              spellcheck="false"
-            />
-            <button
-              type="button"
-              id="cmd-close-btn"
-              class="button button--plain button--icon button--sm"
-            >
-              <span class="visually-hidden">Close command palette</span>
-              <Icon name="Close" size={16} />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <!-- Filtered Results Listbox -->
-      <div class="card__body card__body--flush card__body--scrollable max-height-sm">
-        <ul
-          id="cmd-listbox"
-          role="listbox"
-          class="combobox__listbox combobox__listbox--static padding-xs margin-0 list-style-none"
-          aria-label="Documentation search suggestions"
-        >
-          {searchIndex.map((item, idx) => (
-            <li
-              role="option"
-              id={`cmd-opt-${idx}`}
-              class="combobox__option"
-              aria-selected="false"
-              data-search={`${item.title} ${item.desc} ${item.category}`.toLowerCase()}
-              data-href={item.href}
-            >
-              <div class="inline align-items-center gap-sm">
-                <Icon name={item.icon} size={18} class="text-muted flex-shrink-0" />
-                <div class="combobox__option-main">
-                  <span class="font-weight-medium font-size-sm">{item.title}</span>
-                  <span class="combobox__option-desc small-text">{item.desc}</span>
-                </div>
-              </div>
-              <div class="cluster gap-xs align-items-center flex-shrink-0">
-                <span class="chip chip--subtle chip--sm"><span class="chip__text">{item.category}</span></span>
-                <kbd class="kbd">↵</kbd>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        <!-- Zero-Results Empty State -->
-        <div id="cmd-empty" class="combobox__empty" hidden>
-          <div class="empty-state__content stack gap-xs align-items-center">
-            <h3 class="empty-state__title micro-heading">No results found</h3>
-            <p class="empty-state__description small-text text-muted">Try searching for "button", "tokens", "dialog", or "WCAG".</p>
-          </div>
+  <article class="card card--ruled">
+    
+    <!-- Combobox Search Header -->
+    <header class="card__header card__header--flush">
+      <div class="combobox combobox--flush">
+        <div class="combobox__control gap-cushion">
+          <Icon name="Search" size={20} class="text-muted" />
+          <input
+            id="cmd-input"
+            type="search"
+            class="combobox__input"
+            role="combobox"
+            aria-expanded="true"
+            aria-autocomplete="list"
+            aria-controls="cmd-listbox"
+            placeholder="Search components, tokens, guidelines... (e.g. button, dialog, tokens)"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button
+            type="button"
+            id="cmd-close-btn"
+            class="button button--plain button--icon button--sm"
+          >
+            <span class="visually-hidden">Close command palette</span>
+            <Icon name="Close" size={16} />
+          </button>
         </div>
       </div>
+    </header>
 
-      <!-- Footer with Keyboard Hints -->
-      <footer class="card__footer">
-        <div class="inline inline--between align-items-center text-muted font-size-xs">
-          <div class="cluster gap-sm">
-            <span><kbd class="kbd">↑↓</kbd> Navigate</span>
-            <span><kbd class="kbd">↵</kbd> Select</span>
-            <span><kbd class="kbd">Esc</kbd> Close</span>
-          </div>
-          <span>Design For Humans v2.2</span>
+    <!-- Filtered Results Listbox -->
+    <div class="card__body card__body--flush card__body--scrollable max-height-sm">
+      <ul
+        id="cmd-listbox"
+        role="listbox"
+        class="combobox__listbox combobox__listbox--static padding-xs margin-0 list-style-none"
+        aria-label="Documentation search suggestions"
+      >
+        {searchIndex.map((item, idx) => (
+          <li
+            role="option"
+            id={`cmd-opt-${idx}`}
+            class="combobox__option"
+            aria-selected="false"
+            data-search={`${item.title} ${item.desc} ${item.category}`.toLowerCase()}
+            data-href={item.href}
+          >
+            <div class="inline align-items-center gap-sm">
+              <Icon name={item.icon} size={18} class="text-muted flex-shrink-0" />
+              <div class="combobox__option-main">
+                <span class="font-weight-medium font-size-sm">{item.title}</span>
+                <span class="combobox__option-desc small-text">{item.desc}</span>
+              </div>
+            </div>
+            <div class="cluster gap-xs align-items-center flex-shrink-0">
+              <span class="chip chip--subtle chip--sm"><span class="chip__text">{item.category}</span></span>
+              <kbd class="kbd">↵</kbd>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Zero-Results Empty State -->
+      <div id="cmd-empty" class="combobox__empty" hidden>
+        <div class="empty-state__content stack gap-xs align-items-center">
+          <h3 class="empty-state__title micro-heading">No results found</h3>
+          <p class="empty-state__description small-text text-muted">Try searching for "button", "tokens", "dialog", or "WCAG".</p>
         </div>
-      </footer>
+      </div>
+    </div>
 
-    </article>
-  </div>
+    <!-- Footer with Keyboard Hints -->
+    <footer class="card__footer">
+      <div class="inline inline--between align-items-center text-muted font-size-xs">
+        <div class="cluster gap-sm">
+          <span><kbd class="kbd">↑↓</kbd> Navigate</span>
+          <span><kbd class="kbd">↵</kbd> Select</span>
+          <span><kbd class="kbd">Esc</kbd> Close</span>
+        </div>
+        <span>Design For Humans v2.2</span>
+      </div>
+    </footer>
+
+  </article>
 </dialog>
 
 <script is:inline>

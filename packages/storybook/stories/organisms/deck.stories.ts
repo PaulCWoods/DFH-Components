@@ -105,8 +105,8 @@ AI agents and developers MUST strictly use the following semantic patterns:
         />
       </div>
 
-      <!-- Playback Transport Controls (Composed with .button-group.button-group--center) -->
-      <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport">
+      <!-- Playback Transport Controls (Composed with .button-group) -->
+      <div class="deck__transport button-group" role="group" aria-label="Playback transport">
         <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
           <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
         </button>
@@ -167,7 +167,7 @@ AI agents and developers MUST strictly use the following semantic patterns:
 | **1.4.3 Contrast (Minimum)** | **AA / AAA** | High-contrast token ladder (\`CanvasText\` / \`--foreground\`, \`--foreground-muted\`) achieves >= 4.5:1 text contrast. |
 | **1.4.11 Non-Text Contrast** | **AA** | \`.deck--on-air\` perimeter glow and solid border meet 3:1 graphical contrast against adjacent surfaces; enhanced under \`prefers-contrast: more\`. |
 | **2.4.7 Focus Visible** | **AA** | High-contrast focus ring with 2px offset ensures keyboard visibility across all buttons and range inputs. |
-| **4.1.2 Name, Role, Value** | **A** | Toolbar uses \`role="toolbar"\`, scrubber uses \`<input type="range">\` with valid min/max/value/aria-label, and meters use semantic \`<meter>\`. |
+| **4.1.2 Name, Role, Value** | **A** | Transport controls are a labelled \`role="group"\` (no arrow-key script, so not a toolbar), scrubber uses \`<input type="range">\` with valid min/max/value/aria-label, and meters use semantic \`<meter>\`. |
 | **2.3.3 Animation from Interactions** | **AAA** | Rotating disc animations (\`.deck__art--vinyl.is-spinning\`) are disabled automatically under \`@media (prefers-reduced-motion: reduce)\`. |
 
 ---
@@ -343,7 +343,7 @@ export const Playground: Story = {
 
                   <!-- Center: Timeline & Transport -->
                   <div class="deck__timeline-transport-group">
-                    <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport">
+                    <div class="deck__transport button-group" role="group" aria-label="Playback transport">
                       <button type="button" class="button button--subtle button--icon button--sm deck__cue" aria-label="Cue to start">
                         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                       </button>
@@ -473,8 +473,8 @@ export const Playground: Story = {
                   />
                 </div>
 
-                <!-- Playback Transport (Composed with .button-group.button-group--center) -->
-                <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport">
+                <!-- Playback Transport (Composed with .button-group) -->
+                <div class="deck__transport button-group" role="group" aria-label="Playback transport">
                   <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
                     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                   </button>
@@ -600,7 +600,7 @@ export const OnAirDeck: Story = {
                 />
               </div>
 
-              <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport controls">
+              <div class="deck__transport button-group" role="group" aria-label="Playback transport controls">
                 <button type="button" class="button button--subtle button--icon deck__cue" aria-label="Cue to start">
                   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                 </button>
@@ -704,7 +704,7 @@ export const DualDeckConsole: Story = {
                 <input type="range" class="range range--sm deck__scrubber" min="0" max="232" value="192" style="--value: 82%;" aria-label="Deck A seek" />
               </div>
 
-              <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Deck A transport">
+              <div class="deck__transport button-group" role="group" aria-label="Deck A transport">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
                 <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
@@ -765,7 +765,7 @@ export const DualDeckConsole: Story = {
                 <input type="range" class="range range--sm deck__scrubber" min="0" max="255" value="0" style="--value: 0%;" aria-label="Deck B seek" />
               </div>
 
-              <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Deck B transport">
+              <div class="deck__transport button-group" role="group" aria-label="Deck B transport">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Cue"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
                 <button type="button" class="button button--round deck__play" aria-label="Play"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg></button>
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Skip"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
@@ -836,7 +836,7 @@ export const CompactDeck: Story = {
                 <input type="range" class="range range--sm deck__scrubber" min="0" max="15" value="6" style="--value: 40%;" aria-label="Cart scrubber" />
               </div>
 
-              <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Cart controls">
+              <div class="deck__transport button-group" role="group" aria-label="Cart controls">
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Restart"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
                 <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
                 <button type="button" class="button button--subtle button--icon button--sm" aria-label="Eject"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
@@ -882,7 +882,7 @@ export const HorizontalDock: Story = {
 
               <!-- Center: Transport & Scrubber -->
               <div class="deck__timeline-transport-group">
-                <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Dock playback controls">
+                <div class="deck__transport button-group" role="group" aria-label="Dock playback controls">
                   <button type="button" class="button button--subtle button--icon button--sm" aria-label="Previous track"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
                   <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Pause playback"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
                   <button type="button" class="button button--subtle button--icon button--sm" aria-label="Next track"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronEnd"/></svg></button>
@@ -966,7 +966,7 @@ export const VinylTurntable: Story = {
                 <input type="range" class="range range--sm deck__scrubber" min="0" max="565" value="262" style="--value: 46%;" aria-label="Tonearm position" />
               </div>
 
-              <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Turntable motor controls">
+              <div class="deck__transport button-group" role="group" aria-label="Turntable motor controls">
                 <button type="button" class="button button--subtle button--icon" aria-label="Start motor"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg></button>
                 <button type="button" class="button button--strong button--accent button--round deck__play" aria-label="Stop rotation"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Pause"/></svg></button>
                 <button type="button" class="button button--subtle button--icon" aria-label="33 / 45 RPM switch"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg></button>

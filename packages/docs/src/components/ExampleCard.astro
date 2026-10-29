@@ -24,8 +24,8 @@ const {
 } = Astro.props;
 ---
 
-<article class:list={['card card--bordered card--dense example-card', className]}>
-  <div class="card__canvas">
+<article class:list={['card card--compact example-card', className]}>
+  <div class="card__body card__body--flush">
     <div
       class:list={['preview-stage', previewClass]}
       style={minHeight ? { minBlockSize: minHeight } : undefined}
@@ -33,7 +33,6 @@ const {
       <slot />
     </div>
   </div>
-  <div class="card__content">
     <header class="card__header inline inline--between align-items-center">
       <div class="card__hgroup">
         <h3 class="small-heading margin-0">{title}</h3>
@@ -57,7 +56,6 @@ const {
       )}
       <slot name="body" />
     </div>
-  </div>
 </article>
 
 <style>

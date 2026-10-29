@@ -29,19 +29,11 @@ const {
 <header class="component-header prose-end margin-bottom-xl prose">
   <!-- Breadcrumbs -->
   <nav class="breadcrumb margin-bottom prose-end" aria-label="Breadcrumbs">
-    <ol class="inline align-items-center gap-xs list-none padding-0 margin-0">
-      <li>
-        <a href="/" class="link link--plain small-text text-color-muted">Docs</a>
-      </li>
-      <li>
-        <a href="/components" class="link link--plain small-text text-color-muted">Components</a>
-      </li>
-      <li>
-        <a href={categoryHref} class="link link--plain small-text text-color-muted">{category}</a>
-      </li>
-      <li aria-current="page" class="small-text font-weight-bold">
-        <span>{title}</span>
-      </li>
+    <ol class="small-text">
+      <li><a href="/" class="link">Docs</a></li>
+      <li><a href="/components" class="link">Components</a></li>
+      <li><a href={categoryHref} class="link">{category}</a></li>
+      <li aria-current="page">{title}</li>
     </ol>
   </nav>
 

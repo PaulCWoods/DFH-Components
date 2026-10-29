@@ -18,8 +18,7 @@ const {
 const cleanCode = code.trim();
 ---
 
-<div class:list={['code-block prose-end card card--bordered card--compact', className]}>
-  <div class="card__content">
+<div class:list={['code-block prose-end card card--compact', className]}>
     <div class="code-block__header card__header inline inline--between align-items-center">
       <div class="inline align-items-center gap-xs">
         {title ? (
@@ -42,7 +41,6 @@ const cleanCode = code.trim();
       </button>
     </div>
     <pre class="pre code-block__pre" tabindex="0"><code>{cleanCode}</code></pre>
-  </div>
 </div>
 
 <style>

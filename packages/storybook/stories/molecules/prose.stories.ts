@@ -207,7 +207,7 @@ export const Playground: Story = {
 export const Anatomy: Story = {
   render: () => `
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 52rem; margin-inline: auto;">
-      <div class="card card--bordered" style="padding: var(--spacing-24);">
+      <div class="card" style="padding: var(--spacing-24);">
         <header style="margin-block-end: var(--spacing-16);">
           <span class="sb-demo-tag">Prose Anatomy</span>
           <h3 class="heading" style="margin-block-start: var(--spacing-8);">Semantic Hierarchy Breakdown</h3>
@@ -254,7 +254,7 @@ export const Variants: Story = {
   render: () => `
     <div class="stack" style="gap: var(--spacing-32); max-inline-size: 54rem; margin-inline: auto;">
       <!-- Variant 1: Default Fixed Scale Prose -->
-      <section class="card card--bordered" style="padding: var(--spacing-24);">
+      <section class="card" style="padding: var(--spacing-24);">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">1. Default Fixed Rhythm (.prose)</span>
         <article class="prose">
           <h2>Fixed Scale Rhythm (Default)</h2>
@@ -269,7 +269,7 @@ export const Variants: Story = {
       </section>
 
       <!-- Variant 2: Fluid Scaled Prose -->
-      <section class="card card--bordered font-sizing-fluid" style="padding: var(--spacing-24);">
+      <section class="card font-sizing-fluid" style="padding: var(--spacing-24);">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">2. Fluid Scaling (.font-sizing-fluid)</span>
         <article class="prose">
           <h2>Fluid Viewport Scaling</h2>
@@ -284,7 +284,7 @@ export const Variants: Story = {
       </section>
 
       <!-- Variant 3: Container Query Adaptive -->
-      <section class="card card--bordered font-sizing-cq" style="padding: var(--spacing-24); container-type: inline-size;">
+      <section class="card font-sizing-cq" style="padding: var(--spacing-24); container-type: inline-size;">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">3. Container Adaptive (.font-sizing-cq)</span>
         <article class="prose">
           <h2>Container Query Sizing</h2>
@@ -299,7 +299,7 @@ export const Variants: Story = {
       </section>
 
       <!-- Variant 4: Tight Spacing -->
-      <section class="card card--bordered" style="padding: var(--spacing-24);">
+      <section class="card" style="padding: var(--spacing-24);">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">4. Compact Rhythm (.prose--tight)</span>
         <article class="prose prose--tight">
           <h2>Compact Spacing for Cards & Drawers</h2>
@@ -310,7 +310,7 @@ export const Variants: Story = {
       </section>
 
       <!-- Variant 5: Accessible Emoji Markers -->
-      <section class="card card--bordered" style="padding: var(--spacing-24);">
+      <section class="card" style="padding: var(--spacing-24);">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">5. Accessible Emoji Callouts</span>
         <article class="prose">
           <p class="emoji check">Audit completed with 100% WCAG 2.2 AA / AAA conformance.</p>
@@ -321,7 +321,7 @@ export const Variants: Story = {
       </section>
 
       <!-- Variant 6: Scoped Boundary Cancellation (.prose-end) -->
-      <section class="card card--bordered" style="padding: var(--spacing-24);">
+      <section class="card" style="padding: var(--spacing-24);">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">6. Scoped Boundary Cancellation (.prose-end)</span>
         <article class="prose">
           <h2>Active Prose Section</h2>
@@ -357,7 +357,7 @@ export const StateMatrix: Story = {
   render: () => `
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
       <!-- Context 1: Dark Surface Container -->
-      <div class="card card--bordered" style="padding: var(--spacing-24); background-color: var(--surface-dark); color: var(--foreground-on-dark);">
+      <div class="card" style="padding: var(--spacing-24); background-color: var(--surface-dark); color: var(--foreground-on-dark);">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">Context: Dark Surface Container</span>
         <article class="prose" style="color: inherit;">
           <h2 style="color: inherit;">High Contrast Dark Mode</h2>
@@ -370,7 +370,7 @@ const mode = "dark";</code></pre>
       </div>
 
       <!-- Context 2: Right-to-Left (RTL) Layout -->
-      <div dir="rtl" class="card card--bordered" style="padding: var(--spacing-24); text-align: right;">
+      <div dir="rtl" class="card" style="padding: var(--spacing-24); text-align: right;">
         <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">Context: dir="rtl" Bidirectional</span>
         <article class="prose">
           <h2>تصميم للإنسان: المعايير القياسية للويب</h2>
@@ -395,7 +395,7 @@ const mode = "dark";</code></pre>
 export const SizesAndDensity: Story = {
   render: () => `
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
-      <div class="card card--bordered" style="padding: var(--spacing-24);">
+      <div class="card" style="padding: var(--spacing-24);">
         <header style="margin-block-end: var(--spacing-16);">
           <span class="sb-demo-tag">Ordered & Unordered Markers</span>
           <h3 class="heading" style="margin-block-start: var(--spacing-8);">Proportional List Hierarchy</h3>
@@ -435,7 +435,7 @@ export const SizesAndDensity: Story = {
 export const ZeroClassOrchestration: Story = {
   render: () => `
     <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
-      <div class="card card--bordered" style="padding: var(--spacing-24);">
+      <div class="card" style="padding: var(--spacing-24);">
         <header style="margin-block-end: var(--spacing-16);">
           <span class="sb-demo-tag">Zero-Class Orchestration</span>
           <h3 class="heading" style="margin-block-start: var(--spacing-8);">Pure Semantic HTML Formatting</h3>
@@ -473,7 +473,7 @@ export const RealWorldRecipes: Story = {
   render: () => `
     <div class="stack" style="gap: var(--spacing-32); max-inline-size: 54rem; margin-inline: auto;">
       <!-- Recipe 1: Complete Editorial Blog Post -->
-      <section class="card card--bordered" style="padding: var(--spacing-32);">
+      <section class="card" style="padding: var(--spacing-32);">
         <article class="prose">
           <p class="micro-heading" style="color: var(--foreground-accent); margin-block-end: var(--spacing-4);">
             Architecture RFC &bull; Web Standards
@@ -532,7 +532,7 @@ export const RealWorldRecipes: Story = {
       </section>
 
       <!-- Recipe 2: Technical API Reference & Documentation -->
-      <section class="card card--bordered" style="padding: var(--spacing-24);">
+      <section class="card" style="padding: var(--spacing-24);">
         <article class="prose prose--tight">
           <p class="micro-heading" style="color: var(--foreground-muted); margin-block-end: var(--spacing-4);">
             API Reference &bull; Keyboard Shortcuts

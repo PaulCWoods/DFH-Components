@@ -137,6 +137,10 @@
      Declared before the modifier classes, so a modifier on the box beats a
      flag inherited from a container.
      ------------------------------------------------------------------------ */
+  @container style(--icon-box-size: auto) {
+    --_icon-box-size: auto;
+  }
+
   @container style(--icon-box-size: sm) or style(--ui-sizing: compact) {
     --_icon-box-size: var(--icon-box-sm-min-size, 2rem);
   }
@@ -170,6 +174,10 @@
 /* --------------------------------------------------------------------------
    Icon Box Modifiers
    -------------------------------------------------------------------------- */
+:where(.icon-box--auto) {
+  --_icon-box-size: auto;
+}
+
 :where(.icon-box--sm) {
   --_icon-box-size: var(--icon-box-sm-min-size, 2rem);
 }

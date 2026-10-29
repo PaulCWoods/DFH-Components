@@ -1,32 +1,33 @@
 /* ==========================================================================
-   Design For Humans: Navigation Tree Primitive (Molecule)
+   Design For Humans: Navigation Tree
    --------------------------------------------------------------------------
-   Hierarchical list and outline navigation primitive designed for tables
-   of contents (TOC), documentation sidebars, and nested topic directories.
-   Supports progressive indentations, continuous guide rules, active branch
-   illuminations, and compact container density.
-   Complies with the Organism-Atom Composition Law and zero-specificity :where().
-   Complies with WCAG 2.2 AA / AAA (1.3.1 Info & Relationships, 2.4.7 Focus).
+   Nested links to the sections of a site or page: a docs sidebar, a table
+   of contents. Its items are buttons (.button), as in the menu; the tree
+   makes them plain and full width, with their content at the start, and
+   adds nesting, guide lines and the current location.
 
-   Usage:
-   <!-- Table of Contents Outline -->
-   <nav class="navigation-tree navigation-tree--ruled" aria-label="Table of contents">
-     <ol class="navigation-tree__list">
-       <li class="navigation-tree__item">
-         <a href="#intro" class="navigation-tree__link" aria-current="true">
-           <span>Introduction</span>
-         </a>
-       </li>
-       <li class="navigation-tree__item">
-         <a href="#playground" class="navigation-tree__link">
-           <span>Playground</span>
-         </a>
-         <ol class="navigation-tree__list">
-           <li class="navigation-tree__item">
-             <a href="#options" class="navigation-tree__link">
-               <span>Options</span>
-             </a>
-           </li>
+   The current item is marked with aria-current ("page" for a site,
+   "location" or "true" for a table of contents) and shows bold text in the
+   foreground colour, a tint, and a rail inside the button's inline start,
+   rounded to the button's corners. Other items are regular weight in a
+   quieter colour.
+
+   Everything lines up on the label's inset (the button's border and
+   padding): nested lists start under their parent's label, guide lines
+   are drawn there, and headings use the same inset.
+
+   Options: --ruled (guide lines beside nested lists), --compact (32px
+   rows; the button keeps its 48px hit area unless the product opts into
+   fine-pointer targets).
+
+   <nav class="navigation-tree" aria-label="Documentation">
+     <ol>
+       <li class="navigation-tree__heading"><h2 class="micro-heading">Guides</h2></li>
+       <li><a href="/start" class="button"><span>Getting started</span></a></li>
+       <li>
+         <a href="/tokens" class="button" aria-current="page"><span>Tokens</span></a>
+         <ol>
+           <li><a href="/tokens/global" class="button"><span>Global</span></a></li>
          </ol>
        </li>
      </ol>
@@ -34,212 +35,154 @@
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Navigation Tree Container (:where(.navigation-tree, .nav-tree))
+   1. Base
    ========================================================================== */
-:where(.navigation-tree, .nav-tree) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_nav-tree-gap: var(--nav-tree-gap, var(--spacing-4, 0.25rem));
-  --_nav-tree-indent: var(--nav-tree-indent, var(--spacing-12, 0.75rem));
-  --_nav-tree-line-color: var(--nav-tree-line-color, var(--border-color-quiet, currentColor));
-  --_nav-tree-line-style: var(--nav-tree-line-style, solid);
-  --_nav-tree-line-width: var(--nav-tree-line-width, var(--border-width, 1px));
-  --_nav-tree-padding-block: var(--nav-tree-padding-block, 0px);
-  --_nav-tree-padding-inline: var(--nav-tree-padding-inline, 0px);
+:where(.navigation-tree) {
+  /* Private manifest */
+  --_navigation-tree-gap: var(--navigation-tree-gap, 0.125rem);
 
-  /* Item Geometry & Tokens */
-  --_nav-tree-item-min-size: var(--nav-tree-item-min-size, 2rem);
-  --_nav-tree-item-padding-block: var(--nav-tree-item-padding-block, var(--spacing-6, 0.375rem));
-  --_nav-tree-item-padding-inline: var(--nav-tree-item-padding-inline, var(--spacing-12, 0.75rem));
-  --_nav-tree-item-radius: var(--nav-tree-item-radius, var(--radius-sm, 0.25rem));
+  /* Where an item's label starts inside its row: the button's border and
+     padding. Nested lists, guide lines and headings all line up on it. */
+  --_navigation-tree-inset: calc(var(--button-border-width, 1px) + var(--button-padding-inline, 1rem));
+  --_navigation-tree-rule-width: var(--navigation-tree-rule-width, 1px);
+  --_navigation-tree-rule: var(--_navigation-tree-rule-width) var(--navigation-tree-rule-style, solid) var(--navigation-tree-rule-color, currentColor);
+  --_navigation-tree-current-bg: var(--navigation-tree-current-bg, transparent);
+  --_navigation-tree-current-color: var(--navigation-tree-current-color, var(--foreground, CanvasText));
+  --_navigation-tree-rail-width: var(--navigation-tree-rail-width, 4px);
+  --_navigation-tree-rail-color: var(--navigation-tree-rail-color, currentColor);
+  --_navigation-tree-heading-color: var(--navigation-tree-heading-color, currentColor);
 
-  /* Colors & Interactive Typography */
-  --_nav-tree-link-color: var(--nav-tree-link-color, var(--foreground-muted, currentColor));
-  --_nav-tree-link-color-hover: var(--nav-tree-link-color-hover, var(--foreground, currentColor));
-  --_nav-tree-link-bg-hover: var(--nav-tree-link-bg-hover, var(--surface-translucent-hover, var(--surface-hover, transparent)));
-  --_nav-tree-link-weight: var(--nav-tree-link-weight, var(--font-weight-normal, 400));
-  --_nav-tree-transition: var(--nav-tree-transition, var(--duration-sm, 150ms));
+  /* Items are plain buttons in regular weight and a quieter colour; the
+     current item stands out in weight and colour */
+  --button-prominence: plain;
+  --button-font-weight: var(--font-weight-normal, 400);
+  --font-sizing: fixed;
 
-  /* Active Indicator Tokens (WCAG 1.4.3 & 4.1.2) */
-  --_nav-tree-active-color: var(--nav-tree-active-color, var(--foreground-accent, var(--accent, currentColor)));
-  --_nav-tree-active-bg: var(--nav-tree-active-bg, var(--surface-accent-subtle, transparent));
-  --_nav-tree-active-border-color: var(--nav-tree-active-border-color, var(--foreground-accent, var(--accent, currentColor)));
-  --_nav-tree-active-border-width: var(--nav-tree-active-border-width, 2px);
-  --_nav-tree-active-weight: var(--nav-tree-active-weight, var(--font-weight-semibold, 600));
+  /* Density: compact items have less padding, so the inset follows */
+  @container style(--ui-sizing: compact) {
+    --_navigation-tree-inset: calc(var(--button-border-width, 1px) + var(--button-sm-padding-inline, 0.5rem));
+  }
 
-  /* Container Sizing & Layout */
-  box-sizing: border-box;
-  container-type: inline-size;
   display: block;
+  min-inline-size: 0;
+
+  /* Every list in the tree, at any depth */
+  :where(ol, ul) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--_navigation-tree-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  :where(li) {
+    margin: 0;
+    min-inline-size: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  /* A nested list starts under its parent's label */
+  :where(li) > :where(ol, ul) {
+    margin-block-start: var(--_navigation-tree-gap);
+    margin-inline-start: var(--_navigation-tree-inset);
+  }
+}
+
+:where(.navigation-tree--compact) {
+  --ui-sizing: compact;
+  --_navigation-tree-inset: calc(var(--button-border-width, 1px) + var(--button-sm-padding-inline, 0.5rem));
+}
+
+/* ==========================================================================
+   2. Items: buttons, full width, content at the start
+   ========================================================================== */
+:where(.navigation-tree) :where(li) > :where(.button) {
   inline-size: 100%;
-  padding-block: var(--_nav-tree-padding-block);
-  padding-inline: var(--_nav-tree-padding-inline);
-}
+  justify-content: flex-start;
+  text-align: start;
 
-/* --------------------------------------------------------------------------
-   Container Density Mode (--ui-sizing: compact)
-   -------------------------------------------------------------------------- */
-@container style(--ui-sizing: compact) {
-  :where(.navigation-tree, .nav-tree) {
-    --_nav-tree-gap: var(--spacing-2, 0.125rem);
-    --_nav-tree-indent: var(--spacing-8, 0.5rem);
-    --_nav-tree-item-min-size: 1.75rem;
-    --_nav-tree-item-padding-block: var(--spacing-4, 0.25rem);
-    --_nav-tree-item-padding-inline: var(--spacing-8, 0.5rem);
+  /* A quieter colour that darkens on hover; an intent class keeps its own */
+  &:where(:not(.button--accent, .button--danger)) {
+    --_button-tone: var(--navigation-tree-color, currentColor);
+    --_button-tone-hover: var(--_navigation-tree-current-color);
+    --_button-tone-pressed: var(--_navigation-tree-current-color);
+  }
+
+  /* The label takes the room, so a trailing badge or status sits at the end */
+  > :where(span:not(.visually-hidden, .badge, .status, .chip), .button__text, .lockup) {
+    flex-grow: 1;
+    text-align: start;
+  }
+
+  /* The current location: a tint, the foreground colour and bold, not a
+     filled button, with a rail inside its inline start */
+  &:where([aria-current]:not([aria-current="false"])) {
+    --_button-font-weight: var(--font-weight-bold, 700);
+    --_button-bg: var(--_navigation-tree-current-bg);
+    --_button-text: var(--_navigation-tree-current-color);
+    --_button-border-color: transparent;
+    --_button-hover-bg: var(--surface-translucent-strong, transparent);
+    --_button-hover-text: var(--_navigation-tree-current-color);
+    --_button-hover-border-color: transparent;
+    --_button-active-bg: var(--surface-translucent-strong, transparent);
+    --_button-active-text: var(--_navigation-tree-current-color);
+    --_button-active-border-color: transparent;
+    --_button-ring-color: var(--focus-ring-color, currentColor);
+    --_button-color-palette: initial;
+    --_button-hover-color-palette: initial;
+    --_button-active-color-palette: initial;
+
+    /* The rail fills the button's start edge, over its border: as wide as
+       the rail width or the button's radius, whichever is greater, with its
+       start corners following the button's, so it sits flush in the curve */
+    &::before {
+      background-color: var(--_navigation-tree-rail-color);
+      border-end-start-radius: var(--_button-radius);
+      border-start-start-radius: var(--_button-radius);
+      content: "";
+      inline-size: max(var(--_navigation-tree-rail-width), var(--_button-radius));
+      inset-block: calc(var(--_button-border-width) * -1);
+      inset-inline-start: calc(var(--_button-border-width) * -1);
+      position: absolute;
+    }
   }
 }
 
 /* ==========================================================================
-   2. Lists & Structural Hierarchy (:where(.navigation-tree__list, ul, ol))
+   3. Guide lines (--ruled)
    ========================================================================== */
-:where(.navigation-tree, .nav-tree) :where(ul, ol, .navigation-tree__list, .nav-tree__list) {
-  display: flex;
-  flex-direction: column;
-  gap: var(--_nav-tree-gap);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Nested Sub-Lists (Depth Indentation) */
-:where(.navigation-tree, .nav-tree) :where(li, .navigation-tree__item, .nav-tree__item) > :where(ul, ol, .navigation-tree__list, .nav-tree__list) {
-  margin-block-start: var(--_nav-tree-gap);
-  padding-inline-start: var(--_nav-tree-indent);
-}
-
-/* Tree Nodes (:where(.navigation-tree__item, li)) */
-:where(.navigation-tree, .nav-tree) :where(li, .navigation-tree__item, .nav-tree__item) {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  min-inline-size: 0;
-  padding: 0;
-  position: relative;
-}
-
-/* Flat List Depth Indentation */
-:where(.navigation-tree, .nav-tree) :where(.navigation-tree__item--nested, .nav-tree__item--nested) {
-  padding-inline-start: var(--_nav-tree-indent);
+/* The line drops from the parent's label; the children's rows start right
+   after it */
+:where(.navigation-tree--ruled) :where(li) > :where(ol, ul) {
+  border-inline-start: var(--_navigation-tree-rule);
 }
 
 /* ==========================================================================
-   3. Interactive Links (:where(.navigation-tree__link, a))
+   4. Headings
    ========================================================================== */
-:where(.navigation-tree, .nav-tree) :where(a, .navigation-tree__link, .nav-tree__link) {
-  /* Layout & Sizing */
-  align-items: center;
-  border-radius: var(--_nav-tree-item-radius);
-  box-sizing: border-box;
-  display: flex;
-  gap: var(--spacing-8, 0.5rem);
-  inline-size: 100%;
-  justify-content: space-between;
-  min-block-size: var(--_nav-tree-item-min-size);
-  padding-block: var(--_nav-tree-item-padding-block);
-  padding-inline: var(--_nav-tree-item-padding-inline);
-  position: relative;
-  text-decoration: none;
-
-  /* Typography & Color */
-  color: var(--_nav-tree-link-color);
-  font-weight: var(--_nav-tree-link-weight);
-  transition:
-    color var(--_nav-tree-transition) ease,
-    background-color var(--_nav-tree-transition) ease,
-    border-color var(--_nav-tree-transition) ease;
-
-  /* Interactive States */
-  &:hover {
-    background-color: var(--_nav-tree-link-bg-hover);
-    color: var(--_nav-tree-link-color-hover);
-  }
-
-  /* High-Contrast Focus Visible Perimeter (WCAG 2.4.7 / 2.4.13) */
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
-    outline-offset: var(--focus-ring-offset, 2px);
-  }
-
-  /* Active / Current Location (WCAG 4.1.2) */
-  &:where([aria-current="true"], [aria-current="page"], [aria-current="location"], .is-active) {
-    background-color: var(--_nav-tree-active-bg);
-    color: var(--_nav-tree-active-color);
-    font-weight: var(--_nav-tree-active-weight);
-  }
-}
-
-/* Link Inner Label Hook */
-:where(.navigation-tree__text, .nav-tree__text) {
-  flex: 1;
-  min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ==========================================================================
-   4. Section Group Heading / Category Label
-   ========================================================================== */
-:where(.navigation-tree__heading, .nav-tree__heading, .navigation-tree__label) {
-  align-self: stretch;
-  color: var(--foreground-muted, currentColor);
-  display: flex;
-  flex: 1;
-  margin: 0;
-  min-inline-size: 0;
-  padding-block: var(--_nav-tree-item-padding-block);
-  padding-inline: var(--_nav-tree-item-padding-inline);
+:where(.navigation-tree__heading) {
+  color: var(--_navigation-tree-heading-color);
+  padding-block: calc(var(--_navigation-tree-inset) / 2);
+  padding-inline: var(--_navigation-tree-inset);
   user-select: none;
-}
 
-/* ==========================================================================
-   5. Modifiers (.navigation-tree--ruled, .navigation-tree--indicator, etc.)
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   5.1 Vertical Guide Rules (.navigation-tree--ruled)
-   Traces nested lists with continuous hierarchical indicator lines.
-   -------------------------------------------------------------------------- */
-:where(.navigation-tree--ruled, .nav-tree--ruled) :where(li, .navigation-tree__item, .nav-tree__item) > :where(ul, ol, .navigation-tree__list, .nav-tree__list) {
-  border-inline-start: var(--_nav-tree-line-width) var(--_nav-tree-line-style) var(--_nav-tree-line-color);
-  margin-inline-start: var(--_nav-tree-indent);
-  padding-inline-start: var(--_nav-tree-indent);
-}
-
-/* --------------------------------------------------------------------------
-   5.2 Active Border Indicator (.navigation-tree--indicator, .navigation-tree--toc)
-   Illuminates the active link with an anchored left border stroke.
-   -------------------------------------------------------------------------- */
-:where(.navigation-tree--indicator, .navigation-tree--toc, .nav-tree--indicator) :where(a, .navigation-tree__link, .nav-tree__link) {
-  border-inline-start: var(--_nav-tree-active-border-width) solid transparent;
-  border-radius: 0;
-
-  &:where([aria-current="true"], [aria-current="page"], [aria-current="location"], .is-active) {
-    border-inline-start-color: var(--_nav-tree-active-border-color);
+  > :where(*) {
+    margin: 0;
   }
 }
 
-/* --------------------------------------------------------------------------
-   5.3 Compact Variant (.navigation-tree--compact)
-   -------------------------------------------------------------------------- */
-:where(.navigation-tree--compact, .nav-tree--compact) {
-  --_nav-tree-gap: var(--spacing-2, 0.125rem);
-  --_nav-tree-indent: var(--spacing-8, 0.5rem);
-  --_nav-tree-item-min-size: 1.75rem;
-  --_nav-tree-item-padding-block: var(--spacing-4, 0.25rem);
-  --_nav-tree-item-padding-inline: var(--spacing-8, 0.5rem);
+/* A heading after items opens a new group */
+:where(.navigation-tree) :where(.navigation-tree__heading:not(:first-child)) {
+  margin-block-start: var(--_navigation-tree-inset);
 }
 
-/* --------------------------------------------------------------------------
-   5.4 Flush Root Variant (.navigation-tree--flush)
-   Eliminates all outer padding for tight sidebar and inspector embedding.
-   -------------------------------------------------------------------------- */
-:where(.navigation-tree--flush, .nav-tree--flush) {
-  --_nav-tree-padding-block: 0px;
-  --_nav-tree-padding-inline: 0px;
+/* ==========================================================================
+   5. Forced colours: the rail uses a system colour
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.navigation-tree) :where(li) > :where(.button[aria-current])::before {
+    background-color: Highlight;
+  }
 }

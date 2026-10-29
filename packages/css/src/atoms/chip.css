@@ -48,7 +48,7 @@
   --_chip-font-size: var(--chip-font-size, 0.875rem);
   --_chip-font-weight: var(--chip-font-weight, 700);
   --_chip-text-transform: var(--chip-text-transform, none);
-  --_chip-padding-block: var(--chip-padding-block, 0.125rem);
+  --_chip-padding-block: var(--chip-padding-block, 0.375rem);
   --_chip-padding-inline: var(--chip-padding-inline, 0.5rem);
   --_chip-gap: var(--chip-gap, 0.25rem);
   --_chip-radius: var(--chip-radius, 0.125rem);
@@ -71,8 +71,8 @@
 
   @container style(--chip-size: sm) or style(--ui-sizing: compact) {
     --_chip-font-size: var(--chip-sm-font-size, 0.75rem);
-    --_chip-padding-block: var(--chip-sm-padding-block, 0.125rem);
-    --_chip-padding-inline: var(--chip-sm-padding-inline, 0.25rem);
+    --_chip-padding-block: var(--chip-sm-padding-block, 0.25rem);
+    --_chip-padding-inline: var(--chip-sm-padding-inline, 0.375rem);
   }
 
   @container style(--chip-corners: round) {

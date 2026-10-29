@@ -15,6 +15,16 @@
   outline: revert;
 }
 
+/* Popovers keep the UA's fixed, centred box; a component anchors them */
+:where([popover]) {
+  block-size: revert;
+  inline-size: revert;
+  inset: revert;
+  margin: revert;
+  overflow: revert;
+  position: revert;
+}
+
 /* --------------------------------------------------------------------------
    2. Modern Browser Root Settings
    -------------------------------------------------------------------------- */

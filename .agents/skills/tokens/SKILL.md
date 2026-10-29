@@ -145,7 +145,7 @@ Design For Humans implements an ergonomic, non-verbose shadow architecture pairi
   .card--brand {
     box-shadow: --shadow-md(var(--color-purple-500));
   }
-  .alert--danger {
+  .card--danger-glow {
     box-shadow: --shadow-lg(var(--color-red-500));
   }
   ```
@@ -227,7 +227,7 @@ Design For Humans components use clean, standard semantic class names **without 
 - ✅ `.checkbox`, `.radio`, `.choice`
 - ✅ `.field`, `.field__label`, `.field__hint`, `.field__error`
 - ✅ `.dialog`, `.dialog__header`, `.dialog__title`, `.dialog__body`, `.dialog__footer`
-- ✅ `.popover`, `.popover--anchored`
+- ✅ `.popover`, `.popover--top`
 - ✅ `.accordion`, `.accordion-group`, `.accordion__icon`
 - ✅ `.badge`, `.badge--accent`, `.badge--success`, `.badge--warning`, `.badge--danger`, `.badge--round`
 - ✅ `.chip`

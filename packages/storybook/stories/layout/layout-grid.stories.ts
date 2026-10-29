@@ -44,28 +44,24 @@ AI agents and developers MUST use the following semantic patterns:
 <!-- 1. Semantic Card Catalog Grid -->
 <ul class="grid grid--sm" role="list">
   <li>
-    <div class="card card--bordered">
-      <article class="card__content">
-        <header class="card__header"><h4 class="card__title small-heading">Card A</h4></header>
-        <div class="card__body"><p>Card content copy...</p></div>
-      </article>
-    </div>
+    <article class="card">
+      <header class="card__header"><h4 class="card__title small-heading">Card A</h4></header>
+      <div class="card__body"><p>Card content copy...</p></div>
+    </article>
   </li>
   <li>
-    <div class="card card--bordered">
-      <article class="card__content">
-        <header class="card__header"><h4 class="card__title small-heading">Card B</h4></header>
-        <div class="card__body"><p>Card content copy...</p></div>
-      </article>
-    </div>
+    <article class="card">
+      <header class="card__header"><h4 class="card__title small-heading">Card B</h4></header>
+      <div class="card__body"><p>Card content copy...</p></div>
+    </article>
   </li>
 </ul>
 
 <!-- 2. Dashboard Metric Tiles (Compact xs min-width) -->
 <div class="grid grid--xs">
-  <div class="card card--bordered padding">...</div>
-  <div class="card card--bordered padding">...</div>
-  <div class="card card--bordered padding">...</div>
+  <div class="card padding">...</div>
+  <div class="card padding">...</div>
+  <div class="card padding">...</div>
 </div>
 
 <!-- 3. Native Ruled 2D Matrix -->
@@ -211,7 +207,7 @@ export const SizingScaleMatrix: Story = {
 
       <div class="stack gap">
         <!-- 2xs (8rem) -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">1. .grid--2xs (min 8rem / 128px)</h4>
           <div class="grid grid--2xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Tile 1</div>
@@ -224,7 +220,7 @@ export const SizingScaleMatrix: Story = {
         </div>
 
         <!-- xs (16rem) -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">2. .grid--xs (min 16rem / 256px)</h4>
           <div class="grid grid--xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Widget A</div>
@@ -234,7 +230,7 @@ export const SizingScaleMatrix: Story = {
         </div>
 
         <!-- sm (24rem) -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">3. .grid--sm (min 24rem / 384px)</h4>
           <div class="grid grid--sm sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Card Alpha</div>
@@ -261,74 +257,66 @@ export const GapScaleHierarchy: Story = {
 
       <div class="grid grid--sm">
         <!-- Tight (0) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
-              <p class="card__subtitle font-size-xs"><code>.grid--tight</code></p>
-            </header>
-            <div class="card__body">
-              <div class="grid grid--2xs grid--tight sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P1</div>
-                <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P2</div>
-                <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P3</div>
-                <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P4</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
+            <p class="card__subtitle font-size-xs"><code>.grid--tight</code></p>
+          </header>
+          <div class="card__body">
+            <div class="grid grid--2xs grid--tight sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P1</div>
+              <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P2</div>
+              <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P3</div>
+              <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">P4</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Compact (0.5rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
-            </header>
-            <div class="card__body">
-              <div class="grid grid--2xs sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
-                <div class="sb-demo-box sb-demo-box--sm">T1</div>
-                <div class="sb-demo-box sb-demo-box--sm">T2</div>
-                <div class="sb-demo-box sb-demo-box--sm">T3</div>
-                <div class="sb-demo-box sb-demo-box--sm">T4</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
+          </header>
+          <div class="card__body">
+            <div class="grid grid--2xs sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
+              <div class="sb-demo-box sb-demo-box--sm">T1</div>
+              <div class="sb-demo-box sb-demo-box--sm">T2</div>
+              <div class="sb-demo-box sb-demo-box--sm">T3</div>
+              <div class="sb-demo-box sb-demo-box--sm">T4</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Default (1rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.grid</code> (Standard)</p>
-            </header>
-            <div class="card__body">
-              <div class="grid grid--2xs sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Cell 1</div>
-                <div class="sb-demo-box sb-demo-box--sm">Cell 2</div>
-                <div class="sb-demo-box sb-demo-box--sm">Cell 3</div>
-                <div class="sb-demo-box sb-demo-box--sm">Cell 4</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.grid</code> (Standard)</p>
+          </header>
+          <div class="card__body">
+            <div class="grid grid--2xs sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Cell 1</div>
+              <div class="sb-demo-box sb-demo-box--sm">Cell 2</div>
+              <div class="sb-demo-box sb-demo-box--sm">Cell 3</div>
+              <div class="sb-demo-box sb-demo-box--sm">Cell 4</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Cushioned (4rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.grid--cushioned</code></p>
-            </header>
-            <div class="card__body">
-              <div class="grid grid--xs grid--cushioned sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Feature A</div>
-                <div class="sb-demo-box sb-demo-box--sm">Feature B</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.grid--cushioned</code></p>
+          </header>
+          <div class="card__body">
+            <div class="grid grid--xs grid--cushioned sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Feature A</div>
+              <div class="sb-demo-box sb-demo-box--sm">Feature B</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </div>
   `,
@@ -347,7 +335,7 @@ export const RuledDividers: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Standard Ruled 2D Grid</h4>
         <div class="grid grid--xs grid--ruled">
           <div class="padding-block-xs">
@@ -369,7 +357,7 @@ export const RuledDividers: Story = {
         </div>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Tight Ruled Matrix (<code>.grid--ruled.grid--tight</code>)</h4>
         <div class="grid grid--2xs grid--ruled grid--tight">
           <div class="padding-block-xs font-size-xs">WCAG 1.1</div>
@@ -396,7 +384,7 @@ export const ScopedModifiers: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.grid--tight</code></h4>
           <div class="grid grid--2xs grid--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Tile A</div>
@@ -405,7 +393,7 @@ export const ScopedModifiers: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.grid--cushioned</code></h4>
           <div class="grid grid--xs grid--cushioned sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Spacious A</div>
@@ -432,69 +420,63 @@ export const CardCatalog: Story = {
 
       <ul class="grid grid--sm" role="list">
         <li>
-          <div class="card card--bordered">
-            <article class="card__content stack">
-              <header class="card__header">
-                <hgroup class="card__hgroup">
-                  <h4 class="card__title small-heading">Design Tokens</h4>
-                  <p class="card__subtitle">DTCG Specification</p>
-                </hgroup>
-                <span class="chip"><span class="chip__text">Tier 1-3</span></span>
-              </header>
-              <div class="card__body">
-                <p class="font-size-sm">
-                  Synchronizes palettes, fluid scales, and component properties with Figma Variables and CSS custom properties.
-                </p>
-              </div>
-              <footer class="card__footer">
-                <button type="button" class="button button--subtle button--sm"><span>Read Spec</span></button>
-              </footer>
-            </article>
-          </div>
+          <article class="card stack">
+            <header class="card__header">
+              <hgroup class="card__hgroup">
+                <h4 class="card__title small-heading">Design Tokens</h4>
+                <p class="card__subtitle">DTCG Specification</p>
+              </hgroup>
+              <span class="chip"><span class="chip__text">Tier 1-3</span></span>
+            </header>
+            <div class="card__body">
+              <p class="font-size-sm">
+                Synchronizes palettes, fluid scales, and component properties with Figma Variables and CSS custom properties.
+              </p>
+            </div>
+            <footer class="card__footer">
+              <button type="button" class="button button--subtle button--sm"><span>Read Spec</span></button>
+            </footer>
+          </article>
         </li>
 
         <li>
-          <div class="card card--bordered">
-            <article class="card__content stack">
-              <header class="card__header">
-                <hgroup class="card__hgroup">
-                  <h4 class="card__title small-heading">WCAG 2.2 Level AAA</h4>
-                  <p class="card__subtitle">Digital Accessibility</p>
-                </hgroup>
-                <span class="status status--success"><span class="status__text">Compliant</span></span>
-              </header>
-              <div class="card__body">
-                <p class="font-size-sm">
-                  Rigorous 7:1 text contrast ratios, 3:1 high-contrast focus rings, and zero-JS keyboard accessible controls.
-                </p>
-              </div>
-              <footer class="card__footer">
-                <button type="button" class="button button--subtle button--sm"><span>Audit Checklist</span></button>
-              </footer>
-            </article>
-          </div>
+          <article class="card stack">
+            <header class="card__header">
+              <hgroup class="card__hgroup">
+                <h4 class="card__title small-heading">WCAG 2.2 Level AAA</h4>
+                <p class="card__subtitle">Digital Accessibility</p>
+              </hgroup>
+              <span class="status status--success"><span class="status__text">Compliant</span></span>
+            </header>
+            <div class="card__body">
+              <p class="font-size-sm">
+                Rigorous 7:1 text contrast ratios, 3:1 high-contrast focus rings, and zero-JS keyboard accessible controls.
+              </p>
+            </div>
+            <footer class="card__footer">
+              <button type="button" class="button button--subtle button--sm"><span>Audit Checklist</span></button>
+            </footer>
+          </article>
         </li>
 
         <li>
-          <div class="card card--bordered">
-            <article class="card__content stack">
-              <header class="card__header">
-                <hgroup class="card__hgroup">
-                  <h4 class="card__title small-heading">Layout Primitives</h4>
-                  <p class="card__subtitle">Compositional 1D/2D</p>
-                </hgroup>
-                <span class="chip"><span class="chip__text">Modern CSS</span></span>
-              </header>
-              <div class="card__body">
-                <p class="font-size-sm">
-                  Stack, Cluster, Inline, Grid, and Split primitives built on zero-specificity :where() and container queries.
-                </p>
-              </div>
-              <footer class="card__footer">
-                <button type="button" class="button button--subtle button--sm"><span>View Primitives</span></button>
-              </footer>
-            </article>
-          </div>
+          <article class="card stack">
+            <header class="card__header">
+              <hgroup class="card__hgroup">
+                <h4 class="card__title small-heading">Layout Primitives</h4>
+                <p class="card__subtitle">Compositional 1D/2D</p>
+              </hgroup>
+              <span class="chip"><span class="chip__text">Modern CSS</span></span>
+            </header>
+            <div class="card__body">
+              <p class="font-size-sm">
+                Stack, Cluster, Inline, Grid, and Split primitives built on zero-specificity :where() and container queries.
+              </p>
+            </div>
+            <footer class="card__footer">
+              <button type="button" class="button button--subtle button--sm"><span>View Primitives</span></button>
+            </footer>
+          </article>
         </li>
       </ul>
     </div>
@@ -515,7 +497,7 @@ export const MetricTiles: Story = {
       </div>
 
       <div class="grid grid--xs">
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <p class="font-size-xs text-muted font-weight-bold">AXE RULE COVERAGE</p>
           <div class="inline" style="justify-content: space-between; align-items: baseline; margin-top: var(--spacing-8);">
             <p class="font-size-2 font-weight-bold">92 / 92</p>
@@ -523,7 +505,7 @@ export const MetricTiles: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <p class="font-size-xs text-muted font-weight-bold">FOCUS CLEARANCE</p>
           <div class="inline" style="justify-content: space-between; align-items: baseline; margin-top: var(--spacing-8);">
             <p class="font-size-2 font-weight-bold">4.8 : 1</p>
@@ -531,7 +513,7 @@ export const MetricTiles: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <p class="font-size-xs text-muted font-weight-bold">FIGMA TOKEN SYNC</p>
           <div class="inline" style="justify-content: space-between; align-items: baseline; margin-top: var(--spacing-8);">
             <p class="font-size-2 font-weight-bold">489</p>
@@ -557,7 +539,7 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Grid (xs)</h4>
           <div class="grid grid--2xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Alpha</div>
@@ -565,7 +547,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Grid (2xs)</h4>
           <div class="grid grid--2xs grid--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Alpha</div>
@@ -573,7 +555,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Ruled Grid (2xs)</h4>
           <div class="grid grid--2xs grid--ruled">
             <div class="padding-block-xs font-size-xs">Alpha</div>
@@ -581,7 +563,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Grid (Modifier)</h4>
           <div class="grid grid--2xs grid--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Alpha</div>
@@ -610,85 +592,75 @@ export const GridCarousel: Story = {
 
       <!-- Unconditional Snap Carousel -->
       <div class="grid grid--carousel">
-        <div class="card card--compact card--bordered card--ruled">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h4 class="card__title subheading">Plot Occupancy</h4>
-                <p class="card__subtitle text-muted">Spring 2026</p>
-              </hgroup>
-              <span class="status status--success"><span class="status__text">87.5%</span></span>
-            </header>
-            <div class="card__body">
-              <div class="font-size-2 font-weight-bold font-mono">42 / 48</div>
-              <p class="text-muted" style="margin: 0;">Active plot leases</p>
-            </div>
-          </article>
-        </div>
+        <article class="card card--compact card--ruled">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <h4 class="card__title subheading">Plot Occupancy</h4>
+              <p class="card__subtitle text-muted">Spring 2026</p>
+            </hgroup>
+            <span class="status status--success"><span class="status__text">87.5%</span></span>
+          </header>
+          <div class="card__body">
+            <div class="font-size-2 font-weight-bold font-mono">42 / 48</div>
+            <p class="text-muted" style="margin: 0;">Active plot leases</p>
+          </div>
+        </article>
 
-        <div class="card card--compact card--bordered card--ruled">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h4 class="card__title subheading">Pending Renewals</h4>
-                <p class="card__subtitle text-muted">Action Required</p>
-              </hgroup>
-              <span class="status status--warning"><span class="status__text">7 Due</span></span>
-            </header>
-            <div class="card__body">
-              <div class="font-size-2 font-weight-bold font-mono">7 Plots</div>
-              <p class="text-muted" style="margin: 0;">Awaiting verification</p>
-            </div>
-          </article>
-        </div>
+        <article class="card card--compact card--ruled">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <h4 class="card__title subheading">Pending Renewals</h4>
+              <p class="card__subtitle text-muted">Action Required</p>
+            </hgroup>
+            <span class="status status--warning"><span class="status__text">7 Due</span></span>
+          </header>
+          <div class="card__body">
+            <div class="font-size-2 font-weight-bold font-mono">7 Plots</div>
+            <p class="text-muted" style="margin: 0;">Awaiting verification</p>
+          </div>
+        </article>
 
-        <div class="card card--compact card--bordered card--ruled">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h4 class="card__title subheading">Tool Locker</h4>
-                <p class="card__subtitle text-muted">Communal Shed</p>
-              </hgroup>
-              <span class="status status--danger"><span class="status__text">2 Overdue</span></span>
-            </header>
-            <div class="card__body">
-              <div class="font-size-2 font-weight-bold font-mono">5 Out</div>
-              <p class="text-muted" style="margin: 0;">Shared tools borrowed</p>
-            </div>
-          </article>
-        </div>
+        <article class="card card--compact card--ruled">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <h4 class="card__title subheading">Tool Locker</h4>
+              <p class="card__subtitle text-muted">Communal Shed</p>
+            </hgroup>
+            <span class="status status--danger"><span class="status__text">2 Overdue</span></span>
+          </header>
+          <div class="card__body">
+            <div class="font-size-2 font-weight-bold font-mono">5 Out</div>
+            <p class="text-muted" style="margin: 0;">Shared tools borrowed</p>
+          </div>
+        </article>
 
-        <div class="card card--compact card--bordered card--ruled">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h4 class="card__title subheading">Cistern Reserve</h4>
-                <p class="card__subtitle text-muted">Rainwater Collection</p>
-              </hgroup>
-              <span class="status status--accent"><span class="status__text">78%</span></span>
-            </header>
-            <div class="card__body">
-              <div class="font-size-2 font-weight-bold font-mono">7,850 L</div>
-              <p class="text-muted" style="margin: 0;">Optimal supply</p>
-            </div>
-          </article>
-        </div>
+        <article class="card card--compact card--ruled">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <h4 class="card__title subheading">Cistern Reserve</h4>
+              <p class="card__subtitle text-muted">Rainwater Collection</p>
+            </hgroup>
+            <span class="status status--accent"><span class="status__text">78%</span></span>
+          </header>
+          <div class="card__body">
+            <div class="font-size-2 font-weight-bold font-mono">7,850 L</div>
+            <p class="text-muted" style="margin: 0;">Optimal supply</p>
+          </div>
+        </article>
 
-        <div class="card card--compact card--bordered card--ruled">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h4 class="card__title subheading">Compost Station</h4>
-                <p class="card__subtitle text-muted">Bay 3 Aeration</p>
-              </hgroup>
-              <span class="status status--success"><span class="status__text">Hot</span></span>
-            </header>
-            <div class="card__body">
-              <div class="font-size-2 font-weight-bold font-mono">140°F</div>
-              <p class="text-muted" style="margin: 0;">Active thermophilic phase</p>
-            </div>
-          </article>
-        </div>
+        <article class="card card--compact card--ruled">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <h4 class="card__title subheading">Compost Station</h4>
+              <p class="card__subtitle text-muted">Bay 3 Aeration</p>
+            </hgroup>
+            <span class="status status--success"><span class="status__text">Hot</span></span>
+          </header>
+          <div class="card__body">
+            <div class="font-size-2 font-weight-bold font-mono">140°F</div>
+            <p class="text-muted" style="margin: 0;">Active thermophilic phase</p>
+          </div>
+        </article>
       </div>
     </div>
   `,

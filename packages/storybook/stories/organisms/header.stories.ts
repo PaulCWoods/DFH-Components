@@ -148,16 +148,14 @@ export const Playground: Story = {
         </header>
 
         <div style="max-inline-size: 54rem; margin-inline: auto; padding: var(--spacing-32) var(--spacing-16);">
-          <div class="card card--bordered">
-            <article class="card__content">
-              <header class="card__header">
-                <h2 class="card__title heading">Viewport Scroll Simulation</h2>
-              </header>
-              <div class="card__body">
-                <p>Scroll down this canvas to observe the sticky header's positioning and translucent glassmorphism blur over this card's content.</p>
-              </div>
-            </article>
-          </div>
+          <article class="card">
+            <header class="card__header">
+              <h2 class="card__title heading">Viewport Scroll Simulation</h2>
+            </header>
+            <div class="card__body">
+              <p>Scroll down this canvas to observe the sticky header's positioning and translucent glassmorphism blur over this card's content.</p>
+            </div>
+          </article>
         </div>
       </div>
     `;
@@ -442,7 +440,7 @@ export const RealWorldRecipes: Story = {
             <header class="header header--borderless" style="padding-block: var(--spacing-8); background: var(--surface-muted); border-block-end: 1px solid var(--border-color);">
               <div style="padding-inline: var(--spacing-16);">
                 <nav class="breadcrumb" aria-label="Subheader breadcrumb">
-                  <ol>
+                  <ol class="small-text">
                     <li><a class="link" href="#clusters">Clusters</a></li>
                     <li><a class="link" href="#eu-west">eu-west-1</a></li>
                     <li aria-current="page">Production-DB</li>

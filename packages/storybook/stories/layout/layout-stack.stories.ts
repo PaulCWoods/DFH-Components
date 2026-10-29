@@ -190,71 +190,63 @@ export const GapScaleHierarchy: Story = {
 
       <div class="grid grid--sm">
         <!-- Tight (0) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
-              <p class="card__subtitle font-size-xs"><code>.stack--tight</code></p>
-            </header>
-            <div class="card__body">
-              <div class="stack stack--tight sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Flush Header</div>
-                <div class="sb-demo-box sb-demo-box--sm">Flush Body</div>
-                <div class="sb-demo-box sb-demo-box--sm">Flush Footer</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
+            <p class="card__subtitle font-size-xs"><code>.stack--tight</code></p>
+          </header>
+          <div class="card__body">
+            <div class="stack stack--tight sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Flush Header</div>
+              <div class="sb-demo-box sb-demo-box--sm">Flush Body</div>
+              <div class="sb-demo-box sb-demo-box--sm">Flush Footer</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Compact (0.5rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
-            </header>
-            <div class="card__body">
-              <div class="stack sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
-                <div class="sb-demo-box sb-demo-box--sm">List Item 1</div>
-                <div class="sb-demo-box sb-demo-box--sm">List Item 2</div>
-                <div class="sb-demo-box sb-demo-box--sm">List Item 3</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
+          </header>
+          <div class="card__body">
+            <div class="stack sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
+              <div class="sb-demo-box sb-demo-box--sm">List Item 1</div>
+              <div class="sb-demo-box sb-demo-box--sm">List Item 2</div>
+              <div class="sb-demo-box sb-demo-box--sm">List Item 3</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Default (1rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.stack</code> (Standard)</p>
-            </header>
-            <div class="card__body">
-              <div class="stack sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Standard Item A</div>
-                <div class="sb-demo-box sb-demo-box--sm">Standard Item B</div>
-                <div class="sb-demo-box sb-demo-box--sm">Standard Item C</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.stack</code> (Standard)</p>
+          </header>
+          <div class="card__body">
+            <div class="stack sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Standard Item A</div>
+              <div class="sb-demo-box sb-demo-box--sm">Standard Item B</div>
+              <div class="sb-demo-box sb-demo-box--sm">Standard Item C</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Cushioned (4rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.stack--cushioned</code></p>
-            </header>
-            <div class="card__body">
-              <div class="stack stack--cushioned sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Chapter 1</div>
-                <div class="sb-demo-box sb-demo-box--sm">Chapter 2</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.stack--cushioned</code></p>
+          </header>
+          <div class="card__body">
+            <div class="stack stack--cushioned sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Chapter 1</div>
+              <div class="sb-demo-box sb-demo-box--sm">Chapter 2</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </div>
   `,
@@ -273,7 +265,7 @@ export const RuledDividers: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Standard Ruled Stack</h4>
         <div class="stack stack--ruled">
           <div class="padding-block-sm">
@@ -291,7 +283,7 @@ export const RuledDividers: Story = {
         </div>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Tight Ruled List (<code>.stack--ruled.stack--tight</code>)</h4>
         <div class="stack stack--ruled stack--tight">
           <div class="padding-block-xs font-size-sm">System Metric 1: Contrast Ratio (WCAG AAA)</div>
@@ -317,7 +309,7 @@ export const ScopedModifiers: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.stack--tight</code></h4>
           <div class="stack stack--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Nested Item A</div>
@@ -326,7 +318,7 @@ export const ScopedModifiers: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.stack--cushioned</code></h4>
           <div class="stack stack--cushioned sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Spacious Topic 1</div>
@@ -351,7 +343,7 @@ export const FormComposition: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <form class="form stack" onsubmit="event.preventDefault();">
           <div class="field">
             <label for="stack-user-name" class="field__label">Full Name</label>
@@ -412,34 +404,32 @@ export const CardContentComposition: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered">
-        <article class="card__content stack">
-          <header class="card__header">
-            <hgroup class="card__hgroup">
-              <h4 class="card__title small-heading">Design System Tokens</h4>
-              <p class="card__subtitle">DTCG 3-Tier Architecture</p>
-            </hgroup>
-            <span class="status status--success"><span class="status__text">Stable</span></span>
-          </header>
+      <article class="card stack">
+        <header class="card__header">
+          <hgroup class="card__hgroup">
+            <h4 class="card__title small-heading">Design System Tokens</h4>
+            <p class="card__subtitle">DTCG 3-Tier Architecture</p>
+          </hgroup>
+          <span class="status status--success"><span class="status__text">Stable</span></span>
+        </header>
 
-          <div class="card__body stack" style="--gap: var(--spacing-12);">
-            <p>
-              Tokens synchronize typography, colors, and spatial units between Figma Variables, Tokens Studio, and native CSS custom properties.
-            </p>
-            <div class="cluster">
-              <span class="chip chip--subtle"><span class="chip__text">Tier 1: Global</span></span>
-              <span class="chip chip--subtle"><span class="chip__text">Tier 2: Semantic</span></span>
-              <span class="chip chip--subtle"><span class="chip__text">Tier 3: Component</span></span>
-            </div>
+        <div class="card__body stack" style="--gap: var(--spacing-12);">
+          <p>
+            Tokens synchronize typography, colors, and spatial units between Figma Variables, Tokens Studio, and native CSS custom properties.
+          </p>
+          <div class="cluster">
+            <span class="chip chip--subtle"><span class="chip__text">Tier 1: Global</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Tier 2: Semantic</span></span>
+            <span class="chip chip--subtle"><span class="chip__text">Tier 3: Component</span></span>
           </div>
+        </div>
 
-          <footer class="card__footer" style="justify-content: flex-end;">
-            <button type="button" class="button">
-              <span>View Specification</span>
-            </button>
-          </footer>
-        </article>
-      </div>
+        <footer class="card__footer" style="justify-content: flex-end;">
+          <button type="button" class="button">
+            <span>View Specification</span>
+          </button>
+        </footer>
+      </article>
     </div>
   `,
 };
@@ -459,7 +449,7 @@ export const SemanticLists: Story = {
 
       <div class="grid grid--sm">
         <!-- Ordered Steps -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Ordered Steps (<code>&lt;ol class="stack"&gt;</code>)</h4>
           <ol class="stack" style="--gap: var(--spacing-8);">
             <li class="sb-demo-box sb-demo-box--row">
@@ -478,7 +468,7 @@ export const SemanticLists: Story = {
         </div>
 
         <!-- Unordered Navigation List -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Unordered Actions (<code>&lt;ul class="stack"&gt;</code>)</h4>
           <ul class="stack" style="--gap: var(--spacing-8);">
             <li>
@@ -518,7 +508,7 @@ export const CrossAxisAlignment: Story = {
 
       <div class="grid grid--xs">
         <!-- Stretch -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">stretch (Default)</h4>
           <div class="stack" style="align-items: stretch;">
             <div class="sb-demo-box sb-demo-box--sm">Full Width</div>
@@ -527,7 +517,7 @@ export const CrossAxisAlignment: Story = {
         </div>
 
         <!-- Flex Start -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">flex-start (Intrinsic)</h4>
           <div class="stack" style="align-items: flex-start;">
             <div class="sb-demo-box sb-demo-box--sm">Short</div>
@@ -536,7 +526,7 @@ export const CrossAxisAlignment: Story = {
         </div>
 
         <!-- Center -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">center</h4>
           <div class="stack" style="align-items: center;">
             <div class="sb-demo-box sb-demo-box--sm">Centered</div>
@@ -545,7 +535,7 @@ export const CrossAxisAlignment: Story = {
         </div>
 
         <!-- Flex End -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">flex-end</h4>
           <div class="stack" style="align-items: flex-end;">
             <div class="sb-demo-box sb-demo-box--sm">Right-Aligned</div>
@@ -571,7 +561,7 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Stack</h4>
           <div class="stack sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Alpha</div>
@@ -579,7 +569,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Stack</h4>
           <div class="stack stack--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Alpha</div>
@@ -587,7 +577,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Ruled Stack</h4>
           <div class="stack stack--ruled">
             <div class="padding-block-xs font-size-xs">Alpha</div>
@@ -595,7 +585,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Stack (Modifier)</h4>
           <div class="stack stack--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Alpha</div>

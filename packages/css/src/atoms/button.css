@@ -349,8 +349,11 @@
   --_button-active-color-palette: initial;
 }
 
-/* Strong, and the selected states that render as strong */
-:where(.button--strong, .button.is-active, .button:has(:checked)) {
+/* Strong, and the selected states that render as strong: a current page
+   or step (aria-current), a selection, a checked input, a pressed toggle.
+   A pressed toggle with its own check icon (.icon--on) shows the check
+   instead. A container may map aria-current to its own look (menu, tree). */
+:where(.button--strong, .button.is-active, .button[aria-current]:not([aria-current="false"]), .button:has(:checked), .button[aria-pressed="true"]:not(:has(.icon--on))) {
   --_button-bg: var(--_button-tone);
   --_button-text: var(--_button-on-tone);
   --_button-border-color: var(--_button-tone);
@@ -397,6 +400,14 @@
     --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
     --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   }
+}
+
+
+
+:where(.button--flush) {
+  --_button-padding-block: 0;
+  --_button-padding-inline: 0;
+  --_button-min-size: 0;
 }
 
 /* ==========================================================================
@@ -464,7 +475,7 @@
   display: none;
 }
 
-:where(.button:not(:has(.icon--off)):has(:where(span.visually-hidden, span.sr-only, span.sr))) .icon--on {
+:where(.button:not(:has(.icon--off)):where(.button--icon)) .icon--on {
   opacity: 0;
 }
 
@@ -488,12 +499,10 @@
 }
 
 /* Icon-Only Button (minimal presentation; keeps an accessible name) */
-:where(.button:has(:where(span.visually-hidden, span.sr-only, span.sr))),
-:where(.button--icon) {
-  --_button-padding-inline: var(--_button-padding-block);
-}
 
 :where(.button--icon) {
+  --_button-padding-inline: var(--_button-padding-block);
+
   > :where(span:not(.button__icon, .badge), .button__text) {
     position: absolute;
     inline-size: 1px;
@@ -657,7 +666,8 @@
   padding-block: var(--_button-padding-block);
   text-box: trim-both cap alphabetic;
 
-  &:only-child {
+  /* Zero specificity, so a menu or tree can align the label to the start */
+  &:where(:only-child) {
     text-align: center;
   }
 }
@@ -686,7 +696,7 @@
    are carried by system colours. Transparent borders on subtle and plain
    buttons become visible automatically. */
 @media (forced-colors: active) {
-  :where(.button.is-active, .button:has(:checked), .button[aria-pressed="true"]) {
+  :where(.button.is-active, .button[aria-current]:not([aria-current="false"]), .button:has(:checked), .button[aria-pressed="true"]) {
     forced-color-adjust: none;
     background-color: Highlight;
     border-color: Highlight;

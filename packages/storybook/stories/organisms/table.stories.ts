@@ -566,57 +566,55 @@ export const RealWorldRecipes: Story = {
         <h4 class="small-heading">
           Recipe 1: Table inside Card (.card__body--flush)
         </h4>
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h3 class="card__title subheading">Quarterly Revenue Summary</h3>
-                <p class="card__subtitle">Aggregated cloud subscription billings</p>
-              </hgroup>
-            </header>
-            <div class="card__body card__body--flush">
-              <div class="table-container" tabindex="0" role="region" aria-label="Card table">
-                <table class="table table--striped table--hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Product Tier</th>
-                      <th scope="col">Active Tenants</th>
-                      <th scope="col" class="table__cell--numeric">MRR</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Enterprise Fleet</th>
-                      <td>128</td>
-                      <td class="table__cell--numeric">$128,000.00</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Professional Team</th>
-                      <td>412</td>
-                      <td class="table__cell--numeric">$41,200.00</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Starter Developer</th>
-                      <td>1,050</td>
-                      <td class="table__cell--numeric">$10,500.00</td>
-                    </tr>
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <th scope="row">Grand Total</th>
-                      <td>1,590</td>
-                      <td class="table__cell--numeric">$179,700.00</td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <h3 class="card__title subheading">Quarterly Revenue Summary</h3>
+              <p class="card__subtitle">Aggregated cloud subscription billings</p>
+            </hgroup>
+          </header>
+          <div class="card__body card__body--flush">
+            <div class="table-container" tabindex="0" role="region" aria-label="Card table">
+              <table class="table table--striped table--hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Product Tier</th>
+                    <th scope="col">Active Tenants</th>
+                    <th scope="col" class="table__cell--numeric">MRR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Enterprise Fleet</th>
+                    <td>128</td>
+                    <td class="table__cell--numeric">$128,000.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Professional Team</th>
+                    <td>412</td>
+                    <td class="table__cell--numeric">$41,200.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Starter Developer</th>
+                    <td>1,050</td>
+                    <td class="table__cell--numeric">$10,500.00</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="row">Grand Total</th>
+                    <td>1,590</td>
+                    <td class="table__cell--numeric">$179,700.00</td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
-            <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
-              <button type="button" class="button button--subtle"><span>Export CSV</span></button>
-              <button type="button" class="button button--strong button--accent"><span>Generate Invoice</span></button>
-            </footer>
-          </article>
-        </div>
+          </div>
+          <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
+            <button type="button" class="button button--subtle"><span>Export CSV</span></button>
+            <button type="button" class="button button--strong button--accent"><span>Generate Invoice</span></button>
+          </footer>
+        </article>
       </section>
 
       <!-- Recipe 2: Multi-Axis Sticky Financial Sheet -->

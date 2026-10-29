@@ -55,7 +55,7 @@
   --_status-font-size: var(--status-font-size, 0.875rem);
   --_status-font-weight: var(--status-font-weight, 700);
   --_status-text-transform: var(--status-text-transform, none);
-  --_status-padding-block: var(--status-padding-block, 0.125rem);
+  --_status-padding-block: var(--status-padding-block, 0.375rem);
   --_status-padding-inline: var(--status-padding-inline, 0.5rem);
   --_status-gap: var(--status-gap, 0.25rem);
   --_status-radius: var(--status-radius, 0.125rem);
@@ -114,14 +114,15 @@
     --_status-bg: transparent;
     --_status-border-color: transparent;
     --_status-padding-inline: 0;
+    --_status-padding-block: 0;
     --_status-dot: "";
   }
 
   /* Size */
   @container style(--status-size: sm) or style(--ui-sizing: compact) {
     --_status-font-size: var(--status-sm-font-size, 0.75rem);
-    --_status-padding-block: var(--status-sm-padding-block, 0.125rem);
-    --_status-padding-inline: var(--status-sm-padding-inline, 0.25rem);
+    --_status-padding-block: var(--status-sm-padding-block, 0.25rem);
+    --_status-padding-inline: var(--status-sm-padding-inline, 0.375rem);
   }
 
   /* Corners */
@@ -237,7 +238,12 @@
   --_status-text: var(--_status-tone);
   --_status-border-color: transparent;
   --_status-padding-inline: 0;
+  --_status-padding-block: 0;
   --_status-dot: "";
+
+  &:where(.status--no-dot) {
+    --_status-dot: none;
+  }
 }
 
 :where(.status--strong) {

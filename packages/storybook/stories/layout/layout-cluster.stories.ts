@@ -210,73 +210,65 @@ export const GapScaleHierarchy: Story = {
 
       <div class="grid grid--sm">
         <!-- Tight (0) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
-              <p class="card__subtitle font-size-xs"><code>.cluster--tight</code></p>
-            </header>
-            <div class="card__body">
-              <div class="cluster cluster--tight sb-demo-inspect-gap">
-                <span class="chip"><span class="chip__text">HTML5</span></span>
-                <span class="chip"><span class="chip__text">CSS3</span></span>
-                <span class="chip"><span class="chip__text">ARIA</span></span>
-                <span class="chip"><span class="chip__text">WCAG</span></span>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
+            <p class="card__subtitle font-size-xs"><code>.cluster--tight</code></p>
+          </header>
+          <div class="card__body">
+            <div class="cluster cluster--tight sb-demo-inspect-gap">
+              <span class="chip"><span class="chip__text">HTML5</span></span>
+              <span class="chip"><span class="chip__text">CSS3</span></span>
+              <span class="chip"><span class="chip__text">ARIA</span></span>
+              <span class="chip"><span class="chip__text">WCAG</span></span>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Compact (0.5rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
-            </header>
-            <div class="card__body">
-              <div class="cluster sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
-                <span class="chip chip--subtle"><span class="chip__text">Tokens</span></span>
-                <span class="chip chip--subtle"><span class="chip__text">Themes</span></span>
-                <span class="chip chip--subtle"><span class="chip__text">Scales</span></span>
-                <span class="chip chip--subtle"><span class="chip__text">Colors</span></span>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
+          </header>
+          <div class="card__body">
+            <div class="cluster sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
+              <span class="chip chip--subtle"><span class="chip__text">Tokens</span></span>
+              <span class="chip chip--subtle"><span class="chip__text">Themes</span></span>
+              <span class="chip chip--subtle"><span class="chip__text">Scales</span></span>
+              <span class="chip chip--subtle"><span class="chip__text">Colors</span></span>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Default (1rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.cluster</code> (Standard)</p>
-            </header>
-            <div class="card__body">
-              <div class="cluster sb-demo-inspect-gap">
-                <button type="button" class="button"><span>Accept</span></button>
-                <button type="button" class="button button--subtle"><span>Decline</span></button>
-                <button type="button" class="button button--subtle"><span>Options</span></button>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.cluster</code> (Standard)</p>
+          </header>
+          <div class="card__body">
+            <div class="cluster sb-demo-inspect-gap">
+              <button type="button" class="button"><span>Accept</span></button>
+              <button type="button" class="button button--subtle"><span>Decline</span></button>
+              <button type="button" class="button button--subtle"><span>Options</span></button>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Cushioned (4rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.cluster--cushioned</code></p>
-            </header>
-            <div class="card__body">
-              <div class="cluster cluster--cushioned sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Cluster A</div>
-                <div class="sb-demo-box sb-demo-box--sm">Cluster B</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.cluster--cushioned</code></p>
+          </header>
+          <div class="card__body">
+            <div class="cluster cluster--cushioned sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Cluster A</div>
+              <div class="sb-demo-box sb-demo-box--sm">Cluster B</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </div>
   `,
@@ -297,7 +289,7 @@ export const JustificationVariants: Story = {
 
       <div class="stack gap">
         <!-- Start -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">flex-start (Default Left-Aligned)</h4>
           <div class="cluster" style="justify-content: flex-start; inline-size: 100%;">
             <button type="button" class="button"><span>Alpha</span></button>
@@ -307,7 +299,7 @@ export const JustificationVariants: Story = {
         </div>
 
         <!-- Center -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">center (Balanced Centering)</h4>
           <div class="cluster" style="justify-content: center; inline-size: 100%;">
             <button type="button" class="button"><span>Alpha</span></button>
@@ -317,7 +309,7 @@ export const JustificationVariants: Story = {
         </div>
 
         <!-- End -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">flex-end (Trailing Actions)</h4>
           <div class="cluster" style="justify-content: flex-end; inline-size: 100%;">
             <button type="button" class="button button--subtle"><span>Cancel</span></button>
@@ -326,7 +318,7 @@ export const JustificationVariants: Story = {
         </div>
 
         <!-- Space Between -->
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">space-between (Header / Toolbar Split)</h4>
           <div class="cluster" style="justify-content: space-between; align-items: center; inline-size: 100%;">
             <div class="cluster" style="--gap: var(--spacing-8);">
@@ -357,7 +349,7 @@ export const RuledDividers: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Standard Ruled Cluster</h4>
         <div class="cluster cluster--ruled" style="align-items: center;">
           <button type="button" class="button button--subtle"><span>Overview</span></button>
@@ -367,7 +359,7 @@ export const RuledDividers: Story = {
         </div>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Tight Ruled Toolbar (<code>.cluster--ruled.cluster--tight</code>)</h4>
         <div class="cluster cluster--ruled cluster--tight">
           <button type="button" class="button button--subtle" style="border-radius: 0;"><span>Mon</span></button>
@@ -395,7 +387,7 @@ export const ScopedModifiers: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.cluster--tight</code></h4>
           <div class="cluster cluster--tight sb-demo-inspect-gap">
             <span class="chip"><span class="chip__text">HTML</span></span>
@@ -404,7 +396,7 @@ export const ScopedModifiers: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.cluster--cushioned</code></h4>
           <div class="cluster cluster--cushioned sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Spacious A</div>
@@ -429,7 +421,7 @@ export const TagAndChipCloud: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div class="stack" style="--gap: var(--spacing-12);">
           <div class="cluster" style="justify-content: space-between; align-items: center;">
             <p class="font-size-sm font-weight-bold">Active Filters</p>
@@ -465,7 +457,7 @@ export const ActionToolbar: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div class="stack" style="--gap: var(--spacing-16);">
           <div>
             <h4 class="font-size-md font-weight-bold">Automated axe Conformance Scan</h4>
@@ -504,7 +496,7 @@ export const ButtonRadioGroup: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <fieldset class="fieldset">
           <legend class="legend">Target Conformance Tier</legend>
           <div class="cluster" style="--gap: var(--spacing-8);">
@@ -541,7 +533,7 @@ export const SemanticNavigationList: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <nav aria-label="Footer topics">
           <ul class="cluster" style="--gap: var(--spacing-16);">
             <li><a href="#" class="link" onclick="event.preventDefault();"><span>Design Tokens</span></a></li>
@@ -570,7 +562,7 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Cluster</h4>
           <div class="cluster sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>
@@ -579,7 +571,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Cluster</h4>
           <div class="cluster cluster--tight sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>
@@ -588,7 +580,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Ruled Cluster</h4>
           <div class="cluster cluster--ruled">
             <span class="padding-inline-xs font-size-xs">Alpha</span>
@@ -597,7 +589,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Cluster (Modifier)</h4>
           <div class="cluster cluster--tight sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>

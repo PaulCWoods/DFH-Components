@@ -223,69 +223,61 @@ export const GapScaleHierarchy: Story = {
 
       <div class="grid grid--sm">
         <!-- Tight (0) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
-              <p class="card__subtitle font-size-xs"><code>.inline--tight</code></p>
-            </header>
-            <div class="card__body">
-              <div class="inline inline--tight sb-demo-inspect-gap">
-                <button type="button" class="button button--subtle"><span>Prev</span></button>
-                <button type="button" class="button button--subtle"><span>Next</span></button>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">1. Tight (0 gap)</h4>
+            <p class="card__subtitle font-size-xs"><code>.inline--tight</code></p>
+          </header>
+          <div class="card__body">
+            <div class="inline inline--tight sb-demo-inspect-gap">
+              <button type="button" class="button button--subtle"><span>Prev</span></button>
+              <button type="button" class="button button--subtle"><span>Next</span></button>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Compact (0.5rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
-            </header>
-            <div class="card__body">
-              <div class="inline sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
-                <div class="avatar" data-status="online"><span>DF</span></div>
-                <span class="font-size-sm font-weight-bold">Design For Humans</span>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">2. Compact (0.5rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>--gap: var(--spacing-8)</code></p>
+          </header>
+          <div class="card__body">
+            <div class="inline sb-demo-inspect-gap" style="--gap: var(--spacing-8);">
+              <div class="avatar" data-status="online"><span>DF</span></div>
+              <span class="font-size-sm font-weight-bold">Design For Humans</span>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Default (1rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.inline</code> (Standard)</p>
-            </header>
-            <div class="card__body">
-              <div class="inline sb-demo-inspect-gap">
-                <span class="status status--accent"><span class="status__text">Active</span></span>
-                <span class="status status--success"><span class="status__text">Passing</span></span>
-                <span class="status status--warning"><span class="status__text">Pending</span></span>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">3. Default (1rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.inline</code> (Standard)</p>
+          </header>
+          <div class="card__body">
+            <div class="inline sb-demo-inspect-gap">
+              <span class="status status--accent"><span class="status__text">Active</span></span>
+              <span class="status status--success"><span class="status__text">Passing</span></span>
+              <span class="status status--warning"><span class="status__text">Pending</span></span>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
 
         <!-- Cushioned (4rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
-              <p class="card__subtitle font-size-xs"><code>.inline--cushioned</code></p>
-            </header>
-            <div class="card__body">
-              <div class="inline inline--cushioned sb-demo-inspect-gap">
-                <div class="sb-demo-box sb-demo-box--sm">Metric A</div>
-                <div class="sb-demo-box sb-demo-box--sm">Metric B</div>
-              </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">4. Cushioned (4rem)</h4>
+            <p class="card__subtitle font-size-xs"><code>.inline--cushioned</code></p>
+          </header>
+          <div class="card__body">
+            <div class="inline inline--cushioned sb-demo-inspect-gap">
+              <div class="sb-demo-box sb-demo-box--sm">Metric A</div>
+              <div class="sb-demo-box sb-demo-box--sm">Metric B</div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </div>
   `,
@@ -306,7 +298,7 @@ export const ResponsiveContainerSwitcher: Story = {
 
       <div class="stack gap">
         <!-- Constrained narrow container (Simulated Mobile / Sidebar) -->
-        <div class="card card--bordered padding" style="max-inline-size: 24rem; container-type: inline-size;">
+        <div class="card padding" style="max-inline-size: 24rem; container-type: inline-size;">
           <p class="font-size-xs font-weight-bold text-muted margin-bottom-sm">Narrow Container (&lt; 48em): Stacks Vertically</p>
           <div class="inline-responsive inline-responsive--sm sb-demo-inspect-gap" style="justify-content: space-between;">
             <div>
@@ -321,7 +313,7 @@ export const ResponsiveContainerSwitcher: Story = {
         </div>
 
         <!-- Wide container (Simulated Desktop / Main Content) -->
-        <div class="card card--bordered padding" style="max-inline-size: 54rem; container-type: inline-size;">
+        <div class="card padding" style="max-inline-size: 54rem; container-type: inline-size;">
           <p class="font-size-xs font-weight-bold text-muted margin-bottom-sm">Wide Container (&gt; 48em): Flows Horizontally</p>
           <div class="inline-responsive inline-responsive--sm sb-demo-inspect-gap" style="justify-content: space-between;">
             <div>
@@ -352,7 +344,7 @@ export const RuledDividers: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Standard Ruled Navigation Row</h4>
         <div class="inline inline--ruled">
           <a href="#" class="link" onclick="event.preventDefault();"><span>Dashboard</span></a>
@@ -362,7 +354,7 @@ export const RuledDividers: Story = {
         </div>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Tight Ruled Segmented Control (<code>.inline--ruled.inline--tight</code>)</h4>
         <div class="inline inline--ruled inline--tight">
           <button type="button" class="button button--subtle" style="border-radius: 0;"><span>Day</span></button>
@@ -389,7 +381,7 @@ export const Between: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding stack">
+      <div class="card padding stack">
         <h4 class="font-size-xs font-weight-bold text-muted">Widget Header Bar</h4>
         <div class="inline inline--between">
           <div class="inline align-items-center" style="--gap: var(--spacing-8);">
@@ -405,7 +397,7 @@ export const Between: Story = {
         </div>
       </div>
 
-      <div class="card card--bordered padding stack">
+      <div class="card padding stack">
         <h4 class="font-size-xs font-weight-bold text-muted">Key-Value Telemetry Rows</h4>
         <div class="stack" style="--gap: var(--spacing-8);">
           <div class="inline inline--between">
@@ -440,7 +432,7 @@ export const ScopedModifiers: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.inline--tight</code></h4>
           <div class="inline inline--tight sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>
@@ -449,7 +441,7 @@ export const ScopedModifiers: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <h4 class="font-size-sm font-weight-bold margin-bottom-sm">Modifier: <code>.inline--cushioned</code></h4>
           <div class="inline inline--cushioned sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Spacious 1</div>
@@ -474,7 +466,7 @@ export const IdentityLockup: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div class="inline" style="justify-content: space-between; inline-size: 100%;">
           <div class="inline" style="--gap: var(--spacing-12);">
             <div class="avatar" data-status="online" aria-label="Jordan Lee (Online)">
@@ -511,7 +503,7 @@ export const MetadataBreadcrumbRow: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div class="inline inline--ruled" style="--gap: var(--spacing-12); font-size: var(--typography-font-size--1);">
           <span class="text-muted">October 13, 2026</span>
           <span class="text-muted">8 min read</span>
@@ -536,7 +528,7 @@ export const SemanticNavigationList: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <nav aria-label="Section tabs">
           <ul class="inline" style="--gap: var(--spacing-16);">
             <li><a href="#" class="link" onclick="event.preventDefault();"><strong>1. Overview</strong></a></li>
@@ -564,7 +556,7 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Inline</h4>
           <div class="inline sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>
@@ -572,7 +564,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Tight Inline</h4>
           <div class="inline inline--tight sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>
@@ -580,7 +572,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Ruled Inline</h4>
           <div class="inline inline--ruled">
             <span class="padding-inline-xs font-size-xs">Alpha</span>
@@ -588,7 +580,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Distributed Inline (.inline--between)</h4>
           <div class="inline inline--between sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>
@@ -596,7 +588,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Responsive Switcher (.inline-responsive--sm)</h4>
           <div class="inline-responsive inline-responsive--sm sb-demo-inspect-gap">
             <span class="status status--accent"><span class="status__text">Alpha</span></span>

@@ -489,22 +489,20 @@ export const RealWorldRecipes: Story = {
           </div>
 
           <!-- Recipe 2: Team Member Summary Card -->
-          <div class="card card--compact card--bordered demo-constrained--sm width-md">
-            <article class="card__content">
-              <header class="card__header">
-                <div class="avatar" data-status="online" aria-label="Jordan Lee">
-                  <span>JL</span>
-                </div>
-                <hgroup class="card__hgroup">
-                  <h4 class="card__title small-heading">Jordan Lee</h4>
-                  <p class="card__subtitle">Accessibility Lead</p>
-                </hgroup>
-              </header>
-              <div class="card__body">
-                <p class="small-text">Design System auditor for WCAG 2.2 AA / AAA compliance.</p>
+          <article class="card card--compact demo-constrained--sm width-md">
+            <header class="card__header">
+              <div class="avatar" data-status="online" aria-label="Jordan Lee">
+                <span>JL</span>
               </div>
-            </article>
-          </div>
+              <hgroup class="card__hgroup">
+                <h4 class="card__title small-heading">Jordan Lee</h4>
+                <p class="card__subtitle">Accessibility Lead</p>
+              </hgroup>
+            </header>
+            <div class="card__body">
+              <p class="small-text">Design System auditor for WCAG 2.2 AA / AAA compliance.</p>
+            </div>
+          </article>
         </div>
       </div>
     `;

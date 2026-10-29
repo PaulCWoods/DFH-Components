@@ -1,291 +1,158 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-interface BatchActionsArgs {
-  count: number;
-  label: string;
-  variant: 'default' | 'contrast' | 'docked' | 'inline' | 'compact';
-}
-
-const meta: Meta<BatchActionsArgs> = {
+const meta: Meta = {
   title: 'Molecules/Batch Actions',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Batch Actions Primitive
+# Batch Actions
 
-The **Batch Actions** primitive provides a focused, accessible batch operation toolbar (\`role="toolbar"\`) triggered upon multi-item selection in data tables, grids, and card collections.
-Composed with **Badge**, **Button**, **Button Group**, and **Icon** atoms, it provides dedicated structural hook classes (\`.batch-actions__summary\`, \`.batch-actions__actions\`, \`.batch-actions__dismiss\`) while strictly respecting the **Organism-Atom Composition Law**.
+The bar shown while items are selected: how many, the actions on them, and a way to clear the selection. A placement and a frame around a summary and a button group.
 
----
-
-#### 1. Canonical Semantic Markup Signatures
-
+### Markup
 \`\`\`html
-<!-- Standard Floating Batch Actions Bar -->
-<aside class="batch-actions" role="toolbar" aria-label="Batch actions">
-  <!-- Summary Hook: Count Badge + Selection Label -->
-  <div class="batch-actions__summary">
-    <span class="badge badge--accent"><span class="badge__text">3</span></span>
-    <span class="micro-heading">3 items selected</span>
+<div class="batch-actions" role="group" aria-label="Selected files" hidden>
+  <p class="batch-actions__summary small-heading" role="status">3 selected</p>
+  <hr class="divider" aria-hidden="true">
+  <div class="batch-actions__actions button-group buttons-subtle">
+    <button type="button" class="button"><span>Export</span></button>
+    <button type="button" class="button button--danger"><span>Delete</span></button>
   </div>
-
-  <hr class="divider" aria-hidden="true" />
-
-  <!-- Actions Hook: Bulk Operations Button Group -->
-  <div class="batch-actions__actions">
-    <div class="button-group buttons-sm buttons-subtle">
-      <button type="button" class="button">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-        <span>Export</span>
-      </button>
-      <button type="button" class="button">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
-        <span>Bulk Edit</span>
-      </button>
-      <button type="button" class="button button--danger">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-        <span>Delete</span>
-      </button>
-    </div>
-  </div>
-
-  <hr class="divider" aria-hidden="true" />
-
-  <!-- Dismiss Hook: Clear Selection Trigger -->
-  <div class="batch-actions__dismiss">
-    <button type="button" class="button button--subtle button--icon button--sm" aria-label="Clear selection">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-      <span class="visually-hidden">Clear selection</span>
-    </button>
-  </div>
-</aside>
+  <hr class="divider" aria-hidden="true">
+  <button type="button" class="button button--plain button--icon batch-actions__dismiss">
+    <svg class="icon" …><use href="#Close"/></svg>
+    <span class="visually-hidden">Clear selection</span>
+  </button>
+</div>
 \`\`\`
-`,
+
+- **A group, not a toolbar:** \`role="toolbar"\` promises arrow keys, and the library ships no script.
+- **Summary** is text in \`role="status"\`, so a changed count is announced. Keep the bar in the page and toggle \`hidden\`; it fades and slides away.
+- **Placement:** floating (default, fixed at the bottom centre), \`--docked\`, \`--inline\`. **Prominence:** default, \`--strong\` (inverted), \`--plain\`. Also \`--round\` and \`--compact\`.
+
+The floating stories sit in a stage with a transform, so the fixed bar stays inside it.
+        `,
       },
-    },
-  },
-  argTypes: {
-    count: { control: 'number', defaultValue: 3 },
-    label: { control: 'text', defaultValue: '3 items selected' },
-    variant: {
-      control: 'select',
-      options: ['default', 'contrast', 'docked', 'inline', 'compact'],
-      defaultValue: 'default',
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<BatchActionsArgs>;
+type Story = StoryObj;
 
-export const Default: Story = {
-  render: () => `
-    <div style="min-block-size: 16rem; position: relative; border: 1px dashed var(--border-color); border-radius: var(--panel-radius); padding: var(--spacing-24); background: var(--surface-subtle);">
-      <p class="text-muted" style="text-align: center;">Floating batch actions bar anchored to bottom of viewport/container.</p>
+const icon = (name: string) =>
+  `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
-      <aside class="batch-actions" role="toolbar" aria-label="Batch actions">
-        <div class="batch-actions__summary">
-          <span class="badge badge--accent">
-            <span class="badge__text">3</span>
-          </span>
-          <span class="micro-heading">3 items selected</span>
-        </div>
+const actions = (cls = 'buttons-subtle') => `
+  <div class="batch-actions__actions button-group ${cls}">
+    <button type="button" class="button">${icon('Download')}<span>Export</span></button>
+    <button type="button" class="button">${icon('Edit')}<span>Edit</span></button>
+    <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>
+  </div>`;
 
-        <hr class="divider" aria-hidden="true" />
+const dismiss = `
+  <button type="button" class="button button--plain button--icon batch-actions__dismiss">
+    ${icon('Close')}<span class="visually-hidden">Clear selection</span>
+  </button>`;
 
-        <div class="batch-actions__actions">
-          <div class="button-group buttons-sm buttons-subtle">
-            <button type="button" class="button">
-              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-              <span>Export</span>
-            </button>
-            <button type="button" class="button">
-              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
-              <span>Edit</span>
-            </button>
-            <button type="button" class="button button--danger">
-              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-              <span>Delete</span>
-            </button>
-          </div>
-        </div>
+const bar = (cls: string, label: string, count = '3 selected', attrs = '') => `
+  <div class="batch-actions${cls ? ` ${cls}` : ''}" role="group" aria-label="${label}"${attrs}>
+    <p class="batch-actions__summary small-heading" role="status">${count}</p>
+    <hr class="divider" aria-hidden="true">
+    ${actions()}
+    <hr class="divider" aria-hidden="true">
+    ${dismiss}
+  </div>`;
 
-        <hr class="divider" aria-hidden="true" />
+/* A transform makes the stage the containing block of the fixed bar */
+const stage = (inner: string, note: string) => `
+  <div style="transform: translate(0); min-block-size: 14rem; border: 1px dashed currentColor; padding: 1.5rem;">
+    <p class="small-text">${note}</p>
+    ${inner}
+  </div>`;
 
-        <div class="batch-actions__dismiss">
-          <button type="button" class="button button--subtle button--icon button--sm" aria-label="Clear selection">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-            <span class="visually-hidden">Clear selection</span>
+export const Playground: Story = {
+  args: { prominence: 'default', round: false, compact: false },
+  argTypes: {
+    prominence: { control: 'inline-radio', options: ['default', 'strong', 'plain'] },
+  },
+  render: (args) => {
+    const cls = [args.prominence !== 'default' && `batch-actions--${args.prominence}`,
+      args.round && 'batch-actions--round',
+      args.compact && 'batch-actions--compact'].filter(Boolean).join(' ');
+    return stage(bar(cls, 'Selected files'), 'Floating: fixed at the bottom centre.');
+  },
+};
+
+export const Selection: Story = {
+  render: () => {
+    const files = ['Brief.pdf', 'Moodboard.fig', 'Notes.md', 'Budget.xlsx'];
+    const update = `const s=this.closest('[data-demo]');const n=s.querySelectorAll('input:checked').length;const b=s.querySelector('.batch-actions');b.hidden=n===0;if(n)b.querySelector('[role=status]').textContent=n+' selected';`;
+    const clear = `const s=this.closest('[data-demo]');s.querySelectorAll('input:checked').forEach(c=>c.checked=false);s.querySelector('.batch-actions').hidden=true;s.querySelector('input').focus();`;
+    return `
+      <div data-demo style="transform: translate(0); min-block-size: 20rem; padding: 1.5rem;">
+        <fieldset class="stack">
+          <legend class="small-heading">Files</legend>
+          ${files.map((f) => `<label class="choice"><input type="checkbox" class="checkbox-input" onchange="${update}" /><span>${f}</span></label>`).join('')}
+        </fieldset>
+        <div class="batch-actions batch-actions--round" role="group" aria-label="Selected files" hidden>
+          <p class="batch-actions__summary small-heading" role="status">0 selected</p>
+          <hr class="divider" aria-hidden="true">
+          ${actions()}
+          <hr class="divider" aria-hidden="true">
+          <button type="button" class="button button--plain button--icon batch-actions__dismiss" onclick="${clear}">
+            ${icon('Close')}<span class="visually-hidden">Clear selection</span>
           </button>
         </div>
-      </aside>
-    </div>
-  `,
+      </div>`;
+  },
 };
 
-export const HighContrast: Story = {
+export const Prominence: Story = {
   render: () => `
-    <div style="min-block-size: 16rem; position: relative; border: 1px dashed var(--border-color); border-radius: var(--panel-radius); padding: var(--spacing-24); background: var(--surface-subtle);">
-      <p class="text-muted" style="text-align: center;">High-contrast pill variant for prominent floating visibility.</p>
-
-      <aside class="batch-actions batch-actions--contrast" role="toolbar" aria-label="Batch actions">
-        <div class="batch-actions__summary">
-          <span class="badge badge--accent">
-            <span class="badge__text">5</span>
-          </span>
-          <span class="micro-heading" style="color: inherit;">5 plants selected</span>
-        </div>
-
-        <hr class="divider" aria-hidden="true" />
-
-        <div class="batch-actions__actions">
-          <div class="button-group buttons-sm">
-            <button type="button" class="button button--plain" style="color: inherit;">
-              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-              <span>Export CSV</span>
-            </button>
-            <button type="button" class="button button--plain" style="color: inherit;">
-              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-              <span>Mark Watered</span>
-            </button>
-            <button type="button" class="button button--danger">
-              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-              <span>Archive</span>
-            </button>
-          </div>
-        </div>
-
-        <hr class="divider" aria-hidden="true" />
-
-        <div class="batch-actions__dismiss">
-          <button type="button" class="button button--plain button--icon button--sm" style="color: inherit;" aria-label="Clear selection">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-            <span class="visually-hidden">Clear selection</span>
-          </button>
-        </div>
-      </aside>
-    </div>
-  `,
+    <div class="stack">
+      <h3 class="small-heading">Default</h3>
+      ${bar('batch-actions--inline', 'Selected files, default')}
+      <h3 class="small-heading">--strong</h3>
+      ${bar('batch-actions--inline batch-actions--strong', 'Selected files, strong')}
+      <h3 class="small-heading">--plain</h3>
+      ${bar('batch-actions--inline batch-actions--plain', 'Selected files, plain')}
+      <h3 class="small-heading">--round --compact</h3>
+      ${bar('batch-actions--inline batch-actions--round batch-actions--compact', 'Selected files, compact')}
+    </div>`,
 };
 
-export const DockedInCard: Story = {
+export const DockedInACard: Story = {
+  name: 'Docked in a card',
   render: () => `
-    <div style="max-inline-size: 44rem;">
-      <div class="card card--bordered">
-        <article class="card__content">
-          <header class="card__header">
-            <hgroup class="card__hgroup">
-              <h3 class="card__title heading">Crop Registry</h3>
-              <p class="card__subtitle subheading text-muted">Docked batch actions footer</p>
-            </hgroup>
-          </header>
-
-          <div class="card__body card__body--flush">
-            <table class="table table--compact" style="inline-size: 100%;">
-              <thead>
-                <tr>
-                  <th style="inline-size: 2.5rem;"><input type="checkbox" class="checkbox-input" aria-label="Select all" checked /></th>
-                  <th>Variety</th>
-                  <th>Location</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="table__row--selected">
-                  <td><input type="checkbox" class="checkbox-input" aria-label="Select Brandywine" checked /></td>
-                  <td><strong>Brandywine Heirloom</strong></td>
-                  <td>Bed A-02</td>
-                  <td><span class="status status--success"><span class="status__text">Healthy</span></span></td>
-                </tr>
-                <tr class="table__row--selected">
-                  <td><input type="checkbox" class="checkbox-input" aria-label="Select Genovese" checked /></td>
-                  <td><strong>Genovese Basil</strong></td>
-                  <td>Greenhouse G-1</td>
-                  <td><span class="status status--accent"><span class="status__text">Optimal</span></span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <footer class="card__footer batch-actions batch-actions--docked" role="toolbar" aria-label="Table batch actions">
-            <div class="batch-actions__summary">
-              <span class="badge badge--accent"><span class="badge__text">2</span></span>
-              <span class="micro-heading">2 crops selected</span>
-            </div>
-
-            <div class="batch-actions__actions">
-              <div class="button-group buttons-sm buttons-subtle">
-                <button type="button" class="button">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-                  <span>Export</span>
-                </button>
-                <button type="button" class="button button--danger">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-                  <span>Remove</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="batch-actions__dismiss">
-              <button type="button" class="button button--subtle button--sm">
-                <span>Deselect all</span>
-              </button>
-            </div>
-          </footer>
-        </article>
+    <article class="card" style="max-inline-size: 44rem;">
+      <header class="card__header"><h3 class="card__title heading">Crop registry</h3></header>
+      <div class="card__body">
+        <table class="table table--compact" style="inline-size: 100%;">
+          <thead>
+            <tr><th scope="col"><span class="visually-hidden">Selected</span></th><th scope="col">Variety</th><th scope="col">Location</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Brandywine" checked /></td><td>Brandywine</td><td>Bed A-02</td></tr>
+            <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Genovese" checked /></td><td>Genovese basil</td><td>Greenhouse 1</td></tr>
+            <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Sungold" /></td><td>Sungold</td><td>Bed B-04</td></tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  `,
+      <div class="batch-actions batch-actions--docked" role="group" aria-label="Selected crops">
+        <p class="batch-actions__summary small-heading" role="status">2 selected</p>
+        <div class="batch-actions__actions button-group">
+          <button type="button" class="button button--strong button--accent"><span>Log harvest</span></button>
+          <button type="button" class="button button--danger"><span>Remove</span></button>
+        </div>
+        <button type="button" class="button button--plain batch-actions__dismiss"><span>Deselect all</span></button>
+      </div>
+    </article>`,
 };
 
-export const InCardBand: Story = {
-  render: () => `
-    <div style="max-inline-size: 44rem;">
-      <div class="card card--bordered card--ruled">
-        <article class="card__content">
-          <header class="card__header">
-            <hgroup class="card__hgroup">
-              <h3 class="card__title heading">Batch Harvest Operations</h3>
-              <p class="card__subtitle subheading text-muted">Demonstrating .card__band with inline batch-actions</p>
-            </hgroup>
-          </header>
-
-          <!-- Interstitial card__band hosting inline batch toolbar -->
-          <div class="card__band card__band--subtle">
-            <div class="batch-actions batch-actions--inline batch-actions--compact" role="toolbar" aria-label="Batch actions">
-              <div class="batch-actions__summary">
-                <span class="badge badge--accent"><span class="badge__text">4</span></span>
-                <span class="micro-heading">4 items marked for harvest</span>
-              </div>
-
-              <div class="batch-actions__actions">
-                <div class="button-group buttons-sm buttons-subtle">
-                  <button type="button" class="button button--strong button--accent">
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-                    <span>Log Harvest</span>
-                  </button>
-                  <button type="button" class="button">
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-                    <span>Print QR Tags</span>
-                  </button>
-                </div>
-              </div>
-
-              <div class="batch-actions__dismiss">
-                <button type="button" class="button button--subtle button--sm">
-                  <span>Cancel</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card__body">
-            <p>The <code>.card__band</code> sits seamlessly between the card header and body, fully respecting card rules and edge bleeding while wrapping the batch actions toolbar cleanly.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  `,
+export const RightToLeft: Story = {
+  name: 'Right to left',
+  render: () => `<div dir="rtl">${bar('batch-actions--inline', 'Selected files, right to left')}</div>`,
 };

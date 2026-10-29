@@ -35,74 +35,68 @@ AI agents and developers MUST strictly use the following semantic patterns:
 </button>
 
 <dialog id="confirm-dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
-  <div class="card font-sizing-cq">
-    <article class="card__content">
-      <header class="card__header">
-        <hgroup class="card__hgroup">
-          <h2 id="dialog-title" class="card__title heading">Publish Verification Report</h2>
-          <p class="card__subtitle font-bold text-muted">Immutable Audit Manifest</p>
-        </hgroup>
-        <form method="dialog">
-          <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="confirm-dialog" command="close">
-            <span class="visually-hidden">Close dialog</span>
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-          </button>
-        </form>
-      </header>
+  <article class="card">
+    <header class="card__header">
+      <hgroup class="card__hgroup">
+        <h2 id="dialog-title" class="card__title heading">Publish Verification Report</h2>
+        <p class="card__subtitle font-bold text-muted">Immutable Audit Manifest</p>
+      </hgroup>
+      <form method="dialog">
+        <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="confirm-dialog" command="close">
+          <span class="visually-hidden">Close dialog</span>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        </button>
+      </form>
+    </header>
 
-      <div class="card__body">
-        <p id="dialog-desc">Publishing will generate an immutable verification hash and notify subscribed reviewers.</p>
-      </div>
+    <div class="card__body card__body--scrollable">
+      <p id="dialog-desc">Publishing will generate an immutable verification hash and notify subscribed reviewers.</p>
+    </div>
 
-      <footer class="card__footer">
-        <form method="dialog" class="button-group button-group--stretch button-group--justify-end">
-          <button type="submit" class="button button--subtle" commandfor="confirm-dialog" command="close">
-            <span>Cancel</span>
-          </button>
-          <button type="submit" value="confirm" class="button button--strong button--accent">
-            <span>Publish Report</span>
-          </button>
-        </form>
-      </footer>
-    </article>
-  </div>
+    <footer class="card__footer justify-end">
+      <form method="dialog" class="button-group">
+        <button type="submit" class="button button--subtle" commandfor="confirm-dialog" command="close">
+          <span>Cancel</span>
+        </button>
+        <button type="submit" value="confirm" class="button button--strong button--accent">
+          <span>Publish Report</span>
+        </button>
+      </form>
+    </footer>
+  </article>
 </dialog>
 
 <!-- 2. Slide-Out Drawer (.dialog--drawer) -->
 <dialog id="settings-drawer" class="dialog dialog--drawer" aria-labelledby="drawer-title">
-  <div class="card font-sizing-cq">
-    <article class="card__content" style="block-size: 100%; display: flex; flex-direction: column;">
-      <header class="card__header">
-        <h2 id="drawer-title" class="card__title heading">Workspace Settings</h2>
-        <form method="dialog">
-          <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="settings-drawer" command="close">
-            <span class="visually-hidden">Close drawer</span>
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-          </button>
-        </form>
-      </header>
-      <div class="card__body" style="flex-grow: 1;">
-        <!-- Drawer content -->
-      </div>
-    </article>
-  </div>
+  <article class="card">
+    <header class="card__header">
+      <h2 id="drawer-title" class="card__title heading">Workspace Settings</h2>
+      <form method="dialog">
+        <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="settings-drawer" command="close">
+          <span class="visually-hidden">Close drawer</span>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        </button>
+      </form>
+    </header>
+    <div class="card__body card__body--scrollable">
+      <!-- Drawer content -->
+    </div>
+  </article>
 </dialog>
 
 <!-- 3. Whole-Card Scrollable Modal (.dialog--scrollable) -->
 <dialog id="terms-dialog" class="dialog dialog--scrollable" aria-labelledby="terms-title">
-  <div class="card font-sizing-cq">
-    <article class="card__content">
-      <header class="card__header">
-        <h2 id="terms-title" class="card__title heading">Terms & Conditions</h2>
-      </header>
-      <div class="card__body">
-        <!-- Long body copy -->
-      </div>
-      <footer class="card__footer">
-        <button type="button" class="button button--strong button--accent">Accept</button>
-      </footer>
-    </article>
-  </div>
+  <article class="card">
+    <header class="card__header">
+      <h2 id="terms-title" class="card__title heading">Terms & Conditions</h2>
+    </header>
+    <div class="card__body">
+      <!-- Long body copy -->
+    </div>
+    <footer class="card__footer">
+      <button type="button" class="button button--strong button--accent">Accept</button>
+    </footer>
+  </article>
 </dialog>
 \`\`\`
 
@@ -205,37 +199,35 @@ AI agents and developers MUST strictly use the following semantic patterns:
           aria-labelledby="${dialogId}-title" 
           aria-describedby="${dialogId}-desc"
         >
-          <div class="card font-sizing-cq">
-            <article class="card__content" style="${args.isDrawer ? 'block-size: 100%; display: flex; flex-direction: column;' : ''}">
-              <header class="card__header">
-                <hgroup class="card__hgroup">
-                  <h2 id="${dialogId}-title" class="card__title heading">${args.title}</h2>
-                  ${args.subtitle ? `<p class="card__subtitle font-bold text-muted">${args.subtitle}</p>` : ''}
-                </hgroup>
-                <form method="dialog">
-                  <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                    <span class="visually-hidden">Close</span>
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-                  </button>
-                </form>
-              </header>
+          <article class="card">
+            <header class="card__header">
+              <hgroup class="card__hgroup">
+                <h2 id="${dialogId}-title" class="card__title heading">${args.title}</h2>
+                ${args.subtitle ? `<p class="card__subtitle font-bold text-muted">${args.subtitle}</p>` : ''}
+              </hgroup>
+              <form method="dialog">
+                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
+                  <span class="visually-hidden">Close</span>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+                </button>
+              </form>
+            </header>
 
-              <div class="card__body" style="${args.isDrawer ? 'flex-grow: 1;' : ''}">
-                <p id="${dialogId}-desc">${args.content}</p>
-              </div>
+            <div class="card__body${args.isScrollable ? '' : ' card__body--scrollable'}">
+              <p id="${dialogId}-desc">${args.content}</p>
+            </div>
 
-              <footer class="card__footer">
-                <form method="dialog" class="button-group button-group--stretch button-group--justify-end">
-                  <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
-                    <span>${args.cancelLabel || 'Cancel'}</span>
-                  </button>
-                  <button type="submit" value="confirm" class="button button--strong button--accent">
-                    <span>${args.confirmLabel || 'Confirm'}</span>
-                  </button>
-                </form>
-              </footer>
-            </article>
-          </div>
+            <footer class="card__footer justify-end">
+              <form method="dialog" class="button-group">
+                <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
+                  <span>${args.cancelLabel || 'Cancel'}</span>
+                </button>
+                <button type="submit" value="confirm" class="button button--strong button--accent">
+                  <span>${args.confirmLabel || 'Confirm'}</span>
+                </button>
+              </form>
+            </footer>
+          </article>
         </dialog>
       </div>
     `;
@@ -300,40 +292,38 @@ export const Anatomy: Story = {
           aria-labelledby="anatomy-title" 
           aria-describedby="anatomy-desc"
         >
-          <div class="card card--bordered">
-            <article class="card__content">
-              <header class="card__header">
-                <hgroup class="card__hgroup">
-                  <h2 id="anatomy-title" class="card__title heading">WCAG 2.2 Modal Architecture</h2>
-                  <p class="card__subtitle font-bold text-muted">Native Top-Layer Focus Trapping</p>
-                </hgroup>
-                <form method="dialog">
-                  <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                    <span class="visually-hidden">Close dialog</span>
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-                  </button>
-                </form>
-              </header>
+          <article class="card">
+            <header class="card__header">
+              <hgroup class="card__hgroup">
+                <h2 id="anatomy-title" class="card__title heading">WCAG 2.2 Modal Architecture</h2>
+                <p class="card__subtitle font-bold text-muted">Native Top-Layer Focus Trapping</p>
+              </hgroup>
+              <form method="dialog">
+                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
+                  <span class="visually-hidden">Close dialog</span>
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+                </button>
+              </form>
+            </header>
 
-              <div class="card__body">
-                <p id="anatomy-desc">
-                  This dialog utilizes native browser top-layer positioning with <code>display: block</code> and <code>allow-discrete</code> transitions.
-                  Press <kbd class="kbd">Escape</kbd> to dismiss at any time.
-                </p>
-              </div>
+            <div class="card__body card__body--scrollable">
+              <p id="anatomy-desc">
+                This dialog utilizes native browser top-layer positioning with <code>display: block</code> and <code>allow-discrete</code> transitions.
+                Press <kbd class="kbd">Escape</kbd> to dismiss at any time.
+              </p>
+            </div>
 
-              <footer class="card__footer">
-                <form method="dialog" class="button-group button-group--stretch button-group--justify-end">
-                  <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
-                    <span>Dismiss</span>
-                  </button>
-                  <button type="submit" class="button button--strong button--accent">
-                    <span>Understood</span>
-                  </button>
-                </form>
-              </footer>
-            </article>
-          </div>
+            <footer class="card__footer justify-end">
+              <form method="dialog" class="button-group">
+                <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
+                  <span>Dismiss</span>
+                </button>
+                <button type="submit" class="button button--strong button--accent">
+                  <span>Understood</span>
+                </button>
+              </form>
+            </footer>
+          </article>
         </dialog>
       </div>
     `;
@@ -370,32 +360,30 @@ export const ModalConfirmation: Story = {
         </button>
 
         <dialog id="${dialogId}" class="dialog" aria-labelledby="modal-confirm-title">
-          <div class="card font-sizing-cq">
-            <article class="card__content">
-              <header class="card__header">
-                <h3 id="modal-confirm-title" class="card__title heading">Approve Deployment to Production</h3>
-                <form method="dialog">
-                  <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                    <span class="visually-hidden">Close</span>
-                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                  </button>
-                </form>
-              </header>
-              <div class="card__body">
-                <p>Deploying will update the live production environment to version 2.4.0 with automated rollback enabled.</p>
-              </div>
-              <footer class="card__footer">
-                <form method="dialog" class="button-group button-group--stretch button-group--justify-end">
-                  <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
-                    <span>Cancel</span>
-                  </button>
-                  <button type="submit" class="button button--strong button--accent">
-                    <span>Approve & Deploy</span>
-                  </button>
-                </form>
-              </footer>
-            </article>
-          </div>
+          <article class="card">
+            <header class="card__header">
+              <h3 id="modal-confirm-title" class="card__title heading">Approve Deployment to Production</h3>
+              <form method="dialog">
+                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
+                  <span class="visually-hidden">Close</span>
+                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+              </form>
+            </header>
+            <div class="card__body card__body--scrollable">
+              <p>Deploying will update the live production environment to version 2.4.0 with automated rollback enabled.</p>
+            </div>
+            <footer class="card__footer justify-end">
+              <form method="dialog" class="button-group">
+                <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
+                  <span>Cancel</span>
+                </button>
+                <button type="submit" class="button button--strong button--accent">
+                  <span>Approve & Deploy</span>
+                </button>
+              </form>
+            </footer>
+          </article>
         </dialog>
       </div>
     `;
@@ -436,53 +424,51 @@ export const SlideOutDrawer: Story = {
           class="dialog dialog--drawer" 
           aria-labelledby="drawer-panel-title"
         >
-          <div class="card font-sizing-cq">
-            <article class="card__content" style="block-size: 100%; display: flex; flex-direction: column;">
-              <header class="card__header">
-                <h3 id="drawer-panel-title" class="card__title heading">Quick Settings Drawer</h3>
-                <form method="dialog">
-                  <button 
-                    type="submit" 
-                    class="button button--plain button--icon button--icon-lg" 
-                    commandfor="${dialogId}"
-                    command="close"
-                  >
-                    <span class="visually-hidden">Close drawer</span>
-                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                  </button>
-                </form>
-              </header>
+          <article class="card">
+            <header class="card__header">
+              <h3 id="drawer-panel-title" class="card__title heading">Quick Settings Drawer</h3>
+              <form method="dialog">
+                <button 
+                  type="submit" 
+                  class="button button--plain button--icon button--icon-lg" 
+                  commandfor="${dialogId}"
+                  command="close"
+                >
+                  <span class="visually-hidden">Close drawer</span>
+                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+              </form>
+            </header>
 
-              <div class="card__body stack" style="flex-grow: 1;">
-                <p style="color: var(--foreground-muted);">Manage accessibility preferences and workspace layout.</p>
-                <div class="field">
-                  <label class="choice" for="cb-high-contrast-drawer">
-                    <input type="checkbox" id="cb-high-contrast-drawer" class="checkbox-input" checked />
-                    <span>High-Contrast Focus Indicators</span>
-                  </label>
-                </div>
-                <div class="field">
-                  <label class="choice" for="cb-reduced-motion-drawer">
-                    <input type="checkbox" id="cb-reduced-motion-drawer" class="checkbox-input" />
-                    <span>Reduce Page Animations</span>
-                  </label>
-                </div>
-              </div>  
+            <div class="card__body stack card__body--scrollable">
+              <p style="color: var(--foreground-muted);">Manage accessibility preferences and workspace layout.</p>
+              <div class="field">
+                <label class="choice" for="cb-high-contrast-drawer">
+                  <input type="checkbox" id="cb-high-contrast-drawer" class="checkbox-input" checked />
+                  <span>High-Contrast Focus Indicators</span>
+                </label>
+              </div>
+              <div class="field">
+                <label class="choice" for="cb-reduced-motion-drawer">
+                  <input type="checkbox" id="cb-reduced-motion-drawer" class="checkbox-input" />
+                  <span>Reduce Page Animations</span>
+                </label>
+              </div>
+            </div>  
 
-              <footer class="card__footer">
-                <form method="dialog" class="form__submission" style="display: flex; justify-content: flex-end;">
-                  <button 
-                    type="submit" 
-                    class="button button--strong button--accent"
-                    commandfor="${dialogId}"
-                    command="close"
-                  >
-                    <span>Save & Close</span>
-                  </button>
-                </form>
-              </footer>
-            </article>
-          </div>
+            <footer class="card__footer">
+              <form method="dialog" class="form__submission" style="display: flex; justify-content: flex-end;">
+                <button 
+                  type="submit" 
+                  class="button button--strong button--accent"
+                  commandfor="${dialogId}"
+                  command="close"
+                >
+                  <span>Save & Close</span>
+                </button>
+              </form>
+            </footer>
+          </article>
         </dialog>
       </div>
     `;
@@ -524,75 +510,73 @@ export const WholeCardScrollable: Story = {
           class="dialog dialog--scrollable" 
           aria-labelledby="${dialogId}-title"
         >
-          <div class="card card--bordered" style="inline-size: 28rem;">
-            <article class="card__content">
-              <header class="card__header">
-                <hgroup class="card__hgroup">
-                  <h3 id="${dialogId}-title" class="card__title heading">Whole-Card Scrollable Modal</h3>
-                  <p class="card__subtitle font-bold text-muted">Header scrolls with card content</p>
-                </hgroup>
-                <form method="dialog">
-                  <button 
-                    type="submit" 
-                    class="button button--plain button--icon button--icon-lg" 
-                    commandfor="${dialogId}"
-                    command="close"
-                  >
-                    <span class="visually-hidden">Close</span>
-                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                  </button>
-                </form>
-              </header>
+          <article class="card" style="inline-size: 28rem;">
+            <header class="card__header">
+              <hgroup class="card__hgroup">
+                <h3 id="${dialogId}-title" class="card__title heading">Whole-Card Scrollable Modal</h3>
+                <p class="card__subtitle font-bold text-muted">Header scrolls with card content</p>
+              </hgroup>
+              <form method="dialog">
+                <button 
+                  type="submit" 
+                  class="button button--plain button--icon button--icon-lg" 
+                  commandfor="${dialogId}"
+                  command="close"
+                >
+                  <span class="visually-hidden">Close</span>
+                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+              </form>
+            </header>
 
-              <div class="card__body stack">
-                <p>
-                  By default, DFH dialogs fix the header and footer in place while only the body scrolls.
-                  Applying <code>.dialog--scrollable</code> (or <code>.card--scrollable</code>) enables the entire card
-                  to scroll as a single unified container.
-                </p>
-                <p>
-                  <strong>Terms of Service &amp; Data Processing Agreement:</strong>
-                </p>
-                <p>
-                  1. Data Collection: All token-driven design parameters and automated accessibility telemetry
-                  are recorded in local storage and never transmitted to external services without explicit consent.
-                </p>
-                <p>
-                  2. WCAG 2.2 Level AA / AAA Conformance: Component authors must ensure all custom tokens preserve
-                  at least a 4.5:1 text contrast ratio and a 3:1 contrast ratio for user interface controls.
-                </p>
-                <p>
-                  3. Keyboard Navigation: All modal dialogues must provide keyboard-accessible dismiss mechanisms
-                  (Escape key or declarative invoker command buttons).
-                </p>
-                <p>
-                  4. Top-Layer Architecture: Using native HTML <code>&lt;dialog&gt;</code> guarantees proper top-layer focus trapping
-                  without requiring complex manual tab indexing or focus listeners.
-                </p>
-              </div>
+            <div class="card__body stack">
+              <p>
+                By default, DFH dialogs fix the header and footer in place while only the body scrolls.
+                Applying <code>.dialog--scrollable</code> (or <code>.card--scrollable</code>) enables the entire card
+                to scroll as a single unified container.
+              </p>
+              <p>
+                <strong>Terms of Service &amp; Data Processing Agreement:</strong>
+              </p>
+              <p>
+                1. Data Collection: All token-driven design parameters and automated accessibility telemetry
+                are recorded in local storage and never transmitted to external services without explicit consent.
+              </p>
+              <p>
+                2. WCAG 2.2 Level AA / AAA Conformance: Component authors must ensure all custom tokens preserve
+                at least a 4.5:1 text contrast ratio and a 3:1 contrast ratio for user interface controls.
+              </p>
+              <p>
+                3. Keyboard Navigation: All modal dialogues must provide keyboard-accessible dismiss mechanisms
+                (Escape key or declarative invoker command buttons).
+              </p>
+              <p>
+                4. Top-Layer Architecture: Using native HTML <code>&lt;dialog&gt;</code> guarantees proper top-layer focus trapping
+                without requiring complex manual tab indexing or focus listeners.
+              </p>
+            </div>
 
-              <footer class="card__footer">
-                <form method="dialog" class="button-group button-group--stretch button-group--justify-end">
-                  <button 
-                    type="submit" 
-                    class="button button--subtle" 
-                    commandfor="${dialogId}"
-                    command="close"
-                  >
-                    <span>Decline</span>
-                  </button>
-                  <button 
-                    type="submit" 
-                    class="button button--strong button--accent"
-                    commandfor="${dialogId}"
-                    command="close"
-                  >
-                    <span>Accept Terms</span>
-                  </button>
-                </form>
-              </footer>
-            </article>
-          </div>
+            <footer class="card__footer justify-end">
+              <form method="dialog" class="button-group">
+                <button 
+                  type="submit" 
+                  class="button button--subtle" 
+                  commandfor="${dialogId}"
+                  command="close"
+                >
+                  <span>Decline</span>
+                </button>
+                <button 
+                  type="submit" 
+                  class="button button--strong button--accent"
+                  commandfor="${dialogId}"
+                  command="close"
+                >
+                  <span>Accept Terms</span>
+                </button>
+              </form>
+            </footer>
+          </article>
         </dialog>
       </div>
     `;
@@ -633,34 +617,32 @@ export const RealWorldRecipes: Story = {
         </div>
 
         <dialog id="${deleteDialogId}" class="dialog" aria-labelledby="del-title">
-          <div class="card card--bordered">
-            <article class="card__content">
-              <header class="card__header">
-                <h3 id="del-title" class="card__title heading" style="color: var(--foreground-danger);">Permanently Delete Project?</h3>
-                <form method="dialog">
-                  <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${deleteDialogId}" command="close">
-                    <span class="visually-hidden">Cancel</span>
-                    <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                  </button>
-                </form>
-              </header>
-              <div class="card__body">
-                <p>
-                  This action <strong>cannot be reversed</strong>. All associated audit logs, Figma variable sync bindings, and team permissions will be permanently expunged.
-                </p>
-              </div>
-              <footer class="card__footer">
-                <form method="dialog" class="button-group button-group--stretch button-group--justify-end">
-                  <button type="submit" class="button button--subtle" commandfor="${deleteDialogId}" command="close">
-                    <span>Cancel</span>
-                  </button>
-                  <button type="submit" value="delete" class="button button--danger">
-                    <span>Yes, Delete Project</span>
-                  </button>
-                </form>
-              </footer>
-            </article>
-          </div>
+          <article class="card">
+            <header class="card__header">
+              <h3 id="del-title" class="card__title heading" style="color: var(--foreground-danger);">Permanently Delete Project?</h3>
+              <form method="dialog">
+                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${deleteDialogId}" command="close">
+                  <span class="visually-hidden">Cancel</span>
+                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+              </form>
+            </header>
+            <div class="card__body card__body--scrollable">
+              <p>
+                This action <strong>cannot be reversed</strong>. All associated audit logs, Figma variable sync bindings, and team permissions will be permanently expunged.
+              </p>
+            </div>
+            <footer class="card__footer justify-end">
+              <form method="dialog" class="button-group">
+                <button type="submit" class="button button--subtle" commandfor="${deleteDialogId}" command="close">
+                  <span>Cancel</span>
+                </button>
+                <button type="submit" value="delete" class="button button--danger">
+                  <span>Yes, Delete Project</span>
+                </button>
+              </form>
+            </footer>
+          </article>
         </dialog>
       </div>
     `;

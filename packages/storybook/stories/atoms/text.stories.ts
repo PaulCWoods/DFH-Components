@@ -187,20 +187,18 @@ export const Compact: Story = {
       ${['', 'card--compact']
         .map(
           (c) => `
-        <div class="card card--bordered ${c}">
-          <article class="card__content">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <p class="micro-heading text-muted">${c ? '.card--compact' : 'Default card'}</p>
-                <h2 class="card__title title">Quarterly report</h2>
-              </hgroup>
-            </header>
-            <div class="card__body stack">
-              <p class="text">Revenue grew in every region, led by subscriptions.</p>
-              <p class="small-text text-muted">Updated 2 days ago</p>
-            </div>
-          </article>
-        </div>`
+        <article class="card ${c}">
+          <header class="card__header">
+            <hgroup class="card__hgroup">
+              <p class="micro-heading text-muted">${c ? '.card--compact' : 'Default card'}</p>
+              <h2 class="card__title title">Quarterly report</h2>
+            </hgroup>
+          </header>
+          <div class="card__body stack">
+            <p class="text">Revenue grew in every region, led by subscriptions.</p>
+            <p class="small-text text-muted">Updated 2 days ago</p>
+          </div>
+        </article>`
         )
         .join('')}
     </div>

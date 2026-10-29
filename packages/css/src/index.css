@@ -47,9 +47,11 @@
 @import './molecules/fieldset.css' layer(molecules);
 @import './molecules/choices.css' layer(molecules);
 @import './molecules/range-lockup.css' layer(molecules);
+@import './molecules/card.css' layer(molecules);
 @import './molecules/button-group.css' layer(molecules);
+@import './molecules/menu.css' layer(molecules);
 @import './molecules/banner.css' layer(molecules);
-@import './molecules/alert.css' layer(molecules);
+@import './molecules/banner-dock.css' layer(molecules);
 @import './molecules/toast.css' layer(molecules);
 @import './molecules/tooltip.css' layer(molecules);
 @import './molecules/popover.css' layer(molecules);
@@ -65,18 +67,15 @@
 /* --------------------------------------------------------------------------
    3. Organisms (Complex, high-level assemblies & interactive flows)
    -------------------------------------------------------------------------- */
-@import './organisms/card.css' layer(organisms);
 @import './organisms/deck.css' layer(organisms);
 @import './organisms/dialog.css' layer(organisms);
 @import './organisms/accordion.css' layer(organisms);
-@import './organisms/menu.css' layer(organisms);
 @import './organisms/combobox.css' layer(organisms);
 @import './organisms/table.css' layer(organisms);
 @import './organisms/tabbed-content.css' layer(organisms);
 @import './organisms/empty-state.css' layer(organisms);
 @import './organisms/header.css' layer(organisms);
 @import './organisms/form.css' layer(organisms);
-@import './organisms/section.css' layer(organisms);
 
 /* --------------------------------------------------------------------------
    4. Layout Primitives

@@ -51,25 +51,24 @@ AI agents and developers MUST strictly use the following semantic patterns:
 </section>
 
 <!-- 2. Nested Inside Card Primitive -->
-<article class="card card--bordered bg-card" aria-labelledby="card-empty-title">
-  <div class="card__content">
-    <div class="empty-state empty-state--flush">
-      <div class="empty-state__visual" aria-hidden="true">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
-      </div>
-      <div class="empty-state__content">
-        <h3 id="card-empty-title" class="empty-state__title">No projects yet</h3>
-        <p class="empty-state__description">
-          Get started by creating your first project workspace.
-        </p>
-      </div>
-      <div class="empty-state__actions">
-        <button type="button" class="button button--strong button--accent">
-          <span>New Project</span>
-        </button>
-      </div>
+<article class="card bg-card" aria-labelledby="card-empty-title">
+  <div class="empty-state empty-state--flush">
+    <div class="empty-state__visual" aria-hidden="true">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
+    </div>
+    <div class="empty-state__content">
+      <h3 id="card-empty-title" class="empty-state__title">No projects yet</h3>
+      <p class="empty-state__description">
+        Get started by creating your first project workspace.
+      </p>
+    </div>
+    <div class="empty-state__actions">
+      <button type="button" class="button button--strong button--accent">
+        <span>New Project</span>
+      </button>
     </div>
   </div>
+
 </article>
 
 <!-- 3. Semantic Status Variants -->
@@ -243,34 +242,32 @@ export const FirstTimeOnboarding: Story = {
 export const CardCompanion: Story = {
   render: () => `
     <div style="max-inline-size: 30rem; padding: var(--spacing-16, 1rem);">
-      <article class="card card--bordered bg-card" aria-labelledby="card-empty-heading">
-        <div class="card__content">
-          
-          <header class="card__header">
-            <h3 class="card__title font-size-0 font-bold">Activity Feed</h3>
-            <span class="status status--sm"><span class="status__text">Live</span></span>
-          </header>
+      <article class="card bg-card" aria-labelledby="card-empty-heading">
+        
+        <header class="card__header">
+          <h3 class="card__title font-size-0 font-bold">Activity Feed</h3>
+          <span class="status status--sm"><span class="status__text">Live</span></span>
+        </header>
 
-          <div class="card__body">
-            <div class="empty-state empty-state--flush empty-state--compact" aria-labelledby="card-empty-heading">
-              <div class="empty-state__visual" aria-hidden="true">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-              </div>
-              <div class="empty-state__content">
-                <h4 id="card-empty-heading" class="empty-state__title small-heading">All caught up</h4>
-                <p class="empty-state__description small-text text-muted">
-                  There are no pending review tasks or unread notifications in this workspace.
-                </p>
-              </div>
-              <div class="empty-state__actions">
-                <button type="button" class="button button--subtle button--sm">
-                  <span>Refresh Feed</span>
-                </button>
-              </div>
+        <div class="card__body">
+          <div class="empty-state empty-state--flush empty-state--compact" aria-labelledby="card-empty-heading">
+            <div class="empty-state__visual" aria-hidden="true">
+              <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+            </div>
+            <div class="empty-state__content">
+              <h4 id="card-empty-heading" class="empty-state__title small-heading">All caught up</h4>
+              <p class="empty-state__description small-text text-muted">
+                There are no pending review tasks or unread notifications in this workspace.
+              </p>
+            </div>
+            <div class="empty-state__actions">
+              <button type="button" class="button button--subtle button--sm">
+                <span>Refresh Feed</span>
+              </button>
             </div>
           </div>
-
         </div>
+
       </article>
     </div>
   `,
@@ -370,7 +367,7 @@ export const ContainerStyleQuery: Story = {
         Parent container orchestrates <code>--empty-state-density: compact;</code> declaratively without modifying child classes.
       </p>
 
-      <div style="--empty-state-density: compact;" class="card card--bordered padding-md">
+      <div style="--empty-state-density: compact;" class="card padding-md">
         <section class="empty-state" aria-labelledby="csq-empty-title">
           <div class="empty-state__visual" aria-hidden="true">
             <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>

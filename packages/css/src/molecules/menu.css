@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Design For Humans: Menu
+   --------------------------------------------------------------------------
+   A list of actions, usually in a popover: buttons and links in rows, with
+   optional headings and dividers. Its items are buttons (.button); the
+   menu makes them plain and full width, with their content at the start
+   and a trailing shortcut, badge or status at the end. It never restyles
+   them, so items keep the button's target sizes, intent and focus ring.
+
+   No ARIA menu roles: it is a list. Tab moves through it; a popover adds
+   Escape and light dismiss. A checkable item is a button with
+   aria-pressed and a check icon (.icon--on).
+
+   Axes: prominence (default, --strong, --subtle, --plain), density
+   (--compact). Material: --translucent. --ruled draws rules between items.
+   Flag: --menu-prominence (a popover sets strong; a menu resets it for
+   menus nested inside).
+
+   <menu class="menu" aria-label="Document">
+     <li class="menu__heading"><h3 class="micro-heading">Document</h3></li>
+     <li>
+       <button type="button" class="button">
+         <svg class="icon" …><use href="#Duplicate"/></svg>
+         <span>Duplicate</span>
+         <kbd class="kbd">⌘D</kbd>
+       </button>
+     </li>
+     <li role="separator" class="divider"></li>
+     <li><button type="button" class="button button--danger"><span>Delete</span></button></li>
+   </menu>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.menu) {
+  /* Private manifest */
+  --_menu-fill: var(--menu-bg, var(--surface-card, Canvas));
+  --_menu-bg: var(--_menu-fill);
+  --_menu-border-width: var(--menu-border-width, 1px);
+  --_menu-border-style: var(--menu-border-style, solid);
+  --_menu-border-color: var(--menu-border-color, currentColor);
+  --_menu-radius: var(--menu-radius, 0);
+  --_menu-shadow: none;
+  --_menu-padding: var(--menu-padding, 0.25rem);
+  --_menu-heading-color: var(--menu-heading-color, currentColor);
+  --_menu-heading-padding-inline: var(--button-padding-inline, 1rem);
+  --_menu-rule: var(--menu-rule-width, 1px) var(--menu-rule-style, solid) var(--menu-rule-color, currentColor);
+
+  /* Items are plain buttons */
+  --button-prominence: plain;
+
+  /* Flags apply to this menu; menus nested inside start from the default */
+  --menu-prominence: initial;
+  --font-sizing: fixed;
+
+  /* Prominence flag (a modifier class on the menu beats it) */
+  @container style(--menu-prominence: strong) {
+    --_menu-shadow: var(--menu-strong-shadow, none);
+  }
+
+  @container style(--menu-prominence: subtle) {
+    --_menu-fill: var(--menu-subtle-bg, Canvas);
+    --_menu-border-width: 0px;
+  }
+
+  @container style(--menu-prominence: plain) {
+    --_menu-fill: transparent;
+    --_menu-border-width: 0px;
+    --_menu-padding: 0px;
+    --_menu-radius: 0;
+  }
+
+  /* Density: headings line up with the compact items */
+  @container style(--ui-sizing: compact) {
+    --_menu-heading-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+  }
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: var(--_menu-padding);
+
+  background-color: var(--_menu-bg);
+  border: var(--_menu-border-width) var(--_menu-border-style) var(--_menu-border-color);
+  border-radius: var(--_menu-radius);
+  box-shadow: var(--_menu-shadow);
+  color: var(--foreground, CanvasText);
+
+  > :where(li) {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* ==========================================================================
+   2. Prominence and density modifiers (pure token maps)
+   ========================================================================== */
+:where(.menu--strong) {
+  --_menu-fill: var(--menu-bg, var(--surface-card, Canvas));
+  --_menu-shadow: var(--menu-strong-shadow, none);
+}
+
+:where(.menu--subtle) {
+  --_menu-fill: var(--menu-subtle-bg, Canvas);
+  --_menu-border-width: 0px;
+}
+
+:where(.menu--plain) {
+  --_menu-fill: transparent;
+  --_menu-border-width: 0px;
+  --_menu-padding: 0px;
+  --_menu-radius: 0;
+  --_menu-shadow: none;
+}
+
+:where(.menu--compact) {
+  --ui-sizing: compact;
+  --_menu-heading-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+}
+
+/* Increased contrast: a thicker edge instead of a shadow */
+@media (prefers-contrast: more) {
+  :where(.menu:not(.menu--plain)) {
+    --_menu-border-width: var(--border-width-md, 2px);
+    --_menu-shadow: none;
+
+    @container style(--menu-prominence: plain) {
+      --_menu-border-width: 0px;
+    }
+  }
+}
+
+/* Translucent: a material, combined with any prominence that has a fill */
+@media (prefers-contrast: no-preference) {
+  :where(.menu--translucent) {
+    --_menu-bg: color-mix(in oklch, var(--_menu-fill), transparent var(--menu-translucency, 0%));
+    backdrop-filter: var(--menu-filter, none);
+  }
+}
+
+/* Rules between items replace the dividers where gap decorations work */
+:where(.menu--ruled) {
+  @supports (rule: 1px) {
+    rule: var(--_menu-rule);
+
+    > :where(.divider) {
+      display: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   3. Items: buttons, full width, content at the start
+   ========================================================================== */
+:where(.menu) > :where(li) > :where(.button) {
+  inline-size: 100%;
+  justify-content: flex-start;
+  text-align: start;
+
+  /* The label takes the room, so trailing meta sits at the end */
+  > :where(span:not(.visually-hidden, .badge, .status, .chip), .button__text, .lockup) {
+    flex-grow: 1;
+    text-align: start;
+  }
+
+  /* An unchecked check keeps its space, so the labels line up */
+  &:where(:not(:has(.icon--off))) > :where(.icon--on) {
+    display: inline;
+    visibility: hidden;
+  }
+
+  &:where([aria-pressed="true"]) > :where(.icon--on) {
+    visibility: visible;
+  }
+
+  /* The current page is a tint, not a filled button */
+  &:where([aria-current]:not([aria-current="false"])) {
+    --_button-bg: var(--surface-translucent-strong, transparent);
+    --_button-text: var(--foreground, CanvasText);
+    --_button-border-color: transparent;
+    --_button-hover-bg: var(--surface-translucent-strong, transparent);
+    --_button-hover-text: var(--foreground, CanvasText);
+    --_button-hover-border-color: transparent;
+    --_button-active-bg: var(--surface-translucent-strong, transparent);
+    --_button-active-text: var(--foreground, CanvasText);
+    --_button-active-border-color: transparent;
+    --_button-ring-color: var(--focus-ring-color, currentColor);
+    --_button-color-palette: initial;
+    --_button-hover-color-palette: initial;
+    --_button-active-color-palette: initial;
+  }
+}
+
+/* ==========================================================================
+   4. Headings and dividers
+   ========================================================================== */
+:where(.menu__heading) {
+  color: var(--_menu-heading-color);
+  padding-block: calc(var(--_menu-heading-padding-inline) / 2);
+  padding-inline: var(--_menu-heading-padding-inline);
+  user-select: none;
+
+  > :where(*) {
+    margin: 0;
+  }
+}
+
+/* A heading after items opens a new group */
+:where(.menu) > :where(.menu__heading:not(:first-child)) {
+  margin-block-start: var(--_menu-padding);
+}
+
+/* Divider (.divider atom): the menu only places it, bleeding to its edges */
+:where(.menu) > :where(.divider) {
+  margin-block: var(--_menu-padding);
+  margin-inline: calc(var(--_menu-padding) * -1);
+}

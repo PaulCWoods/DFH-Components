@@ -455,7 +455,7 @@
   border-color: transparent;
 }
 
-:where(.card__header--flush, .card__head--flush)>:where(.combobox--flush) {
+:where(.card__header--flush)>:where(.combobox--flush) {
   --_combobox-padding-inline: var(--_card-padding);
 
   :where(.combobox__control) {

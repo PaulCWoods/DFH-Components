@@ -2,217 +2,216 @@
 import Icon from './Icon.astro';
 ---
 
-<div id="button-playground" class="component-playground prose-end card card--ruled card--bordered margin-block-lg">
-<div class="card__content">
-  <!-- Playground Top Toolbar -->
-  <header class="card__header playground-toolbar inline inline--between align-items-center">
-    <div class="inline align-items-center">
-      <h3 class="small-heading">Interactive Playground</h3>
-      <span class="status status--accent status--sm"><span class="status__text">Live Demo</span></span>
-    </div>
-
-    <!-- Surface Background Switcher -->
-    <div class="inline align-items-center gap-2xs surface-switcher" role="group" aria-label="Preview background switcher">
-      <button
-        type="button"
-        class="button button--plain button--sm button--icon surface-btn is-active"
-        data-surface="default"
-        title="Default Canvas Surface"
-        aria-label="Default Canvas Surface"
-      >
-        <span class="swatch swatch--canvas button__icon"></span>
-      </button>
-      <button
-        type="button"
-        class="button button--plain button--sm button--icon surface-btn"
-        data-surface="subtle"
-        title="Subtle Tinted Surface"
-        aria-label="Subtle Tinted Surface"
-      >
-        <span class="swatch swatch--subtle button__icon"></span>
-      </button>
-      <button
-        type="button"
-        class="button button--plain button--sm button--icon surface-btn"
-        data-surface="card"
-        title="Card Elevated Surface"
-        aria-label="Card Elevated Surface"
-      >
-        <span class="swatch swatch--card button__icon"></span>
-      </button>
-      <button
-        type="button"
-        class="button button--plain button--sm button--icon surface-btn"
-        data-surface="dark"
-        title="Contrast Dark Surface"
-        aria-label="Contrast Dark Surface"
-      >
-        <span class="swatch swatch--dark button__icon"></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Live Canvas Stage -->
-  <div class="card__band card__band--flush">
-  <div id="playground-stage" class="playground-stage stage--default">
-    <div id="stage-target-container" class="stage-target-wrapper">
-      <button type="button" id="stage-button" class="button">
-        <span id="stage-label">Click Me</span>
-      </button>
-    </div>
-
-    <!-- Real-time interaction toast -->
-    <div id="playground-feedback" class="stage-feedback small-text text-muted" aria-live="polite">
-      Interactive preview: Try clicking or pressing <kbd class="kbd">Tab</kbd> + <kbd class="kbd">Space</kbd>
-    </div>
-  </div>
+<div id="button-playground" class="component-playground prose-end card card--ruled margin-block-lg">
+<!-- Playground Top Toolbar -->
+<header class="card__header playground-toolbar inline inline--between align-items-center">
+  <div class="inline align-items-center">
+    <h3 class="small-heading">Interactive Playground</h3>
+    <span class="status status--accent status--sm"><span class="status__text">Live Demo</span></span>
   </div>
 
-  <!-- Control Controls Area & Code Inspector (2-column on desktop) -->
-  <div class="playground-body grid grid--sm grid--ruled border-top card__body gap-lg">
-    
-    <!-- Left: Controls Configuration Form -->
-    <div class="playground-controls">
-      <h4 class="micro-heading margin-bottom">Configure Properties</h4>
+  <!-- Surface Background Switcher -->
+  <div class="inline align-items-center gap-2xs surface-switcher" role="group" aria-label="Preview background switcher">
+    <button
+      type="button"
+      class="button button--plain button--sm button--icon surface-btn is-active"
+      data-surface="default"
+      title="Default Canvas Surface"
+      aria-label="Default Canvas Surface"
+    >
+      <span class="swatch swatch--canvas button__icon"></span>
+    </button>
+    <button
+      type="button"
+      class="button button--plain button--sm button--icon surface-btn"
+      data-surface="subtle"
+      title="Subtle Tinted Surface"
+      aria-label="Subtle Tinted Surface"
+    >
+      <span class="swatch swatch--subtle button__icon"></span>
+    </button>
+    <button
+      type="button"
+      class="button button--plain button--sm button--icon surface-btn"
+      data-surface="card"
+      title="Card Elevated Surface"
+      aria-label="Card Elevated Surface"
+    >
+      <span class="swatch swatch--card button__icon"></span>
+    </button>
+    <button
+      type="button"
+      class="button button--plain button--sm button--icon surface-btn"
+      data-surface="dark"
+      title="Contrast Dark Surface"
+      aria-label="Contrast Dark Surface"
+    >
+      <span class="swatch swatch--dark button__icon"></span>
+    </button>
+  </div>
+</header>
 
-      <div class="form form--compact fields-grid ui-compact controls-subtle">
-        <!-- Prominence Variant -->
-        <div class="field">
-          <label for="ctrl-prominence" class="field__label">Prominence</label>
-          <select id="ctrl-prominence" class="select">
-            <option value="default" selected>Default (Neutral Outline)</option>
-            <option value="strong">Strong (.button--strong)</option>
-            <option value="subtle">Subtle (.button--subtle)</option>
-            <option value="plain">Plain (.button--plain)</option>
-            <option value="placeholder">Placeholder (.button--placeholder)</option>
-          </select>
-        </div>
+<!-- Live Canvas Stage -->
+<div class="card__band">
+<div id="playground-stage" class="playground-stage stage--default">
+  <div id="stage-target-container" class="stage-target-wrapper">
+    <button type="button" id="stage-button" class="button">
+      <span id="stage-label">Click Me</span>
+    </button>
+  </div>
 
-        <!-- Semantic Tone -->
-        <div class="field">
-          <label for="ctrl-tone" class="field__label">Intent</label>
-          <select id="ctrl-tone" class="select">
-            <option value="neutral" selected>Neutral</option>
-            <option value="accent">Accent / Primary (.button--accent)</option>
-            <option value="danger">Danger (.button--danger)</option>
-          </select>
-        </div>
+  <!-- Real-time interaction toast -->
+  <div id="playground-feedback" class="stage-feedback small-text text-muted" aria-live="polite">
+    Interactive preview: Try clicking or pressing <kbd class="kbd">Tab</kbd> + <kbd class="kbd">Space</kbd>
+  </div>
+</div>
+</div>
 
-        <!-- Target Size / Density -->
-        <div class="field">
-          <label for="ctrl-size" class="field__label">Size & Target Density</label>
-          <select id="ctrl-size" class="select">
-            <option value="default" selected>Default (48px — WCAG 2.5.5 AAA)</option>
-            <option value="sm">Small / Compact (32px — .button--sm)</option>
-            <option value="lg">Large (56px — .button--lg)</option>
-          </select>
-        </div>
+<!-- Control Controls Area & Code Inspector (2-column on desktop) -->
+<div class="playground-body grid grid--sm grid--ruled border-top card__body gap-lg">
+  
+  <!-- Left: Controls Configuration Form -->
+  <div class="playground-controls">
+    <h4 class="micro-heading margin-bottom">Configure Properties</h4>
 
-        <!-- Corner Geometry -->
-        <div class="field">
-          <label for="ctrl-corners" class="field__label">Corner Shape</label>
-          <select id="ctrl-corners" class="select">
-            <option value="default" selected>Default Rounded</option>
-            <option value="pill">Pill (.button--pill)</option>
-            <option value="round">Round (.button--round)</option>
-          </select>
-        </div>
-
-        <!-- Icon Configuration -->
-        <div class="field">
-          <label for="ctrl-icon" class="field__label">Icon Accoutrement</label>
-          <select id="ctrl-icon" class="select">
-            <option value="none" selected>None (Text Only)</option>
-            <option value="leading">Leading Icon (+ Add)</option>
-            <option value="trailing">Trailing Directional (→ Arrow)</option>
-            <option value="icon-only">Icon Only (Search)</option>
-          </select>
-        </div>
-
-        <!-- Custom Label -->
-        <div class="field" id="field-label-text">
-          <label for="ctrl-label" class="field__label">Button Label</label>
-          <input type="text" id="ctrl-label" class="input" value="Get Started" />
-        </div>
-
-        <!-- Interactive States Toggles -->
-        <hr class="divider" />
-        <fieldset class="fieldset">
-          <legend class="fieldset__label">Interactive States</legend>
-          <div class="cluster">
-            <label class="button">
-              <input type="checkbox" id="ctrl-state-active" class="visually-hidden" />
-              <Icon name="Check" size={14} class="icon--on" />
-              <Icon name="Circle" size={14} class="icon--off" />
-              <span>Active State</span>
-            </label>
-            <label class="button">
-              <input type="checkbox" id="ctrl-state-disabled" class="visually-hidden" />
-              <Icon name="Check" size={14} class="icon--on" />
-              <Icon name="Circle" size={14} class="icon--off" />
-              <span>Disabled</span>
-            </label>
-          </div>
-        </fieldset>
+    <div class="form form--compact fields-grid ui-compact controls-subtle">
+      <!-- Prominence Variant -->
+      <div class="field">
+        <label for="ctrl-prominence" class="field__label">Prominence</label>
+        <select id="ctrl-prominence" class="select">
+          <option value="default" selected>Default (Neutral Outline)</option>
+          <option value="strong">Strong (.button--strong)</option>
+          <option value="subtle">Subtle (.button--subtle)</option>
+          <option value="plain">Plain (.button--plain)</option>
+          <option value="placeholder">Placeholder (.button--placeholder)</option>
+        </select>
       </div>
+
+      <!-- Semantic Tone -->
+      <div class="field">
+        <label for="ctrl-tone" class="field__label">Intent</label>
+        <select id="ctrl-tone" class="select">
+          <option value="neutral" selected>Neutral</option>
+          <option value="accent">Accent / Primary (.button--accent)</option>
+          <option value="danger">Danger (.button--danger)</option>
+        </select>
+      </div>
+
+      <!-- Target Size / Density -->
+      <div class="field">
+        <label for="ctrl-size" class="field__label">Size & Target Density</label>
+        <select id="ctrl-size" class="select">
+          <option value="default" selected>Default (48px — WCAG 2.5.5 AAA)</option>
+          <option value="sm">Small / Compact (32px — .button--sm)</option>
+          <option value="lg">Large (56px — .button--lg)</option>
+        </select>
+      </div>
+
+      <!-- Corner Geometry -->
+      <div class="field">
+        <label for="ctrl-corners" class="field__label">Corner Shape</label>
+        <select id="ctrl-corners" class="select">
+          <option value="default" selected>Default Rounded</option>
+          <option value="pill">Pill (.button--pill)</option>
+          <option value="round">Round (.button--round)</option>
+        </select>
+      </div>
+
+      <!-- Icon Configuration -->
+      <div class="field">
+        <label for="ctrl-icon" class="field__label">Icon Accoutrement</label>
+        <select id="ctrl-icon" class="select">
+          <option value="none" selected>None (Text Only)</option>
+          <option value="leading">Leading Icon (+ Add)</option>
+          <option value="trailing">Trailing Directional (→ Arrow)</option>
+          <option value="icon-only">Icon Only (Search)</option>
+        </select>
+      </div>
+
+      <!-- Custom Label -->
+      <div class="field" id="field-label-text">
+        <label for="ctrl-label" class="field__label">Button Label</label>
+        <input type="text" id="ctrl-label" class="input" value="Get Started" />
+      </div>
+
+      <!-- Interactive States Toggles -->
+      <hr class="divider" />
+      <fieldset class="fieldset">
+        <legend class="fieldset__label">Interactive States</legend>
+        <div class="cluster">
+          <label class="button">
+            <input type="checkbox" id="ctrl-state-active" class="visually-hidden" />
+            <Icon name="Check" size={14} class="icon--on" />
+            <Icon name="Circle" size={14} class="icon--off" />
+            <span>Active State</span>
+          </label>
+          <label class="button">
+            <input type="checkbox" id="ctrl-state-disabled" class="visually-hidden" />
+            <Icon name="Check" size={14} class="icon--on" />
+            <Icon name="Circle" size={14} class="icon--off" />
+            <span>Disabled</span>
+          </label>
+        </div>
+      </fieldset>
     </div>
+  </div>
 
-    <!-- Right: Generated Code & Snippet Inspector -->
-    <div class="playground-code flex flex-dir-col justify-content-between">
-      <div>
-        <div class="inline inline--between align-items-center margin-bottom-sm">
-          <div class="tab-list tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle" role="tablist">
-            <button
-              type="button"
-              class="tab is-active"
-              id="tab-code-html"
-              role="tab"
-              aria-selected="true"
-              aria-controls="panel-code-html"
-            >
-              <span class="tab__text">HTML Markup</span>
-            </button>
-            <button
-              type="button"
-              class="tab"
-              id="tab-code-cq"
-              role="tab"
-              aria-selected="false"
-              aria-controls="panel-code-cq"
-            >
-              <span class="tab__text">Container Style Query</span>
-            </button>
-          </div>
-
+  <!-- Right: Generated Code & Snippet Inspector -->
+  <div class="playground-code flex flex-dir-col justify-content-between">
+    <div>
+      <div class="inline inline--between align-items-center margin-bottom-sm">
+        <div class="tab-list tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle" role="tablist">
           <button
             type="button"
-            id="playground-copy-btn"
-            class="button button--plain button--sm"
-            aria-label="Copy generated code"
+            class="tab is-active"
+            id="tab-code-html"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-code-html"
           >
-            <Icon name="Duplicate" size={14} class="copy-icon" />
-            <Icon name="Check" size={14} class="check-icon hide" />
-            <span class="copy-label">Copy</span>
+            <span class="tab__text">HTML Markup</span>
+          </button>
+          <button
+            type="button"
+            class="tab"
+            id="tab-code-cq"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-code-cq"
+          >
+            <span class="tab__text">Container Style Query</span>
           </button>
         </div>
 
-        <!-- HTML Panel -->
-        <div id="panel-code-html" role="tabpanel" aria-labelledby="tab-code-html">
-          <pre class="pre snippet-pre" tabindex="0"><code id="code-output-html"></code></pre>
-        </div>
-
-        <!-- Container Query Panel -->
-        <div id="panel-code-cq" role="tabpanel" aria-labelledby="tab-code-cq" hidden>
-          <pre class="pre snippet-pre" tabindex="0"><code id="code-output-cq"></code></pre>
-        </div>
+        <button
+          type="button"
+          id="playground-copy-btn"
+          class="button button--plain button--sm"
+          aria-label="Copy generated code"
+        >
+          <Icon name="Duplicate" size={14} class="copy-icon" />
+          <Icon name="Check" size={14} class="check-icon hide" />
+          <span class="copy-label">Copy</span>
+        </button>
       </div>
 
-      <div class="margin-top-md padding-top-sm border-top small-text text-muted">
-        Tip: DFH buttons use zero-specificity <code>:where()</code>. You can customize them via container variables or modifier classes without cascade lock-in.
+      <!-- HTML Panel -->
+      <div id="panel-code-html" role="tabpanel" aria-labelledby="tab-code-html">
+        <pre class="pre snippet-pre" tabindex="0"><code id="code-output-html"></code></pre>
+      </div>
+
+      <!-- Container Query Panel -->
+      <div id="panel-code-cq" role="tabpanel" aria-labelledby="tab-code-cq" hidden>
+        <pre class="pre snippet-pre" tabindex="0"><code id="code-output-cq"></code></pre>
       </div>
     </div>
+
+    <div class="margin-top-md padding-top-sm border-top small-text text-muted">
+      Tip: DFH buttons use zero-specificity <code>:where()</code>. You can customize them via container variables or modifier classes without cascade lock-in.
+    </div>
   </div>
-  </div>
+</div>
+
 </div>
 
 <style>

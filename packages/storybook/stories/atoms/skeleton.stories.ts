@@ -180,28 +180,26 @@ export const Motion: Story = {
 export const LoadingCard: Story = {
   render: () => `
     <div class="demo-stage" style="max-inline-size: 24rem;">
-      <article class="card card--bordered" aria-busy="true" aria-labelledby="skeleton-card-title">
-        <div class="card__content">
-          <header class="card__header">
-            <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
-            <hgroup class="card__hgroup">
-              <h3 id="skeleton-card-title" class="card__title small-heading">Team activity</h3>
-              <p class="card__subtitle small-text"><span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 8rem;"></span></p>
-            </hgroup>
-          </header>
-          <div class="card__body">
-            <p class="visually-hidden" role="status">Loading team activity…</p>
-            <span class="skeleton skeleton--media" aria-hidden="true"></span>
-            <p class="text">
-              <span class="skeleton skeleton--text" aria-hidden="true"></span>
-              <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
-            </p>
-          </div>
-          <footer class="card__footer">
-            <span class="status skeleton" aria-hidden="true"><span class="status__text">Active</span></span>
-            <button type="button" class="button button--subtle skeleton" aria-hidden="true" disabled><span>Open</span></button>
-          </footer>
+      <article class="card" aria-busy="true" aria-labelledby="skeleton-card-title">
+        <header class="card__header">
+          <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
+          <hgroup class="card__hgroup">
+            <h3 id="skeleton-card-title" class="card__title small-heading">Team activity</h3>
+            <p class="card__subtitle small-text"><span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 8rem;"></span></p>
+          </hgroup>
+        </header>
+        <div class="card__body">
+          <p class="visually-hidden" role="status">Loading team activity…</p>
+          <span class="skeleton skeleton--media" aria-hidden="true"></span>
+          <p class="text">
+            <span class="skeleton skeleton--text" aria-hidden="true"></span>
+            <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
+          </p>
         </div>
+        <footer class="card__footer">
+          <span class="status skeleton" aria-hidden="true"><span class="status__text">Active</span></span>
+          <button type="button" class="button button--subtle skeleton" aria-hidden="true" disabled><span>Open</span></button>
+        </footer>
       </article>
     </div>
   `,

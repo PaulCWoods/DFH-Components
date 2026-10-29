@@ -7,129 +7,40 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Stepper Primitive
+# Stepper
 
-Structured, accessible sequential progression and multi-step wizard navigation composing ordered lists (\`<ol>\`), semantic step landmarks (\`<nav aria-label="...">\`), completed checkmarks, and responsive container query collapse adhering strictly to WCAG 2.2 Level AA / AAA standards.
+The steps of one task: which are done, which is current, which are left. An ordered list of steps, each with an indicator, a title and an optional description.
 
----
-
-### Canonical Semantic Markup Signatures
-
-#### A. Standard Progress Stepper (Non-Interactive)
+### Markup
 \`\`\`html
-<nav class="stepper" aria-label="Registration progress">
-  <ol class="stepper__list">
-    <!-- Completed Step -->
-    <li class="stepper__item is-complete">
-      <div class="stepper__step">
-        <span class="stepper__indicator" aria-hidden="true">
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-        </span>
-        <div class="stepper__content">
-          <span class="stepper__title small-heading">Personal Details</span>
-          <span class="stepper__description small-text text-muted">Completed</span>
-        </div>
-      </div>
-    </li>
-
-    <!-- Active Step -->
-    <li class="stepper__item is-active" aria-current="step">
-      <div class="stepper__step">
-        <span class="stepper__indicator"><span>2</span></span>
-        <div class="stepper__content">
-          <span class="stepper__title small-heading">Growing Agreement</span>
-          <span class="stepper__description small-text text-muted">In progress</span>
-        </div>
-      </div>
-    </li>
-
-    <!-- Upcoming Step -->
-    <li class="stepper__item">
-      <div class="stepper__step">
-        <span class="stepper__indicator"><span>3</span></span>
-        <div class="stepper__content">
-          <span class="stepper__title small-heading">Fee Schedule</span>
-          <span class="stepper__description small-text text-muted">Pending</span>
-        </div>
-      </div>
-    </li>
-  </ol>
-</nav>
+<ol class="stepper" aria-label="Registration">
+  <li class="stepper__item is-complete">
+    <div class="stepper__step">
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
+      <span class="stepper__title small-heading"><span class="visually-hidden">Completed: </span>Details</span>
+      <span class="stepper__description small-text">Verified</span>
+    </div>
+  </li>
+  <li class="stepper__item" aria-current="step">
+    <div class="stepper__step">
+      <span class="stepper__indicator micro-heading" aria-hidden="true">2</span>
+      <span class="stepper__title small-heading"><span class="visually-hidden">Current: </span>Agreement</span>
+    </div>
+  </li>
+  <li class="stepper__item">
+    <div class="stepper__step">
+      <span class="stepper__indicator micro-heading" aria-hidden="true">3</span>
+      <span class="stepper__title small-heading">Payment</span>
+    </div>
+  </li>
+</ol>
 \`\`\`
 
-#### B. Interactive Jump Stepper (Clickable Buttons)
-\`\`\`html
-<nav class="stepper" aria-label="Checkout steps">
-  <ol class="stepper__list">
-    <li class="stepper__item is-complete">
-      <button type="button" class="stepper__step">
-        <span class="stepper__indicator" aria-hidden="true">
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-        </span>
-        <span class="stepper__title small-heading">Shipping</span>
-      </button>
-    </li>
-    <li class="stepper__item is-active" aria-current="step">
-      <button type="button" class="stepper__step is-active" aria-current="step">
-        <span class="stepper__indicator"><span>2</span></span>
-        <span class="stepper__title small-heading">Payment</span>
-      </button>
-    </li>
-    <li class="stepper__item">
-      <button type="button" class="stepper__step" disabled>
-        <span class="stepper__indicator"><span>3</span></span>
-        <span class="stepper__title small-heading">Review</span>
-      </button>
-    </li>
-  </ol>
-</nav>
-\`\`\`
-
----
-
-### WCAG 2.2 Conformance Matrix
-| Criterion | Level | Status | Architectural Implementation |
-| :--- | :--- | :--- | :--- |
-| **1.3.1 Info and Relationships** | A | **Pass** | Semantic \`<nav aria-label="...">\` landmarks the progression; \`<ol>\` and \`<li>\` communicate numbered linear steps to assistive technology. |
-| **4.1.2 Name, Role, Value** | A | **Pass** | The active step explicitly declares \`aria-current="step"\` so screen readers announce current workflow position unambiguously. |
-| **1.4.1 Use of Color** | A | **Pass** | Completed steps are identified by a checkmark icon (\`#Check\`) in addition to green color, ensuring non-color-only state recognition. |
-| **1.4.3 Contrast (Minimum)** | AA | **Pass** | Indicator text and borders meet >= 4.5:1 against surfaces in all color themes; active state features high-contrast accent ring. |
-| **2.4.7 Focus Visible** | AA | **Pass** | Interactive buttons inherit prominent 2px outline with 3px offset when focused via keyboard. |
-| **Container Queries** | Best Practice | **Pass** | \`@container (max-width: 34rem)\` automatically collapses secondary descriptions and collapses non-active step titles in narrow viewports. |
-
----
-
-### CSS Custom Property Token Contract
-| CSS Variable | Default Value | Fallback Ladder | Description |
-| :--- | :--- | :--- | :--- |
-| \`--_stepper-gap\` | \`var(--stepper-gap)\` | \`var(--spacing-16, 1rem)\` | Spacing between step items |
-| \`--_stepper-track-thickness\` | \`var(--stepper-track-thickness)\` | \`var(--border-width-2, 2px)\` | Thickness of the connecting progression track |
-| \`--_stepper-track-color\` | \`var(--stepper-track-color)\` | \`var(--border-color-quiet)\` | Inactive connecting track stroke color |
-| \`--_stepper-track-color-complete\` | \`var(--stepper-track-color-complete)\` | \`var(--foreground-success)\` | Completed track segment fill color |
-| \`--_stepper-indicator-size\` | \`var(--stepper-indicator-size)\` | \`var(--spacing-36, 2.25rem)\` | Diameter of the step circle indicator |
-| \`--_stepper-indicator-font-size\` | \`var(--stepper-indicator-font-size)\` | \`var(--micro-heading-font-size, 0.875rem)\` | Indicator numeral font size |
-| \`--_stepper-title-font-size\` | \`var(--stepper-title-font-size)\` | \`var(--micro-heading-font-size, 0.875rem)\` | Step label text size |
-| \`--_stepper-desc-font-size\` | \`var(--stepper-desc-font-size)\` | \`var(--body-sm-font-size)\` | Subtitle description text size |
+- **State:** \`aria-current="step"\` on the current item; \`.is-complete\` and \`.is-invalid\` on others. Never colour alone: the indicator shows a check or warning icon, and the title starts with the state in hidden text, since the indicator is hidden.
+- **Steps** are a \`<div>\`, an \`<a>\` for a page the user may revisit, or a \`<button>\` in an in-page wizard. Wrap the list in a \`<nav>\` only when its steps are links.
+- **Options:** \`--vertical\`, \`--plain\` (the number or icon without its circle, coloured by state; flag \`--stepper-prominence: plain\`), \`--compact\`. In a narrow row (below 34rem) the descriptions hide; the titles keep the state.
         `,
       },
-    },
-  },
-  argTypes: {
-    orientation: {
-      control: 'select',
-      options: ['horizontal', 'vertical'],
-      description: 'Direction of step progression',
-      defaultValue: 'horizontal',
-    },
-    compact: {
-      control: 'boolean',
-      description: 'Hides subtitles for a denser presentation',
-      defaultValue: false,
-    },
-    activeStep: {
-      control: { type: 'range', min: 1, max: 4, step: 1 },
-      description: 'Currently active step index',
-      defaultValue: 2,
     },
   },
 };
@@ -137,274 +48,134 @@ Structured, accessible sequential progression and multi-step wizard navigation c
 export default meta;
 type Story = StoryObj;
 
-/**
- * 1. Playground
- * Interactive stepper sandbox exploring orientations, compact mode, and step states.
- */
+type Step = { title: string; description?: string; state?: 'complete' | 'current' | 'invalid' };
+
+const icon = (name: string) =>
+  `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
+
+const said = { complete: 'Completed: ', current: 'Current: ', invalid: 'Needs attention: ' };
+
+const indicator = (s: Step, n: number) =>
+  s.state === 'complete' ? `<span class="stepper__indicator" aria-hidden="true">${icon('Check')}</span>`
+    : s.state === 'invalid' ? `<span class="stepper__indicator" aria-hidden="true">${icon('Warning')}</span>`
+      : `<span class="stepper__indicator micro-heading" aria-hidden="true">${n}</span>`;
+
+const item = (s: Step, n: number, tag = 'div', href = '') => {
+  const cls = s.state === 'complete' ? ' is-complete' : s.state === 'invalid' ? ' is-invalid' : '';
+  const current = s.state === 'current' ? ' aria-current="step"' : '';
+  const open = tag === 'a' ? `a href="${href}#step-${n}"` : tag === 'button' ? `button type="button"${!s.state ? ' disabled' : ''}` : tag;
+  return `
+    <li class="stepper__item${cls}"${current}>
+      <${open} class="stepper__step">
+        ${indicator(s, n)}
+        <span class="stepper__title small-heading">${s.state ? `<span class="visually-hidden">${said[s.state]}</span>` : ''}${s.title}</span>
+        ${s.description ? `<span class="stepper__description small-text">${s.description}</span>` : ''}
+      </${tag}>
+    </li>`;
+};
+
+const stepper = (steps: Step[], cls = '', label = 'Registration', tag = 'div') =>
+  `<ol class="stepper${cls ? ` ${cls}` : ''}" aria-label="${label}">${steps.map((s, i) => item(s, i + 1, tag)).join('')}</ol>`;
+
+const registration: Step[] = [
+  { title: 'Details', description: 'Verified', state: 'complete' },
+  { title: 'Agreement', description: 'Sign the plot terms', state: 'current' },
+  { title: 'Payment', description: 'Sliding scale' },
+  { title: 'Review', description: 'Check and submit' },
+];
+
 export const Playground: Story = {
+  args: { current: 2, plain: false, vertical: false, compact: false, descriptions: true },
+  argTypes: { current: { control: { type: 'range', min: 1, max: 4 } } },
   render: (args) => {
-    const isVertical = args.orientation === 'vertical';
-    const isCompact = args.compact;
-    const active = args.activeStep || 2;
-
-    const steps = [
-      { id: 1, title: 'Plot & Gardener', desc: 'Personal details' },
-      { id: 2, title: 'Growing Agreement', desc: 'Rules & bylaws' },
-      { id: 3, title: 'Fee Schedule', desc: 'Sliding scale tier' },
-      { id: 4, title: 'Confirmation', desc: 'Keycard issuance' },
-    ];
-
-    return `
-      <div style="max-inline-size: ${isVertical ? '24rem' : '48rem'}; padding: var(--spacing-16);">
-        <nav class="stepper ${isVertical ? 'stepper--vertical' : ''} ${isCompact ? 'stepper--compact' : ''}" aria-label="Registration steps">
-          <ol class="stepper__list">
-            ${steps
-              .map((s) => {
-                const isComplete = s.id < active;
-                const isActive = s.id === active;
-                const stateClass = isComplete ? 'is-complete' : isActive ? 'is-active' : '';
-                const ariaCurrent = isActive ? 'aria-current="step"' : '';
-
-                return `
-                  <li class="stepper__item ${stateClass}" ${ariaCurrent}>
-                    <div class="stepper__step">
-                      <span class="stepper__indicator" aria-hidden="true">
-                        ${isComplete ? '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>' : `<span>${s.id}</span>`}
-                      </span>
-                      <div class="stepper__content">
-                        <span class="stepper__title small-heading">${s.title}</span>
-                        ${!isCompact ? `<span class="stepper__description small-text text-muted">${isComplete ? 'Completed' : s.desc}</span>` : ''}
-                      </div>
-                    </div>
-                  </li>
-                `;
-              })
-              .join('')}
-          </ol>
-        </nav>
-      </div>
-    `;
+    const steps = registration.map((s, i): Step => ({
+      title: s.title,
+      description: args.descriptions ? s.description : undefined,
+      state: i + 1 < args.current ? 'complete' : i + 1 === args.current ? 'current' : undefined,
+    }));
+    const cls = [args.plain && 'stepper--plain', args.vertical && 'stepper--vertical', args.compact && 'stepper--compact'].filter(Boolean).join(' ');
+    return `<div style="max-inline-size: ${args.vertical ? '20rem' : '48rem'};">${stepper(steps, cls)}</div>`;
   },
 };
 
-/**
- * 2. Linear Progress
- * Standard non-interactive stepper used in progressive wizards and sign-up flows.
- */
-export const LinearProgress: Story = {
+export const States: Story = {
   render: () => `
-    <div style="max-inline-size: 52rem; padding: var(--spacing-16);">
-      <nav class="stepper" aria-label="Garden plot reservation workflow">
-        <ol class="stepper__list">
-          <li class="stepper__item is-complete">
-            <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-              </span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Select Plot</span>
-                <span class="stepper__description small-text text-muted">Plot #B-04</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item is-active" aria-current="step">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>2</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Gardener Info</span>
-                <span class="stepper__description small-text text-muted">In progress</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>3</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Civic Agreement</span>
-                <span class="stepper__description small-text text-muted">Pending</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>4</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Keycard Issuance</span>
-                <span class="stepper__description small-text text-muted">Final step</span>
-              </div>
-            </div>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  `,
+    <div style="max-inline-size: 48rem;">
+      ${stepper([
+        { title: 'Identity', description: 'Verified', state: 'complete' },
+        { title: 'Soil agreement', description: 'Signature missing', state: 'invalid' },
+        { title: 'Annual dues', description: 'In progress', state: 'current' },
+        { title: 'Review' },
+      ], '', 'Plot registration')}
+    </div>`,
 };
 
-/**
- * 3. Interactive Wizard
- * Uses button triggers allowing users to jump back to previously completed steps.
- */
-export const InteractiveWizard: Story = {
+export const LinkedSteps: Story = {
+  name: 'Linked steps',
   render: () => `
-    <div style="max-inline-size: 48rem; padding: var(--spacing-16);">
-      <nav class="stepper" aria-label="Interactive wizard">
-        <ol class="stepper__list">
-          <li class="stepper__item is-complete">
-            <button type="button" class="stepper__step" onclick="alert('Navigating to Step 1: Account Details');">
-              <span class="stepper__indicator" aria-hidden="true">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-              </span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Account Details</span>
-                <span class="stepper__description small-text text-muted">Click to edit</span>
-              </div>
-            </button>
-          </li>
-          <li class="stepper__item is-active" aria-current="step">
-            <button type="button" class="stepper__step is-active" aria-current="step">
-              <span class="stepper__indicator"><span>2</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Organization</span>
-                <span class="stepper__description small-text text-muted">Current step</span>
-              </div>
-            </button>
-          </li>
-          <li class="stepper__item">
-            <button type="button" class="stepper__step" disabled>
-              <span class="stepper__indicator"><span>3</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Billing Tier</span>
-                <span class="stepper__description small-text text-muted">Locked</span>
-              </div>
-            </button>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  `,
+    <nav aria-label="Checkout" style="max-inline-size: 40rem;">
+      <ol class="stepper" aria-label="Checkout steps">
+        ${item({ title: 'Shipping', state: 'complete' }, 1, 'a')}
+        ${item({ title: 'Payment', state: 'current' }, 2, 'a')}
+        ${item({ title: 'Review' }, 3)}
+      </ol>
+    </nav>`,
 };
 
-/**
- * 4. Vertical Stepper
- * Column-oriented progression suitable for sidebars, drawers, and mobile workflows.
- */
+export const InPageWizard: Story = {
+  name: 'In-page wizard (buttons)',
+  render: () => `
+    <div style="max-inline-size: 40rem;">
+      ${stepper([
+        { title: 'Account', state: 'complete' },
+        { title: 'Organisation', state: 'current' },
+        { title: 'Billing' },
+      ], '', 'Set-up wizard', 'button')}
+    </div>`,
+};
+
+export const Plain: Story = {
+  name: 'Plain (no circles)',
+  render: () => {
+    const steps: Step[] = [
+      { title: 'Identity', description: 'Verified', state: 'complete' },
+      { title: 'Soil agreement', description: 'Signature missing', state: 'invalid' },
+      { title: 'Annual dues', description: 'In progress', state: 'current' },
+      { title: 'Review' },
+    ];
+    return `
+      <div class="stack" style="max-inline-size: 48rem;">
+        ${stepper(steps, 'stepper--plain', 'Plot registration, plain')}
+        <div style="max-inline-size: 20rem;">${stepper(steps, 'stepper--plain stepper--vertical', 'Plot registration, plain vertical')}</div>
+      </div>`;
+  },
+};
+
 export const Vertical: Story = {
   render: () => `
-    <div style="max-inline-size: 20rem; padding: var(--spacing-16);">
-      <nav class="stepper stepper--vertical" aria-label="Setup guide">
-        <ol class="stepper__list">
-          <li class="stepper__item is-complete">
-            <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-              </span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Account Setup</span>
-                <span class="stepper__description small-text text-muted">Verified email</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item is-active" aria-current="step">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>2</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Security Keys</span>
-                <span class="stepper__description small-text text-muted">2FA Enrollment</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>3</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Team Invites</span>
-                <span class="stepper__description small-text text-muted">Collaborator roles</span>
-              </div>
-            </div>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  `,
+    <div style="max-inline-size: 20rem;">
+      ${stepper([
+        { title: 'Profile', description: 'Verified', state: 'complete' },
+        { title: 'Security keys', description: 'Enrol a passkey', state: 'current' },
+        { title: 'Team invites', description: 'Optional' },
+      ], 'stepper--vertical', 'Set-up guide')}
+    </div>`,
 };
 
-/**
- * 5. Compact Stepper
- * Clean and compact indicators ideal for constrained modal headers or cards.
- */
 export const Compact: Story = {
   render: () => `
-    <div style="max-inline-size: 40rem; padding: var(--spacing-16);">
-      <nav class="stepper stepper--compact" aria-label="Compact progress bar">
-        <ol class="stepper__list">
-          <li class="stepper__item is-complete">
-            <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
-              <span class="stepper__title small-heading">Details</span>
-            </div>
-          </li>
-          <li class="stepper__item is-complete">
-            <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
-              <span class="stepper__title small-heading">Preferences</span>
-            </div>
-          </li>
-          <li class="stepper__item is-active" aria-current="step">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>3</span></span>
-              <span class="stepper__title small-heading">Payment</span>
-            </div>
-          </li>
-          <li class="stepper__item">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>4</span></span>
-              <span class="stepper__title small-heading">Review</span>
-            </div>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  `,
+    <div class="stack" style="max-inline-size: 36rem;">
+      ${stepper(registration, 'stepper--compact', 'Registration, compact')}
+      ${stepper(registration, 'stepper--compact stepper--vertical', 'Registration, compact vertical')}
+    </div>`,
 };
 
-/**
- * 6. Validation Error State
- * Demonstrates an invalid step state when form fields within a prior step fail validation.
- */
-export const ValidationErrorState: Story = {
-  render: () => `
-    <div style="max-inline-size: 44rem; padding: var(--spacing-16);">
-      <nav class="stepper" aria-label="Form validation progress">
-        <ol class="stepper__list">
-          <li class="stepper__item is-complete">
-            <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Identity</span>
-                <span class="stepper__description small-text text-muted">Verified</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item is-invalid">
-            <div class="stepper__step">
-              <span class="stepper__indicator" aria-hidden="true"><span>!</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Soil Agreement</span>
-                <span class="stepper__description small-text text-danger">Signature missing</span>
-              </div>
-            </div>
-          </li>
-          <li class="stepper__item is-active" aria-current="step">
-            <div class="stepper__step">
-              <span class="stepper__indicator"><span>3</span></span>
-              <div class="stepper__content">
-                <span class="stepper__title small-heading">Annual Dues</span>
-                <span class="stepper__description small-text text-muted">Current step</span>
-              </div>
-            </div>
-          </li>
-        </ol>
-      </nav>
-    </div>
-  `,
+export const NarrowContainer: Story = {
+  name: 'Narrow container',
+  render: () => `<div style="max-inline-size: 24rem;">${stepper(registration, '', 'Registration, narrow')}</div>`,
+};
+
+export const RightToLeft: Story = {
+  name: 'Right to left',
+  render: () => `<div dir="rtl" style="max-inline-size: 48rem;">${stepper(registration, '', 'Registration, right to left')}</div>`,
 };

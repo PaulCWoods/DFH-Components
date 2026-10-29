@@ -48,7 +48,8 @@
   --_badge-font-weight: var(--badge-font-weight, 700);
   --_badge-size: var(--badge-size, 1.25rem);
   --_badge-padding-inline: var(--badge-padding-inline, 0.25rem);
-  --_badge-dot-size: var(--badge-dot-size, 0.5rem);
+  --_badge-text-padding-inline: var(--badge-text-padding-inline, 0.1em);
+  --_badge-dot-size: var(--badge-dot-size, 0.75rem);
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -78,6 +79,7 @@
   @container style(--badge-size: sm) or style(--ui-sizing: compact) {
     --_badge-font-size: var(--badge-sm-font-size, 0.75rem);
     --_badge-size: var(--badge-sm-size, 1rem);
+    --_badge-text-padding-inline: 0px;
   }
 
   /* Layout & Display */
@@ -110,6 +112,7 @@
 }
 
 :where(.badge__text) {
+  padding-inline: var(--_badge-text-padding-inline);
   text-box: trim-both cap alphabetic;
 }
 

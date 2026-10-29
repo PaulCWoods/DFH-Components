@@ -36,7 +36,7 @@ AI agents and developers MUST use the following semantic patterns:
 
 \`\`\`html
 <!-- 1. Sticky Navigation Header -->
-<div class="position-relative card card--bordered" style="block-size: 14rem; overflow-y: auto;">
+<div class="position-relative card" style="block-size: 14rem; overflow-y: auto;">
   <div class="position-sticky" style="top: 0; z-index: 1; background: var(--surface-card);">
     <strong>Sticky Header</strong>
   </div>
@@ -44,12 +44,12 @@ AI agents and developers MUST use the following semantic patterns:
 </div>
 
 <!-- 2. Accessible Horizontally Scrollable Table Container -->
-<div class="card card--bordered overflow-x-auto" tabindex="0" aria-label="Deliverables table" role="region">
+<div class="card overflow-x-auto" tabindex="0" aria-label="Deliverables table" role="region">
   <table class="table">...</table>
 </div>
 
 <!-- 3. Stacking Isolation Context -->
-<div class="isolate card card--bordered padding">
+<div class="isolate card padding">
   <!-- Internal elements with z-index will never leak into outer page stacking -->
 </div>
 \`\`\`
@@ -120,7 +120,7 @@ export const Playground: Story = {
     const overClass = args.overflow !== 'visible' ? args.overflow : '';
     const isolateClass = args.isolate ? 'isolate' : '';
 
-    const classes = ['card', 'card--bordered', 'padding', dimClass, posClass, overClass, isolateClass].filter(Boolean).join(' ');
+    const classes = ['card', 'padding', dimClass, posClass, overClass, isolateClass].filter(Boolean).join(' ');
 
     return `
       <div class="sb-demo-section wrapper wrapper--md">
@@ -153,26 +153,26 @@ export const StickyPositioning: Story = {
         </p>
       </div>
 
-      <div class="position-relative card card--bordered" style="block-size: 14rem; overflow-y: auto; padding: 0;">
+      <div class="position-relative card" style="block-size: 14rem; overflow-y: auto; padding: 0;">
         <div class="position-sticky padding-sm inline" style="top: 0; z-index: 1; background: var(--surface-card); border-bottom: 1px solid var(--border-color-quiet); justify-content: space-between; inline-size: 100%;">
           <span class="font-weight-bold font-size-xs">.position-sticky Header</span>
           <span class="sb-demo-tag">Pinned</span>
         </div>
 
         <div class="padding stack" style="--gap: var(--spacing-16);">
-          <div class="card card--bordered padding-sm">
+          <div class="card padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 1: Foundations</h5>
             <p class="font-size-xs text-muted">Global DTCG design tokens and fluid typography.</p>
           </div>
-          <div class="card card--bordered padding-sm">
+          <div class="card padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 2: Layout Primitives</h5>
             <p class="font-size-xs text-muted">Stack, Cluster, Inline, Grid, Split, and Wrapper.</p>
           </div>
-          <div class="card card--bordered padding-sm">
+          <div class="card padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 3: Accessibility</h5>
             <p class="font-size-xs text-muted">WCAG 2.2 AA / AAA automated verification.</p>
           </div>
-          <div class="card card--bordered padding-sm">
+          <div class="card padding-sm">
             <h5 class="font-size-xs font-weight-bold">Section 4: Deliverables</h5>
             <p class="font-size-xs text-muted">Storybook stories and Figma synchronized tokens.</p>
           </div>
@@ -197,7 +197,7 @@ export const OverflowStrategies: Story = {
 
       <div class="grid grid--sm">
         <!-- overflow-clip -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <div>
             <h4 class="font-size-sm font-weight-bold">1. Strict Clipping: <code>.overflow-clip</code></h4>
             <p class="font-size-xs text-muted margin-top-xs">
@@ -205,7 +205,7 @@ export const OverflowStrategies: Story = {
             </p>
           </div>
 
-          <div class="card card--bordered overflow-clip padding-sm" style="max-inline-size: 16rem; position: relative;">
+          <div class="card overflow-clip padding-sm" style="max-inline-size: 16rem; position: relative;">
             <div style="inline-size: 24rem; background: var(--surface-muted); padding: var(--spacing-8);">
               <span class="font-size-xs">Wide content clipped neatly at boundary</span>
             </div>
@@ -213,7 +213,7 @@ export const OverflowStrategies: Story = {
         </div>
 
         <!-- overflow-x-auto (Keyboard Accessible) -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <div>
             <h4 class="font-size-sm font-weight-bold">2. Horizontal Scroll: <code>.overflow-x-auto</code></h4>
             <p class="font-size-xs text-muted margin-top-xs">
@@ -221,7 +221,7 @@ export const OverflowStrategies: Story = {
             </p>
           </div>
 
-          <div class="card card--bordered overflow-x-auto padding-sm" tabindex="0" role="region" aria-label="Sample wide content" style="max-inline-size: 16rem;">
+          <div class="card overflow-x-auto padding-sm" tabindex="0" role="region" aria-label="Sample wide content" style="max-inline-size: 16rem;">
             <div style="inline-size: 26rem; background: var(--surface-muted); padding: var(--spacing-8);">
               <span class="font-size-xs">Wide content scrolls with keyboard focus ring</span>
             </div>
@@ -245,8 +245,8 @@ export const StackingContextIsolation: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
-        <div class="isolate card card--bordered padding" style="background: var(--surface-card); position: relative;">
+      <div class="card padding stack" style="--gap: var(--spacing-16);">
+        <div class="isolate card padding" style="background: var(--surface-card); position: relative;">
           <div class="inline" style="justify-content: space-between;">
             <span class="font-size-sm font-weight-bold">Self-Contained Stacking Context</span>
             <span class="sb-demo-tag">.isolate</span>
@@ -274,16 +274,16 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding w-full">
+        <div class="card padding w-full">
           <span class="font-size-xs">.w-full</span>
         </div>
-        <div class="card card--bordered padding overflow-clip">
+        <div class="card padding overflow-clip">
           <span class="font-size-xs">.overflow-clip</span>
         </div>
-        <div class="card card--bordered padding isolate">
+        <div class="card padding isolate">
           <span class="font-size-xs">.isolate</span>
         </div>
-        <div class="card card--bordered padding position-relative">
+        <div class="card padding position-relative">
           <span class="font-size-xs">.position-relative</span>
         </div>
       </div>

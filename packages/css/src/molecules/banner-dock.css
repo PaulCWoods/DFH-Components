@@ -1,0 +1,105 @@
+/* ==========================================================================
+   Design For Humans: Banner Dock
+   --------------------------------------------------------------------------
+   Pins a banner to the page edge: site announcements, maintenance notices,
+   consent bars. Placement only; the banner draws itself. The dock squares
+   the banner's corners and drops its edge borders through the --banner-dock
+   flag, and never styles the banner directly.
+
+   Placements: (none) in flow at the top of the page, --sticky (sticks to the
+   top on scroll), --fixed-top, --fixed-bottom. --floating insets the banner
+   from the edge and keeps its frame; combine it with a placement.
+
+   An alert is a role, not a dock: use role="alert" or role="status" on a
+   region that is in the page before its message arrives.
+
+   <aside class="banner-dock banner-dock--sticky" aria-label="Site notice">
+     <div class="wrapper">
+       <div class="banner banner--warning">…</div>
+     </div>
+   </aside>
+
+   Dismiss by setting [hidden] on the dock; it slides away.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.banner-dock) {
+  /* Private manifest */
+  --_banner-dock-z-index: var(--banner-dock-z-index, 100);
+  --_banner-dock-padding-block: var(--banner-dock-padding-block, calc(var(--spacing, 1rem) / 2));
+  --_banner-dock-padding-inline: var(--banner-dock-padding-inline, var(--spacing, 1rem));
+  --_banner-dock-transition: var(--banner-dock-transition, 0s);
+  --_banner-dock-exit: -100%;
+
+  /* Flags for the banner inside */
+  --banner-dock: top;
+  --banner-align: center;
+
+  container-type: inline-size;
+  display: block;
+  inline-size: 100%;
+
+  /* Dismissal: [hidden] slides the dock off its edge */
+  transition-behavior: allow-discrete;
+  transition-duration: var(--_banner-dock-transition);
+  transition-property: opacity, translate, display;
+
+  &[hidden] {
+    opacity: 0;
+    translate: 0 var(--_banner-dock-exit);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --_banner-dock-exit: 0;
+    --_banner-dock-transition: 0s;
+  }
+}
+
+/* ==========================================================================
+   2. Placements
+   ========================================================================== */
+:where(.banner-dock--sticky) {
+  inset-block-start: 0;
+  position: sticky;
+  z-index: var(--_banner-dock-z-index);
+}
+
+:where(.banner-dock--fixed-top) {
+  inset-block-start: 0;
+  inset-inline: 0;
+  position: fixed;
+  z-index: var(--_banner-dock-z-index);
+}
+
+:where(.banner-dock--fixed-bottom) {
+  --banner-dock: bottom;
+  --_banner-dock-exit: 100%;
+
+  inset-block-end: 0;
+  inset-inline: 0;
+  position: fixed;
+  z-index: var(--_banner-dock-z-index);
+}
+
+/* Floating: inset from the edge; the banner keeps its frame */
+:where(.banner-dock--floating) {
+  --banner-dock: none;
+
+  display: flex;
+  justify-content: center;
+  padding-block: var(--_banner-dock-padding-block);
+  padding-inline: var(--_banner-dock-padding-inline);
+  pointer-events: none;
+
+  > :where(*) {
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.banner-dock--fixed-bottom) {
+    --_banner-dock-exit: 0;
+  }
+}

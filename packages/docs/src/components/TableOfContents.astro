@@ -10,19 +10,35 @@ interface Props {
 }
 
 const { toc = [] } = Astro.props;
+
+/* Depth-3 headings nest under the depth-2 heading before them */
+type TocNode = TocItem & { children: TocItem[] };
+const tree: TocNode[] = [];
+for (const item of toc) {
+  const parent = tree[tree.length - 1];
+  if (item.depth === 3 && parent) parent.children.push(item);
+  else tree.push({ ...item, children: [] });
+}
 ---
 
 {toc.length > 0 && (
   <aside id="docs-toc" class="sidebar sidebar--sticky sidebar--end max-xl:hide" aria-label="Table of contents" style="min-inline-size: 13rem; max-inline-size: 16rem; flex: 0 0 auto;">
     <div class="sidebar__scroller py">
-      <span class="navigation-tree__heading micro-heading text-muted margin-bottom">On This Page</span>
-      <nav class="navigation-tree navigation-tree--indicator navigation-tree--compact navigation-tree--flush" aria-label="Table of contents">
-        <ol class="navigation-tree__list">
-          {toc.map((item) => (
-            <li class={`navigation-tree__item ${item.depth === 3 ? 'navigation-tree__item--nested' : ''}`.trim()}>
-              <a href={`#${item.id}`} class="navigation-tree__link toc-link" data-target-id={item.id}>
-                <span class="navigation-tree__text">{item.label}</span>
-              </a>
+      <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="docs-toc-heading">
+        <ol>
+          <li class="navigation-tree__heading"><h2 id="docs-toc-heading" class="micro-heading">On This Page</h2></li>
+          {tree.map((item) => (
+            <li>
+              <a href={`#${item.id}`} class="button toc-link" data-target-id={item.id}><span>{item.label}</span></a>
+              {item.children.length > 0 && (
+                <ol>
+                  {item.children.map((child) => (
+                    <li>
+                      <a href={`#${child.id}`} class="button toc-link" data-target-id={child.id}><span>{child.label}</span></a>
+                    </li>
+                  ))}
+                </ol>
+              )}
             </li>
           ))}
         </ol>
@@ -43,7 +59,7 @@ const { toc = [] } = Astro.props;
             const id = entry.target.id;
             tocLinks.forEach((link) => {
               if (link.getAttribute('data-target-id') === id) {
-                link.setAttribute('aria-current', 'true');
+                link.setAttribute('aria-current', 'location');
               } else {
                 link.removeAttribute('aria-current');
               }

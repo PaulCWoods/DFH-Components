@@ -1,231 +1,136 @@
 /* ==========================================================================
-   Design For Humans: Toast Primitive
+   Design For Humans: Toast Stack and Toast
    --------------------------------------------------------------------------
-   Non-modal status notifications, live announcements, and floating alert
-   stacks composed using the banner primitive with modern top-layer popover
-   support, viewport pinning, safe area insets, and smooth entry/exit animations.
+   Banners floated in a corner of the viewport.
 
-   Usage (Stacked in Viewport):
-   <aside class="toast-stack toast-stack--bottom-end" aria-label="Notifications">
-     <div class="toast" role="status" aria-live="polite">
-       <div class="banner banner--success banner--dynamic-corners" role="none">
-         <div class="banner__inner">
-           <p><strong>Success</strong></p>
-           <p>Your settings have been saved.</p>
-         </div>
-         <button type="button" class="button button--subtle button--icon banner__action" aria-label="Dismiss notification">
-           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
-             <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
-           </svg>
-         </button>
-       </div>
+   The stack is the live region. It is in the page from the start, opened
+   once with showPopover() so it sits in the top layer, and toasts are added
+   to it. Polite messages go in a role="status" stack; urgent ones in a
+   role="alert" stack. A modal dialog makes the page outside it inert, so a
+   dialog that raises toasts holds its own stack.
+
+   A toast is a banner with .toast: it gains a shadow and entry and exit
+   transitions. Remove it, or set [hidden], to dismiss it. A toast with an
+   action never dismisses itself; others stay at least 5 seconds and pause
+   while hovered or focused (WCAG 2.2.1).
+
+   <div class="toast-stack toast-stack--bottom-end" popover="manual" role="status" aria-label="Notifications">
+     <div class="banner banner--success toast">
+       <span class="icon-box" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
+       <div class="banner__body"><p class="text">Settings saved.</p></div>
+       <button type="button" class="button button--icon banner__action">…</button>
      </div>
-   </aside>
+   </div>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Toast Stack Container (:where(.toast-stack))
+   1. Stack
    ========================================================================== */
 :where(.toast-stack) {
-  /* --------------------------------------------------------------------------
-     Local Variables & Fallback Ladder
-     -------------------------------------------------------------------------- */
-  --_toast-gap: var(--toast-gap, var(--spacing-12, 0.75rem));
-  --_toast-offset: var(--toast-offset, var(--spacing-16, 1rem));
+  /* Private manifest */
+  --_toast-gap: var(--toast-gap, calc(var(--spacing, 1rem) * 0.75));
+  --_toast-offset: var(--toast-offset, var(--spacing, 1rem));
   --_toast-max-width: var(--toast-max-width, 28rem);
-  --_toast-z-index: var(--toast-z-index, var(--z-index-toast, 1000));
-  --_banner-gap: calc(var(--banner-gap, var(--spacing, 1rem)) / 2);
+  --_toast-z-index: var(--z-index-toast, 1000);
+  --_toast-block-start: auto;
+  --_toast-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
+  --_toast-inline-start: auto;
+  --_toast-inline-end: calc(var(--_toast-offset) + env(safe-area-inset-right, 0px));
+  --_toast-align: flex-end;
 
-  /* Positioning */
-  position: fixed;
-  z-index: var(--_toast-z-index);
-  box-sizing: border-box;
+  /* Flags for the banners inside */
+  --banner-shadow: var(--toast-shadow, var(--shadow-md, none));
 
-  /* Layout & Stacking */
+  /* A popover's UA box (border, padding, background, centring) is reset */
+  background: transparent;
+  border: 0;
+  color: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+
+  /* Pinned to a corner; the empty stack lets clicks through */
+  align-items: var(--_toast-align);
   display: flex;
   flex-direction: column;
   gap: var(--_toast-gap);
   inline-size: 100%;
-  max-inline-size: min(var(--_toast-max-width), calc(100% - calc(var(--_toast-offset) * 2)));
-
-  /* Transparent Pass-Through */
+  inset-block-start: var(--_toast-block-start);
+  inset-block-end: var(--_toast-block-end);
+  inset-inline-start: var(--_toast-inline-start);
+  inset-inline-end: var(--_toast-inline-end);
+  max-inline-size: min(var(--_toast-max-width), 100% - var(--_toast-offset) * 2);
   pointer-events: none;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  position: fixed;
+  z-index: var(--_toast-z-index);
 
-  :where(li) {
-    display: contents;
+  /* A closed popover stack stays hidden */
+  &[popover]:not(:popover-open) {
+    display: none;
   }
-
-  /* Default Placement: Bottom End (Bottom-Right in LTR) */
-  inset-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
-  inset-inline-end: calc(var(--_toast-offset) + env(safe-area-inset-right, 0px));
-  align-items: flex-end;
 }
 
 /* ==========================================================================
-   2. Toast Stack Placement Modifiers
+   2. Placements (pure token maps; bottom end is the default)
    ========================================================================== */
-
-/* Bottom End (Default) */
-:where(.toast-stack--bottom-end) {
-  inset-block-start: auto;
-  inset-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
-  inset-inline-start: auto;
-  inset-inline-end: calc(var(--_toast-offset) + env(safe-area-inset-right, 0px));
-  align-items: flex-end;
+:where(.toast-stack--top-start, .toast-stack--top-center, .toast-stack--top-end) {
+  --_toast-block-start: calc(var(--_toast-offset) + env(safe-area-inset-top, 0px));
+  --_toast-block-end: auto;
 }
 
-/* Bottom Start (Bottom-Left in LTR) */
-:where(.toast-stack--bottom-start) {
-  inset-block-start: auto;
-  inset-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
-  inset-inline-start: calc(var(--_toast-offset) + env(safe-area-inset-left, 0px));
-  inset-inline-end: auto;
-  align-items: flex-start;
+:where(.toast-stack--top-start, .toast-stack--bottom-start) {
+  --_toast-inline-start: calc(var(--_toast-offset) + env(safe-area-inset-left, 0px));
+  --_toast-inline-end: auto;
+  --_toast-align: flex-start;
 }
 
-/* Bottom Center */
-:where(.toast-stack--bottom-center) {
-  inset-block-start: auto;
-  inset-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
-  inset-inline: 0;
+:where(.toast-stack--top-center, .toast-stack--bottom-center) {
+  --_toast-inline-start: 0;
+  --_toast-inline-end: 0;
+  --_toast-align: center;
+
   margin-inline: auto;
-  align-items: center;
-}
-
-/* Top End (Top-Right in LTR) */
-:where(.toast-stack--top-end) {
-  inset-block-start: calc(var(--_toast-offset) + env(safe-area-inset-top, 0px));
-  inset-block-end: auto;
-  inset-inline-start: auto;
-  inset-inline-end: calc(var(--_toast-offset) + env(safe-area-inset-right, 0px));
-  align-items: flex-end;
-}
-
-/* Top Start (Top-Left in LTR) */
-:where(.toast-stack--top-start) {
-  inset-block-start: calc(var(--_toast-offset) + env(safe-area-inset-top, 0px));
-  inset-block-end: auto;
-  inset-inline-start: calc(var(--_toast-offset) + env(safe-area-inset-left, 0px));
-  inset-inline-end: auto;
-  align-items: flex-start;
-}
-
-/* Top Center */
-:where(.toast-stack--top-center) {
-  inset-block-start: calc(var(--_toast-offset) + env(safe-area-inset-top, 0px));
-  inset-block-end: auto;
-  inset-inline: 0;
-  margin-inline: auto;
-  align-items: center;
 }
 
 /* ==========================================================================
-   3. Toast Item Primitive (:where(.toast))
+   3. Toast (on a banner)
    ========================================================================== */
 :where(.toast) {
-  /* --------------------------------------------------------------------------
-     Local Variables & Fallback Ladder
-     -------------------------------------------------------------------------- */
-  --_toast-shadow: var(--toast-shadow, var(--shadow-md, none));
-  --_toast-transition: var(--toast-transition, var(--duration-sm, 150ms));
-  --_toast-timefunc: var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_toast-transition: var(--toast-transition, 0s);
+  --_toast-timefunc: var(--toast-timefunc, ease-in-out);
+  --_toast-shift: 0.5rem;
 
-  /* Map to banner shadow */
-  --banner-shadow: var(--_toast-shadow);
-
-  /* Layout & Sizing */
-  box-sizing: border-box;
-  display: block;
-  inline-size: 100%;
   max-inline-size: 100%;
   pointer-events: auto;
 
-  /* Animation */
-  animation: toast-slide-in var(--_toast-transition) var(--_toast-timefunc) forwards;
-}
-
-/* Dismissing state */
-:where(.toast--dismissing) {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity var(--_toast-transition) var(--_toast-timefunc),
-    transform var(--_toast-transition) var(--_toast-timefunc);
-}
-
-/* ==========================================================================
-   4. Native Popover Top-Layer Support (:where([popover].toast))
-   ========================================================================== */
-:where([popover].toast) {
-  /* Reset browser native popover styling */
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-
-  /* Top-layer transitions */
-  opacity: 0;
-  transform: translateY(0.5rem) scale(0.96);
-
-  transition-property: opacity, transform, display, overlay;
-  transition-duration: var(--_toast-transition);
-  transition-timing-function: var(--_toast-timefunc);
+  /* Entry from @starting-style; exit when [hidden] */
   transition-behavior: allow-discrete;
-}
-
-:where([popover].toast:popover-open) {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+  transition-duration: var(--_toast-transition);
+  transition-property: opacity, translate, scale, display;
+  transition-timing-function: var(--_toast-timefunc);
 
   @starting-style {
     opacity: 0;
-    transform: translateY(0.5rem) scale(0.96);
+    scale: 0.96;
+    translate: 0 var(--_toast-shift);
   }
-}
 
-/* ==========================================================================
-   5. Keyframes for DOM-injected Toasts
-   ========================================================================== */
-@keyframes toast-slide-in {
-  from {
+  &[hidden] {
     opacity: 0;
-    transform: translateY(0.5rem) scale(0.96);
+    scale: 0.96;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  @media (prefers-reduced-motion: reduce) {
+    --_toast-shift: 0;
+    --_toast-transition: 0s;
   }
 }
 
 /* ==========================================================================
-   6. Accessibility & Media Queries
+   4. Accessibility & media queries
    ========================================================================== */
-@media (prefers-reduced-motion: reduce) {
-  :where(.toast) {
-    animation: none;
-  }
-
-  :where([popover].toast, [popover].toast:popover-open) {
-    transform: none;
-    transition-duration: var(--duration-0, 0s);
-
-    @starting-style {
-      transform: none;
-    }
-  }
-
-  :where(.toast--dismissing) {
-    transform: none;
-    transition-duration: var(--duration-0, 0s);
-  }
-}
-
 @media (prefers-contrast: more) {
-  :where(.toast) {
-    outline: var(--border-width, 1px) solid currentColor;
+  :where(.toast-stack) {
+    --banner-shadow: none;
   }
 }

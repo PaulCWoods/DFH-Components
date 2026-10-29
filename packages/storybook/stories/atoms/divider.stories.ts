@@ -118,12 +118,10 @@ export const Orientation: Story = {
 
       <span class="sb-demo-tag">Card inside .inline: the card's divider stays horizontal</span>
       <div class="inline" style="align-items: stretch;">
-        <div class="card card--bordered">
-          <div class="card__content stack">
-            <p class="text" style="margin: 0;">Section one</p>
-            <hr class="divider">
-            <p class="text" style="margin: 0;">Section two</p>
-          </div>
+        <div class="card stack">
+          <p class="text" style="margin: 0;">Section one</p>
+          <hr class="divider">
+          <p class="text" style="margin: 0;">Section two</p>
         </div>
         <hr class="divider" aria-orientation="vertical">
         <p class="text" style="margin: 0;">Beside the card</p>
@@ -139,23 +137,21 @@ export const Orientation: Story = {
 export const InOrganisms: Story = {
   render: () => `
     <div class="demo-stage stack">
-      <menu class="menu" role="menu" aria-label="Document options" style="max-inline-size: 16rem;">
-        <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Duplicate</span></button></li>
-        <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Export</span></button></li>
+      <menu class="menu" aria-label="Document options" style="max-inline-size: 16rem;">
+        <li><button type="button" class="button"><span>Duplicate</span></button></li>
+        <li><button type="button" class="button"><span>Export</span></button></li>
         <li role="separator" class="divider"></li>
-        <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><span>Delete</span></button></li>
+        <li><button type="button" class="button button--danger"><span>Delete</span></button></li>
       </menu>
 
-      <div class="batch-actions batch-actions--inline" role="toolbar" aria-label="Batch operations">
-        <div class="batch-actions__summary"><span class="small-text">3 selected</span></div>
+      <div class="batch-actions batch-actions--inline" role="group" aria-label="Selected documents">
+        <p class="batch-actions__summary small-heading" role="status">3 selected</p>
         <hr class="divider" aria-hidden="true" />
-        <div class="batch-actions__actions">
-          <button type="button" class="button button--subtle button--sm"><span>Export</span></button>
+        <div class="batch-actions__actions button-group buttons-subtle">
+          <button type="button" class="button"><span>Export</span></button>
         </div>
         <hr class="divider" aria-hidden="true" />
-        <div class="batch-actions__dismiss">
-          <button type="button" class="button button--plain button--sm"><span>Clear</span></button>
-        </div>
+        <button type="button" class="button button--plain batch-actions__dismiss"><span>Clear</span></button>
       </div>
     </div>
   `,

@@ -384,43 +384,41 @@ export const RealWorldRecipes: Story = {
   render: () => `
     <div class="stack demo-constrained--lg">
       <!-- Recipe A: Card FAQ Section -->
-      <div class="card card--bordered">
-        <article class="card__content">
-          <header class="card__header">
-            <h3 class="card__title subheading">Frequently Asked Questions</h3>
-            <p class="card__subtitle">Everything you need to know about Design For Humans</p>
-          </header>
-          <div class="card__body card__body--flush">
-            <div class="accordion-group accordion-group--tight">
-              <details class="accordion accordion--flush" name="card-faq" open>
-                <summary>Why use native web primitives instead of JavaScript libraries?</summary>
-                <p style="margin: 0; line-height: 1.6; color: var(--foreground-muted);">
-                  Native primitives have zero runtime bundle overhead, guarantee native assistive technology compatibility, and cannot desynchronize from browser accessibility trees.
-                </p>
-              </details>
+      <article class="card">
+        <header class="card__header">
+          <h3 class="card__title subheading">Frequently Asked Questions</h3>
+          <p class="card__subtitle">Everything you need to know about Design For Humans</p>
+        </header>
+        <div class="card__body card__body--flush">
+          <div class="accordion-group accordion-group--tight">
+            <details class="accordion accordion--flush" name="card-faq" open>
+              <summary>Why use native web primitives instead of JavaScript libraries?</summary>
+              <p style="margin: 0; line-height: 1.6; color: var(--foreground-muted);">
+                Native primitives have zero runtime bundle overhead, guarantee native assistive technology compatibility, and cannot desynchronize from browser accessibility trees.
+              </p>
+            </details>
 
-              <details class="accordion accordion--flush" name="card-faq">
-                <summary>How does Figma token synchronization work?</summary>
-                <p style="margin: 0; line-height: 1.6; color: var(--foreground-muted);">
-                  Tokens are defined in W3C DTCG format and automatically compiled to CSS custom properties and Figma Variables collections using our Node exporter.
-                </p>
-              </details>
+            <details class="accordion accordion--flush" name="card-faq">
+              <summary>How does Figma token synchronization work?</summary>
+              <p style="margin: 0; line-height: 1.6; color: var(--foreground-muted);">
+                Tokens are defined in W3C DTCG format and automatically compiled to CSS custom properties and Figma Variables collections using our Node exporter.
+              </p>
+            </details>
 
-              <details class="accordion accordion--flush" name="card-faq">
-                <summary>Which browsers support interpolate-size?</summary>
-                <p style="margin: 0; line-height: 1.6; color: var(--foreground-muted);">
-                  Modern Chromium browsers support <code>interpolate-size: allow-keywords;</code> today. Non-supporting browsers gracefully open and close instantly with zero layout shift or script errors.
-                </p>
-              </details>
-            </div>
+            <details class="accordion accordion--flush" name="card-faq">
+              <summary>Which browsers support interpolate-size?</summary>
+              <p style="margin: 0; line-height: 1.6; color: var(--foreground-muted);">
+                Modern Chromium browsers support <code>interpolate-size: allow-keywords;</code> today. Non-supporting browsers gracefully open and close instantly with zero layout shift or script errors.
+              </p>
+            </details>
           </div>
-          <footer class="card__footer" style="display: flex; justify-content: flex-end;">
-            <a href="#" class="button button--subtle" role="button">
-              <span>View Full Documentation &rarr;</span>
-            </a>
-          </footer>
-        </article>
-      </div>
+        </div>
+        <footer class="card__footer" style="display: flex; justify-content: flex-end;">
+          <a href="#" class="button button--subtle" role="button">
+            <span>View Full Documentation &rarr;</span>
+          </a>
+        </footer>
+      </article>
     </div>
   `,
 };

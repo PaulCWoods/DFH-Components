@@ -47,20 +47,20 @@ AI agents and developers MUST use the following semantic patterns:
 \`\`\`html
 <!-- 1. Leading Navigation Sidebar + Main Workspace -->
 <div class="split split--xs">
-  <aside class="card card--bordered padding">
+  <aside class="card padding">
     <nav aria-label="Documentation sections">...</nav>
   </aside>
-  <main class="card card--bordered padding">
+  <main class="card padding">
     <article>...</article>
   </main>
 </div>
 
 <!-- 2. Trailing Inspector / Properties Sidebar -->
 <div class="split split--end split--xs">
-  <main class="card card--bordered padding">
+  <main class="card padding">
     <h3>Canvas Workspace</h3>
   </main>
-  <aside class="card card--bordered padding">
+  <aside class="card padding">
     <h4>Inspector Properties</h4>
   </aside>
 </div>
@@ -231,7 +231,7 @@ export const SidebarSizingHierarchy: Story = {
 
       <div class="stack gap">
         <!-- 2xs (8rem) -->
-        <div class="card card--bordered padding" style="container-type: inline-size;">
+        <div class="card padding" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">1. Narrow: .split--2xs (8rem / 128px)</h4>
           <div class="split split--2xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Rail (8rem)</div>
@@ -240,7 +240,7 @@ export const SidebarSizingHierarchy: Story = {
         </div>
 
         <!-- xs (16rem) -->
-        <div class="card card--bordered padding" style="container-type: inline-size;">
+        <div class="card padding" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">2. Compact: .split--xs (16rem / 256px)</h4>
           <div class="split split--xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Filter Sidebar (16rem)</div>
@@ -249,7 +249,7 @@ export const SidebarSizingHierarchy: Story = {
         </div>
 
         <!-- sm (24rem) -->
-        <div class="card card--bordered padding" style="container-type: inline-size;">
+        <div class="card padding" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold margin-bottom-xs">3. Standard: .split--sm (24rem / 384px)</h4>
           <div class="split split--sm sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Nav Panel (24rem)</div>
@@ -276,7 +276,7 @@ export const PlacementStartVsEnd: Story = {
 
       <div class="grid grid--sm">
         <!-- Leading Sidebar -->
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Leading Sidebar (Default)</h4>
           <div class="split split--xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Navigation</div>
@@ -285,7 +285,7 @@ export const PlacementStartVsEnd: Story = {
         </div>
 
         <!-- Trailing Sidebar -->
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Trailing Sidebar (<code>.split--end</code>)</h4>
           <div class="split split--end split--xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Article Body</div>
@@ -310,7 +310,7 @@ export const TripleSplitLayout: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div class="split split--three split--2xs" style="align-items: center; --gap: var(--spacing-16);">
           <!-- Start: Logo & Brand -->
           <div class="inline" style="--gap: var(--spacing-8);">
@@ -351,7 +351,7 @@ export const RuledDividers: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding" style="container-type: inline-size;">
+      <div class="card padding" style="container-type: inline-size;">
         <div class="split split--xs split--ruled" style="--gap: var(--spacing-24);">
           <div class="stack" style="--gap: var(--spacing-8);">
             <p class="font-weight-bold font-size-sm">Sidebar Index</p>
@@ -387,7 +387,7 @@ export const FilterSidebarRecipe: Story = {
 
       <div class="split split--xs" style="--gap: var(--spacing-24);">
         <!-- Sidebar Filter Pane -->
-        <aside class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
+        <aside class="card padding stack" style="--gap: var(--spacing-16);">
           <div class="cluster" style="justify-content: space-between; align-items: center;">
             <p class="font-weight-bold font-size-sm">Filters</p>
             <button type="button" class="button button--subtle font-size-xs"><span>Reset</span></button>
@@ -417,14 +417,14 @@ export const FilterSidebarRecipe: Story = {
 
           <ul class="grid grid--xs" role="list">
             <li>
-              <div class="card card--bordered padding stack" style="--gap: var(--spacing-8);">
+              <div class="card padding stack" style="--gap: var(--spacing-8);">
                 <span class="status status--success"><span class="status__text">Passing</span></span>
                 <h5 class="font-weight-bold font-size-sm">Color Contrast Matrix</h5>
                 <p class="font-size-xs text-muted">Zero failures across light-dark palettes.</p>
               </div>
             </li>
             <li>
-              <div class="card card--bordered padding stack" style="--gap: var(--spacing-8);">
+              <div class="card padding stack" style="--gap: var(--spacing-8);">
                 <span class="status status--success"><span class="status__text">Passing</span></span>
                 <h5 class="font-weight-bold font-size-sm">Focus Indicators</h5>
                 <p class="font-size-xs text-muted">High-contrast 3:1 focus ring clearance.</p>
@@ -451,7 +451,7 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Standard Split (xs)</h4>
           <div class="split split--2xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Sidebar</div>
@@ -459,7 +459,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Reverse Split (.split--end)</h4>
           <div class="split split--end split--2xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Main Pane</div>
@@ -467,7 +467,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Tight Split</h4>
           <div class="split split--2xs split--tight sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Sidebar</div>
@@ -475,7 +475,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack" style="container-type: inline-size;">
+        <div class="card padding stack" style="container-type: inline-size;">
           <h4 class="font-size-xs font-weight-bold">Ruled Split</h4>
           <div class="split split--2xs split--ruled">
             <div class="sb-demo-box sb-demo-box--sm">Sidebar</div>

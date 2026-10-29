@@ -5,7 +5,7 @@ description: |
 
   Trigger immediately for:
   - Authoring or refactoring complex composite components and recipes in packages/storybook/stories/recipes/recipe-*.stories.ts.
-  - Designing menu, listbox, or toolbar interactions using .button-group primitives.
+  - Designing menus, listboxes and action sets with the .menu and .button-group primitives.
   - Container-level focus styling (.focus-within / .focus-none patterns).
   - Eliminating wrapper div noise and utility overrides in favor of primitive orchestrators.
   - Evaluating structural CSS decisions (progressive rule separators, auto-push siblings, in-flow heading semantics).
@@ -32,15 +32,17 @@ In Design For Humans, complex composite patterns (Command Palettes, Dropdown Men
   </a>
 </div>
 
-<!-- ✅ CANONICAL PATTERN: Orchestrated composite with clean, flat semantic markup -->
-<div class="button-group button-group--stacked button-group--ruled s-button:subtle-tint" role="listbox" aria-label="Navigation suggestions">
-  <h3 class="button-group__content micro-heading text-muted">UI Components</h3>
-  <a href="#button" class="button button--subtle" role="option">
-    <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#Share"/></svg>
-    <span>Button Primitive</span>
-    <span class="badge badge--sm"><span>Component</span></span>
-  </a>
-</div>
+<!-- ✅ CANONICAL PATTERN: a menu lays plain buttons out; the markup stays flat -->
+<menu class="menu menu--plain menu--ruled" aria-label="Navigation suggestions">
+  <li class="menu__heading"><h3 class="micro-heading">UI Components</h3></li>
+  <li>
+    <a href="#button" class="button">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
+      <span>Button Primitive</span>
+      <span class="chip chip--sm"><span class="chip__text">Component</span></span>
+    </a>
+  </li>
+</menu>
 ```
 
 ---
@@ -52,22 +54,23 @@ Whenever building or refactoring a composite UI recipe, run through this mental 
 ### Heuristic 1: Can the parent container orchestrate item geometry & variation?
 * Avoid putting `.radius-none`, `.justify-content-between`, or `.w-full` on each child.
 * **Declarative Container Style Queries (Zero-Class Pattern):**
-  * Set contextual properties on the parent container (e.g. `.navigation { --button-variation: subtle; --button-corners: round; }` or `--ui-density: dense;`).
+  * Set contextual properties on the parent container (e.g. `.navigation { --button-prominence: subtle; --button-corners: round; }` or `--ui-sizing: compact;`).
   * Children adapt automatically without modifier classes (`<button class="button">...</button>`).
 * **Container-level modifiers:**
-  * `.button-group--stacked`: Stretches items vertically, aligns content to start.
-  * `.button-group--ruled`: Strips individual borders and border-radii, introducing hairline separators.
-  * `s-button:subtle` / `s-button:subtle-tint`: Applies contextual surface styling across all child buttons automatically.
+  * `.menu`: rows of plain, full-width buttons with their content at the start (§3b).
+  * `.button-group--vertical`: a column of full-width buttons, content centred.
+  * `.button-group--joined`: one control with shared edges (a segmented switcher).
+  * `.buttons-subtle`, `.buttons-plain`, `.buttons-round`: set a flag on every button inside.
 
 ### Heuristic 2: Can sibling selectors eliminate nested flex wrappers?
-* Take advantage of built-in button-group layout rules:
-  * `:where(.button > span:not(.icon, .chip, .badge)) { flex-grow: 1; }` — Label automatically expands to fill available space.
-  * `:where(.button__text) + :where(kbd, .kbd, .chip, .badge, .icon) { margin-inline-start: auto; }` — Trailing metadata automatically right-aligns.
+* Take advantage of the menu's layout rules:
+  * The label (`span`, `.button__text`, `.lockup`) grows to fill the row.
+  * So trailing metadata (`kbd`, `.chip`, `.status`, `.badge`) sits at the end.
 * **Result:** No inner `<div class="inline gap-sm">` or `<div class="split">` is needed inside buttons.
 
 ### Heuristic 3: Are group separators and titles accessible in the document outline?
-* Instead of non-semantic `<div><span>Section Title</span></div>`, use semantic heading elements (`<h3>`, `<h4>`) classed with `.button-group__content`.
-* `.button-group__content` handles font metrics, text alignment, and automatically increases `padding-block-start` for non-first child headings.
+* Instead of non-semantic `<div><span>Section Title</span></div>`, put a heading element (`<h3>`, `<h4>`) with a text atom in a `<li class="menu__heading">`.
+* `.menu__heading` only places and colours it; the text atom sets the type.
 
 ### Heuristic 4: Is focus delegated cleanly to avoid double rings?
 * In composite search bars, inputs inside card headers, or segmented form rows:
@@ -77,7 +80,7 @@ Whenever building or refactoring a composite UI recipe, run through this mental 
 
 ### Heuristic 5: Are dividers progressively enhanced?
 * Use layout primitive modifiers with CSS `rule` support:
-  * `.grid--ruled`, `.inline--ruled`, `.stack--ruled`, `.cluster--ruled`, `.button-group--ruled`.
+  * `.grid--ruled`, `.inline--ruled`, `.stack--ruled`, `.cluster--ruled`, `.button-group--ruled`, `.menu--ruled`.
   * Fallback to `var(--border-width-thin, 1px)` via `@supports (rule: 1px)`.
   * Avoid manual `<hr class="divider">` repetition inside homogeneous collections unless building mixed-action toolbars.
 
@@ -263,18 +266,18 @@ Whenever building or refactoring a composite UI recipe, run through this mental 
 
 ### C. Anchored Context Menu (Button Trigger + Popover + Menu Primitive)
 ```html
-<button type="button" class="button button--secondary" popovertarget="doc-menu" style="anchor-name: --menu-trigger;" aria-haspopup="menu">
+<button type="button" class="button" popovertarget="doc-menu">
   <span>Options</span>
   <svg class="icon"><use href="#ChevronDown"/></svg>
 </button>
 
-<div id="doc-menu" popover class="popover popover--anchored" style="position-anchor: --menu-trigger; min-inline-size: 16rem;">
+<div id="doc-menu" popover class="popover" style="min-inline-size: 16rem;">
   <menu class="menu menu--translucent" aria-label="Quick options">
-    <header class="menu__heading">Actions</header>
-    <li role="none"><button type="button" class="menu__item" role="menuitem"><svg class="icon"><use href="#Duplicate"/></svg><span>Duplicate</span><kbd class="kbd">⌘D</kbd></button></li>
-    <li role="none"><button type="button" class="menu__item" role="menuitem"><svg class="icon"><use href="#Download"/></svg><span>Export</span><kbd class="kbd">⇧⌘E</kbd></button></li>
-    <hr class="menu__separator">
-    <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><svg class="icon"><use href="#Delete"/></svg><span>Delete</span><kbd class="kbd">⌫</kbd></button></li>
+    <li class="menu__heading"><h3 class="micro-heading">Actions</h3></li>
+    <li><button type="button" class="button"><svg class="icon"><use href="#Duplicate"/></svg><span>Duplicate</span><kbd class="kbd">⌘D</kbd></button></li>
+    <li><button type="button" class="button"><svg class="icon"><use href="#Download"/></svg><span>Export</span><kbd class="kbd">⇧⌘E</kbd></button></li>
+    <hr class="divider">
+    <li><button type="button" class="button button--danger"><svg class="icon"><use href="#Delete"/></svg><span>Delete</span><kbd class="kbd">⌫</kbd></button></li>
   </menu>
 </div>
 ```

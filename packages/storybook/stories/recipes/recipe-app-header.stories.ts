@@ -60,22 +60,22 @@ The **Application Header** recipe demonstrates how Design For Humans primitives 
       </button>
 
       <!-- Notifications with Badge -->
-      <button type="button" class="button button--icon" popovertarget="notif-popover" style="anchor-name: --notif-anchor;">
+      <button type="button" class="button button--icon" popovertarget="notif-popover">
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
         <span class="badge badge--danger badge--sm badge--top-end"><span class="badge__text">3</span></span>
       </button>
 
       <!-- User Profile Menu -->
-      <button type="button" class="button avatar button--avatar button--round" popovertarget="user-popover" style="anchor-name: --user-anchor;" data-status="online">
+      <button type="button" class="button avatar button--avatar button--round" popovertarget="user-popover" data-status="online">
         <span>AB</span>
       </button>
 
-      <div id="user-popover" popover class="popover popover--anchored" style="position-anchor: --user-anchor;">
+      <div id="user-popover" popover class="popover">
         <menu class="menu menu--translucent" aria-label="Account options">
-          <header class="menu__heading">Alex Bennett</header>
-          <li role="none"><button type="button" class="menu__item" role="menuitem"><span>Profile</span><kbd class="kbd">⇧⌘P</kbd></button></li>
+          <li class="menu__heading"><h3 class="micro-heading">Alex Bennett</h3></li>
+          <li><button type="button" class="button"><span>Profile</span><kbd class="kbd">⇧⌘P</kbd></button></li>
           <li role="separator" class="divider"></li>
-          <li role="none"><button type="button" class="menu__item menu__item--destructive" role="menuitem"><span>Sign Out</span></button></li>
+          <li><button type="button" class="button button--danger"><span>Sign Out</span></button></li>
         </menu>
       </div>
     </div>
@@ -183,8 +183,6 @@ export const Standard: Story = {
                 type="button" 
                 class="button button--icon" 
                 popovertarget="${notifPopoverId}"
-                style="anchor-name: ${notifAnchorName};"
-                aria-haspopup="dialog"
                 aria-label="Notifications (3 unread)"
               >
                 <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
@@ -199,17 +197,17 @@ export const Standard: Story = {
               <div 
                 id="${notifPopoverId}" 
                 popover 
-                class="popover popover--anchored"
-                style="position-anchor: ${notifAnchorName}; min-inline-size: 20rem;"
+                class="popover" style="min-inline-size: 20rem;"
               >
-                <div class="card card--compact card--translucent card--ruled">
-                  <article class="card__content">
-                    <header class="card__header inline justify-content-between align-items-center">
-                      <h3 class="card__title font-size-0">Notifications</h3>
-                      <span class="badge badge--accent badge--sm"><span class="badge__text">3 New</span></span>
-                    </header>
-                    <div class="card__body card__body--flush">
-                      <div class="button-group button-group--tight button-group--stacked buttons-subtle">
+                <article class="card card--compact card--translucent card--ruled">
+                  <header class="card__header inline justify-content-between align-items-center">
+                    <h3 class="card__title font-size-0">Notifications</h3>
+                    <span class="badge badge--accent badge--sm"><span class="badge__text">3 New</span></span>
+                  </header>
+                  <div class="card__body card__body--flush">
+                    <menu class="menu menu--plain" aria-label="Unread notifications">
+                      <li>
+
                         <button type="button" class="button">
                           <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
                           <span class="button__text stack gap-0">
@@ -218,6 +216,9 @@ export const Standard: Story = {
                           </span>
                           <small class="small-text text-color-muted">2m</small>
                         </button>
+
+                      </li>
+                      <li>
                         <button type="button" class="button">
                           <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
                           <span class="button__text stack gap-0">
@@ -226,16 +227,16 @@ export const Standard: Story = {
                           </span>
                           <small class="small-text text-color-muted">1h</small>
                         </button>
-                      </div>
-                    </div>
-                    <footer class="card__footer inline justify-content-between align-items-center">
-                      <button type="button" class="button button--subtle button--sm" onclick="this.closest('.card__content').querySelector('.card__body').innerHTML = '<div class=\\'empty-state empty-state--compact empty-state--flush padding-block-sm\\'><div class=\\'empty-state__visual\\'><svg class=\\'icon\\'><use href=\\'#Check\\'/></svg></div><div class=\\'empty-state__content\\'><h4 class=\\'empty-state__title\\'>All caught up!</h4><p class=\\'empty-state__description\\'>No unread notifications.</p></div></div>'; this.style.display='none';">
-                        <span>Mark all read</span>
-                      </button>
-                      <a href="#all-notifications" class="link font-size-sm"><span>View all</span></a>
-                    </footer>
-                  </article>
-                </div>
+                      </li>
+                    </menu>
+                  </div>
+                  <footer class="card__footer inline justify-content-between align-items-center">
+                    <button type="button" class="button button--subtle button--sm" onclick="this.closest('.card').querySelector('.card__body').innerHTML = '<div class=\\'empty-state empty-state--compact empty-state--flush padding-block-sm\\'><div class=\\'empty-state__visual\\'><svg class=\\'icon\\'><use href=\\'#Check\\'/></svg></div><div class=\\'empty-state__content\\'><h4 class=\\'empty-state__title\\'>All caught up!</h4><p class=\\'empty-state__description\\'>No unread notifications.</p></div></div>'; this.style.display='none';">
+                      <span>Mark all read</span>
+                    </button>
+                    <a href="#all-notifications" class="link font-size-sm"><span>View all</span></a>
+                  </footer>
+                </article>
               </div>
 
               <!-- Profile Avatar Button with Live Status Ring (Trigger for Popover) -->
@@ -243,9 +244,7 @@ export const Standard: Story = {
                 type="button" 
                 class="button avatar button--avatar button--round" 
                 popovertarget="${userPopoverId}"
-                style="anchor-name: ${userAnchorName};"
                 data-status="online"
-                aria-haspopup="menu"
                 aria-label="Account menu for Alex Bennett (online)"
               >
                 <span>AB</span>
@@ -255,13 +254,12 @@ export const Standard: Story = {
               <div 
                 id="${userPopoverId}" 
                 popover 
-                class="popover popover--anchored"
-                style="position-anchor: ${userAnchorName}; min-inline-size: 18rem;"
+                class="popover" style="min-inline-size: 18rem;"
               >
                 <menu class="menu menu--translucent" aria-label="User account menu">
                   
                   <!-- User Identity Header -->
-                  <header class="menu__content inline gap-sm align-items-center padding-block-xs">
+                  <li class="menu__heading inline gap-sm align-items-center">
                     <div class="avatar avatar--sm" data-status="online" aria-label="Alex Bennett (online)">
                       <span>AB</span>
                     </div>
@@ -269,29 +267,29 @@ export const Standard: Story = {
                       <span class="font-weight-medium">Alex Bennett</span>
                       <span class="small-text text-color-muted">alex.bennett@dfh.design</span>
                     </div>
-                  </header>
+                  </li>
 
                   <li role="separator" class="divider"></li>
 
                   <!-- Menu Actions with Keyboard Shortcuts -->
-                  <li role="none">
-                    <button type="button" class="menu__item" role="menuitem">
+                  <li>
+                    <button type="button" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                       <span>Your Profile</span>
                       <kbd class="kbd">⇧⌘P</kbd>
                     </button>
                   </li>
 
-                  <li role="none">
-                    <button type="button" class="menu__item" role="menuitem">
+                  <li>
+                    <button type="button" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                       <span>System Preferences</span>
                       <kbd class="kbd">⌘,</kbd>
                     </button>
                   </li>
 
-                  <li role="none">
-                    <button type="button" class="menu__item" role="menuitem">
+                  <li>
+                    <button type="button" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bookmarked"/></svg>
                       <span>Saved Components</span>
                     </button>
@@ -300,7 +298,7 @@ export const Standard: Story = {
                   <li role="separator" class="divider"></li>
 
                   <!-- Integrated Switch Toggle -->
-                  <li role="none">
+                  <li>
                     <label class="switch switch--sm padding-inline-sm padding-block-xs flex justify-content-between align-items-center">
                       <span class="switch__label">Dark Mode</span>
                       <input type="checkbox" role="switch" class="visually-hidden" checked />
@@ -314,8 +312,8 @@ export const Standard: Story = {
                   <li role="separator" class="divider"></li>
 
                   <!-- Destructive Sign Out -->
-                  <li role="none">
-                    <button type="button" class="menu__item menu__item--destructive" role="menuitem">
+                  <li>
+                    <button type="button" class="button button--danger">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                       <span>Sign Out</span>
                     </button>
@@ -329,27 +327,27 @@ export const Standard: Story = {
 
         <!-- Command Palette Modal Invoked from Header Search -->
         <dialog id="${cmdDialogId}" class="dialog" aria-label="Command palette">
-          <div class="card card--flush card--ruled card--translucent wrapper wrapper--lg">
-            <article class="card__content">
-              <header class="card__header inline gap-sm focus-within">
-                <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-                <input 
-                  type="search" 
-                  class="input input--flush focus-none flex-grow" 
-                  role="combobox" 
-                  aria-expanded="true" 
-                  placeholder="Search components, tokens, documentation..." 
-                  autofocus 
-                />
-                <form method="dialog">
-                  <button type="submit" class="button button--subtle button--icon" commandfor="${cmdDialogId}" command="close" aria-label="Close command palette">
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-                  </button>
-                </form>
-              </header>
-              <div class="card__body card__body--flush overflow-y-auto" style="max-block-size: 20rem;">
-                <div role="listbox" class="button-group button-group--stacked button-group--ruled buttons-subtle" aria-label="Suggestions">
-                  <h3 class="button-group__content micro-heading text-color-muted">Recent Documents</h3>
+          <article class="card card--ruled card--translucent wrapper wrapper--lg">
+            <header class="card__header inline gap-sm focus-within">
+              <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+              <input 
+                type="search" 
+                class="input input--flush focus-none flex-grow" 
+                role="combobox" 
+                aria-expanded="true" 
+                placeholder="Search components, tokens, documentation..." 
+                autofocus 
+              />
+              <form method="dialog">
+                <button type="submit" class="button button--subtle button--icon" commandfor="${cmdDialogId}" command="close" aria-label="Close command palette">
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+                </button>
+              </form>
+            </header>
+            <div class="card__body card__body--flush overflow-y-auto card__body--scrollable" style="max-block-size: 20rem;">
+              <menu role="listbox" class="menu menu--plain menu--ruled" aria-label="Suggestions">
+                <li role="presentation" class="menu__heading micro-heading">Recent Documents</li>
+                <li role="none">
                   <button type="button" class="button button--subtle is-active" role="option" aria-selected="true">
                     <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
                     <span class="button__text stack gap-none text-align-start flex-grow">
@@ -358,6 +356,8 @@ export const Standard: Story = {
                     </span>
                     <kbd class="kbd">↵</kbd>
                   </button>
+                </li>
+                <li role="none">
                   <button type="button" class="button button--subtle" role="option" aria-selected="false">
                     <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                     <span class="button__text stack gap-none text-align-start flex-grow">
@@ -366,18 +366,18 @@ export const Standard: Story = {
                     </span>
                     <kbd class="kbd">↵</kbd>
                   </button>
-                </div>
+                </li>
+              </menu>
+            </div>
+            <footer class="card__footer inline-responsive justify-content-between text-color-muted font-size-sm">
+              <div class="cluster gap-sm">
+                <span><kbd class="kbd">↑↓</kbd> Navigate</span>
+                <span><kbd class="kbd">↵</kbd> Select</span>
+                <span><kbd class="kbd">ESC</kbd> Close</span>
               </div>
-              <footer class="card__footer inline-responsive justify-content-between text-color-muted font-size-sm">
-                <div class="cluster gap-sm">
-                  <span><kbd class="kbd">↑↓</kbd> Navigate</span>
-                  <span><kbd class="kbd">↵</kbd> Select</span>
-                  <span><kbd class="kbd">ESC</kbd> Close</span>
-                </div>
-                <span>Design For Humans v2.2</span>
-              </footer>
-            </article>
-          </div>
+              <span>Design For Humans v2.2</span>
+            </footer>
+          </article>
         </dialog>
 
         <!-- Simulated Main Page Content for Skip-Link Testing -->
@@ -391,21 +391,19 @@ export const Standard: Story = {
             </div>
 
             <!-- Instruction Card -->
-            <div class="card">
-              <article class="card__content">
-                <header class="card__header">
-                  <h2 class="card__title heading">Interactive Recipe Highlights</h2>
-                </header>
-                <div class="card__body prose">
-                  <ul>
-                    <li><strong>Skip Link Navigation:</strong> Click into the preview and press <kbd>Tab</kbd> to focus the high-contrast in-flow skip banner.</li>
-                    <li><strong>Command Palette:</strong> Click the Search docs button or press <kbd>⌘K</kbd> to launch the top-layer spotlight dialog.</li>
-                    <li><strong>Anchored Menu Primitive:</strong> Click the avatar in the top right to open the native zero-JS anchored <code>.menu</code> primitive with keyboard shortcuts and dark mode switch.</li>
-                    <li><strong>Notification Popover:</strong> Click the bell button to open the notifications panel with unread items and empty state transition.</li>
-                  </ul>
-                </div>
-              </article>
-            </div>
+            <article class="card">
+              <header class="card__header">
+                <h2 class="card__title heading">Interactive Recipe Highlights</h2>
+              </header>
+              <div class="card__body prose">
+                <ul>
+                  <li><strong>Skip Link Navigation:</strong> Click into the preview and press <kbd>Tab</kbd> to focus the high-contrast in-flow skip banner.</li>
+                  <li><strong>Command Palette:</strong> Click the Search docs button or press <kbd>⌘K</kbd> to launch the top-layer spotlight dialog.</li>
+                  <li><strong>Anchored Menu Primitive:</strong> Click the avatar in the top right to open the native zero-JS anchored <code>.menu</code> primitive with keyboard shortcuts and dark mode switch.</li>
+                  <li><strong>Notification Popover:</strong> Click the bell button to open the notifications panel with unread items and empty state transition.</li>
+                </ul>
+              </div>
+            </article>
           </div>
         </main>
       </div>
@@ -452,9 +450,7 @@ export const WithBreadcrumbSubnav: Story = {
                   type="button" 
                   class="button avatar button--avatar button--round" 
                   popovertarget="${popoverId}"
-                  style="anchor-name: ${anchorName};"
                   data-status="online"
-                  aria-haspopup="menu"
                   aria-label="Account menu (online)"
                 >
                   <span>AB</span>
@@ -463,26 +459,25 @@ export const WithBreadcrumbSubnav: Story = {
                 <div 
                   id="${popoverId}" 
                   popover 
-                  class="popover popover--anchored"
-                  style="position-anchor: ${anchorName}; min-inline-size: 16rem;"
+                  class="popover" style="min-inline-size: 16rem;"
                 >
                   <menu class="menu menu--translucent" aria-label="User account menu">
-                    <header class="menu__heading">Alex Bennett</header>
-                    <li role="none">
-                      <button type="button" class="menu__item" role="menuitem">
+                    <li class="menu__heading"><h3 class="micro-heading">Alex Bennett</h3></li>
+                    <li>
+                      <button type="button" class="button">
                         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                         <span>Profile</span>
                       </button>
                     </li>
-                    <li role="none">
-                      <button type="button" class="menu__item" role="menuitem">
+                    <li>
+                      <button type="button" class="button">
                         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                         <span>Preferences</span>
                       </button>
                     </li>
                     <li role="separator" class="divider"></li>
-                    <li role="none">
-                      <button type="button" class="menu__item menu__item--destructive" role="menuitem">
+                    <li>
+                      <button type="button" class="button button--danger">
                         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                         <span>Sign Out</span>
                       </button>
@@ -497,7 +492,7 @@ export const WithBreadcrumbSubnav: Story = {
           <div class="header header--translucent">
             <div class="wrapper flex align-items-center justify-content-between padding-block-sm">
               <nav class="breadcrumb" aria-label="Breadcrumbs">
-                <ol>
+                <ol class="small-text">
                   <li><a href="#home" class="link"><span>Design System</span></a></li>
                   <li><a href="#components" class="link"><span>Components</span></a></li>
                   <li aria-current="page"><span>Combobox Primitive</span></li>
@@ -521,16 +516,14 @@ export const WithBreadcrumbSubnav: Story = {
 
         <main class="main overflow-auto">
           <div class="wrapper padding-block-lg">
-            <div class="card">
-              <article class="card__content">
-                <header class="card__header">
-                  <h1 class="card__title">Combobox Primitive Documentation</h1>
-                </header>
-                <div class="card__body">
-                  <p>Detailed documentation and live demos of the accessible searchable combobox and anchored popup listbox orchestrator.</p>
-                </div>
-              </article>
-            </div>
+            <article class="card">
+              <header class="card__header">
+                <h1 class="card__title">Combobox Primitive Documentation</h1>
+              </header>
+              <div class="card__body">
+                <p>Detailed documentation and live demos of the accessible searchable combobox and anchored popup listbox orchestrator.</p>
+              </div>
+            </article>
           </div>
         </main>
       </div>
@@ -650,9 +643,7 @@ export const ResponsiveCollapsibleNav: Story = {
                 type="button" 
                 class="button avatar button--avatar button--round" 
                 popovertarget="${userPopoverId}"
-                style="anchor-name: ${userAnchorName};"
                 data-status="online"
-                aria-haspopup="menu"
                 aria-label="Account menu for Alex Bennett (online)"
               >
                 <span>AB</span>
@@ -662,26 +653,25 @@ export const ResponsiveCollapsibleNav: Story = {
               <div 
                 id="${userPopoverId}" 
                 popover 
-                class="popover popover--anchored"
-                style="position-anchor: ${userAnchorName}; min-inline-size: 16rem;"
+                class="popover" style="min-inline-size: 16rem;"
               >
                 <menu class="menu menu--translucent" aria-label="User account menu">
-                  <header class="menu__heading">Alex Bennett</header>
-                  <li role="none">
-                    <button type="button" class="menu__item" role="menuitem">
+                  <li class="menu__heading"><h3 class="micro-heading">Alex Bennett</h3></li>
+                  <li>
+                    <button type="button" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
                       <span>Your Profile</span>
                     </button>
                   </li>
-                  <li role="none">
-                    <button type="button" class="menu__item" role="menuitem">
+                  <li>
+                    <button type="button" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
                       <span>System Preferences</span>
                     </button>
                   </li>
                   <li role="separator" class="divider"></li>
-                  <li role="none">
-                    <button type="button" class="menu__item menu__item--destructive" role="menuitem">
+                  <li>
+                    <button type="button" class="button button--danger">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
                       <span>Sign Out</span>
                     </button>
@@ -694,7 +684,6 @@ export const ResponsiveCollapsibleNav: Story = {
                 type="button" 
                 class="button button--icon xl:hide" 
                 popovertarget="${mobileNavId}"
-                style="anchor-name: ${mobileNavAnchor};"
                 aria-label="Toggle navigation menu"
                 aria-controls="${mobileNavId}"
                 aria-expanded="false"
@@ -711,38 +700,37 @@ export const ResponsiveCollapsibleNav: Story = {
               <div 
                 id="${mobileNavId}" 
                 popover 
-                class="popover popover--anchored popover--bottom-end xl:hide"
-                style="position-anchor: ${mobileNavAnchor}; min-inline-size: 16rem;"
+                class="popover popover--end-aligned xl:hide" style="min-inline-size: 16rem;"
               >
                 <menu class="menu menu--translucent" aria-label="Mobile navigation">
-                  <header class="menu__heading font-size-sm text-color-muted">Navigation Menu</header>
-                  <li role="none">
-                    <a href="#dashboard" class="menu__item" aria-current="page">
+                  <li class="menu__heading"><h3 class="micro-heading">Navigation</h3></li>
+                  <li>
+                    <a href="#dashboard" class="button" aria-current="page">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
                       <span>Dashboard</span>
                     </a>
                   </li>
-                  <li role="none">
-                    <a href="#components" class="menu__item">
+                  <li>
+                    <a href="#components" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
                       <span>Components</span>
                     </a>
                   </li>
-                  <li role="none">
-                    <a href="#tokens" class="menu__item">
+                  <li>
+                    <a href="#tokens" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Point"/></svg>
                       <span>Design Tokens</span>
                     </a>
                   </li>
-                  <li role="none">
-                    <a href="#audit" class="menu__item">
+                  <li>
+                    <a href="#audit" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
                       <span>A11y Audit</span>
                     </a>
                   </li>
                   <li role="separator" class="divider"></li>
-                  <li role="none">
-                    <button type="button" class="menu__item">
+                  <li>
+                    <button type="button" class="button">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
                       <span>Search Documentation</span>
                     </button>
@@ -765,32 +753,30 @@ export const ResponsiveCollapsibleNav: Story = {
             </div>
 
             <!-- Testing & Documentation Card -->
-            <div class="card">
-              <article class="card__content">
-                <header class="card__header">
-                  <h2 class="card__title heading">How This Recipe Operates</h2>
-                </header>
-                <div class="card__body prose">
-                  <ul>
-                    <li>
-                      <strong>Responsive Breakpoints:</strong> On viewports wider than <code>48em</code> (desktop), the inline navigation links are visible, and the hamburger button is hidden via <code>.md:hide</code>. On narrower viewports (mobile/tablet), the inline links are hidden via <code>.max-md:hide</code> and the toggle button is displayed.
-                    </li>
-                    <li>
-                      <strong>Zero Checkbox Hacks:</strong> Uses native HTML <code>popover</code> and <code>popovertarget</code> for top-layer elevation and automatic light-dismiss (pressing <kbd>Esc</kbd> or clicking outside closes the menu).
-                    </li>
-                    <li>
-                      <strong>Dynamic Icon Flip:</strong> The toggle button pairs <code>.icon--off</code> (<code>#Navigation</code> hamburger) with <code>.icon--on</code> (<code>#Close</code>). When the popover opens, the icon flips smoothly without custom JavaScript.
-                    </li>
-                    <li>
-                      <strong>First-Class Menu Primitive:</strong> The mobile flyout uses <code>.menu.menu--translucent</code> with accessible <code>.menu__item</code> targets and <code>.menu__separator</code> rules.
-                    </li>
-                    <li>
-                      <strong>Progressive Enhancement:</strong> A progressive event listener syncs <code>aria-expanded="true"</code> on the toggle button when the popover opens, ensuring 100% WCAG 2.2 AA / AAA screen-reader compatibility.
-                    </li>
-                  </ul>
-                </div>
-              </article>
-            </div>
+            <article class="card">
+              <header class="card__header">
+                <h2 class="card__title heading">How This Recipe Operates</h2>
+              </header>
+              <div class="card__body prose">
+                <ul>
+                  <li>
+                    <strong>Responsive Breakpoints:</strong> On viewports wider than <code>48em</code> (desktop), the inline navigation links are visible, and the hamburger button is hidden via <code>.md:hide</code>. On narrower viewports (mobile/tablet), the inline links are hidden via <code>.max-md:hide</code> and the toggle button is displayed.
+                  </li>
+                  <li>
+                    <strong>Zero Checkbox Hacks:</strong> Uses native HTML <code>popover</code> and <code>popovertarget</code> for top-layer elevation and automatic light-dismiss (pressing <kbd>Esc</kbd> or clicking outside closes the menu).
+                  </li>
+                  <li>
+                    <strong>Dynamic Icon Flip:</strong> The toggle button pairs <code>.icon--off</code> (<code>#Navigation</code> hamburger) with <code>.icon--on</code> (<code>#Close</code>). When the popover opens, the icon flips smoothly without custom JavaScript.
+                  </li>
+                  <li>
+                    <strong>First-Class Menu Primitive:</strong> The mobile flyout uses <code>.menu.menu--translucent</code> with accessible <code>.button</code> targets and <code>.divider</code> rules.
+                  </li>
+                  <li>
+                    <strong>Progressive Enhancement:</strong> A progressive event listener syncs <code>aria-expanded="true"</code> on the toggle button when the popover opens, ensuring 100% WCAG 2.2 AA / AAA screen-reader compatibility.
+                  </li>
+                </ul>
+              </div>
+            </article>
           </div>
         </main>
       </div>

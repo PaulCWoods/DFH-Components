@@ -55,7 +55,7 @@ The fundamental action control. Variation is expressed on the library's shared a
 | Density | none on the button; a compact container steps it to \`--sm\` | \`--ui-sizing: compact\` |
 | Corners | \`--round\` | \`--button-corners\` |
 
-Selected states (\`.is-active\`, a checked input inside a \`<label class="button">\`) render as strong.
+Selected states (\`.is-active\`, \`aria-current\`, a checked input inside a \`<label class="button">\`, \`aria-pressed="true"\`) render as strong.
 
 \`\`\`html
 <!-- Primary action: strong prominence + accent intent -->
@@ -248,7 +248,7 @@ export const ContainerFlags: Story = {
     <div class="demo-stage stack">
       <div class="demo-label">Parent: style="--button-prominence: subtle; --button-corners: round;"</div>
       <nav class="cluster" style="--button-prominence: subtle; --button-corners: round;" aria-label="Demo navigation">
-        <a href="#" class="button is-active" aria-current="page"><span>Overview</span></a>
+        <a href="#" class="button" aria-current="page"><span>Overview</span></a>
         <a href="#" class="button"><span>Analytics</span></a>
         <a href="#" class="button"><span>Reports</span></a>
       </nav>

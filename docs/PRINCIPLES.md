@@ -86,15 +86,15 @@ Complex components are assembled from simpler ones, and every layer has one job.
 
 1. **Layout primitives** (stack, cluster, grid, split, inline) own space and arrangement. They hold no content styling.
 2. **Atoms** are indivisible and meaningful alone (button, input, link, badge).
-3. **Molecules** combine atoms for one purpose (banner, pagination, telemetry).
-4. **Organisms** combine molecules and primitives into a complete region (table, dialog, card, header, batch actions).
+3. **Molecules** combine atoms for one purpose (card, banner, menu, button group, batch actions, breadcrumb, navigation tree, pagination, stepper, telemetry).
+4. **Organisms** combine molecules and primitives into a complete region (table, dialog, header).
 
 Structural components (layout, bands, headers) and content components (prose, media, data) are kept separate and combined, so a card is a structure that can hold any content.
 
 **One visual, many roles**
 
 - When two components share most of their structure and styling, the library keeps one visual component and expresses the difference as a role or a container.
-- `banner` is the visual molecule for in-flow and docked announcements. An alert is a banner with `role="alert"` (or `role="status"` for non-critical notices), optionally placed in a floating or toast container. Alert must not define its own tokens or styles that duplicate banner's, and the two must not import each other.
+- `banner` is the visual molecule for in-flow and docked announcements. An alert is a banner inserted into a region with `role="alert"` (or `role="status"` for non-critical notices); there is no `.alert` class. `.banner-dock` pins a banner to the page edge and `.toast-stack` floats banners in a corner. Both are placement only: they set banner flags and never style the banner, and the banner never mentions them.
 
 **Token tiers**
 
@@ -131,7 +131,7 @@ The core library holds components that are common across web applications. Domai
 | Component | v1 status | Action |
 | --- | --- | --- |
 | `telemetry` | In core | Refactor to compose standard atoms (badge, text, icon) rather than its own type and trend styles. |
-| `batch-actions` | In core | Keep as an organism for tables and card grids. |
+| `batch-actions` | In core | A molecule: a placement and frame around a summary and a button group, for tables and card grids. |
 | `deck` | Out of core | Move from `packages/css/src/organisms/` to a recipe in `packages/storybook/stories/recipes/`. It remains a stress test of the token system, not a library component. |
 
 A new component enters the core only if it serves a need that recurs across unrelated products; otherwise it is a recipe.
@@ -235,7 +235,12 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | Does fine pointer switch on automatically? | No. Fine-pointer targets are opt-in by the product through a root token, and change the minimum target only. |
 | Is info its own intent? | Yes, from the icon pass: info uses the Tier 1 aqua ramp through its own Tier 2 roles (`foreground-info`, `surface-info`, `surface-info-strong`, `border-color-info`). Accent stays the brand colour. |
 | Are deck, telemetry and batch-actions in v1? | Telemetry and batch-actions are in core. Deck moves to recipes. |
-| Are alert and banner separate? | No. Banner is the visual; alert is a role on it. |
+| Are alert and banner separate? | No. Banner is the visual; alert is a role on the region it is inserted into. The page-edge container is `.banner-dock`. |
+| Where does a toast's live role go? | On the stack, which is in the page before any toast arrives. A toast never carries its own role. |
+| Where does tooltip end and popover begin? | A tooltip is one line of plain text about a control, opened only by `interestfor` and never the only copy of what it says. Anything richer, or with a control in it, is a popover holding a card or a menu, opened by `popovertarget` or, as a hovercard, by `interestfor`. |
+| Does a menu use ARIA menu roles? | No. A menu is a list of buttons and links; Tab moves through it and its popover gives Escape and light dismiss. `role="menu"` promises arrow keys, typeahead and focus management that need a script, and the library ships none. The same goes for `role="toolbar"`: a set of controls is a labelled `role="group"`. |
+| How is the current page, location or step marked? | With `aria-current` alone, never a class. A button with `aria-current` renders as selected, like `.is-active`; a menu or navigation tree shows it as a tint (the tree adds a rail). Steps use `aria-current="step"`, and the title carries the state in hidden text, since colour and the indicator are not enough. |
+| What do button group, menu and batch actions each own? | A button group lays related buttons out (a row, a column, or joined into one control) and never aligns itself on the page. A menu lays plain buttons out in rows with headings and dividers. Batch actions is a placement and frame around a selection summary and a button group. None restyles its buttons. |
 | Does the Google Fonts import stay? | No. System stacks by default; fonts load in Storybook and docs heads only. |
 | May Tier 3 tokens reference Tier 1? | Yes, in token JSON, to choose a scale step. Component CSS still never references Tier 1. |
 | Should tight groups of small controls avoid overlapping hit areas? | No. WCAG 2.5.8 allows overlap; the later control wins. Dense toolbars that need exact targets opt into fine-pointer targets. |
@@ -261,6 +266,7 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | What size does a text atom take by default? | Its fixed step, at every width, headings included. A container chooses fluid, `cq` or compact sizing through `--font-sizing` (or `--ui-sizing: compact`); the appearance-mode classes set it. |
 | How many names can a utility have? | Two at most: a verbose name (property and value) and Tailwind's shorthand where Tailwind has one with the same meaning. |
 | How many small text steps are there? | One: `.small-text` (step −1). `.micro-text` is removed. `.micro-heading` is the uppercase eyebrow, a separate job. |
+| Is card a molecule or an organism? | A molecule. A card is a surface with named slots; what goes in its body is content, not part of the card. Components that compose a card (popover, dialog) then sit at or above it in the cascade, so a positioning shell is never overridden by the card it wraps. |
 
 ## 10. Refinement checklist
 

@@ -1,380 +1,266 @@
 /* ==========================================================================
-   Design For Humans: Tooltip Primitive
+   Design For Humans: Tooltip
    --------------------------------------------------------------------------
-   Compact contextual overlay utilizing native HTML [popover="hint"] and
-   CSS Anchor Positioning (position-area, position-try-fallbacks) with
-   inverted high-contrast styling, position-aware anchor arrows, and top-layer
-   transitions.
-   WCAG 2.2 Level AA / AAA compliant (WCAG 1.4.13 Content on Hover or Focus).
-   Parity with Design For Humans Blog (_tooltip.scss & _component-library.twig).
+   A short line of plain text about a control, shown while the control is
+   hovered or focused. Opened only by interestfor, so tooltips appear in
+   browsers with interest invokers (Chromium) and nowhere else: a tooltip
+   never holds the only copy of what it says. Rich or interactive content is
+   a popover opened with interestfor (a hovercard).
 
-   Usage:
-   <!-- Native Interest Invoker / Popover with Anchor Positioning -->
-   <button 
-     type="button" 
-     class="button button--icon" 
-     interestfor="tip-save"
-     popovertarget="tip-save"
-     style="anchor-name: --anchor-save;"
-   >
-     <span class="visually-hidden">Save changes</span>
-     <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-       <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-     </svg>
+   Two kinds, by what the text is:
+     label        repeats the control's name (icon buttons). The name stays
+                  in the button; the tooltip takes aria-hidden="true".
+     description  extra text. The invoker points aria-describedby at it.
+
+   WCAG 1.4.13: the pointer can move onto the tooltip without it closing,
+   and Escape closes it (native).
+
+   Placement (logical; flips when it doesn't fit): above by default,
+   --bottom, --start, --end. Flag: --tooltip-placement (bottom, start, end).
+   --no-arrow drops the arrow.
+
+   <button type="button" class="button button--icon" interestfor="tip-bold">
+     <svg class="icon" …></svg>
+     <span class="visually-hidden">Bold</span>
    </button>
-   <div 
-     id="tip-save" 
-     popover="hint" 
-     class="tooltip tooltip--anchored" 
-     style="position-anchor: --anchor-save;"
-   >
-     Save changes (Ctrl+S)
-   </div>
+   <div id="tip-bold" popover="hint" class="tooltip" aria-hidden="true">Bold</div>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Tooltip Primitive (:where([popover="hint"], [popover].tooltip, .tooltip))
+   1. Base
    ========================================================================== */
-:where([popover="hint"], [popover].tooltip, .tooltip) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_tooltip-arrow-size: var(--tooltip-arrow-size, 0.375rem);
-  --_tooltip-bg: var(--tooltip-bg, var(--surface-inverted, #1a1a1a));
+:where(.tooltip) {
+  /* Private manifest */
+  --_tooltip-bg: var(--tooltip-bg, var(--surface-inverted, CanvasText));
+  --_tooltip-color: var(--tooltip-color, var(--foreground-inverted-strong, Canvas));
   --_tooltip-border-color: var(--tooltip-border-color, transparent);
-  --_tooltip-border-style: var(--tooltip-border-style, solid);
   --_tooltip-border-width: var(--tooltip-border-width, 1px);
-  --_tooltip-border: var(--tooltip-border, var(--_tooltip-border-width) var(--_tooltip-border-style) var(--_tooltip-border-color));
-  --_tooltip-color: var(--tooltip-color, var(--foreground-inverted-strong, #ffffff));
-  --_tooltip-cushion: var(--tooltip-cushion, var(--spacing-cushion, 2rem));
-  --_tooltip-font-family: var(--tooltip-font-family, var(--typography-font-family-sans, sans-serif));
-  --_tooltip-font-size: var(--tooltip-font-size, var(--typography-font-size--1, 0.8rem));
-  --_tooltip-font-weight: var(--tooltip-font-weight, var(--font-weight-medium, 500));
-  --_tooltip-line-height: var(--tooltip-line-height, var(--typography-line-height--1, 1.3));
-  --_tooltip-max-width: var(--tooltip-max-width, 18rem);
-  --_tooltip-min-width: var(--tooltip-min-width, var(--spacing-block-2xs, 12.8rem));
-  --_tooltip-width: var(--tooltip-width, max-content);
-  --_tooltip-offset: var(--tooltip-offset, var(--spacing-4, 0.25rem));
-  --_tooltip-padding-block: var(--tooltip-padding-block, var(--spacing-4, 0.25rem));
-  --_tooltip-padding-inline: var(--tooltip-padding-inline, var(--spacing-8, 0.5rem));
-  --_tooltip-radius: var(--tooltip-radius, var(--radius-sm, 0.25rem));
-  --_tooltip-shadow: var(--tooltip-shadow, var(--shadow-sm, none));
-  --_tooltip-text-align: var(--tooltip-text-align, center);
-  --_tooltip-text-wrap: var(--tooltip-text-wrap, balance);
-  --_tooltip-timefunc: var(--tooltip-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-  --_tooltip-transition: var(--tooltip-transition, var(--duration-sm, 150ms));
-  --_tooltip-z-index: var(--tooltip-z-index, var(--z-index-tooltip, 1100));
+  --_tooltip-radius: var(--tooltip-radius, 0);
+  --_tooltip-shadow: var(--tooltip-shadow, none);
+  --_tooltip-padding-block: var(--tooltip-padding-block, 0.25rem);
+  --_tooltip-padding-inline: var(--tooltip-padding-inline, 0.5rem);
+  --_tooltip-max-width: var(--tooltip-max-width, 20rem);
+  --_tooltip-offset: var(--tooltip-offset, 0.5rem);
+  --_tooltip-arrow-size: var(--tooltip-arrow-size, 0.375rem);
+  --_tooltip-transition: var(--tooltip-transition, 0s);
+  --_tooltip-timefunc: var(--tooltip-timefunc, ease-in-out);
 
-  /* Layout & Sizing */
+  /* Surface */
+  background-color: var(--_tooltip-bg);
+  border: var(--_tooltip-border-width) solid var(--_tooltip-border-color);
+  border-radius: var(--_tooltip-radius);
+  box-shadow: var(--_tooltip-shadow);
   box-sizing: border-box;
-  inline-size: var(--_tooltip-width, max-content);
-  max-inline-size: min(var(--_tooltip-max-width), calc(100dvi - var(--_tooltip-cushion)));
-  margin: 0;
-  padding: 0;
-  position: relative;
-  z-index: var(--_tooltip-z-index);
+  color: var(--_tooltip-color);
+  inline-size: max-content;
+  max-inline-size: min(var(--_tooltip-max-width), calc(100dvi - var(--_tooltip-offset) * 2));
+  overflow: visible;
+  padding-block: var(--_tooltip-padding-block);
+  padding-inline: var(--_tooltip-padding-inline);
 
-  /* Surface & Border Reset (Deferred to nested Card / Banner) */
-  background: transparent;
-  border: none;
-  color: inherit;
-  box-shadow: none;
+  /* Type: the small-text step, so the tooltip follows --font-sizing */
+  font-family: var(--body-font-family);
+  font-size: var(--body-sm-fixed-font-size);
+  font-weight: var(--tooltip-font-weight, var(--body-font-weight));
+  line-height: var(--body-sm-line-height);
+  text-align: center;
+  text-wrap: balance;
 
-  /* Interaction constraints */
-  pointer-events: none;
-  user-select: none;
+  @container style(--font-sizing: fluid) {
+    font-size: var(--body-sm-fluid-font-size);
+  }
 
-  /* Top-layer entry & exit transitions */
+  @container style(--font-sizing: cq) {
+    font-size: var(--body-sm-cq-font-size);
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--body-sm-compact-font-size);
+  }
+
+  /* Entry and exit, closed state */
   opacity: 0;
-  transform: translateY(0.15rem) scale(0.96);
-
-  transition-property: opacity, transform, display, overlay;
-  transition-duration: var(--_tooltip-transition);
-  transition-timing-function: var(--_tooltip-timefunc);
+  scale: 0.96;
   transition-behavior: allow-discrete;
+  transition-duration: var(--_tooltip-transition);
+  transition-property: opacity, scale, display, overlay;
+  transition-timing-function: var(--_tooltip-timefunc);
 
-  /* Ensure nested card or banner expands to full available width */
-  > :where(.card, .banner) {
-    inline-size: 100%;
-    max-inline-size: 100%;
-    pointer-events: auto;
-    user-select: auto;
-  }
+  /* .\:popover-open is the popover polyfill's class */
+  &:where(:popover-open, .\:popover-open) {
+    opacity: 1;
+    scale: 1;
 
-  &:has(.card, .banner) {
-    --_tooltip-width: var(--popover-max-size, var(--spacing-block-xs, 16rem));
-  }
-
-  /* Standalone Tooltip Fallback (when not wrapping a Card or Banner) */
-  &:not(:has(.card, .banner)) {
-    background-color: var(--_tooltip-bg);
-    border: var(--_tooltip-border);
-    border-radius: var(--_tooltip-radius);
-    box-shadow: var(--_tooltip-shadow);
-    color: var(--_tooltip-color);
-    font-family: var(--_tooltip-font-family);
-    font-size: var(--_tooltip-font-size);
-    font-weight: var(--_tooltip-font-weight);
-    line-height: var(--_tooltip-line-height);
-    padding-block: var(--_tooltip-padding-block);
-    padding-inline: var(--_tooltip-padding-inline);
-    text-align: var(--_tooltip-text-align);
-    text-wrap: var(--_tooltip-text-wrap);
-  }
-}
-
-/* Opt-out modifier */
-:where(.tooltip--no-arrow)::before {
-  display: none !important;
-}
-
-/* ==========================================================================
-   2. Open Tooltip State in Top Layer (:where(...):where(:popover-open, ...))
-   ========================================================================== */
-:where([popover="hint"], [popover].tooltip, .tooltip):where(:popover-open, .\:popover-open) {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-
-  @starting-style {
-    opacity: 0;
-    transform: translateY(0.15rem) scale(0.96);
+    @starting-style {
+      opacity: 0;
+      scale: 0.96;
+    }
   }
 }
 
 /* ==========================================================================
-   3. CSS Anchor Positioning Integration
+   2. Anchoring
+   Container flags are declared before the modifier classes, so a modifier
+   on the tooltip beats a flag inherited from a container.
    ========================================================================== */
+@supports (position-area: self-block-start) {
+  :where(.tooltip) {
+    /* Placement map: the area, the offset side, the alignment and the arrow
+       (with its position when a fallback flips the tooltip) */
+    --_tooltip-area: self-block-start;
+    --_tooltip-margin-block: 0 var(--_tooltip-offset);
+    --_tooltip-margin-inline: 0;
+    --_tooltip-align: normal;
+    --_tooltip-justify: anchor-center;
+    --_tooltip-arrow-block: auto calc(var(--_tooltip-arrow-size) * -0.5);
+    --_tooltip-arrow-inline: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+    --_tooltip-arrow-block-flip: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+    --_tooltip-arrow-inline-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
 
-/* Modern CSS position-area & position-try-fallbacks */
-@supports (position-area: top) {
-  :where([popover="hint"], [popover].tooltip, .tooltip) {
-    position: fixed;
-    inset: auto;
-    position-area: top;
-    justify-self: anchor-center;
-    position-try-fallbacks: flip-block, flip-inline;
-    margin-block-end: var(--_tooltip-offset);
-    container-type: anchored;
-  }
-
-  /* Directional Position Modifiers */
-  :where(.tooltip--bottom) {
-    position-area: bottom;
-    justify-self: anchor-center;
-    margin-block-end: 0;
-    margin-block-start: var(--_tooltip-offset);
-  }
-
-  :where(.tooltip--left, .tooltip--start) {
-    position-area: left;
-    align-self: anchor-center;
-    margin-block-end: 0;
-    margin-inline-end: var(--_tooltip-offset);
-  }
-
-  :where(.tooltip--right, .tooltip--end) {
-    position-area: right;
-    align-self: anchor-center;
-    margin-block-end: 0;
-    margin-inline-start: var(--_tooltip-offset);
-  }
-}
-
-/* Fallback anchor() function positioning */
-@supports not (position-area: top) {
-  @supports (bottom: anchor(top)) {
-    :where([popover="hint"], [popover].tooltip, .tooltip) {
-      position: fixed;
-      inset: auto;
-      bottom: calc(anchor(top) + var(--_tooltip-offset));
-      left: anchor(center);
-      transform: translateX(-50%) translateY(0.15rem) scale(0.96);
+    @container style(--tooltip-placement: bottom) {
+      --_tooltip-area: self-block-end;
+      --_tooltip-margin-block: var(--_tooltip-offset) 0;
+      --_tooltip-margin-inline: 0;
+      --_tooltip-align: normal;
+      --_tooltip-justify: anchor-center;
+      --_tooltip-arrow-block: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+      --_tooltip-arrow-inline: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+      --_tooltip-arrow-block-flip: auto calc(var(--_tooltip-arrow-size) * -0.5);
+      --_tooltip-arrow-inline-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
     }
 
-    :where([popover="hint"], [popover].tooltip, .tooltip):where(:popover-open, .\:popover-open) {
-      transform: translateX(-50%) translateY(0) scale(1);
+    @container style(--tooltip-placement: start) {
+      --_tooltip-area: self-inline-start;
+      --_tooltip-margin-block: 0;
+      --_tooltip-margin-inline: 0 var(--_tooltip-offset);
+      --_tooltip-align: anchor-center;
+      --_tooltip-justify: normal;
+      --_tooltip-arrow-block: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+      --_tooltip-arrow-inline: auto calc(var(--_tooltip-arrow-size) * -0.5);
+      --_tooltip-arrow-block-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+      --_tooltip-arrow-inline-flip: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+    }
 
-      @starting-style {
-        transform: translateX(-50%) translateY(0.15rem) scale(0.96);
+    @container style(--tooltip-placement: end) {
+      --_tooltip-area: self-inline-end;
+      --_tooltip-margin-block: 0;
+      --_tooltip-margin-inline: var(--_tooltip-offset) 0;
+      --_tooltip-align: anchor-center;
+      --_tooltip-justify: normal;
+      --_tooltip-arrow-block: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+      --_tooltip-arrow-inline: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+      --_tooltip-arrow-block-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+      --_tooltip-arrow-inline-flip: auto calc(var(--_tooltip-arrow-size) * -0.5);
+    }
+
+    align-self: var(--_tooltip-align);
+    container-type: anchored;
+    inset: auto;
+    justify-self: var(--_tooltip-justify);
+    margin-block: var(--_tooltip-margin-block);
+    margin-inline: var(--_tooltip-margin-inline);
+    position: fixed;
+    position-area: var(--_tooltip-area);
+    position-try-fallbacks: flip-block, flip-inline;
+  }
+
+  :where(.tooltip--bottom) {
+    --_tooltip-area: self-block-end;
+    --_tooltip-margin-block: var(--_tooltip-offset) 0;
+    --_tooltip-margin-inline: 0;
+    --_tooltip-align: normal;
+    --_tooltip-justify: anchor-center;
+    --_tooltip-arrow-block: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+    --_tooltip-arrow-inline: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+    --_tooltip-arrow-block-flip: auto calc(var(--_tooltip-arrow-size) * -0.5);
+    --_tooltip-arrow-inline-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+  }
+
+  :where(.tooltip--start) {
+    --_tooltip-area: self-inline-start;
+    --_tooltip-margin-block: 0;
+    --_tooltip-margin-inline: 0 var(--_tooltip-offset);
+    --_tooltip-align: anchor-center;
+    --_tooltip-justify: normal;
+    --_tooltip-arrow-block: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+    --_tooltip-arrow-inline: auto calc(var(--_tooltip-arrow-size) * -0.5);
+    --_tooltip-arrow-block-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+    --_tooltip-arrow-inline-flip: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+  }
+
+  :where(.tooltip--end) {
+    --_tooltip-area: self-inline-end;
+    --_tooltip-margin-block: 0;
+    --_tooltip-margin-inline: var(--_tooltip-offset) 0;
+    --_tooltip-align: anchor-center;
+    --_tooltip-justify: normal;
+    --_tooltip-arrow-block: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+    --_tooltip-arrow-inline: calc(var(--_tooltip-arrow-size) * -0.5) auto;
+    --_tooltip-arrow-block-flip: calc(50% - var(--_tooltip-arrow-size) / 2) auto;
+    --_tooltip-arrow-inline-flip: auto calc(var(--_tooltip-arrow-size) * -0.5);
+  }
+
+  /* ------------------------------------------------------------------------
+     Arrow: a rotated square on the side facing the invoker. It follows the
+     tooltip when a fallback flips it.
+     ------------------------------------------------------------------------ */
+  @supports (container-type: anchored) {
+    :where(.tooltip)::before {
+      background-color: var(--_tooltip-bg);
+      block-size: var(--_tooltip-arrow-size);
+      content: "";
+      inline-size: var(--_tooltip-arrow-size);
+      inset-block: var(--_tooltip-arrow-block);
+      inset-inline: var(--_tooltip-arrow-inline);
+      pointer-events: none;
+      position: absolute;
+      rotate: 45deg;
+    }
+
+    @container anchored(fallback: flip-block) {
+      :where(.tooltip)::before {
+        inset-block: var(--_tooltip-arrow-block-flip);
       }
     }
 
-    :where(.tooltip--bottom) {
-      bottom: auto;
-      top: calc(anchor(bottom) + var(--_tooltip-offset));
+    @container anchored(fallback: flip-inline) {
+      :where(.tooltip)::before {
+        inset-inline: var(--_tooltip-arrow-inline-flip);
+      }
     }
 
-    :where(.tooltip--left, .tooltip--start) {
-      bottom: auto;
-      left: auto;
-      right: calc(anchor(left) + var(--_tooltip-offset));
-      top: anchor(center);
-      transform: translateY(-50%) scale(0.96);
-    }
-
-    :where(.tooltip--left, .tooltip--start):where(:popover-open, .\:popover-open) {
-      transform: translateY(-50%) scale(1);
-    }
-
-    :where(.tooltip--right, .tooltip--end) {
-      bottom: auto;
-      left: calc(anchor(right) + var(--_tooltip-offset));
-      top: anchor(center);
-      transform: translateY(-50%) scale(0.96);
-    }
-
-    :where(.tooltip--right, .tooltip--end):where(:popover-open, .\:popover-open) {
-      transform: translateY(-50%) scale(1);
+    :where(.tooltip--no-arrow)::before {
+      content: none;
     }
   }
 }
 
 /* ==========================================================================
-   4. Position-Aware Anchor Arrow (Progressive Enhancement)
-   Requires browser support for container-type: anchored
-   ========================================================================== */
-@supports (container-type: anchored) {
-  :where([popover="hint"], [popover].tooltip, .tooltip):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    inline-size: var(--_tooltip-arrow-size);
-    block-size: var(--_tooltip-arrow-size);
-    background-color: var(--_tooltip-bg);
-    inset-block-end: calc(var(--_tooltip-arrow-size) * -0.5);
-    inset-inline-start: 50%;
-    translate: -50% 0;
-    rotate: 45deg;
-    border-radius: 1px;
-    pointer-events: none;
-  }
-
-  /* Directional position overrides */
-  :where(.tooltip--bottom):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-    inset-block-end: auto;
-    inset-block-start: calc(var(--_tooltip-arrow-size) * -0.5);
-    inset-inline-start: 50%;
-    translate: -50% 0;
-  }
-
-  :where(.tooltip--left, .tooltip--start):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-    inset-block-end: auto;
-    inset-block-start: 50%;
-    inset-inline-start: auto;
-    inset-inline-end: calc(var(--_tooltip-arrow-size) * -0.5);
-    translate: 0 -50%;
-  }
-
-  :where(.tooltip--right, .tooltip--end):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-    inset-block-end: auto;
-    inset-block-start: 50%;
-    inset-inline-start: calc(var(--_tooltip-arrow-size) * -0.5);
-    inset-inline-end: auto;
-    translate: 0 -50%;
-  }
-
-  /* Anchored container queries automatically flip the arrow when the tooltip flips */
-  @container anchored(fallback: flip-block) {
-    :where([popover="hint"], [popover].tooltip, .tooltip):not(:where(.tooltip--bottom)):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      inset-block-end: auto;
-      inset-block-start: calc(var(--_tooltip-arrow-size) * -0.5);
-    }
-
-    :where(.tooltip--bottom):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      inset-block-start: auto;
-      inset-block-end: calc(var(--_tooltip-arrow-size) * -0.5);
-    }
-  }
-
-  @container anchored(fallback: flip-inline) {
-    :where(.tooltip--left, .tooltip--start):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      inset-inline-end: auto;
-      inset-inline-start: calc(var(--_tooltip-arrow-size) * -0.5);
-    }
-
-    :where(.tooltip--right, .tooltip--end):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      inset-inline-start: auto;
-      inset-inline-end: calc(var(--_tooltip-arrow-size) * -0.5);
-    }
-  }
-
-  /* High-contrast border alignment for arrow */
-  @media (prefers-contrast: more) {
-    :where([popover="hint"], [popover].tooltip, .tooltip):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      border-inline-end: 1px solid var(--foreground-inverted-strong, #ffffff);
-      border-block-end: 1px solid var(--foreground-inverted-strong, #ffffff);
-    }
-
-    :where(.tooltip--bottom):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      border-inline-end: none;
-      border-block-end: none;
-      border-inline-start: 1px solid var(--foreground-inverted-strong, #ffffff);
-      border-block-start: 1px solid var(--foreground-inverted-strong, #ffffff);
-    }
-
-    :where(.tooltip--left, .tooltip--start):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      border-inline-end: 1px solid var(--foreground-inverted-strong, #ffffff);
-      border-block-start: 1px solid var(--foreground-inverted-strong, #ffffff);
-      border-block-end: none;
-    }
-
-    :where(.tooltip--right, .tooltip--end):not(:has(.card, .banner), .tooltip--no-arrow)::before {
-      border-inline-start: 1px solid var(--foreground-inverted-strong, #ffffff);
-      border-block-end: 1px solid var(--foreground-inverted-strong, #ffffff);
-      border-block-start: none;
-    }
-  }
-}
-
-/* ==========================================================================
-   5. CSS-Triggered Tooltip Container Pattern (Pure CSS / Hover Context)
-   ========================================================================== */
-:where(.has-tooltip) {
-  position: relative;
-  display: inline-flex;
-
-  @media (hover: hover) {
-    &:where(:hover, :focus-within) > :where(.tooltip:not([popover])) {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      visibility: visible;
-    }
-  }
-
-  &:where(:focus-within) > :where(.tooltip:not([popover])) {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    visibility: visible;
-  }
-}
-
-:where(.has-tooltip > .tooltip:not([popover])) {
-  position: absolute;
-  inset-block-end: calc(100% + var(--_tooltip-offset));
-  inset-inline-start: 50%;
-  transform: translateX(-50%) translateY(0.15rem) scale(0.96);
-  visibility: hidden;
-  white-space: nowrap;
-}
-
-/* ==========================================================================
-   6. Accessibility & Media Queries
+   3. Reduced Motion & High Contrast
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  :where([popover="hint"], [popover].tooltip, .tooltip),
-  :where([popover="hint"], [popover].tooltip, .tooltip):where(:popover-open, .\:popover-open) {
-    transform: none;
-    transition-duration: var(--duration-0, 0s);
+  :where(.tooltip) {
+    scale: none;
+    transition-duration: 0s;
 
-    @starting-style {
-      transform: none;
+    &:where(:popover-open, .\:popover-open) {
+      scale: none;
+
+      @starting-style {
+        scale: none;
+      }
     }
   }
 }
 
+/* A visible edge instead of a shadow; the arrow goes, since it has no edge */
 @media (prefers-contrast: more) {
-  :where([popover="hint"], [popover].tooltip, .tooltip):not(:has(.card, .banner)) {
-    border: 1px solid var(--foreground-inverted-strong, #ffffff);
-    box-shadow: none;
+  :where(.tooltip) {
+    --_tooltip-border-color: var(--_tooltip-color);
+    --_tooltip-shadow: none;
+  }
+
+  :where(.tooltip)::before {
+    content: none;
   }
 }

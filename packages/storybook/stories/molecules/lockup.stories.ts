@@ -180,7 +180,7 @@ export const InTableCells: Story = {
  */
 export const Truncated: Story = {
   render: () => `
-    <div class="card card--bordered padding" style="max-inline-size: 16rem;">
+    <div class="card padding" style="max-inline-size: 16rem;">
       <div class="lockup">
         <b>Very Long Project Name That Might Wrap</b>
         <small style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">

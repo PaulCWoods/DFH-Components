@@ -1,0 +1,381 @@
+/* ==========================================================================
+   Design For Humans: Card
+   --------------------------------------------------------------------------
+   A surface with named parts. What goes in its body is content, not part of
+   the card, so the card styles its frame and part geometry only; typography
+   belongs to the text atoms.
+
+   Structure: parts (__thumb, __header, __band, __body, __footer) are direct
+   children of .card. .card__content wraps parts only where they sit beside
+   a __thumb in a row card.
+
+   Axes: prominence (default, --strong, --subtle, --plain), density
+   (--compact). Flags: --card-prominence (set on a container; a card resets
+   it for cards nested inside), --card-scroll: all, --card-font-sizing
+   (fixed by default; a dialog sets cq).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.card) {
+  /* Private manifest */
+  --_card-fill: var(--card-bg, var(--surface-card, Canvas));
+  --_card-bg: var(--_card-fill);
+  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-style: var(--card-border-style, solid);
+  --_card-border-color: var(--card-border-color, currentColor);
+  --_card-radius: var(--card-radius, 0);
+  --_card-shadow: none;
+  --_card-shadow-hover: var(--card-hover-shadow, none);
+  --_card-padding: var(--card-padding, var(--spacing-breathe));
+  --_card-inner-padding: var(--card-inner-padding, var(--spacing-breathe));
+  --_card-part-padding: calc(var(--_card-inner-padding) / 2);
+  --_card-hgroup-gap: var(--card-hgroup-gap, 0);
+  --_card-rule: var(--card-inner-border-width, 1px) var(--card-inner-border-style, solid) var(--card-inner-border-color, currentColor);
+  --_card-transition: var(--card-transition, 0s);
+
+  /* Flags apply to this card; cards nested inside start from the default */
+  --card-prominence: initial;
+  --card-scroll: initial;
+  --font-sizing: var(--card-font-sizing, fixed);
+
+  /* Prominence flag (a modifier class on the card beats it) */
+  @container style(--card-prominence: strong) {
+    --_card-shadow: var(--card-strong-shadow, none);
+  }
+
+  @container style(--card-prominence: subtle) {
+    --_card-fill: var(--card-subtle-bg, var(--surface-muted, Canvas));
+    --_card-border-width: 0px;
+  }
+
+  @container style(--card-prominence: plain) {
+    --_card-fill: transparent;
+    --_card-border-width: 0px;
+    --_card-radius: 0;
+  }
+
+  /* Density: a compact container steps the card down */
+  @container style(--ui-sizing: compact) {
+    --_card-padding: var(--card-compact-padding, var(--spacing));
+    --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
+  }
+
+  @container style(--card-scroll: all) {
+    max-block-size: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  container-type: inline-size;
+  display: flex;
+  flex-direction: var(--card-dir, column);
+  flex-grow: 1;
+  min-block-size: 0;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+
+  background-color: var(--_card-bg);
+  border: var(--_card-border-width) var(--_card-border-style) var(--_card-border-color);
+  border-radius: var(--_card-radius);
+  box-shadow: var(--_card-shadow);
+  color: var(--foreground, CanvasText);
+
+  /* A card with no parts pads itself */
+  &:not(:has(> :is(.card__thumb, .card__content, .card__header, .card__band, .card__body, .card__footer))) {
+    padding: var(--_card-padding);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --_card-transition: 0s;
+  }
+}
+
+/* ==========================================================================
+   2. Prominence and density modifiers (pure token maps)
+   ========================================================================== */
+:where(.card--strong) {
+  --_card-fill: var(--card-bg, var(--surface-card, Canvas));
+  --_card-shadow: var(--card-strong-shadow, none);
+}
+
+:where(.card--subtle) {
+  --_card-fill: var(--card-subtle-bg, var(--surface-muted, Canvas));
+  --_card-border-width: 0px;
+}
+
+:where(.card--plain) {
+  --_card-fill: transparent;
+  --_card-border-width: 0px;
+  --_card-radius: 0;
+  --_card-shadow: none;
+}
+
+:where(.card--compact, .card.ui-compact) {
+  --ui-sizing: compact;
+  --_card-padding: var(--card-compact-padding, var(--spacing));
+  --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
+}
+
+/* Increased contrast: a thicker edge instead of shadows; a subtle card gains one */
+@media (prefers-contrast: more) {
+  :where(.card:not(.card--plain)) {
+    --_card-border-width: var(--border-width-md, 2px);
+    --_card-shadow: none;
+
+    @container style(--card-prominence: plain) {
+      --_card-border-width: 0px;
+    }
+  }
+}
+
+/* Translucent: a material, combined with any prominence that has a fill */
+@media (prefers-contrast: no-preference) {
+  :where(.card--translucent) {
+    --_card-bg: color-mix(in oklch, var(--_card-fill), transparent var(--card-translucency, 0%));
+    backdrop-filter: var(--card-filter, none);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive prominence: plain while the nearest size container is narrow.
+   Written desktop-first, so with no container to query the card keeps its look.
+   -------------------------------------------------------------------------- */
+@container (width < 40em) {
+  :where(.\@max-sm\:card--plain) {
+    --_card-fill: transparent;
+    --_card-border-width: 0px;
+    --_card-radius: 0;
+    --_card-shadow: none;
+  }
+}
+
+@container (width < 30em) {
+  :where(.\@max-xs\:card--plain) {
+    --_card-fill: transparent;
+    --_card-border-width: 0px;
+    --_card-radius: 0;
+    --_card-shadow: none;
+  }
+}
+
+/* ==========================================================================
+   3. Parts
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Shared part geometry: each part pads itself, so rules and bands run edge
+   to edge without negative margins
+   -------------------------------------------------------------------------- */
+:where(.card__header, .card__band, .card__body, .card__footer) {
+  flex-shrink: 0;
+  min-inline-size: 0;
+  padding-inline: var(--_card-padding);
+  padding-block: var(--_card-part-padding);
+
+  &:where(:first-child, .card__thumb + *) {
+    padding-block-start: var(--_card-padding);
+  }
+
+  &:where(:last-child) {
+    padding-block-end: var(--_card-padding);
+  }
+}
+
+:where(.card__header--flush, .card__body--flush, .card__footer--flush) {
+  padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Media
+   -------------------------------------------------------------------------- */
+:where(.card__thumb) {
+  --_card-thumb-aspect-ratio: var(--card-thumb-aspect-ratio, 2 / 1);
+
+  background-color: var(--card-thumb-bg, var(--surface-muted, transparent));
+  flex-shrink: 0;
+  font-size: 0;
+
+  > :where(img, video) {
+    aspect-ratio: var(--_card-thumb-aspect-ratio);
+    block-size: 100%;
+    display: block;
+    inline-size: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Parts beside media in a row card */
+:where(.card__content) {
+  container-type: inline-size;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+:where(.card__header) {
+  align-items: var(--card-header-align, flex-start);
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) / 2);
+
+  &:has(> :is(h1, h2, h3, h4, h5, h6)):has(> p) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  /* Title or heading group takes the space, pushing actions to the end */
+  > :where(h1, h2, h3, h4, h5, h6, hgroup, .card__title, .card__hgroup) {
+    flex: 1;
+  }
+}
+
+:where(.card__hgroup) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_card-hgroup-gap);
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* Forces a full-width second line in the header */
+:where(.card__header-line) {
+  inline-size: 100%;
+}
+
+/* Typography comes from the text atoms; these hooks set geometry only */
+:where(.card__title) {
+  margin: 0;
+  min-inline-size: 0;
+  text-wrap: balance;
+}
+
+:where(.card__subtitle) {
+  color: var(--card-subtitle-color, var(--foreground-muted, currentColor));
+  margin: 0;
+  min-inline-size: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Band: an interstitial strip for toolbars, steppers and notices
+   -------------------------------------------------------------------------- */
+:where(.card__band) {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--card-band-gap, var(--spacing));
+  justify-content: space-between;
+}
+
+:where(.card__band--subtle) {
+  background-color: var(--card-band-subtle-bg, var(--surface-muted, transparent));
+}
+
+/* --------------------------------------------------------------------------
+   Body
+   -------------------------------------------------------------------------- */
+:where(.card__body) {
+  flex: 1 1 auto;
+
+  > :first-child {
+    margin-block-start: 0;
+  }
+
+  > :last-child {
+    margin-block-end: 0;
+  }
+}
+
+/* A flush tab list lines its labels up with the card's content */
+:where(.card__body--flush) {
+  --tab-list-inset: var(--_card-padding);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+:where(.card__footer) {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) / 2);
+  margin-block-start: auto;
+}
+
+/* ==========================================================================
+   4. Rules between parts (.card--ruled)
+   ========================================================================== */
+:where(.card--ruled) {
+  --_card-part-padding: var(--_card-inner-padding);
+
+  > :where(.card__header, .card__band, .card__body, .card__footer):not(:last-child),
+  > :where(.card__content)> :where(.card__header, .card__band, .card__body, .card__footer):not(:last-child) {
+    border-block-end: var(--_card-rule);
+  }
+}
+
+/* ==========================================================================
+   5. Scrolling
+   --------------------------------------------------------------------------
+   __body--scrollable: the body scrolls between a pinned header and footer.
+   The card fills its container's height where that height is definite.
+   --scrollable (or --card-scroll: all): the whole card scrolls as one.
+   ========================================================================== */
+:where(.card:has(> .card__body--scrollable, > .card__content > .card__body--scrollable)) {
+  block-size: 100%;
+}
+
+:where(.card__body--scrollable) {
+  flex: 1 1 auto;
+  max-block-size: var(--card-body-max-block-size, none);
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+:where(.card--scrollable) {
+  max-block-size: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ==========================================================================
+   6. Linked card
+   --------------------------------------------------------------------------
+   A link with .link--stretched (usually in the title) makes the whole card
+   its target. The focus ring is drawn on the card's perimeter, and other
+   controls are lifted above the link's overlay.
+   ========================================================================== */
+:where(.card:has(.link--stretched)) {
+  transition: box-shadow var(--_card-transition) ease;
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: var(--_card-shadow-hover);
+    }
+  }
+
+  &:has(.link--stretched:focus-visible) {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
+  :where(button, a:not(.link--stretched), [role="button"], input, select, textarea, summary, label) {
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (prefers-contrast: more) {
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}

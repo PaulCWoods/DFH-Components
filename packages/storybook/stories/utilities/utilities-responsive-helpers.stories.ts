@@ -195,7 +195,7 @@ export const Playground: Story = {
     return `
       <div class="stack gap-md" style="max-inline-size: 54rem; margin-inline: auto;">
         <!-- Status Bar -->
-        <div class="card card--bordered padding-sm inline align-items-center justify-content-between" style="background: var(--surface-muted);">
+        <div class="card padding-sm inline align-items-center justify-content-between" style="background: var(--surface-muted);">
           <div class="inline align-items-center gap-sm">
             <span class="chip"><span class="chip__text">${args.containerScoped ? '@container' : '@media'}</span></span>
             <span class="font-size-sm">Active Class: <code>.${appliedClass}</code></span>
@@ -221,7 +221,7 @@ export const Playground: Story = {
           </div>
 
           <!-- Target Card inside container -->
-          <div class="card card--bordered padding stack gap-sm ${args.visibilityMode === 'icons-only' ? appliedClass : ''}">
+          <div class="card padding stack gap-sm ${args.visibilityMode === 'icons-only' ? appliedClass : ''}">
             <div class="inline align-items-center justify-content-between">
               <h4 class="card__title font-size-md" style="margin: 0;">Responsive Action Toolbar</h4>
               <span class="sb-demo-tag">Adaptive Component</span>
@@ -278,7 +278,7 @@ export const ContainerVsViewportComparison: Story = {
       <div class="split gap-lg" style="--split-min-width: 18rem;">
         <!-- Left: Narrow Sidebar Column with Container Query (Succeeds!) -->
         <div class="container-inline stack gap-sm" style="flex: 1; max-inline-size: 22rem;">
-          <div class="card card--bordered padding stack gap-sm" style="background: var(--surface);">
+          <div class="card padding stack gap-sm" style="background: var(--surface);">
             <div class="inline align-items-center justify-content-between">
               <span class="sb-demo-tag">Container Query (@container)</span>
               <span class="font-size-xs text-color-muted">~20em width</span>
@@ -297,7 +297,7 @@ export const ContainerVsViewportComparison: Story = {
 
         <!-- Right: Narrow Sidebar Column with Viewport Query (Fails!) -->
         <div class="stack gap-sm" style="flex: 1; max-inline-size: 22rem;">
-          <div class="card card--bordered padding stack gap-sm" style="background: var(--surface-muted);">
+          <div class="card padding stack gap-sm" style="background: var(--surface-muted);">
             <div class="inline align-items-center justify-content-between">
               <span class="sb-demo-tag">Viewport Media Query (@media)</span>
               <span class="font-size-xs text-color-muted">Viewport > 48em</span>
@@ -334,7 +334,7 @@ export const ProgressiveDisclosureToolbar: Story = {
 
       <div class="stack gap-md">
         <!-- Wide Container (Full Labels) -->
-        <div class="container-inline card card--bordered padding stack gap-sm">
+        <div class="container-inline card padding stack gap-sm">
           <span class="font-size-xs font-weight-bold text-color-muted">1. WIDE CONTAINER (Above 48em threshold):</span>
           <div class="cluster gap-sm align-items-center @max-md:hide-labels">
             <button type="button" class="button button--strong button--accent">
@@ -353,7 +353,7 @@ export const ProgressiveDisclosureToolbar: Story = {
         </div>
 
         <!-- Narrow Container (Automatically Collapses to Icon-Only) -->
-        <div class="container-inline card card--bordered padding stack gap-sm" style="max-inline-size: 24rem;">
+        <div class="container-inline card padding stack gap-sm" style="max-inline-size: 24rem;">
           <span class="font-size-xs font-weight-bold text-color-muted">2. NARROW CONTAINER (Below 48em threshold):</span>
           <div class="cluster gap-sm align-items-center @max-md:hide-labels">
             <button type="button" class="button button--strong button--accent" aria-label="Approve Audit">
@@ -386,7 +386,7 @@ export const ResponsiveTableColumns: Story = {
         In complex data tables, low-priority columns can hide automatically when container inline space is restricted, complying with WCAG 1.4.10 Reflow.
       </p>
 
-      <div class="container-inline card card--bordered" style="overflow-x: auto;">
+      <div class="container-inline card" style="overflow-x: auto;">
         <table class="table" style="inline-size: 100%; border-collapse: collapse;">
           <thead>
             <tr style="border-block-end: 1px solid var(--border-color); text-align: left;">
@@ -437,7 +437,7 @@ export const ViewportLayoutShell: Story = {
         For macro layout chrome (like application headers and drawer toggles), viewport media queries coordinate global mobile vs desktop presentation.
       </p>
 
-      <header class="card card--bordered padding inline align-items-center justify-content-between" style="background: var(--surface);">
+      <header class="card padding inline align-items-center justify-content-between" style="background: var(--surface);">
         <!-- Brand Lockup -->
         <div class="inline align-items-center gap-sm">
           <button type="button" class="button button--subtle button--icon md:hide" aria-label="Open mobile navigation menu">
@@ -483,23 +483,23 @@ export const StateMatrix: Story = {
       <div class="container-inline stack gap-md pd-md rounded-md border" style="background: var(--surface);">
         <h4 class="font-size-sm font-weight-bold">Container Query Breakpoint Thresholds</h4>
         <div class="stack gap-xs">
-          <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-2xs:hide">
+          <div class="card padding-xs inline align-items-center justify-content-between @max-2xs:hide">
             <code>.@max-2xs:hide</code>
             <span class="sb-demo-tag">Above 20em (320px)</span>
           </div>
-          <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-xs:hide">
+          <div class="card padding-xs inline align-items-center justify-content-between @max-xs:hide">
             <code>.@max-xs:hide</code>
             <span class="sb-demo-tag">Above 30em (480px)</span>
           </div>
-          <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-sm:hide">
+          <div class="card padding-xs inline align-items-center justify-content-between @max-sm:hide">
             <code>.@max-sm:hide</code>
             <span class="sb-demo-tag">Above 40em (640px)</span>
           </div>
-          <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-md:hide">
+          <div class="card padding-xs inline align-items-center justify-content-between @max-md:hide">
             <code>.@max-md:hide</code>
             <span class="sb-demo-tag">Above 48em (768px)</span>
           </div>
-          <div class="card card--bordered padding-xs inline align-items-center justify-content-between @max-lg:hide">
+          <div class="card padding-xs inline align-items-center justify-content-between @max-lg:hide">
             <code>.@max-lg:hide</code>
             <span class="sb-demo-tag">Above 60em (960px)</span>
           </div>
@@ -531,7 +531,7 @@ export const ViewportHeightShell: Story = {
         </div>
 
         <!-- Demonstration Elements -->
-        <div class="card card--bordered padding-sm inline align-items-center justify-content-between short:hide">
+        <div class="card padding-sm inline align-items-center justify-content-between short:hide">
           <div class="inline align-items-center gap-xs">
             <span class="sb-demo-tag">.short:hide</span>
             <span>Desktop Expanded Panel (Hidden on Short Viewports &le; 36em)</span>
@@ -539,7 +539,7 @@ export const ViewportHeightShell: Story = {
           <span class="sb-demo-tag">Visible Now</span>
         </div>
 
-        <div class="card card--bordered padding-sm inline align-items-center justify-content-between short:show">
+        <div class="card padding-sm inline align-items-center justify-content-between short:show">
           <div class="inline align-items-center gap-xs">
             <span class="sb-demo-tag">.short:show</span>
             <span>Compact Navigation Bar (Visible ONLY on Short Viewports &le; 36em)</span>
@@ -547,7 +547,7 @@ export const ViewportHeightShell: Story = {
           <span class="sb-demo-tag">Visible Now</span>
         </div>
 
-        <div class="card card--bordered padding-sm inline align-items-center justify-content-between app-unlocked:show">
+        <div class="card padding-sm inline align-items-center justify-content-between app-unlocked:show">
           <div class="inline align-items-center gap-xs">
             <span class="sb-demo-tag">.app-unlocked:show</span>
             <span>Adaptive Mobile/Short Topbar (Visible on Mobile OR Short Viewport)</span>
@@ -555,7 +555,7 @@ export const ViewportHeightShell: Story = {
           <span class="sb-demo-tag">Unlocked Mode</span>
         </div>
 
-        <div class="card card--bordered padding-sm inline align-items-center justify-content-between app-locked:show">
+        <div class="card padding-sm inline align-items-center justify-content-between app-locked:show">
           <div class="inline align-items-center gap-xs">
             <span class="sb-demo-tag">.app-locked:show</span>
             <span>Desktop Locked Full Rail (Visible ONLY on Wide AND Tall Desktop)</span>

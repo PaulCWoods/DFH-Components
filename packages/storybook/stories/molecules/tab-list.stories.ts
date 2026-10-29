@@ -266,14 +266,12 @@ export const Flush: Story = {
   render: () =>
     withTabBehaviour(`
     <div class="demo-stage demo-constrained--sm">
-      <div class="card card--bordered">
-        <article class="card__content">
-          <header class="card__header"><h3 class="card__title small-heading">Workspace</h3></header>
-          <div class="card__body card__body--flush">
-            ${navList('Workspace', ['Projects', 'Members', 'Billing'], { style: 'segmented', prominence: 'subtle', extra: ['tab-list--vertical', 'tab-list--flush', 'tab-list--tight'] })}
-          </div>
-        </article>
-      </div>
+      <article class="card">
+        <header class="card__header"><h3 class="card__title small-heading">Workspace</h3></header>
+        <div class="card__body card__body--flush">
+          ${navList('Workspace', ['Projects', 'Members', 'Billing'], { style: 'segmented', prominence: 'subtle', extra: ['tab-list--vertical', 'tab-list--flush', 'tab-list--tight'] })}
+        </div>
+      </article>
     </div>
   `),
 };

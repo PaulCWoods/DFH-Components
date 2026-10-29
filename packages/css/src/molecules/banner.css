@@ -1,350 +1,347 @@
 /* ==========================================================================
-   Design For Humans: Banner Primitive
+   Design For Humans: Banner
    --------------------------------------------------------------------------
-   Inline status messages, actions, and semantic notification callouts.
-   Parity with Design For Humans Blog (_banner.scss & _component-library.twig).
-   Prominence matrix: Default (bordered translucent), --subtle (borderless), --strong (high-emphasis filled).
+   One message with an intent, in one row: an optional icon, the body and
+   optional actions. A banner with media, a title, body and footer, or no
+   message is a card.
 
-   Usage:
-   <div class="banner banner--warning" role="region" aria-label="Notice">
-     <div class="banner__inner">
-       <p>Scheduled maintenance window begins tonight at 22:00.</p>
+   Axes: prominence (default, --subtle, --strong, --plain), intent (neutral,
+   --accent, --info, --success, --warning, --danger), density (--compact),
+   corners (--round). Flags: --banner-prominence, --banner-intent,
+   --banner-corners, --banner-dock (set by .banner-dock).
+
+   Intent is never colour alone: a banner with a non-neutral intent starts
+   with an icon or states its intent in the text. The icon sits in an
+   .icon-box, sized and aligned like the banner's buttons (--banner-align,
+   start by default; a dock centres both).
+
+   <div class="banner banner--warning">
+     <span class="icon-box" aria-hidden="true">
+       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+     </span>
+     <div class="banner__body">
+       <p class="text">Scheduled maintenance begins tonight at 22:00.</p>
      </div>
-     <button type="button" class="button button--subtle banner__action">
-       <span>Dismiss</span>
-     </button>
+     <button type="button" class="button button--icon banner__action">…</button>
    </div>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Banner Container (:where(.banner))
+   1. Base
    ========================================================================== */
 :where(.banner) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
+  /* Children: small, subtle buttons and an icon box the same size; a tight
+     prose rhythm; fixed type */
   --button-size: sm;
   --button-prominence: subtle;
   --icon-box-size: sm;
+  --icon-box-sm-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --font-sizing: fixed;
   --vert-spacing: tight;
 
-  --_banner-action-align: var(--banner-action-align, flex-start);
-  --_banner-bg: color-mix(in srgb,
-      var(--banner-bg, var(--surface-card, transparent)),
-      transparent var(--banner-translucency, 0%));
-  --_banner-border-color: var(--banner-border-color, var(--panel-border-color, currentColor));
-  --_banner-border-style: var(--banner-border-style, var(--panel-border-style, solid));
-  --_banner-border-width: var(--banner-border-width, var(--panel-border-width, 1px));
-  --_banner-filter: var(--banner-filter, var(--surface-layer-filter, none));
-  --_banner-gap: var(--banner-gap, var(--spacing-8, .5rem));
-  --_banner-inner-border-color: var(--banner-inner-border-color, var(--banner-border-color, var(--rule-color, currentColor)));
-  --_banner-inner-border-style: var(--banner-inner-border-style, var(--rule-style, solid));
-  --_banner-inner-border-width: var(--banner-inner-border-width, var(--rule-width, 1px));
-  --_banner-inner-padding-block: calc(var(--banner-inner-padding, var(--spacing-8, 0.5rem))/2);
-  --_banner-inner-padding-inline: var(--banner-inner-padding, var(--spacing-8, 0.5rem));
-  --_banner-outer-padding: var(--banner-outer-padding, var(--spacing-8, 0.5rem));
-  --_banner-radius: var(--banner-radius, var(--panel-radius, 0.25rem));
-  --_banner-shadow: var(--banner-shadow, none);
-  --_banner-text: var(--banner-text, var(--foreground, currentColor));
-  --_banner-thumb-width: var(--banner-thumb-width, var(--spacing-block-2xs, 16rem));
+  /* Private manifest: intent tones (neutral by default) */
+  --_banner-tone: var(--foreground, CanvasText);
+  --_banner-tint: var(--banner-bg, var(--surface-card, Canvas));
+  --_banner-subtle-tint: var(--banner-subtle-bg, var(--surface-muted, Canvas));
+  --_banner-tone-border: var(--banner-border-color, var(--border-color-muted, currentColor));
+  --_banner-solid: var(--banner-strong-bg, var(--foreground, CanvasText));
+  --_banner-on-solid: var(--foreground-inverted-strong, Canvas);
+  --_banner-icon: var(--_banner-tone);
 
-  /* Container Query Orchestration */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_banner-gap: var(--banner-sm-gap, var(--spacing-8, 0.5rem));
-    --_banner-outer-padding: var(--banner-sm-outer-padding, var(--spacing-4, 0.25rem));
-    --_banner-inner-padding-block: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
-    --_banner-inner-padding-inline: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
+  /* Prominence: default draws the tint and the intent border */
+  --_banner-bg: var(--_banner-tint);
+  --_banner-text: var(--foreground, CanvasText);
+  --_banner-border-width: var(--banner-border-width, 1px);
+
+  /* Geometry */
+  --_banner-radius: var(--banner-radius, 0);
+  --_banner-shadow: var(--banner-shadow, none);
+  --_banner-padding: var(--banner-padding, var(--spacing, 1rem));
+  --_banner-body-padding: var(--banner-body-padding, var(--spacing, 1rem));
+  --_banner-gap: var(--banner-gap, 0px);
+  --_banner-body-gap: var(--banner-body-gap, var(--spacing-4, 0.25rem));
+  --_banner-align: var(--banner-align, flex-start);
+  --_banner-transition: var(--banner-transition, 0s);
+
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifier classes, so a modifier on the banner beats
+     a flag inherited from a container.
+     ------------------------------------------------------------------------ */
+
+  /* Intent */
+  @container style(--banner-intent: accent) {
+    --_banner-tone: var(--foreground-accent, CanvasText);
+    --_banner-tint: var(--surface-accent, Canvas);
+    --_banner-subtle-tint: var(--surface-accent, Canvas);
+    --_banner-tone-border: var(--border-color-accent, currentColor);
+    --_banner-solid: var(--surface-accent-strong, var(--foreground-accent, CanvasText));
   }
 
-  /* Layout & Sizing */
+  @container style(--banner-intent: info) {
+    --_banner-tone: var(--foreground-info, CanvasText);
+    --_banner-tint: var(--surface-info, Canvas);
+    --_banner-subtle-tint: var(--surface-info, Canvas);
+    --_banner-tone-border: var(--border-color-info, currentColor);
+    --_banner-solid: var(--surface-info-strong, var(--foreground-info, CanvasText));
+  }
+
+  @container style(--banner-intent: success) {
+    --_banner-tone: var(--foreground-success, CanvasText);
+    --_banner-tint: var(--surface-success, Canvas);
+    --_banner-subtle-tint: var(--surface-success, Canvas);
+    --_banner-tone-border: var(--border-color-success, currentColor);
+    --_banner-solid: var(--surface-success-strong, var(--foreground-success, CanvasText));
+  }
+
+  @container style(--banner-intent: warning) {
+    --_banner-tone: var(--foreground-warning, CanvasText);
+    --_banner-tint: var(--surface-warning, Canvas);
+    --_banner-subtle-tint: var(--surface-warning, Canvas);
+    --_banner-tone-border: var(--border-color-warning, currentColor);
+    --_banner-solid: var(--surface-warning-strong, var(--foreground-warning, CanvasText));
+  }
+
+  @container style(--banner-intent: danger) {
+    --_banner-tone: var(--foreground-danger, CanvasText);
+    --_banner-tint: var(--surface-danger, Canvas);
+    --_banner-subtle-tint: var(--surface-danger, Canvas);
+    --_banner-tone-border: var(--border-color-danger, currentColor);
+    --_banner-solid: var(--surface-danger-strong, var(--foreground-danger, CanvasText));
+  }
+
+  /* Density (before prominence, so a plain banner stays flush) */
+  @container style(--ui-sizing: compact) {
+    --_banner-padding: var(--banner-compact-padding, calc(var(--spacing, 1rem) / 4));
+    --_banner-body-padding: var(--banner-compact-body-padding, calc(var(--spacing, 1rem) / 4));
+  }
+
+  /* Prominence */
+  @container style(--banner-prominence: subtle) {
+    --_banner-bg: var(--_banner-subtle-tint);
+    --_banner-border-width: 0px;
+  }
+
+  @container style(--banner-prominence: strong) {
+    --color-palette: inverted;
+    --link-color: currentColor;
+    --_banner-bg: var(--_banner-solid);
+    --_banner-text: var(--_banner-on-solid);
+    --_banner-icon: var(--_banner-on-solid);
+    --_banner-border-width: 0px;
+  }
+
+  @container style(--banner-prominence: plain) {
+    --icon-box-size: auto;
+    --_banner-bg: transparent;
+    --_banner-border-width: 0px;
+    --_banner-gap: var(--banner-plain-gap, var(--spacing-8, 0.5rem));
+    --_banner-padding: 0px;
+    --_banner-body-padding: 0px;
+  }
+
+  /* Corners: round buttons, with the frame drawn concentric around them */
+  @container style(--banner-corners: round) {
+    --button-corners: round;
+    --_banner-radius: calc(var(--button-sm-min-size, var(--spacing-target-sm, 2rem)) / 2 + var(--_banner-padding) + var(--_banner-border-width));
+  }
+
+  /* Docked to a page edge by .banner-dock: square, edge borders dropped */
+  @container style(--banner-dock: top) {
+    --_banner-radius: 0;
+    --_banner-edge-inline: 0px;
+    --_banner-edge-start: 0px;
+  }
+
+  @container style(--banner-dock: bottom) {
+    --_banner-radius: 0;
+    --_banner-edge-inline: 0px;
+    --_banner-edge-end: 0px;
+  }
+
+  /* Layout */
   align-items: center;
   display: flex;
-  max-inline-size: none;
-  overflow: clip;
-  padding: var(--_banner-outer-padding);
-
-  /* Spacing */
   gap: var(--_banner-gap);
+  overflow: clip;
+  padding: var(--_banner-padding);
 
-  /* Surface, Border, Foreground & Backdrop */
+  /* Surface */
   background-color: var(--_banner-bg);
-  color: var(--_banner-text);
-  border: var(--_banner-border-width) var(--_banner-border-style) var(--_banner-border-color);
+  border-color: var(--_banner-tone-border);
+  border-style: solid;
+  border-block-start-width: var(--_banner-edge-start, var(--_banner-border-width));
+  border-block-end-width: var(--_banner-edge-end, var(--_banner-border-width));
+  border-inline-width: var(--_banner-edge-inline, var(--_banner-border-width));
   border-radius: var(--_banner-radius);
   box-shadow: var(--_banner-shadow);
-  backdrop-filter: var(--_banner-filter);
+  color: var(--_banner-text);
 
-  /* Child text inherits banner foreground */
-  :where(p, span, h1, h2, h3, h4, h5, h6, .heading, .subheading, .small-heading, .micro-heading) {
-    color: inherit;
+  /* Dismissal: [hidden] fades the banner out; entry fades it in */
+  transition-behavior: allow-discrete;
+  transition-duration: var(--_banner-transition);
+  transition-property: opacity,
+  display;
+
+  &[hidden] {
+    opacity: 0;
   }
 
-  /* Icons inside Banner */
-  > :where(.icon, svg, .icon-box) {
-    flex-shrink: 0;
-    color: var(--icon-color, currentColor);
+  @starting-style {
+    opacity: 0;
   }
 
+  /* The intent icon sits in an icon box the size of the buttons, aligned
+     with them */
   > :where(.icon-box) {
-    align-self: var(--banner-icon-align, var(--_banner-icon-align, flex-start));
+    align-self: var(--_banner-align);
+    color: var(--_banner-icon);
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --_banner-transition: 0s;
   }
 }
 
 /* ==========================================================================
-   2. Banner Inner Content Container (:where(.banner__inner))
+   2. Intent modifiers (pure token maps)
    ========================================================================== */
-:where(.banner__inner) {
-  /* Layout */
+:where(.banner--accent) {
+  --_banner-tone: var(--foreground-accent, CanvasText);
+  --_banner-tint: var(--surface-accent, Canvas);
+  --_banner-subtle-tint: var(--surface-accent, Canvas);
+  --_banner-tone-border: var(--border-color-accent, currentColor);
+  --_banner-solid: var(--surface-accent-strong, var(--foreground-accent, CanvasText));
+}
+
+:where(.banner--info) {
+  --_banner-tone: var(--foreground-info, CanvasText);
+  --_banner-tint: var(--surface-info, Canvas);
+  --_banner-subtle-tint: var(--surface-info, Canvas);
+  --_banner-tone-border: var(--border-color-info, currentColor);
+  --_banner-solid: var(--surface-info-strong, var(--foreground-info, CanvasText));
+}
+
+:where(.banner--success) {
+  --_banner-tone: var(--foreground-success, CanvasText);
+  --_banner-tint: var(--surface-success, Canvas);
+  --_banner-subtle-tint: var(--surface-success, Canvas);
+  --_banner-tone-border: var(--border-color-success, currentColor);
+  --_banner-solid: var(--surface-success-strong, var(--foreground-success, CanvasText));
+}
+
+:where(.banner--warning) {
+  --_banner-tone: var(--foreground-warning, CanvasText);
+  --_banner-tint: var(--surface-warning, Canvas);
+  --_banner-subtle-tint: var(--surface-warning, Canvas);
+  --_banner-tone-border: var(--border-color-warning, currentColor);
+  --_banner-solid: var(--surface-warning-strong, var(--foreground-warning, CanvasText));
+}
+
+:where(.banner--danger) {
+  --_banner-tone: var(--foreground-danger, CanvasText);
+  --_banner-tint: var(--surface-danger, Canvas);
+  --_banner-subtle-tint: var(--surface-danger, Canvas);
+  --_banner-tone-border: var(--border-color-danger, currentColor);
+  --_banner-solid: var(--surface-danger-strong, var(--foreground-danger, CanvasText));
+}
+
+/* An intent colours the links inside a banner that has a surface */
+:where(.banner--accent, .banner--info, .banner--success, .banner--warning, .banner--danger) {
+  --link-color: var(--_banner-tone);
+}
+
+/* ==========================================================================
+   3. Density, prominence and corner modifiers (pure token maps)
+   Density comes first so a plain banner stays flush. Each prominence resets
+   what the others set, so the last class wins.
+   ========================================================================== */
+:where(.banner--compact, .banner.ui-compact) {
+  --ui-sizing: compact;
+  --_banner-padding: var(--banner-compact-padding, calc(var(--spacing, 1rem) / 4));
+  --_banner-body-padding: var(--banner-compact-body-padding, calc(var(--spacing, 1rem) / 4));
+}
+
+:where(.banner--subtle) {
+  --_banner-bg: var(--_banner-subtle-tint);
+  --_banner-text: var(--foreground, CanvasText);
+  --_banner-icon: var(--_banner-tone);
+  --_banner-border-width: 0px;
+}
+
+:where(.banner--strong) {
+  --color-palette: inverted;
+  --link-color: currentColor;
+  --_banner-bg: var(--_banner-solid);
+  --_banner-text: var(--_banner-on-solid);
+  --_banner-icon: var(--_banner-on-solid);
+  --_banner-border-width: 0px;
+}
+
+:where(.banner--plain) {
+  --icon-box-size: auto;
+  --_banner-bg: transparent;
+  --_banner-text: var(--foreground, CanvasText);
+  --_banner-icon: var(--_banner-tone);
+  --_banner-border-width: 0px;
+  --_banner-gap: var(--banner-plain-gap, var(--spacing-8, 0.5rem));
+  --_banner-padding: 0px;
+  --_banner-body-padding: 0px;
+}
+
+:where(.banner--round) {
+  --button-corners: round;
+  --_banner-radius: calc(var(--button-sm-min-size, var(--spacing-target-sm, 2rem)) / 2 + var(--_banner-padding) + var(--_banner-border-width));
+}
+
+/* Translucent: a material, combined with any prominence that has a fill */
+@media (prefers-contrast: no-preference) {
+  :where(.banner--translucent) {
+    background-color: color-mix(in oklch, var(--_banner-bg), transparent var(--banner-translucency, 0%));
+    backdrop-filter: var(--banner-filter, none);
+  }
+}
+
+/* ==========================================================================
+   4. Parts
+   ========================================================================== */
+
+/* Body: the message. Typography comes from the text atoms. */
+:where(.banner__body) {
   align-items: flex-start;
   display: flex;
-  flex-direction: column;
+  gap: var(--_banner-body-gap);
   flex: 1;
+  flex-direction: column;
   justify-content: center;
+  min-inline-size: 0;
+  padding-block: calc(var(--_banner-body-padding) / 2);
+  padding-inline: var(--_banner-body-padding);
 
-  /* Spacing & Content Padding */
-  gap: var(--_banner-gap, var(--banner-gap, var(--spacing, 1rem)));
-  padding-block: var(--_banner-inner-padding-block);
-  padding-inline: var(--_banner-inner-padding-inline);
-
-  /* Reset default child paragraph & heading margins to respect banner gap */
   > :where(*) {
     margin: 0;
   }
 }
 
-/* Banner Thumbnail Container (:where(.banner__thumb)) */
-:where(.banner__thumb) {
-  align-self: stretch;
-  font-size: 0;
-  inline-size: var(--_banner-thumb-width);
-  position: relative;
-  margin-block: calc(var(--_banner-outer-padding) * -1);
-
-  &:first-child {
-    margin-inline-start: calc(var(--_banner-outer-padding) * -1);
-  }
-
-  &:last-child {
-    margin-inline-end: calc(var(--_banner-outer-padding) * -1);
-  }
-
-  :where(img, picture) {
-    position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-  }
-}
-
-/* ==========================================================================
-   3. Banner Action Container / Trigger (:where(.banner__action))
-   ========================================================================== */
+/* Action: one button, or a .cluster of them */
 :where(.banner__action) {
-  /* Positioning */
-  align-self: var(--banner-action-align, var(--_banner-action-align, flex-start));
+  align-self: var(--_banner-align);
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
-   4. Prominence Matrix Modifiers (.banner--subtle, .banner--strong)
+   5. Accessibility & media queries
    ========================================================================== */
 
-/* Subtle Banner (Borderless soft resting tint) */
-:where(.banner--subtle) {
-  --banner-bg: var(--banner-subtle-bg, var(--surface-muted));
-  --banner-translucency: 0%;
-  --_banner-border-width: 0px;
-  --_banner-border-color: transparent;
-}
-
-/* Strong Banner (High-emphasis solid tone fill with inverted high-contrast white text) */
-:where(.banner--strong) {
-  --color-palette: inverted;
-  --_banner-bg: var(--banner-strong-bg, var(--foreground, currentColor));
-  --_banner-border-color: transparent;
-  --_banner-border-width: 0px;
-  --_banner-text: var(--foreground-inverted-strong, #ffffff);
-  --banner-translucency: 0%;
-  --icon-color: var(--foreground-inverted-strong, #ffffff);
-  --link-color: currentColor;
-}
-
-/* ==========================================================================
-   5. Semantic Variants (.banner--success, .banner--error, etc.)
-   ========================================================================== */
-
-/* Success Variant */
-:where(.banner--success) {
-  --link-color: var(--foreground-success, currentColor);
-  --link-hover-color: var(--foreground-success-hover, currentColor);
-  --link-pressed-color: var(--foreground-success-pressed, currentColor);
-  --icon-color: var(--foreground-success, currentColor);
-  --banner-bg: var(--surface-success, transparent);
-  --banner-border-color: var(--border-color-success, currentColor);
-
-  &:where(.banner--strong) {
-    --icon-color: var(--foreground-inverted-strong);
-    --_banner-bg: var(--banner-success-strong-bg, var(--surface-success-strong, var(--foreground-success, #00875a)));
-  }
-}
-
-/* Error / Danger Variant */
-:where(.banner--error),
-:where(.banner--danger) {
-  --link-color: var(--foreground-danger, currentColor);
-  --link-hover-color: var(--foreground-danger-hover, currentColor);
-  --link-pressed-color: var(--foreground-danger-pressed, currentColor);
-  --icon-color: var(--foreground-danger, currentColor);
-  --banner-bg: var(--surface-danger, transparent);
-  --banner-border-color: var(--border-color-danger, currentColor);
-
-  &:where(.banner--strong) {
-    --_banner-bg: var(--banner-danger-strong-bg, var(--surface-danger-strong, var(--foreground-danger, #d32f2f)));
-    --icon-color: var(--foreground-inverted-strong);
-  }
-}
-
-/* Warning Variant */
-:where(.banner--warning) {
-  --link-color: var(--foreground-warning, currentColor);
-  --link-hover-color: var(--foreground-warning-hover, currentColor);
-  --link-pressed-color: var(--foreground-warning-pressed, currentColor);
-  --icon-color: var(--foreground-warning, currentColor);
-  --banner-bg: var(--surface-warning, transparent);
-  --banner-border-color: var(--border-color-warning, currentColor);
-
-  &:where(.banner--strong) {
-    --icon-color: var(--foreground-inverted-strong);
-    --_banner-bg: var(--banner-warning-strong-bg, var(--surface-warning-strong, var(--foreground-warning, #b06000)));
-  }
-}
-
-/* Info Variant */
-:where(.banner--info) {
-  --link-color: var(--foreground-info, currentColor);
-  --link-hover-color: var(--foreground-info-hover, currentColor);
-  --link-pressed-color: var(--foreground-info-pressed, currentColor);
-  --icon-color: var(--foreground-info, currentColor);
-  --banner-bg: var(--surface-info, transparent);
-  --banner-border-color: var(--border-color-info, currentColor);
-
-  &:where(.banner--strong) {
-    --_banner-bg: var(--banner-info-strong-bg, var(--surface-info-strong, var(--foreground-info, Canvas)));
-    --icon-color: var(--foreground-inverted-strong);
-  }
-}
-
-/* Accent Variant */
-:where(.banner--accent) {
-  --link-color: var(--foreground-accent, currentColor);
-  --link-hover-color: var(--foreground-accent-hover, currentColor);
-  --link-pressed-color: var(--foreground-accent-pressed, currentColor);
-  --icon-color: var(--foreground-accent, currentColor);
-  --banner-bg: var(--surface-accent, transparent);
-  --banner-border-color: var(--border-color-accent, currentColor);
-
-  &:where(.banner--strong) {
-    --_banner-bg: var(--banner-accent-strong-bg, var(--surface-accent-strong, var(--foreground-accent, #008076)));
-    --icon-color: var(--foreground-inverted-strong);
-  }
-}
-
-/* ==========================================================================
-   6. Modifiers (.banner--dynamic-corners, .banner--round, .banner--ruled, etc.)
-   ========================================================================== */
-
-/* Compact / Dense Modifier */
-:where(.banner--compact, .banner--dense) {
-  --_banner-gap: var(--banner-sm-gap, var(--spacing-8, 0.5rem));
-  --_banner-outer-padding: var(--banner-sm-outer-padding, var(--spacing-4, 0.25rem));
-  --_banner-inner-padding-block: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
-  --_banner-inner-padding-inline: var(--banner-sm-inner-padding, var(--spacing-4, 0.25rem));
-}
-
-/* Flush Edge-to-Edge Modifier */
-:where(.banner--flush) {
-  border-radius: 0;
-  border-inline: none;
-}
-
-/* Dynamic Concentric Corners Modifier */
-:where(.banner--dynamic-corners) {
-  --_banner-radius: calc(min(var(--button-radius, var(--radius, 0.25rem)), var(--button-min-size, var(--spacing-target, 3rem)) / 2) + var(--_banner-outer-padding) + var(--_banner-border-width));
-}
-
-/* Round Pill Modifier */
-:where(.banner--round) {
-  --_banner-radius: var(--radius-round, 9999px);
-
-  > :where(.button) {
-    --button-radius: var(--radius-round, 9999px);
-  }
-
-  :where(.banner__inner) {
-    &:first-child {
-      padding-inline-start: calc(var(--banner-inner-padding, var(--spacing-8, 0.5rem)) * 2);
-    }
-
-    &:last-child {
-      padding-inline-end: calc(var(--banner-inner-padding, var(--spacing-8, 0.5rem)) * 2);
-    }
-  }
-}
-
-/* Ruled Divider Modifier */
-:where(.banner--ruled) {
-  @supports (rule: 1px) {
-    rule: var(--_banner-inner-border-width) var(--_banner-inner-border-style) var(--_banner-inner-border-color);
-  }
-}
-
-:where(.banner--action-align-center) {
-  --banner-action-align: center;
-}
-
-/* ==========================================================================
-   7. Alert Integration (.alert .banner)
-   ========================================================================== */
-
-:where(.alert .banner) {
-  display: inline-flex;
-}
-
-:where(.alert:not(.alert--floating) > .banner) {
-  border-radius: 0;
-  border-inline: none;
-  inline-size: 100%;
-}
-
-:where(.alert--top:not(.alert--floating) > .banner,
-  .alert--sticky:not(.alert--floating) > .banner,
-  .alert--fixed-top:not(.alert--floating) > .banner) {
-  border-block-start: none;
-}
-
-:where(.alert--bottom:not(.alert--floating) > .banner,
-  .alert--fixed-bottom:not(.alert--floating) > .banner) {
-  border-block-end: none;
-}
-
-/* When Banner is nested inside .wrapper within .alert */
-:where(.alert .wrapper > .banner) {
-  inline-size: 100%;
-}
-
-/* ==========================================================================
-   8. Accessibility & Media Queries
-   ========================================================================== */
-
+/* Increased contrast: a thicker edge on every banner that has a surface */
 @media (prefers-contrast: more) {
-  :where(.banner) {
-    --banner-translucency: 0%;
-    --_banner-border-width: var(--border-width-md, var(--border-width, 2px));
-  }
+  :where(.banner:not(.banner--plain)) {
+    --_banner-border-width: var(--border-width-md, 2px);
+    --_banner-tone-border: currentColor;
 
-  :where(.banner--subtle) {
-    --_banner-border-width: var(--border-width, 1px);
-    --_banner-border-color: currentColor;
+    @container style(--banner-prominence: plain) {
+      --_banner-border-width: 0px;
+    }
   }
 }

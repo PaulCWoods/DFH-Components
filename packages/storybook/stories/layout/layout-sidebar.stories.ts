@@ -841,24 +841,24 @@ export const AppShellIntegration: Story = {
             </header>
 
             <div class="grid grid--3 gap-md">
-              <div class="card card--bordered padding stack gap-xs">
+              <div class="card padding stack gap-xs">
                 <span class="micro-heading text-muted">Requests / Sec</span>
                 <span class="heading" style="font-size: 1.75rem;">12,480</span>
                 <span class="status status--success status--sm"><span class="status__text">+14.2%</span></span>
               </div>
-              <div class="card card--bordered padding stack gap-xs">
+              <div class="card padding stack gap-xs">
                 <span class="micro-heading text-muted">P99 Latency</span>
                 <span class="heading" style="font-size: 1.75rem;">18ms</span>
                 <span class="status status--accent status--sm"><span class="status__text">Optimal</span></span>
               </div>
-              <div class="card card--bordered padding stack gap-xs">
+              <div class="card padding stack gap-xs">
                 <span class="micro-heading text-muted">Error Rate</span>
                 <span class="heading" style="font-size: 1.75rem;">0.002%</span>
                 <span class="status status--subtle status--sm"><span class="status__text">Nominal</span></span>
               </div>
             </div>
 
-            <div class="card card--bordered padding stack gap-sm">
+            <div class="card padding stack gap-sm">
               <h3 class="small-heading">System Log Stream</h3>
               <p class="text text-muted">Scroll down to observe independent main viewport scrolling alongside the pinned sidebar.</p>
               <div style="block-size: 20rem; background: var(--surface-card, #fff); border-radius: var(--radius-sm, 4px); border: 1px solid var(--border-color-quiet, #eee); padding: 1rem;">

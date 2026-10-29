@@ -24,7 +24,7 @@
         grid-area: header;
     }
 
-    &> :is(aside, .aside, .alert, .app__aside, .sidebar) {
+    &> :is(aside, .aside, .app__aside, .sidebar) {
         grid-area: aside;
     }
 

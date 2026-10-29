@@ -213,7 +213,7 @@ export const ContainerFlags: Story = {
 export const Flush: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md">
-      <div class="card card--bordered">
+      <div class="card">
         <div class="card__header inline gap-sm focus-within">
           <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
           <input type="search" class="input input--flush focus-none flex-grow" aria-label="Search commands" placeholder="Search commands" />

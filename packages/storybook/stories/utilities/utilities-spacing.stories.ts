@@ -40,30 +40,30 @@ AI agents and developers MUST use the following semantic patterns:
 
 \`\`\`html
 <!-- 1. All-Sides Token Padding (Standard & Explicit -md) -->
-<div class="card card--bordered padding">
+<div class="card padding">
   <span>Standard 1rem (16px) padding all sides</span>
 </div>
-<div class="card card--bordered padding-md">
+<div class="card padding-md">
   <span>Explicit -md synonym (1rem / 16px)</span>
 </div>
 
 <!-- 2. Fine-Grained XS Spacing -->
-<div class="card card--bordered padding-xs">
+<div class="card padding-xs">
   <span>Tight 0.25rem (4px) micro-component padding</span>
 </div>
 
 <!-- 3. Directional Logical Aliases -->
-<div class="card card--bordered padding-start-md padding-end-xs">
+<div class="card padding-start-md padding-end-xs">
   <span>Start: 1rem (16px), End: 0.25rem (4px)</span>
 </div>
 
 <!-- 4. Logical Inline & Block Padding -->
-<div class="card card--bordered padding-inline-md padding-block-sm">
+<div class="card padding-inline-md padding-block-sm">
   <span>Horizontal 1rem, Vertical 0.5rem</span>
 </div>
 
 <!-- 5. Shorthand Alias Parity (.px, .py, .pd, .mx, .my, .mg, .pl, .pr, .ml, .mr) -->
-<div class="card card--bordered px-lg py-sm">
+<div class="card px-lg py-sm">
   <span>Horizontal 2rem, Vertical 0.5rem (compact syntax)</span>
 </div>
 
@@ -178,7 +178,7 @@ export const Playground: Story = {
           Live Sandbox: Test token tiers, direction axes, and shorthand aliases below.
         </p>
         <div class="sb-demo-stage sb-demo-stage--lg" style="background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 8px, var(--surface-card) 8px, var(--surface-card) 16px);">
-          <div class="card card--bordered ${activeClass}" style="${boxModelStyles}; position: relative;">
+          <div class="card ${activeClass}" style="${boxModelStyles}; position: relative;">
             <div style="background: var(--surface-card); padding: var(--spacing-8); border-radius: var(--radius-sm); text-align: center;">
               <p class="font-weight-bold font-size-sm">Active Class: <code>.${activeClass}</code></p>
               <p class="font-size-xs text-muted margin-top-xs">
@@ -207,69 +207,59 @@ export const PaddingScaleHierarchy: Story = {
 
       <div class="grid grid--sm">
         <!-- 0 -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">1. Zero (.padding-0 / .pd-0)</h4>
-              <p class="card__subtitle font-size-xs">0px</p>
-            </header>
-            <div class="card__body padding-0" style="background: light-dark(#e6f4ea, #193224);">
-              <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">Flush Content</div>
-            </div>
-          </article>
-        </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">1. Zero (.padding-0 / .pd-0)</h4>
+            <p class="card__subtitle font-size-xs">0px</p>
+          </header>
+          <div class="card__body padding-0" style="background: light-dark(#e6f4ea, #193224);">
+            <div class="sb-demo-box sb-demo-box--sm" style="border-radius: 0;">Flush Content</div>
+          </div>
+        </article>
 
         <!-- xs (0.25rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">2. Extra Compact (.padding-xs / .pd-xs)</h4>
-              <p class="card__subtitle font-size-xs">0.25rem (4px)</p>
-            </header>
-            <div class="card__body padding-xs" style="background: light-dark(#e6f4ea, #193224);">
-              <div class="sb-demo-box sb-demo-box--sm">XS Content</div>
-            </div>
-          </article>
-        </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">2. Extra Compact (.padding-xs / .pd-xs)</h4>
+            <p class="card__subtitle font-size-xs">0.25rem (4px)</p>
+          </header>
+          <div class="card__body padding-xs" style="background: light-dark(#e6f4ea, #193224);">
+            <div class="sb-demo-box sb-demo-box--sm">XS Content</div>
+          </div>
+        </article>
 
         <!-- sm (0.5rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">3. Compact (.padding-sm / .pd-sm)</h4>
-              <p class="card__subtitle font-size-xs">0.5rem (8px)</p>
-            </header>
-            <div class="card__body padding-sm" style="background: light-dark(#e6f4ea, #193224);">
-              <div class="sb-demo-box sb-demo-box--sm">Compact Content</div>
-            </div>
-          </article>
-        </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">3. Compact (.padding-sm / .pd-sm)</h4>
+            <p class="card__subtitle font-size-xs">0.5rem (8px)</p>
+          </header>
+          <div class="card__body padding-sm" style="background: light-dark(#e6f4ea, #193224);">
+            <div class="sb-demo-box sb-demo-box--sm">Compact Content</div>
+          </div>
+        </article>
 
         <!-- default / md (1rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">4. Standard (.padding / .padding-md / .pd / .pd-md)</h4>
-              <p class="card__subtitle font-size-xs">1rem (16px)</p>
-            </header>
-            <div class="card__body padding" style="background: light-dark(#e6f4ea, #193224);">
-              <div class="sb-demo-box sb-demo-box--sm">Standard Content</div>
-            </div>
-          </article>
-        </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">4. Standard (.padding / .padding-md / .pd / .pd-md)</h4>
+            <p class="card__subtitle font-size-xs">1rem (16px)</p>
+          </header>
+          <div class="card__body padding" style="background: light-dark(#e6f4ea, #193224);">
+            <div class="sb-demo-box sb-demo-box--sm">Standard Content</div>
+          </div>
+        </article>
 
         <!-- lg (2rem) -->
-        <div class="card card--bordered">
-          <article class="card__content">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">5. Generous (.padding-lg / .pd-lg)</h4>
-              <p class="card__subtitle font-size-xs">2rem (32px)</p>
-            </header>
-            <div class="card__body padding-lg" style="background: light-dark(#e6f4ea, #193224);">
-              <div class="sb-demo-box sb-demo-box--sm">Spacious Content</div>
-            </div>
-          </article>
-        </div>
+        <article class="card">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">5. Generous (.padding-lg / .pd-lg)</h4>
+            <p class="card__subtitle font-size-xs">2rem (32px)</p>
+          </header>
+          <div class="card__body padding-lg" style="background: light-dark(#e6f4ea, #193224);">
+            <div class="sb-demo-box sb-demo-box--sm">Spacious Content</div>
+          </div>
+        </article>
       </div>
     </div>
   `,
@@ -290,7 +280,7 @@ export const LogicalDirectionalSpacing: Story = {
 
       <div class="grid grid--sm">
         <!-- Inline Only -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Horizontal Only: <code>.padding-inline-lg</code> (<code>.px-lg</code>)</h4>
           <div class="padding-inline-lg" style="background: light-dark(#e6f4ea, #193224); outline: 1px dashed #34a853;">
             <div class="sb-demo-box sb-demo-box--sm">2rem Left &amp; Right</div>
@@ -298,7 +288,7 @@ export const LogicalDirectionalSpacing: Story = {
         </div>
 
         <!-- Block Only -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Vertical Only: <code>.padding-block-lg</code> (<code>.py-lg</code>)</h4>
           <div class="padding-block-lg" style="background: light-dark(#e6f4ea, #193224); outline: 1px dashed #34a853;">
             <div class="sb-demo-box sb-demo-box--sm">2rem Top &amp; Bottom</div>
@@ -306,7 +296,7 @@ export const LogicalDirectionalSpacing: Story = {
         </div>
 
         <!-- Asymmetric Mix -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Asymmetric: <code>.px-lg.py-sm</code></h4>
           <div class="padding-inline-lg padding-block-sm" style="background: light-dark(#e6f4ea, #193224); outline: 1px dashed #34a853;">
             <div class="sb-demo-box sb-demo-box--sm">Horizontal 2rem, Vertical 0.5rem</div>
@@ -330,10 +320,10 @@ export const MarginOffsets: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div style="background: light-dark(#fef7e0, #382e18); padding: var(--spacing-8); outline: 1px dashed #fbbc04;">
           <p class="font-size-xs text-muted font-weight-bold">Amber Zone = Outer Margin Clearance</p>
-          <div class="card card--bordered margin-top-lg margin-bottom-sm padding-sm" style="background: var(--surface-card);">
+          <div class="card margin-top-lg margin-bottom-sm padding-sm" style="background: var(--surface-card);">
             <p class="font-size-xs"><code>.margin-top-lg.margin-bottom-sm</code> (<code>.mt-lg.mb-sm</code>)</p>
           </div>
         </div>
@@ -357,17 +347,17 @@ export const BidirectionalRTLDemo: Story = {
 
       <div class="grid grid--sm">
         <!-- LTR -->
-        <div class="card card--bordered padding stack" dir="ltr">
+        <div class="card padding stack" dir="ltr">
           <span class="sb-demo-tag font-size-xs">LTR Mode</span>
-          <div class="card card--bordered padding-inline-lg padding-block-sm">
+          <div class="card padding-inline-lg padding-block-sm">
             <p class="font-size-sm"><strong>Left-To-Right:</strong> Start is on the left.</p>
           </div>
         </div>
 
         <!-- RTL -->
-        <div class="card card--bordered padding stack" dir="rtl">
+        <div class="card padding stack" dir="rtl">
           <span class="sb-demo-tag font-size-xs">RTL Mode (dir="rtl")</span>
-          <div class="card card--bordered padding-inline-lg padding-block-sm">
+          <div class="card padding-inline-lg padding-block-sm">
             <p class="font-size-sm"><strong>Right-To-Left:</strong> Start is on the right.</p>
           </div>
         </div>
@@ -391,43 +381,37 @@ export const CardDensityVariations: Story = {
 
       <div class="grid grid--sm">
         <!-- Compact -->
-        <div class="card card--bordered padding-sm">
-          <article class="card__content stack" style="--gap: var(--spacing-4);">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">Compact Density</h4>
-              <span class="sb-demo-tag">Dense</span>
-            </header>
-            <div class="card__body">
-              <p class="font-size-xs text-muted">Using .padding-sm for data-dense grids.</p>
-            </div>
-          </article>
-        </div>
+        <article class="card padding-sm stack" style="--gap: var(--spacing-4);">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">Compact Density</h4>
+            <span class="sb-demo-tag">Dense</span>
+          </header>
+          <div class="card__body">
+            <p class="font-size-xs text-muted">Using .padding-sm for data-dense grids.</p>
+          </div>
+        </article>
 
         <!-- Standard -->
-        <div class="card card--bordered padding">
-          <article class="card__content stack" style="--gap: var(--spacing-8);">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">Standard Density</h4>
-              <span class="status status--accent status--sm"><span class="status__text">Default</span></span>
-            </header>
-            <div class="card__body">
-              <p class="font-size-xs text-muted">Using .padding for general application content.</p>
-            </div>
-          </article>
-        </div>
+        <article class="card padding stack" style="--gap: var(--spacing-8);">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">Standard Density</h4>
+            <span class="status status--accent status--sm"><span class="status__text">Default</span></span>
+          </header>
+          <div class="card__body">
+            <p class="font-size-xs text-muted">Using .padding for general application content.</p>
+          </div>
+        </article>
 
         <!-- Spacious -->
-        <div class="card card--bordered padding-lg">
-          <article class="card__content stack" style="--gap: var(--spacing-12);">
-            <header class="card__header">
-              <h4 class="card__title font-size-sm">Spacious Density</h4>
-              <span class="sb-demo-tag">Relaxed</span>
-            </header>
-            <div class="card__body">
-              <p class="font-size-xs text-muted">Using .padding-lg for editorial highlights.</p>
-            </div>
-          </article>
-        </div>
+        <article class="card padding-lg stack" style="--gap: var(--spacing-12);">
+          <header class="card__header">
+            <h4 class="card__title font-size-sm">Spacious Density</h4>
+            <span class="sb-demo-tag">Relaxed</span>
+          </header>
+          <div class="card__body">
+            <p class="font-size-xs text-muted">Using .padding-lg for editorial highlights.</p>
+          </div>
+        </article>
       </div>
     </div>
   `,
@@ -447,22 +431,22 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding-xs">
+        <div class="card padding-xs">
           <span class="font-size-xs">.padding-xs</span>
         </div>
-        <div class="card card--bordered padding-sm">
+        <div class="card padding-sm">
           <span class="font-size-xs">.padding-sm</span>
         </div>
-        <div class="card card--bordered padding-md">
+        <div class="card padding-md">
           <span class="font-size-xs">.padding-md (.padding)</span>
         </div>
-        <div class="card card--bordered padding-lg">
+        <div class="card padding-lg">
           <span class="font-size-xs">.padding-lg</span>
         </div>
-        <div class="card card--bordered padding-start-md padding-end-xs">
+        <div class="card padding-start-md padding-end-xs">
           <span class="font-size-xs">.padding-start-md.padding-end-xs</span>
         </div>
-        <div class="card card--bordered padding-inline-lg padding-block-sm">
+        <div class="card padding-inline-lg padding-block-sm">
           <span class="font-size-xs">.px-lg.py-sm</span>
         </div>
       </div>

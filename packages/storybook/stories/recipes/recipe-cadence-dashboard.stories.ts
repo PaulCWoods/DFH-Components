@@ -22,17 +22,17 @@ const meta: Meta = {
   - **Mobile View (Small Viewports):** The primary rail gracefully disappears; its identity and utilities migrate to a compact **Mobile Top Navigation Bar** (\`.header.md:hide\`) with drawer toggle button; the main navigation buttons migrate to a **Floating Tab Bar Dock** (\`.tab-list--docked\`) at the bottom of the viewport; and the submenu sidebar transforms into an off-canvas **Slide-Over Drawer** with accessible dark blurred backdrop (\`.backdrop\`).
 
 - **Application Holy Grail Frame (\`.app.app--viewport\` & \`.main.main--viewport\`):**
-  Uses the canonical Holy Grail grid defined in \`layout/app.css\` with modern dynamic viewport height (\`100dvb\`) and desktop viewport containment (\`.app--viewport\`). Keeps the **Station Header** and **Persistent Audio Dock** firmly anchored while enabling individual panels in the **Main Workspace** (\`.main--viewport\` + \`.split--stretch\` + \`.card--panel\`) to scroll internally.
+  Uses the canonical Holy Grail grid defined in \`layout/app.css\` with modern dynamic viewport height (\`100dvb\`) and desktop viewport containment (\`.app--viewport\`). Keeps the **Station Header** and **Persistent Audio Dock** firmly anchored while enabling individual panels in the **Main Workspace** (\`.main--viewport\` + \`.split--stretch\` + \`.card__body--scrollable\`) to scroll internally.
 
 - **Station Header & Telemetry (\`.header.header--sticky.header--translucent\`):**
-  Sticky glassmorphism header featuring station selector (\`.select.select--sm\`), stream health badge (\`.badge\` with live indicator dot and \`data-status="online"\`), quick metrics stat cards (\`.card.card--compact.card--bordered\`), and global emergency action buttons (\`.button--danger\`, \`.button--danger\`).
+  Sticky glassmorphism header featuring station selector (\`.select.select--sm\`), stream health badge (\`.badge\` with live indicator dot and \`data-status="online"\`), quick metrics stat cards (\`.card.card--compact\`), and global emergency action buttons (\`.button--danger\`, \`.button--danger\`).
 
 - **Leading Sidebar Deck A (\`.deck.deck--on-air.deck--panel.deck--bordered\`):**
-  Dedicated playback station composed with the **Deck Organism** (\`deck.css\`) featuring rotating vinyl turntable artwork (\`.deck__art--vinyl.is-spinning\`), typographic lockup (\`.deck__identity.lockup\`), live timeline scrubber (\`.range.range--sm.deck__scrubber\`), primary transport toolbar (\`.button-group.button-group--center\`), level output faders (\`.deck__volume\`), and stereo VU peak monitoring (\`<meter class="meter meter--sm">\`).
+  Dedicated playback station composed with the **Deck Organism** (\`deck.css\`) featuring rotating vinyl turntable artwork (\`.deck__art--vinyl.is-spinning\`), typographic lockup (\`.deck__identity.lockup\`), live timeline scrubber (\`.range.range--sm.deck__scrubber\`), primary transport toolbar (\`.deck__transport.button-group\`), level output faders (\`.deck__volume\`), and stereo VU peak monitoring (\`<meter class="meter meter--sm">\`).
 
-- **Expanding Main Workspace: Program Timetable (\`.card.card--panel.card--bordered\`):**
+- **Expanding Main Workspace: Program Timetable (\`.card\` with \`.card__body--scrollable\`):**
   Broadcast queue and scheduled asset rundown composed with the patterns established in the **Tally & Sprout Recipe**:
-  - **Toolbar & Live Count:** Filter pills (\`.button-group.button-group--tight.buttons-subtle\`), search field (\`.input.input--sm\`), and live screen-reader feedback (\`role="status"\` & \`aria-live="polite"\`).
+  - **Toolbar & Live Count:** Filter pills (\`.button-group.button-group--joined.buttons-subtle\`), search field (\`.input.input--sm\`), and live screen-reader feedback (\`role="status"\` & \`aria-live="polite"\`).
   - **Dynamic Multi-Select & Batch Action Bar:** Row checkboxes with "Select All" table header checkbox and a floating action bar ("Cue Next", "Remove Selected").
   - **Strict Table Geometry:** Uses \`.table.table--striped.table--hover.table--sticky-header\` with token-driven column helpers (\`.table__col--index\`, \`.table__col--fit\`, \`.table__col--lg\`, \`.table__col--center\`, \`.table__cell--center\`).
   - **Typographic Lockup:** Title and artist paired via the \`.lockup\` primitive.
@@ -1175,37 +1175,33 @@ export const LiveDashboard: Story = {
                       type="button" 
                       class="button button--subtle button--icon button--sm" 
                       id="btn-track-meta"
-                      popovertarget="track-meta-popover" 
-                      style="anchor-name: --meta-anchor;"
-                      aria-haspopup="dialog"
+                      popovertarget="track-meta-popover"
                       aria-label="Inspect Track Metadata and ISRC"
                     >
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg>
                     </button>
 
                     <!-- Anchored Popover -->
-                    <div id="track-meta-popover" popover class="popover popover--anchored" style="position-anchor: --meta-anchor; min-inline-size: 20rem;">
-                      <div class="card card--compact card--bordered card--translucent card--ruled">
-                        <article class="card__content">
-                          <header class="card__header">
-                            <h3 class="card__title font-size-sm font-weight-bold">Licensing & Asset Inspector</h3>
-                          </header>
-                          <div class="card__body card__body--flush">
-                            <div class="table-container">
-                              <table class="table table--compact font-size-xs">
-                                <tbody>
-                                  <tr><th scope="row" class="text-muted">ISRC</th><td><code>US-AT2-24-00192</code></td></tr>
-                                  <tr><th scope="row" class="text-muted">PRO / Rights</th><td><span class="chip chip--sm"><span class="chip__text">ASCAP / BMI</span></span></td></tr>
-                                  <tr><th scope="row" class="text-muted">Format</th><td>FLAC 24-bit / 96kHz</td></tr>
-                                  <tr><th scope="row" class="text-muted">Loudness</th><td>-14.2 LUFS (Target: -14)</td></tr>
-                                  <tr><th scope="row" class="text-muted">BPM / Key</th><td>124 BPM • E Minor</td></tr>
-                                  <tr><th scope="row" class="text-muted">Label / Year</th><td>2026 Ghostly International</td></tr>
-                                </tbody>
-                              </table>
-                            </div>
+                    <div id="track-meta-popover" popover class="popover" style="min-inline-size: 20rem;">
+                      <article class="card card--compact card--translucent card--ruled">
+                        <header class="card__header">
+                          <h3 class="card__title font-size-sm font-weight-bold">Licensing & Asset Inspector</h3>
+                        </header>
+                        <div class="card__body card__body--flush">
+                          <div class="table-container">
+                            <table class="table table--compact font-size-xs">
+                              <tbody>
+                                <tr><th scope="row" class="text-muted">ISRC</th><td><code>US-AT2-24-00192</code></td></tr>
+                                <tr><th scope="row" class="text-muted">PRO / Rights</th><td><span class="chip chip--sm"><span class="chip__text">ASCAP / BMI</span></span></td></tr>
+                                <tr><th scope="row" class="text-muted">Format</th><td>FLAC 24-bit / 96kHz</td></tr>
+                                <tr><th scope="row" class="text-muted">Loudness</th><td>-14.2 LUFS (Target: -14)</td></tr>
+                                <tr><th scope="row" class="text-muted">BPM / Key</th><td>124 BPM • E Minor</td></tr>
+                                <tr><th scope="row" class="text-muted">Label / Year</th><td>2026 Ghostly International</td></tr>
+                              </tbody>
+                            </table>
                           </div>
-                        </article>
-                      </div>
+                        </div>
+                      </article>
                     </div>
                   </div>
                 </header>
@@ -1258,7 +1254,7 @@ export const LiveDashboard: Story = {
                   </div>
 
                   <!-- Transport Controls -->
-                  <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Playback transport controls">
+                  <div class="deck__transport button-group" role="group" aria-label="Playback transport controls">
                     <button type="button" class="button button--subtle button--icon deck__cue" id="deck-cue-btn" aria-label="Cue to start">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                     </button>
@@ -1331,103 +1327,101 @@ export const LiveDashboard: Story = {
             <!-- -------------------------------------------------------------- -->
             <!-- Right Pane: Broadcast Queue & Program Timetable                -->
             <!-- -------------------------------------------------------------- -->
-            <section class="card card--panel" aria-label="Broadcast Playback Queue">
-              <article class="card__content">
-                
-                <!-- Queue Header & Filter Toolbar -->
-                <header class="card__header container-type-inline-size">
-                  <hgroup class="card__hgroup">
-                    <h2 class="card__title subheading">Broadcast Queue & Schedule</h2>
-                    <p class="card__subtitle micro-heading" id="queue-count-summary" role="status" aria-live="polite">8 items queued • Total remaining airtime: 34m 18s</p>
-                  </hgroup>
-                  <div class="cluster gap-xs align-items-center @max-md:hide-labels">
-                    <button type="button" class="button button--sm" id="btn-balance-queue" aria-label="Auto-Balance Queue Clocks">
-                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Sortable"/></svg>
-                      <span>Auto-Balance</span>
-                    </button>
-                    <button type="button" class="button button--strong button--accent button--sm" id="btn-insert-asset" aria-label="Insert Asset to Queue">
-                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
-                      <span>Insert Track</span>
-                    </button>
+            <section class="card" aria-label="Broadcast Playback Queue">
+              
+              <!-- Queue Header & Filter Toolbar -->
+              <header class="card__header container-type-inline-size">
+                <hgroup class="card__hgroup">
+                  <h2 class="card__title subheading">Broadcast Queue & Schedule</h2>
+                  <p class="card__subtitle micro-heading" id="queue-count-summary" role="status" aria-live="polite">8 items queued • Total remaining airtime: 34m 18s</p>
+                </hgroup>
+                <div class="cluster gap-xs align-items-center @max-md:hide-labels">
+                  <button type="button" class="button button--sm" id="btn-balance-queue" aria-label="Auto-Balance Queue Clocks">
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Sortable"/></svg>
+                    <span>Auto-Balance</span>
+                  </button>
+                  <button type="button" class="button button--strong button--accent button--sm" id="btn-insert-asset" aria-label="Insert Asset to Queue">
+                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
+                    <span>Insert Track</span>
+                  </button>
+                </div>
+
+                <!-- Search & Category Filters -->
+                <div class="card__header-line inline justify-content-between align-items-center flex-wrap gap-xs margin-top">
+                  <!-- Search Input -->
+                  <div class="flex flex-grow-1" style="max-inline-size: 22rem;">
+                    <input 
+                      type="search" 
+                      class="input input--sm" 
+                      id="queue-search-input" 
+                      placeholder="Search tracks, stagers, ads, ISRC..." 
+                      aria-label="Filter queued broadcast assets"
+                    />
                   </div>
 
-                  <!-- Search & Category Filters -->
-                  <div class="card__header-line inline justify-content-between align-items-center flex-wrap gap-xs margin-top">
-                    <!-- Search Input -->
-                    <div class="flex flex-grow-1" style="max-inline-size: 22rem;">
-                      <input 
-                        type="search" 
-                        class="input input--sm" 
-                        id="queue-search-input" 
-                        placeholder="Search tracks, stagers, ads, ISRC..." 
-                        aria-label="Filter queued broadcast assets"
-                      />
-                    </div>
-
-                    <!-- Category Pills -->
-                    <div class="button-group button-group--tight buttons-subtle" role="radiogroup" aria-label="Queue Category Filter">
-                      <button type="button" class="button button--sm is-active" data-filter="all" role="radio" aria-checked="true"><span>All</span></button>
-                      <button type="button" class="button button--sm" data-filter="music" role="radio" aria-checked="false"><span>Music</span></button>
-                      <button type="button" class="button button--sm" data-filter="stager" role="radio" aria-checked="false"><span>Stagers</span></button>
-                      <button type="button" class="button button--sm" data-filter="ad" role="radio" aria-checked="false"><span>Ads</span></button>
-                    </div>
-                  </div>
-
-                  <!-- Dynamic Multi-Select Batch Action Floating Bar (Sprout Pattern) -->
-                  <div id="batch-action-bar" class="inline justify-content-between align-items-center padding-xs margin-block-start-xs radius-sm" style="display: none; background-color: var(--surface-translucent, transparent); border: var(--border-width, 1px) solid var(--border-color-accent, currentColor);">
-                    <div class="inline align-items-center gap-sm">
-                      <span class="badge badge--accent badge--sm" id="batch-counter-badge"><span class="badge__text">0 selected</span></span>
-                      <span class="font-size-xs">Batch actions for selected tracks:</span>
-                    </div>
-                    <div class="inline gap-xs">
-                      <button type="button" class="button button--plain button--sm" id="btn-batch-cue">
-                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg>
-                        <span>Cue Next</span>
-                      </button>
-                      <button type="button" class="button button--plain button--sm" id="btn-batch-remove">
-                        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-                        <span>Remove Selected</span>
-                      </button>
-                    </div>
-                  </div>
-                </header>
-
-                <!-- Queue Data Table with Sprout Recipe Standards -->
-                <div class="card__body card__body--flush">
-                  <div class="table-container" tabindex="0" role="region" aria-label="Scheduled broadcast queue timetable">
-                    <table class="table table--striped table--hover table--sticky-header" id="queue-table">
-                      <caption class="visually-hidden">Live broadcast queue and scheduled program rundown listing upcoming tracks, audio assets, and station automation.</caption>
-                      <thead>
-                        <tr>
-                          <th scope="col" class="table__col--index">
-                            <label class="choice visually-hidden" for="select-all-queue-cb">Select all rows</label>
-                            <input type="checkbox" id="select-all-queue-cb" class="checkbox-input" />
-                          </th>
-                          <th scope="col" class="table__col--fit table__col--center">Time</th>
-                          <th scope="col" class="table__col--fill">Asset / Track Title</th>
-                          <th scope="col" class="table__col--fit table__col--center">Type</th>
-                          <th scope="col" class="table__col--fit table__col--center">Duration</th>
-                          <th scope="col" class="table__col--fit table__col--center">Status</th>
-                          <th scope="col" class="table__col--fit table__cell--center"><span class="visually-hidden">Actions</span></th>
-                        </tr>
-                      </thead>
-                      <tbody id="queue-tbody">
-                        <!-- Populated dynamically by microtask -->
-                      </tbody>
-                    </table>
+                  <!-- Category Pills -->
+                  <div class="button-group button-group--joined buttons-subtle" role="radiogroup" aria-label="Queue Category Filter">
+                    <button type="button" class="button button--sm is-active" data-filter="all" role="radio" aria-checked="true"><span>All</span></button>
+                    <button type="button" class="button button--sm" data-filter="music" role="radio" aria-checked="false"><span>Music</span></button>
+                    <button type="button" class="button button--sm" data-filter="stager" role="radio" aria-checked="false"><span>Stagers</span></button>
+                    <button type="button" class="button button--sm" data-filter="ad" role="radio" aria-checked="false"><span>Ads</span></button>
                   </div>
                 </div>
 
-                <!-- Queue Automation Status Footer -->
-                <footer class="card__footer inline justify-content-between align-items-center text-muted font-size-xs">
-                  <div class="inline align-items-center gap-xs">
-                    <svg class="icon font-size-xs" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-                    <span>Automation Engine: AutoDJ Active (Next ad break window at 11:45 AM)</span>
+                <!-- Dynamic Multi-Select Batch Action Floating Bar (Sprout Pattern) -->
+                <div id="batch-action-bar" class="inline justify-content-between align-items-center padding-xs margin-block-start-xs radius-sm" style="display: none; background-color: var(--surface-translucent, transparent); border: var(--border-width, 1px) solid var(--border-color-accent, currentColor);">
+                  <div class="inline align-items-center gap-sm">
+                    <span class="badge badge--accent badge--sm" id="batch-counter-badge"><span class="badge__text">0 selected</span></span>
+                    <span class="font-size-xs">Batch actions for selected tracks:</span>
                   </div>
-                  <span>Sync: Primary Master (0 dropped frames)</span>
-                </footer>
+                  <div class="inline gap-xs">
+                    <button type="button" class="button button--plain button--sm" id="btn-batch-cue">
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Play"/></svg>
+                      <span>Cue Next</span>
+                    </button>
+                    <button type="button" class="button button--plain button--sm" id="btn-batch-remove">
+                      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+                      <span>Remove Selected</span>
+                    </button>
+                  </div>
+                </div>
+              </header>
 
-              </article>
+              <!-- Queue Data Table with Sprout Recipe Standards -->
+              <div class="card__body card__body--flush card__body--scrollable">
+                <div class="table-container" tabindex="0" role="region" aria-label="Scheduled broadcast queue timetable">
+                  <table class="table table--striped table--hover table--sticky-header" id="queue-table">
+                    <caption class="visually-hidden">Live broadcast queue and scheduled program rundown listing upcoming tracks, audio assets, and station automation.</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col" class="table__col--index">
+                          <label class="choice visually-hidden" for="select-all-queue-cb">Select all rows</label>
+                          <input type="checkbox" id="select-all-queue-cb" class="checkbox-input" />
+                        </th>
+                        <th scope="col" class="table__col--fit table__col--center">Time</th>
+                        <th scope="col" class="table__col--fill">Asset / Track Title</th>
+                        <th scope="col" class="table__col--fit table__col--center">Type</th>
+                        <th scope="col" class="table__col--fit table__col--center">Duration</th>
+                        <th scope="col" class="table__col--fit table__col--center">Status</th>
+                        <th scope="col" class="table__col--fit table__cell--center"><span class="visually-hidden">Actions</span></th>
+                      </tr>
+                    </thead>
+                    <tbody id="queue-tbody">
+                      <!-- Populated dynamically by microtask -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Queue Automation Status Footer -->
+              <footer class="card__footer inline justify-content-between align-items-center text-muted font-size-xs">
+                <div class="inline align-items-center gap-xs">
+                  <svg class="icon font-size-xs" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+                  <span>Automation Engine: AutoDJ Active (Next ad break window at 11:45 AM)</span>
+                </div>
+                <span>Sync: Primary Master (0 dropped frames)</span>
+              </footer>
+
             </section>
 
           </div>
@@ -1461,7 +1455,7 @@ export const LiveDashboard: Story = {
 
                 <!-- Center: Transport Controls & Scrubber Timeline -->
                 <div class="deck__timeline-transport-group">
-                  <div class="deck__transport button-group button-group--center" role="toolbar" aria-label="Dock playback controls">
+                  <div class="deck__transport button-group" role="group" aria-label="Dock playback controls">
                     <button type="button" class="button button--subtle button--icon button--sm" id="dock-prev-btn" aria-label="Cue previous track">
                       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronStart"/></svg>
                     </button>
@@ -1546,101 +1540,99 @@ export const LiveDashboard: Story = {
         <!-- 4. Broadcast & DSP Settings Modal Dialog (<dialog>)                -->
         <!-- ================================================================== -->
         <dialog id="cadence-settings-dialog" class="dialog" aria-labelledby="cadence-dialog-title" aria-describedby="cadence-dialog-desc">
-          <div class="card card--bordered card--ruled wrapper wrapper--md" style="margin: 0 auto;">
-            <article class="card__content">
+          <article class="card card--ruled wrapper wrapper--md" style="margin: 0 auto;">
+            
+            <!-- Dialog Header -->
+            <header class="card__header">
+              <hgroup>
+                <h2 id="cadence-dialog-title" class="card__title heading">Stream & Broadcast Settings</h2>
+                <p id="cadence-dialog-desc" class="card__subtitle small-text">Configure primary audio pipeline, DSP codecs, and automation failsafes.</p>
+              </hgroup>
+              <form method="dialog">
+                <button type="submit" class="button button--subtle button--icon" commandfor="cadence-settings-dialog" command="close" aria-label="Close settings dialog">
+                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+                </button>
+              </form>
+            </header>
+
+            <!-- Dialog Body -->
+            <div class="card__body card__body--scrollable">
+              <div class="form controls-subtle">
               
-              <!-- Dialog Header -->
-              <header class="card__header">
-                <hgroup>
-                  <h2 id="cadence-dialog-title" class="card__title heading">Stream & Broadcast Settings</h2>
-                  <p id="cadence-dialog-desc" class="card__subtitle small-text">Configure primary audio pipeline, DSP codecs, and automation failsafes.</p>
-                </hgroup>
-                <form method="dialog">
-                  <button type="submit" class="button button--subtle button--icon" commandfor="cadence-settings-dialog" command="close" aria-label="Close settings dialog">
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-                  </button>
-                </form>
-              </header>
-
-              <!-- Dialog Body -->
-              <div class="card__body">
-                <div class="form controls-subtle">
-                
-                <!-- Audio Source -->
-                <div class="field">
-                  <label for="setting-audio-source" class="field__label">Primary Sound Device / Audio Interface</label>
-                  <select id="setting-audio-source" class="select">
-                    <option value="interface-1" selected>Universal Audio Apollo x8 (Channels 1-2 Master Out)</option>
-                    <option value="interface-2">Dante Virtual Soundcard (Network Bus A)</option>
-                    <option value="interface-3">Built-in CoreAudio Virtual Aggregate</option>
-                  </select>
-                </div>
-
-                <!-- Codec Selection -->
-                <div class="field">
-                  <label for="setting-codec" class="field__label">Broadcast Encoding Codec & Bitrate</label>
-                  <select id="setting-codec" class="select">
-                    <option value="aac-320" selected>320 kbps AAC-LC (High Fidelity Stereo - Current)</option>
-                    <option value="aac-192">192 kbps AAC-HE (Mobile Optimized)</option>
-                    <option value="mp3-320">320 kbps MP3 (Legacy Fallback Stream)</option>
-                    <option value="flac">FLAC Lossless 24-bit (Archival Feed)</option>
-                  </select>
-                </div>
-                <hr class="divider" />
-
-                <!-- Loudness Normalization Switch -->
-                <label class="switch">
-                  <span class="switch__label">
-                    <strong>EBU R128 / ReplayGain Loudness Processing</strong>
-                    <small>Enforces consistent -14 LUFS integrated volume across tracks</small>
-                  </span>
-                  <input type="checkbox" role="switch" class="visually-hidden" checked id="switch-loudness" />
-                  <span class="switch__control" aria-hidden="true">
-                    <span class="switch__option switch__option--off">Off</span>
-                    <span class="switch__option switch__option--on">On</span>
-                  </span>
-                </label>
-
-                <!-- Emergency Failsafe Switch -->
-                <label class="switch">
-                  <span class="switch__label">
-                    <strong>Auto-Failover to Emergency Cart</strong>
-                    <small>Triggers emergency backup rotation if buffer drops under 10ms</small>
-                  </span>
-                  <input type="checkbox" role="switch" class="visually-hidden" checked id="switch-failsafe" />
-                  <span class="switch__control" aria-hidden="true">
-                    <span class="switch__option switch__option--off">Off</span>
-                    <span class="switch__option switch__option--on">On</span>
-                  </span>
-                </label>
-
-                <!-- Buffer Latency Slider -->
-                <hr class="divider" />
-                <div class="field">
-                  <div class="inline justify-content-between align-items-center">
-                    <label for="setting-buffer" class="field__label">Buffer Latency Safety Margin</label>
-                    <output for="setting-buffer" id="buffer-readout" class="font-size-xs font-weight-bold font-mono">42 ms</output>
-                  </div>
-                  <input type="range" class="range range--sm" id="setting-buffer" min="10" max="250" value="42" style="--value: 17%;" />
-                </div>
-                </div>
-
+              <!-- Audio Source -->
+              <div class="field">
+                <label for="setting-audio-source" class="field__label">Primary Sound Device / Audio Interface</label>
+                <select id="setting-audio-source" class="select">
+                  <option value="interface-1" selected>Universal Audio Apollo x8 (Channels 1-2 Master Out)</option>
+                  <option value="interface-2">Dante Virtual Soundcard (Network Bus A)</option>
+                  <option value="interface-3">Built-in CoreAudio Virtual Aggregate</option>
+                </select>
               </div>
 
-              <!-- Dialog Footer -->
-              <footer class="card__footer inline justify-content-end">
-                <form method="dialog" class="inline">
-                  <button type="submit" class="button" commandfor="cadence-settings-dialog" command="close">
-                    <span>Cancel</span>
-                  </button>
-                  <button type="submit" value="save" class="button button--strong button--accent" id="btn-save-settings">
-                    <span>Save Configuration</span>
-                  </button>
-                </form>
-              </footer>
+              <!-- Codec Selection -->
+              <div class="field">
+                <label for="setting-codec" class="field__label">Broadcast Encoding Codec & Bitrate</label>
+                <select id="setting-codec" class="select">
+                  <option value="aac-320" selected>320 kbps AAC-LC (High Fidelity Stereo - Current)</option>
+                  <option value="aac-192">192 kbps AAC-HE (Mobile Optimized)</option>
+                  <option value="mp3-320">320 kbps MP3 (Legacy Fallback Stream)</option>
+                  <option value="flac">FLAC Lossless 24-bit (Archival Feed)</option>
+                </select>
+              </div>
+              <hr class="divider" />
 
-            </article>
-          </div>
+              <!-- Loudness Normalization Switch -->
+              <label class="switch">
+                <span class="switch__label">
+                  <strong>EBU R128 / ReplayGain Loudness Processing</strong>
+                  <small>Enforces consistent -14 LUFS integrated volume across tracks</small>
+                </span>
+                <input type="checkbox" role="switch" class="visually-hidden" checked id="switch-loudness" />
+                <span class="switch__control" aria-hidden="true">
+                  <span class="switch__option switch__option--off">Off</span>
+                  <span class="switch__option switch__option--on">On</span>
+                </span>
+              </label>
+
+              <!-- Emergency Failsafe Switch -->
+              <label class="switch">
+                <span class="switch__label">
+                  <strong>Auto-Failover to Emergency Cart</strong>
+                  <small>Triggers emergency backup rotation if buffer drops under 10ms</small>
+                </span>
+                <input type="checkbox" role="switch" class="visually-hidden" checked id="switch-failsafe" />
+                <span class="switch__control" aria-hidden="true">
+                  <span class="switch__option switch__option--off">Off</span>
+                  <span class="switch__option switch__option--on">On</span>
+                </span>
+              </label>
+
+              <!-- Buffer Latency Slider -->
+              <hr class="divider" />
+              <div class="field">
+                <div class="inline justify-content-between align-items-center">
+                  <label for="setting-buffer" class="field__label">Buffer Latency Safety Margin</label>
+                  <output for="setting-buffer" id="buffer-readout" class="font-size-xs font-weight-bold font-mono">42 ms</output>
+                </div>
+                <input type="range" class="range range--sm" id="setting-buffer" min="10" max="250" value="42" style="--value: 17%;" />
+              </div>
+              </div>
+
+            </div>
+
+            <!-- Dialog Footer -->
+            <footer class="card__footer inline justify-content-end">
+              <form method="dialog" class="inline">
+                <button type="submit" class="button" commandfor="cadence-settings-dialog" command="close">
+                  <span>Cancel</span>
+                </button>
+                <button type="submit" value="save" class="button button--strong button--accent" id="btn-save-settings">
+                  <span>Save Configuration</span>
+                </button>
+              </form>
+            </footer>
+
+          </article>
         </dialog>
 
         <!-- ================================================================== -->
@@ -1698,25 +1690,23 @@ export const BufferingState: Story = {
         <div class="stack gap-md">
           
           <!-- Global Warning Alert -->
-          <div class="alert alert--warning" role="alert">
-            <div class="alert__visual"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></div>
-            <div class="alert__content">
-              <h3 class="alert__title">Audio Stream Stalled (Ingest Server Timeout)</h3>
-              <p class="alert__description">The ingest uplink from WDFH Main Studio has exceeded the 250ms threshold. Automated fallback cart will activate in 12 seconds.</p>
+          <div class="banner banner--warning">
+            <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+            <div class="banner__body">
+              <h3 class="text font-bold">Audio stream stalled (ingest server timeout)</h3>
+              <p class="small-text">The ingest uplink from WDFH Main Studio has exceeded the 250ms threshold. Automated fallback cart will activate in 12 seconds.</p>
             </div>
-            <button type="button" class="button button--sm"><span>Retry Connection</span></button>
+            <button type="button" class="button banner__action"><span>Retry connection</span></button>
           </div>
 
           <!-- Skeleton Queue Loading Grid -->
-          <div class="card card--bordered">
-            <div class="card__content stack gap-sm">
-              <h3 class="card__title font-size-sm">Broadcast Queue (Holding Pattern)</h3>
-              <div class="stack gap-xs" aria-busy="true" aria-label="Re-synchronizing queue timetable">
-                <p class="visually-hidden" role="status">Re-synchronizing the queue…</p>
-                <span class="skeleton skeleton--heading skeleton--w-75" aria-hidden="true"></span>
-                <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
-              </div>
+          <div class="card stack gap-sm">
+            <h3 class="card__title font-size-sm">Broadcast Queue (Holding Pattern)</h3>
+            <div class="stack gap-xs" aria-busy="true" aria-label="Re-synchronizing queue timetable">
+              <p class="visually-hidden" role="status">Re-synchronizing the queue…</p>
+              <span class="skeleton skeleton--heading skeleton--w-75" aria-hidden="true"></span>
+              <span class="skeleton skeleton--text" aria-hidden="true"></span>
+              <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
             </div>
           </div>
 

@@ -54,7 +54,7 @@ AI agents and developers MUST use the following semantic patterns:
 
 \`\`\`html
 <!-- 1. Semantic Dropdown / Popover Width (16rem / 256px) -->
-<div class="card card--bordered width-popover padding-sm">
+<div class="card width-popover padding-sm">
   <ul class="stack gap-xs">...</ul>
 </div>
 
@@ -150,7 +150,7 @@ export const Playground: Story = {
     return `
       <div class="stack gap-md" style="max-inline-size: 100%;">
         <!-- Status Bar -->
-        <div class="card card--bordered padding-sm inline align-items-center justify-content-between" style="background: var(--surface-muted);">
+        <div class="card padding-sm inline align-items-center justify-content-between" style="background: var(--surface-muted);">
           <div class="inline align-items-center gap-sm">
             <span class="chip"><span class="chip__text">${args.dimensionType.toUpperCase()}</span></span>
             <span class="font-size-sm">Active Class: <code>.${appliedClass}</code></span>
@@ -159,9 +159,9 @@ export const Playground: Story = {
         </div>
 
         <!-- Render Container -->
-        <div class="card card--bordered padding stack gap-sm" style="overflow-x: auto; background: var(--surface);">
+        <div class="card padding stack gap-sm" style="overflow-x: auto; background: var(--surface);">
           <div 
-            class="${appliedClass} card card--bordered padding-sm stack gap-xs" 
+            class="${appliedClass} card padding-sm stack gap-xs" 
             style="
               background: var(--surface-active); 
               border: 2px dashed var(--border-color-accent);
@@ -259,7 +259,7 @@ export const SemanticWidthHierarchy: Story = {
             <span class="sb-demo-tag">.width-popover / .width-xs</span>
             <span class="font-size-xs text-color-muted">16rem (256px) — Menus, Dropdowns, Flyouts</span>
           </div>
-          <div class="card card--bordered width-popover padding-sm" style="background: var(--surface);">
+          <div class="card width-popover padding-sm" style="background: var(--surface);">
             <div class="stack gap-xs">
               <span class="font-size-xs font-weight-bold text-color-muted">QUICK ACTIONS</span>
               <button type="button" class="button button--subtle button--sm inline justify-content-start"><span>Duplicate Item</span></button>
@@ -275,7 +275,7 @@ export const SemanticWidthHierarchy: Story = {
             <span class="sb-demo-tag">.width-sidebar / .width-sm</span>
             <span class="font-size-xs text-color-muted">24rem (384px) — Navigation & Filter Sidebars</span>
           </div>
-          <aside class="card card--bordered width-sidebar padding stack gap-sm" style="background: var(--surface);">
+          <aside class="card width-sidebar padding stack gap-sm" style="background: var(--surface);">
             <h4 class="font-size-md font-weight-bold" style="margin: 0;">Filters Sidebar</h4>
             <div class="field">
               <label for="filter-status" class="field__label">Status</label>
@@ -295,7 +295,7 @@ export const SemanticWidthHierarchy: Story = {
             <span class="sb-demo-tag">.width-dialog / .width-md</span>
             <span class="font-size-xs text-color-muted">36rem (576px) — Modal Dialogs & Settings Cards</span>
           </div>
-          <div class="card card--bordered width-dialog padding stack gap-md" style="background: var(--surface);">
+          <div class="card width-dialog padding stack gap-md" style="background: var(--surface);">
             <header class="inline align-items-center justify-content-between border-b pb-sm">
               <h4 class="font-size-md font-weight-bold" style="margin: 0;">Confirm Deployment</h4>
               <span class="status status--warning"><span class="status__text">Staging</span></span>
@@ -316,7 +316,7 @@ export const SemanticWidthHierarchy: Story = {
             <span class="sb-demo-tag">.width-prose / .width-lg</span>
             <span class="font-size-xs text-color-muted">48rem (768px) — Optimal Reading Column (~65-75ch, WCAG AAA)</span>
           </div>
-          <article class="card card--bordered width-prose padding stack gap-sm" style="background: var(--surface);">
+          <article class="card width-prose padding stack gap-sm" style="background: var(--surface);">
             <h3 class="font-size-lg font-weight-bold" style="margin: 0;">Accessible Typography Reading Comfort</h3>
             <p class="font-size-sm" style="line-height: 1.6; margin: 0;">
               WCAG 2.2 Success Criterion 1.4.8 recommends line lengths between 60 and 80 characters. Constraining body prose with <code>.width-prose</code> guarantees that text lines do not stretch across ultrawide monitors, preventing eye strain and cognitive disorientation for neurodivergent and low-vision readers.
@@ -344,17 +344,17 @@ export const BlowoutSafeConstraints: Story = {
 
       <div class="stack gap-md">
         <!-- Wide Container -->
-        <div class="card card--bordered padding stack gap-xs">
+        <div class="card padding stack gap-xs">
           <span class="font-size-xs font-weight-bold text-color-muted">1. WIDE CONTAINER (Element achieves full 24rem width):</span>
-          <div class="card card--bordered min-width-sm padding-sm" style="background: var(--surface-muted);">
+          <div class="card min-width-sm padding-sm" style="background: var(--surface-muted);">
             <code>.min-width-sm</code> (24rem / 384px)
           </div>
         </div>
 
         <!-- Narrow Container Simulation (Simulating 300px mobile viewport) -->
-        <div class="card card--bordered padding stack gap-xs" style="max-inline-size: 18rem;">
+        <div class="card padding stack gap-xs" style="max-inline-size: 18rem;">
           <span class="font-size-xs font-weight-bold text-color-muted">2. NARROW CONTAINER (300px / 18rem - Clamps to 100% without blowout!):</span>
-          <div class="card card--bordered min-width-sm padding-sm" style="background: var(--surface-active); border-color: var(--border-color-accent);">
+          <div class="card min-width-sm padding-sm" style="background: var(--surface-active); border-color: var(--border-color-accent);">
             <code>.min-width-sm</code> (Clamped to 100% of parent)
           </div>
         </div>
@@ -379,13 +379,13 @@ export const HeightAndFlexGrowth: Story = {
 
       <div class="inline gap-md" style="block-size: 12rem;">
         <!-- Fixed Height 2XS Block -->
-        <div class="card card--bordered height-2xs width-xs padding-sm stack justify-content-between" style="background: var(--surface);">
+        <div class="card height-2xs width-xs padding-sm stack justify-content-between" style="background: var(--surface);">
           <span class="sb-demo-tag">.height-2xs</span>
           <span class="font-size-xs text-color-muted">Fixed 128px block-size</span>
         </div>
 
         <!-- Flex Growth (.size-grow) -->
-        <div class="card card--bordered height-fill size-grow padding-sm stack justify-content-between" style="background: var(--surface-active); border-style: dashed;">
+        <div class="card height-fill size-grow padding-sm stack justify-content-between" style="background: var(--surface-active); border-style: dashed;">
           <div class="inline align-items-center justify-content-between">
             <span class="sb-demo-tag">.size-grow</span>
             <span class="font-size-xs text-color-muted">flex-grow: 1</span>
@@ -415,7 +415,7 @@ export const StateMatrix: Story = {
 
       <div class="grid gap-md" style="--grid-min-item-width: 16rem;">
         <!-- Matrix 1: block-target -->
-        <div class="card card--bordered padding stack gap-xs">
+        <div class="card padding stack gap-xs">
           <span class="sb-demo-tag">.block-target</span>
           <div class="block-target border rounded-md inline align-items-center justify-content-center" style="background: var(--surface);">
             <span class="font-size-xs">48px</span>
@@ -423,7 +423,7 @@ export const StateMatrix: Story = {
         </div>
 
         <!-- Matrix 2: width-popover -->
-        <div class="card card--bordered padding stack gap-xs">
+        <div class="card padding stack gap-xs">
           <span class="sb-demo-tag">.width-popover</span>
           <div class="width-popover border padding-xs rounded-md" style="background: var(--surface); max-inline-size: 100%;">
             <span class="font-size-xs">256px / 16rem</span>
@@ -431,7 +431,7 @@ export const StateMatrix: Story = {
         </div>
 
         <!-- Matrix 3: width-sidebar -->
-        <div class="card card--bordered padding stack gap-xs">
+        <div class="card padding stack gap-xs">
           <span class="sb-demo-tag">.width-sidebar</span>
           <div class="width-sidebar border padding-xs rounded-md" style="background: var(--surface); max-inline-size: 100%;">
             <span class="font-size-xs">384px / 24rem</span>
@@ -439,7 +439,7 @@ export const StateMatrix: Story = {
         </div>
 
         <!-- Matrix 4: width-dialog -->
-        <div class="card card--bordered padding stack gap-xs">
+        <div class="card padding stack gap-xs">
           <span class="sb-demo-tag">.width-dialog</span>
           <div class="width-dialog border padding-xs rounded-md" style="background: var(--surface); max-inline-size: 100%;">
             <span class="font-size-xs">576px / 36rem</span>

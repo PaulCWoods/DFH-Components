@@ -7,69 +7,31 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Navigation Tree Primitive (.navigation-tree / .nav-tree)
+# Navigation Tree
 
-Hierarchical list and outline navigation primitive designed specifically for **Tables of Contents (TOC)**, **documentation sidebars**, **sitemaps**, and **nested directory trees**.
+Nested links to the sections of a site or a page: a docs sidebar, a table of contents. Its items are buttons, as in the menu; the tree makes them plain and full width, and adds nesting, guide lines and the current location.
 
-Unlike flat \`.tab-list\` switchers, \`.navigation-tree\` natively embraces multi-level nested \`<ol>\` and \`<ul>\` lists with tokenized indentation, continuous hierarchical guide rules (\`.navigation-tree--ruled\`), token-driven active location indicators (\`[aria-current="true"]\`), and container density adaptations.
-
----
-
-### Canonical Semantic Markup Signatures
-
-#### 1. Table of Contents with Indicator Rail
+### Markup
 \`\`\`html
-<nav class="navigation-tree navigation-tree--indicator navigation-tree--ruled" aria-label="Table of contents">
-  <ol class="navigation-tree__list">
-    <li class="navigation-tree__item">
-      <a href="#overview" class="navigation-tree__link" aria-current="true">
-        <span class="navigation-tree__text">Overview</span>
-      </a>
-    </li>
-    <li class="navigation-tree__item">
-      <a href="#playground" class="navigation-tree__link">
-        <span class="navigation-tree__text">Interactive Playground</span>
-      </a>
-      <!-- Nested Level 2 -->
-      <ol class="navigation-tree__list">
-        <li class="navigation-tree__item">
-          <a href="#playground-controls" class="navigation-tree__link">
-            <span class="navigation-tree__text">Controls & Options</span>
-          </a>
-        </li>
+<nav class="navigation-tree" aria-label="Documentation">
+  <ol>
+    <li class="navigation-tree__heading"><h2 class="micro-heading">Guides</h2></li>
+    <li><a href="/start" class="button"><span>Getting started</span></a></li>
+    <li>
+      <a href="/tokens" class="button" aria-current="page"><span>Tokens</span></a>
+      <ol>
+        <li><a href="/tokens/global" class="button"><span>Global</span></a></li>
+        <li><a href="/tokens/semantic" class="button"><span>Semantic</span></a></li>
       </ol>
-    </li>
-    <li class="navigation-tree__item">
-      <a href="#accessibility" class="navigation-tree__link">
-        <span class="navigation-tree__text">Accessibility & WCAG 2.2</span>
-        <span class="status status--success status--sm"><span class="status__text">AAA</span></span>
-      </a>
     </li>
   </ol>
 </nav>
 \`\`\`
 
----
-
-### WCAG 2.2 Conformance Matrix
-| Criterion | Level | Status | Architectural Implementation |
-| :--- | :--- | :--- | :--- |
-| **1.3.1 Info & Relationships** | A | **Pass** | Semantic \`<nav aria-label="...">\` landmarks the navigation outline; nested \`<ol>\` or \`<ul>\` elements communicate structural depth hierarchy directly to assistive technology. |
-| **4.1.2 Name, Role, Value** | A | **Pass** | Active location is declared natively via \`aria-current="true"\` (or \`aria-current="page"\`), announcing the user's reading position in the outline. |
-| **1.4.3 Contrast (Minimum)** | AA (4.5:1) | **Pass** | Inactive links meet >= 4.5:1 text contrast; active states leverage high-contrast foreground accents (\`--foreground-accent\`) and background tints. |
-| **2.4.7 Focus Visible** | AA | **Pass** | Inherits high-contrast 2px focus perimeter with 2px offset on all interactive \`<a>\` links. |
-
----
-
-### CSS Custom Property Token Contract
-| CSS Variable | Default Value | Fallback Ladder | Description |
-| :--- | :--- | :--- | :--- |
-| \`--_nav-tree-gap\` | \`var(--nav-tree-gap)\` | \`var(--spacing-4, 0.25rem)\` | Vertical spacing between sibling items |
-| \`--_nav-tree-indent\` | \`var(--nav-tree-indent)\` | \`var(--spacing-12, 0.75rem)\` | Progressive indentation step for nested sub-lists |
-| \`--_nav-tree-line-color\` | \`var(--nav-tree-line-color)\` | \`var(--border-color-quiet)\` | Vertical guide rule border color in \`.navigation-tree--ruled\` |
-| \`--_nav-tree-item-min-size\` | \`var(--nav-tree-item-min-size)\` | \`2rem\` | Accessible touch target minimum block size |
-| \`--_nav-tree-active-color\` | \`var(--nav-tree-active-color)\` | \`var(--foreground-accent)\` | Text color on \`[aria-current="true"]\` active items |
-| \`--_nav-tree-active-border-color\`| \`var(--nav-tree-active-border-color)\` | \`var(--foreground-accent)\` | Left stroke color on \`.navigation-tree--indicator\` active item |
+- **Current location:** \`aria-current\` on the link (\`page\` for a site, \`location\` or \`true\` for a table of contents). It shows bold text in the foreground colour, a tint and a rail inside the button's start edge, rounded to its corners; other items are regular weight in a quieter colour. Nested lists, guide lines and headings all line up on the item label.
+- **Nesting** is nested lists inside the item. **Headings** are \`<li class="navigation-tree__heading">\` with a text atom.
+- **Options:** \`--ruled\` (guide lines beside nested lists), \`--compact\` (32px rows; the button keeps its 48px hit area unless the product opts into fine-pointer targets).
+- **Not a menu:** a menu is actions in a popover; a tree is navigation with depth and a current location. **Not a tab list:** tabs switch views of one thing.
         `,
       },
     },
@@ -79,215 +41,102 @@ Unlike flat \`.tab-list\` switchers, \`.navigation-tree\` natively embraces mult
 export default meta;
 type Story = StoryObj;
 
-/**
- * Helper to mount interactive click handlers for demo stories
- */
-const withInteractiveLinks = (html: string) => {
-  const container = document.createElement('div');
-  container.innerHTML = html;
+type Node = { label: string; current?: boolean; meta?: string; children?: Node[] };
 
-  requestAnimationFrame(() => {
-    const links = container.querySelectorAll<HTMLElement>('.navigation-tree__link');
-    links.forEach((link) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        links.forEach((l) => l.removeAttribute('aria-current'));
-        link.setAttribute('aria-current', 'true');
-      });
-    });
-  });
+const docs: Node[] = [
+  { label: 'Getting started', children: [
+    { label: 'Installation' },
+    { label: 'Tokens', current: true, children: [{ label: 'Global' }, { label: 'Semantic' }, { label: 'Component' }] },
+  ] },
+  { label: 'Components', children: [{ label: 'Atoms' }, { label: 'Molecules' }, { label: 'Organisms' }] },
+  { label: 'Accessibility' },
+];
 
-  return container;
+const slug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+
+const list = (nodes: Node[], current = 'page'): string => `<ol>${nodes.map((n) => `
+  <li>
+    <a href="#${slug(n.label)}" class="button"${n.current ? ` aria-current="${current}"` : ''}><span>${n.label}</span>${n.meta ?? ''}</a>
+    ${n.children ? list(n.children, current) : ''}
+  </li>`).join('')}</ol>`;
+
+const tree = (cls: string, label: string, nodes = docs, current = 'page') =>
+  `<nav class="navigation-tree${cls ? ` ${cls}` : ''}" aria-label="${label}">${list(nodes, current)}</nav>`;
+
+export const Playground: Story = {
+  args: { ruled: true, compact: false },
+  render: (args) => `
+    <div style="max-inline-size: 18rem;">
+      ${tree([args.ruled && 'navigation-tree--ruled', args.compact && 'navigation-tree--compact'].filter(Boolean).join(' '), 'Documentation')}
+    </div>`,
 };
 
-/**
- * 1. Table of Contents Outline
- * Standard single & multi-level article outline with active location indicator.
- */
-export const TableOfContentsOutline: Story = {
-  render: () =>
-    withInteractiveLinks(`
-    <div class="card card--bordered padding-md" style="max-inline-size: 20rem; background: var(--surface);">
-      <div class="micro-heading text-muted margin-bottom-xs">
-        <span>On This Page</span>
-      </div>
-      <nav class="navigation-tree navigation-tree--indicator navigation-tree--compact" aria-label="Table of contents">
-        <ol class="navigation-tree__list">
-          <li class="navigation-tree__item">
-            <a href="#overview" class="navigation-tree__link" aria-current="true">
-              <span class="navigation-tree__text">Overview</span>
-            </a>
-          </li>
-          <li class="navigation-tree__item">
-            <a href="#playground" class="navigation-tree__link">
-              <span class="navigation-tree__text">Interactive Playground</span>
-            </a>
-            <ol class="navigation-tree__list">
-              <li class="navigation-tree__item">
-                <a href="#playground-controls" class="navigation-tree__link">
-                  <span class="navigation-tree__text">Controls & Density</span>
-                </a>
-              </li>
-              <li class="navigation-tree__item">
-                <a href="#playground-code" class="navigation-tree__link">
-                  <span class="navigation-tree__text">Live Code Generation</span>
-                </a>
-              </li>
-            </ol>
-          </li>
-          <li class="navigation-tree__item">
-            <a href="#accessibility" class="navigation-tree__link">
-              <span class="navigation-tree__text">Accessibility (WCAG 2.2)</span>
-            </a>
-          </li>
-          <li class="navigation-tree__item">
-            <a href="#custom-properties" class="navigation-tree__link">
-              <span class="navigation-tree__text">Custom Properties</span>
-            </a>
-          </li>
+export const WithHeadings: Story = {
+  name: 'With headings',
+  render: () => `
+    <div style="max-inline-size: 18rem;">
+      <nav class="navigation-tree" aria-label="Library">
+        <ol>
+          <li class="navigation-tree__heading"><h2 class="micro-heading">Foundations</h2></li>
+          <li><a href="#colour" class="button"><span>Colour</span></a></li>
+          <li><a href="#type" class="button" aria-current="page"><span>Typography</span></a></li>
+          <li class="navigation-tree__heading"><h2 class="micro-heading">Components</h2></li>
+          <li><a href="#button" class="button"><span>Button</span><span class="status status--plain status--success"><span class="status__text">Stable</span></span></a></li>
+          <li><a href="#menu" class="button"><span>Menu</span><span class="status status--plain status--info"><span class="status__text">New</span></span></a></li>
         </ol>
       </nav>
-    </div>
-  `),
+    </div>`,
 };
 
-/**
- * 2. Ruled Hierarchy Tree (.navigation-tree--ruled)
- * Continuous vertical guide lines trace parent-child relationships clearly across deep trees.
- */
-export const RuledHierarchyTree: Story = {
-  render: () =>
-    withInteractiveLinks(`
-    <div class="card card--bordered padding-md" style="max-inline-size: 24rem; background: var(--surface);">
-      <div class="micro-heading text-muted margin-bottom-xs">
-        <span>Documentation Topics</span>
-      </div>
-      <nav class="navigation-tree navigation-tree--ruled" aria-label="Documentation topics">
-        <ul class="navigation-tree__list">
-          <li class="navigation-tree__item">
-            <a href="#getting-started" class="navigation-tree__link">
-              <span class="navigation-tree__text">Getting Started</span>
-            </a>
-            <ul class="navigation-tree__list">
-              <li class="navigation-tree__item">
-                <a href="#installation" class="navigation-tree__link">
-                  <span class="navigation-tree__text">Installation</span>
-                </a>
-              </li>
-              <li class="navigation-tree__item">
-                <a href="#token-architecture" class="navigation-tree__link" aria-current="true">
-                  <span class="navigation-tree__text">Token Architecture</span>
-                </a>
-                <ul class="navigation-tree__list">
-                  <li class="navigation-tree__item">
-                    <a href="#global-tokens" class="navigation-tree__link">
-                      <span class="navigation-tree__text">1-Global Tokens</span>
-                    </a>
-                  </li>
-                  <li class="navigation-tree__item">
-                    <a href="#semantic-tokens" class="navigation-tree__link">
-                      <span class="navigation-tree__text">2-Semantic Tokens</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+export const TableOfContents: Story = {
+  name: 'Table of contents',
+  render: () => `
+    <div style="max-inline-size: 16rem;">
+      <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="toc-heading">
+        <ol>
+          <li class="navigation-tree__heading"><h2 id="toc-heading" class="micro-heading">On this page</h2></li>
+          <li><a href="#overview" class="button"><span>Overview</span></a></li>
+          <li>
+            <a href="#markup" class="button" aria-current="location"><span>Markup</span></a>
+            <ol>
+              <li><a href="#current-location" class="button"><span>Current location</span></a></li>
+              <li><a href="#nesting" class="button"><span>Nesting</span></a></li>
+            </ol>
           </li>
-          <li class="navigation-tree__item">
-            <a href="#components" class="navigation-tree__link">
-              <span class="navigation-tree__text">Components Library</span>
-            </a>
-          </li>
-        </ul>
+          <li><a href="#options" class="button"><span>Options</span></a></li>
+          <li><a href="#accessibility" class="button"><span>Accessibility</span></a></li>
+        </ol>
       </nav>
-    </div>
-  `),
+    </div>`,
 };
 
-/**
- * 3. With Badges and Metadata
- * Navigation tree nodes supporting atom badges to communicate status, version, or counts.
- */
-export const WithBadgesAndMetadata: Story = {
-  render: () =>
-    withInteractiveLinks(`
-    <div class="card card--bordered padding-md" style="max-inline-size: 24rem; background: var(--surface);">
-      <nav class="navigation-tree navigation-tree--ruled" aria-label="API Sections">
-        <ul class="navigation-tree__list">
-          <li class="navigation-tree__item">
-            <a href="#atoms" class="navigation-tree__link">
-              <span class="navigation-tree__text">Atoms</span>
-              <span class="badge badge--sm"><span class="badge__text">17</span></span>
-            </a>
-            <ul class="navigation-tree__list">
-              <li class="navigation-tree__item">
-                <a href="#button" class="navigation-tree__link" aria-current="true">
-                  <span class="navigation-tree__text">Button</span>
-                  <span class="status status--success status--sm"><span class="status__text">AAA</span></span>
-                </a>
-              </li>
-              <li class="navigation-tree__item">
-                <a href="#input" class="navigation-tree__link">
-                  <span class="navigation-tree__text">Input</span>
-                  <span class="chip chip--subtle chip--sm"><span class="chip__text">v2.2</span></span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="navigation-tree__item">
-            <a href="#molecules" class="navigation-tree__link">
-              <span class="navigation-tree__text">Molecules</span>
-              <span class="status status--accent status--sm"><span class="status__text">New</span></span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  `),
-};
-
-/**
- * 4. Compact Density in Sidebar Context
- * Demonstrates dense layout mode (--ui-sizing: compact) embedded in a sidebar rail.
- */
-export const CompactSidebarContext: Story = {
-  render: () =>
-    withInteractiveLinks(`
-    <div class="sidebar sidebar--flush border" style="max-inline-size: 18rem; min-block-size: 22rem; background: var(--surface);">
-      <div class="sidebar__scroller py px-sm">
-        <span class="navigation-tree__heading micro-heading text-muted">Page Contents</span>
-        <nav class="navigation-tree navigation-tree--indicator navigation-tree--compact navigation-tree--flush" aria-label="Page contents">
-          <ol class="navigation-tree__list">
-            <li class="navigation-tree__item">
-              <a href="#sec-1" class="navigation-tree__link" aria-current="true">
-                <span class="navigation-tree__text">Executive Summary</span>
-              </a>
-            </li>
-            <li class="navigation-tree__item">
-              <a href="#sec-2" class="navigation-tree__link">
-                <span class="navigation-tree__text">Design Token Economics</span>
-              </a>
-              <ol class="navigation-tree__list">
-                <li class="navigation-tree__item">
-                  <a href="#sec-2-1" class="navigation-tree__link">
-                    <span class="navigation-tree__text">Fluid Clamps</span>
-                  </a>
-                </li>
-                <li class="navigation-tree__item">
-                  <a href="#sec-2-2" class="navigation-tree__link">
-                    <span class="navigation-tree__text">Zero Specificity Cascade</span>
-                  </a>
-                </li>
-              </ol>
-            </li>
-            <li class="navigation-tree__item">
-              <a href="#sec-3" class="navigation-tree__link">
-                <span class="navigation-tree__text">Accessibility Checklist</span>
-              </a>
-            </li>
-          </ol>
-        </nav>
+export const InACard: Story = {
+  name: 'In a card',
+  render: () => `
+    <article class="card" style="max-inline-size: 20rem;">
+      <header class="card__header"><h3 class="card__title heading">Settings</h3></header>
+      <div class="card__body">
+        ${tree('', 'Settings', [
+          { label: 'Profile' },
+          { label: 'Notifications', meta: '<span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="visually-hidden">, 3 unread</span>' },
+          { label: 'Security', current: true, children: [{ label: 'Passkeys' }, { label: 'Sessions' }] },
+        ])}
       </div>
-    </div>
-  `),
+    </article>`,
+};
+
+export const LongLabels: Story = {
+  name: 'Long labels wrap',
+  render: () => `
+    <div style="max-inline-size: 14rem;">
+      ${tree('navigation-tree--ruled', 'Long labels', [
+        { label: 'Designing accessible colour palettes for dark mode', current: true },
+        { label: 'Fluid type', children: [{ label: 'Choosing a minimum and maximum size for every step' }] },
+      ])}
+    </div>`,
+};
+
+export const RightToLeft: Story = {
+  name: 'Right to left',
+  render: () => `<div dir="rtl" style="max-inline-size: 18rem;">${tree('navigation-tree--ruled', 'Documentation, right to left')}</div>`,
 };

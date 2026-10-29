@@ -52,7 +52,7 @@ AI agents and developers MUST use the following semantic patterns:
 <!-- 3. Centered Splash / Login Dialog (.wrapper--middle) -->
 <div class="sb-demo-frame" style="block-size: 20rem;">
   <div class="wrapper wrapper--xs wrapper--middle">
-    <div class="card card--bordered padding">
+    <div class="card padding">
       <h3>Sign In</h3>
     </div>
   </div>
@@ -132,7 +132,7 @@ export const Playground: Story = {
         </p>
         <div class="sb-demo-stage sb-demo-stage--lg" style="block-size: ${args.middle ? '18rem' : 'auto'};">
           <div class="${classes}">
-            <div class="card card--bordered padding">
+            <div class="card padding">
               <h4 class="font-size-sm font-weight-bold">Bounded Content Box</h4>
               <p class="font-size-xs text-muted margin-top-xs">
                 Active tier: <code>${args.size}</code> &middot; Alignment: <code>${args.align}</code>
@@ -160,19 +160,19 @@ export const SizingScaleHierarchy: Story = {
 
       <div class="stack gap">
         <div class="wrapper wrapper--xs sb-demo-inspect-gap">
-          <div class="card card--bordered padding"><p class="font-size-xs font-weight-bold">.wrapper--xs (16rem / 256px)</p></div>
+          <div class="card padding"><p class="font-size-xs font-weight-bold">.wrapper--xs (16rem / 256px)</p></div>
         </div>
 
         <div class="wrapper wrapper--sm sb-demo-inspect-gap">
-          <div class="card card--bordered padding"><p class="font-size-xs font-weight-bold">.wrapper--sm (24rem / 384px)</p></div>
+          <div class="card padding"><p class="font-size-xs font-weight-bold">.wrapper--sm (24rem / 384px)</p></div>
         </div>
 
         <div class="wrapper wrapper--md sb-demo-inspect-gap">
-          <div class="card card--bordered padding"><p class="font-size-xs font-weight-bold">.wrapper--md (36rem / 576px)</p></div>
+          <div class="card padding"><p class="font-size-xs font-weight-bold">.wrapper--md (36rem / 576px)</p></div>
         </div>
 
         <div class="wrapper wrapper--lg sb-demo-inspect-gap">
-          <div class="card card--bordered padding"><p class="font-size-xs font-weight-bold">.wrapper--lg (48rem / 768px)</p></div>
+          <div class="card padding"><p class="font-size-xs font-weight-bold">.wrapper--lg (48rem / 768px)</p></div>
         </div>
       </div>
     </div>
@@ -192,7 +192,7 @@ export const HorizontalAlignments: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
+      <div class="card padding stack" style="--gap: var(--spacing-16);">
         <!-- Start -->
         <div>
           <p class="font-size-xs text-muted margin-bottom-xs">Leading Edge: <code>.wrapper--start</code></p>
@@ -236,7 +236,7 @@ export const VerticalCenteringHero: Story = {
 
       <div class="sb-demo-frame" style="block-size: 18rem;">
         <div class="wrapper wrapper--xs wrapper--middle">
-          <div class="card card--bordered padding stack" style="--gap: var(--spacing-12); text-align: center;">
+          <div class="card padding stack" style="--gap: var(--spacing-12); text-align: center;">
             <div class="avatar avatar--placeholder" style="margin-inline: auto;">
               <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
             </div>
@@ -267,7 +267,7 @@ export const OptimalReadingColumn: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <article class="wrapper wrapper--sm stack" style="--gap: var(--spacing-16);">
           <hgroup class="stack" style="--gap: var(--spacing-4);">
             <h3 class="font-size-fluid-2 font-weight-bold">Designing for Humans</h3>
@@ -301,28 +301,28 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Centered Wrapper (xs)</h4>
           <div class="wrapper wrapper--2xs sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Centered</div>
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Start-Aligned Wrapper</h4>
           <div class="wrapper wrapper--2xs wrapper--start sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">Start</div>
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">End-Aligned Wrapper</h4>
           <div class="wrapper wrapper--2xs wrapper--end sb-demo-inspect-gap">
             <div class="sb-demo-box sb-demo-box--sm">End</div>
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Middle-Centered Wrapper</h4>
           <div style="block-size: 6rem;">
             <div class="wrapper wrapper--2xs wrapper--middle sb-demo-inspect-gap">

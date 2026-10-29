@@ -194,7 +194,7 @@ const buttonTokens: TokenRow[] = [
       Semantic tones signal intent to the user without altering layout geometry or touch targets. Tones can be paired with any prominence level.
     </p>
 
-    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+    <div class="prose-end card padding-md margin-bottom-md">
       <div class="cluster gap-md align-items-center">
         <!-- Neutral -->
         <button type="button" class="button">
@@ -304,7 +304,7 @@ const buttonTokens: TokenRow[] = [
       Buttons seamlessly accommodate leading icons, directional trailing icons, and icon-only layouts. Always use <code>aria-hidden="true"</code> on decorative icons and provide accessible DOM text.
     </p>
 
-    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+    <div class="prose-end card padding-md margin-bottom-md">
       <div class="cluster gap-md align-items-center">
         <!-- Leading Icon -->
         <button type="button" class="button button--strong button--accent">
@@ -332,7 +332,7 @@ const buttonTokens: TokenRow[] = [
     </div>
 
     <!-- Translation Deep Dive Callout -->
-    <div class="prose-end card card--bordered card--translucent padding-md margin-bottom-md border-accent">
+    <div class="prose-end card card--translucent padding-md margin-bottom-md border-accent">
       <div class="inline align-items-center gap-xs margin-bottom-xs">
         <Icon name="Sparkles" size={16} class="text-accent" />
         <h3 class="small-heading margin-0 font-weight-bold">Human-Centric Best Practice: Real DOM Text over <code>aria-label</code></h3>
@@ -361,7 +361,7 @@ const buttonTokens: TokenRow[] = [
       Any <code>&lt;label class="button"&gt;</code> wrapping a native <code>&lt;input type="checkbox"&gt;</code> or <code>&lt;input type="radio"&gt;</code> instantly gains full button styling, keyboard navigation, and checked state management without writing a single line of JavaScript.
     </p>
 
-    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+    <div class="prose-end card padding-md margin-bottom-md">
       <div class="cluster gap-md align-items-center">
         <!-- Button Checkbox Switch -->
         <label class="button">
@@ -372,7 +372,7 @@ const buttonTokens: TokenRow[] = [
         </label>
 
         <!-- Segmented Radio Choices -->
-        <div class="button-group button-group--segmented" role="radiogroup" aria-label="Frequency">
+        <div class="button-group button-group--joined" role="radiogroup" aria-label="Frequency">
           <label class="button">
             <input type="radio" name="demo-freq" class="visually-hidden" checked />
             <Icon name="Check" size={14} class="icon--on" />
@@ -406,7 +406,7 @@ const buttonTokens: TokenRow[] = [
       Rather than managing repetitive utility classes on every nested child button, parent containers (cards, sidebars, headers, dialogs) declare high-level intent via container variables. Nested buttons react automatically through native <code>@container style(...)</code> queries.
     </p>
 
-    <div class="prose-end card card--bordered padding-md margin-bottom-md">
+    <div class="prose-end card padding-md margin-bottom-md">
       <div class="compact-demo-container padding-md border-dashed">
         <div class="small-text text-muted margin-bottom-sm">
           Parent container declares <code>--ui-sizing: compact</code> and <code>--button-prominence: subtle</code>:
@@ -450,7 +450,7 @@ const buttonTokens: TokenRow[] = [
       Accessibility is not a bolt-on feature. The button primitive adheres to the strictest WCAG 2.2 Level AA and Level AAA standards.
     </p>
 
-    <div class="prose-end card card--bordered card--flush overflow-x-auto margin-bottom-md">
+    <div class="prose-end card overflow-x-auto margin-bottom-md">
       <table class="table" aria-label="WCAG 2.2 Compliance Matrix for Button Primitive">
         <thead>
           <tr>
@@ -503,7 +503,7 @@ const buttonTokens: TokenRow[] = [
 
     <!-- Keyboard Navigation Table -->
     <h3>Keyboard Navigation</h3>
-    <div class="prose-end card card--bordered card--flush overflow-x-auto margin-bottom-md">
+    <div class="prose-end card overflow-x-auto margin-bottom-md">
       <table class="table" aria-label="Button Keyboard Interactions">
         <thead>
           <tr>

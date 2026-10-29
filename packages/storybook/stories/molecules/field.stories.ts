@@ -403,86 +403,84 @@ export const RealWorldRecipes: Story = {
   render: () => `
     <div class="stack demo-constrained--lg">
       <!-- Recipe A: Enterprise User Registration Form -->
-      <div class="card card--bordered">
-        <article class="card__content">
-          <header class="card__header">
-            <h3 class="card__title subheading">Create Enterprise Account</h3>
-            <p class="card__subtitle">All fields marked with (Required) must be completed to activate your workspace.</p>
-          </header>
-          <div class="card__body">
-            <form class="form" onsubmit="return false;">
-              <!-- Split Name Row -->
-              <div class="split" style="display: flex; gap: var(--spacing-16); inline-size: 100%;">
-                <div class="field" style="flex: 1 1 50%;">
-                  <label for="reg-first" class="field__label">First Name</label>
-                  <input id="reg-first" type="text" class="input" required value="Ada" />
-                </div>
-                <div class="field" style="flex: 1 1 50%;">
-                  <label for="reg-last" class="field__label">Last Name</label>
-                  <input id="reg-last" type="text" class="input" required value="Lovelace" />
-                </div>
+      <article class="card">
+        <header class="card__header">
+          <h3 class="card__title subheading">Create Enterprise Account</h3>
+          <p class="card__subtitle">All fields marked with (Required) must be completed to activate your workspace.</p>
+        </header>
+        <div class="card__body">
+          <form class="form" onsubmit="return false;">
+            <!-- Split Name Row -->
+            <div class="split" style="display: flex; gap: var(--spacing-16); inline-size: 100%;">
+              <div class="field" style="flex: 1 1 50%;">
+                <label for="reg-first" class="field__label">First Name</label>
+                <input id="reg-first" type="text" class="input" required value="Ada" />
               </div>
-
-              <!-- Email Field -->
-              <div class="field">
-                <label for="reg-email" class="field__label">Work Email Address</label>
-                <p id="reg-email-hint" class="field__hint">We will send an activation link to this address.</p>
-                <input 
-                  id="reg-email" 
-                  type="email" 
-                  class="input" 
-                  required 
-                  value="ada@analytical-engine.org" 
-                  aria-describedby="reg-email-hint"
-                />
+              <div class="field" style="flex: 1 1 50%;">
+                <label for="reg-last" class="field__label">Last Name</label>
+                <input id="reg-last" type="text" class="input" required value="Lovelace" />
               </div>
+            </div>
 
-              <!-- Role Select -->
-              <div class="field">
-                <label for="reg-role" class="field__label">Organizational Role</label>
-                <select id="reg-role" class="select" required>
-                  <option value="">Select your role...</option>
-                  <option value="lead" selected>Digital Accessibility Specialist</option>
-                  <option value="eng">Design System Engineer</option>
-                  <option value="mgr">Engineering Manager</option>
-                </select>
-              </div>
+            <!-- Email Field -->
+            <div class="field">
+              <label for="reg-email" class="field__label">Work Email Address</label>
+              <p id="reg-email-hint" class="field__hint">We will send an activation link to this address.</p>
+              <input 
+                id="reg-email" 
+                type="email" 
+                class="input" 
+                required 
+                value="ada@analytical-engine.org" 
+                aria-describedby="reg-email-hint"
+              />
+            </div>
 
-              <!-- Project Scope Textarea -->
-              <div class="field">
-                <label for="reg-scope" class="field__label">Target Compliance Goals</label>
-                <p id="reg-scope-hint" class="field__hint">Briefly outline your audit scope or milestones.</p>
-                <textarea 
-                  id="reg-scope" 
-                  class="textarea" 
-                  rows="3" 
-                  placeholder="Targeting WCAG 2.2 AA certification across mobile and web platforms..."
-                  aria-describedby="reg-scope-hint"
-                ></textarea>
-              </div>
+            <!-- Role Select -->
+            <div class="field">
+              <label for="reg-role" class="field__label">Organizational Role</label>
+              <select id="reg-role" class="select" required>
+                <option value="">Select your role...</option>
+                <option value="lead" selected>Digital Accessibility Specialist</option>
+                <option value="eng">Design System Engineer</option>
+                <option value="mgr">Engineering Manager</option>
+              </select>
+            </div>
 
-              <!-- Agreement Fieldset -->
-              <fieldset class="fieldset">
-                <legend class="legend">Terms & Standards</legend>
-                <label class="choice" for="reg-terms">
-                  <input type="checkbox" id="reg-terms" class="checkbox-input" required checked />
-                  <span>I agree to uphold WCAG 2.2 accessibility standards across this project</span>
-                </label>
-              </fieldset>
+            <!-- Project Scope Textarea -->
+            <div class="field">
+              <label for="reg-scope" class="field__label">Target Compliance Goals</label>
+              <p id="reg-scope-hint" class="field__hint">Briefly outline your audit scope or milestones.</p>
+              <textarea 
+                id="reg-scope" 
+                class="textarea" 
+                rows="3" 
+                placeholder="Targeting WCAG 2.2 AA certification across mobile and web platforms..."
+                aria-describedby="reg-scope-hint"
+              ></textarea>
+            </div>
 
-              <!-- Submission Bar -->
-              <div class="form__submission form__submission--right">
-                <button type="reset" class="button button--subtle">
-                  <span>Reset</span>
-                </button>
-                <button type="submit" class="button button--strong button--accent">
-                  <span>Complete Registration</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </article>
-      </div>
+            <!-- Agreement Fieldset -->
+            <fieldset class="fieldset">
+              <legend class="legend">Terms & Standards</legend>
+              <label class="choice" for="reg-terms">
+                <input type="checkbox" id="reg-terms" class="checkbox-input" required checked />
+                <span>I agree to uphold WCAG 2.2 accessibility standards across this project</span>
+              </label>
+            </fieldset>
+
+            <!-- Submission Bar -->
+            <div class="form__submission form__submission--right">
+              <button type="reset" class="button button--subtle">
+                <span>Reset</span>
+              </button>
+              <button type="submit" class="button button--strong button--accent">
+                <span>Complete Registration</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </article>
     </div>
   `,
 };

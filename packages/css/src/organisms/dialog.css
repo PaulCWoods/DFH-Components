@@ -1,171 +1,109 @@
 /* ==========================================================================
-   Design For Humans: Dialog Primitive
+   Design For Humans: Dialog
    --------------------------------------------------------------------------
-   Accessible modal dialog container leveraging native HTML <dialog> for
-   top-layer positioning, viewport constraints, backdrop dimming, and focus
-   trapping. Content surfaces and layout are composed using the Card primitive.
-   Parity with Design For Humans Blog (_dialog.scss & _component-library.twig).
+   Native <dialog class="dialog"> shell: top-layer placement, size, backdrop
+   and transitions. The surface is a .card inside it, which the dialog
+   configures through card flags (strong prominence, its own radius and
+   shadow) and never restyles. Classes only: a bare <dialog> keeps its
+   browser rendering.
 
    Usage:
    <dialog id="my-dialog" class="dialog" aria-labelledby="dialog-title">
      <div class="card">
-       <article class="card__content">
-         <header class="card__header">
-           <h2 id="dialog-title" class="card__title">Dialog Title</h2>
-           <button type="button" class="button button--subtle button--icon" commandfor="my-dialog" command="close">
-             <span class="visually-hidden">Close dialog</span>
-             <svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-           </button>
-         </header>
-         <div class="card__body">
-           <p>Dialog body copy.</p>
-         </div>
-         <footer class="card__footer">
-           <button type="button" class="button button--strong button--accent" commandfor="my-dialog" command="close">
-             <span>Confirm</span>
-           </button>
-         </footer>
-       </article>
+       <header class="card__header">
+         <h2 id="dialog-title" class="card__title small-heading">Dialog title</h2>
+       </header>
+       <div class="card__body card__body--scrollable">…</div>
+       <footer class="card__footer">…</footer>
      </div>
    </dialog>
+
+   .dialog--scrollable: the whole card scrolls as one (sets --card-scroll: all).
+   .dialog--drawer: a full-height panel on the inline end.
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Dialog Container (:where(dialog.dialog, dialog))
+   1. Base
    ========================================================================== */
-:where(dialog.dialog, dialog) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_dialog-backdrop-color: var(--dialog-backdrop-color, var(--color-backdrop, rgba(0, 0, 0, 0.5)));
-  --_dialog-backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
-  --_dialog-bg: var(--dialog-bg, var(--surface-card, Canvas));
-  --_dialog-border-color: var(--dialog-border-color, var(--card-border-color, var(--border-color-quiet, currentColor)));
-  --_dialog-border-style: var(--dialog-border-style, var(--card-border-style, solid));
-  --_dialog-border-width: var(--dialog-border-width, var(--card-border-width, 0px));
+:where(.dialog) {
+  /* Private manifest */
+  --_dialog-backdrop-color: var(--dialog-backdrop-color, transparent);
+  --_dialog-backdrop-filter: var(--dialog-backdrop-filter, none);
+  --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion));
+  --_dialog-width: var(--dialog-width, var(--spacing-block));
+  --_dialog-max-height: var(--dialog-max-height, 100dvb);
+  --_dialog-drawer-width: var(--dialog-drawer-width, var(--spacing-block-sm));
+  --_dialog-drawer-offset: 100%;
+  --_dialog-radius: var(--dialog-radius, var(--card-radius, 0));
+  --_dialog-shadow: var(--dialog-shadow, none);
+  --_dialog-timefunc: var(--dialog-timefunc, ease-in-out);
+  --_dialog-transition: var(--dialog-transition, 0s);
   --_dialog-close-button-prominence: var(--dialog-close-button-prominence, subtle);
   --_dialog-close-button-size: var(--dialog-close-button-size, sm);
-  --_dialog-color: var(--dialog-color, var(--foreground, currentColor));
-  --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion, 2rem));
-  --_dialog-drawer-max-width: var(--dialog-drawer-max-width, 28rem);
-  --_dialog-font-family: var(--dialog-font-family, var(--typography-font-family-sans, sans-serif));
-  --_dialog-font-size: var(--dialog-font-size, var(--body-fixed-font-size, 1rem));
-  --_dialog-line-height: var(--dialog-line-height, var(--body-line-height, 1.5));
-  --_dialog-max-height: var(--dialog-max-height, 90vb);
-  --_dialog-padding: var(--dialog-padding, var(--spacing-16, 1rem));
-  --_dialog-radius: var(--dialog-radius, var(--card-radius, none));
-  --_dialog-shadow: var(--dialog-shadow, var(--card-shadow, none));
-  --_dialog-timefunc: var(--dialog-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-  --_dialog-transition: var(--dialog-transition, var(--duration-md, 250ms));
-  --_dialog-width: var(--dialog-width, var(--spacing-block, 36rem));
 
-  /* Layout & Sizing */
+  /* The card inside is a floating surface */
+  --card-prominence: strong;
+  --font-sizing: cq;
+
   box-sizing: border-box;
   container-type: inline-size;
-  --font-sizing: cq;
   display: none;
-  inline-size: min(var(--_dialog-width), calc(100vi - var(--_dialog-cushion)));
-  max-block-size: min(var(--_dialog-max-height), calc(100vb - var(--_dialog-cushion)));
+  inline-size: min(var(--_dialog-width), calc(100dvi - var(--_dialog-cushion)));
+  max-block-size: min(var(--_dialog-max-height), calc(100dvb - var(--_dialog-cushion)));
   overflow: visible;
   overscroll-behavior: contain;
-
-  /* Spacing */
   margin: auto;
   padding: 0;
+  position: fixed;
+  inset: 0;
 
-  /* Surface & Border Reset (Deferred to internal Card) */
+  /* The card draws the surface */
   background: transparent;
   border: none;
   color: inherit;
 
-  /* Positioning */
-  position: fixed;
-  inset: 0;
-
-  /* Closed State & Discrete Transitions */
+  /* Closed state and discrete transitions */
   opacity: 0;
   transform: scale(0.96) translateY(0.5rem);
-  pointer-events: none;
-
   transition-property: opacity, transform, display, overlay;
   transition-duration: var(--_dialog-transition);
   transition-timing-function: var(--_dialog-timefunc);
   transition-behavior: allow-discrete;
 
-  /* Ensure nested card expands to full available width and clips cleanly */
   > :where(.card) {
-    --font-sizing: cq;
-    border-radius: var(--_dialog-radius);
-    border: var(--_dialog-border-width) var(--_dialog-border-style) var(--_dialog-border-color);
-    box-shadow: var(--_dialog-shadow);
+    --card-radius: var(--_dialog-radius);
+    --card-strong-shadow: var(--_dialog-shadow);
+    --card-font-sizing: cq;
+
     inline-size: 100%;
-    max-inline-size: 100%;
     max-block-size: 100%;
-    min-block-size: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
   }
 
-  > :where(.card)> :where(.card__content) {
-    max-block-size: 100%;
-    min-block-size: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  > :where(.card)> :where(.card__content:not(:has(.card__body))) {
+  /* Without a card, the dialog draws a card's surface itself */
+  &:not(:has(> .card)) {
+    background-color: var(--card-bg, var(--surface-card, Canvas));
+    border: var(--card-border-width, 1px) var(--card-border-style, solid) var(--card-border-color, currentColor);
+    border-radius: var(--_dialog-radius);
+    box-shadow: var(--_dialog-shadow);
+    padding: var(--card-padding, var(--spacing-breathe));
     overflow-y: auto;
-    overscroll-behavior: contain;
   }
 
-  > :where(.card) :where(.card__header, .card__head) {
-    flex-shrink: 0;
-  }
-
-  > :where(.card) :where(.card__body) {
-    flex: 1 1 auto;
-    min-block-size: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scroll-padding-block: var(--_card-padding, 1rem);
-  }
-
-  > :where(.card) :where(.card__footer, .card__foot) {
-    flex-shrink: 0;
-  }
-
-  /* Standalone Dialog Fallback (when not wrapping a Card) */
-  &:not(:has(.card)) {
-    background-color: var(--_dialog-bg);
-    color: var(--_dialog-color);
-    padding: var(--_dialog-padding);
-    border: var(--_dialog-border-width, var(--border-width, 1px)) var(--_dialog-border-style) var(--_dialog-border-color);
-    border-radius: var(--_dialog-radius, var(--radius, 0.25rem));
-    box-shadow: var(--_dialog-shadow, var(--shadow-lg, none));
-    font-family: var(--_dialog-font-family);
-    font-size: var(--_dialog-font-size);
-    line-height: var(--_dialog-line-height);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  /* Close button overides */
+  /* A lone close button in a dialog form */
   :where(form[method="dialog"]:has(.button:only-child)) {
     --button-prominence: var(--_dialog-close-button-prominence);
     --button-size: var(--_dialog-close-button-size);
   }
+
+  &:dir(rtl) {
+    --_dialog-drawer-offset: -100%;
+  }
 }
 
-/* ==========================================================================
-   2. Native Backdrop (::backdrop)
-   ========================================================================== */
-:where(dialog.dialog, dialog)::backdrop {
+:where(.dialog)::backdrop {
   background-color: var(--_dialog-backdrop-color);
   backdrop-filter: var(--_dialog-backdrop-filter);
   opacity: 0;
-
   transition-property: opacity, backdrop-filter, display, overlay;
   transition-duration: var(--_dialog-transition);
   transition-timing-function: var(--_dialog-timefunc);
@@ -173,138 +111,70 @@
 }
 
 /* ==========================================================================
-   3. Open Dialog State
+   2. Open state
    ========================================================================== */
-:where(dialog.dialog, dialog)[open] {
+:where(.dialog)[open] {
   display: flex;
   flex-direction: column;
   opacity: 1;
-  transform: scale(1) translateY(0);
-  pointer-events: auto;
+  transform: none;
 
   &::backdrop {
     opacity: 1;
   }
 
-  /* Entry transition starting state */
   @starting-style {
     opacity: 0;
     transform: scale(0.96) translateY(0.5rem);
 
     &::backdrop {
       opacity: 0;
-      backdrop-filter: none;
     }
   }
 }
 
 /* ==========================================================================
-   4. Whole-Card Scrollable Modifier (.dialog--scrollable / .card--scrollable)
-   Enables the entire card (header, body, and footer) to scroll as a single unit
-   instead of fixing the header/footer and only scrolling .card__body.
+   3. Modifiers
    ========================================================================== */
-:where(dialog.dialog--scrollable, dialog.dialog:has(.card--scrollable))> :where(.card:not(:has(.card__content))),
-:where(dialog.dialog, dialog)> :where(.card--scrollable:not(:has(.card__content))) {
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+:where(.dialog--scrollable) {
+  --card-scroll: all;
 }
 
-:where(dialog.dialog--scrollable, dialog.dialog:has(.card--scrollable))> :where(.card)> :where(.card__content),
-:where(dialog.dialog, dialog)> :where(.card--scrollable)> :where(.card__content) {
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-
-  @supports (container-type: scroll-state) {
-    container-type: scroll-state inline-size;
-    container-name: card-scroller;
-  }
-}
-
-:where(dialog.dialog--scrollable, dialog.dialog:has(.card--scrollable))> :where(.card) :where(.card__body),
-:where(dialog.dialog, dialog)> :where(.card--scrollable) :where(.card__body) {
-  flex: 1 0 auto;
-  min-block-size: auto;
-  overflow-y: visible;
-  overscroll-behavior: auto;
-}
-
-@container style(--dialog-scroll: card) or style(--dialog-scroll: all) {
-  :where(dialog.dialog, dialog)> :where(.card:not(:has(.card__content))) {
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  :where(dialog.dialog, dialog)> :where(.card)> :where(.card__content) {
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-
-    @supports (container-type: scroll-state) {
-      container-type: scroll-state inline-size;
-      container-name: card-scroller;
-    }
-  }
-
-  :where(dialog.dialog, dialog)> :where(.card) :where(.card__body) {
-    flex: 1 0 auto;
-    min-block-size: auto;
-    overflow-y: visible;
-    overscroll-behavior: auto;
-  }
-}
-
-/* ==========================================================================
-   5. Drawer Modifier (.dialog--drawer)
-   Slides in from the end of the viewport as a slide-out panel.
-   ========================================================================== */
-:where(dialog.dialog--drawer) {
-  margin: 0;
-  margin-inline-start: auto;
-  inset-inline-start: auto;
-  inset-inline-end: 0;
+:where(.dialog--drawer) {
+  block-size: 100dvb;
+  inline-size: min(var(--_dialog-drawer-width), 100dvi);
   inset-block: 0;
-  max-inline-size: min(var(--_dialog-drawer-max-width), 100vi);
-  max-block-size: 100vb;
-  block-size: 100vb;
-  transform: translateX(100%);
+  inset-inline: auto 0;
+  margin: 0;
+  max-block-size: 100dvb;
+  transform: translateX(var(--_dialog-drawer-offset));
 
   > :where(.card) {
+    --card-radius: 0;
+
     block-size: 100%;
-    border-radius: 0;
-    border-inline-end: none;
-    border-block: none;
   }
 
-  &:not(:has(.card)) {
-    block-size: 100%;
+  &:not(:has(> .card)) {
     border-radius: 0;
-    border-inline-end: none;
-    border-block: none;
   }
 
   &[open] {
-    transform: translateX(0);
+    transform: none;
 
     @starting-style {
-      transform: translateX(100%);
+      transform: translateX(var(--_dialog-drawer-offset));
     }
   }
 }
 
 /* ==========================================================================
-   6. Accessibility & Media Queries
+   4. Preferences
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-
-  :where(dialog.dialog, dialog),
-  :where(dialog.dialog, dialog)[open],
-  :where(dialog.dialog--drawer),
-  :where(dialog.dialog--drawer)[open] {
+  :where(.dialog),
+  :where(.dialog)[open] {
     transform: none;
-    transition-duration: var(--duration-0, 0s);
 
     @starting-style {
       transform: none;
@@ -313,12 +183,7 @@
 }
 
 @media (prefers-contrast: more) {
-  :where(dialog.dialog, dialog)::backdrop {
+  :where(.dialog)::backdrop {
     backdrop-filter: none;
-  }
-
-  :where(dialog.dialog, dialog):not(:has(.card)) {
-    outline: 2px solid var(--border-color, currentColor);
-    outline-offset: 1px;
   }
 }

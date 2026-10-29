@@ -69,7 +69,7 @@ AI agents and developers MUST use the following semantic patterns:
 </div>
 
 <!-- 3. Inset Focus Container for Flush Cards or Dialog Sections -->
-<div class="card card--compact card--bordered focus-within focus-within--inset">
+<div class="card card--compact focus-within focus-within--inset">
   <div class="card__body inline align-items-center justify-content-between">
     <span>Enable Analytics</span>
     <input type="checkbox" role="switch" class="checkbox-input" aria-label="Enable Analytics" />
@@ -165,7 +165,7 @@ export const Playground: Story = {
 
     return `
       <div class="stack gap-md" style="max-inline-size: 34rem; margin-inline: auto;">
-        <div class="card card--bordered padding-sm" style="background: var(--surface-muted);">
+        <div class="card padding-sm" style="background: var(--surface-muted);">
           <p class="font-size-sm text-color-muted" style="margin: 0;">
             ⌨️ <strong>Accessibility Test Instructions:</strong> Press <kbd style="padding: 2px 6px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--surface);">Tab</kbd> to focus through the controls below. Notice how the container highlights cleanly without double outlines.
           </p>
@@ -256,7 +256,7 @@ export const CompoundSearchBar: Story = {
 export const TargetedInputContainer: Story = {
   render: () => `
     <div class="stack gap-md" style="max-inline-size: 34rem;">
-      <div class="card card--bordered padding-sm" style="background: var(--surface-muted);">
+      <div class="card padding-sm" style="background: var(--surface-muted);">
         <p class="font-size-sm text-color-muted" style="margin: 0;">
           💡 <strong>Behavioral Contrast:</strong> Press <kbd>Tab</kbd>. When the input is focused, the <em>container</em> receives the ring. Press <kbd>Tab</kbd> again to the "Copy Token" button: now <em>only the button</em> receives the focus ring, preserving clear visual intent.
         </p>
@@ -300,7 +300,7 @@ export const InsetFocusContainer: Story = {
       </p>
 
       <div class="stack gap-sm">
-        <div class="card card--bordered card--compact focus-within focus-within--inset" style="overflow: hidden;">
+        <div class="card card--compact focus-within focus-within--inset" style="overflow: hidden;">
           <div class="card__body inline align-items-center justify-content-between">
             <div>
               <p class="font-weight-bold" style="margin: 0;">Automated axe Scans</p>
@@ -316,7 +316,7 @@ export const InsetFocusContainer: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered card--compact focus-within focus-within--inset" style="overflow: hidden;">
+        <div class="card card--compact focus-within focus-within--inset" style="overflow: hidden;">
           <div class="card__body inline align-items-center justify-content-between">
             <div>
               <p class="font-weight-bold" style="margin: 0;">Forced Colors Simulation</p>
@@ -376,7 +376,7 @@ export const CompositeCardDelegation: Story = {
         Press <kbd>Tab</kbd> to focus the card link. The outer card boundary highlights as the interactive target.
       </p>
 
-      <article class="card card--bordered padding focus-within rounded-md" style="transition: border-color var(--transition-fast);">
+      <article class="card padding focus-within rounded-md" style="transition: border-color var(--transition-fast);">
         <header class="stack gap-xs">
           <div class="inline align-items-center justify-content-between">
             <span class="status status--accent"><span class="status__text">WCAG 2.2 AAA</span></span>
@@ -467,7 +467,7 @@ export const StateMatrix: Story = {
 
       <div class="grid gap-lg" style="--grid-min-item-width: 24rem;">
         <!-- Matrix Item 1: .focus-within -->
-        <div class="card card--bordered padding stack gap-sm">
+        <div class="card padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
             <span class="sb-demo-tag">.focus-within</span>
             <span class="font-size-xs text-color-muted">Universal Delegation</span>
@@ -479,7 +479,7 @@ export const StateMatrix: Story = {
         </div>
 
         <!-- Matrix Item 2: .focus-within--input -->
-        <div class="card card--bordered padding stack gap-sm">
+        <div class="card padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
             <span class="sb-demo-tag">.focus-within--input</span>
             <span class="font-size-xs text-color-muted">Input Scoped Only</span>
@@ -491,7 +491,7 @@ export const StateMatrix: Story = {
         </div>
 
         <!-- Matrix Item 3: .focus-within--inset -->
-        <div class="card card--bordered padding stack gap-sm">
+        <div class="card padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
             <span class="sb-demo-tag">.focus-within--inset</span>
             <span class="font-size-xs text-color-muted">Inset -2px Offset</span>
@@ -503,7 +503,7 @@ export const StateMatrix: Story = {
         </div>
 
         <!-- Matrix Item 4: .focus-within--border -->
-        <div class="card card--bordered padding stack gap-sm">
+        <div class="card padding stack gap-sm">
           <div class="inline align-items-center justify-content-between">
             <span class="sb-demo-tag">.focus-within--border</span>
             <span class="font-size-xs text-color-muted">Border Color Elevation</span>

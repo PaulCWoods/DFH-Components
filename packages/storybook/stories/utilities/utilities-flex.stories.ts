@@ -187,7 +187,7 @@ export const JustifyContentDistributions: Story = {
 
       <div class="stack gap">
         <!-- Between -->
-        <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
+        <div class="card padding stack" style="--gap: var(--spacing-4);">
           <p class="font-size-xs font-weight-bold text-muted">.justify-content-between (Split extremes)</p>
           <div class="flex justify-content-between align-items-center sb-demo-inspect-gap padding-sm">
             <span class="sb-demo-tag"><span>Start Edge</span></span>
@@ -196,7 +196,7 @@ export const JustifyContentDistributions: Story = {
         </div>
 
         <!-- Center -->
-        <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
+        <div class="card padding stack" style="--gap: var(--spacing-4);">
           <p class="font-size-xs font-weight-bold text-muted">.justify-content-center (Centered group)</p>
           <div class="flex justify-content-center align-items-center gap-sm sb-demo-inspect-gap padding-sm">
             <button type="button" class="button button--subtle button--sm"><span>Prev</span></button>
@@ -205,7 +205,7 @@ export const JustifyContentDistributions: Story = {
         </div>
 
         <!-- End -->
-        <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
+        <div class="card padding stack" style="--gap: var(--spacing-4);">
           <p class="font-size-xs font-weight-bold text-muted">.justify-content-end (Trailing action bar)</p>
           <div class="flex justify-content-end align-items-center gap-sm sb-demo-inspect-gap padding-sm">
             <button type="button" class="button button--subtle button--sm"><span>Cancel</span></button>
@@ -214,7 +214,7 @@ export const JustifyContentDistributions: Story = {
         </div>
 
         <!-- Evenly -->
-        <div class="card card--bordered padding stack" style="--gap: var(--spacing-4);">
+        <div class="card padding stack" style="--gap: var(--spacing-4);">
           <p class="font-size-xs font-weight-bold text-muted">.justify-content-evenly (Equal spacing around and between)</p>
           <div class="flex justify-content-evenly align-items-center sb-demo-inspect-gap padding-sm">
             <span class="chip chip--subtle"><span class="chip__text">Col 1</span></span>
@@ -242,7 +242,7 @@ export const CrossAxisAlignmentUtilities: Story = {
 
       <div class="grid grid--sm">
         <!-- Center -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <p class="font-size-xs font-weight-bold text-muted">.align-items-center (Default Centering)</p>
           <div class="flex align-items-center gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="avatar" data-status="online"><span>DF</span></div>
@@ -251,7 +251,7 @@ export const CrossAxisAlignmentUtilities: Story = {
         </div>
 
         <!-- Start -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <p class="font-size-xs font-weight-bold text-muted">.align-items-start (Top Align)</p>
           <div class="flex align-items-start gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="avatar" data-status="online"><span>DF</span></div>
@@ -260,7 +260,7 @@ export const CrossAxisAlignmentUtilities: Story = {
         </div>
 
         <!-- End -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <p class="font-size-xs font-weight-bold text-muted">.align-items-end (Bottom Align)</p>
           <div class="flex align-items-end gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="avatar" data-status="online"><span>DF</span></div>
@@ -269,7 +269,7 @@ export const CrossAxisAlignmentUtilities: Story = {
         </div>
 
         <!-- Stretch -->
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <p class="font-size-xs font-weight-bold text-muted">.align-items-stretch (Full Height Stretch)</p>
           <div class="flex align-items-stretch gap-sm sb-demo-inspect-gap padding-sm" style="block-size: 6rem;">
             <div class="sb-demo-box sb-demo-box--sm flex align-items-center">Stretched 1</div>
@@ -294,7 +294,7 @@ export const FluidChildSizing: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
+      <div class="card padding stack" style="--gap: var(--spacing-16);">
         <div class="flex align-items-center gap-sm">
           <div class="sb-demo-box sb-demo-box--sm">Fixed Start</div>
           <div class="sb-demo-box sb-demo-box--center-tint flex-1 padding-sm text-center">
@@ -304,7 +304,7 @@ export const FluidChildSizing: Story = {
         </div>
 
         <!-- Application Header Pattern -->
-        <div class="flex align-items-center gap-sm card card--bordered padding-sm" style="background: var(--surface-card);">
+        <div class="flex align-items-center gap-sm card padding-sm" style="background: var(--surface-card);">
           <div class="inline" style="--gap: var(--spacing-8);">
             <div class="avatar avatar--sm" data-status="online"><span>DF</span></div>
             <span class="font-weight-bold font-size-sm">DFH Studio</span>
@@ -337,21 +337,21 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <div class="flex justify-content-between align-items-center">
             <span class="font-size-xs">Left</span>
             <span class="font-size-xs">Right</span>
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <div class="flex justify-content-center align-items-center gap-sm">
             <span class="font-size-xs">Center 1</span>
             <span class="font-size-xs">Center 2</span>
           </div>
         </div>
 
-        <div class="card card--bordered padding">
+        <div class="card padding">
           <div class="flex align-items-center gap-sm">
             <span class="font-size-xs">Fixed</span>
             <div class="flex-1 sb-demo-box sb-demo-box--sm text-center font-size-xs">flex-1</div>

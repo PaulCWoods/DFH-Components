@@ -140,7 +140,7 @@ export const Playground: Story = {
           Live Sandbox: Adjust type scale steps, weights, text alignments, and modern wrapping algorithms below.
         </p>
         <div class="sb-demo-stage sb-demo-stage--lg">
-          <div class="card card--bordered padding">
+          <div class="card padding">
             <p class="${classes}">
               Design For Humans unites web standards, digital accessibility, and DTCG design tokens to build robust, beautiful digital interfaces.
             </p>
@@ -164,7 +164,7 @@ export const TypeScaleLadder: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding stack" style="--gap: var(--spacing-16);">
+      <div class="card padding stack" style="--gap: var(--spacing-16);">
         <div class="inline" style="justify-content: space-between; align-items: baseline;">
           <span class="font-size-xs text-muted font-weight-bold">.font-size-xs (Step -2 / 0.75rem / 12px)</span>
           <span class="font-size-xs">The quick brown fox jumps over the lazy dog.</span>
@@ -219,7 +219,7 @@ export const ModernTextWrapping: Story = {
 
       <div class="grid grid--sm">
         <!-- text-wrap: balance -->
-        <div class="card card--bordered padding stack" style="--gap: var(--spacing-12);">
+        <div class="card padding stack" style="--gap: var(--spacing-12);">
           <span class="sb-demo-tag font-size-xs">.text-wrap-balance (Headlines)</span>
           <h4 class="font-size-lg font-weight-bold text-wrap-balance" style="max-inline-size: 20rem;">
             Ensuring Consistent Multi-Line Headline Balance Across Devices
@@ -230,7 +230,7 @@ export const ModernTextWrapping: Story = {
         </div>
 
         <!-- text-wrap: pretty -->
-        <div class="card card--bordered padding stack" style="--gap: var(--spacing-12);">
+        <div class="card padding stack" style="--gap: var(--spacing-12);">
           <span class="sb-demo-tag font-size-xs">.text-wrap-pretty (Body Paragraphs)</span>
           <p class="font-size-sm text-wrap-pretty" style="max-inline-size: 20rem;">
             When rendering longer paragraph copy, text-wrap: pretty optimizes the trailing rag to avoid orphans on the final line without slowing down initial layout passes.
@@ -257,7 +257,7 @@ export const SemanticTextColors: Story = {
         </p>
       </div>
 
-      <div class="card card--bordered padding">
+      <div class="card padding">
         <div class="cluster" style="--gap: var(--spacing-24);">
           <span class="text-color-accent font-weight-bold font-size-sm">.text-color-accent (Primary Accent)</span>
           <span class="text-color-muted font-size-sm">.text-color-muted (Secondary Meta)</span>
@@ -285,32 +285,28 @@ export const DensityModes: Story = {
 
       <div class="grid grid--sm">
         <!-- Fixed Mode -->
-        <div class="card card--bordered font-sizing-fixed padding">
-          <article class="card__content stack" style="--gap: var(--spacing-8);">
-            <div class="inline" style="justify-content: space-between;">
-              <span class="sb-demo-tag">.font-sizing-fixed</span>
-              <span class="font-size-xs text-muted">Dashboard</span>
-            </div>
-            <h4 class="card__title font-size-sm font-weight-bold">Dense Fixed Typography</h4>
-            <p class="font-size-xs text-muted">
-              Headings and text lock to exact fixed pixel steps, perfect for dense analytics tables and toolbars.
-            </p>
-          </article>
-        </div>
+        <article class="card font-sizing-fixed padding stack" style="--gap: var(--spacing-8);">
+          <div class="inline" style="justify-content: space-between;">
+            <span class="sb-demo-tag">.font-sizing-fixed</span>
+            <span class="font-size-xs text-muted">Dashboard</span>
+          </div>
+          <h4 class="card__title font-size-sm font-weight-bold">Dense Fixed Typography</h4>
+          <p class="font-size-xs text-muted">
+            Headings and text lock to exact fixed pixel steps, perfect for dense analytics tables and toolbars.
+          </p>
+        </article>
 
         <!-- Fluid Mode -->
-        <div class="card card--bordered font-sizing-fluid padding">
-          <article class="card__content stack" style="--gap: var(--spacing-8);">
-            <div class="inline" style="justify-content: space-between;">
-              <span class="sb-demo-tag">.font-sizing-fluid</span>
-              <span class="font-size-xs text-muted">Editorial</span>
-            </div>
-            <h4 class="card__title font-size-sm font-weight-bold">Fluid Reading Typography</h4>
-            <p class="font-size-xs text-muted">
-              Font sizes scale smoothly with viewport width clamps for optimal long-form reading comfort.
-            </p>
-          </article>
-        </div>
+        <article class="card font-sizing-fluid padding stack" style="--gap: var(--spacing-8);">
+          <div class="inline" style="justify-content: space-between;">
+            <span class="sb-demo-tag">.font-sizing-fluid</span>
+            <span class="font-size-xs text-muted">Editorial</span>
+          </div>
+          <h4 class="card__title font-size-sm font-weight-bold">Fluid Reading Typography</h4>
+          <p class="font-size-xs text-muted">
+            Font sizes scale smoothly with viewport width clamps for optimal long-form reading comfort.
+          </p>
+        </article>
       </div>
     </div>
   `,
@@ -330,10 +326,10 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding"><span class="font-size-xs">.font-size-xs</span></div>
-        <div class="card card--bordered padding"><span class="font-size-sm font-weight-medium">.font-size-sm</span></div>
-        <div class="card card--bordered padding"><span class="font-size-base font-weight-bold">.font-size-base</span></div>
-        <div class="card card--bordered padding"><span class="font-size-lg font-weight-bold">.font-size-lg</span></div>
+        <div class="card padding"><span class="font-size-xs">.font-size-xs</span></div>
+        <div class="card padding"><span class="font-size-sm font-weight-medium">.font-size-sm</span></div>
+        <div class="card padding"><span class="font-size-base font-weight-bold">.font-size-base</span></div>
+        <div class="card padding"><span class="font-size-lg font-weight-bold">.font-size-lg</span></div>
       </div>
     </div>
   `,

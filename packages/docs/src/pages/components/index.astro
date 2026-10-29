@@ -50,25 +50,23 @@ const categories = [
     </p>
 
     <!-- Featured Component Spotlight Banner -->
-    <div class="card card--bordered card--translucent margin-block-lg">
-      <div class="card__content padding-md">
-        <div class="split split--end align-items-center gap-md">
-          <div class="stack gap-xs">
-            <div class="inline align-items-center gap-xs">
-              <span class="status status--accent status--strong status--sm"><span class="status__text">Featured Prototype</span></span>
-              <span class="micro-heading text-muted">Atom Primitive</span>
-            </div>
-            <h2 class="heading margin-0">Button Component Prototype</h2>
-            <p class="small-text text-muted margin-0">
-              Interactive playground, anatomy variations, target-size ergonomics (48px AAA), WCAG 2.2 compliance matrix, design tokens, and Do’s & Don’ts.
-            </p>
+    <div class="card card--translucent margin-block-lg padding-md">
+      <div class="split split--end align-items-center gap-md">
+        <div class="stack gap-xs">
+          <div class="inline align-items-center gap-xs">
+            <span class="status status--accent status--strong status--sm"><span class="status__text">Featured Prototype</span></span>
+            <span class="micro-heading text-muted">Atom Primitive</span>
           </div>
-          <div class="flex justify-end">
-            <a href="/components/atoms/button" class="button button--strong button--accent" role="button">
-              <span>View Button Documentation</span>
-              <Icon name="ArrowRight" size={14} class="icon--dir" />
-            </a>
-          </div>
+          <h2 class="heading margin-0">Button Component Prototype</h2>
+          <p class="small-text text-muted margin-0">
+            Interactive playground, anatomy variations, target-size ergonomics (48px AAA), WCAG 2.2 compliance matrix, design tokens, and Do’s & Don’ts.
+          </p>
+        </div>
+        <div class="flex justify-end">
+          <a href="/components/atoms/button" class="button button--strong button--accent" role="button">
+            <span>View Button Documentation</span>
+            <Icon name="ArrowRight" size={14} class="icon--dir" />
+          </a>
         </div>
       </div>
     </div>
@@ -85,7 +83,7 @@ const categories = [
 
         <div class="grid md:grid--2-col lg:grid--3-col gap-md">
           {cat.items.map((item) => (
-            <a href={item.href} class="card card--bordered card--interactive link link--plain p-md block">
+            <a href={item.href} class="card link link--plain p-md block">
               <div class="stack gap-xs">
                 <div class="inline inline--between align-items-center">
                   <span class="font-weight-bold text-accent">{item.name}</span>
@@ -110,12 +108,5 @@ const categories = [
     padding: var(--spacing-16, 1rem);
   }
 
-  .card--interactive {
-    transition: transform var(--duration-sm, 150ms) ease, border-color var(--duration-sm, 150ms) ease;
-  }
 
-  .card--interactive:hover {
-    border-color: var(--foreground-accent, #008076);
-    transform: translateY(-2px);
-  }
 </style>

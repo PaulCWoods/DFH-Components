@@ -33,7 +33,7 @@
    </section>
 
    <!-- 2. Nested Inside Card Primitive -->
-   <article class="card card--bordered bg-card">
+   <article class="card">
      <div class="card__content">
        <div class="empty-state empty-state--flush">
          ...

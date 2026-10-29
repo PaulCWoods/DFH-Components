@@ -1,399 +1,164 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-interface ButtonGroupArgs {
-  layout?: 'default' | 'tight' | 'stacked' | 'stretch';
-  density?: 'default' | 'dense';
-}
-
-const meta: Meta<ButtonGroupArgs> = {
+const meta: Meta = {
   title: 'Molecules/Button Group',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Button Group Primitive
+# Button Group
 
-The **Button Group** primitive is a layout container engineered for grouping related action buttons, segmented controls, and dropdown/context action menus with horizontal, vertical, and full-width layouts.
-Built with zero-specificity \`:where()\`, local private variables (\`--_button-group-*\`), joined border radii for tight controls, and native container queries.
+A set of related buttons laid out together: a row by default, or a column. The group lays the buttons out; they keep their own look. It has no alignment options: a \`justify-*\` utility on the group, or the layout around it, decides where the buttons sit. Rows of actions with headings and shortcuts are a menu.
 
----
-
-#### 1. Canonical Semantic Markup Signatures
-AI agents and developers MUST strictly use the following semantic patterns:
-
+### Markup
 \`\`\`html
-<!-- Standard Horizontal Action Cluster -->
 <div class="button-group">
-  <button type="button" class="button"><span>Cancel</span></button>
-  <button type="button" class="button"><span>Save Draft</span></button>
-  <hr class="divider">
+  <button type="button" class="button"><span>Save draft</span></button>
   <button type="button" class="button button--strong button--accent"><span>Publish</span></button>
 </div>
 
-<!-- Segmented Control with Joined Borders -->
-<div class="button-group button-group--tight">
-  <button type="button" class="button"><span>Day</span></button>
-  <button type="button" class="button is-active"><span>Week</span></button>
-  <button type="button" class="button"><span>Month</span></button>
-</div>
-
-<!-- Stacked Column Menu (Dropdowns, Context Menus, and Drawers) -->
-<div class="button-group button-group--tight button-group--stacked buttons-subtle">
-  <button type="button" class="button">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
-    <span>Duplicate</span>
-  </button>
-  <button type="button" class="button">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-    <span>Export JSON</span>
-  </button>
-  <hr class="divider">
-  <button type="button" class="button button--subtle button--danger">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-    <span>Delete</span>
-  </button>
-</div>
-
-<!-- Stretched Action Bar with Inline Content and End Spacer -->
-<div class="button-group button-group--stretch">
-  <button type="button" class="button"><span>Previous</span></button>
-  <span class="button-group__content button-group__fill">Step 2 of 5</span>
-  <button type="button" class="button button--strong button--accent button-group__end"><span>Next Step</span></button>
+<div class="button-group button-group--joined" role="radiogroup" aria-label="Range">
+  <label class="button"><input type="radio" name="range" class="visually-hidden" checked><span>Day</span></label>
+  <label class="button"><input type="radio" name="range" class="visually-hidden"><span>Week</span></label>
 </div>
 \`\`\`
 
----
-
-#### 2. WCAG 2.2 Conformance Matrix
-
-| Criterion | Level | Implementation Strategy |
-| :--- | :---: | :--- |
-| **2.5.5 / 2.5.8 Target Size** | **AA/AAA** | Child buttons preserve standard 48px baseline targets; compact variants preserve minimum 32px targets. |
-| **2.4.7 / 2.4.13 Focus Visible** | **AA/AAA** | For tight controls (\`.button-group--tight\`), the focus ring reverses offset (\`outline-offset: -2px\`) to prevent overlapping adjacent buttons. |
-| **1.3.1 Info & Relationships** | **A** | Group semantics can be optionally reinforced via \`role="group"\` or \`role="toolbar"\` with descriptive \`aria-label\`. |
-| **Divider Auto-Orientation** | **Standard** | \`hr.divider\` elements nested inside \`.button-group\` automatically switch to vertical lines via container-driven logical borders. |
-
----
-
-#### 3. CSS Custom Property Contract Table
-
-| Custom Property | Fallback | Intended Purpose |
-| :--- | :--- | :--- |
-| \`--button-group-gap\` | \`--spacing\` (1rem / 16px) | Spacing between buttons in standard groups |
-| \`--button-group-tight-gap\` | \`0px\` | Spacing between buttons in tight / segmented groups |
-| \`--button-group-divider-width\` | \`--border-width\` (1px) | Stroke thickness of nested dividers |
-| \`--button-group-divider-color\` | \`--border-color\` (\`currentColor\`) | Divider stroke color |
-| \`--button-group-content-color\` | \`currentColor\` | Text color for \`.button-group__content\` spans |
-| \`--button-group-content-font-size\` | \`--typography-font-size-0\` (1rem) | Text size for inline labels |
-| \`--button-group-heading-gap\` | \`--spacing-16\` (1rem) | Vertical gap above section headings in stacked menus |
-
----
-
-#### 4. Zero-Class Container Style Queries (\`@container style(...)\`)
-Parents can declaratively orchestrate child button styles in groups:
-
-\`\`\`css
-/* Example: Contextual subtle toolbar */
-.table-toolbar {
-  --button-prominence: subtle;
-  --ui-sizing: compact;
-}
-\`\`\`
-`,
+- **Options:** \`--joined\` (one control), \`--vertical\` (full-width buttons), \`--fill\` (the buttons share the width), \`--ruled\` (rules between buttons where gap decorations are supported), \`--compact\`. \`__end\` pushes itself and what follows to the end.
+- **Button looks** come from the buttons: \`.buttons-strong\`, \`.buttons-subtle\`, \`.buttons-plain\`, \`.buttons-sm\`, \`.buttons-round\` set them for the whole group.
+- **Roles.** A group whose buttons share a purpose takes \`role="group"\` and a label; exclusive choices are radios in a \`role="radiogroup"\`. Not \`role="toolbar"\`, which promises arrow keys.
+- **Joined** keeps every border; the hovered, selected or focused button rises so its border and focus ring show in full.
+        `,
       },
     },
-  },
-  argTypes: {
-    layout: {
-      description: 'Group layout arrangement',
-      control: 'select',
-      options: ['default', 'tight', 'stacked', 'stretch'],
-      defaultValue: 'default',
-    },
-    density: {
-      description: 'Container query density',
-      control: 'select',
-      options: ['default', 'dense'],
-      defaultValue: 'default',
-    },
-  },
-  render: (args) => {
-    const layoutClass = args.layout && args.layout !== 'default' ? `button-group--${args.layout}` : '';
-    const densityStyle = args.density === 'dense' ? '--ui-sizing: compact;' : '';
-
-    return `
-      <div class="demo-stage demo-constrained--md" style="${densityStyle}">
-        <div class="button-group ${layoutClass}">
-          <button type="button" class="button"><span>Cancel</span></button>
-          <button type="button" class="button"><span>Save Draft</span></button>
-          <hr class="divider">
-          <button type="button" class="button button--strong button--accent"><span>Publish</span></button>
-        </div>
-      </div>
-    `;
   },
 };
 
 export default meta;
-type Story = StoryObj<ButtonGroupArgs>;
+type Story = StoryObj;
 
-/**
- * 1. Playground (Interactive Sandbox)
- * Adjust layout orientations, tightness, and density via Storybook controls.
- */
+const icon = (name: string) =>
+  `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
+
+const radios = (name: string, labels: string[]) =>
+  labels.map((l, i) => `<label class="button"><input type="radio" name="${name}" value="${l.toLowerCase()}" class="visually-hidden"${i === 0 ? ' checked' : ''} /><span>${l}</span></label>`).join('');
+
 export const Playground: Story = {
-  args: {
-    layout: 'default',
-    density: 'default',
+  args: { joined: false, vertical: false, fill: false, ruled: false, compact: false, prominence: 'default', round: false },
+  argTypes: {
+    prominence: { control: 'inline-radio', options: ['default', 'strong', 'subtle', 'plain'] },
+  },
+  render: (args) => {
+    const cls = ['button-group',
+      args.joined && 'button-group--joined',
+      args.vertical && 'button-group--vertical',
+      args.fill && 'button-group--fill',
+      args.ruled && 'button-group--ruled',
+      args.compact && 'button-group--compact',
+      args.prominence !== 'default' && `buttons-${args.prominence}`,
+      args.round && 'buttons-round'].filter(Boolean).join(' ');
+    return `
+      <div style="max-inline-size: 32rem;">
+        <div class="${cls}" role="group" aria-label="Document">
+          <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
+          <button type="button" class="button">${icon('Download')}<span>Export</span></button>
+          <button type="button" class="button">${icon('Share')}<span>Share</span></button>
+        </div>
+      </div>`;
   },
 };
 
-/**
- * 2. Anatomy & Structure Breakdown
- * Shows buttons, auto-orienting vertical dividers, inline content labels, and end spacers.
- */
-export const Anatomy: Story = {
+export const Joined: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="demo-label">1. Action Buttons &rarr; 2. Auto-Orienting Divider &rarr; 3. Text Label &rarr; 4. End Spacer (.button-group__end)</div>
-      
-      <div class="button-group button-group--stretch" style="inline-size: 100%;">
-        <button type="button" class="button"><span>Back</span></button>
-        <hr class="divider">
-        <span class="button-group__content button-group__fill">Step 3 of 5 (Review Deliverables)</span>
-        <hr class="divider">
-        <button type="button" class="button button--strong button--accent button-group__end"><span>Continue</span></button>
+    <div class="stack">
+      <h3 class="small-heading">Exclusive choice: radios</h3>
+      <div class="button-group button-group--joined" role="radiogroup" aria-label="Range">${radios('range', ['Day', 'Week', 'Month', 'Year'])}</div>
+
+      <h3 class="small-heading">Toggles: aria-pressed</h3>
+      <div class="button-group button-group--joined" role="group" aria-label="Text style">
+        <button type="button" class="button button--icon" aria-pressed="true">${icon('Bold')}<span class="visually-hidden">Bold</span></button>
+        <button type="button" class="button button--icon" aria-pressed="false">${icon('Italic')}<span class="visually-hidden">Italic</span></button>
+        <button type="button" class="button button--icon" aria-pressed="false">${icon('Link')}<span class="visually-hidden">Link</span></button>
       </div>
-    </div>
-  `,
+
+      <h3 class="small-heading">Subtle, round and compact</h3>
+      <div class="cluster">
+        <div class="button-group button-group--joined buttons-subtle" role="radiogroup" aria-label="View">${radios('view-subtle', ['Grid', 'List', 'Board'])}</div>
+        <div class="button-group button-group--joined buttons-round" role="radiogroup" aria-label="Layout">${radios('view-round', ['Grid', 'List', 'Board'])}</div>
+        <div class="button-group button-group--joined button-group--compact" role="radiogroup" aria-label="Density">${radios('view-compact', ['Grid', 'List', 'Board'])}</div>
+      </div>
+
+      <h3 class="small-heading">Vertical</h3>
+      <div class="button-group button-group--joined button-group--vertical" role="radiogroup" aria-label="Plan" style="max-inline-size: 16rem;">${radios('plan', ['Monthly', 'Yearly', 'Lifetime'])}</div>
+
+      <h3 class="small-heading">Right to left</h3>
+      <div dir="rtl" class="button-group button-group--joined buttons-round" role="radiogroup" aria-label="Range, right to left">${radios('range-rtl', ['Day', 'Week', 'Month'])}</div>
+    </div>`,
 };
 
-/**
- * 3. Variants & Layout Patterns
- * Demonstrates Horizontal Cluster, Segmented Tight Control, Stacked Column Menu, and Ruled Group.
- */
-export const Variants: Story = {
+export const Layout: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <!-- 1. Standard Horizontal -->
-      <div>
-        <div class="demo-label">1. Standard Horizontal (.button-group)</div>
+    <div class="stack" style="max-inline-size: 36rem;">
+      <h3 class="small-heading">Vertical: full-width buttons, content centred</h3>
+      <div class="button-group button-group--vertical" style="max-inline-size: 20rem;">
+        <button type="button" class="button button--strong button--accent">${icon('Email')}<span>Continue with email</span></button>
+        <button type="button" class="button">${icon('Lock')}<span>Continue with a passkey</span></button>
+        <button type="button" class="button button--plain"><span>Other options</span></button>
+      </div>
+
+      <h3 class="small-heading">Fill: the buttons share the width</h3>
+      <div class="button-group button-group--fill">
+        <button type="button" class="button"><span>Cancel</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Submit</span></button>
+      </div>
+
+      <h3 class="small-heading">End part and text</h3>
+      <div class="button-group">
+        <button type="button" class="button"><span>Back</span></button>
+        <span class="small-text">Step 3 of 4</span>
+        <button type="button" class="button button--strong button--accent button-group__end"><span>Next</span></button>
+      </div>
+
+      <h3 class="small-heading">Aligned with a utility</h3>
+      <div class="button-group justify-end">
+        <button type="button" class="button button--subtle"><span>Cancel</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Save</span></button>
+      </div>
+
+      <h3 class="small-heading">Ruled, with a divider</h3>
+      <div class="button-group button-group--ruled buttons-plain" role="group" aria-label="Edit">
+        <button type="button" class="button"><span>Cut</span></button>
+        <button type="button" class="button"><span>Copy</span></button>
+        <button type="button" class="button"><span>Paste</span></button>
+      </div>
+      <div class="button-group buttons-subtle" role="group" aria-label="File">
+        <button type="button" class="button"><span>Edit</span></button>
+        <button type="button" class="button"><span>Share</span></button>
+        <hr class="divider" aria-orientation="vertical">
+        <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>
+      </div>
+    </div>`,
+};
+
+export const Density: Story = {
+  render: () => `
+    <div class="stack">
+      <h3 class="small-heading">Default: 48px targets</h3>
+      <div class="button-group">
+        <button type="button" class="button"><span>Review</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Approve</span></button>
+      </div>
+      <h3 class="small-heading">--compact: smaller buttons and gaps</h3>
+      <div class="button-group button-group--compact">
+        <button type="button" class="button"><span>Review</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Approve</span></button>
+      </div>
+      <h3 class="small-heading">Inside a .ui-compact region</h3>
+      <div class="ui-compact">
         <div class="button-group">
           <button type="button" class="button"><span>Review</span></button>
-          <button type="button" class="button"><span>Approve</span></button>
-          <hr class="divider">
-          <button type="button" class="button button--strong button--accent"><span>Deploy</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Approve</span></button>
         </div>
       </div>
-
-      <hr class="divider" />
-
-      <!-- 2. Segmented Tight Control -->
-      <div>
-        <div class="demo-label">2. Segmented Tight Control (.button-group--tight / Joined Radii)</div>
-        <div class="button-group button-group--tight">
-          <button type="button" class="button is-active"><span>Overview</span></button>
-          <button type="button" class="button"><span>Activity</span></button>
-          <button type="button" class="button"><span>Audit Logs</span></button>
-          <button type="button" class="button"><span>Settings</span></button>
-        </div>
-      </div>
-
-      <hr class="divider" />
-
-      <!-- 3. Stretched Action Bar -->
-      <div>
-        <div class="demo-label">3. Full-Width Stretched (.button-group--stretch)</div>
-        <div class="button-group button-group--stretch" style="inline-size: 100%;">
-          <button type="button" class="button" style="flex: 1 1 auto;"><span>Cancel</span></button>
-          <button type="button" class="button button--strong button--accent" style="flex: 1 1 auto;"><span>Submit</span></button>
-        </div>
-      </div>
-
-      <hr class="divider" />
-
-      <!-- 4. Stacked Column Menu -->
-      <div>
-        <div class="demo-label">4. Stacked Column Menu (.button-group--stacked)</div>
-        <div class="card card--compact card--bordered" style="max-inline-size: 20rem;">
-          <div class="card__content">
-            <div class="card__body card__body--flush">
-              <div class="button-group button-group--tight button-group--stacked buttons-subtle">
-                <button type="button" class="button">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
-                  <span>Duplicate Item</span>
-                </button>
-                <button type="button" class="button">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-                  <span>Export Report</span>
-                </button>
-                <hr class="divider">
-                <button type="button" class="button button--subtle button--danger">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-                  <span>Delete Permanently</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 4. State Matrix
- * Side-by-side verification of Active/Selected, Disabled, and Subtle items inside groups.
- */
-export const StateMatrix: Story = {
-  render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <div class="demo-label">Item States in Group (Selected, Resting, Disabled)</div>
-      <div class="button-group button-group--tight">
-        <button type="button" class="button is-active">
-          <span>Active View</span>
-        </button>
-        <button type="button" class="button">
-          <span>Standard View</span>
-        </button>
-        <button type="button" class="button" disabled>
-          <span>Disabled View</span>
-        </button>
-      </div>
-
-      <hr class="divider" />
-
-      <div class="demo-label">Mixed Variants with Divider</div>
-      <div class="button-group">
-        <button type="button" class="button button--subtle"><span>Cancel</span></button>
-        <button type="button" class="button"><span>Save Draft</span></button>
-        <hr class="divider">
-        <button type="button" class="button button--strong button--accent"><span>Confirm Action</span></button>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 5. Sizes & Density (WCAG Target Compliance)
- * Compares standard button group with compact density mode.
- */
-export const SizesAndDensity: Story = {
-  render: () => `
-    <div class="demo-stage demo-constrained--lg stack">
-      <!-- Standard Spacing -->
-      <div>
-        <div class="demo-label">Standard Density (48px Touch Targets)</div>
-        <div class="button-group">
-          <button type="button" class="button"><span>Action 1</span></button>
-          <button type="button" class="button button--strong button--accent"><span>Action 2</span></button>
-        </div>
-      </div>
-
-      <hr class="divider" />
-
-      <!-- Dense Container Query -->
-      <div style="--ui-sizing: compact;">
-        <div class="demo-label">Compact Container (--ui-sizing: compact / 32px visual, 48px hit area)</div>
-        <div class="button-group">
-          <button type="button" class="button"><span>Action 1</span></button>
-          <button type="button" class="button button--strong button--accent"><span>Action 2</span></button>
-        </div>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 6. Zero-Class Container Style Queries (@container style(...))
- * Demonstrating parent container orchestration for button styles inside groups.
- */
-export const ZeroClassOrchestration: Story = {
-  render: () => `
-    <div class="stack demo-constrained--md">
-      <!-- Subtle Navigation Group -->
-      <div class="demo-label">Parent: style="--button-prominence: subtle; --button-corners: round;"</div>
-      <div class="demo-stage" style="--button-prominence: subtle; --button-corners: round;">
-        <div class="button-group">
-          <button type="button" class="button"><span>Summary</span></button>
-          <button type="button" class="button"><span>Issues</span></button>
-          <button type="button" class="button"><span>Discussions</span></button>
-        </div>
-      </div>
-
-      <!-- Dense Segmented Toolbar -->
-      <div class="demo-label">Parent: style="--ui-sizing: compact;"</div>
-      <div class="demo-stage" style="--ui-sizing: compact;">
-        <div class="button-group button-group--tight">
-          <button type="button" class="button is-active"><span>Grid</span></button>
-          <button type="button" class="button"><span>Table</span></button>
-          <button type="button" class="button"><span>Kanban</span></button>
-        </div>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 7. Real-World Recipes & UI Compositions
- * Common production patterns: Context menu dropdown, step wizard toolbar, and card footer action bar.
- */
-export const RealWorldRecipes: Story = {
-  render: () => `
-    <div class="stack demo-constrained--lg">
-      <!-- Recipe A: Floating Context Menu / Dropdown Surface -->
-      <div class="card card--bordered card--translucent card--ruled" style="max-inline-size: 18rem; box-shadow: var(--shadow-lg);">
-        <article class="card__content">
-          <header class="card__header" style="padding-block: var(--spacing-8);">
-            <h4 class="card__title" style="font-size: var(--typography-font-size--1); text-transform: uppercase; letter-spacing: 0.05em; color: var(--foreground-muted);">
-              File Operations
-            </h4>
-          </header>
-          <div class="card__body card__body--flush">
-            <div class="button-group button-group--tight button-group--stacked buttons-subtle">
-              <button type="button" class="button">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
-                <span>Make a Copy</span>
-              </button>
-              <button type="button" class="button">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
-                <span>Download Archive</span>
-              </button>
-              <button type="button" class="button">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-                <span>Mark as Reviewed</span>
-              </button>
-              <hr class="divider">
-              <button type="button" class="button button--subtle button--danger">
-                <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-                <span>Move to Trash</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <!-- Recipe B: Multi-Step Form Navigation Bar -->
-      <div class="card card--bordered">
-        <article class="card__content">
-          <div class="card__body">
-            <div class="button-group button-group--stretch" style="inline-size: 100%;">
-              <button type="button" class="button button--subtle">
-                <span>&larr; Back</span>
-              </button>
-              <hr class="divider">
-              <span class="button-group__content button-group__fill" style="font-weight: var(--font-weight-bold);">
-                Step 3 of 4: WCAG Checklist
-              </span>
-              <hr class="divider">
-              <button type="button" class="button button--strong button--accent button-group__end">
-                <span>Continue &rarr;</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  `,
+    </div>`,
 };

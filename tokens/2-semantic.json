@@ -350,37 +350,37 @@
       "$value": "{color.amber.700}"
     },
     "info-dark": {
-      "$value": "{color.blue.700}"
+      "$value": "{color.aqua.700}"
     },
     "warning-dark-hover": {
       "$value": "{color.amber.600}"
     },
     "info-dark-hover": {
-      "$value": "{color.blue.600}"
+      "$value": "{color.aqua.600}"
     },
     "warning-dark-pressed": {
       "$value": "{color.amber.800}"
     },
     "info-dark-pressed": {
-      "$value": "{color.blue.800}"
+      "$value": "{color.aqua.800}"
     },
     "warning-light": {
       "$value": "{color.amber.300}"
     },
     "info-light": {
-      "$value": "{color.blue.300}"
+      "$value": "{color.aqua.300}"
     },
     "warning-light-hover": {
       "$value": "{color.amber.200}"
     },
     "info-light-hover": {
-      "$value": "{color.blue.200}"
+      "$value": "{color.aqua.200}"
     },
     "warning-light-pressed": {
       "$value": "{color.amber.400}"
     },
     "info-light-pressed": {
-      "$value": "{color.blue.400}"
+      "$value": "{color.aqua.400}"
     },
     "success-dark": {
       "$value": "{color.green.700}"

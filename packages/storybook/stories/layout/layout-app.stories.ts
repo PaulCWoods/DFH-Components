@@ -155,7 +155,7 @@ export const Playground: Story = {
     const mainContent = args.withSidebar
       ? `
         <div class="split split--xs" style="block-size: 100%;">
-          <aside class="card card--bordered padding stack" style="--gap: var(--spacing-12); border-radius: 0; border-top: none; border-bottom: none; border-inline-start: none;">
+          <aside class="card padding stack" style="--gap: var(--spacing-12); border-radius: 0; border-top: none; border-bottom: none; border-inline-start: none;">
             <p class="font-weight-bold font-size-sm">Sidebar Nav</p>
             <nav class="stack" style="--gap: var(--spacing-8);">
               <a href="#" class="link" onclick="event.preventDefault();"><span>Overview</span></a>
@@ -329,7 +329,7 @@ export const FullBleedCanvas: Story = {
           </header>
 
           <main class="main main--flush" style="display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 10px, var(--surface-card) 10px, var(--surface-card) 20px);">
-            <div class="card card--bordered padding stack" style="text-align: center; max-inline-size: 20rem;">
+            <div class="card padding stack" style="text-align: center; max-inline-size: 20rem;">
               <h4 class="font-weight-bold font-size-sm">Edge-to-Edge Canvas</h4>
               <p class="font-size-xs text-muted">Zero margin/padding restrictions.</p>
             </div>
@@ -354,7 +354,7 @@ export const StateMatrix: Story = {
       </div>
 
       <div class="grid grid--sm">
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Standard Holy Grail Shell</h4>
           <div style="block-size: 10rem; position: relative; overflow: hidden; border: 1px dashed var(--border-color-quiet);">
             <div class="app">
@@ -365,7 +365,7 @@ export const StateMatrix: Story = {
           </div>
         </div>
 
-        <div class="card card--bordered padding stack">
+        <div class="card padding stack">
           <h4 class="font-size-xs font-weight-bold">Flush Main Shell</h4>
           <div style="block-size: 10rem; position: relative; overflow: hidden; border: 1px dashed var(--border-color-quiet);">
             <div class="app">
