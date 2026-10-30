@@ -249,6 +249,7 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | May Tier 3 tokens reference Tier 1? | Yes, in token JSON, to choose a scale step. Component CSS still never references Tier 1. |
 | Should tight groups of small controls avoid overlapping hit areas? | No. WCAG 2.5.8 allows overlap; the later control wins. Dense toolbars that need exact targets opt into fine-pointer targets. |
 | Does each prominence need an explicit modifier, such as `--outline`? | Not yet. Add one only when a real case needs to override a container's prominence back to the default. |
+| Is a card's edge part of prominence? | No. Prominence sets the fill; the card's chrome axis (`--flat`, `--bordered`) sets the edge, and `--flush` the padding, so each modifier keeps to one axis. `--plain` keeps its edgeless look; `.card--plain.card--bordered` is the outline the row above anticipated. Chrome is card-only until a second surface needs it. |
 | How are badge, chip, status and kbd told apart? | By job. Attached count or dot: badge. State of a thing: status. Value or tag, optionally removable: chip. Key: kbd. There is no separate "label" atom. |
 | What is a status's default look? | The outline pill, like every other default prominence. `--strong`, `--subtle` and `--plain` (dot and text) follow the shared axis. |
 | Must a badge sit in a corner? | No. It can sit inline after its host's label or in a logical corner, as long as it belongs to a host. |

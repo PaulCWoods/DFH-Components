@@ -201,3 +201,13 @@ All approved as recommended.
 ### Left for later
 - Page-level size containers, so the container-prefixed classes match in most layouts (HANDOVER backlog).
 - The dark-mode card surface is darker than the page (palette backlog).
+
+## Follow-up: card chrome and flush
+
+`--flat`, `--bordered` and `--flush` came back for the Token Designer's tool panels and other layout panels, reviewed against one axis per modifier:
+
+- **Chrome** (`--card-chrome` flag): `--flat` drops the edge (border, corners, shadow) and keeps the fill; `--bordered` draws the border at any prominence. The two are values of one axis, so a card takes one. Prominence keeps the fill: `.card--plain.card--bordered` is an outline.
+- **Flush** drops the padding at the card's edges and nothing else. The first draft also cleared the fill, border and corners, which repeated `--plain` and fused two axes; `.card--plain.card--flush` gives that look.
+- **Responsive:** `@max-2xl:` and `@max-md:` versions of `--plain`, `--flat`, `--bordered` and `--flush`, written after the prominence ones so a responsive chrome applies over a responsive prominence.
+- **Flags:** a card resets `--card-chrome` for cards nested inside it, like `--card-prominence`. The `flush` value of the flag is gone with the change above.
+- **Increased contrast:** a bordered card gains the 2px edge even when plain; a flat card gains one like any non-plain card.

@@ -19,6 +19,7 @@
    1. Atoms (Foundational, indivisible elements)
    -------------------------------------------------------------------------- */
 @import './atoms/text.css' layer(atoms);
+@import './atoms/list.css' layer(atoms);
 @import './atoms/link.css' layer(atoms);
 @import './atoms/icon.css' layer(atoms);
 @import './atoms/badge.css' layer(atoms);

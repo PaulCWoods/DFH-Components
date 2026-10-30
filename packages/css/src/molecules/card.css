@@ -9,10 +9,13 @@
    children of .card. .card__content wraps parts only where they sit beside
    a __thumb in a row card.
 
-   Axes: prominence (default, --strong, --subtle, --plain), density
-   (--compact). Flags: --card-prominence (set on a container; a card resets
-   it for cards nested inside), --card-scroll: all, --card-font-sizing
-   (fixed by default; a dialog sets cq).
+   Axes: prominence (default, --strong, --subtle, --plain), chrome (the
+   frame's edge: default, --flat, --bordered), padding (--flush), density
+   (--compact). Flags: --card-prominence and --card-chrome (set on a
+   container; a card resets them for cards nested inside), --card-scroll:
+   all, --card-font-sizing (fixed by default; a dialog sets cq).
+   Responsive: @max-2xl: and @max-md: versions of --plain, --flat,
+   --bordered and --flush.
    ========================================================================== */
 
 /* ==========================================================================
@@ -37,6 +40,7 @@
 
   /* Flags apply to this card; cards nested inside start from the default */
   --card-prominence: initial;
+  --card-chrome: initial;
   --card-scroll: initial;
   --font-sizing: var(--card-font-sizing, fixed);
 
@@ -53,7 +57,20 @@
   @container style(--card-prominence: plain) {
     --_card-fill: transparent;
     --_card-border-width: 0px;
-    --_card-radius: 0;
+    --_card-radius: 0px;
+  }
+
+  /* Chrome flag: the frame's edge, whatever the prominence */
+  @container style(--card-chrome: flat) {
+    --_card-border-width: 0px;
+    --_card-radius: 0px;
+    --_card-shadow: none;
+  }
+
+  @container style(--card-chrome: bordered) {
+    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-style: var(--card-border-style, solid);
+    --_card-border-color: var(--card-border-color, currentColor);
   }
 
   /* Density: a compact container steps the card down */
@@ -94,7 +111,11 @@
 }
 
 /* ==========================================================================
-   2. Prominence and density modifiers (pure token maps)
+   2. Modifiers (pure token maps)
+   Prominence sets the fill; chrome sets the edge (border, corners, shadow);
+   flush sets the padding. One of each combines: .card--subtle.card--flat is
+   a square tint, .card--plain.card--bordered an outline,
+   .card--plain.card--flush the content alone.
    ========================================================================== */
 :where(.card--strong) {
   --_card-fill: var(--card-bg, var(--surface-card, Canvas));
@@ -109,13 +130,21 @@
 :where(.card--plain) {
   --_card-fill: transparent;
   --_card-border-width: 0px;
-  --_card-radius: 0;
+  --_card-radius: 0px;
   --_card-shadow: none;
 }
 
-:where(.card--flush) {
+:where(.card--compact, .card.ui-compact) {
+  --ui-sizing: compact;
+  --_card-padding: var(--card-compact-padding, var(--spacing));
+  --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
+}
+
+/* Chrome: --flat drops the edge (border, corners and shadow) and keeps the
+   fill; --bordered draws the border at any prominence */
+:where(.card--flat) {
   --_card-border-width: 0px;
-  --_card-radius: 0;
+  --_card-radius: 0px;
   --_card-shadow: none;
 }
 
@@ -125,15 +154,16 @@
   --_card-border-color: var(--card-border-color, currentColor);
 }
 
-:where(.card--compact, .card.ui-compact) {
-  --ui-sizing: compact;
-  --_card-padding: var(--card-compact-padding, var(--spacing));
-  --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
+/* Flush: no padding at the card's edges, for content that brings its own
+   (a table, an image, another layout). Gaps between parts stay. */
+:where(.card--flush) {
+  --_card-padding: 0px;
 }
 
-/* Increased contrast: a thicker edge instead of shadows; a subtle card gains one */
+/* Increased contrast: a thicker edge instead of shadows; a subtle or flat
+   card gains one, and a bordered one thickens */
 @media (prefers-contrast: more) {
-  :where(.card:not(.card--plain)) {
+  :where(.card:not(.card--plain), .card--bordered) {
     --_card-border-width: var(--border-width-md, 2px);
     --_card-shadow: none;
 
@@ -152,15 +182,34 @@
 }
 
 /* --------------------------------------------------------------------------
-   Responsive prominence: plain while the nearest size container is narrow.
-   Written desktop-first, so with no container to query the card keeps its look.
+   Responsive: prominence, chrome and padding while the nearest size
+   container is narrow (@max-2xl: below 42rem, @max-md: below 28rem). Written
+   desktop-first, so with no container to query the card keeps its look.
+   Chrome comes after prominence, so @max-md:card--plain with
+   @max-md:card--bordered gives an outline.
    -------------------------------------------------------------------------- */
 @container (width < 42rem) {
   :where(.\@max-2xl\:card--plain) {
     --_card-fill: transparent;
     --_card-border-width: 0px;
-    --_card-radius: 0;
+    --_card-radius: 0px;
     --_card-shadow: none;
+  }
+
+  :where(.\@max-2xl\:card--flat) {
+    --_card-border-width: 0px;
+    --_card-radius: 0px;
+    --_card-shadow: none;
+  }
+
+  :where(.\@max-2xl\:card--bordered) {
+    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-style: var(--card-border-style, solid);
+    --_card-border-color: var(--card-border-color, currentColor);
+  }
+
+  :where(.\@max-2xl\:card--flush) {
+    --_card-padding: 0px;
   }
 }
 
@@ -168,8 +217,24 @@
   :where(.\@max-md\:card--plain) {
     --_card-fill: transparent;
     --_card-border-width: 0px;
-    --_card-radius: 0;
+    --_card-radius: 0px;
     --_card-shadow: none;
+  }
+
+  :where(.\@max-md\:card--flat) {
+    --_card-border-width: 0px;
+    --_card-radius: 0px;
+    --_card-shadow: none;
+  }
+
+  :where(.\@max-md\:card--bordered) {
+    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-style: var(--card-border-style, solid);
+    --_card-border-color: var(--card-border-color, currentColor);
+  }
+
+  :where(.\@max-md\:card--flush) {
+    --_card-padding: 0px;
   }
 }
 

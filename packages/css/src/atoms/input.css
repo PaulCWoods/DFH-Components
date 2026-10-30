@@ -503,6 +503,16 @@
   --_color-input-size: var(--input-lg-min-size, 4rem);
 }
 
+:where(.color-input--stretch) {
+  @supports not (width: stretch) {
+    inline-size: 100%;
+  }
+
+  @supports (width: stretch) {
+    inline-size: stretch;
+  }
+}
+
 /* ==========================================================================
    8. File Input (:where(.file-input))
    The "Choose file" button inherits the font; the browser draws the rest.

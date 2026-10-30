@@ -34,12 +34,15 @@ Parts (\`__thumb\`, \`__header\`, \`__band\`, \`__body\`, \`__footer\`) are dire
 | Axis | Values | Flag |
 | :--- | :--- | :--- |
 | Prominence | default (surface and quiet border), \`--strong\` (raised, for floating cards), \`--subtle\` (tint, no border), \`--plain\` (no surface, border or shadow) | \`--card-prominence\` |
+| Chrome | default (the prominence's edge), \`--flat\` (no border, corners or shadow; keeps the fill), \`--bordered\` (a border at any prominence) | \`--card-chrome\` |
+| Padding | default, \`--flush\` (no padding at the card's edges) | |
 | Density | default, \`--compact\` | \`--ui-sizing: compact\` |
 
 - \`--translucent\` is a material that combines with any prominence that has a fill.
 - \`--ruled\` draws rules between parts; \`.card__band\` (\`--subtle\`) is a full-width strip between them.
 - Dialog and popover set \`--card-prominence: strong\` for the card they hold. A card resets the flag for cards nested inside it.
-- \`@max-2xl:card--plain\` (below 42rem) and \`@max-md:card--plain\` (below 28rem) drop the frame while the nearest size container is narrow.
+- One modifier per axis: \`.card--plain.card--bordered\` is an outline, \`.card--subtle.card--flat\` a square tint, \`.card--plain.card--flush\` the content alone.
+- \`@max-2xl:\` (below 42rem) and \`@max-md:\` (below 28rem) versions of \`--plain\`, \`--flat\`, \`--bordered\` and \`--flush\` apply while the nearest size container is narrow.
 
 ### Linked card
 Put \`.link.link--plain.link--stretched\` in the title. The whole card becomes the target, the focus ring is drawn on the card's perimeter, other controls are lifted above the link, and hover raises the shadow where hover exists.
@@ -60,6 +63,8 @@ const img = 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=f
 export const Playground: Story = {
   args: {
     prominence: 'default',
+    chrome: 'default',
+    flush: false,
     compact: false,
     ruled: false,
     translucent: false,
@@ -71,6 +76,8 @@ export const Playground: Story = {
   },
   argTypes: {
     prominence: { control: 'inline-radio', options: ['default', 'strong', 'subtle', 'plain'] },
+    chrome: { control: 'inline-radio', options: ['default', 'flat', 'bordered'] },
+    flush: { control: 'boolean' },
     compact: { control: 'boolean' },
     ruled: { control: 'boolean' },
     translucent: { control: 'boolean' },
@@ -84,6 +91,8 @@ export const Playground: Story = {
     const classes = [
       'card',
       args.prominence !== 'default' ? `card--${args.prominence}` : '',
+      args.chrome !== 'default' ? `card--${args.chrome}` : '',
+      args.flush ? 'card--flush' : '',
       args.compact ? 'card--compact' : '',
       args.ruled ? 'card--ruled' : '',
       args.translucent ? 'card--translucent' : '',
@@ -147,7 +156,7 @@ const prominenceCard = (cls: string, name: string, note: string) => `
     <header class="card__header">
       <hgroup class="card__hgroup">
         <h3 class="card__title heading">${name}</h3>
-        <p class="card__subtitle small-text">${cls ? `.${cls}` : 'default'}</p>
+        <p class="card__subtitle small-text">${cls ? `.${cls.replace(/ /g, '.')}` : 'default'}</p>
       </hgroup>
     </header>
     <div class="card__body"><p class="text">${note}</p></div>
@@ -167,6 +176,18 @@ export const Prominence: Story = {
           <div class="card__body"><p class="text">A material on top of any prominence with a fill.</p></div>
         </article>
       </div>
+    </div>
+  `,
+};
+
+export const Chrome: Story = {
+  render: () => `
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); gap: var(--spacing-24);">
+      ${prominenceCard('card--flat', 'Flat', 'The card surface with no border, corners or shadow: a panel in a layout.')}
+      ${prominenceCard('card--subtle card--flat', 'Subtle and flat', 'A square tint.')}
+      ${prominenceCard('card--plain card--bordered', 'Plain and bordered', 'An outline: no surface, a border.')}
+      ${prominenceCard('card--subtle card--bordered', 'Subtle and bordered', 'A tint with a border.')}
+      ${prominenceCard('card--flush', 'Flush', 'No padding at the edges, for content that brings its own.')}
     </div>
   `,
 };
@@ -236,6 +257,12 @@ export const Responsive: Story = {
       <article class="card card--strong @max-2xl:card--plain">
         <header class="card__header"><h3 class="card__title heading">Plain while narrow</h3></header>
         <div class="card__body"><p class="text">Gains its border, radius and shadow as the container grows past 42rem.</p></div>
+      </article>
+    </div>
+    <div class="container-inline" style="resize: horizontal; overflow: auto; inline-size: 24rem; max-inline-size: 100%; border: 1px dashed var(--border-color-quiet); padding: var(--spacing-8); margin-block-start: var(--spacing-16);">
+      <article class="card @max-md:card--flat @max-md:card--flush">
+        <header class="card__header"><h3 class="card__title heading">Flat and flush while narrow</h3></header>
+        <div class="card__body"><p class="text">Below 28rem the edge and the outer padding go, so the content runs to the container's edge.</p></div>
       </article>
     </div>
   `,

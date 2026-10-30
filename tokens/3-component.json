@@ -247,6 +247,19 @@
       "$type": "dimension"
     }
   },
+  "list": {
+    "$description": "Bulleted and numbered lists outside prose, spaced like prose's bare lists.",
+    "indent": {
+      "$value": "calc({spacing} * 1.5)",
+      "$type": "dimension",
+      "$description": "Inline-start indent that holds the markers, as prose.indent"
+    },
+    "gap": {
+      "$value": "calc({spacing} / 2)",
+      "$type": "dimension",
+      "$description": "Space between items, half the prose block space. Compact sizing halves it"
+    }
+  },
   "kbd": {
     "$description": "Keyboard key or shortcut.",
     "font-family": {

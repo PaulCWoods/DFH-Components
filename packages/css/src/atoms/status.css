@@ -73,31 +73,31 @@
   @container style(--status-intent: accent) {
     --_status-tone: var(--status-color, var(--foreground-accent, CanvasText));
     --_status-tint: var(--status-tint, var(--surface-accent, Canvas));
-    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+    --_status-tone-border: var(--status-color-border, var(--border-color-accent, Canvas));
   }
 
   @container style(--status-intent: info) {
     --_status-tone: var(--status-color, var(--foreground-info, CanvasText));
     --_status-tint: var(--status-tint, var(--surface-info, Canvas));
-    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+    --_status-tone-border: var(--status-color-border, var(--border-color-info, Canvas));
   }
 
   @container style(--status-intent: danger) {
     --_status-tone: var(--status-color, var(--foreground-danger, CanvasText));
     --_status-tint: var(--status-tint, var(--surface-danger, Canvas));
-    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+    --_status-tone-border: var(--status-color-border, var(--border-color-danger, Canvas));
   }
 
   @container style(--status-intent: warning) {
     --_status-tone: var(--status-color, var(--foreground-warning, CanvasText));
     --_status-tint: var(--status-tint, var(--surface-warning, Canvas));
-    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+    --_status-tone-border: var(--status-color-border, var(--border-color-warning, Canvas));
   }
 
   @container style(--status-intent: success) {
     --_status-tone: var(--status-color, var(--foreground-success, CanvasText));
     --_status-tint: var(--status-tint, var(--surface-success, Canvas));
-    --_status-tone-border: var(--status-color-border, var(--_status-tone));
+    --_status-tone-border: var(--status-color-border, var(--border-color-success, Canvas));
   }
 
   /* Prominence */
@@ -199,31 +199,31 @@
 :where(.status--accent) {
   --_status-tone: var(--status-color, var(--foreground-accent, CanvasText));
   --_status-tint: var(--status-tint, var(--surface-accent, Canvas));
-  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  --_status-tone-border: var(--status-color-border, var(--border-color-accent, CanvasText));
 }
 
 :where(.status--info) {
   --_status-tone: var(--status-color, var(--foreground-info, CanvasText));
   --_status-tint: var(--status-tint, var(--surface-info, Canvas));
-  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  --_status-tone-border: var(--status-color-border, var(--border-color-info, CanvasText));
 }
 
 :where(.status--danger) {
   --_status-tone: var(--status-color, var(--foreground-danger, CanvasText));
   --_status-tint: var(--status-tint, var(--surface-danger, Canvas));
-  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  --_status-tone-border: var(--status-color-border, var(--border-color-danger, CanvasText));
 }
 
 :where(.status--warning) {
   --_status-tone: var(--status-color, var(--foreground-warning, CanvasText));
   --_status-tint: var(--status-tint, var(--surface-warning, Canvas));
-  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  --_status-tone-border: var(--status-color-border, var(--border-color-warning, CanvasText));
 }
 
 :where(.status--success) {
   --_status-tone: var(--status-color, var(--foreground-success, CanvasText));
   --_status-tint: var(--status-tint, var(--surface-success, Canvas));
-  --_status-tone-border: var(--status-color-border, var(--_status-tone));
+  --_status-tone-border: var(--status-color-border, var(--border-color-success, CanvasText));
 }
 
 /* ==========================================================================

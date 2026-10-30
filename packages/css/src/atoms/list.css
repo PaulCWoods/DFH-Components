@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Design For Humans: List Primitive
+   --------------------------------------------------------------------------
+   A bulleted or numbered list outside prose, with the same indent and item
+   spacing as prose's bare lists. The element sets the kind: ul for bullets,
+   ol for numbers. Type comes from a text atom on the list (.text,
+   .small-text); the list sets geometry only.
+
+   | Axis    | Modifiers | Container flag                                |
+   | ------- | --------- | --------------------------------------------- |
+   | Density | (none)    | --ui-sizing: compact halves the item spacing  |
+
+   The markers sit inside the list's box (the indent holds them), so a list
+   lines up with the text around it in a card, dialog or field.
+
+   Nested ol lists step to lower-latin, then lower-roman, as in prose.
+
+   Accessibility:
+   - Safari drops list semantics when list-style is none; that only matters
+     for role="list", which this atom never needs (it keeps its markers).
+
+   Usage:
+   <ul class="list small-text">
+     <li>First item</li>
+     <li>Second item</li>
+   </ul>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base List (:where(.list))
+   ========================================================================== */
+:where(.list) {
+  --_list-indent: var(--list-indent, 1.5rem);
+  --_list-gap: var(--list-gap, 0.5rem);
+
+  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
+    --_list-gap: calc(var(--list-gap, 0.5rem) / 2);
+  }
+
+  margin: 0;
+  padding-inline-start: var(--_list-indent);
+
+  /* Items, nested ones included; a nested list starts a step below its
+     item's text and indents again */
+  :where(li) {
+    margin-block-end: var(--_list-gap);
+
+    &:last-child {
+      margin-block-end: 0;
+    }
+
+    > :where(ul, ol) {
+      margin-block: var(--_list-gap) 0;
+      padding-inline-start: var(--_list-indent);
+    }
+  }
+}
+
+:where(ul.list) {
+  list-style-type: disc;
+}
+
+:where(ul.list ul) {
+  list-style-type: circle;
+}
+
+:where(ol.list) {
+  list-style-type: decimal;
+}
+
+:where(ol.list ol) {
+  list-style-type: lower-latin;
+}
+
+:where(ol.list ol ol) {
+  list-style-type: lower-roman;
+}

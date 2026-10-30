@@ -732,6 +732,10 @@
     gap: 0;
 }
 
+:where(.gap-thin) {
+    gap: var(--rule-width, 1px);
+}
+
 :where(.gap-2xs) {
     gap: var(--spacing-2xs, 0.125rem);
 }

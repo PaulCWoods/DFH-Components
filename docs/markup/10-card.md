@@ -5,14 +5,19 @@ A surface with named parts. The card draws its frame and the geometry of its par
 | Axis | Values | Flag |
 | :--- | :--- | :--- |
 | Prominence | default (card surface and quiet border), `--strong` (raised: shadow, for floating cards), `--subtle` (tint, no border), `--plain` (no surface, border or shadow; keeps padding) | `--card-prominence` |
+| Chrome | default (the prominence's own edge), `--flat` (no border, corners or shadow; keeps the fill), `--bordered` (a border at any prominence) | `--card-chrome` |
+| Padding | default, `--flush` (no padding at the card's edges) | |
 | Density | default, `--compact` | `--ui-sizing: compact` |
 
 - **Structure:** parts (`__thumb`, `__header`, `__band`, `__body`, `__footer`) are direct children of `.card`, and each pads itself. `.card__content` wraps parts only beside a `__thumb` in a row card (`--card-dir: row`).
+- **One modifier per axis:** prominence sets the fill, chrome the edge, flush the padding, so they combine: `.card--plain.card--bordered` is an outline, `.card--subtle.card--flat` a square tint, `.card--plain.card--flush` the content alone. Don't put `--flat` and `--bordered` on one card; they are two values of one axis.
+- **Flat** is for a card that sits in a layout as a panel (a sidebar pane, a tool column) where an edge and corners would box it in. Under increased contrast it gains a 2px border, like every card but a plain one.
+- **Flush** drops the padding at the card's edges for content that brings its own (a table, an image, a nested layout). The gaps between parts stay. A single part can go flush instead with `__body--flush` and the like.
 - **Material:** `--translucent` combines with any prominence that has a fill.
 - **Rules and bands:** `--ruled` rules between parts, bands included. `.card__band` is a full-width strip between parts; `--subtle` tints it.
 - **Flush parts:** `__header--flush`, `__body--flush`, `__footer--flush` drop the part's padding. A flush body hands the card's padding to a flush tab list.
-- **Flags** are set on a container, never on the card. Dialog and popover set `--card-prominence: strong`. A card resets the flag for cards nested inside it; a modifier on the card beats the flag.
-- **Responsive:** `@max-2xl:card--plain` (below 42rem) and `@max-md:card--plain` (below 28rem) drop the frame while the nearest size container is narrow. They need an ancestor with `container-type: inline-size` (`.container-inline`, `.split`, `.sidebar`); without one the card keeps its look.
+- **Flags** are set on a container, never on the card. Dialog and popover set `--card-prominence: strong`; `--card-chrome: flat` or `bordered` sets the edge of every card inside. A card resets both flags for cards nested inside it; a modifier on the card beats a flag.
+- **Responsive:** `@max-2xl:` (below 42rem) and `@max-md:` (below 28rem) versions of `--plain`, `--flat`, `--bordered` and `--flush` apply while the nearest size container is narrow: `@max-md:card--flat @max-md:card--flush` lets a card run edge to edge on a phone. They need an ancestor with `container-type: inline-size` (`.container-inline`, `.split`, `.sidebar`); without one the card keeps its look.
 - **Linked card:** a `.link.link--plain.link--stretched` in the title makes the whole card the target. The focus ring is drawn on the card's perimeter and other controls are lifted above the link.
 - **Scrolling:** `.card__body--scrollable` scrolls the body between a pinned header and footer (the card fills a definite container height). `.card--scrollable` scrolls the whole card. Make the scroll region focusable (`tabindex="0"`) and name it.
 - **Loading:** a card with `aria-busy="true"`, a `role="status"` message and skeleton shapes (§26).
@@ -41,7 +46,7 @@ A surface with named parts. The card draws its frame and the geometry of its par
 </article>
 ```
 
-## B. Prominence, Density and Material
+## B. Prominence, Chrome, Padding, Density and Material
 ```html
 <article class="card">…</article>
 <article class="card card--strong">…</article>
@@ -50,12 +55,18 @@ A surface with named parts. The card draws its frame and the geometry of its par
 <article class="card card--compact card--ruled">…</article>
 <article class="card card--strong card--translucent">…</article>
 
+<!-- Chrome and padding: one modifier per axis -->
+<article class="card card--flat">…</article>
+<article class="card card--plain card--bordered">…</article>
+<article class="card card--plain card--flush">…</article>
+
 <!-- Every card in a list, set once on the container -->
 <ul class="grid list-none" style="--card-prominence: subtle;">…</ul>
 
-<!-- Plain while its container is narrow -->
+<!-- Plain while its container is narrow; flat and flush on a phone-width container -->
 <div class="container-inline">
   <article class="card @max-2xl:card--plain">…</article>
+  <article class="card @max-md:card--flat @max-md:card--flush">…</article>
 </div>
 ```
 

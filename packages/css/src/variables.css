@@ -360,8 +360,8 @@
   --border-color-complementary: light-dark(var(--color-olive-600), var(--color-olive-500));
   --border-color-danger: var(--color-red-500);
   --border-color-warning: var(--color-amber-500);
-  --border-color-info: var(--color-aqua-500);
   --border-color-success: var(--color-green-500);
+  --border-color-info: var(--color-aqua-500);
   --border-width-medium: var(--border-width-2);
   --border-width-thin: var(--border-width-1);
   --border-width-thick: var(--border-width-4);
@@ -638,6 +638,8 @@
   --status-sm-font-size: var(--typography-font-size--2);
   --status-sm-padding-block: var(--spacing-4);
   --status-sm-padding-inline: var(--spacing-6);
+  --list-indent: calc(var(--spacing) * 1.5);
+  --list-gap: calc(var(--spacing) / 2);
   --kbd-font-family: var(--code-font-family);
   --kbd-font-size: var(--body-sm-fixed-font-size);
   --kbd-padding-block: var(--spacing-2);

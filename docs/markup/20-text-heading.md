@@ -1,6 +1,6 @@
 # 20. Text & Heading Primitives (Typography Presets)
 
-Nine atoms, one step of the scale each. The class sets the look; choose the element for its meaning (an `h2` can look like a `.small-heading`). The audit is in `docs/audit/text.md`.
+Ten type atoms, one step of the scale each, and a list atom (section D). The class sets the look; choose the element for its meaning (an `h2` can look like a `.small-heading`). The audit is in `docs/audit/text.md`.
 
 | Class | Job | Step |
 | :--- | :--- | :--- |
@@ -60,3 +60,26 @@ Nine atoms, one step of the scale each. The class sets the look; choose the elem
 
 ---
 
+
+## D. Lists
+`.list` is a bulleted (`ul`) or numbered (`ol`) list outside prose, with prose's indent and item spacing. The reset strips a bare list's padding, which leaves its markers hanging outside the box. `.list` puts them back inside, so they sit within a card's or dialog's padding. Put a text atom on the list for its type; `.list` sets the geometry only.
+
+```html
+<ul class="list small-text">
+  <li><code class="font-mono">tokens/theme.json</code></li>
+  <li><code class="font-mono">tokens/1-global.json</code>, the ramps</li>
+</ul>
+
+<ol class="list text">
+  <li>Choose a curve
+    <ol>
+      <li>Nested lists take the same spacing and indent again</li>
+    </ol>
+  </li>
+  <li>Publish</li>
+</ol>
+```
+
+- **Markers:** disc then circle for `ul`; decimal, lower-latin, lower-roman for `ol`, as in prose.
+- **Spacing:** `--list-indent` and `--list-gap` (Tier 3, the same values as prose). A compact region halves the gap.
+- **Not for** navigation, menus or card grids: those are components with `role="list"` and no markers. Inside `.prose`, a bare list is styled already; don't add `.list`.

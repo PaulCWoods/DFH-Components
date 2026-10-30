@@ -217,3 +217,44 @@ export const Composition: Story = {
     </article>
   `,
 };
+
+/**
+ * `.list`: a bulleted or numbered list outside prose, with prose's indent and
+ * item spacing, so its markers sit inside a card's padding. A text atom on the
+ * list sets its type.
+ */
+export const Lists: Story = {
+  render: () => `
+    <div class="grid grid--2-col grid--xs gap-md" style="max-inline-size: 48rem;">
+      <article class="card">
+        <header class="card__header"><h3 class="card__title small-heading">Bulleted</h3></header>
+        <div class="card__body stack gap-sm">
+          <p class="text">This rewrites the color tokens:</p>
+          <ul class="list small-text">
+            <li><code class="font-mono">tokens/theme.json</code></li>
+            <li><code class="font-mono">tokens/1-global.json</code>, the ramps
+              <ul>
+                <li>Nested items indent again</li>
+              </ul>
+            </li>
+            <li><code class="font-mono">tokens/2-semantic.json</code>, the roles</li>
+          </ul>
+        </div>
+      </article>
+      <article class="card">
+        <header class="card__header"><h3 class="card__title small-heading">Numbered</h3></header>
+        <div class="card__body">
+          <ol class="list text">
+            <li>Choose a curve
+              <ol>
+                <li>Then a lower-latin step</li>
+              </ol>
+            </li>
+            <li>Check the contrast</li>
+            <li>Publish</li>
+          </ol>
+        </div>
+      </article>
+    </div>
+  `,
+};
