@@ -2,16 +2,17 @@
 /* ==========================================================================
    npm run build:type [-- --write] [-- --migrate]
    Builds the type scale and text styles from the `type` section of
-   tokens/theme.json and prints them. --write replaces the typography block
-   of tokens/1-global.json, the fluid type steps, and the text styles in
-   tokens/2-semantic.json. --migrate reads today's tokens into a new `type`
-   section of theme.json (once, before the first --write).
+   tokens/theme.json, prints them and runs the type gate. --write replaces
+   the typography block of tokens/1-global.json, the fluid type steps and
+   the text styles in tokens/2-semantic.json, and only when nothing fails
+   the gate (reports don't block it). --migrate reads today's tokens into
+   a new `type` section of theme.json, once, before the first --write.
    ========================================================================== */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { migrateType, typeGlobal, fluidBlock, applyTypeStyles, scaleSteps, fluidSteps, fontLinks, fontFaces, stepKey } from '../src/index.js';
+import { migrateType, typeGlobal, fluidBlock, applyTypeStyles, scaleSteps, fluidSteps, fontLinks, fontFaces, stepKey, typeGate } from '../src/index.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
@@ -62,7 +63,25 @@ const links = fontLinks(type);
 if (links.length) console.log(`\nFont links for the page head:\n${links.join('\n')}`);
 const faces = fontFaces(type);
 
+/* The gate. Fails block --write; reports are for a person to judge. */
+const { failures, reports } = typeGate(type, { semantic, global });
+const line = (r) => `  ${(r.style ?? 'scale').padEnd(15)} ${r.message}`;
+if (reports.length) {
+  console.log(`\nReported, not gated (${reports.length}):`);
+  reports.forEach((r) => console.log(line(r)));
+}
+if (failures.length) {
+  console.log(`\nFailing (${failures.length}):`);
+  failures.forEach((r) => console.log(line(r)));
+} else {
+  console.log('\nNothing fails the type gate.');
+}
+
 if (args.has('--write')) {
+  if (failures.length) {
+    console.error('\nNot written: fix the failures first.');
+    process.exit(1);
+  }
   global.typography = typeGlobal(type, global.typography);
   global.fluid = { ...global.fluid, typography: fluidBlock(type, global.fluid?.typography) };
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
@@ -72,3 +91,5 @@ if (args.has('--write')) {
   }
   console.log('\nWrote the typography of tokens/1-global.json and the text styles in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
 }
+
+process.exit(failures.length ? 1 : 0);

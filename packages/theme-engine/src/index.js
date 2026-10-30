@@ -5,3 +5,4 @@ export * from './gate.js';
 export * from './tokens.js';
 export * from './roles.js';
 export * from './type.js';
+export * from './type-gate.js';

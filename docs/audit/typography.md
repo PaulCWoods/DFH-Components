@@ -128,7 +128,12 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
 ### Order of work
 
 1. **Engine and migration.** Done 30 October 2026: `type.js`, `test/type.test.js`, `npm run build:type`, the `type` section of `theme.json` (migrated from the tokens), and the fluid range as tokens (`typography.fluid-scale.min-viewport`, `max-viewport`), which `compile-tokens.js` now reads. The compiled `variables.css` is unchanged apart from those two properties. The engine leaves a token as written when it already resolves to the style's value, so references between styles (subheading takes heading's family) and the line-height steps survive until a value changes.
-2. **Gate.** Checks and tests, run by a `build:type` script (like `build:palette`) and by the designer.
+2. **Gate.** Done 30 October 2026: `src/type-gate.js` (`typeGate`), `test/type-gate.test.js`, run by `npm run build:type`, which refuses `--write` on a failure. The designer runs it from phase 3. Today's theme has no failures and six reports:
+   - **floor:** micro-heading (compact), body-sm (compact, cq) and body-xs (every mode) reach 11.1px;
+   - **line height:** body-sm (1.422) and body-xs (1.264) are below 1.5;
+   - **modes:** body-sm's cq size runs a step below its fluid size.
+
+   These are findings 5 and 6, left for phase 6. A style with a step off the scale fails its reference and skips the size checks, so one mistake gives one failure. The look-alike check compares headings with headings and body styles with body styles only, since a heading and body text at one size are meant to differ by weight.
 3. **Designer, Global tab**, with the Fonts panel (Google, Adobe and local sources, the `<link>` and `@font-face` output).
 4. **Designer, Semantic tab**, and Publish for type.
 5. **Figma text styles** from the semantic styles.
