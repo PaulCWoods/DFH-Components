@@ -358,3 +358,63 @@ export const refVar = (value) => {
   const path = ref.replace(/^fluid\.typography\.font-size\./, 'typography.font-size.fluid.');
   return `var(--${path.replace(/minus-/g, '-').replace(/\./g, '-')})`;
 };
+
+/* --------------------------------------------------------------------------
+   Figma: the text styles, as Tokens Studio typography tokens
+   Built from the published Tier 2 tokens, so Figma mirrors what the CSS
+   uses. Every style twice: at its fixed size, and under compact/ at its
+   compact size. Fluid and cq sizes are web only: Figma has one size per
+   style. Each property follows its references down to a Tier 1 token (or a
+   Tier 2 weight), since the Tokens Studio sets don't carry every text group.
+   A style missing a property takes body's, as the CSS does.
+   -------------------------------------------------------------------------- */
+const CASE = { none: 'none', uppercase: 'uppercase', lowercase: 'lowercase', capitalize: 'capitalize' };
+
+export const figmaTextStyles = (semantic, { names = STYLE_NAMES } = {}) => {
+  const has = (group, key) => semantic[group]?.[key] !== undefined;
+  /* {heading.font-family} -> {body.font-family} -> {typography.font-family.sans} */
+  const settle = (value) => {
+    for (let i = 0, v = value; i < 20; i++) {
+      const ref = refOf(v);
+      if (!ref || ref.startsWith('font-weight.') || get(semantic, ref) === undefined) return v;
+      const node = get(semantic, ref);
+      v = node?.$value ?? node;
+    }
+    return value;
+  };
+  const prop = (name, key) => settle((has(name, key) ? semantic[name][key] : semantic.body?.[key])?.$value);
+  const size = (name, mode) => {
+    const group = mode === 'compact' ? `${name}-compact` : has(`${name}-fixed`, 'font-size') ? `${name}-fixed` : name;
+    return settle(semantic[group]?.['font-size']?.$value);
+  };
+  const percent = (v) => `${+(Number(v) * 100).toFixed(2)}%`;
+  const em = (v) => (typeof v === 'string' && v.endsWith('em') ? `${+(parseFloat(v) * 100).toFixed(2)}%` : v);
+
+  const styles = { compact: {} };
+  for (const name of names) {
+    if (!semantic[name] && !semantic[`${name}-fixed`]) continue;
+    /* A style without a size of its own (code) is set at body's */
+    const sized = size(name, 'fixed') ? name : 'body';
+    const lineHeight = prop(name, 'line-height');
+    const letterSpacing = prop(name, 'letter-spacing');
+    const textCase = CASE[prop(name, 'text-transform')] ?? 'none';
+    const base = {
+      fontFamily: prop(name, 'font-family'),
+      fontWeight: prop(name, 'font-weight'),
+      lineHeight: refOf(lineHeight) ? lineHeight : percent(lineHeight),
+      ...(letterSpacing !== undefined ? { letterSpacing: em(letterSpacing) } : {}),
+      textCase,
+    };
+    for (const mode of ['fixed', 'compact']) {
+      const fontSize = size(sized, mode) ?? size(sized, 'fixed');
+      const token = {
+        $type: 'typography',
+        $value: { ...base, fontSize },
+        $description: `${name}${mode === 'compact' ? ', compact' : ''}${sized !== name ? " (body's size)" : ''}. Fluid and container sizes are web only.`,
+      };
+      if (mode === 'fixed') styles[name] = token;
+      else styles.compact[name] = token;
+    }
+  }
+  return styles;
+};

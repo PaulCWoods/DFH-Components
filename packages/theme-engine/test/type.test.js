@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applyTypeStyles, evalCalc, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
+import { applyTypeStyles, evalCalc, figmaTextStyles, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -98,4 +98,33 @@ test('references become the compiler\'s property names', () => {
   assert.equal(refVar('{typography.font-size.cq.-2}'), 'var(--typography-font-size-cq--2)');
   assert.equal(refVar('{font-weight.bold}'), 'var(--font-weight-bold)');
   assert.equal(refVar(1.6), '1.6');
+});
+
+test('Figma gets every style, fixed and compact, on tokens that exist', () => {
+  const styles = figmaTextStyles(semantic);
+  const { compact, ...fixed } = styles;
+  assert.equal(Object.keys(fixed).length, 14);
+  assert.deepEqual(Object.keys(compact), Object.keys(fixed));
+  const exists = (ref) => [global, semantic].some((f) => ref.slice(1, -1).split('.').reduce((o, k) => o?.[k], f) !== undefined);
+  for (const token of [...Object.values(fixed), ...Object.values(compact)]) {
+    for (const value of Object.values(token.$value)) if (String(value).startsWith('{')) assert.ok(exists(value), value);
+  }
+  assert.deepEqual(fixed.heading.$value, {
+    fontFamily: '{typography.font-family.sans}',
+    fontWeight: '{font-weight.bold}',
+    lineHeight: '{typography.line-height.minus-3}',
+    letterSpacing: '{typography.spacing.normal}',
+    textCase: 'none',
+    fontSize: '{typography.font-size.2}',
+  });
+  assert.equal(compact.heading.$value.fontSize, '{typography.font-size.1}');
+  assert.equal(fixed['micro-heading'].$value.textCase, 'uppercase');
+  /* code has no size of its own: body's */
+  assert.equal(fixed.code.$value.fontSize, '{typography.font-size.0}');
+});
+
+test('a line height written as a number becomes a percentage for Figma', () => {
+  const edited = structuredClone(semantic);
+  edited.heading['line-height'].$value = 1.2;
+  assert.equal(figmaTextStyles(edited).heading.$value.lineHeight, '120%');
 });

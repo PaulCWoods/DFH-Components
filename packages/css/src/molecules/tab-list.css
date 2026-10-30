@@ -221,6 +221,7 @@
 /* The list's own size: the flag above reaches its tabs, this its corners */
 :where(.tab-list--sm, .tab-list.ui-compact) {
   --_tab-list-tab-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
+  --_tab-list-indicator-width: var(--tab-sm-list-indicator-width, 2px);
 }
 
 :where(.tab-list--round) {

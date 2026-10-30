@@ -42,7 +42,7 @@ Ten text styles, the text atoms' tokens. Each has a family, weight, line height,
 1. **One scale, three definitions.** The static scale (`font-size-base`, `ratio`), the fluid scale (`fluid-scale`) and the stored step values all describe the same thing. Only the first two are inputs; the stored values are outputs that sit beside them in the same file and look editable.
 2. **The fluid range isn't a token.** 400px and 1280px are fixed in the compiler, so a product can't change where fluid type starts and stops growing, and Figma never sees it. *Fixed in phase 1: the range is now two tokens.*
 3. **Line height is chosen by hand, step by step.** Nothing ties it to the size, so a style can end up with loose large type or tight small type. Tokens have pointed at steps that don't exist (`line-height.3` to `.5`, fixed in the quick fixes), and the Figma presets still do.
-4. **Figma's text styles are out of date.** The six presets point at line-height steps 2 to 5, which don't exist; give the title the sans family (the library uses display); and leave out small-heading, micro-heading, display-title and label. There are no compact styles.
+4. **Figma's text styles are out of date.** *Fixed in phase 5: generated from the styles.* The six presets point at line-height steps 2 to 5, which don't exist; give the title the sans family (the library uses display); and leave out small-heading, micro-heading, display-title and label. There are no compact styles.
 5. **Gaps in the modes.** micro-heading and label have no fluid or cq size, so in a fluid region they stay fixed while the type around them grows. body-sm's cq size is -2 while its fluid size is -1. body-xs's compact size is the same as its fixed size (step -2 is the floor).
 6. **The smallest step is 11.1px.** Step -2 (0.694rem) carries footnotes, hints and micro text in compact regions. It is legal, but small for a library that aims at AA and some AAA.
 7. **Font stacks name web fonts the library doesn't load.** PRINCIPLES §4 says the tokens default to system stacks. Today Inter, Plus Jakarta Sans and JetBrains Mono come first; they only appear when installed locally, so the same page renders differently from machine to machine.
@@ -149,7 +149,10 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
    - **Moving a step** moves the compact and grow-to steps with it.
    - **Preview:** in the Typography section, a specimen of every text atom in place of the sample UI. The preview's bar (shared with Colors, where it says which mode is showing) holds a sizing control (fixed, fluid, cq, compact), a width control that narrows the frame so fluid and container sizes can be watched as they grow, and the light and dark button. `typeCssVars` now writes the text styles' properties as well.
    - Publish for type came with phase 3.
-5. **Figma text styles** from the semantic styles.
+5. **Figma text styles.** Done 30 October 2026. `figmaTextStyles` (theme engine) builds them from the published Tier 2 styles, and `export-figma-tokens.js` writes them into the Tokens Studio file in place of the six hand-written presets.
+   - **Coverage:** all 14 styles at their fixed size, and the same 14 under `compact/`.
+   - **References:** each property follows its references down to a Tier 1 token (or a Tier 2 weight), because the Tokens Studio sets don't carry every text group. Every reference resolves inside the exported file.
+   - **Fixes finding 4:** the title takes the display family, and the line heights point at steps that exist. Fluid and container sizes stay web only (Figma has one size per style). Native Figma Variables can't carry text styles, so they come through Tokens Studio.
 6. **Fixes the tool makes possible:** the mode gaps (finding 5), the floor (finding 6) and the stacks (finding 7), each as a theme change you approve in the designer.
 7. **Blog mirror.**
 

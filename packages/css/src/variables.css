@@ -536,8 +536,8 @@
   --ease-in: cubic-bezier(0.4, 0.0, 1.0, 1.0);
   --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  --shadow-color: light-dark(color-mix(in srgb, var(--color-neutral-900), transparent 90%), color-mix(in srgb, var(--color-black), transparent 80%));
-  --shadow-color-light: light-dark(color-mix(in srgb, var(--color-neutral-800), transparent 95%), color-mix(in srgb, var(--color-black), transparent 90%));
+  --shadow-color: light-dark(color-mix(in srgb, var(--color-neutral-900), transparent 90%), color-mix(in srgb, var(--color-black), transparent 25%));
+  --shadow-color-light: light-dark(color-mix(in srgb, var(--color-neutral-800), transparent 95%), color-mix(in srgb, var(--color-black), transparent 50%));
   --shadow-none: 0 0 0 0 transparent;
   --shadow-sm: 
     var(--_shadow-sm-layer-1) var(--shadow-color),

@@ -97,6 +97,7 @@
   @container style(--tab-list-size: sm) or style(--ui-sizing: compact) {
     --_tab-font-size: var(--tab-sm-font-size, var(--control-sm-font-size, 0.875rem));
     --_tab-min-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
+    --_tab-line-width: var(--tab-sm-list-indicator-width, 2px);
     --_tab-padding-block: var(--tab-sm-padding-block, 0.125rem);
     --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, 0.5rem);
   }
@@ -190,7 +191,9 @@
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition-property: background-color, border-color, color;
+  transition-property: background-color,
+  border-color,
+  color;
   transition-duration: var(--_tab-transition);
   transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
 

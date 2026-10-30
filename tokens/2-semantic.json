@@ -1223,12 +1223,12 @@
   "shadow": {
     "$type": "shadow",
     "color": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent 90%), color-mix(in srgb, {color.black}, transparent 80%))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent 90%), color-mix(in srgb, {color.black}, transparent 25%))",
       "$type": "color",
       "$description": "Elevation shadow color tint"
     },
     "color-light": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.800}, transparent 95%), color-mix(in srgb, {color.black}, transparent 90%))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.800}, transparent 95%), color-mix(in srgb, {color.black}, transparent 50%))",
       "$type": "color",
       "$description": "Subtle elevation shadow color tint"
     },

@@ -190,17 +190,26 @@ Design For Humans supports fluid spacing and responsive typography across both W
 - **Custom / Dramatic Scales (Two-Token Syntax):** Explicit `fluid(min, max)` expressions remain fully supported for non-standard or dramatic scaling ranges spanning multiple scale steps (e.g. `fluid({fluid.typography.font-size.1}, {fluid.typography.font-size.5})` or `fluid(1rem, 3.5rem)`).
 - **Fixed Non-Fluid Typography:** Reference static global scale tokens directly without `fluid()`, e.g. `"$value": "{typography.font-size.minus-1}"` for `micro-heading`.
 
-#### Semantic Typography Presets
-- `body`: `"{fluid.typography.font-size.0}"` (Mobile: 16px, Desktop: 24px)
-- `body-sm`: `"{fluid.typography.font-size.minus-1}"` (Mobile: 13px, Desktop: 19px)
-- `body-lg`: `"{fluid.typography.font-size.1}"` (Mobile: 19px, Desktop: 30px)
-- `heading`: `"{fluid.typography.font-size.2}"` (Mobile: 23px, Desktop: 38px)
-- `subheading`: `"{fluid.typography.font-size.1}"` (Mobile: 19px, Desktop: 30px)
-- `small-heading`: `"{fluid.typography.font-size.minus-1}"` (Mobile: 13px, Desktop: 19px)
-- `micro-heading`: `"{typography.font-size.minus-1}"` (Fixed static 12.8px)
-- `title`: `"{fluid.typography.font-size.5}"` (Mobile: 40px, Desktop: 73px)
-- `display-title`: `"{fluid.typography.font-size.7}"` (Mobile: 57px, Desktop: 114px)
-- `pullquote`: `"{fluid.typography.font-size.1}"` (Mobile: 19px, Desktop: 30px)
+#### Semantic Text Styles
+The text styles are written by the type engine from the `type` section of `tokens/theme.json` (`npm run build:type`, or the Token Designer's Typography section). Edit the theme, not the style tokens. Each style has a fixed step, a compact step, and grows in fluid and cq regions with the system (its step on the small scale to the same step on the large) or to another step:
+
+| Style | Fixed | Compact | Fluid / cq |
+| :--- | :--- | :--- | :--- |
+| `display-title` | 5 | 4 | 5 → 8 |
+| `title` | 3 | 2 | 3 → 5 |
+| `heading` | 2 | 1 | 2 → 3 |
+| `subheading` | 1 | 0 | 1 |
+| `small-heading` | 0 | -1 | 0 |
+| `micro-heading` | -1 | -2 | fixed |
+| `body-lg` | 1 | 0 | 1 |
+| `body` | 0 | -1 | 0 |
+| `body-sm` | -1 | -2 | -1 (cq: -2) |
+| `body-xs` | -2 | -2 | -2 |
+| `label` | 0 | -1 | fixed |
+
+`code`, `body-alt` and `body-strong` set only a family or weight and take body's size.
+
+**Figma text styles** are generated from these (`figmaTextStyles` in the theme engine, used by `export-figma-tokens.js`): every style at its fixed size, and under `compact/` at its compact size, in the Tokens Studio file. Fluid and cq sizes are web only. Never hand-write text style presets.
 
 ---
 
