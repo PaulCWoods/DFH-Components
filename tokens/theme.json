@@ -440,5 +440,24 @@
         "weight": "bold"
       }
     }
+  },
+  "space": {
+    "base": "1rem",
+    "ratio": 1.333333,
+    "roles": {
+      "breathe-sm": {
+        "from": "0.75rem",
+        "step": 0
+      },
+      "breathe": {
+        "step": 1
+      },
+      "cushion": {
+        "step": 2
+      },
+      "cushion-lg": {
+        "step": 3
+      }
+    }
   }
 }

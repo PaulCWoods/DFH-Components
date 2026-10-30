@@ -133,7 +133,7 @@
 }
 
 :where(.header--translucent) {
-  --_header-bg: color-mix(in srgb, var(--header-bg, var(--surface-card, Canvas)), transparent var(--_header-translucency));
+  --_header-bg: color-mix(in oklch, var(--header-bg, var(--surface-card, Canvas)), transparent var(--_header-translucency));
   backdrop-filter: var(--_header-filter);
 }
 

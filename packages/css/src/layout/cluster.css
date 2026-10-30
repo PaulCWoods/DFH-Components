@@ -67,7 +67,7 @@
 }
 
 :where(.cluster--cushioned) {
-    --_gap: var(--spacing-cushion, 2rem);
+    --_gap: var(--spacing-cushion);
 
     @container style(--ui-sizing: compact) {
         --_gap: var(--spacing, 1rem);

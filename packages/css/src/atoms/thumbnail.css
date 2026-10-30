@@ -1,0 +1,135 @@
+/* ==========================================================================
+   Design For Humans: Thumbnail
+   --------------------------------------------------------------------------
+   A small picture of a thing: album art, a product shot, a file preview.
+   People take an avatar; an icon on a tint takes an icon box; a card's own
+   image takes .card__thumb. A thumbnail is never interactive; a button or
+   link that opens the thing contains one.
+
+   | Axis    | Modifiers                         | Container flag                 |
+   | ------- | --------------------------------- | ------------------------------ |
+   | Size    | (48px) --sm (32px) --lg (64px)    | --thumbnail-size-step: sm, lg  |
+   | Corners | (rounded) --round                 | --thumbnail-corners: round     |
+
+   The size is the block size (height), so thumbnails line up in a row
+   whatever their shape; the inline size follows --thumbnail-aspect (1 by
+   default; 4 / 3 or 16 / 9 for previews). A compact container
+   (--ui-sizing: compact) steps each size down one. A one-off size (96px
+   artwork) sets --thumbnail-size.
+
+   No picture: an icon for the kind of thing (music, a file, a product)
+   on the tint the thumbnail shows behind everything, which is also what
+   shows while an image loads.
+
+   Naming:
+   - Beside a visible title: decorative, alt="" (or aria-hidden="true" on an
+     icon thumbnail).
+   - On its own, or carrying what the text doesn't: a real alt.
+
+   Badges: the corner badge classes (.badge--top-end …) sit on its corners.
+
+   <img class="thumbnail" src="album.jpg" alt="" />
+
+   <span class="thumbnail" aria-hidden="true">
+     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Music"/></svg>
+   </span>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.thumbnail) {
+  /* Private manifest */
+  --_thumbnail-size: var(--thumbnail-size, 3rem);
+  --_thumbnail-aspect: var(--thumbnail-aspect, 1);
+  --_thumbnail-radius: var(--thumbnail-radius, 0.25rem);
+  --_thumbnail-bg: var(--thumbnail-bg, Canvas);
+  --_thumbnail-text: var(--thumbnail-text, currentColor);
+  /* How far a corner badge moves in: none on a rounded square */
+  --_thumbnail-badge-inset: 0px;
+
+  /* ------------------------------------------------------------------------
+     Container flags, declared before the modifier classes
+     ------------------------------------------------------------------------ */
+  @container style(--thumbnail-size-step: sm) or style(--ui-sizing: compact) {
+    --_thumbnail-size: var(--thumbnail-sm-size, 2rem);
+  }
+
+  @container style(--thumbnail-size-step: lg) {
+    --_thumbnail-size: var(--thumbnail-lg-size, 4rem);
+  }
+
+  @container style(--thumbnail-corners: round) {
+    --_thumbnail-radius: var(--thumbnail-round-radius, 9999px);
+    --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
+  }
+
+  align-items: center;
+  aspect-ratio: var(--_thumbnail-aspect);
+  background-color: var(--_thumbnail-bg);
+  block-size: var(--_thumbnail-size);
+  border-radius: var(--_thumbnail-radius);
+  box-sizing: border-box;
+  color: var(--_thumbnail-text);
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: auto;
+  justify-content: center;
+  position: relative;
+  vertical-align: middle;
+
+  /* An <img class="thumbnail"> is the picture itself */
+  &:where(img) {
+    object-fit: cover;
+  }
+
+  /* A picture fills the shape and rounds itself, so a badge can overhang */
+  > :where(img, picture) {
+    block-size: 100%;
+    border-radius: inherit;
+    display: block;
+    inline-size: 100%;
+    object-fit: cover;
+  }
+
+  > :where(.icon) {
+    block-size: 50%;
+    inline-size: 50%;
+  }
+
+  /* A corner badge sits on the corner, ringed in the surface colour */
+  > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
+    box-shadow: 0 0 0 var(--avatar-group-ring-width, 2px) var(--avatar-group-ring-color, Canvas);
+    margin: var(--_thumbnail-badge-inset);
+  }
+}
+
+/* ==========================================================================
+   2. Size and corners
+   ========================================================================== */
+:where(.thumbnail--sm) {
+  --_thumbnail-size: var(--thumbnail-sm-size, 2rem);
+}
+
+:where(.thumbnail--lg) {
+  --_thumbnail-size: var(--thumbnail-lg-size, 4rem);
+
+  @container style(--ui-sizing: compact) {
+    --_thumbnail-size: var(--thumbnail-size, 3rem);
+  }
+}
+
+:where(.thumbnail--round) {
+  --_thumbnail-radius: var(--thumbnail-round-radius, 9999px);
+  /* On a circle, (1 - 1/√2) / 2 of the size, as on an avatar */
+  --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
+}
+
+/* ==========================================================================
+   3. Preferences
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.thumbnail) {
+    border: 1px solid CanvasText;
+  }
+}

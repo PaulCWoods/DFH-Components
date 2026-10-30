@@ -14,8 +14,8 @@
    ========================================================================== */
 :where(.color-palette-inverted, .colors-inverted) {
     --color-palette: inverted;
-    --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-faint, 95%));
-    --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-stronger));
+    --surface-translucent: color-mix(in oklch, var(--surface-inverted), transparent var(--translucency-faint, 95%));
+    --surface-translucent-strong: color-mix(in oklch, var(--surface-inverted), transparent var(--translucency-stronger));
 }
 
 /* ==========================================================================
@@ -23,7 +23,7 @@
    ========================================================================== */
 * {
     @container style(--color-palette: inverted) {
-        --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-faint, 95%));
-        --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-stronger));
+        --surface-translucent: color-mix(in oklch, var(--surface-inverted), transparent var(--translucency-faint, 95%));
+        --surface-translucent-strong: color-mix(in oklch, var(--surface-inverted), transparent var(--translucency-stronger));
     }
 }

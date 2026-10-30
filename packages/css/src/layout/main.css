@@ -25,7 +25,7 @@
        respond to the main's width. .container-type-normal turns it off. */
     container-type: inline-size;
     box-sizing: border-box;
-    padding: var(--spacing-cushion, 1rem);
+    padding: var(--spacing-cushion);
 }
 
 /* A wrapper inside brings its own gutter */

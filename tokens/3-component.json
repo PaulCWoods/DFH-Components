@@ -145,6 +145,45 @@
       "$type": "color"
     }
   },
+  "thumbnail": {
+    "$description": "Thumbnail atom: artwork, product shots and file previews",
+    "size": {
+      "$value": "{spacing.48}",
+      "$type": "dimension",
+      "$description": "Block size (height); the inline size follows the aspect"
+    },
+    "sm-size": {
+      "$value": "{spacing.32}",
+      "$type": "dimension"
+    },
+    "lg-size": {
+      "$value": "{spacing.64}",
+      "$type": "dimension"
+    },
+    "aspect": {
+      "$value": "1",
+      "$type": "string",
+      "$description": "Width to height, as an aspect-ratio value (1, 4 / 3, 16 / 9)"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension"
+    },
+    "round-radius": {
+      "$value": "{radius.round}",
+      "$type": "dimension"
+    },
+    "bg": {
+      "$value": "{surface.muted}",
+      "$type": "color",
+      "$description": "Behind a placeholder icon, or an image still loading"
+    },
+    "text": {
+      "$value": "{foreground.muted}",
+      "$type": "color",
+      "$description": "A placeholder icon"
+    }
+  },
   "lockup": {
     "$description": "Lockup tokens",
     "gap": {
@@ -2571,17 +2610,17 @@
     "$type": "component",
     "$description": "Loading placeholder shapes. The fill mixes the text colour so it shows the same on any surface.",
     "color": {
-      "$value": "color-mix(in srgb, {foreground} 20%, transparent)",
+      "$value": "color-mix(in oklch, {foreground} 20%, transparent)",
       "$type": "color",
       "$description": "Skeleton fill"
     },
     "color-strong": {
-      "$value": "color-mix(in srgb, {foreground} 35%, transparent)",
+      "$value": "color-mix(in oklch, {foreground} 35%, transparent)",
       "$type": "color",
       "$description": "Skeleton fill under increased contrast"
     },
     "shimmer": {
-      "$value": "color-mix(in srgb, {surface} 60%, transparent)",
+      "$value": "color-mix(in oklch, {surface} 60%, transparent)",
       "$type": "color",
       "$description": "Shimmer sweep: the page surface passing over the fill"
     },

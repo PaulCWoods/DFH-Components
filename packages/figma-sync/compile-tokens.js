@@ -481,57 +481,21 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
     return `clamp(${minRem}rem, ${intersection}rem + ${slopeUnit}${unit}, ${maxRem}rem)`;
   }
 
-  // Spacing scale parameters matching blog site (space-scale: 1.333333 / 4/3):
-  const spaceRatio = 4 / 3;
-  const baseSpacingRem = 1.0;
-
-  const spacingDefs = [
-    {
-      name: 'spacing-fluid',
-      factor: 1,
-      min: baseSpacingRem,
-      max: +(baseSpacingRem * Math.pow(spaceRatio, 1)).toFixed(4),
-      baseVar: 'var(--spacing-16)'
-    },
-    {
-      name: 'spacing-fluid-x2',
-      factor: 2,
-      min: baseSpacingRem,
-      max: +(baseSpacingRem * Math.pow(spaceRatio, 2)).toFixed(4),
-      baseVar: 'var(--spacing-16)'
-    },
-    {
-      name: 'spacing-fluid-x3',
-      factor: 3,
-      min: baseSpacingRem,
-      max: +(baseSpacingRem * Math.pow(spaceRatio, 3)).toFixed(4),
-      baseVar: 'var(--spacing-16)'
-    },
-  ];
-
-  const spacingCqDefs = [
-    {
-      name: 'spacing-cq',
-      factor: 1,
-      min: baseSpacingRem,
-      max: +(baseSpacingRem * Math.pow(spaceRatio, 1)).toFixed(4),
-      baseVar: 'var(--spacing-16)'
-    },
-    {
-      name: 'spacing-cq-x2',
-      factor: 2,
-      min: baseSpacingRem,
-      max: +(baseSpacingRem * Math.pow(spaceRatio, 2)).toFixed(4),
-      baseVar: 'var(--spacing-16)'
-    },
-    {
-      name: 'spacing-cq-x3',
-      factor: 3,
-      min: baseSpacingRem,
-      max: +(baseSpacingRem * Math.pow(spaceRatio, 3)).toFixed(4),
-      baseVar: 'var(--spacing-16)'
-    },
-  ];
+  // Fluid spacing: one fluid(min, max) step per role in fluid.spacing (written
+  // from tokens/theme.json by npm run build:space). The token walk writes each
+  // role's viewport clamp (--fluid-spacing-<role>); this adds its container
+  // twin (--fluid-spacing-cq-<role>) and both progress() versions.
+  const toRem = (v) => {
+    const str = String(v).trim();
+    if (str.startsWith('{')) return toRem(lookupGlobalToken(globalTokens, str.slice(1, -1)));
+    return str.endsWith('px') ? parseFloat(str) / 16 : parseFloat(str);
+  };
+  const spacingDefs = Object.entries(globalTokens.fluid?.spacing ?? {})
+    .filter(([key, node]) => !key.startsWith('$') && typeof node?.$value === 'string' && node.$value.startsWith('fluid('))
+    .map(([key, node]) => {
+      const [min, max] = node.$value.slice(6, -1).split(',').map(toRem);
+      return { name: `fluid-spacing-${key}`, nameCq: `fluid-spacing-cq-${key}`, min, max };
+    });
 
   // Fluid typography scale parameters derived from 1-global.json
   const mobileBase = scaleParams?.mobileBase || 1.0;
@@ -596,11 +560,8 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
     `  --_max-font-size: ${desktopBase}rem;`,
     `  --_max-ratio: ${desktopRatio};`,
     '',
-    '  /* Fluid Spacing (Standard clamp fallbacks: vi units) */',
-    ...spacingDefs.map(s => `  --${s.name}: ${calculateClamp(s.min, s.max, 'vi')};`),
-    '',
     '  /* Container Fluid Spacing (Container Query: cqi units) */',
-    ...spacingCqDefs.map(s => `  --${s.name}: ${calculateClamp(s.min, s.max, 'cqi')};`),
+    ...spacingDefs.map(s => `  --${s.nameCq}: ${calculateClamp(s.min, s.max, 'cqi')};`),
     '',
     '  /* Fluid Typography (Viewport: vi units) */',
     ...fontDefs.map(f => `  --${f.name}: ${f.clampVi};`),
@@ -610,11 +571,11 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
   ];
 
   const progressiveVars = [
-    '    /* Fluid Spacing using progress(), pow(), and round() */',
-    ...spacingDefs.map(s => `    --${s.name}: round(${s.baseVar} + var(--_progress) * (${s.baseVar} * pow(var(--_space-ratio), ${s.factor}) - ${s.baseVar}), var(--_interval));`),
+    '    /* Fluid Spacing using progress() and round() */',
+    ...spacingDefs.map(s => `    --${s.name}: round(${s.min}rem + var(--_progress) * (${s.max}rem - ${s.min}rem), var(--_interval));`),
     '',
-    '    /* Container Fluid Spacing using progress(), pow(), and round() */',
-    ...spacingCqDefs.map(s => `    --${s.name}: round(${s.baseVar} + var(--_progress-cq) * (${s.baseVar} * pow(var(--_space-ratio), ${s.factor}) - ${s.baseVar}), var(--_interval));`),
+    '    /* Container Fluid Spacing using progress() and round() */',
+    ...spacingDefs.map(s => `    --${s.nameCq}: round(${s.min}rem + var(--_progress-cq) * (${s.max}rem - ${s.min}rem), var(--_interval));`),
     '',
     '    /* Fluid Typography using progress() and round() (Option A precomputed) */',
     ...fontDefs.map(f => `    --${f.name}: round(${f.minRem}rem + var(--_progress) * (${f.maxRem}rem - ${f.minRem}rem), var(--_interval));`),
@@ -632,7 +593,6 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
     --_progress-cq: progress(100 * var(--_progressunit, 1cqi), var(--_min-viewport), var(--_max-viewport));
     --_pg: var(--_progress);
     --_pgcq: var(--_progress-cq);
-    --_space-ratio: 1.333333;
 
 ${progressiveVars.join('\n')}
   }
@@ -640,12 +600,6 @@ ${progressiveVars.join('\n')}
 
   // CSS Level 5 @function definitions for spacing and typography
   const functionDefs = [
-    `@function --spacing-fluid(--size, --factor: 1) {
-  result: round(var(--size) + var(--_progress) * (var(--size) * pow(var(--_space-ratio), var(--factor)) - var(--size)), var(--_interval));
-}`,
-    `@function --spacing-cq(--size, --factor: 1) {
-  result: round(var(--size) + var(--_progress-cq) * (var(--size) * pow(var(--_space-ratio), var(--factor)) - var(--size)), var(--_interval));
-}`,
     `@function --type-size(--n) {
   result: round(calc(var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
 }`,
@@ -665,16 +619,6 @@ ${progressiveVars.join('\n')}
   ];
 
   const supportsMapping = [
-    '    /* Fluid Spacing Functions */',
-    '    --spacing-fluid: --spacing-fluid(var(--spacing-16), 1);',
-    '    --spacing-fluid-x2: --spacing-fluid(var(--spacing-16), 2);',
-    '    --spacing-fluid-x3: --spacing-fluid(var(--spacing-16), 3);',
-    '',
-    '    /* Container Fluid Spacing Functions */',
-    '    --spacing-cq: --spacing-cq(var(--spacing-16), 1);',
-    '    --spacing-cq-x2: --spacing-cq(var(--spacing-16), 2);',
-    '    --spacing-cq-x3: --spacing-cq(var(--spacing-16), 3);',
-    '',
     '    /* Fluid Typography Functions */',
     ...fontDefs.map(f => f.isCompound
       ? `    --${f.name}: --type-size-fluid(${f.minStep}, ${f.maxStep});`

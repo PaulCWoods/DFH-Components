@@ -206,7 +206,7 @@ const levels = (id: string) => `
   </div>`;
 
 const art = (spinning: boolean) =>
-  `<div class="deck__art deck__art--vinyl${spinning ? ' is-spinning' : ''}" aria-hidden="true"></div>`;
+  `<span class="thumbnail thumbnail--round deck__vinyl${spinning ? ' is-spinning' : ''}" aria-hidden="true"></span>`;
 
 const deck = (id: string, name: string, state: 'on-air' | 'cue') => `
   <section class="card ${state === 'on-air' ? 'card--strong card--success' : 'card--strong card--warning'}" aria-labelledby="${id}-title">

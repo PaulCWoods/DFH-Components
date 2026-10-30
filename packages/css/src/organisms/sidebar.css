@@ -42,7 +42,7 @@
   --_sidebar-border-color: var(--sidebar-border-color, var(--border-color-quiet, currentColor));
   --_sidebar-border-style: var(--sidebar-border-style, solid);
   --_sidebar-border-width: var(--sidebar-border-width, var(--border-width, 1px));
-  --_sidebar-padding: var(--sidebar-padding, var(--spacing-cushion, 1rem));
+  --_sidebar-padding: var(--sidebar-padding, var(--spacing-cushion));
   --_sidebar-width: var(--sidebar-width, 18rem);
   --_sidebar-min-width: var(--sidebar-min-width, 14rem);
   --_sidebar-offset: 0px;

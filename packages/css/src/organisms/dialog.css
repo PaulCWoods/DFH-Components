@@ -48,7 +48,7 @@
   /* Private manifest */
   --_dialog-width: var(--dialog-width, var(--spacing-block, 36rem));
   --_dialog-drawer-width: var(--dialog-drawer-width, var(--spacing-block-sm, 24rem));
-  --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion, 2rem));
+  --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion));
   --_dialog-max-height: var(--dialog-max-height, calc(100dvb - var(--_dialog-cushion) * 2));
   --_dialog-radius: var(--dialog-radius, var(--card-radius, 0));
   --_dialog-shadow: var(--dialog-shadow, none);
@@ -103,7 +103,7 @@
     border: var(--card-border-width, 1px) var(--card-border-style, solid) var(--card-border-color, currentColor);
     border-radius: var(--_dialog-radius);
     box-shadow: var(--_dialog-shadow);
-    padding: var(--card-padding, var(--spacing-breathe, 1rem));
+    padding: var(--card-padding, var(--spacing-breathe));
     overflow-y: auto;
   }
 }

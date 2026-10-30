@@ -6,3 +6,4 @@ export * from './tokens.js';
 export * from './roles.js';
 export * from './type.js';
 export * from './type-gate.js';
+export * from './space.js';

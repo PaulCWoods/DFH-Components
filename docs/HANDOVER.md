@@ -44,7 +44,8 @@
 | Recipes (states as stories, no inline styles, deck out of core, one command palette) | Done | [audit](audit/recipes.md) |
 | Colour palette (generated ramps, contrast gate, theme engine, Token Designer with Global and Semantic tabs; bridge colours removed) | Done | [audit](audit/palette.md) |
 | Card intent and subtle telemetry | Done | [surfaces](audit/surfaces.md), [identity](audit/identity-values.md) |
-| Typography (theme engine for the type scale and text styles, font sources, gate, Typography section in the Token Designer) | Engine, gate, designer and Figma text styles done (phases 1–5); the fixes the tool makes possible next | [audit](audit/typography.md) |
+| Typography (theme engine for the type scale, line-height scale and text styles; font sources, variable fonts, system stacks by default with a generated `fonts.css`; gate; Typography section in the Token Designer; Figma text styles) | Done, blog mirrored | [audit](audit/typography.md) |
+| Fluid spacing (`space` theme section, engine, `build:space`, roles breathe-sm to cushion-lg, Spacing section in the Token Designer, Figma per-mode fix) | Done, blog mirrored | [audit](audit/fluid-spacing.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
@@ -66,7 +67,7 @@ Done: `.main` and `.app__workspace` are inline-size containers; `.container-type
 Patterns the deck needed that the library lacks. Each waits for its component's next pass, or a second use.
 
 - **Card intent:** done (`.card--accent` and the other intents; see `audit/surfaces.md`). Cadence's decks use it.
-- **Thumbnail atom:** square artwork with a size token, a fallback icon and avatar-style corner badges, for album art, product shots and file previews. Avatars are round and for people; icon boxes hold icons; `card__thumb` serves only a card's image. Cadence uses `.deck__art`.
+- **Thumbnail atom:** done (`.thumbnail`, §6c): avatar sizes plus `--thumbnail-size`, `--thumbnail-aspect`, `--round`, an icon when there's no picture, corner badges. Cadence's record is a round thumbnail.
 - **Range scale labels:** start and end labels under a slider (elapsed and remaining time, a price range, 0 to 100). Range lockup shows one value only.
 - **Three-zone bar:** start, a true centre and end, for a media player, an editor toolbar or a wizard footer. Header bars and between-clusters don't centre the middle part. Cadence uses `.deck-dock`, a `1fr auto 1fr` grid.
 
@@ -92,7 +93,7 @@ The warning and accent contrast failures are resolved by the generated palette: 
 - The docs sidebar links to a `/components/atoms/badge` page, and to `/components/layout/*` pages, that don't exist.
 - Icon work (glyphs to draw, the tab icon scale, `Icon.astro`, the blog accent/info clash) is listed in `audit/icon-todo.md`.
 - The docs sidebar's "Composite Recipes" links (`/recipes/*`) point at pages that don't exist. Either build them from the stories or link to Storybook.
-- Tier 2 `color-mix(in srgb, …)` derivations move to `in oklch` when next touched (`audit/phase-0.md`).
+- Colour mixes are `in oklch` (done 30 October 2026, blog mirrored). Every one mixes a colour with `transparent`, so only the alpha changes and nothing looks different; the Figma exporter evaluates both spaces. The shadow colours now use translucency tokens (a `translucency.25` step was added) in place of literal percentages.
 - Text sizes: Tier 2 keeps one fixed size per text atom, `--{atom}-fixed-font-size`. The plain `--body-sm-font-size` and `--body-xs-font-size` (duplicates) are gone, and `--micro-heading-font-size` is `--micro-heading-fixed-font-size`. Figma still names them `body-sm/font-size` and so on (the exporter maps them), so the Figma output is unchanged apart from two descriptions. Blog mirrored.
 
 ### Quick fixes (after the palette pass)

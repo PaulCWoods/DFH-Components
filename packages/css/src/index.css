@@ -24,6 +24,7 @@
 @import './atoms/icon.css' layer(atoms);
 @import './atoms/badge.css' layer(atoms);
 @import './atoms/avatar.css' layer(atoms);
+@import './atoms/thumbnail.css' layer(atoms);
 @import './atoms/chip.css' layer(atoms);
 @import './atoms/status.css' layer(atoms);
 @import './atoms/kbd.css' layer(atoms);

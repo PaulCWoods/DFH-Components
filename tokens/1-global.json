@@ -661,6 +661,9 @@
     "10": {
       "$value": "10%"
     },
+    "25": {
+      "$value": "25%"
+    },
     "33": {
       "$value": "33%"
     },
@@ -1064,19 +1067,23 @@
   },
   "fluid": {
     "spacing": {
-      "1": {
-        "$value": "fluid({spacing.16}, {spacing.32})",
-        "$description": "Standard fluid base spacing (1rem Mobile to 2rem Desktop)"
+      "$type": "dimension",
+      "breathe-sm": {
+        "$value": "fluid(0.75rem, 1rem)",
+        "$description": "Fluid breathe-sm space (0.75rem / 12px at the smallest width to 1rem / 16px at the largest)"
       },
-      "2": {
-        "$value": "fluid({spacing.32}, {spacing.48})",
-        "$description": "Double fluid spacing (2rem Mobile to 3rem Desktop)"
+      "breathe": {
+        "$value": "fluid(1rem, 1.3333rem)",
+        "$description": "Fluid breathe space (1rem / 16px at the smallest width to 1.3333rem / 21.3px at the largest)"
       },
-      "3": {
-        "$value": "fluid({spacing.48}, {spacing.64})",
-        "$description": "Triple fluid spacing (3rem Mobile to 4rem Desktop)"
+      "cushion": {
+        "$value": "fluid(1rem, 1.7778rem)",
+        "$description": "Fluid cushion space (1rem / 16px at the smallest width to 1.7778rem / 28.4px at the largest)"
       },
-      "$type": "dimension"
+      "cushion-lg": {
+        "$value": "fluid(1rem, 2.3704rem)",
+        "$description": "Fluid cushion-lg space (1rem / 16px at the smallest width to 2.3704rem / 37.9px at the largest)"
+      }
     },
     "typography": {
       "font-size": {

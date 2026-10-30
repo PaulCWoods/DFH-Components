@@ -50,11 +50,11 @@
 }
 
 :where(.margin-breathe, .m-breathe) {
-    margin: var(--spacing-breathe, 1rem);
+    margin: var(--spacing-breathe);
 }
 
 :where(.margin-cushion, .m-cushion) {
-    margin: var(--spacing-cushion, 2rem);
+    margin: var(--spacing-cushion);
 }
 
 :where(.margin-auto, .m-auto) {
@@ -103,11 +103,11 @@
 }
 
 :where(.margin-block-breathe, .my-breathe) {
-    margin-block: var(--spacing-breathe, 1rem);
+    margin-block: var(--spacing-breathe);
 }
 
 :where(.margin-block-cushion, .my-cushion) {
-    margin-block: var(--spacing-cushion, 2rem);
+    margin-block: var(--spacing-cushion);
 }
 
 :where(.margin-block-auto, .my-auto) {
@@ -156,11 +156,11 @@
 }
 
 :where(.margin-inline-breathe, .mx-breathe) {
-    margin-inline: var(--spacing-breathe, 1rem);
+    margin-inline: var(--spacing-breathe);
 }
 
 :where(.margin-inline-cushion, .mx-cushion) {
-    margin-inline: var(--spacing-cushion, 2rem);
+    margin-inline: var(--spacing-cushion);
 }
 
 :where(.margin-inline-auto, .mx-auto) {
@@ -209,11 +209,11 @@
 }
 
 :where(.margin-block-start-breathe, .mt-breathe) {
-    margin-block-start: var(--spacing-breathe, 1rem);
+    margin-block-start: var(--spacing-breathe);
 }
 
 :where(.margin-block-start-cushion, .mt-cushion) {
-    margin-block-start: var(--spacing-cushion, 2rem);
+    margin-block-start: var(--spacing-cushion);
 }
 
 :where(.margin-block-start-auto, .mt-auto) {
@@ -262,11 +262,11 @@
 }
 
 :where(.margin-block-end-breathe, .mb-breathe) {
-    margin-block-end: var(--spacing-breathe, 1rem);
+    margin-block-end: var(--spacing-breathe);
 }
 
 :where(.margin-block-end-cushion, .mb-cushion) {
-    margin-block-end: var(--spacing-cushion, 2rem);
+    margin-block-end: var(--spacing-cushion);
 }
 
 :where(.margin-block-end-auto, .mb-auto) {
@@ -315,11 +315,11 @@
 }
 
 :where(.margin-inline-start-breathe, .ms-breathe) {
-    margin-inline-start: var(--spacing-breathe, 1rem);
+    margin-inline-start: var(--spacing-breathe);
 }
 
 :where(.margin-inline-start-cushion, .ms-cushion) {
-    margin-inline-start: var(--spacing-cushion, 2rem);
+    margin-inline-start: var(--spacing-cushion);
 }
 
 :where(.margin-inline-start-auto, .ms-auto) {
@@ -368,11 +368,11 @@
 }
 
 :where(.margin-inline-end-breathe, .me-breathe) {
-    margin-inline-end: var(--spacing-breathe, 1rem);
+    margin-inline-end: var(--spacing-breathe);
 }
 
 :where(.margin-inline-end-cushion, .me-cushion) {
-    margin-inline-end: var(--spacing-cushion, 2rem);
+    margin-inline-end: var(--spacing-cushion);
 }
 
 :where(.margin-inline-end-auto, .me-auto) {
@@ -421,11 +421,11 @@
 }
 
 :where(.padding-breathe, .p-breathe) {
-    padding: var(--spacing-breathe, 1rem);
+    padding: var(--spacing-breathe);
 }
 
 :where(.padding-cushion, .p-cushion) {
-    padding: var(--spacing-cushion, 2rem);
+    padding: var(--spacing-cushion);
 }
 
 
@@ -470,11 +470,11 @@
 }
 
 :where(.padding-block-breathe, .py-breathe) {
-    padding-block: var(--spacing-breathe, 1rem);
+    padding-block: var(--spacing-breathe);
 }
 
 :where(.padding-block-cushion, .py-cushion) {
-    padding-block: var(--spacing-cushion, 2rem);
+    padding-block: var(--spacing-cushion);
 }
 
 
@@ -519,11 +519,11 @@
 }
 
 :where(.padding-inline-breathe, .px-breathe) {
-    padding-inline: var(--spacing-breathe, 1rem);
+    padding-inline: var(--spacing-breathe);
 }
 
 :where(.padding-inline-cushion, .px-cushion) {
-    padding-inline: var(--spacing-cushion, 2rem);
+    padding-inline: var(--spacing-cushion);
 }
 
 
@@ -568,11 +568,11 @@
 }
 
 :where(.padding-block-start-breathe, .pt-breathe) {
-    padding-block-start: var(--spacing-breathe, 1rem);
+    padding-block-start: var(--spacing-breathe);
 }
 
 :where(.padding-block-start-cushion, .pt-cushion) {
-    padding-block-start: var(--spacing-cushion, 2rem);
+    padding-block-start: var(--spacing-cushion);
 }
 
 
@@ -617,11 +617,11 @@
 }
 
 :where(.padding-block-end-breathe, .pb-breathe) {
-    padding-block-end: var(--spacing-breathe, 1rem);
+    padding-block-end: var(--spacing-breathe);
 }
 
 :where(.padding-block-end-cushion, .pb-cushion) {
-    padding-block-end: var(--spacing-cushion, 2rem);
+    padding-block-end: var(--spacing-cushion);
 }
 
 
@@ -666,11 +666,11 @@
 }
 
 :where(.padding-inline-start-breathe, .ps-breathe) {
-    padding-inline-start: var(--spacing-breathe, 1rem);
+    padding-inline-start: var(--spacing-breathe);
 }
 
 :where(.padding-inline-start-cushion, .ps-cushion) {
-    padding-inline-start: var(--spacing-cushion, 2rem);
+    padding-inline-start: var(--spacing-cushion);
 }
 
 
@@ -715,11 +715,11 @@
 }
 
 :where(.padding-inline-end-breathe, .pe-breathe) {
-    padding-inline-end: var(--spacing-breathe, 1rem);
+    padding-inline-end: var(--spacing-breathe);
 }
 
 :where(.padding-inline-end-cushion, .pe-cushion) {
-    padding-inline-end: var(--spacing-cushion, 2rem);
+    padding-inline-end: var(--spacing-cushion);
 }
 
 
@@ -769,11 +769,11 @@
 }
 
 :where(.gap-breathe) {
-    gap: var(--spacing-breathe, 1rem);
+    gap: var(--spacing-breathe);
 }
 
 :where(.gap-cushion) {
-    gap: var(--spacing-cushion, 2rem);
+    gap: var(--spacing-cushion);
 }
 
 :where(.row-gap-0, .gap-y-0) {
@@ -813,11 +813,11 @@
 }
 
 :where(.row-gap-breathe, .gap-y-breathe) {
-    row-gap: var(--spacing-breathe, 1rem);
+    row-gap: var(--spacing-breathe);
 }
 
 :where(.row-gap-cushion, .gap-y-cushion) {
-    row-gap: var(--spacing-cushion, 2rem);
+    row-gap: var(--spacing-cushion);
 }
 
 :where(.column-gap-0, .gap-x-0) {
@@ -857,9 +857,9 @@
 }
 
 :where(.column-gap-breathe, .gap-x-breathe) {
-    column-gap: var(--spacing-breathe, 1rem);
+    column-gap: var(--spacing-breathe);
 }
 
 :where(.column-gap-cushion, .gap-x-cushion) {
-    column-gap: var(--spacing-cushion, 2rem);
+    column-gap: var(--spacing-cushion);
 }

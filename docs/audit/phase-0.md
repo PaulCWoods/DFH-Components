@@ -50,7 +50,7 @@ Builds: `npm run build-storybook` and `npm run build:docs` both pass.
 
 ## Found along the way (not Phase 0)
 
-- **Hex ramps are correct.** They are generated from OKLCH tooling and stored as hex for Figma. PRINCIPLES §5 now says OKLCH governs creating and manipulating colour. Follow-up: Tier 2 derivations currently use `color-mix(in srgb, …)` (`color.muted`, `color.overlay`, `surface.translucent`, `shadow.color` and others); move them to `in oklch` when those tokens are next touched, and check contrast after.
+- **Hex ramps are correct.** They are generated from OKLCH tooling and stored as hex for Figma. PRINCIPLES §5 now says OKLCH governs creating and manipulating colour. Follow-up: Tier 2 derivations currently use `color-mix(in srgb, …)` (`color.muted`, `color.overlay`, `surface.translucent`, `shadow.color` and others); move them to `in oklch` when those tokens are next touched, and check contrast after. *Done 30 October 2026: every mix is `in oklch`; the contrast gate passes.*
 - **`color.red.100` and `color.red.200` are identical** (`#fff1ee`).
 - **Stale hex fallbacks.** Component fallbacks such as `#008076` and `#005f57` are aqua, but accent is now purple. If tokens failed to load, components would show the wrong brand colour, which is more evidence for removing literal fallbacks.
 - **Inconsistent Tier 2 helper naming.** `surface.accent-strong` maps light mode to `accent-strong-light`, while `surface.danger-strong` maps light mode to `danger-strong-dark`. The resolved colours are equivalent; only the helper names differ.

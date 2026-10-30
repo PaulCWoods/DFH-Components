@@ -34,10 +34,14 @@
 
 :where(.ui-compact) {
     --ui-sizing: compact;
+    --spacing-breathe-sm: var(--spacing-sm);
     --spacing-breathe: var(--spacing);
     --spacing-cushion: var(--spacing);
+    --spacing-cushion-lg: var(--spacing);
+    --spacing-cq-breathe-sm: var(--spacing-sm);
     --spacing-cq-breathe: var(--spacing);
     --spacing-cq-cushion: var(--spacing);
+    --spacing-cq-cushion-lg: var(--spacing);
     --font-sizing: compact;
     font-size: var(--body-compact-font-size);
 }
@@ -47,10 +51,14 @@
 @media (pointer: fine) {
     :where(.fine\:ui-compact) {
         --ui-sizing: compact;
+        --spacing-breathe-sm: var(--spacing-sm);
         --spacing-breathe: var(--spacing);
         --spacing-cushion: var(--spacing);
+        --spacing-cushion-lg: var(--spacing);
+        --spacing-cq-breathe-sm: var(--spacing-sm);
         --spacing-cq-breathe: var(--spacing);
         --spacing-cq-cushion: var(--spacing);
+        --spacing-cq-cushion-lg: var(--spacing);
         --font-sizing: compact;
         font-size: var(--body-compact-font-size);
     }

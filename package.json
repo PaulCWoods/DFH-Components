@@ -12,6 +12,7 @@
     "export:figma": "node packages/figma-sync/export-figma-tokens.js",
     "build:palette": "node packages/theme-engine/bin/build-palette.js",
     "build:type": "node packages/theme-engine/bin/build-type.js",
+    "build:space": "node packages/theme-engine/bin/build-space.js",
     "test:theme": "npm test --workspace=@design-for-humans/theme-engine",
     "sync:icons": "node scripts/sync-icons.js",
     "check:utilities": "node scripts/check-utilities.js",

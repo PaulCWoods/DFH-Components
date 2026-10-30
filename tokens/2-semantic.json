@@ -41,7 +41,7 @@
   "color": {
     "$type": "color",
     "muted": {
-      "$value": "color-mix(in srgb, currentColor, transparent {translucency.50})",
+      "$value": "color-mix(in oklch, currentColor, transparent {translucency.50})",
       "$description": "Semi-transparent muted tint based on current text color"
     },
     "focus": {
@@ -49,15 +49,15 @@
       "$description": "High-contrast focus ring stroke color (WCAG 2.4.7 & 2.4.13 >= 3:1)"
     },
     "quiet": {
-      "$value": "color-mix(in srgb, currentColor, transparent {translucency.70})",
+      "$value": "color-mix(in oklch, currentColor, transparent {translucency.70})",
       "$description": "Low-contrast subtle tint for dividers and hair-lines"
     },
     "backdrop": {
-      "$value": "color-mix(in srgb, {color.neutral.900}, transparent {translucency.50})",
+      "$value": "color-mix(in oklch, {color.neutral.900}, transparent {translucency.50})",
       "$description": "Overlay scrim background for modal dialogs"
     },
     "overlay": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.000}, transparent {translucency.33}), color-mix(in srgb, {color.neutral.900}, transparent {translucency.33}))",
+      "$value": "light-dark(color-mix(in oklch, {color.neutral.000}, transparent {translucency.33}), color-mix(in oklch, {color.neutral.900}, transparent {translucency.33}))",
       "$description": "Translucent surface layer for sticky navigation and floating panels"
     }
   },
@@ -109,7 +109,7 @@
       "$description": "Maximum depth background for deep containers"
     },
     "layer": {
-      "$value": "light-dark(color-mix(in srgb, {color.white}, transparent {surface-layer.translucency}), color-mix(in srgb, {color.black}, transparent {surface-layer.translucency}))",
+      "$value": "light-dark(color-mix(in oklch, {color.white}, transparent {surface-layer.translucency}), color-mix(in oklch, {color.black}, transparent {surface-layer.translucency}))",
       "$description": "Layer surface background for floating or sticky elements"
     },
     "accent": {
@@ -137,15 +137,15 @@
       "$description": "High-contrast complementary surface for primary interactive elements"
     },
     "translucent": {
-      "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.95})",
+      "$value": "color-mix(in oklch, {surface.inverted}, transparent {translucency.95})",
       "$description": "Gentle hover tint on interactive surfaces"
     },
     "translucent-strong": {
-      "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.90})",
+      "$value": "color-mix(in oklch, {surface.inverted}, transparent {translucency.90})",
       "$description": "Stronger hover tint on interactive surfaces"
     },
     "shade": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.1000}, transparent {translucency.95}), color-mix(in srgb, {color.black}, transparent {translucency.70}))",
+      "$value": "light-dark(color-mix(in oklch, {color.neutral.1000}, transparent {translucency.95}), color-mix(in oklch, {color.black}, transparent {translucency.70}))",
       "$description": "Darker shade for gentle emphasis"
     },
     "danger": {
@@ -302,7 +302,7 @@
         "$description": "Quiet border stroke color"
       },
       "control": {
-        "$value": "color-mix(in srgb, currentColor, transparent {translucency.33})",
+        "$value": "color-mix(in oklch, currentColor, transparent {translucency.33})",
         "$description": "Form control boundary: 67% of the text colour, at least 3:1 against the page in both schemes (WCAG 1.4.11)"
       },
       "accent": {
@@ -485,11 +485,11 @@
       "$description": "Largest block spacing (e.g. Site width)"
     },
     "breathe": {
-      "$value": "var(--spacing-fluid)",
+      "$value": "{fluid.spacing.breathe}",
       "$description": "Fluid breathing space between major container sections"
     },
     "cushion": {
-      "$value": "var(--spacing-fluid-x2)",
+      "$value": "{fluid.spacing.cushion}",
       "$description": "Double fluid cushion space for outer page and hero margins"
     },
     "scroll-margin": {
@@ -497,12 +497,28 @@
       "$description": "Clearance above anchored heading targets"
     },
     "cq-breathe": {
-      "$value": "var(--spacing-cq)",
+      "$value": "{fluid.spacing.cq.breathe}",
       "$description": "Container-fluid breathing space using container query cqi units"
     },
     "cq-cushion": {
-      "$value": "var(--spacing-cq-x2)",
+      "$value": "{fluid.spacing.cq.cushion}",
       "$description": "Double container-fluid cushion space using container query cqi units"
+    },
+    "breathe-sm": {
+      "$value": "{fluid.spacing.breathe-sm}",
+      "$description": "A smaller breathing space, for tighter groups"
+    },
+    "cq-breathe-sm": {
+      "$value": "{fluid.spacing.cq.breathe-sm}",
+      "$description": "A smaller breathing space, for tighter groups, growing with its container (cqi)"
+    },
+    "cushion-lg": {
+      "$value": "{fluid.spacing.cushion-lg}",
+      "$description": "A larger cushion, for page sections and heroes"
+    },
+    "cq-cushion-lg": {
+      "$value": "{fluid.spacing.cq.cushion-lg}",
+      "$description": "A larger cushion, for page sections and heroes, growing with its container (cqi)"
     }
   },
   "font-weight": {
@@ -1223,12 +1239,12 @@
   "shadow": {
     "$type": "shadow",
     "color": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent 90%), color-mix(in srgb, {color.black}, transparent 25%))",
+      "$value": "light-dark(color-mix(in oklch, {color.neutral.900}, transparent {translucency.90}), color-mix(in oklch, {color.black}, transparent {translucency.25}))",
       "$type": "color",
       "$description": "Elevation shadow color tint"
     },
     "color-light": {
-      "$value": "light-dark(color-mix(in srgb, {color.neutral.800}, transparent 95%), color-mix(in srgb, {color.black}, transparent 50%))",
+      "$value": "light-dark(color-mix(in oklch, {color.neutral.800}, transparent {translucency.95}), color-mix(in oklch, {color.black}, transparent {translucency.50}))",
       "$type": "color",
       "$description": "Subtle elevation shadow color tint"
     },

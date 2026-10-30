@@ -97,6 +97,7 @@
   --opacity-90: 0.9;
   --opacity-100: 1;
   --translucency-10: 10%;
+  --translucency-25: 25%;
   --translucency-33: 33%;
   --translucency-50: 50%;
   --translucency-70: 70%;
@@ -208,9 +209,10 @@
   --z-index-600: 600;
   --z-index-700: 700;
   --z-index--1: -1;
-  --fluid-spacing-1: clamp(1rem, 0.55rem + 1.82vi, 2rem);
-  --fluid-spacing-2: clamp(2rem, 1.55rem + 1.82vi, 3rem);
-  --fluid-spacing-3: clamp(3rem, 2.55rem + 1.82vi, 4rem);
+  --fluid-spacing-breathe-sm: clamp(0.75rem, 0.64rem + 0.45vi, 1rem);
+  --fluid-spacing-breathe: clamp(1rem, 0.85rem + 0.61vi, 1.3333rem);
+  --fluid-spacing-cushion: clamp(1rem, 0.65rem + 1.41vi, 1.7778rem);
+  --fluid-spacing-cushion-lg: clamp(1rem, 0.38rem + 2.49vi, 2.3704rem);
   --fluid-typography-font-size-0: clamp(1rem, 0.91rem + 0.36vi, 1.2rem);
   --fluid-typography-font-size-1: clamp(1.2rem, 1.09rem + 0.44vi, 1.44rem);
   --fluid-typography-font-size-2: clamp(1.44rem, 1.31rem + 0.52vi, 1.728rem);
@@ -231,15 +233,11 @@
   --_max-font-size: 1.2rem;
   --_max-ratio: 1.2;
 
-  /* Fluid Spacing (Standard clamp fallbacks: vi units) */
-  --spacing-fluid: clamp(1rem, 0.85rem + 0.61vi, 1.3333rem);
-  --spacing-fluid-x2: clamp(1rem, 0.65rem + 1.41vi, 1.7778rem);
-  --spacing-fluid-x3: clamp(1rem, 0.38rem + 2.49vi, 2.3704rem);
-
   /* Container Fluid Spacing (Container Query: cqi units) */
-  --spacing-cq: clamp(1rem, 0.85rem + 0.61cqi, 1.3333rem);
-  --spacing-cq-x2: clamp(1rem, 0.65rem + 1.41cqi, 1.7778rem);
-  --spacing-cq-x3: clamp(1rem, 0.38rem + 2.49cqi, 2.3704rem);
+  --fluid-spacing-cq-breathe-sm: clamp(0.75rem, 0.64rem + 0.45cqi, 1rem);
+  --fluid-spacing-cq-breathe: clamp(1rem, 0.85rem + 0.61cqi, 1.3333rem);
+  --fluid-spacing-cq-cushion: clamp(1rem, 0.65rem + 1.41cqi, 1.7778rem);
+  --fluid-spacing-cq-cushion-lg: clamp(1rem, 0.38rem + 2.49cqi, 2.3704rem);
 
   /* Fluid Typography (Viewport: vi units) */
   --typography-font-size-fluid--2: clamp(0.6944rem, 0.63rem + 0.25vi, 0.8333rem);
@@ -299,11 +297,11 @@
   --blur-lg: blur(8px);
   --blur-xl: blur(16px);
   --blur: var(--blur-md);
-  --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-50));
+  --color-muted: color-mix(in oklch, currentColor, transparent var(--translucency-50));
   --color-focus: currentColor;
-  --color-quiet: color-mix(in srgb, currentColor, transparent var(--translucency-70));
-  --color-backdrop: color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-50));
-  --color-overlay: light-dark(color-mix(in srgb, var(--color-neutral-000), transparent var(--translucency-33)), color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-33)));
+  --color-quiet: color-mix(in oklch, currentColor, transparent var(--translucency-70));
+  --color-backdrop: color-mix(in oklch, var(--color-neutral-900), transparent var(--translucency-50));
+  --color-overlay: light-dark(color-mix(in oklch, var(--color-neutral-000), transparent var(--translucency-33)), color-mix(in oklch, var(--color-neutral-900), transparent var(--translucency-33)));
   --surface-layer-filter: var(--blur-lg);
   --surface-layer-translucency: var(--translucency-subtle);
   --surface: light-dark(var(--color-neutral-000), var(--color-neutral-1000));
@@ -314,16 +312,16 @@
   --surface-card-inverted: light-dark(var(--color-black), var(--color-white));
   --surface-dark: light-dark(var(--color-neutral-1000), var(--color-black));
   --surface-darker: var(--color-black);
-  --surface-layer: light-dark(color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)));
+  --surface-layer: light-dark(color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)));
   --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
   --surface-accent-dark: var(--color-purple-800);
   --surface-accent-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
   --surface-complementary: light-dark(var(--color-olive-200), var(--color-olive-800));
   --surface-complementary-dark: var(--color-olive-800);
   --surface-complementary-strong: light-dark(var(--color-olive-700), var(--color-olive-300));
-  --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-95));
-  --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-90));
-  --surface-shade: light-dark(color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-95)), color-mix(in srgb, var(--color-black), transparent var(--translucency-70)));
+  --surface-translucent: color-mix(in oklch, var(--surface-inverted), transparent var(--translucency-95));
+  --surface-translucent-strong: color-mix(in oklch, var(--surface-inverted), transparent var(--translucency-90));
+  --surface-shade: light-dark(color-mix(in oklch, var(--color-neutral-1000), transparent var(--translucency-95)), color-mix(in oklch, var(--color-black), transparent var(--translucency-70)));
   --surface-danger: light-dark(var(--color-red-100), var(--color-red-900));
   --surface-danger-strong: light-dark(var(--color-red-700), var(--color-red-300));
   --surface-warning: light-dark(var(--color-amber-100), var(--color-amber-900));
@@ -360,7 +358,7 @@
   --border-color: currentColor;
   --border-color-muted: var(--color-muted);
   --border-color-quiet: var(--color-quiet);
-  --border-color-control: color-mix(in srgb, currentColor, transparent var(--translucency-33));
+  --border-color-control: color-mix(in oklch, currentColor, transparent var(--translucency-33));
   --border-color-accent: var(--color-purple-500);
   --border-color-complementary: light-dark(var(--color-olive-600), var(--color-olive-500));
   --border-color-danger: var(--color-red-500);
@@ -399,11 +397,15 @@
   --spacing-block-lg: var(--spacing-768);
   --spacing-block-xl: var(--spacing-1024);
   --spacing-block-2xl: var(--spacing-1280);
-  --spacing-breathe: var(--spacing-fluid);
-  --spacing-cushion: var(--spacing-fluid-x2);
+  --spacing-breathe: var(--fluid-spacing-breathe);
+  --spacing-cushion: var(--fluid-spacing-cushion);
   --spacing-scroll-margin: 1em;
-  --spacing-cq-breathe: var(--spacing-cq);
-  --spacing-cq-cushion: var(--spacing-cq-x2);
+  --spacing-cq-breathe: var(--fluid-spacing-cq-breathe);
+  --spacing-cq-cushion: var(--fluid-spacing-cq-cushion);
+  --spacing-breathe-sm: var(--fluid-spacing-breathe-sm);
+  --spacing-cq-breathe-sm: var(--fluid-spacing-cq-breathe-sm);
+  --spacing-cushion-lg: var(--fluid-spacing-cushion-lg);
+  --spacing-cq-cushion-lg: var(--fluid-spacing-cq-cushion-lg);
   --font-weight-regular: var(--typography-font-weight-400);
   --font-weight-medium: var(--typography-font-weight-500);
   --font-weight-semibold: var(--typography-font-weight-600);
@@ -539,8 +541,8 @@
   --ease-in: cubic-bezier(0.4, 0.0, 1.0, 1.0);
   --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  --shadow-color: light-dark(color-mix(in srgb, var(--color-neutral-900), transparent 90%), color-mix(in srgb, var(--color-black), transparent 25%));
-  --shadow-color-light: light-dark(color-mix(in srgb, var(--color-neutral-800), transparent 95%), color-mix(in srgb, var(--color-black), transparent 50%));
+  --shadow-color: light-dark(color-mix(in oklch, var(--color-neutral-900), transparent var(--translucency-90)), color-mix(in oklch, var(--color-black), transparent var(--translucency-25)));
+  --shadow-color-light: light-dark(color-mix(in oklch, var(--color-neutral-800), transparent var(--translucency-95)), color-mix(in oklch, var(--color-black), transparent var(--translucency-50)));
   --shadow-none: 0 0 0 0 transparent;
   --shadow-sm: 
     var(--_shadow-sm-layer-1) var(--shadow-color),
@@ -623,6 +625,14 @@
   --avatar-group-overlap: 0.33;
   --avatar-group-ring-width: var(--border-width);
   --avatar-group-ring-color: var(--surface);
+  --thumbnail-size: var(--spacing-48);
+  --thumbnail-sm-size: var(--spacing-32);
+  --thumbnail-lg-size: var(--spacing-64);
+  --thumbnail-aspect: 1;
+  --thumbnail-radius: var(--radius);
+  --thumbnail-round-radius: var(--radius-round);
+  --thumbnail-bg: var(--surface-muted);
+  --thumbnail-text: var(--foreground-muted);
   --lockup-gap: var(--spacing-0);
   --badge-font-size: var(--body-sm-fixed-font-size);
   --badge-font-weight: var(--font-weight-bold);
@@ -1108,9 +1118,9 @@
   --menu-rule-color: var(--rule-color);
   --menu-translucency: var(--translucency-subtle);
   --menu-filter: var(--surface-layer-filter);
-  --skeleton-color: color-mix(in srgb, var(--foreground) 20%, transparent);
-  --skeleton-color-strong: color-mix(in srgb, var(--foreground) 35%, transparent);
-  --skeleton-shimmer: color-mix(in srgb, var(--surface) 60%, transparent);
+  --skeleton-color: color-mix(in oklch, var(--foreground) 20%, transparent);
+  --skeleton-color-strong: color-mix(in oklch, var(--foreground) 35%, transparent);
+  --skeleton-shimmer: color-mix(in oklch, var(--surface) 60%, transparent);
   --skeleton-radius: var(--radius-sm);
   --skeleton-radius-round: var(--radius-round);
   --skeleton-duration: 1.6s;
@@ -1161,14 +1171,6 @@
     var(--_shadow-inner-layer-3) var(--color);
 }
 
-@function --spacing-fluid(--size, --factor: 1) {
-  result: round(var(--size) + var(--_progress) * (var(--size) * pow(var(--_space-ratio), var(--factor)) - var(--size)), var(--_interval));
-}
-
-@function --spacing-cq(--size, --factor: 1) {
-  result: round(var(--size) + var(--_progress-cq) * (var(--size) * pow(var(--_space-ratio), var(--factor)) - var(--size)), var(--_interval));
-}
-
 @function --type-size(--n) {
   result: round(calc(var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
 }
@@ -1199,16 +1201,6 @@
     --shadow-lg-light: --shadow-lg(var(--shadow-color-light));
     --shadow-inner: --shadow-inner(var(--shadow-color));
     --shadow-inner-light: --shadow-inner(var(--shadow-color-light));
-    /* Fluid Spacing Functions */
-    --spacing-fluid: --spacing-fluid(var(--spacing-16), 1);
-    --spacing-fluid-x2: --spacing-fluid(var(--spacing-16), 2);
-    --spacing-fluid-x3: --spacing-fluid(var(--spacing-16), 3);
-
-    /* Container Fluid Spacing Functions */
-    --spacing-cq: --spacing-cq(var(--spacing-16), 1);
-    --spacing-cq-x2: --spacing-cq(var(--spacing-16), 2);
-    --spacing-cq-x3: --spacing-cq(var(--spacing-16), 3);
-
     /* Fluid Typography Functions */
     --typography-font-size-fluid--2: --type-size-fluid(-2);
     --typography-font-size-fluid--1: --type-size-fluid(-1);
@@ -1280,17 +1272,18 @@
     --_progress-cq: progress(100 * var(--_progressunit, 1cqi), var(--_min-viewport), var(--_max-viewport));
     --_pg: var(--_progress);
     --_pgcq: var(--_progress-cq);
-    --_space-ratio: 1.333333;
 
-    /* Fluid Spacing using progress(), pow(), and round() */
-    --spacing-fluid: round(var(--spacing-16) + var(--_progress) * (var(--spacing-16) * pow(var(--_space-ratio), 1) - var(--spacing-16)), var(--_interval));
-    --spacing-fluid-x2: round(var(--spacing-16) + var(--_progress) * (var(--spacing-16) * pow(var(--_space-ratio), 2) - var(--spacing-16)), var(--_interval));
-    --spacing-fluid-x3: round(var(--spacing-16) + var(--_progress) * (var(--spacing-16) * pow(var(--_space-ratio), 3) - var(--spacing-16)), var(--_interval));
+    /* Fluid Spacing using progress() and round() */
+    --fluid-spacing-breathe-sm: round(0.75rem + var(--_progress) * (1rem - 0.75rem), var(--_interval));
+    --fluid-spacing-breathe: round(1rem + var(--_progress) * (1.3333rem - 1rem), var(--_interval));
+    --fluid-spacing-cushion: round(1rem + var(--_progress) * (1.7778rem - 1rem), var(--_interval));
+    --fluid-spacing-cushion-lg: round(1rem + var(--_progress) * (2.3704rem - 1rem), var(--_interval));
 
-    /* Container Fluid Spacing using progress(), pow(), and round() */
-    --spacing-cq: round(var(--spacing-16) + var(--_progress-cq) * (var(--spacing-16) * pow(var(--_space-ratio), 1) - var(--spacing-16)), var(--_interval));
-    --spacing-cq-x2: round(var(--spacing-16) + var(--_progress-cq) * (var(--spacing-16) * pow(var(--_space-ratio), 2) - var(--spacing-16)), var(--_interval));
-    --spacing-cq-x3: round(var(--spacing-16) + var(--_progress-cq) * (var(--spacing-16) * pow(var(--_space-ratio), 3) - var(--spacing-16)), var(--_interval));
+    /* Container Fluid Spacing using progress() and round() */
+    --fluid-spacing-cq-breathe-sm: round(0.75rem + var(--_progress-cq) * (1rem - 0.75rem), var(--_interval));
+    --fluid-spacing-cq-breathe: round(1rem + var(--_progress-cq) * (1.3333rem - 1rem), var(--_interval));
+    --fluid-spacing-cq-cushion: round(1rem + var(--_progress-cq) * (1.7778rem - 1rem), var(--_interval));
+    --fluid-spacing-cq-cushion-lg: round(1rem + var(--_progress-cq) * (2.3704rem - 1rem), var(--_interval));
 
     /* Fluid Typography using progress() and round() (Option A precomputed) */
     --typography-font-size-fluid--2: round(0.6944rem + var(--_progress) * (0.8333rem - 0.6944rem), var(--_interval));
@@ -1338,12 +1331,12 @@
   --surface-card: light-dark(var(--color-black), var(--color-white));
   --surface-card-inverted: light-dark(var(--color-white), var(--color-black));
   --surface-dark: light-dark(var(--color-black), var(--color-neutral-1000));
-  --surface-layer: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --surface-layer: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
   --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
   --surface-complementary: light-dark(var(--color-olive-800), var(--color-olive-200));
   --surface-complementary-strong: light-dark(var(--color-olive-300), var(--color-olive-700));
-  --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-70)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-95)));
+  --surface-shade: light-dark(color-mix(in oklch, var(--color-black), transparent var(--translucency-70)), color-mix(in oklch, var(--color-neutral-1000), transparent var(--translucency-95)));
   --surface-danger: light-dark(var(--color-red-900), var(--color-red-100));
   --surface-danger-strong: light-dark(var(--color-red-300), var(--color-red-700));
   --surface-warning: light-dark(var(--color-amber-900), var(--color-amber-100));
@@ -1382,10 +1375,12 @@
   --avatar-accent-text: light-dark(var(--color-neutral-800), var(--color-neutral-000));
   --avatar-count-text: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --avatar-group-ring-color: light-dark(var(--color-neutral-1000), var(--color-neutral-000));
+  --thumbnail-bg: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+  --thumbnail-text: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --banner-bg: light-dark(var(--color-black), var(--color-white));
   --banner-subtle-bg: light-dark(var(--color-neutral-900), var(--color-neutral-100));
   --banner-strong-bg: light-dark(var(--color-neutral-000), var(--color-neutral-800));
-  --batch-actions-bg: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --batch-actions-bg: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --batch-actions-docked-bg: light-dark(var(--color-black), var(--color-white));
   --batch-actions-strong-bg: light-dark(var(--color-neutral-000), var(--color-neutral-1000));
   --batch-actions-strong-color: light-dark(var(--color-neutral-800), var(--color-neutral-000));
@@ -1409,7 +1404,7 @@
   --input-background-color: light-dark(var(--color-black), var(--color-white));
   --link-color: light-dark(var(--color-purple-300), var(--color-purple-600));
   --pagination-gap-color: light-dark(var(--color-neutral-300), var(--color-neutral-700));
-  --stepper-indicator-bg: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --stepper-indicator-bg: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --stepper-indicator-color: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --stepper-current-color: light-dark(var(--color-purple-300), var(--color-purple-600));
   --stepper-complete-color: light-dark(var(--color-green-300), var(--color-green-600));
@@ -1436,15 +1431,15 @@
   --switch-on-bg: light-dark(var(--color-purple-300), var(--color-purple-600));
   --switch-on-color: light-dark(var(--color-black), var(--color-white));
   --tab-list-indicator-color: light-dark(var(--color-neutral-000), var(--color-neutral-800));
-  --telemetry-bg: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --telemetry-bg: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --tooltip-bg: light-dark(var(--color-neutral-000), var(--color-neutral-1000));
   --tooltip-color: light-dark(var(--color-black), var(--color-white));
   --menu-bg: light-dark(var(--color-black), var(--color-white));
   --menu-subtle-bg: light-dark(var(--color-neutral-900), var(--color-neutral-100));
   --menu-heading-color: light-dark(var(--color-neutral-300), var(--color-neutral-700));
-  --skeleton-color: color-mix(in srgb, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 20%, transparent);
-  --skeleton-color-strong: color-mix(in srgb, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 35%, transparent);
-  --skeleton-shimmer: color-mix(in srgb, light-dark(var(--color-neutral-1000), var(--color-neutral-000)) 60%, transparent);
+  --skeleton-color: color-mix(in oklch, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 20%, transparent);
+  --skeleton-color-strong: color-mix(in oklch, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 35%, transparent);
+  --skeleton-shimmer: color-mix(in oklch, light-dark(var(--color-neutral-1000), var(--color-neutral-000)) 60%, transparent);
   --combobox-listbox-bg: light-dark(var(--color-black), var(--color-white));
   --combobox-option-selected-color: light-dark(var(--color-purple-300), var(--color-purple-600));
 }
@@ -1458,12 +1453,12 @@
   --surface-card: light-dark(var(--color-black), var(--color-white));
   --surface-card-inverted: light-dark(var(--color-white), var(--color-black));
   --surface-dark: light-dark(var(--color-black), var(--color-neutral-1000));
-  --surface-layer: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --surface-layer: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
   --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
   --surface-complementary: light-dark(var(--color-olive-800), var(--color-olive-200));
   --surface-complementary-strong: light-dark(var(--color-olive-300), var(--color-olive-700));
-  --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-70)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-95)));
+  --surface-shade: light-dark(color-mix(in oklch, var(--color-black), transparent var(--translucency-70)), color-mix(in oklch, var(--color-neutral-1000), transparent var(--translucency-95)));
   --surface-danger: light-dark(var(--color-red-900), var(--color-red-100));
   --surface-danger-strong: light-dark(var(--color-red-300), var(--color-red-700));
   --surface-warning: light-dark(var(--color-amber-900), var(--color-amber-100));
@@ -1502,10 +1497,12 @@
   --avatar-accent-text: light-dark(var(--color-neutral-800), var(--color-neutral-000));
   --avatar-count-text: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --avatar-group-ring-color: light-dark(var(--color-neutral-1000), var(--color-neutral-000));
+  --thumbnail-bg: light-dark(var(--color-neutral-900), var(--color-neutral-100));
+  --thumbnail-text: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --banner-bg: light-dark(var(--color-black), var(--color-white));
   --banner-subtle-bg: light-dark(var(--color-neutral-900), var(--color-neutral-100));
   --banner-strong-bg: light-dark(var(--color-neutral-000), var(--color-neutral-800));
-  --batch-actions-bg: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --batch-actions-bg: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --batch-actions-docked-bg: light-dark(var(--color-black), var(--color-white));
   --batch-actions-strong-bg: light-dark(var(--color-neutral-000), var(--color-neutral-1000));
   --batch-actions-strong-color: light-dark(var(--color-neutral-800), var(--color-neutral-000));
@@ -1529,7 +1526,7 @@
   --input-background-color: light-dark(var(--color-black), var(--color-white));
   --link-color: light-dark(var(--color-purple-300), var(--color-purple-600));
   --pagination-gap-color: light-dark(var(--color-neutral-300), var(--color-neutral-700));
-  --stepper-indicator-bg: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --stepper-indicator-bg: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --stepper-indicator-color: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --stepper-current-color: light-dark(var(--color-purple-300), var(--color-purple-600));
   --stepper-complete-color: light-dark(var(--color-green-300), var(--color-green-600));
@@ -1556,15 +1553,15 @@
   --switch-on-bg: light-dark(var(--color-purple-300), var(--color-purple-600));
   --switch-on-color: light-dark(var(--color-black), var(--color-white));
   --tab-list-indicator-color: light-dark(var(--color-neutral-000), var(--color-neutral-800));
-  --telemetry-bg: light-dark(color-mix(in srgb, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--color-white), transparent var(--surface-layer-translucency)));
+  --telemetry-bg: light-dark(color-mix(in oklch, var(--color-black), transparent var(--surface-layer-translucency)), color-mix(in oklch, var(--color-white), transparent var(--surface-layer-translucency)));
   --tooltip-bg: light-dark(var(--color-neutral-000), var(--color-neutral-1000));
   --tooltip-color: light-dark(var(--color-black), var(--color-white));
   --menu-bg: light-dark(var(--color-black), var(--color-white));
   --menu-subtle-bg: light-dark(var(--color-neutral-900), var(--color-neutral-100));
   --menu-heading-color: light-dark(var(--color-neutral-300), var(--color-neutral-700));
-  --skeleton-color: color-mix(in srgb, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 20%, transparent);
-  --skeleton-color-strong: color-mix(in srgb, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 35%, transparent);
-  --skeleton-shimmer: color-mix(in srgb, light-dark(var(--color-neutral-1000), var(--color-neutral-000)) 60%, transparent);
+  --skeleton-color: color-mix(in oklch, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 20%, transparent);
+  --skeleton-color-strong: color-mix(in oklch, light-dark(var(--color-neutral-000), var(--color-neutral-800)) 35%, transparent);
+  --skeleton-shimmer: color-mix(in oklch, light-dark(var(--color-neutral-1000), var(--color-neutral-000)) 60%, transparent);
   --combobox-listbox-bg: light-dark(var(--color-black), var(--color-white));
   --combobox-option-selected-color: light-dark(var(--color-purple-300), var(--color-purple-600));
   }

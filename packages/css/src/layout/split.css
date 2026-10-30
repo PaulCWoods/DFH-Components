@@ -38,7 +38,7 @@
    1. Base
    -------------------------------------------------------------------------- */
 :where(.split) {
-    --_gap: var(--gap, var(--spacing-cushion, 1.5rem));
+    --_gap: var(--gap, var(--spacing-cushion));
     --_split-side: var(--split-side-width, var(--spacing-block-xs, 16rem));
     --_split-main-min: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
 
