@@ -1,60 +1,47 @@
 ---
+/* ==========================================================================
+   The page: head, fonts, colour scheme, and the library's app shell
+   (§19d): skip link, sticky header, the page's own content, footer, and
+   the search dialog. No docs CSS: everything here is the library.
+   The font links between the theme-fonts markers in the head are written
+   by build:type and the designer's Publish. Don't quote the markers
+   anywhere else in this file: the writer replaces from the first one.
+   ========================================================================== */
 import '@design-for-humans/components-css/src/index.css';
 import '@design-for-humans/components-css/src/fonts.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Search from '../components/Search.astro';
+import type { Section } from '../lib/nav';
 
-interface Props {
-  title: string;
-  description?: string;
-  currentSection?: string;
-}
-
-const {
-  title,
-  description = 'Design For Humans — An accessible, token-driven modern UI design system and component library.',
-  currentSection = '',
-} = Astro.props;
+interface Props { title: string; description: string; nav: Section[]; current: string }
+const { title, description, nav, current } = Astro.props;
+const fullTitle = title === 'Design For Humans Components' ? title : `${title} · Design For Humans Components`;
 ---
-
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} — Design For Humans</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/icons.svg#BrandDesignForHumans" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <!-- theme fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=PT+Mono:wght@400&family=Plus+Jakarta+Sans:wght@800&display=swap" />
+    <link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" />
     <!-- /theme fonts -->
     <script is:inline>
-      (() => {
-        const stored = localStorage.getItem('dfh-theme');
-        if (stored === 'light' || stored === 'dark') {
-          document.documentElement.setAttribute('data-theme', stored);
-          document.documentElement.style.colorScheme = stored;
-        }
-      })();
+      /* The remembered colour scheme, before the first paint (SchemeToggle) */
+      try {
+        const s = localStorage.getItem('dfh-scheme');
+        if (s === 'light' || s === 'dark') document.documentElement.classList.add('color-scheme-' + s);
+      } catch {}
     </script>
   </head>
-  <body>
-    <a href="#main-content" class="skip-link">
-      <span>Skip to main content</span>
-    </a>
+  <body class="app">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header nav={nav} current={current} />
     <slot />
+    <Footer />
+    <Search />
   </body>
 </html>
-
-<style is:global>
-
-  body {
-    margin: 0;
-    min-block-size: 100dvb;
-    font-family: var(--font-family-body, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
-    color: var(--foreground, currentColor);
-    background-color: var(--surface, Canvas);
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-  }
-</style>

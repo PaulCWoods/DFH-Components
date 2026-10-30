@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { leadingSteps, SYSTEM_STACKS, fontsCss, roleFont, roleStack, applyTypeStyles, evalCalc, figmaTextStyles, fontCovers, pickWeights, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
+import { useFixtureFonts } from './fonts-fixture.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -32,7 +33,7 @@ test('migrating today\'s tokens gives the scale and styles back', () => {
 });
 
 test('role tokens name system stacks; fonts.css points them at the theme\'s fonts', () => {
-  const type = structuredClone(theme.type);
+  const type = useFixtureFonts(structuredClone(theme.type));
   type.fonts.georgia = { source: 'system', family: 'Georgia', fallback: 'serif' };
   type.families.serif = { font: 'georgia' };
   type.families.display = { use: 'sans' };
@@ -196,7 +197,7 @@ test('a font covers the weights it loads, a variable font its whole range', () =
 });
 
 test('a family can share another\'s font or take a system stack, and loads nothing of its own', () => {
-  const type = structuredClone(theme.type);
+  const type = useFixtureFonts(structuredClone(theme.type));
   type.families.display = { use: 'sans' };
   type.families.mono = { system: 'monospace' };
   const links = fontLinks(type).join('\n');

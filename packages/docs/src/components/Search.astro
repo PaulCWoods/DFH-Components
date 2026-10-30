@@ -1,0 +1,80 @@
+---
+/* ==========================================================================
+   Search: a dialog over the Pagefind index (built after astro build by
+   `pagefind --site dist`). Results are links with their excerpt; a status
+   line says how many were found. In the dev server there is no index, and
+   the dialog says so.
+   ========================================================================== */
+import Icon from './Icon.astro';
+---
+<dialog id="search" class="dialog" aria-labelledby="search-title" closedby="any">
+  <div class="card">
+    <header class="card__header">
+      <h2 id="search-title" class="card__title small-heading">Search the docs</h2>
+      <button type="button" class="button button--plain button--icon" commandfor="search" command="close">
+        <span class="sr-only">Close</span><Icon name="Close" />
+      </button>
+    </header>
+    <div class="card__body stack">
+      <div class="field">
+        <label for="search-input" class="field__label label">Search for</label>
+        <input id="search-input" type="search" class="input" autocomplete="off" autofocus aria-describedby="search-status" />
+      </div>
+      <p id="search-status" class="small-text text-muted" role="status"></p>
+      <ol class="stack gap-md" role="list" id="search-results"></ol>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  type Result = { url: string; meta: { title: string }; excerpt: string };
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const status = document.getElementById('search-status')!;
+  const list = document.getElementById('search-results')!;
+  let pagefind: any;
+  const load = async () => {
+    if (pagefind !== undefined) return pagefind;
+    try {
+      pagefind = await import(/* @vite-ignore */ `${location.origin}/pagefind/pagefind.js`);
+    } catch {
+      pagefind = null;
+    }
+    return pagefind;
+  };
+  let run = 0;
+  input.addEventListener('input', async () => {
+    const term = input.value.trim();
+    const mine = ++run;
+    if (!term) {
+      list.replaceChildren();
+      status.textContent = '';
+      return;
+    }
+    const pf = await load();
+    if (!pf) {
+      status.textContent = 'Search works on the built site (npm run build:docs).';
+      return;
+    }
+    const search = await pf.debouncedSearch(term, {}, 250);
+    if (mine !== run || !search) return;
+    const results: Result[] = await Promise.all(search.results.slice(0, 10).map((r: any) => r.data()));
+    list.replaceChildren(
+      ...results.map((r) => {
+        const li = document.createElement('li');
+        li.className = 'stack gap-2xs';
+        const a = document.createElement('a');
+        a.className = 'link small-heading';
+        a.href = r.url;
+        a.textContent = r.meta.title;
+        const p = document.createElement('p');
+        p.className = 'small-text text-muted';
+        /* Pagefind's excerpt is text from our own pages, with <mark> round the matches */
+        p.innerHTML = r.excerpt;
+        li.append(a, p);
+        return li;
+      }),
+    );
+    const n = search.results.length;
+    status.textContent = n ? `${n} ${n === 1 ? 'page' : 'pages'} found${n > 10 ? ', showing the first 10' : ''}.` : `Nothing found for “${term}”.`;
+  });
+</script>

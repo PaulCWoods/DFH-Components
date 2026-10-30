@@ -1,0 +1,45 @@
+---
+/* ==========================================================================
+   Colour scheme: follow the system, light or dark.
+   Sets .color-scheme-light or .color-scheme-dark on <html> (none follows
+   the system) and remembers the choice. The head script in BaseLayout
+   applies it before the first paint. There can be two copies (the header,
+   and the drawer on narrow screens); both show the same state.
+   ========================================================================== */
+import Icon from './Icon.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+const options = [
+  { value: 'system', label: 'Match system', icon: 'LightDark' },
+  { value: 'light', label: 'Light', icon: 'Light' },
+  { value: 'dark', label: 'Dark', icon: 'Moon' },
+];
+---
+<div class:list={['button-group button-group--joined', cls]} role="group" aria-label="Colour scheme" data-scheme-toggle>
+  {options.map((o) => (
+    <button type="button" class="button button--plain button--icon button--sm" data-scheme={o.value} aria-pressed={o.value === 'system' ? 'true' : 'false'}>
+      <Icon name={o.icon} /><span class="sr-only">{o.label}</span>
+    </button>
+  ))}
+</div>
+
+<script>
+  const KEY = 'dfh-scheme';
+  const root = document.documentElement;
+  const read = () => {
+    try { return localStorage.getItem(KEY) ?? 'system'; } catch { return 'system'; }
+  };
+  const apply = (scheme: string) => {
+    root.classList.remove('color-scheme-light', 'color-scheme-dark');
+    if (scheme === 'light' || scheme === 'dark') root.classList.add(`color-scheme-${scheme}`);
+    document.querySelectorAll<HTMLButtonElement>('[data-scheme]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.scheme === scheme)));
+  };
+  apply(read());
+  document.querySelectorAll<HTMLButtonElement>('[data-scheme]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const scheme = b.dataset.scheme!;
+      try { scheme === 'system' ? localStorage.removeItem(KEY) : localStorage.setItem(KEY, scheme); } catch {}
+      apply(scheme);
+    }),
+  );
+</script>

@@ -1,116 +1,56 @@
 ---
+/* ==========================================================================
+   The site header (§33): the brand, the sections as a tab list, search,
+   the colour scheme, and below 48rem a menu button for the drawer, which
+   holds the sections and the colour scheme.
+   ========================================================================== */
 import Icon from './Icon.astro';
-import ThemeToggle from './ThemeToggle.astro';
+import NavTree from './NavTree.astro';
+import SchemeToggle from './SchemeToggle.astro';
+import type { Section } from '../lib/nav';
 
-interface Props {
-  currentSection?: string;
-}
-
-const { currentSection = '' } = Astro.props;
+interface Props { nav: Section[]; current: string }
+const { nav, current } = Astro.props;
+const inSection = (s: Section) => s.pages.some((p) => p.href === current);
 ---
-
-<header class="header header--sticky header--translucent" style="--header-max-width: none;">
+<header class="header header--sticky">
   <div class="header__bar">
-    
-    <!-- Left: Brand Lockup & Mobile Toggle -->
-    <div class="inline">
-      <button
-        type="button"
-        class="button button--plain button--icon md:hide"
-        commandfor="docs-nav"
-        command="show-modal"
-        aria-haspopup="dialog"
-      >
-        <span class="sr-only">Navigation menu</span>
-        <Icon name="Navigation" />
-      </button>
-
-      <div class="inline relative">
-        <Icon name="BrandDesignForHumans" class="text-accent" size={"2xl"} />
-        <div class="lockup whitespace-nowrap max-sm:hide">
-          <span class="small-heading">
-            <a href="/" class="link link--plain link--stretched">
-              Design For Humans
-            </a>
-          </span>
-          <span class="small-text text-muted">v2.2 • Accessible UI Library</span>
-        </div>
-      </div>
-
-      <span class="status status--accent status--subtle status--sm max-md:hide">
-        <span class="status__text">WCAG AAA</span>
-      </span>
-    </div>
-
-    <!-- Center: Primary Nav Links (Tab List Navigation Pattern) -->
-    <nav class="header__nav tab-list tab-list--plain tab-list--scrollable max-xl:hide" aria-label="Main Navigation">
+    <a href="/" class="link link--plain small-heading inline gap-xs">
+      <Icon name="BrandDesignForHumans" /><span>Design For Humans</span>
+    </a>
+    <nav class="header__nav tab-list tab-list--plain tab-list--scrollable @max-3xl:hide" aria-label="Sections">
       <ul>
-        <li>
-          <a
-            href="/"
-            class="tab"
-            aria-current={currentSection === 'overview' ? 'page' : undefined}
-          >
-            <span class="tab__text">Overview</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/components"
-            class="tab"
-            aria-current={currentSection === 'components' ? 'page' : undefined}
-          >
-            <span class="tab__text">Components</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/tokens"
-            class="tab"
-            aria-current={currentSection === 'tokens' ? 'page' : undefined}
-          >
-            <span class="tab__text">Tokens</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/guidelines"
-            class="tab"
-            aria-current={currentSection === 'guidelines' ? 'page' : undefined}
-          >
-            <span class="tab__text">Guidelines</span>
-          </a>
-        </li>
+        {nav.map((s) => (
+          <li><a href={s.href} class="tab" aria-current={inSection(s) ? 'page' : undefined}><span class="tab__text">{s.label}</span></a></li>
+        ))}
       </ul>
     </nav>
-
-    <!-- Right: Quick Search, Theme Toggle, Storybook Link -->
-    <div class="inline gap-xs">
-      <button
-        type="button"
-        id="header-search-btn"
-        class="button button--subtle"
-        aria-label="Search documentation (Cmd+K)"
-        title="Search documentation (Cmd+K)"
-      >
-        <Icon name="Search" size={16} />
-        <span class="max-sm:hide text-muted">Search...</span>
-        <kbd class="kbd max-sm:hide">⌘K</kbd>
+    <div class="cluster gap-xs">
+      <button type="button" class="button button--plain button--icon" commandfor="search" command="show-modal">
+        <Icon name="Search" /><span class="sr-only">Search</span>
       </button>
-
-      <ThemeToggle />
-
-      <a
-        href="http://localhost:6006"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="button button--plain button--icon max-sm:hide"
-        aria-label="Storybook component explorer (opens in a new tab)"
-        title="Open Storybook Sandbox (Port 6006)"
-      >
-        <Icon name="Code" size={20} />
-      </a>
+      <SchemeToggle class="@max-3xl:hide" />
+      <button type="button" class="button button--plain button--icon @3xl:hide" commandfor="site-nav" command="show-modal">
+        <Icon name="Navigation" /><span class="sr-only">Menu</span>
+      </button>
     </div>
-
   </div>
 </header>
+
+<dialog id="site-nav" class="dialog dialog--drawer dialog--start" aria-labelledby="drawer-title" closedby="any">
+  <article class="card">
+    <header class="card__header">
+      <h2 id="drawer-title" class="card__title small-heading">Menu</h2>
+      <button type="button" class="button button--plain button--icon" commandfor="site-nav" command="close">
+        <span class="sr-only">Close</span><Icon name="Close" />
+      </button>
+    </header>
+    <div class="card__body card__body--scrollable" tabindex="0" aria-label="Menu">
+      <NavTree nav={nav} current={current} mode="all" idPrefix="drawer-nav" />
+    </div>
+    <footer class="card__footer">
+      <span class="small-text" aria-hidden="true">Colour scheme</span>
+      <SchemeToggle />
+    </footer>
+  </article>
+</dialog>

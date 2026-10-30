@@ -17,6 +17,7 @@
     "sync:icons": "node scripts/sync-icons.js",
     "check:utilities": "node scripts/check-utilities.js",
     "check:layout": "node scripts/check-layout.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
     "sync:blog": "node scripts/sync-blog.js",
     "watch:blog": "node scripts/sync-blog.js --watch",
     "storybook": "npm run storybook --workspace=@design-for-humans/storybook",

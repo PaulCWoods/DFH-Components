@@ -102,6 +102,20 @@ The foundations pages read the theme and tokens at build time, so they can't dri
 6. **Brochure.** The home page and a few marketing pages, built from library parts and showing the live components.
 7. **Deploy** to `components.designforhumans.blog`.
 
+## Phase 1: done (30 October 2026)
+
+- **Removed** the prototype: its pages, layouts and components.
+- **Shell from the library:** `body.app` with a skip link; a sticky `.header` with the brand, the sections as a plain scrollable tab list, search, the colour scheme and (below 48rem) a menu button; the section's pages in a sticky `.sidebar` of `.navigation-tree` (from 48rem); the article in `.prose` inside a `.wrapper`; "On this page" in a sticky end `.sidebar` (from the xl width, on pages with two or more sections); previous and next as `.block-link`s; a one-row `.footer`. No docs CSS.
+- **Drawer:** below 48rem the menu button opens a `.dialog--drawer.dialog--start` with every section (the current one opened to its pages) and the colour scheme.
+- **Colour scheme:** follow the system, light or dark, as a joined button group with `aria-pressed`. It sets `.color-scheme-light` or `-dark` on `<html>` and remembers the choice; a head script applies it before the first paint.
+- **Search:** Pagefind, built after `astro build`, in a `.dialog` with a field, a status line and linked results. The article is the indexed region.
+- **Content:** a `docs` collection (`src/content/docs`, MDX with `title`, `summary`, `order`). A folder is a section and its `index.mdx` the overview; sections show in the header and drawer once they have a page. Two pages so far: Overview and Tools. The home page stands in for the brochure.
+- **Code** takes the library's prose styling: Astro's highlighter is off (its colours failed contrast). A code block of our own comes with the live examples in phase 2.
+- **Gate:** `npm run check:docs` (links and anchors, axe in light and dark, reachability at 10 sizes). 3 pages pass.
+- **Fonts:** the font writer now needs each `theme fonts` marker on a line of its own. A comment in the layout that quoted the marker was taken for it, and a Publish overwrote the layout's frontmatter.
+- **Site:** `site` is `https://components.designforhumans.blog`, with trailing slashes.
+- **Library candidates:** none yet.
+
 ## Open questions (for later phases)
 
 1. **Hosting** for the subdomain (Netlify, Cloudflare Pages, or the blog's server).

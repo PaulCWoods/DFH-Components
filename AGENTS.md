@@ -100,12 +100,14 @@ DFH-Components/
 │   │   │   ├── layout/        # 1D/2D spatial layout primitives (cluster, grid, inline, split, stack, wrapper; app and main shell)
 │   │   │   ├── utilities/     # Low-specificity utility classes (spacing, border, typography, accessibility, display, flex, layout-helpers)
 │   │   │   └── overrides.css  # Custom extension layer for project-specific overrides
-│   ├── docs/                  # @design-for-humans/docs (Astro documentation portal)
+│   ├── docs/                  # @design-for-humans/docs: the docs site (components.designforhumans.blog), plan in docs/audit/docs-site.md
 │   │   ├── src/
-│   │   │   ├── components/    # Astro documentation components (ExampleCard, CodeBlock, ComponentPlayground, etc.)
-│   │   │   ├── layouts/       # Astro page shells & layout wrappers
-│   │   │   └── pages/         # Documentation routes (/components, /components/atoms/button, etc.)
-│   │   └── public/            # Public assets (icons.svg, favicon)
+│   │   │   ├── content/docs/  # The written pages, one MDX file each; a folder is a section, index.mdx its overview
+│   │   │   ├── components/    # Site parts built from library markup (header, navigation tree, search, scheme toggle)
+│   │   │   ├── layouts/       # BaseLayout (head, fonts, app shell) and DocLayout (sidebar, article, on this page)
+│   │   │   ├── lib/nav.ts     # Sections and pages from the collection
+│   │   │   └── pages/         # Routes: the home page and /docs/[...slug]
+│   │   └── public/            # Public assets (icons.svg)
 │   ├── theme-engine/          # Builds the colour ramps from tokens/theme.json and gates Tier 2 contrast (core of the future Token Designer)
 │   ├── token-designer/        # Token Designer prototype (Vite app): edit tokens/theme.json visually, with live ramps, contrast and preview
 │   ├── figma-sync/            # Token compilation & Figma export tooling
@@ -152,8 +154,9 @@ DFH-Components/
 | :--- | :--- | :--- |
 | `npm run storybook` | `@design-for-humans/storybook` | Starts Storybook dev server on `http://localhost:6006` with live a11y checks. |
 | `npm run build:storybook` | `@design-for-humans/storybook` | Generates static Storybook production bundle in `storybook-static/`. |
-| `npm run docs` | `@design-for-humans/docs` | Starts Astro documentation dev server on `http://localhost:4321`. |
-| `npm run build:docs` | `@design-for-humans/docs` | Builds static Astro documentation site into `packages/docs/dist/`. |
+| `npm run docs` | `@design-for-humans/docs` | Starts the docs dev server on `http://localhost:4321` (search needs a build). |
+| `npm run build:docs` | `@design-for-humans/docs` | Builds the docs site into `packages/docs/dist/` and its Pagefind search index. |
+| `npm run check:docs` | Root | The docs gate: on every built page, internal links and anchors resolve, axe passes in light and dark, and nothing is out of reach at 10 screen sizes. Run `build:docs` first. |
 
 ### 2. Tokens & Assets Pipeline
 | Command | Workspace / Context | Description |

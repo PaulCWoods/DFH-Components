@@ -6,6 +6,9 @@ node_modules/
 dist/
 storybook-static/
 
+# Astro's generated types and content cache
+.astro/
+
 # Environment and local IDE configs
 .DS_Store
 .env

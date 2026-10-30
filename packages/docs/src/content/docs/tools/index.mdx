@@ -1,0 +1,34 @@
+---
+title: Tools
+summary: Storybook, the Token Designer and the Figma export, and when to use each.
+---
+
+The library comes with three tools beside these docs. Each one works from the same tokens.
+
+## Storybook
+
+The workbench. Every component has stories for each variant, size, state and edge case (right-to-left text, compact regions, long content), and each story runs axe accessibility checks as it renders.
+
+Use it to see everything a component can do, or to check a change. These docs show the common cases and link to Storybook for the rest.
+
+```sh
+npm run storybook        # http://localhost:6006
+```
+
+## Token Designer
+
+The theme editor. It edits `tokens/theme.json` visually: colour ramps and roles with their contrast, the type scale and text styles, and the spacing roles. A preview shows the result, and each change runs the same checks as the build.
+
+**Publish** writes the colour, type and spacing tokens, rebuilds the CSS and exports to Figma. It is blocked while any check fails.
+
+```sh
+npm run designer         # http://localhost:5180
+```
+
+## Figma
+
+`npm run export:figma` writes the tokens for Figma in two forms: Tokens Studio (free tier), and native Figma variables in light and dark modes, with text styles generated from the same type theme as the CSS.
+
+```sh
+npm run export:figma     # packages/figma-sync/dist/
+```

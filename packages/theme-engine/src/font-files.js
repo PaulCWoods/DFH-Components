@@ -12,7 +12,9 @@ import { resolve } from 'node:path';
 import { fontLinks, fontsCss } from './type.js';
 
 const HEADS = ['packages/storybook/.storybook/preview-head.html', 'packages/docs/src/layouts/BaseLayout.astro'];
-const MARKS = /([ \t]*)<!-- theme fonts -->[\s\S]*?<!-- \/theme fonts -->/;
+/* Each marker on a line of its own, so a comment that mentions one isn't
+   taken for it */
+const MARKS = /^([ \t]*)<!-- theme fonts -->[ \t]*$[\s\S]*?^[ \t]*<!-- \/theme fonts -->[ \t]*$/m;
 
 export const writeFontFiles = (root, type) => {
   const written = ['packages/css/src/fonts.css'];

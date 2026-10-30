@@ -1,0 +1,44 @@
+---
+/* ==========================================================================
+   The docs navigation as a navigation tree (§16b).
+   - section: the current section's pages, under its name (the sidebar).
+   - all: every section, the current one opened to its pages (the drawer).
+   Ids are prefixed, so the sidebar and drawer copies don't clash.
+   ========================================================================== */
+import type { Section } from '../lib/nav';
+
+interface Props { nav: Section[]; current: string; mode: 'section' | 'all'; idPrefix: string }
+const { nav, current, mode, idPrefix } = Astro.props;
+const section = nav.find((s) => s.pages.some((p) => p.href === current));
+const headingId = `${idPrefix}-heading`;
+const pageLinks = (s: Section) => s.pages;
+---
+{mode === 'section' && section && (
+  <nav class="navigation-tree" aria-labelledby={headingId}>
+    <ol>
+      <li class="navigation-tree__heading"><h2 id={headingId} class="micro-heading">{section.label}</h2></li>
+      {pageLinks(section).map((p) => (
+        <li><a href={p.href} class="button" aria-current={p.href === current ? 'page' : undefined}><span>{p.title}</span></a></li>
+      ))}
+    </ol>
+  </nav>
+)}
+{mode === 'all' && (
+  <nav class="navigation-tree" aria-labelledby={headingId}>
+    <ol>
+      <li class="navigation-tree__heading"><h2 id={headingId} class="micro-heading">Documentation</h2></li>
+      {nav.map((s) => (
+        <li>
+          <a href={s.href} class="button" aria-current={s.href === current ? 'page' : undefined}><span>{s.label}</span></a>
+          {s === section && s.pages.length > 1 && (
+            <ol>
+              {s.pages.slice(1).map((p) => (
+                <li><a href={p.href} class="button" aria-current={p.href === current ? 'page' : undefined}><span>{p.title}</span></a></li>
+              ))}
+            </ol>
+          )}
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

@@ -1,64 +1,55 @@
 ---
+/* ==========================================================================
+   A docs page: the section's pages in a sidebar (from 48rem; the drawer
+   below), the article, and "On this page" in an end sidebar from the xl
+   width when the page has two or more sections. Pagefind indexes the
+   article only.
+   ========================================================================== */
 import BaseLayout from './BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Sidebar from '../components/Sidebar.astro';
-import CommandPalette from '../components/CommandPalette.astro';
-import TableOfContents, { type TocItem } from '../components/TableOfContents.astro';
+import NavTree from '../components/NavTree.astro';
+import PageNav from '../components/PageNav.astro';
+import { flatten, type Section } from '../lib/nav';
 
 interface Props {
-  title?: string;
-  description?: string;
-  currentSection?: string;
-  currentPath?: string;
-  toc?: TocItem[];
-  isProse?: boolean;
+  title: string;
+  summary: string;
+  nav: Section[];
+  current: string;
+  headings: { depth: number; slug: string; text: string }[];
 }
-
-const {
-  title = 'Design For Humans',
-  description,
-  currentSection = '',
-  currentPath = '',
-  toc = [],
-  isProse = false,
-} = Astro.props;
+const { title, summary, nav, current, headings } = Astro.props;
+const pages = flatten(nav);
+const at = pages.findIndex((p) => p.href === current);
+const toc = headings.filter((h) => h.depth === 2);
 ---
-
-<BaseLayout title={title} description={description} currentSection={currentSection}>
-  <div class="app">
-    <!-- Top Chrome: Sticky Header -->
-    <Header currentSection={currentSection} />
-
-    <!-- Main Workspace Shell -->
-    <div class="app__workspace">
-      <!-- Left Chrome: Navigation Sidebar -->
-      <Sidebar currentSection={currentSection} currentPath={currentPath} />
-
-      <!-- Center Stage: Content Area -->
-      <main id="main-content" class="main">
-        {isProse ? (
-          <article class="prose font-sizing-fluid wrapper wrapper--xl py-breathe">
-            <slot />
-          </article>
-        ) : (
-          <div class="doc-content-wrapper wrapper wrapper--xl py-breathe">
-            <slot />
-          </div>
-        )}
-      </main>
-
-      <!-- Right Chrome: On This Page Table of Contents -->
-      {toc && toc.length > 0 && <TableOfContents toc={toc} />}
+<BaseLayout title={title} description={summary} nav={nav} current={current}>
+  <div class="app__workspace">
+    <div class="sidebar sidebar--sticky max-md:hide">
+      <div class="sidebar__body">
+        <NavTree nav={nav} current={current} mode="section" idPrefix="section-nav" />
+      </div>
     </div>
-
-    <!-- Modal Chrome: Global Search -->
-    <CommandPalette />
+    <main id="main" class="main">
+      <div class="wrapper stack gap-cushion">
+        <article class="prose" data-pagefind-body>
+          <h1>{title}</h1>
+          <p class="large-text text-muted">{summary}</p>
+          <slot />
+        </article>
+        <PageNav prev={pages[at - 1]} next={pages[at + 1]} />
+      </div>
+    </main>
+    {toc.length > 1 && (
+      <div class="sidebar sidebar--end sidebar--sticky max-xl:hide">
+        <div class="sidebar__body">
+          <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="toc-heading">
+            <ol>
+              <li class="navigation-tree__heading"><h2 id="toc-heading" class="micro-heading">On this page</h2></li>
+              {toc.map((h) => <li><a href={`#${h.slug}`} class="button"><span>{h.text}</span></a></li>)}
+            </ol>
+          </nav>
+        </div>
+      </div>
+    )}
   </div>
 </BaseLayout>
-
-<style>
-  .doc-content-wrapper {
-    --wrapper-max-width: 72rem;
-  }
-</style>
-

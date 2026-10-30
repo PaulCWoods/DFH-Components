@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { styleSizes, typeGate } from '../src/index.js';
+import { useFixtureFonts } from './fonts-fixture.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -79,9 +80,10 @@ test('a heading looser than body, and two look-alike styles, are reported', () =
 });
 
 test('a style whose weight its font doesn\'t load is reported; a variable range covers it', () => {
-  const { reports } = edit((t) => (t.fonts['plus-jakarta-sans'].weights = [600, 700]));
+  const { reports } = edit((t) => (useFixtureFonts(t).fonts['plus-jakarta-sans'].weights = [600, 700]));
   assert.ok(reports.some((r) => r.rule === 'weight' && r.style === 'display-title'));
   const variable = edit((t) => {
+    useFixtureFonts(t);
     delete t.fonts['plus-jakarta-sans'].weights;
     t.fonts['plus-jakarta-sans'].axes = { wght: [200, 800] };
   });
@@ -90,6 +92,7 @@ test('a style whose weight its font doesn\'t load is reported; a variable range 
 
 test('a shared family takes its font\'s weights; a missing or looping one fails', () => {
   const { reports } = edit((t) => {
+    useFixtureFonts(t);
     t.families.display = { use: 'sans' };
     delete t.fonts.inter.axes;
     t.fonts.inter.weights = [400, 700];

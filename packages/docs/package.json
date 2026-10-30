@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "astro dev --port 4321",
     "start": "astro dev --port 4321",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview"
   },
   "dependencies": {
-    "@design-for-humans/components-css": "*",
     "@astrojs/mdx": "^8.1.0",
+    "@design-for-humans/components-css": "*",
     "astro": "^7.4.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
   }
 }

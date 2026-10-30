@@ -1,25 +1,35 @@
 ---
-import DocLayout from '../layouts/DocLayout.astro';
+/* The home page. It becomes the brochure (docs-site plan, phase 6); until
+   then, a short introduction and the way into the docs. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { getNav } from '../lib/nav';
+
+const nav = await getNav();
+const sections = nav.filter((s) => s.key);
 ---
-
-<DocLayout title="Documentation Shell" isProse={true} currentSection="overview" currentPath="/">
-  <h1>Documentation Frame</h1>
-  <p class="lede">
-    A clean, minimal content canvas inside <code>.prose</code>. Use this blank stage to shape, refine, and polish the outer frame and chrome of the documentation site.
-  </p>
-
-  <h2>Standard Prose Elements</h2>
-  <p>
-    This content area automatically applies Design For Humans <code>.prose</code> typography presets to native HTML elements without utility classes or specificity conflicts.
-  </p>
-
-  <ul>
-    <li>Fluid container-adaptive line lengths and font sizing.</li>
-    <li>Zero-specificity styles that yield gracefully to custom extensions.</li>
-    <li>High-contrast text and link colors automatically tuned for light and dark color schemes.</li>
-  </ul>
-
-  <blockquote>
-    <p>“Organisms orchestrate layout geometry; Atoms dictate elemental styling.”</p>
-  </blockquote>
-</DocLayout>
+<BaseLayout title="Design For Humans Components" description="An accessible, token-driven component library built on web standards." nav={nav} current="/">
+  <main id="main" class="main">
+    <div class="wrapper stack gap-cushion">
+      <div class="stack gap-sm max-inline-size-2xl">
+        <h1 class="display-title">Components for humans</h1>
+        <p class="large-text text-muted">An accessible, token-driven component library on native HTML and modern CSS, for designers and developers working from one source.</p>
+        <div class="cluster">
+          <a href="/docs/" class="button button--strong button--accent"><span>Read the docs</span><Icon name="ArrowRight" class="icon--dir" /></a>
+        </div>
+      </div>
+      {sections.length > 0 && (
+        <ul class="grid grid--3-col gap-sm" role="list" aria-label="Sections">
+          {sections.map((s) => (
+            <li>
+              <a href={s.href} class="block-link">
+                <span class="block-link__text"><span class="small-heading">{s.label}</span><br /><span class="small-text text-muted">{s.pages[0].summary}</span></span>
+                <Icon name="ArrowRight" class="block-link__arrow icon--dir" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </main>
+</BaseLayout>
