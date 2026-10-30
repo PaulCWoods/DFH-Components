@@ -10,11 +10,17 @@
     "prepare": "husky || true",
     "build:tokens": "node packages/figma-sync/compile-tokens.js",
     "export:figma": "node packages/figma-sync/export-figma-tokens.js",
+    "build:palette": "node packages/theme-engine/bin/build-palette.js",
+    "test:theme": "npm test --workspace=@design-for-humans/theme-engine",
     "sync:icons": "node scripts/sync-icons.js",
+    "check:utilities": "node scripts/check-utilities.js",
+    "sync:blog": "node scripts/sync-blog.js",
+    "watch:blog": "node scripts/sync-blog.js --watch",
     "storybook": "npm run storybook --workspace=@design-for-humans/storybook",
     "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook",
     "docs": "npm run dev --workspace=@design-for-humans/docs",
-    "build:docs": "npm run build --workspace=@design-for-humans/docs"
+    "build:docs": "npm run build --workspace=@design-for-humans/docs",
+    "designer": "npm run dev --workspace=@design-for-humans/token-designer"
   },
   "devDependencies": {
     "prettier": "^3.0.0",

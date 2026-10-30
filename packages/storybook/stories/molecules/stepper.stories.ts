@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Stepper
-
 The steps of one task: which are done, which is current, which are left. An ordered list of steps, each with an indicator, a title and an optional description.
 
 ### Markup
@@ -17,14 +15,14 @@ The steps of one task: which are done, which is current, which are left. An orde
   <li class="stepper__item is-complete">
     <div class="stepper__step">
       <span class="stepper__indicator" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
-      <span class="stepper__title small-heading"><span class="visually-hidden">Completed: </span>Details</span>
+      <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
       <span class="stepper__description small-text">Verified</span>
     </div>
   </li>
   <li class="stepper__item" aria-current="step">
     <div class="stepper__step">
       <span class="stepper__indicator micro-heading" aria-hidden="true">2</span>
-      <span class="stepper__title small-heading"><span class="visually-hidden">Current: </span>Agreement</span>
+      <span class="stepper__title small-heading"><span class="sr-only">Current: </span>Agreement</span>
     </div>
   </li>
   <li class="stepper__item">
@@ -68,7 +66,7 @@ const item = (s: Step, n: number, tag = 'div', href = '') => {
     <li class="stepper__item${cls}"${current}>
       <${open} class="stepper__step">
         ${indicator(s, n)}
-        <span class="stepper__title small-heading">${s.state ? `<span class="visually-hidden">${said[s.state]}</span>` : ''}${s.title}</span>
+        <span class="stepper__title small-heading">${s.state ? `<span class="sr-only">${said[s.state]}</span>` : ''}${s.title}</span>
         ${s.description ? `<span class="stepper__description small-text">${s.description}</span>` : ''}
       </${tag}>
     </li>`;

@@ -1,178 +1,195 @@
 /* ==========================================================================
-   Design For Humans: Header Landmark Primitive
+   Design For Humans: Header
    --------------------------------------------------------------------------
-   Semantic top-level header and navigation landmark with sticky positioning,
-   translucent glassmorphism, and token-driven bottom borders.
-   Parity with Design For Humans Blog (_header.scss & _component-library.twig).
+   The band at the top of a page or app that holds the brand, the main
+   navigation and global actions. An organism: the header draws the band
+   (surface, border, sticky, translucency) and lays out its rows; what is in
+   a row (a lockup, a tab list, buttons, a breadcrumb) styles itself.
+
+   | Axis        | Values                               | Flag                 |
+   | :---------- | :----------------------------------- | :------------------- |
+   | Prominence  | default, --plain, --translucent      | none                 |
+   | Density     | default, --compact                   | --ui-sizing: compact |
+   | Placement   | in flow, --sticky                    | none                 |
+
+   Parts:
+   - .header__bar is a row: brand, navigation, actions. Its content is capped
+     at --header-max-width (the site width) and centred, so it lines up with
+     .wrapper. Two rows are two bars, with a rule between them.
+   - .header__nav takes the free space and can shrink, so a scrollable tab
+     list fits. The last part always sits at the end, with or without a
+     (visible) nav.
+
+   Sticky: the shadow shows only while the header is stuck (a scroll-state
+   query); browsers without one keep the border. While a sticky header is on
+   the page, the page's scroll padding keeps focused elements clear of it
+   (WCAG 2.4.11): set --header-height on :root if the header is taller than
+   4rem.
+
+   Semantics: a <header> that is a direct child of <body> (or .app) is the
+   banner landmark: one per page, after the skip link, with no aria-label.
+   Navigation is a <nav aria-label>, the current page aria-current="page".
 
    Usage:
-   <header class="header header--sticky header--translucent">
-     <div class="wrapper flex justify-content-between align-items-center">
-       ...
+   <header class="header header--sticky">
+     <div class="header__bar">
+       <a href="/" class="link link--plain">…brand…</a>
+       <nav class="header__nav tab-list tab-list--plain" aria-label="Main">…</nav>
+       <button type="button" class="button">Sign in</button>
      </div>
    </header>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Base Header Container (:where(.header))
+   1. Base: the band
    ========================================================================== */
-
-:root {
-  --header-height: var(--header-mobile-height);
-
-  @media (min-width: 1024px) {
-    --header-height: var(--header-desktop-height);
-  }
-}
-
-:where(.header, .header-container) {
-  --_header-z-index: var(--header-z-index, var(--z-index-sticky, 100));
-}
-
 :where(.header) {
-  /* --------------------------------------------------------------------------
-     Local Private Variables (Defaults & Fallback Ladder)
-     -------------------------------------------------------------------------- */
-  --_header-backdrop-filter: var(--header-backdrop-filter, var(--surface-layer-filter, blur(8px)));
+  /* Private manifest */
   --_header-bg: var(--header-bg, var(--surface-card, Canvas));
-  --_header-border-color: var(--header-border-color, var(--app-border-color, var(--border-color-quiet, currentColor)));
-  --_header-border-style: var(--header-border-style, var(--app-border-style, solid));
-  --_header-border-width: var(--header-border-width, var(--app-border-width, var(--border-width, 1px)));
-  --_header-color-palette: var(--header-color-palette, default);
-  --_header-color-scheme: var(--header-color-scheme, inherit);
-  --_header-height: var(--header-height, 3.75rem);
-  --_header-padding-inline: var(--header-padding-inline, var(--spacing-cushion, 1rem));
-  --_header-padding-block: var(--header-padding-block, 0px);
-  --_header-text: var(--header-text, var(--foreground, currentColor));
+  --_header-border-color: var(--header-border-color, var(--border-color-quiet, currentColor));
+  --_header-border-style: var(--header-border-style, solid);
+  --_header-border-width: var(--header-border-width, var(--border-width, 1px));
+  --_header-padding-block: var(--header-padding-block, 0.5rem);
+  --_header-padding-inline: var(--header-padding-inline, 1rem);
+  --_header-gap: var(--header-gap, 1rem);
+  --_header-max-width: var(--header-max-width, var(--site-width, 75rem));
+  --_header-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+  --_header-shadow: var(--header-shadow, var(--shadow-md, none));
   --_header-translucency: var(--header-translucency, var(--translucency-subtle, 10%));
-  --_header-transition: var(--header-transition, var(--duration-sm));
-  --_header-z-index: var(--header-z-index, var(--z-index-sticky, 100));
+  --_header-filter: var(--header-filter, var(--surface-layer-filter, none));
+  --_header-transition: var(--duration-sm, 150ms);
 
-  /* Palette & Scheme */
-  --color-palette: var(--_header-color-palette);
-  color-scheme: var(--_header-color-scheme);
-  color: var(--_header-text);
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifiers, so a modifier beats a flag.
+     ------------------------------------------------------------------------ */
+  @container style(--ui-sizing: compact) {
+    --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
+    --_header-min-size: var(--spacing-target-sm, 2rem);
+  }
 
-  /* Layout & Sizing */
+  /* Its rows can adapt to its width; the stuck shadow queries its position */
+  container: header / inline-size scroll-state;
+
+  display: block;
   box-sizing: border-box;
-  container-type: inline-size;
-  display: flex;
-  flex-direction: column;
   inline-size: 100%;
-  justify-content: center;
-  min-block-size: var(--_header-height);
-  padding-inline-start: calc(var(--_header-padding-inline) + var(--safe-area-inset-left));
-  padding-inline-end: calc(var(--_header-padding-inline) + var(--safe-area-inset-right));
-  padding-block-start: var(--_header-padding-block);
-  padding-block-end: var(--_header-padding-block);
+  padding-inline: var(--safe-area-inset-left, 0px) var(--safe-area-inset-right, 0px);
   position: relative;
 
-  /* Surface & Border */
   background-color: var(--_header-bg);
   border-block-end: var(--_header-border-width) var(--_header-border-style) var(--_header-border-color);
 }
 
+/* At the top of the page, clear a notch */
 :where(.header:first-child) {
-  padding-block-start: calc(var(--_header-padding-block) + var(--safe-area-inset-top));
-}
-
-:where(.header-container) {
-  --_header-container-gap: var(--header-container-gap, 0px);
-  --_header-height: var(--header-height, 3.75rem);
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--_header-container-gap);
-  justify-content: center;
-  min-block-size: var(--_header-height);
-
-  :where(.header) {
-    min-block-size: var(--header-contained-height, 0px);
-  }
+  padding-block-start: var(--safe-area-inset-top, 0px);
 }
 
 /* ==========================================================================
-   2. Modifiers (.header--sticky, .header--translucent, etc.)
+   2. Parts
+   ========================================================================== */
+:where(.header__bar) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_header-gap);
+  box-sizing: content-box;
+  max-inline-size: var(--_header-max-width);
+  min-block-size: var(--_header-min-size);
+  margin-inline: auto;
+  padding-block: var(--_header-padding-block);
+  padding-inline: var(--_header-padding-inline);
+
+  /* The last part sits at the end. A visible nav has already taken the
+     free space, so this margin is then zero. */
+  > :where(:last-child:not(:first-child)) {
+    margin-inline-start: auto;
+  }
+
+  /* Two rows: a rule between them */
+  & + :where(.header__bar) {
+    border-block-start: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+  }
+}
+
+:where(.header__nav) {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+
+/* ==========================================================================
+   3. Modifiers
    ========================================================================== */
 
-/* Sticky Landmark (Pinned to top of scrolling viewport) */
+/* Prominence */
+:where(.header--plain) {
+  --_header-bg: transparent;
+  --_header-border-width: 0px;
+}
+
+:where(.header--translucent) {
+  --_header-bg: color-mix(in srgb, var(--header-bg, var(--surface-card, Canvas)), transparent var(--_header-translucency));
+  backdrop-filter: var(--_header-filter);
+}
+
+/* Density: the bar and the atoms in it step down */
+:where(.header--compact) {
+  --ui-sizing: compact;
+  --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
+  --_header-min-size: var(--spacing-target-sm, 2rem);
+}
+
+/* Placement: pinned to the top, with a shadow only while stuck */
 :where(.header--sticky) {
-  box-shadow: var(--shadow-reset);
   inset-block-start: 0;
   position: sticky;
-  transition: box-shadow var(--_header-transition) ease;
-  z-index: var(--_header-z-index);
+  z-index: var(--header-z-index, var(--z-index-sticky, 100));
 
-  @container app scroll-state(scrollable: block-start) {
-    box-shadow: var(--header-shadow, var(--card-layer-shadow));
-
-    @media (prefers-contrast: more) {
-      box-shadow: none;
-    }
+  &::after {
+    box-shadow: var(--_header-shadow);
+    content: "";
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity var(--_header-transition) ease-out;
+    z-index: -1;
   }
 
-  @supports (animation-timeline: scroll()) {
-    animation-timeline: scroll();
-    animation-range: 0px 24px;
-    animation-name: header-elevation;
-    animation-fill-mode: both;
-    animation-timing-function: linear;
-
-    @media (prefers-contrast: more) {
-      animation-name: none;
+  @container scroll-state(stuck: top) {
+    &::after {
+      opacity: 1;
     }
   }
 }
 
-@keyframes header-elevation {
-  from {
-    box-shadow: var(--shadow-reset);
-  }
-
-  to {
-    box-shadow: var(--header-shadow, var(--card-layer-shadow));
-  }
-}
-
-/* Translucent Glassmorphism */
-@media (prefers-contrast: no-preference) {
-  :where(.header--translucent) {
-    background-color: color-mix(in srgb, var(--_header-bg), transparent var(--_header-translucency));
-    backdrop-filter: var(--_header-backdrop-filter);
-  }
-}
-
-/* Borderless / Flush Variant */
-:where(.header--borderless) {
-  --_header-border-width: 0;
-  border-block-end: none;
-}
-
-/* No inline padding */
-:where(.header--flush) {
-  --_header-padding-inline: 0px;
+/* Focus Not Obscured (2.4.11): focused elements scroll clear of the header */
+:where(:root:has(.header--sticky)) {
+  scroll-padding-block-start: var(--header-height, 4rem);
 }
 
 /* ==========================================================================
-   3. Accessibility & Media Queries
+   4. Preferences
    ========================================================================== */
-
 @media (prefers-contrast: more) {
   :where(.header) {
-    --_header-border-width: var(--border-width-md, var(--border-width, 2px));
-    --_header-translucency: 0%;
+    --_header-border-width: var(--border-width-md, 2px);
+    --_header-shadow: none;
+  }
+
+  :where(.header--plain) {
+    --_header-border-width: 0px;
   }
 
   :where(.header--translucent) {
+    --_header-bg: var(--header-bg, var(--surface-card, Canvas));
     backdrop-filter: none;
   }
 }
 
-/* --------------------------------------------------------------------------
-   Reduced Motion Support
-   -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --header-transition: 0s;
+  :where(.header--sticky)::after {
+    transition: none;
   }
 }

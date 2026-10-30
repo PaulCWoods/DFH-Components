@@ -35,8 +35,6 @@ const meta: Meta<ChipArgs> = {
     docs: {
       description: {
         component: `
-### Chip
-
 A token that **represents a value**: a selected option in a combobox, an active filter, a category or tag. It can be removable.
 
 - State ("Passed") is a **Status**.
@@ -98,7 +96,7 @@ export const ProminenceAndSize: Story = {
     <div class="demo-stage stack">
       ${PROMINENCES.map(
         (p) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           <span class="sb-demo-label" style="inline-size: 6rem;">${p}</span>
           ${TAGS.slice(0, 2).map((t) => chip(t, chipClasses(p))).join('')}
           ${TAGS.slice(2).map((t) => chip(t, chipClasses(p), true)).join('')}
@@ -115,7 +113,7 @@ export const ProminenceAndSize: Story = {
  */
 export const ActiveFilters: Story = {
   render: () => `
-    <div class="demo-stage cluster align-items-center">
+    <div class="demo-stage cluster">
       <span class="small-text">Active filters:</span>
       ${TAGS.map((t) => chip(t, 'chip chip--subtle chip--round', true)).join('')}
       <button type="button" class="button button--plain button--sm"><span>Clear all</span></button>

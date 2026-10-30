@@ -1,23 +1,35 @@
 /* ==========================================================================
-   Display Utilities
+   Design For Humans: Display Utilities
+   --------------------------------------------------------------------------
+   Sets display. .inline and .grid are layout primitives, so the display
+   values use their verbose names (.display-inline). To hide by a condition,
+   see the responsive helpers (.md:hide).
    ========================================================================== */
 
-:where(.display-block, .d-block, .block) {
+:where(.display-block, .block) {
     display: block;
 }
 
-:where(.display-inline, .d-inline) {
+:where(.display-inline) {
     display: inline;
 }
 
-:where(.display-inline-block, .d-inline-block, .inline-block) {
+:where(.display-inline-block, .inline-block) {
     display: inline-block;
 }
 
-:where(.display-contents, .d-contents, .contents) {
+:where(.display-flex, .flex) {
+    display: flex;
+}
+
+:where(.display-inline-flex, .inline-flex) {
+    display: inline-flex;
+}
+
+:where(.display-contents, .contents) {
     display: contents;
 }
 
-:where(.display-none, .d-none, .hidden, .hide) {
+:where(.display-none, .hidden) {
     display: none;
 }

@@ -1,9 +1,11 @@
 /* ==========================================================================
    Design For Humans: Color Palette Utilities
    --------------------------------------------------------------------------
-   Contextual semantic palette inversion. Swaps light-dark() token branches
-   to guarantee contrasting foreground and surface presentation across
-   both light and dark environments.
+   Contextual semantic palette inversion: a region takes the other mode's
+   colours. The swapped Tier 2 roles (and the Tier 3 tokens that read them)
+   are generated into variables.css from each role's light-dark() value;
+   this file switches the flag and re-mixes the translucent surfaces, which
+   are built from --surface-inverted rather than written as light-dark().
    Parity with Design For Humans Blog (_color-palette.scss).
    ========================================================================== */
 
@@ -12,71 +14,8 @@
    ========================================================================== */
 :where(.color-palette-inverted, .colors-inverted) {
     --color-palette: inverted;
-
-    /* Semantic Surfaces */
-    --surface: light-dark(var(--surface-color-dark), var(--surface-color-light));
-    --surface-subtle: light-dark(var(--surface-color-dark), var(--surface-color-light));
-    --surface-muted: light-dark(var(--surface-color-dark-muted), var(--surface-color-light-muted));
-    --surface-inverted: light-dark(var(--surface-color-light), var(--surface-color-dark));
-    --surface-card: light-dark(var(--surface-color-darker), var(--surface-color-lighter));
-    --surface-card-inverted: light-dark(var(--surface-color-lighter), var(--surface-color-darker));
-    --surface-dark: light-dark(var(--surface-color-darker), var(--surface-color-dark));
-    --surface-layer: light-dark(color-mix(in srgb, var(--surface-color-darker), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--surface-color-lighter), transparent var(--surface-layer-translucency)));
-    --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-95));
+    --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-faint, 95%));
     --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-stronger));
-
-    /* Status Surfaces */
-    --surface-danger: light-dark(var(--surface-color-danger-dark), var(--surface-color-danger-light));
-    --surface-danger-strong: light-dark(var(--surface-color-danger-strong-light), var(--surface-color-danger-strong-dark));
-    --surface-warning: light-dark(var(--surface-color-warning-dark), var(--surface-color-warning-light));
-    --surface-warning-strong: light-dark(var(--surface-color-warning-strong-light), var(--surface-color-warning-strong-dark));
-    --surface-success: light-dark(var(--surface-color-success-dark), var(--surface-color-success-light));
-    --surface-success-strong: light-dark(var(--surface-color-success-strong-light), var(--surface-color-success-strong-dark));
-
-    /* Semantic Foregrounds */
-    --foreground: light-dark(var(--foreground-color-light), var(--foreground-color-dark));
-    --foreground-strong: light-dark(var(--foreground-color-lighter), var(--foreground-color-darker));
-    --foreground-muted: light-dark(var(--foreground-color-light-muted), var(--foreground-color-dark-muted));
-    --foreground-inverted: light-dark(var(--foreground-color-dark), var(--foreground-color-light));
-    --foreground-inverted-strong: light-dark(var(--foreground-color-darker), var(--foreground-color-lighter));
-
-    /* Status Foregrounds */
-    --foreground-danger: light-dark(var(--foreground-color-danger-light), var(--foreground-color-danger-dark));
-    --foreground-danger-hover: light-dark(var(--foreground-color-danger-light-hover), var(--foreground-color-danger-dark-hover));
-    --foreground-danger-pressed: light-dark(var(--foreground-color-danger-light-pressed), var(--foreground-color-danger-dark-pressed));
-
-    --foreground-success: light-dark(var(--foreground-color-success-light), var(--foreground-color-success-dark));
-    --foreground-success-hover: light-dark(var(--foreground-color-success-light-hover), var(--foreground-color-success-dark-hover));
-    --foreground-success-pressed: light-dark(var(--foreground-color-success-light-pressed), var(--foreground-color-success-dark-pressed));
-
-    --foreground-warning: light-dark(var(--foreground-color-warning-light), var(--foreground-color-warning-dark));
-    --foreground-warning-hover: light-dark(var(--foreground-color-warning-light-hover), var(--foreground-color-warning-dark-hover));
-    --foreground-warning-pressed: light-dark(var(--foreground-color-warning-light-pressed), var(--foreground-color-warning-dark-pressed));
-
-    /* Status Borders */
-    --border-color-danger: light-dark(var(--border-color-danger-dark), var(--border-color-danger-light));
-    --border-color-success: light-dark(var(--border-color-success-dark), var(--border-color-success-light));
-    --border-color-warning: light-dark(var(--border-color-warning-dark), var(--border-color-warning-light));
-
-    /* Accents */
-    --surface-accent: light-dark(var(--surface-color-accent-dark), var(--surface-color-accent-light));
-    --surface-accent-strong: light-dark(var(--surface-color-accent-strong-dark), var(--surface-color-accent-strong-light));
-
-    --foreground-accent: light-dark(var(--foreground-color-accent-light), var(--foreground-color-accent-dark));
-    --foreground-accent-hover: light-dark(var(--foreground-color-accent-light-hover), var(--foreground-color-accent-dark-hover));
-    --foreground-accent-pressed: light-dark(var(--foreground-color-accent-light-pressed), var(--foreground-color-accent-dark-pressed));
-
-    --border-color-accent: light-dark(var(--border-color-accent-dark), var(--border-color-accent-light));
-
-    /* Complementaries */
-    --surface-complementary: light-dark(var(--surface-color-complementary-dark), var(--surface-color-complementary-light));
-    --surface-complementary-strong: light-dark(var(--surface-color-complementary-strong-dark), var(--surface-color-complementary-strong-light));
-
-    --foreground-complementary: light-dark(var(--foreground-color-complementary-light), var(--foreground-color-complementary-dark));
-    --foreground-complementary-hover: light-dark(var(--foreground-color-complementary-light-hover), var(--foreground-color-complementary-dark-hover));
-    --foreground-complementary-pressed: light-dark(var(--foreground-color-complementary-light-pressed), var(--foreground-color-complementary-dark-pressed));
-
-    --border-color-complementary: light-dark(var(--border-color-complementary-dark), var(--border-color-complementary-light));
 }
 
 /* ==========================================================================
@@ -84,69 +23,7 @@
    ========================================================================== */
 * {
     @container style(--color-palette: inverted) {
-        /* Semantic Surfaces */
-        --surface: light-dark(var(--surface-color-dark), var(--surface-color-light));
-        --surface-subtle: light-dark(var(--surface-color-dark), var(--surface-color-light));
-        --surface-muted: light-dark(var(--surface-color-dark-muted), var(--surface-color-light-muted));
-        --surface-inverted: light-dark(var(--surface-color-light), var(--surface-color-dark));
-        --surface-card: light-dark(var(--surface-color-darker), var(--surface-color-lighter));
-        --surface-card-inverted: light-dark(var(--surface-color-lighter), var(--surface-color-darker));
-        --surface-dark: light-dark(var(--surface-color-darker), var(--surface-color-dark));
-        --surface-layer: light-dark(color-mix(in srgb, var(--surface-color-darker), transparent var(--surface-layer-translucency)), color-mix(in srgb, var(--surface-color-lighter), transparent var(--surface-layer-translucency)));
-        --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-95));
+        --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-faint, 95%));
         --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-stronger));
-
-        /* Status Surfaces */
-        --surface-danger: light-dark(var(--surface-color-danger-dark), var(--surface-color-danger-light));
-        --surface-danger-strong: light-dark(var(--surface-color-danger-strong-light), var(--surface-color-danger-strong-dark));
-        --surface-warning: light-dark(var(--surface-color-warning-dark), var(--surface-color-warning-light));
-        --surface-warning-strong: light-dark(var(--surface-color-warning-strong-light), var(--surface-color-warning-strong-dark));
-        --surface-success: light-dark(var(--surface-color-success-dark), var(--surface-color-success-light));
-        --surface-success-strong: light-dark(var(--surface-color-success-strong-light), var(--surface-color-success-strong-dark));
-
-        /* Semantic Foregrounds */
-        --foreground: light-dark(var(--foreground-color-light), var(--foreground-color-dark));
-        --foreground-strong: light-dark(var(--foreground-color-lighter), var(--foreground-color-darker));
-        --foreground-muted: light-dark(var(--foreground-color-light-muted), var(--foreground-color-dark-muted));
-        --foreground-inverted: light-dark(var(--foreground-color-dark), var(--foreground-color-light));
-        --foreground-inverted-strong: light-dark(var(--foreground-color-darker), var(--foreground-color-lighter));
-
-        /* Status Foregrounds */
-        --foreground-danger: light-dark(var(--foreground-color-danger-light), var(--foreground-color-danger-dark));
-        --foreground-danger-hover: light-dark(var(--foreground-color-danger-light-hover), var(--foreground-color-danger-dark-hover));
-        --foreground-danger-pressed: light-dark(var(--foreground-color-danger-light-pressed), var(--foreground-color-danger-dark-pressed));
-
-        --foreground-success: light-dark(var(--foreground-color-success-light), var(--foreground-color-success-dark));
-        --foreground-success-hover: light-dark(var(--foreground-color-success-light-hover), var(--foreground-color-success-dark-hover));
-        --foreground-success-pressed: light-dark(var(--foreground-color-success-light-pressed), var(--foreground-color-success-dark-pressed));
-
-        --foreground-warning: light-dark(var(--foreground-color-warning-light), var(--foreground-color-warning-dark));
-        --foreground-warning-hover: light-dark(var(--foreground-color-warning-light-hover), var(--foreground-color-warning-dark-hover));
-        --foreground-warning-pressed: light-dark(var(--foreground-color-warning-light-pressed), var(--foreground-color-warning-dark-pressed));
-
-        /* Status Borders */
-        --border-color-danger: light-dark(var(--border-color-danger-dark), var(--border-color-danger-light));
-        --border-color-success: light-dark(var(--border-color-success-dark), var(--border-color-success-light));
-        --border-color-warning: light-dark(var(--border-color-warning-dark), var(--border-color-warning-light));
-
-        /* Accents */
-        --surface-accent: light-dark(var(--surface-color-accent-dark), var(--surface-color-accent-light));
-        --surface-accent-strong: light-dark(var(--surface-color-accent-strong-dark), var(--surface-color-accent-strong-light));
-
-        --foreground-accent: light-dark(var(--foreground-color-accent-light), var(--foreground-color-accent-dark));
-        --foreground-accent-hover: light-dark(var(--foreground-color-accent-light-hover), var(--foreground-color-accent-dark-hover));
-        --foreground-accent-pressed: light-dark(var(--foreground-color-accent-light-pressed), var(--foreground-color-accent-dark-pressed));
-
-        --border-color-accent: light-dark(var(--border-color-accent-dark), var(--border-color-accent-light));
-
-        /* Complementaries */
-        --surface-complementary: light-dark(var(--surface-color-complementary-dark), var(--surface-color-complementary-light));
-        --surface-complementary-strong: light-dark(var(--surface-color-complementary-strong-dark), var(--surface-color-complementary-strong-light));
-
-        --foreground-complementary: light-dark(var(--foreground-color-complementary-light), var(--foreground-color-complementary-dark));
-        --foreground-complementary-hover: light-dark(var(--foreground-color-complementary-light-hover), var(--foreground-color-complementary-dark-hover));
-        --foreground-complementary-pressed: light-dark(var(--foreground-color-complementary-light-pressed), var(--foreground-color-complementary-dark-pressed));
-
-        --border-color-complementary: light-dark(var(--border-color-complementary-dark), var(--border-color-complementary-light));
     }
 }

@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Menu
-
 A list of actions, usually opened from a button in a popover: buttons and links in rows, with optional headings and dividers. Its items are buttons; the menu makes them plain and full width, with their content at the start and a trailing shortcut, badge or status at the end. It never restyles them, so items keep the button's targets, intent and focus ring.
 
 ### Markup

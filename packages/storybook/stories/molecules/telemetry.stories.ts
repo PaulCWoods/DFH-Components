@@ -1,472 +1,138 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-interface TelemetryArgs {
-  label: string;
-  value: string;
-  unit: string;
-  trend: string;
-  trendDirection: 'positive' | 'negative' | 'neutral' | 'none';
-  icon: string;
-  variant: 'default' | 'subtle' | 'bordered' | 'pill' | 'card';
-  size: 'default' | 'compact';
-  status: 'none' | 'online' | 'warning' | 'busy' | 'offline';
-  stacked: boolean;
-}
-
-const meta: Meta<TelemetryArgs> = {
+const meta: Meta = {
   title: 'Molecules/Telemetry',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Telemetry & Stat Pill Primitives
+A labelled value: "Uptime 99.98%". A description list, so each label is a term and its value the description. The telemetry draws the surface and lays out the parts; type comes from text atoms on them, and the value gets tabular figures.
 
-The **Telemetry** primitive provides compact metric pills, stat counters, and multi-metric dashboard strips.
-Designed for high-density audio consoles, operational telemetry bars, and analytics dashboards.
-
-#### WCAG 2.2 Level AA / AAA Compliance:
-- **1.4.3 Contrast (Minimum):** All telemetry labels and numerical values meet 4.5:1 / 7:1 contrast ratios against light and dark surfaces.
-- **1.4.11 Non-Text Contrast:** Integrated 1px / 2px borders, status rings, and icons maintain 3:1 contrast against container backdrops.
-- **Semantic Flexibility:** Supports both \`<div>\`/\`<span>\`/\`<strong>\` and native HTML5 \`<dl>\`/\`<dt>\`/\`<dd>\` definition lists for optimal screen reader key-value pairing.
-- **Tabular Numerics:** Values strictly utilize \`font-variant-numeric: tabular-nums\` to avoid horizontal layout jank during live telemetry readouts.
-
----
-
-#### Canonical Component Markup Signatures
-
+### Markup
 \`\`\`html
-<!-- 1. Standard Telemetry Metric Pill -->
-<div class="telemetry">
-  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
-  <div class="telemetry__content">
-    <span class="telemetry__label">Listeners</span>
-    <strong class="telemetry__value">14,820</strong>
-  </div>
-</div>
-
-<!-- 2. Metric with Unit & Trend -->
-<div class="telemetry">
-  <div class="telemetry__content">
-    <span class="telemetry__label">Buffer Latency</span>
-    <strong class="telemetry__value">42<span class="telemetry__unit">ms</span></strong>
-  </div>
-  <span class="telemetry__trend" data-trend="positive" aria-label="Improved by 4 milliseconds">
-    <svg class="icon font-size-xs" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowDown"/></svg>
-    -4ms
-  </span>
-</div>
-
-<!-- 3. Semantic Definition List Telemetry Strip -->
-<dl class="telemetry-group telemetry-strip--ruled" aria-label="Station live metrics">
+<dl class="telemetry-group" aria-label="Station">
   <div class="telemetry">
-    <dt class="telemetry__label">Listeners</dt>
-    <dd class="telemetry__value">14,820</dd>
-  </div>
-  <div class="telemetry">
-    <dt class="telemetry__label">Peak Today</dt>
-    <dd class="telemetry__value">28,450</dd>
-  </div>
-  <div class="telemetry">
-    <dt class="telemetry__label">Uptime</dt>
-    <dd class="telemetry__value">99.98%</dd>
+    <dt class="small-text text-muted"><svg class="icon" …><use href="#Progress"/></svg>Uptime</dt>
+    <dd class="small-heading">99.98<span class="small-text">%</span></dd>
   </div>
 </dl>
-
-<!-- 4. Dashboard KPI Stat Card (.telemetry--card .telemetry--stacked) -->
-<div class="telemetry telemetry--card telemetry--stacked">
-  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg>
-  <div class="telemetry__content">
-    <span class="telemetry__label">Monthly Recurring Revenue</span>
-    <strong class="telemetry__value">$48,290</strong>
-    <span class="telemetry__trend telemetry__trend--positive">
-      +14.2% vs last month
-    </span>
-  </div>
-</div>
 \`\`\`
-`,
+
+- **Label** (\`dt\`): a text atom, with an optional leading icon.
+- **Value** (\`dd\`): a text atom; a unit is a smaller text atom inside it. Values use tabular figures so they don't jump as they change.
+- **Trend or state:** a \`.status--plain\` with an arrow icon and signed text ("+12%") in the value, so it is never colour alone.
+- **Options:** \`--icon-start\` (the label's icon moves to a gutter at the start of the box, larger and centred; flag \`--telemetry-icon-placement: start\`), \`--inline\` (label beside value), \`--plain\` (flag \`--telemetry-prominence: plain\`), \`--round\` (flag \`--telemetry-corners: round\`), \`--compact\` (or any compact container).
+- **Group:** \`.telemetry-group\` is the \`<dl>\`; \`--ruled\` makes one bordered strip with dividers. A single telemetry is a \`<dl class="telemetry">\` with its \`dt\` and \`dd\` directly inside.
+- **Live values:** don't make the group a live region. If a change matters, announce it in a separate \`role="status"\`.
+        `,
       },
     },
-  },
-  argTypes: {
-    label: { control: 'text', description: 'Metric title / label' },
-    value: { control: 'text', description: 'Numerical or formatted readout value' },
-    unit: { control: 'text', description: 'Optional unit suffix (ms, %, GB, etc.)' },
-    trend: { control: 'text', description: 'Trend percentage or delta change text' },
-    trendDirection: {
-      control: { type: 'select' },
-      options: ['none', 'positive', 'negative', 'neutral'],
-      description: 'Trend semantic indicator color',
-    },
-    icon: {
-      control: { type: 'select' },
-      options: ['User', 'Progress', 'Circle', 'Settings', 'Record', 'Upload', 'ArrowUp', 'ArrowDown', 'None'],
-      description: 'Leading SVG sprite icon symbol',
-    },
-    variant: {
-      control: { type: 'select' },
-      options: ['default', 'subtle', 'bordered', 'pill', 'card'],
-      description: 'Visual container styling',
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['default', 'compact'],
-      description: 'Density scale',
-    },
-    status: {
-      control: { type: 'select' },
-      options: ['none', 'online', 'warning', 'busy', 'offline'],
-      description: 'Status intent highlight color',
-    },
-    stacked: { control: 'boolean', description: 'Stack label and value vertically' },
-  },
-  args: {
-    label: 'Listeners',
-    value: '14,820',
-    unit: '',
-    trend: '+12.4%',
-    trendDirection: 'positive',
-    icon: 'User',
-    variant: 'default',
-    size: 'default',
-    status: 'none',
-    stacked: false,
   },
 };
 
 export default meta;
-type Story = StoryObj<TelemetryArgs>;
+type Story = StoryObj;
 
-/**
- * 1. Interactive Playground
- */
+const icon = (name: string) => `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
+
+type Metric = { label: string; value: string; unit?: string; icon?: string; trend?: { intent: string; arrow: string; text: string } };
+
+const metric = (m: Metric, o: { cls?: string; value?: string } = {}) => `
+  <div class="telemetry${o.cls ? ` ${o.cls}` : ''}">
+    <dt class="small-text text-muted">${m.icon ? icon(m.icon) : ''}${m.label}</dt>
+    <dd class="${o.value ?? 'small-heading'}">${m.value}${m.unit ? `<span class="small-text">${m.unit}</span>` : ''}${m.trend ? `
+      <span class="status status--plain status--${m.trend.intent}">${icon(m.trend.arrow)}${m.trend.text}</span>` : ''}</dd>
+  </div>`;
+
+const group = (label: string, items: Metric[], o: { cls?: string; item?: string; value?: string } = {}) =>
+  `<dl class="telemetry-group${o.cls ? ` ${o.cls}` : ''}" aria-label="${label}">${items.map((m) => metric(m, { cls: o.item, value: o.value })).join('')}</dl>`;
+
+const station: Metric[] = [
+  { label: 'Listeners', value: '14,820', icon: 'User' },
+  { label: 'Peak today', value: '28,450', icon: 'Progress' },
+  { label: 'Latency', value: '42', unit: 'ms', icon: 'Settings' },
+];
+
+const server: Metric[] = [
+  { label: 'CPU load', value: '18.4', unit: '%' },
+  { label: 'Memory', value: '4.2', unit: 'GB' },
+  { label: 'Network in', value: '142', unit: 'MB/s', icon: 'ArrowDown' },
+  { label: 'Network out', value: '318', unit: 'MB/s', icon: 'ArrowUp' },
+];
+
 export const Playground: Story = {
+  args: { iconStart: false, inline: false, plain: false, round: false, compact: false, ruled: false, icons: true },
   render: (args) => {
-    const classes = [
-      'telemetry',
-      args.variant === 'subtle' ? 'telemetry--subtle' : '',
-      args.variant === 'bordered' ? 'telemetry--bordered' : '',
-      args.variant === 'pill' ? 'telemetry--pill' : '',
-      args.variant === 'card' ? 'telemetry--card' : '',
-      args.size === 'compact' ? 'telemetry--compact' : '',
-      args.stacked ? 'telemetry--stacked' : '',
-    ]
-      .filter(Boolean)
-      .join(' ');
-
-    const statusAttr = args.status !== 'none' ? `data-status="${args.status}"` : '';
-    const hasIcon = args.icon && args.icon !== 'None';
-    const hasTrend = args.trend && args.trendDirection !== 'none';
-
-    return `
-      <div style="padding: 2rem; display: flex; justify-content: center; align-items: center; background-color: var(--surface);">
-        <div class="${classes}" ${statusAttr}>
-          ${hasIcon ? `<svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${args.icon}"/></svg>` : ''}
-          <div class="telemetry__content">
-            <span class="telemetry__label">${args.label}</span>
-            <strong class="telemetry__value">${args.value}${args.unit ? `<span class="telemetry__unit">${args.unit}</span>` : ''}</strong>
-          </div>
-          ${
-            hasTrend
-              ? `<span class="telemetry__trend" data-trend="${args.trendDirection}">${args.trend}</span>`
-              : ''
-          }
-        </div>
-      </div>
-    `;
+    const item = [args.iconStart && 'telemetry--icon-start', args.inline && 'telemetry--inline', args.plain && 'telemetry--plain', args.round && 'telemetry--round', args.compact && 'telemetry--compact'].filter(Boolean).join(' ');
+    const items = station.map((m) => ({ ...m, icon: args.icons ? m.icon : undefined }));
+    return group('Station', items, { cls: args.ruled ? 'telemetry-group--ruled' : '', item });
   },
 };
 
-/**
- * 2. Cadence Station Header Telemetry Strip
- * Demonstrates the exact metrics strip needed for live broadcast telemetry.
- */
-export const QuickMetricsStrip: Story = {
+export const Default: Story = { render: () => group('Station', station) };
+
+export const IconStart: Story = {
+  name: 'Icon start',
   render: () => `
-    <div style="padding: 2rem; background-color: var(--surface);">
-      <div class="telemetry-group" role="region" aria-label="Station live metrics">
-        
-        <!-- Active Listeners -->
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Listeners</span>
-            <strong class="telemetry__value">14,820</strong>
-          </div>
-        </div>
-
-        <!-- Peak Today -->
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Peak</span>
-            <strong class="telemetry__value">28,450</strong>
-          </div>
-        </div>
-
-        <!-- Broadcast Uptime -->
-        <div class="telemetry" data-status="online">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Circle"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Uptime</span>
-            <strong class="telemetry__value">99.98%</strong>
-          </div>
-        </div>
-
-        <!-- Buffer Latency with Unit -->
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Latency</span>
-            <strong class="telemetry__value">42<span class="telemetry__unit">ms</span></strong>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `,
+    <div class="stack">
+      ${group('Station', station, { item: 'telemetry--icon-start' })}
+      ${group('Server health', server.filter((m) => m.icon), { cls: 'telemetry-group--ruled', item: 'telemetry--icon-start' })}
+      ${group('Station', station, { item: 'telemetry--icon-start telemetry--round telemetry--inline' })}
+      <div style="--telemetry-icon-placement: start;">${group('Station, set by a container flag', station, { item: 'telemetry--compact' })}</div>
+      <div dir="rtl">${group('Station', station, { item: 'telemetry--icon-start' })}</div>
+    </div>`,
 };
 
-/**
- * 3. Ruled Telemetry Strip
- * Segmented multi-item strip sharing a single perimeter with integrated dividers.
- */
-export const RuledTelemetryStrip: Story = {
-  render: () => `
-    <div style="padding: 2rem; background-color: var(--surface);">
-      <div class="telemetry-strip telemetry-strip--ruled" role="region" aria-label="Server health telemetry">
-        
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">CPU Load</span>
-            <strong class="telemetry__value">18.4%</strong>
-          </div>
-        </div>
+export const Ruled: Story = { render: () => group('Server health', server, { cls: 'telemetry-group--ruled' }) };
 
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Upload"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Memory</span>
-            <strong class="telemetry__value">4.2<span class="telemetry__unit">GB</span></strong>
-          </div>
-        </div>
-
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowDown"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Network In</span>
-            <strong class="telemetry__value">142<span class="telemetry__unit">MB/s</span></strong>
-          </div>
-        </div>
-
-        <div class="telemetry">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Network Out</span>
-            <strong class="telemetry__value">318<span class="telemetry__unit">MB/s</span></strong>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `,
+export const Trends: Story = {
+  render: () => group('This month', [
+    { label: 'Listen hours', value: '128,450', trend: { intent: 'success', arrow: 'ArrowUp', text: '+18.2%' } },
+    { label: 'Drop-off', value: '3.1', unit: '%', trend: { intent: 'danger', arrow: 'ArrowUp', text: '+0.4 pts' } },
+    { label: 'Bandwidth', value: '14.8', unit: 'TB', trend: { intent: 'neutral', arrow: 'ArrowRight', text: 'Flat' } },
+  ], { value: 'heading' }),
 };
 
-/**
- * 4. Semantic Definition List Semantics
- * Accessible key-value pairs using HTML5 `<dl>`, `<dt>`, and `<dd>`.
- */
-export const DefinitionListSemantics: Story = {
-  render: () => `
-    <div style="padding: 2rem; background-color: var(--surface);">
-      <dl class="telemetry-group" aria-label="Stream encoding specifications">
-        
-        <div class="telemetry telemetry--pill">
-          <dt class="telemetry__label">
-            <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-            Codec
-          </dt>
-          <dd class="telemetry__value">AAC-LC</dd>
-        </div>
-
-        <div class="telemetry telemetry--pill">
-          <dt class="telemetry__label">Bitrate</dt>
-          <dd class="telemetry__value">320<span class="telemetry__unit">kbps</span></dd>
-        </div>
-
-        <div class="telemetry telemetry--pill">
-          <dt class="telemetry__label">Sample Rate</dt>
-          <dd class="telemetry__value">48<span class="telemetry__unit">kHz</span></dd>
-        </div>
-
-        <div class="telemetry telemetry--pill">
-          <dt class="telemetry__label">Channels</dt>
-          <dd class="telemetry__value">Stereo (2.0)</dd>
-        </div>
-
-      </dl>
-    </div>
-  `,
+export const Inline: Story = {
+  render: () => group('Stream encoding', [
+    { label: 'Codec', value: 'AAC-LC' },
+    { label: 'Bitrate', value: '320', unit: 'kbps' },
+    { label: 'Sample rate', value: '48', unit: 'kHz' },
+  ], { item: 'telemetry--inline telemetry--round', value: 'small-text font-bold' }),
 };
 
-/**
- * 5. Telemetry with Trends & Status Indicators
- * Highlights growth, warnings, and live service health.
- */
-export const WithTrendsAndStatuses: Story = {
-  render: () => `
-    <div style="padding: 2rem; display: flex; flex-direction: column; gap: var(--spacing-16); background-color: var(--surface);">
-      
-      <!-- Trend indicators -->
-      <div class="telemetry-group">
-        <div class="telemetry">
-          <div class="telemetry__content">
-            <span class="telemetry__label">Concurrent Streams</span>
-            <strong class="telemetry__value">3,492</strong>
-          </div>
-          <span class="telemetry__trend" data-trend="positive">+8.4%</span>
-        </div>
-
-        <div class="telemetry">
-          <div class="telemetry__content">
-            <span class="telemetry__label">Error Rate</span>
-            <strong class="telemetry__value">0.02%</strong>
-          </div>
-          <span class="telemetry__trend" data-trend="positive">-0.05%</span>
-        </div>
-
-        <div class="telemetry">
-          <div class="telemetry__content">
-            <span class="telemetry__label">Packet Drop</span>
-            <strong class="telemetry__value">1.4%</strong>
-          </div>
-          <span class="telemetry__trend" data-trend="negative">+0.8%</span>
-        </div>
-      </div>
-
-      <!-- Semantic status ring variations -->
-      <div class="telemetry-group">
-        <div class="telemetry" data-status="online">
-          <span class="status status--success status--plain"></span>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Primary Transcoder</span>
-            <strong class="telemetry__value">Healthy</strong>
-          </div>
-        </div>
-
-        <div class="telemetry" data-status="warning">
-          <span class="status status--warning status--plain"></span>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Secondary Sync</span>
-            <strong class="telemetry__value">Syncing</strong>
-          </div>
-        </div>
-
-        <div class="telemetry" data-status="offline">
-          <span class="status status--danger status--plain"></span>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Tertiary Cart</span>
-            <strong class="telemetry__value">Offline</strong>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  `,
+export const Plain: Story = {
+  render: () => group('Connection', [
+    { label: 'Ping', value: '12', unit: 'ms' },
+    { label: 'Loss', value: '0', unit: '%' },
+    { label: 'FPS', value: '60' },
+  ], { item: 'telemetry--plain' }),
 };
 
-/**
- * 6. Dashboard KPI Stat Cards (.telemetry--card)
- * Larger stacked cards designed for overview grids and executive dashboards.
- */
-export const CardMetricsDashboard: Story = {
-  render: () => `
-    <div style="padding: 2rem; background-color: var(--surface);">
-      <div class="grid grid--3-col" style="--grid-gap: var(--spacing-16);">
-        
-        <div class="telemetry telemetry--card telemetry--stacked">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Total Listen Hours</span>
-            <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">128,450<span class="telemetry__unit">hrs</span></strong>
-            <span class="telemetry__trend telemetry__trend--positive">
-              +18.2% vs previous period
-            </span>
-          </div>
-        </div>
+export const Compact: Story = { render: () => group('Station', station, { item: 'telemetry--compact' }) };
 
-        <div class="telemetry telemetry--card telemetry--stacked">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Record"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">Avg Session Duration</span>
-            <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">48.2<span class="telemetry__unit">mins</span></strong>
-            <span class="telemetry__trend telemetry__trend--positive">
-              +4.1 mins longer
-            </span>
-          </div>
-        </div>
-
-        <div class="telemetry telemetry--card telemetry--stacked">
-          <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
-          <div class="telemetry__content">
-            <span class="telemetry__label">CDN Bandwidth</span>
-            <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">14.8<span class="telemetry__unit">TB</span></strong>
-            <span class="telemetry__trend telemetry__trend--neutral">
-              Within monthly budget
-            </span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  `,
+export const InACompactRegion: Story = {
+  name: 'In a compact region',
+  render: () => `<div class="ui-compact">${group('Server health', server, { cls: 'telemetry-group--ruled' })}</div>`,
 };
 
-/**
- * 7. Compact Density & Inline Variations
- * Ultra-compact pills for dense toolbars and inline readouts.
- */
-export const CompactAndInline: Story = {
+export const Single: Story = {
   render: () => `
-    <div style="padding: 2rem; display: flex; flex-direction: column; gap: var(--spacing-16); background-color: var(--surface);">
-      
-      <!-- Compact pills -->
-      <div class="telemetry-group">
-        <div class="telemetry telemetry--compact">
-          <span class="telemetry__label">FPS</span>
-          <strong class="telemetry__value">60</strong>
-        </div>
+    <dl class="telemetry">
+      <dt class="small-text text-muted">${icon('User')}Listeners</dt>
+      <dd class="small-heading">14,820</dd>
+    </dl>`,
+};
 
-        <div class="telemetry telemetry--compact">
-          <span class="telemetry__label">Ping</span>
-          <strong class="telemetry__value">12<span class="telemetry__unit">ms</span></strong>
-        </div>
+export const WithAState: Story = {
+  name: 'With a state',
+  render: () => group('Encoder', [
+    { label: 'Stream', value: '', trend: { intent: 'success', arrow: 'Check', text: 'Online' } },
+    { label: 'Backup', value: '', trend: { intent: 'warning', arrow: 'Warning', text: 'Degraded' } },
+  ]),
+};
 
-        <div class="telemetry telemetry--compact">
-          <span class="telemetry__label">Loss</span>
-          <strong class="telemetry__value">0%</strong>
-        </div>
-      </div>
-
-      <!-- Inline side-by-side layout -->
-      <div class="telemetry-group">
-        <div class="telemetry telemetry--inline">
-          <div class="telemetry__content">
-            <span class="telemetry__label">Station Buffer:</span>
-            <strong class="telemetry__value">4.0s</strong>
-          </div>
-        </div>
-
-        <div class="telemetry telemetry--inline">
-          <div class="telemetry__content">
-            <span class="telemetry__label">Bitrate:</span>
-            <strong class="telemetry__value">320 kbps</strong>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  `,
+export const RightToLeft: Story = {
+  render: () => `<div dir="rtl">${group('Server health', server, { cls: 'telemetry-group--ruled' })}</div>`,
 };

@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Navigation Tree
-
 Nested links to the sections of a site or a page: a docs sidebar, a table of contents. Its items are buttons, as in the menu; the tree makes them plain and full width, and adds nesting, guide lines and the current location.
 
 ### Markup
@@ -118,7 +116,7 @@ export const InACard: Story = {
       <div class="card__body">
         ${tree('', 'Settings', [
           { label: 'Profile' },
-          { label: 'Notifications', meta: '<span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="visually-hidden">, 3 unread</span>' },
+          { label: 'Notifications', meta: '<span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="sr-only">, 3 unread</span>' },
           { label: 'Security', current: true, children: [{ label: 'Passkeys' }, { label: 'Sessions' }] },
         ])}
       </div>

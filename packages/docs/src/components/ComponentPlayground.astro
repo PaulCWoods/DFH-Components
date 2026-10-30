@@ -2,16 +2,16 @@
 import Icon from './Icon.astro';
 ---
 
-<div id="button-playground" class="component-playground prose-end card card--ruled margin-block-lg">
+<div id="button-playground" class="component-playground prose-end card card--ruled my-lg">
 <!-- Playground Top Toolbar -->
-<header class="card__header playground-toolbar inline inline--between align-items-center">
-  <div class="inline align-items-center">
+<header class="card__header playground-toolbar inline inline--between">
+  <div class="inline">
     <h3 class="small-heading">Interactive Playground</h3>
     <span class="status status--accent status--sm"><span class="status__text">Live Demo</span></span>
   </div>
 
   <!-- Surface Background Switcher -->
-  <div class="inline align-items-center gap-2xs surface-switcher" role="group" aria-label="Preview background switcher">
+  <div class="inline gap-2xs surface-switcher" role="group" aria-label="Preview background switcher">
     <button
       type="button"
       class="button button--plain button--sm button--icon surface-btn is-active"
@@ -68,16 +68,16 @@ import Icon from './Icon.astro';
 </div>
 
 <!-- Control Controls Area & Code Inspector (2-column on desktop) -->
-<div class="playground-body grid grid--sm grid--ruled border-top card__body gap-lg">
+<div class="playground-body grid grid--sm grid--ruled border-t card__body gap-lg">
   
   <!-- Left: Controls Configuration Form -->
   <div class="playground-controls">
-    <h4 class="micro-heading margin-bottom">Configure Properties</h4>
+    <h4 class="micro-heading mb-md">Configure Properties</h4>
 
-    <div class="form form--compact fields-grid ui-compact controls-subtle">
+    <div class="form form--compact form--aligned ui-compact controls-subtle">
       <!-- Prominence Variant -->
       <div class="field">
-        <label for="ctrl-prominence" class="field__label">Prominence</label>
+        <label for="ctrl-prominence" class="field__label label">Prominence</label>
         <select id="ctrl-prominence" class="select">
           <option value="default" selected>Default (Neutral Outline)</option>
           <option value="strong">Strong (.button--strong)</option>
@@ -89,7 +89,7 @@ import Icon from './Icon.astro';
 
       <!-- Semantic Tone -->
       <div class="field">
-        <label for="ctrl-tone" class="field__label">Intent</label>
+        <label for="ctrl-tone" class="field__label label">Intent</label>
         <select id="ctrl-tone" class="select">
           <option value="neutral" selected>Neutral</option>
           <option value="accent">Accent / Primary (.button--accent)</option>
@@ -99,7 +99,7 @@ import Icon from './Icon.astro';
 
       <!-- Target Size / Density -->
       <div class="field">
-        <label for="ctrl-size" class="field__label">Size & Target Density</label>
+        <label for="ctrl-size" class="field__label label">Size & Target Density</label>
         <select id="ctrl-size" class="select">
           <option value="default" selected>Default (48px — WCAG 2.5.5 AAA)</option>
           <option value="sm">Small / Compact (32px — .button--sm)</option>
@@ -109,7 +109,7 @@ import Icon from './Icon.astro';
 
       <!-- Corner Geometry -->
       <div class="field">
-        <label for="ctrl-corners" class="field__label">Corner Shape</label>
+        <label for="ctrl-corners" class="field__label label">Corner Shape</label>
         <select id="ctrl-corners" class="select">
           <option value="default" selected>Default Rounded</option>
           <option value="pill">Pill (.button--pill)</option>
@@ -119,7 +119,7 @@ import Icon from './Icon.astro';
 
       <!-- Icon Configuration -->
       <div class="field">
-        <label for="ctrl-icon" class="field__label">Icon Accoutrement</label>
+        <label for="ctrl-icon" class="field__label label">Icon Accoutrement</label>
         <select id="ctrl-icon" class="select">
           <option value="none" selected>None (Text Only)</option>
           <option value="leading">Leading Icon (+ Add)</option>
@@ -130,23 +130,23 @@ import Icon from './Icon.astro';
 
       <!-- Custom Label -->
       <div class="field" id="field-label-text">
-        <label for="ctrl-label" class="field__label">Button Label</label>
+        <label for="ctrl-label" class="field__label label">Button Label</label>
         <input type="text" id="ctrl-label" class="input" value="Get Started" />
       </div>
 
       <!-- Interactive States Toggles -->
       <hr class="divider" />
       <fieldset class="fieldset">
-        <legend class="fieldset__label">Interactive States</legend>
+        <legend class="fieldset__legend label">Interactive States</legend>
         <div class="cluster">
           <label class="button">
-            <input type="checkbox" id="ctrl-state-active" class="visually-hidden" />
+            <input type="checkbox" id="ctrl-state-active" class="sr-only" />
             <Icon name="Check" size={14} class="icon--on" />
             <Icon name="Circle" size={14} class="icon--off" />
             <span>Active State</span>
           </label>
           <label class="button">
-            <input type="checkbox" id="ctrl-state-disabled" class="visually-hidden" />
+            <input type="checkbox" id="ctrl-state-disabled" class="sr-only" />
             <Icon name="Check" size={14} class="icon--on" />
             <Icon name="Circle" size={14} class="icon--off" />
             <span>Disabled</span>
@@ -157,9 +157,9 @@ import Icon from './Icon.astro';
   </div>
 
   <!-- Right: Generated Code & Snippet Inspector -->
-  <div class="playground-code flex flex-dir-col justify-content-between">
+  <div class="playground-code flex flex-col justify-between">
     <div>
-      <div class="inline inline--between align-items-center margin-bottom-sm">
+      <div class="inline inline--between mb-sm">
         <div class="tab-list tab-list--tight tab-list--sm tab-list--segmented tab-list--subtle" role="tablist">
           <button
             type="button"
@@ -190,23 +190,23 @@ import Icon from './Icon.astro';
           aria-label="Copy generated code"
         >
           <Icon name="Duplicate" size={14} class="copy-icon" />
-          <Icon name="Check" size={14} class="check-icon hide" />
+          <Icon name="Check" size={14} class="check-icon hidden" />
           <span class="copy-label">Copy</span>
         </button>
       </div>
 
       <!-- HTML Panel -->
       <div id="panel-code-html" role="tabpanel" aria-labelledby="tab-code-html">
-        <pre class="pre snippet-pre" tabindex="0"><code id="code-output-html"></code></pre>
+        <pre class="whitespace-pre snippet-pre" tabindex="0"><code id="code-output-html"></code></pre>
       </div>
 
       <!-- Container Query Panel -->
       <div id="panel-code-cq" role="tabpanel" aria-labelledby="tab-code-cq" hidden>
-        <pre class="pre snippet-pre" tabindex="0"><code id="code-output-cq"></code></pre>
+        <pre class="whitespace-pre snippet-pre" tabindex="0"><code id="code-output-cq"></code></pre>
       </div>
     </div>
 
-    <div class="margin-top-md padding-top-sm border-top small-text text-muted">
+    <div class="mt-md pt-sm border-t small-text text-muted">
       Tip: DFH buttons use zero-specificity <code>:where()</code>. You can customize them via container variables or modifier classes without cascade lock-in.
     </div>
   </div>
@@ -446,8 +446,8 @@ import Icon from './Icon.astro';
         innerHtml = `<span>${labelText}</span>\n<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="/icons.svg#ArrowRight"/></svg>`;
         codeMarkup = `<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span>${labelText}</span>\n  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false">\n    <use href="#ArrowRight"/>\n  </svg>\n</button>`;
       } else if (icon === 'icon-only') {
-        innerHtml = `<span class="visually-hidden">${labelText}</span>\n<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="/icons.svg#Search"/></svg>`;
-        codeMarkup = `<!-- Accessible Icon Button: .visually-hidden enables browser translation & voice control -->\n<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span class="visually-hidden">${labelText}</span>\n  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">\n    <use href="#Search"/>\n  </svg>\n</button>`;
+        innerHtml = `<span class="sr-only">${labelText}</span>\n<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="/icons.svg#Search"/></svg>`;
+        codeMarkup = `<!-- Accessible Icon Button: .visually-hidden enables browser translation & voice control -->\n<button type="button" class="${classes.join(' ')}"${isDisabled ? ' disabled aria-disabled="true"' : ''}>\n  <span class="sr-only">${labelText}</span>\n  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">\n    <use href="#Search"/>\n  </svg>\n</button>`;
       }
 
       stageBtn.innerHTML = innerHtml;

@@ -194,7 +194,8 @@ body {
 /* --------------------------------------------------------------------------
    12. Accessibility & Interactive State
    -------------------------------------------------------------------------- */
-:where([hidden]) {
+/* `until-found` stays in the layout so find-in-page can reveal it. */
+:where([hidden]:not([hidden="until-found"])) {
   display: none !important;
 }
 

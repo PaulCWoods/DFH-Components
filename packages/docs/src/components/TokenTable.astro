@@ -16,22 +16,22 @@ interface Props {
 const { tokens = [], caption = 'Component Design Tokens' } = Astro.props;
 ---
 
-<div class="token-table-wrapper prose-end card card--compact overflow-x-auto margin-block-md">
+<div class="token-table-wrapper prose-end card card--compact overflow-x-auto my-md">
 <div class="table-container">
   <table class="table table--compact table--sticky-first-column" aria-label={caption}>
     <thead>
       <tr>
-        <th scope="col" class="table__col--fit">CSS Token</th>
-        <th scope="col" class="table__col--fit">CSS Property</th>
+        <th scope="col" class="table__cell--fit">CSS Token</th>
+        <th scope="col" class="table__cell--fit">CSS Property</th>
         <th scope="col" class="table__col--xl">Fallback / Default</th>
-        <th scope="col" class="table__col--min-xl">Description</th>
+        <th scope="col" class="table__col--xl">Description</th>
       </tr>
     </thead>
     <tbody>
       {tokens.map((token) => (
         <tr>
           <td class="font-mono table__cell--fit">
-            <div class="inline align-items-center gap-xs">
+            <div class="inline gap-xs">
               <code class="token-name">{token.name}</code>
               <button
                 type="button"
@@ -41,14 +41,14 @@ const { tokens = [], caption = 'Component Design Tokens' } = Astro.props;
                 title="Copy token property"
               >
                 <Icon name="Duplicate" size={12} class="copy-token-icon" />
-                <Icon name="Check" size={12} class="check-token-icon hide text-success" />
+                <Icon name="Check" size={12} class="check-token-icon hidden text-success" />
               </button>
             </div>
           </td>
           <td class="font-mono text-muted table__cell--fit">
             <code>{token.property}</code>
           </td>
-          <td class="font-mono table__cell--xl">
+          <td class="font-mono table__col--xl">
             <code>{token.fallback}</code>
           </td>
           <td class="table__cell--min-xl">{token.description}</td>

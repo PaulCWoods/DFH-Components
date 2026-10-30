@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Banner Dock
-
 Pins a banner to the page edge: site announcements, maintenance notices, consent bars. The dock is placement only. It squares the banner's corners and drops its edge borders through the \`--banner-dock\` flag, and never styles the banner directly.
 
 ### Markup
@@ -20,7 +18,7 @@ Pins a banner to the page edge: site announcements, maintenance notices, consent
       <div class="banner__body"><p class="text">Maintenance on Sunday from 02:00 to 04:00 UTC.</p></div>
       <button type="button" class="button button--icon banner__action">
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-        <span class="visually-hidden">Dismiss notice</span>
+        <span class="sr-only">Dismiss notice</span>
       </button>
     </div>
   </div>
@@ -54,7 +52,7 @@ const iconBox = (name: string) => `<span class="icon-box" aria-hidden="true">${i
 const dismiss = `
   <button type="button" class="button button--icon banner__action" onclick="this.closest('.banner-dock').hidden = true">
     ${icon('Close')}
-    <span class="visually-hidden">Dismiss notice</span>
+    <span class="sr-only">Dismiss notice</span>
   </button>`;
 
 const page = `

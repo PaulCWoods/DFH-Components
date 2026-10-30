@@ -16,8 +16,8 @@
 <!-- Determinate, labelled, with a readout -->
 <div class="field">
   <div class="field__header">
-    <label for="upload-progress" class="field__label">Uploading asset</label>
-    <span class="field__result">68%</span>
+    <label for="upload-progress" class="field__label label">Uploading asset</label>
+    <span class="small-text">68%</span>
   </div>
   <progress id="upload-progress" class="progress" value="68" max="100">68%</progress>
 </div>
@@ -31,7 +31,7 @@
 <!-- Indeterminate: aria-busy on the region being loaded -->
 <section aria-busy="true" aria-labelledby="sync-label">
   <div class="field">
-    <label id="sync-label" for="sync-progress" class="field__label">Syncing data</label>
+    <label id="sync-label" for="sync-progress" class="field__label label">Syncing data</label>
     <progress id="sync-progress" class="progress">Syncing</progress>
   </div>
 </section>
@@ -42,8 +42,8 @@
 <!-- With thresholds: colour follows the region the value falls in -->
 <div class="field">
   <div class="field__header">
-    <label for="disk-meter" class="field__label">Disk use</label>
-    <span class="field__result">72 GB of 100 GB</span>
+    <label for="disk-meter" class="field__label label">Disk use</label>
+    <span class="small-text">72 GB of 100 GB</span>
   </div>
   <meter id="disk-meter" class="meter" value="72" min="0" max="100" low="60" high="85" optimum="20">72 GB</meter>
 </div>
@@ -53,9 +53,9 @@
 
 <!-- Password strength -->
 <div class="field">
-  <label for="pwd-field" class="field__label">Password</label>
+  <label for="pwd-field" class="field__label label">Password</label>
   <input id="pwd-field" type="password" class="input" aria-describedby="pwd-strength" />
-  <p id="pwd-strength" class="field__hint">Strength: strong</p>
+  <p id="pwd-strength" class="field__hint small-text">Strength: strong</p>
   <meter class="meter meter--sm" value="4" min="0" max="4" low="2" high="3" optimum="4" aria-labelledby="pwd-strength">4 of 4</meter>
 </div>
 ```

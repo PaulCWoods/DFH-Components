@@ -1,24 +1,28 @@
-# 6b. Lockup Primitive (Paired Typographic Micro-Container)
+# 6b. Lockup
+A primary line with a secondary one under it: a name and an email, a plot and its soil. A molecule that stacks its lines and lets them truncate; type comes from text atoms on the lines. The audit is in `docs/audit/identity-values.md`.
+
 ```html
-<!-- Standalone Data Pair (Table Cell or Card) -->
-<div class="lockup">
-  <b>Full Sun</b>
-  <small>Mycorrhizal Fungi + Leaf Mulch</small>
-</div>
-
-<!-- User Identity Lockup (Composed with .inline & .avatar) -->
-<div class="inline align-items-center" style="--gap: var(--spacing-8);">
-  <div class="avatar avatar--sm" aria-hidden="true"><span>MC</span></div>
-  <div class="lockup">
-    <b>Marcus Chen</b>
-    <small>mchen.gardens@urbanmail.net</small>
-  </div>
-</div>
-
-<!-- Inline Flow Span Lockup -->
 <span class="lockup">
-  <b>Plot #12</b>
-  <small>Raised Bed</small>
+  <span class="small-heading">Full sun</span>
+  <span class="small-text text-muted">Mycorrhizal fungi and leaf mulch</span>
 </span>
 ```
 
+## Identity
+An avatar beside a lockup. The name is visible, so the avatar is decorative.
+```html
+<div class="inline">
+  <span class="avatar avatar--sm" aria-hidden="true">MC</span>
+  <span class="lockup">
+    <span class="small-heading">Marcus Chen</span>
+    <span class="small-text text-muted">mchen@urbanmail.net</span>
+  </span>
+</div>
+```
+
+- **Lines** take any text atom: `.small-heading` over `.small-text.text-muted` in lists and tables, `.heading` over `.text` for a profile. The lockup sets no type.
+- **Truncation:** add `.truncate` to a line; the lockup and its lines have `min-inline-size: 0`, so they shrink in flex and grid.
+- **Alignment:** `.text-center` or `.text-end` on the lockup.
+- **Spacing:** `--lockup-gap` (none by default; the lines' leading spaces them).
+- **Inline:** `<span class="lockup">` is inline-flex, so it can sit in a button or a sentence.
+- **No options.** Removed: `<b>` / `<small>` lines (use text atoms), `lockup--*` modifiers.

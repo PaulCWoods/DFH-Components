@@ -12,7 +12,7 @@ A surface with named parts. The card draws its frame and the geometry of its par
 - **Rules and bands:** `--ruled` rules between parts, bands included. `.card__band` is a full-width strip between parts; `--subtle` tints it.
 - **Flush parts:** `__header--flush`, `__body--flush`, `__footer--flush` drop the part's padding. A flush body hands the card's padding to a flush tab list.
 - **Flags** are set on a container, never on the card. Dialog and popover set `--card-prominence: strong`. A card resets the flag for cards nested inside it; a modifier on the card beats the flag.
-- **Responsive:** `@max-sm:card--plain` (below 40em) and `@max-xs:card--plain` (below 30em) drop the frame while the nearest size container is narrow. They need an ancestor with `container-type: inline-size` (`.container-inline`, `.split`, `.sidebar`); without one the card keeps its look.
+- **Responsive:** `@max-2xl:card--plain` (below 42rem) and `@max-md:card--plain` (below 28rem) drop the frame while the nearest size container is narrow. They need an ancestor with `container-type: inline-size` (`.container-inline`, `.split`, `.sidebar`); without one the card keeps its look.
 - **Linked card:** a `.link.link--plain.link--stretched` in the title makes the whole card the target. The focus ring is drawn on the card's perimeter and other controls are lifted above the link.
 - **Scrolling:** `.card__body--scrollable` scrolls the body between a pinned header and footer (the card fills a definite container height). `.card--scrollable` scrolls the whole card. Make the scroll region focusable (`tabindex="0"`) and name it.
 - **Loading:** a card with `aria-busy="true"`, a `role="status"` message and skeleton shapes (§26).
@@ -55,7 +55,7 @@ A surface with named parts. The card draws its frame and the geometry of its par
 
 <!-- Plain while its container is narrow -->
 <div class="container-inline">
-  <article class="card @max-sm:card--plain">…</article>
+  <article class="card @max-2xl:card--plain">…</article>
 </div>
 ```
 
@@ -78,6 +78,8 @@ A surface with named parts. The card draws its frame and the geometry of its par
   </footer>
 </article>
 ```
+
+The title takes the free space but never shrinks below its longest word. In a narrow card the status or action wraps to the next line instead of running over the title. A `.truncate` title keeps shrinking.
 
 ## D. Band
 ```html
@@ -107,7 +109,7 @@ A surface with named parts. The card draws its frame and the geometry of its par
       <p class="card__subtitle small-text">8 items queued</p>
     </hgroup>
     <button type="button" class="button button--sm"><span>Auto-balance</span></button>
-    <div class="card__header-line cluster justify-content-between">
+    <div class="card__header-line cluster cluster--between">
       <input type="search" class="input input--sm" placeholder="Search queued items" aria-label="Search items" />
     </div>
   </header>

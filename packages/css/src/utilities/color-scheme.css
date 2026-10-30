@@ -1,19 +1,22 @@
 /* ==========================================================================
    Design For Humans: Color Scheme Utilities
    --------------------------------------------------------------------------
-   Native browser color-scheme mode toggles. Triggers automatic resolution
-   of all light-dark() CSS variables across the DOM cascade.
-   Parity with Design For Humans Blog (_color-scheme.scss).
+   Sets the colour scheme of a region, so every light-dark() value inside
+   resolves for it. The text colour is set again here: the colour a region
+   inherits was resolved for the scheme above it.
    ========================================================================== */
 
 :where(.color-scheme-dark) {
     color-scheme: dark;
+    color: var(--foreground, CanvasText);
 }
 
 :where(.color-scheme-light) {
     color-scheme: light;
+    color: var(--foreground, CanvasText);
 }
 
 :where(.color-scheme-light-dark) {
     color-scheme: light dark;
+    color: var(--foreground, CanvasText);
 }

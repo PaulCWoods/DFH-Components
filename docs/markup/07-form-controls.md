@@ -1,5 +1,5 @@
 # 7. Input & Form Control Primitives
-Six atoms: input (with colour and file), select, textarea, checkbox and radio, switch, range. The audit is in `docs/audit/form-controls.md`.
+Six atoms: input (with colour and file), select, textarea, checkbox and radio, switch, range. The audit is in `docs/audit/form-controls.md`. What goes around them (field, fieldset, choices, form) is in [§7b](07b-form-composition.md).
 
 - **Classes only.** Bare `<input>`, `<select>` and `<textarea>` keep browser styling; the reset gives them back their native rendering.
 - **One base for text controls.** `.input`, `.select` and `.textarea` share `atoms/input.css` section 1: the same size, prominence, corners, flags and states.
@@ -21,16 +21,16 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 ## A. Text, Colour and File Inputs
 ```html
 <div class="field">
-  <label for="user-email" class="field__label">Email Address</label>
-  <p id="user-email-hint" class="field__hint">We will never share your email address.</p>
+  <label for="user-email" class="field__label label">Email Address</label>
+  <p id="user-email-hint" class="field__hint small-text">We will never share your email address.</p>
   <input id="user-email" type="email" class="input" autocomplete="email" aria-describedby="user-email-hint" />
 </div>
 
 <!-- Error state -->
 <div class="field">
-  <label for="account-id" class="field__label">Account ID</label>
+  <label for="account-id" class="field__label label">Account ID</label>
+  <p id="account-id-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Account ID must start with "DFH-" followed by 6 digits.</p>
   <input id="account-id" type="text" class="input" aria-invalid="true" aria-describedby="account-id-error" value="INVALID-ID" />
-  <p id="account-id-error" class="field__error">Account ID must start with "DFH-" followed by 6 digits.</p>
 </div>
 
 <!-- Size, prominence and corners -->
@@ -48,7 +48,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 ## B. Textarea (grows with `field-sizing: content`)
 ```html
 <div class="field">
-  <label for="feedback" class="field__label">Feedback</label>
+  <label for="feedback" class="field__label label">Feedback</label>
   <textarea id="feedback" class="textarea"></textarea>
 </div>
 
@@ -59,7 +59,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 ## C. Select
 ```html
 <div class="field">
-  <label for="role-select" class="field__label">Primary Role</label>
+  <label for="role-select" class="field__label label">Primary Role</label>
   <select id="role-select" class="select">
     <option value="">Choose a role</option>
     <option value="lead">Accessibility Lead</option>
@@ -74,39 +74,26 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 </select>
 ```
 
-## D. Checkboxes, Radios, Choices & Fieldset
+## D. Checkboxes & Radios
+A checkbox or radio goes in a `.choice` label; a set of them is `.choices` in a fieldset (§7b).
 ```html
-<fieldset class="fieldset">
-  <legend class="legend">Audit deliverables</legend>
-  <div class="choices">
-    <label class="choice">
-      <input type="checkbox" class="checkbox-input" checked />
-      <span>Automated axe scan</span>
-    </label>
-    <label class="choice">
-      <input type="checkbox" class="checkbox-input checkbox-input--lg" />
-      <span>Keyboard review</span>
-    </label>
-  </div>
-</fieldset>
+<label class="choice">
+  <input type="checkbox" class="checkbox-input" name="terms" />
+  <span>I agree to the plot terms</span>
+</label>
 
-<div class="choices choices--inline">
-  <label class="choice">
-    <input type="radio" name="frequency" class="radio-input" checked />
-    <span>Daily</span>
-  </label>
-  <label class="choice">
-    <input type="radio" name="frequency" class="radio-input" />
-    <span>Weekly</span>
-  </label>
-</div>
+<!-- Large box -->
+<label class="choice">
+  <input type="radio" class="radio-input radio-input--lg" name="size" value="full" />
+  <span>Full plot</span>
+</label>
 ```
 
 ## E. Switch (`role="switch"`)
 ```html
 <label class="switch">
-  <span class="switch__label">Notifications <small>Email and push</small></span>
-  <input type="checkbox" role="switch" class="visually-hidden" checked />
+  <span class="switch__label label">Notifications <span class="small-text text-muted">Email and push</span></span>
+  <input type="checkbox" role="switch" class="sr-only" checked />
   <span class="switch__control" aria-hidden="true">
     <span class="switch__option switch__option--off">Off</span>
     <span class="switch__option switch__option--on">On</span>
@@ -115,8 +102,8 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 
 <!-- Small, round, danger -->
 <label class="switch switch--sm switch--round switch--danger">
-  <span class="switch__label">Auto-delete</span>
-  <input type="checkbox" role="switch" class="visually-hidden" />
+  <span class="switch__label label">Auto-delete</span>
+  <input type="checkbox" role="switch" class="sr-only" />
   <span class="switch__control" aria-hidden="true">
     <span class="switch__option switch__option--off">Off</span>
     <span class="switch__option switch__option--on">On</span>
@@ -129,8 +116,8 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 ```html
 <div class="field">
   <div class="field__header">
-    <label for="volume-control" class="field__label">Volume</label>
-    <output for="volume-control" class="field__output">65%</output>
+    <label for="volume-control" class="field__label label">Volume</label>
+    <output for="volume-control" class="small-text">65%</output>
   </div>
   <input id="volume-control" type="range" class="range" min="0" max="100" value="65" style="--value: 65%;" />
 </div>
@@ -152,22 +139,5 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 <div class="range-lockup range-lockup--bordered range-lockup--round range-lockup--fill">…</div>
 ```
 
-## G. Complete Form Layout & Submission Bar
-```html
-<form class="form">
-  <div class="field">
-    <label for="full-name" class="field__label">Full Name</label>
-    <input id="full-name" type="text" class="input" required />
-  </div>
-
-  <div class="form__submission form__submission--right">
-    <button type="reset" class="button button--subtle">
-      <span>Cancel</span>
-    </button>
-    <button type="submit" class="button button--strong button--accent">
-      <span>Submit</span>
-    </button>
-  </div>
-</form>
-```
-
+## G. Forms
+Fields, fieldsets, choices and the form itself are in [§7b](07b-form-composition.md).

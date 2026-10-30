@@ -1,111 +1,110 @@
 /* ==========================================================================
-   Design For Humans: App Layout Primitive
+   Design For Humans: App Shell Layout Primitive
    --------------------------------------------------------------------------
-   3-row Holy Grail application shell (header, main, footer) utilizing dynamic
-   viewport units (100dvb) and zero-specificity (:where()) grid layout.
+   The page shell: header, main and footer in rows, the main row taking the
+   free height so the footer sits at the bottom of a short page.
+
+   - .app places its direct children: a <header> or .header at the top, a
+     <main>, .main or .app__workspace in the middle, a <footer> or .footer
+     at the bottom. The skip link comes first and takes no row.
+   - .app__workspace sets side panes (a .sidebar, an <aside>) beside the
+     main; below 48rem they stack, side pane first.
+   - --viewport locks the shell to the screen so panes scroll inside it.
+     It unlocks to a scrolling page at small widths or heights, where panes
+     would be too short to use.
+
+   Landmarks: one shell per page. Its <header> is the banner, its <footer>
+   the contentinfo, and there is one <main>.
+
+   Usage:
+   <body class="app">
+     <a href="#main" class="skip-link">Skip to content</a>
+     <header class="header">…</header>
+     <div class="app__workspace">
+       <nav class="sidebar sidebar--sticky" aria-label="Sections">…</nav>
+       <main id="main" class="main">…</main>
+     </div>
+     <footer class="footer">…</footer>
+   </body>
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. Shell
+   -------------------------------------------------------------------------- */
 :where(.app) {
-    min-block-size: 100dvb;
-    container-name: app;
-    container-type: scroll-state;
-    overflow: visible;
-
     display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-    grid-template-columns: 100%;
     grid-template-areas:
         "header"
-        "aside"
         "main"
         "footer";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    min-block-size: 100dvb;
 
-    &> :is(header, .header, .header-container) {
+    > :where(header, .header) {
         grid-area: header;
     }
 
-    &> :is(aside, .aside, .app__aside, .sidebar) {
-        grid-area: aside;
-    }
-
-    &> :is(main, .main, .app__workspace, .workspace) {
+    > :where(main, .main, .app__workspace) {
         grid-area: main;
+        min-block-size: 0;
     }
 
-    &> :is(footer, .footer, .app__footer) {
+    > :where(footer, .footer) {
         grid-area: footer;
     }
 }
 
 /* --------------------------------------------------------------------------
-   Footer Landmark Primitive (:where(.footer, .app__footer))
-   Semantic application-level footer landmark with token-driven top borders.
+   2. Workspace: side panes beside the main
    -------------------------------------------------------------------------- */
-
-:where(.footer, .app__footer) {
-    /* Local Private Variables (Defaults & Fallback Ladder) */
-    --_footer-bg: var(--footer-bg, var(--surface-card, Canvas));
-    --_footer-border-color: var(--footer-border-color, var(--app-border-color, var(--border-color-quiet, currentColor)));
-    --_footer-border-style: var(--footer-border-style, var(--app-border-style, solid));
-    --_footer-border-width: var(--footer-border-width, var(--app-border-width, var(--border-width, 1px)));
-    --_footer-padding: var(--footer-padding, var(--spacing-cushion, 1rem));
-
-    background-color: var(--_footer-bg);
-    border-block-start: var(--_footer-border-width) var(--_footer-border-style) var(--_footer-border-color);
-    box-sizing: border-box;
-    padding: var(--_footer-padding);
-}
-
-/* --------------------------------------------------------------------------
-   Workspace Landmark & Sidebar Orchestrator (.app__workspace / .workspace)
-   Orchestrates side-by-side sidebars, rails, and main content canvas under
-   the application header, expanding to fill available vertical space.
-   -------------------------------------------------------------------------- */
-
-:where(.app__workspace, .workspace) {
+:where(.app__workspace) {
+    align-items: stretch;
     display: flex;
     inline-size: 100%;
     min-block-size: 0;
-    flex: 1 1 auto;
-    align-items: stretch;
 
-    & > :where(.main) {
+    > :where(.main, main) {
         flex: 1 1 auto;
         min-inline-size: 0;
     }
 
-    @media (width < 48em) {
+    @media (width < 48rem) {
         flex-direction: column;
-    }
-}
 
-:where(.app--viewport, .app--locked) :where(.app__workspace, .workspace) {
-    block-size: 100%;
-    min-block-size: 0;
-    overflow: hidden;
-
-    @media (width < 48em) or (height < 36em) {
-        block-size: auto;
-        min-block-size: 0;
-        overflow: visible;
+        > :where(.sidebar, aside) {
+            max-inline-size: none;
+        }
     }
 }
 
 /* --------------------------------------------------------------------------
-   Viewport-Locked Application Shell (.app--viewport / .app--locked)
-   Locks outer viewport on desktop to enable internal pane/card scrolling.
-   Gracefully unlocks to natural document scroll on mobile (< 48em).
+   3. Viewport: the shell fills the screen, panes scroll inside
    -------------------------------------------------------------------------- */
-
-:where(.app--viewport, .app--locked) {
+:where(.app--viewport) {
     block-size: 100dvb;
-    container-type: normal;
     overflow: hidden;
 
-    @media (width < 48em) or (height < 36em) {
+    > :where(.app__workspace) {
+        block-size: 100%;
+        overflow: hidden;
+
+        > :where(.main, main) {
+            overflow-y: auto;
+        }
+    }
+
+    @media (width < 48rem) or (height < 36rem) {
         block-size: auto;
-        min-block-size: 100dvb;
-        container-type: scroll-state;
         overflow: visible;
+
+        > :where(.app__workspace) {
+            block-size: auto;
+            overflow: visible;
+
+            > :where(.main, main) {
+                overflow-y: visible;
+            }
+        }
     }
 }

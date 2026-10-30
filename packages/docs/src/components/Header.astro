@@ -9,41 +9,41 @@ interface Props {
 const { currentSection = '' } = Astro.props;
 ---
 
-<header class="header header--sticky header--translucent" aria-label="Documentation site header">
-  <div class="inline inline--between">
+<header class="header header--sticky header--translucent" style="--header-max-width: none;">
+  <div class="header__bar">
     
     <!-- Left: Brand Lockup & Mobile Toggle -->
-    <div class="inline align-items-center">
+    <div class="inline">
       <button
         type="button"
-        id="mobile-nav-toggle"
-        class="button button--plain button--icon max-md:show"
-        aria-controls="docs-sidebar"
-        aria-expanded="false"
+        class="button button--plain button--icon md:hide"
+        commandfor="docs-nav"
+        command="show-modal"
+        aria-haspopup="dialog"
       >
-        <span class="visually-hidden">Toggle navigation menu</span>
+        <span class="sr-only">Navigation menu</span>
         <Icon name="Navigation" />
       </button>
 
-      <div class="inline align-items-center position-relative">
+      <div class="inline relative">
         <Icon name="BrandDesignForHumans" class="text-accent" size={"2xl"} />
-        <div class="lockup white-space-nowrap max-sm:hide">
-          <b>
+        <div class="lockup whitespace-nowrap max-sm:hide">
+          <span class="small-heading">
             <a href="/" class="link link--plain link--stretched">
               Design For Humans
             </a>
-          </b>
-          <small>v2.2 • Accessible UI Library</small>
+          </span>
+          <span class="small-text text-muted">v2.2 • Accessible UI Library</span>
         </div>
       </div>
 
-      <span class="status status--accent status--subtle status--sm md:show">
+      <span class="status status--accent status--subtle status--sm max-md:hide">
         <span class="status__text">WCAG AAA</span>
       </span>
     </div>
 
     <!-- Center: Primary Nav Links (Tab List Navigation Pattern) -->
-    <nav class="tab-list tab-list--plain tab-list--scrollable xl:show" aria-label="Main Navigation">
+    <nav class="header__nav tab-list tab-list--plain tab-list--scrollable max-xl:hide" aria-label="Main Navigation">
       <ul>
         <li>
           <a

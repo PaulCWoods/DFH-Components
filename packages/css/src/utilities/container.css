@@ -1,21 +1,19 @@
 /* ==========================================================================
-   Design For Humans: Container Type Utilities
+   Design For Humans: Container Utilities
    --------------------------------------------------------------------------
-   Defines container context on parent elements for CSS Container Queries.
-   Direct parity with the Design For Humans blog architecture (_container-type.scss).
+   Makes an element a size container, so container queries inside it (@md:hide,
+   @md:grid--3-col, @max-sm:card--plain) measure it. An inline-size container
+   can't shrink to its content, so don't put it on a flex item that should.
    ========================================================================== */
 
-:where(.container-type-inline-size, .container-inline,
-  .cq-inline, .cq) {
-  container-type: inline-size;
+:where(.container-type-inline-size, .container-inline) {
+    container-type: inline-size;
 }
 
-:where(.container-type-size, .container-size,
-  .cq-size) {
-  container-type: size;
+:where(.container-type-size) {
+    container-type: size;
 }
 
-:where(.container-type-normal, .container-normal,
-  .cq-normal) {
-  container-type: normal;
+:where(.container-type-normal) {
+    container-type: normal;
 }

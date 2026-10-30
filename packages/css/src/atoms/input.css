@@ -1,15 +1,16 @@
 /* ==========================================================================
    Design For Humans: Text Control Base & Input Primitive
    --------------------------------------------------------------------------
-   Section 1 is the base shared by every text control: .input, .select and
-   .textarea. select.css and textarea.css add only what differs. Section 6 on
+   Section 1 is the base shared by every text control: .input, .select,
+   .textarea and the combobox's frame (.combobox__control). select.css,
+   textarea.css and combobox.css add only what differs. Section 6 on
    is input's own: date and time alignment, colour and file inputs.
 
    | Axis       | Modifiers                 | Container flags                                   |
    | ---------- | ------------------------- | ------------------------------------------------- |
-   | Size       | (default) --sm --lg       | --{input,select,textarea}-size, --controls-size    |
-   | Prominence | (outline) --subtle --plain | --{input,select,textarea}-prominence, --controls-prominence |
-   | Corners    | --round                   | --{input,select,textarea}-corners, --controls-corners |
+   | Size       | (default) --sm --lg       | --{input,select,textarea,combobox}-size, --controls-size    |
+   | Prominence | (outline) --subtle --plain | --{input,select,textarea,combobox}-prominence, --controls-prominence |
+   | Corners    | --round                   | --{input,select,textarea,combobox}-corners, --controls-corners |
 
    A compact container (--ui-sizing: compact) steps controls to --sm.
    --flush is layout, not prominence: no inline padding and no boundary, for
@@ -33,9 +34,9 @@
    ========================================================================== */
 
 /* ==========================================================================
-   1. Text Control Base (:where(.input, .select, .textarea))
+   1. Text Control Base (:where(.input, .select, .textarea, .combobox__control))
    ========================================================================== */
-:where(.input, .select, .textarea) {
+:where(.input, .select, .textarea, .combobox__control) {
   /* ------------------------------------------------------------------------
      Size sources. Each control may redefine these at its own root; the
      effective values below pick one set by size.
@@ -220,6 +221,41 @@
     }
   }
 
+  /* The combobox's modifiers sit on .combobox and set these flags */
+  &:where(.combobox__control) {
+    @container style(--combobox-size: sm) {
+      --_control-min-size: var(--_control-sm-min-size);
+      --_control-padding-block: var(--_control-sm-padding-block);
+      --_control-padding-inline: var(--_control-sm-padding-inline);
+      --_control-font-size: var(--_control-sm-font-size);
+      --_control-line-height: var(--_control-sm-line-height);
+    }
+
+    @container style(--combobox-size: lg) {
+      --_control-min-size: var(--_control-lg-min-size);
+      --_control-padding-block: var(--_control-lg-padding-block);
+      --_control-padding-inline: var(--_control-lg-padding-inline);
+      --_control-font-size: var(--_control-lg-font-size);
+      --_control-line-height: var(--_control-lg-line-height);
+    }
+
+    @container style(--combobox-prominence: subtle) {
+      --_control-bg: var(--surface-translucent, transparent);
+      --_control-hover-bg: var(--surface-translucent-strong, transparent);
+      --_control-border-width: 0px;
+    }
+
+    @container style(--combobox-prominence: plain) {
+      --_control-bg: transparent;
+      --_control-hover-bg: var(--surface-translucent, transparent);
+      --_control-sides-transparency: 100%;
+    }
+
+    @container style(--combobox-corners: round) {
+      --_control-radius: var(--radius-round, 9999px);
+    }
+  }
+
   /* Layout & Sizing */
   box-sizing: border-box;
   flex: 1 1 auto;
@@ -271,7 +307,7 @@
   @media (hover: hover) {
 
     /* select always matches :read-only, so only text fields are excluded */
-    &:hover:not(:disabled, [aria-disabled="true"], :where(input, textarea):read-only) {
+    &:hover:not(:disabled, [aria-disabled="true"], :where(input, textarea):read-only, :has(> :disabled)) {
       --_control-edge-color: var(--_control-hover-edge-color);
       background-color: var(--_control-hover-bg);
     }
@@ -296,13 +332,28 @@
     cursor: not-allowed;
   }
 
-  &:where(:read-only:not(:disabled, [aria-disabled="true"], select)) {
+  &:where(:read-only:not(:disabled, [aria-disabled="true"], select, .combobox__control)) {
     border-style: dashed;
     cursor: default;
   }
 
-  :where(.inline-form, .inline-field) & {
-    inline-size: auto;
+  /* The combobox frame takes its states from the input inside it */
+  &:where(.combobox__control) {
+    &:has(> .combobox__input:focus-visible) {
+      --_control-edge-color: var(--_control-focus-edge-color);
+      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
+      outline-offset: var(--focus-ring-offset, 2px);
+    }
+
+    &:has(> .combobox__input:where(:user-invalid, [aria-invalid="true"])) {
+      --_control-edge-color: var(--_control-invalid-edge-color);
+      outline-color: var(--_control-invalid-edge-color);
+    }
+
+    &:has(> .combobox__input:disabled) {
+      opacity: var(--opacity-disabled, 0.4);
+      cursor: not-allowed;
+    }
   }
 }
 

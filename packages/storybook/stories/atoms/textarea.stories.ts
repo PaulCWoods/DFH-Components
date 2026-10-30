@@ -30,7 +30,7 @@ const field = (label: string, control: (id: string) => string) => {
   const id = `textarea-demo-${++uid}`;
   return `
     <div class="field">
-      <label for="${id}" class="field__label">${label}</label>
+      <label for="${id}" class="field__label label">${label}</label>
       ${control(id)}
     </div>`;
 };
@@ -42,8 +42,6 @@ const meta: Meta<TextareaArgs> = {
     docs: {
       description: {
         component: `
-### Textarea
-
 A multi-line text field that grows with its content (\`field-sizing: content\`) between \`--textarea-lines-min\` (3) and \`--textarea-lines-max\` (16) lines. It shares the text control base with input and select (see **Atoms/Input**).
 
 | Axis | Modifiers | Container flags |
@@ -56,7 +54,7 @@ Also \`--one-line\`: starts at one line and grows.
 
 \`\`\`html
 <div class="field">
-  <label for="feedback" class="field__label">Feedback</label>
+  <label for="feedback" class="field__label label">Feedback</label>
   <textarea id="feedback" class="textarea"></textarea>
 </div>
 \`\`\`
@@ -75,14 +73,14 @@ Also \`--one-line\`: starts at one line and grows.
   render: (args) => `
     <div class="demo-stage demo-constrained--md">
       <div class="field">
-        <label for="textarea-playground" class="field__label">${args.label}</label>
+        <label for="textarea-playground" class="field__label label">${args.label}</label>
+        ${args.invalid ? '<p id="textarea-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>' : ''}
         <textarea
           id="textarea-playground"
           class="${textareaClasses(args.size, args.prominence, args.oneLine)}"
           ${args.invalid ? 'aria-invalid="true" aria-describedby="textarea-playground-error"' : ''}
           ${args.disabled ? 'disabled' : ''}
         >Type to see it grow.</textarea>
-        ${args.invalid ? '<p id="textarea-playground-error" class="field__error">Tell us at least one thing.</p>' : ''}
       </div>
     </div>
   `,
@@ -139,9 +137,9 @@ export const States: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md stack">
       <div class="field">
-        <label for="textarea-invalid" class="field__label">Invalid</label>
+        <label for="textarea-invalid" class="field__label label">Invalid</label>
+        <p id="textarea-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>
         <textarea id="textarea-invalid" class="textarea" aria-invalid="true" aria-describedby="textarea-invalid-error"></textarea>
-        <p id="textarea-invalid-error" class="field__error">Tell us at least one thing.</p>
       </div>
       ${field('Read-only', (id) => `<textarea id="${id}" class="textarea" readonly>Submitted on 3 March.</textarea>`)}
       ${field('Disabled', (id) => `<textarea id="${id}" class="textarea" disabled>Locked</textarea>`)}

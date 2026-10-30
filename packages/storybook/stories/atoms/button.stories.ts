@@ -43,8 +43,6 @@ const meta: Meta<ButtonArgs> = {
     docs: {
       description: {
         component: `
-### Button
-
 The fundamental action control. Variation is expressed on the library's shared axes (PRINCIPLES §2); each modifier sets exactly one axis, so any combination works without extra classes.
 
 | Axis | Modifiers | Container flag |
@@ -71,7 +69,7 @@ Selected states (\`.is-active\`, \`aria-current\`, a checked input inside a \`<l
 
 <!-- Icon-only: keep an accessible name -->
 <button type="button" class="button button--icon">
-  <span class="visually-hidden">Search site</span>
+  <span class="sr-only">Search site</span>
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
 </button>
 \`\`\`
@@ -202,7 +200,7 @@ export const SizesAndTargets: Story = {
   render: () => `
     <div class="demo-stage stack">
       <div class="demo-label">.button--sm (32px) · default (48px) · .button--lg (64px)</div>
-      <div class="cluster align-items-center">
+      <div class="cluster">
         <button type="button" class="button button--strong button--accent button--sm"><span>Small</span></button>
         <button type="button" class="button button--strong button--accent"><span>Default</span></button>
         <button type="button" class="button button--strong button--accent button--lg"><span>Large</span></button>
@@ -211,13 +209,13 @@ export const SizesAndTargets: Story = {
       <hr class="divider" />
 
       <div class="demo-label">Small icon buttons keep a 48px hit area (dashed outline shows it)</div>
-      <div class="cluster align-items-center">
+      <div class="cluster">
         ${['Search', 'Edit', 'Delete']
           .map(
             (icon) => `
           <span style="display: inline-grid; place-items: center; inline-size: var(--spacing-target); block-size: var(--spacing-target); outline: 1px dashed var(--border-color-muted);">
             <button type="button" class="button button--subtle button--icon button--sm">
-              <span class="visually-hidden">${icon}</span>
+              <span class="sr-only">${icon}</span>
               <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${icon}"/></svg>
             </button>
           </span>`,
@@ -228,10 +226,10 @@ export const SizesAndTargets: Story = {
       <hr class="divider" />
 
       <div class="demo-label">Fine-pointer opt-in (style="--spacing-target-min: var(--spacing-target-sm)"): hit area matches the 32px visual</div>
-      <div class="cluster align-items-center" style="--spacing-target-min: var(--spacing-target-sm);">
+      <div class="cluster" style="--spacing-target-min: var(--spacing-target-sm);">
         <button type="button" class="button button--sm"><span>Small</span></button>
         <button type="button" class="button button--subtle button--icon button--sm">
-          <span class="visually-hidden">Search</span>
+          <span class="sr-only">Search</span>
           <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         </button>
       </div>
@@ -260,7 +258,7 @@ export const ContainerFlags: Story = {
       </div>
 
       <div class="demo-label">Parent: style="--ui-sizing: compact;" (density steps controls to --sm; --lg steps to default)</div>
-      <div class="cluster align-items-center" style="--ui-sizing: compact;">
+      <div class="cluster" style="--ui-sizing: compact;">
         <button type="button" class="button"><span>Cancel</span></button>
         <button type="button" class="button button--strong button--accent"><span>Save</span></button>
         <button type="button" class="button button--lg"><span>Large</span></button>
@@ -281,22 +279,20 @@ export const ContainerFlags: Story = {
  */
 export const IconOnlyAndShapes: Story = {
   render: () => `
-    <div class="demo-stage cluster align-items-center">
+    <div class="demo-stage cluster">
       <button type="button" class="button button--icon">
-        <span class="visually-hidden">Search records</span>
+        <span class="sr-only">Search records</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
       </button>
       <button type="button" class="button button--icon button--round button--subtle">
-        <span class="visually-hidden">Notifications</span>
+        <span class="sr-only">Notifications</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
       </button>
       <button type="button" class="button button--strong button--accent button--round">
         <span>Get Started</span>
         <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
       </button>
-      <button type="button" class="button button--avatar button--round" data-status="online" aria-label="Alex Morgan profile (online)">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="" width="40" height="40" />
-      </button>
+      <button type="button" class="button button--plain button--icon button--round" aria-label="Alex Morgan profile, online"><span class="avatar avatar--sm" aria-hidden="true"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="" /><span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span></span></button>
     </div>
   `,
 };
@@ -309,20 +305,20 @@ export const Toggles: Story = {
   render: () => `
     <div class="demo-stage cluster">
       <label class="button">
-        <input type="checkbox" class="visually-hidden" />
+        <input type="checkbox" class="sr-only" />
         <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
         <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         <span>Notifications</span>
       </label>
       <fieldset class="cluster" style="border: 0; margin: 0; padding: 0;">
-        <legend class="visually-hidden">View</legend>
+        <legend class="fieldset__legend label sr-only">View</legend>
         <label class="button">
-          <input type="radio" name="button-toggle-demo" class="visually-hidden" checked />
+          <input type="radio" name="button-toggle-demo" class="sr-only" checked />
           <span>Grid</span>
           <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         </label>
         <label class="button">
-          <input type="radio" name="button-toggle-demo" class="visually-hidden" />
+          <input type="radio" name="button-toggle-demo" class="sr-only" />
           <span>List</span>
           <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
         </label>
@@ -332,14 +328,14 @@ export const Toggles: Story = {
 };
 
 /**
- * Labels collapse to icon-only in narrow containers (@max-md:hide-labels).
+ * Labels collapse to icon-only in narrow containers (@max-3xl:hide-labels).
  * Drag the container edge to resize.
  */
 export const ContainerAdaptive: Story = {
   render: () => `
     <div class="demo-stage">
-      <div class="container-type-inline-size" style="resize: horizontal; overflow: auto; inline-size: 34rem; min-inline-size: 10rem; max-inline-size: 100%; padding: var(--spacing-default); outline: 1px dashed var(--border-color-muted);">
-        <div class="cluster @max-md:hide-labels">
+      <div class="container-inline" style="resize: horizontal; overflow: auto; inline-size: 34rem; min-inline-size: 10rem; max-inline-size: 100%; padding: var(--spacing-default); outline: 1px dashed var(--border-color-muted);">
+        <div class="cluster @max-3xl:hide-labels">
           <button type="button" class="button">
             <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
             <span class="button__text">Search</span>

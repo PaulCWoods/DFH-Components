@@ -22,7 +22,7 @@ const tab = (args: TabArgs) => {
   const content = [
     args.hasIcon || args.iconOnly ? icon('Home') : '',
     `<span class="tab__text">${args.label}</span>`,
-    args.hasBadge ? '<span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="visually-hidden">, 3 new</span>' : '',
+    args.hasBadge ? '<span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="sr-only">, 3 new</span>' : '',
   ].join('');
   return `<${tag} ${state} class="tab${args.iconOnly ? ' tab--icon' : ''}"${disabled}>${content}</${tag}>`;
 };
@@ -44,8 +44,6 @@ const meta: Meta<TabArgs> = {
     docs: {
       description: {
         component: `
-### Tab
-
 One tab: a \`<button role="tab">\` in a tablist, or an \`<a>\` in navigation. A tab always lives in a \`.tab-list\`, which sets its style, prominence, size and corners and draws the selection indicator. See **Molecules/Tab List** for the variants.
 
 - **Selected:** \`aria-selected="true"\` in a tablist; \`aria-current\` (any value but \`"false"\`) in navigation. No class is needed.
@@ -136,7 +134,7 @@ export const Content: Story = {
           <button type="button" role="tab" class="tab" aria-selected="true" tabindex="0">${icon('Home')}<span class="tab__text">Icon</span></button>
           <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1">
             <span class="tab__text">Badge</span>
-            <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="visually-hidden">, 14 open</span>
+            <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="sr-only">, 14 open</span>
           </button>
           <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1">
             <span class="tab__text">Status</span>

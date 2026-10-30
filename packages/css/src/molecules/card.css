@@ -113,6 +113,18 @@
   --_card-shadow: none;
 }
 
+:where(.card--flush) {
+  --_card-border-width: 0px;
+  --_card-radius: 0;
+  --_card-shadow: none;
+}
+
+:where(.card--bordered) {
+  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-style: var(--card-border-style, solid);
+  --_card-border-color: var(--card-border-color, currentColor);
+}
+
 :where(.card--compact, .card.ui-compact) {
   --ui-sizing: compact;
   --_card-padding: var(--card-compact-padding, var(--spacing));
@@ -143,8 +155,8 @@
    Responsive prominence: plain while the nearest size container is narrow.
    Written desktop-first, so with no container to query the card keeps its look.
    -------------------------------------------------------------------------- */
-@container (width < 40em) {
-  :where(.\@max-sm\:card--plain) {
+@container (width < 42rem) {
+  :where(.\@max-2xl\:card--plain) {
     --_card-fill: transparent;
     --_card-border-width: 0px;
     --_card-radius: 0;
@@ -152,8 +164,8 @@
   }
 }
 
-@container (width < 30em) {
-  :where(.\@max-xs\:card--plain) {
+@container (width < 28rem) {
+  :where(.\@max-md\:card--plain) {
     --_card-fill: transparent;
     --_card-border-width: 0px;
     --_card-radius: 0;
@@ -257,6 +269,13 @@
   text-wrap: balance;
 }
 
+/* In the header, a title never shrinks below its longest word: an action or
+   status beside it wraps to the next line instead of running over it. A
+   truncated title keeps shrinking. */
+:where(.card__header)> :where(h1, h2, h3, h4, h5, h6, hgroup, .card__title, .card__hgroup):where(:not(.truncate)) {
+  min-inline-size: min-content;
+}
+
 :where(.card__subtitle) {
   color: var(--card-subtitle-color, var(--foreground-muted, currentColor));
   margin: 0;
@@ -293,9 +312,11 @@
   }
 }
 
-/* A flush tab list lines its labels up with the card's content */
+/* A flush tab list, table or accordion lines its content up with the card's */
 :where(.card__body--flush) {
+  --accordion-inset: var(--_card-padding);
   --tab-list-inset: var(--_card-padding);
+  --table-inset: var(--_card-padding);
 }
 
 /* --------------------------------------------------------------------------

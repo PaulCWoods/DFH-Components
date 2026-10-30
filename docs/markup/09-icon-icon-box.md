@@ -4,7 +4,7 @@ An icon is a glyph from the sprite (`icons/icons.svg`, one filled family), sized
 | Atom | Axes | Notes |
 | :--- | :--- | :--- |
 | `.icon` | Size (`1em`, `--sm`, `--lg`); intent (`--accent`, `--info`, `--danger`, `--warning`, `--success`) | `--dir` mirrors in right-to-left text; `--disclosure` rotates with the nearest `[aria-expanded]`. Any other size: set `--icon-size` or the font size. |
-| `.icon-box` | Size (48px, `--sm` 32px, `--lg` 64px); prominence (plain, `--subtle`); corners (`--round`) | A fixed square frame that lines icons up with controls. Not interactive. Flags: `--icon-box-size`, `--icon-box-prominence`, `--icon-box-corners`; a compact container steps it to `--sm`. |
+| `.icon-box` | Size (48px, `--sm` 32px, `--lg` 64px); prominence (plain, `--subtle`); corners (`--round`); intent (`--accent`, `--info`, `--success`, `--warning`, `--danger`) | A fixed square frame that lines icons up with controls. Not interactive. Intent colours the icon, and a subtle box takes the intent's tint. Flags: `--icon-box-size`, `--icon-box-prominence`, `--icon-box-corners`, `--icon-box-intent`; a compact container steps it to `--sm`. In forced colours a subtle box keeps an outline. |
 
 - Every icon carries `width="1em" height="1em"`, so it stays text-sized if CSS fails to load.
 - Decorative icons (beside text, or inside a named control) carry `aria-hidden="true" focusable="false"`. A meaningful standalone icon takes `role="img"` and `aria-label`, or its control carries the name.
@@ -27,6 +27,11 @@ An icon is a glyph from the sprite (`icons/icons.svg`, one filled family), sized
 <!-- Icon box -->
 <span class="icon-box icon-box--subtle icon-box--round" aria-hidden="true">
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+</span>
+
+<!-- Icon box with an intent: the icon and the text beside it say what it means -->
+<span class="icon-box icon-box--subtle icon-box--round icon-box--success" aria-hidden="true">
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
 </span>
 ```
 

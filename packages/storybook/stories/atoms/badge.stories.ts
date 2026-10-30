@@ -31,8 +31,6 @@ const meta: Meta<BadgeArgs> = {
     docs: {
       description: {
         component: `
-### Badge
-
 A count or dot **attached to a host**: a tab, button, nav item or icon. It sits inline after the host's label or in one of its corners.
 
 - State of a thing ("Passed", "Live") is a **Status**.
@@ -60,7 +58,7 @@ Placement: inline by default; \`--top-end\`, \`--top-start\`, \`--bottom-end\`, 
 <a href="/issues" class="tab">
   <span class="tab__text">Issues</span>
   <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span>
-  <span class="visually-hidden">, 14 open</span>
+  <span class="sr-only">, 14 open</span>
 </a>
 \`\`\`
 
@@ -109,7 +107,7 @@ export const IntentsAndSizes: Story = {
       ${[false, true]
         .map(
           (small) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           ${INTENTS.map(
             (intent, i) => `
             <button type="button" class="button" aria-label="Inbox, ${i + 2} unread">
@@ -120,7 +118,7 @@ export const IntentsAndSizes: Story = {
         </div>`
         )
         .join('')}
-      <div class="cluster align-items-center">
+      <div class="cluster">
         ${INTENTS.map(
           (intent) => `
           <button type="button" class="button button--icon" aria-label="Updates, new">
@@ -138,7 +136,7 @@ export const IntentsAndSizes: Story = {
  */
 export const Placement: Story = {
   render: () => `
-    <div class="demo-stage cluster align-items-center" style="gap: var(--spacing-32);">
+    <div class="demo-stage cluster" style="gap: var(--spacing-32);">
       ${(['top-end', 'top-start', 'bottom-end', 'bottom-start'] as Placement[])
         .map(
           (p) => `
@@ -164,10 +162,10 @@ export const InContext: Story = {
     <div class="demo-stage stack">
       <nav class="tab-list" aria-label="Repository sections">
         <a href="#code" class="tab" aria-current="page"><span class="tab__text">Code</span></a>
-        <a href="#issues" class="tab"><span class="tab__text">Issues</span> <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="visually-hidden">, 14 open</span></a>
-        <a href="#pulls" class="tab"><span class="tab__text">Pull requests</span> <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="visually-hidden">, 3 open</span></a>
+        <a href="#issues" class="tab"><span class="tab__text">Issues</span> <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="sr-only">, 14 open</span></a>
+        <a href="#pulls" class="tab"><span class="tab__text">Pull requests</span> <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="sr-only">, 3 open</span></a>
       </nav>
-      <div class="cluster align-items-center">
+      <div class="cluster">
         <span class="badge badge--accent" aria-hidden="true"><span class="badge__text">3</span></span>
         <span>3 items selected</span>
       </div>
@@ -180,7 +178,7 @@ export const InContext: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage cluster align-items-center" style="--badge-intent: success; --badge-size: sm;">
+    <div class="demo-stage cluster" style="--badge-intent: success; --badge-size: sm;">
       <button type="button" class="button" aria-label="Approved, 4"><span>Approved</span><span class="badge" aria-hidden="true"><span class="badge__text">4</span></span></button>
       <button type="button" class="button" aria-label="Merged, 9"><span>Merged</span><span class="badge" aria-hidden="true"><span class="badge__text">9</span></span></button>
       <button type="button" class="button" aria-label="Failed, 1"><span>Failed</span><span class="badge badge--danger" aria-hidden="true"><span class="badge__text">1</span></span></button>

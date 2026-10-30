@@ -33,6 +33,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 | `.button--primary`, `.button--secondary`, `.button--danger`, `.button--selected`, `.button--subtle-tint`, `.button--ghost`, compound `.button--*-primary` / `--*-destructive` | `.button--strong.button--accent`, `.button`, `.button--danger`, `.is-active`, `.button--subtle`, `.button--plain`, single-axis pairs | **Removed** in the button pass. These classes no longer exist. |
 | `--button-variation`, `--button-appearance`, `--button-tone` (flag), `--button-density`, `.buttons-dense`, `.buttons-regular`, `.buttons-primary`, `.buttons-destructive` | `--button-prominence`, `--button-intent`, `--ui-sizing: compact` | **Removed** in the button pass. |
 | `.badge--strong`, `--subtle`, `--plain`, `--round`, `--contrast`; badges used as labels; `.badge--top-right-corner` and the other physical corners; `.chip--simple`, `.chip--status`, `.chip--color-*`; `[data-status]` on badge, chip or status; `--badge-variation`, `--badge-tone`, `--badge-appearance`, `--chip-variation` | `.status` with a prominence and intent, `.chip`, `.badge--top-end` / `--top-start` / `--bottom-end` / `--bottom-start`, `.chip--plain`, `.status--plain.status--{intent}`, `--status-*` / `--chip-*` / `--badge-intent` flags | **Removed** in the badge pass. See §5. |
+| `.avatar--xs`, `--xl`, `--round`, `--crescent`, `--stackable`, `--status-*`; `.avatar__text`, `__image`, `__fallback`; `.avatar-count`, `__text`; `[data-status]`, `data-color` on an avatar; `.button--avatar`; `div.avatar-group`; `.lockup--*` modifiers, `<b>`/`<small>` lockup lines; `.telemetry__icon`, `__content`, `__label`, `__value`, `__unit`, `__trend`, `__status`, `[data-trend]`; `.telemetry--pill`, `--subtle`, `--bordered`, `--sm`, `--stacked`, `--icon-end`, `--card`; `.telemetry-strip`, `.stat-pill`; `--telemetry-variation`, `--telemetry-density` | `--avatar-size`, `.avatar--placeholder`/`--count`, a dot badge with the state in the name, `--avatar-bg` + `--avatar-text`, a `.button--plain.button--icon.button--round` holding an `aria-hidden` avatar, `ul.avatar-group` of `li`s; text atoms in `.lockup`, `.text-center`/`.text-end`, `.inline`; `<dl class="telemetry-group">` of `.telemetry` with bare `dt`/`dd` and text atoms, `.status--plain` trends, `--round`, `--plain`, `--compact`, `.telemetry-group--ruled`; `--telemetry-prominence`, `--ui-sizing: compact` | **Removed** in the identity pass. Avatar is an atom. See §6, §6b, §30. |
 | `.icon--xs`, `--md`, `--xl`, `--2xl`, `--scale-*`, `--muted`, `--destructive`, bare `.dir`; `.icon-box--surface`, `.icon-boxes-*`, `.icon-box-compact`, `.icon-box-lg`, `--icon-box-density`; `--icon-scale` | `--icon-size`, `.icon--danger`, `.text-color-muted`, `.icon--dir`, `.icon-box--subtle`, `--icon-box-size: sm`, `--ui-sizing: compact` | **Removed** in the icon pass. See §9. |
 | `--dense` modifiers (`.card--dense`, `.field--dense`, `.banner--dense`, etc.) | `--compact` | One density modifier only. |
 | `.ui-dense`, `style(--ui-density: dense)`, `--control-density`, `--menu-density`, `--combobox-density`, `--textarea-density`, `--telemetry-density` | `.ui-compact`, `style(--ui-sizing: compact)` | One density flag. Migrate in each component's pass. |
@@ -42,18 +43,27 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 | `.link--accent`, `--danger`, `--destructive`, `--success`, `--muted`, `--sm`, `--lg`, `--inline-flex`, `--underline(d)`, `--stretch`, `--inverted`, `--on-dark`; `.block-link--compact`, `--ghost`, `--icon`, `--inline`, `--flex`; `--link-hover-color`, `--link-active-color` | `.link`, `.link--subtle`, `.button--danger` for actions, `.color-scheme-dark` on dark bands, `.link--stretched`; `.block-link--sm`, `--plain`, `.button--icon` on an `<a>` | **Removed** in the link pass. See §8. |
 | `.tabs`, `.tabs__panel`, `.tabbed-content__panel`; per-tab `.tab--button`, `--subtle`, `--plain`, `--simple`, `--sm`, `--round`, `--vertical`, `--fill`; `.tabs-button`, `.tabs-subtle`, `.tabs-plain`, `.tabs-sm`, `.tabs-round`, `.tabs-icon`, `.tabs-vertical`, `.tabs-on-right`, `.tabs-flush`, `.tabs-scrollable`, `.tabs-wrap`, `.tabs-fill`, `.tabs-floating`, `.tabs-docked`, `.tabs-docked-top`; `--tabs-variation`, `--tab-variation`, `--tabs-style`, `--tabs-shape`; `--tabs-*` tokens | `.tabbed-content`, `.tab-panel`; axes on the list: `.tab-list--segmented`, `--subtle`, `--plain`, `--sm`, `--round`, `--vertical`, `--end`, `--flush`, `--scrollable`, `--fill`, `--floating`, `--docked`; `.tab--icon`; `--tab-list-style`, `--tab-list-prominence`, `--tab-list-size`, `--tab-list-corners`; `--tab-*`, `--tab-list-*` tokens | **Removed** in the tab pass. See §24. |
 | `.micro-text`, `.caption`, `.nano-heading`, `.nano-text`, `.strong-text`, `.alt-text`, `.code-text`, `.code`, `.color-muted`; `--micro-text-*`, `--nano-*`, `--small-text-*`, `--large-text-*`, `--body-font-size` | `.small-text`, `.font-bold`, `.font-serif`, `.font-mono`, `.text-muted`; `--body-sm-*`, `--body-lg-*`, `--body-fixed-font-size` | **Removed** in the text pass. Text atoms are fixed by default; see §20. |
+| `--vert-space`, `--vert-spacing`, `--prose-vert-spacing`, `--prose-font-sizing`, `--prose-spacing`, `.vert-spacing-*`, `.font-sizing-tight`; `.emoji.*` classes; `--prose-link-*`, `--prose-underline-*`, `--prose-body-*`, `--prose-block-width`, `--prose-inset-space*`, `--prose-vert-space*`, `--prose-figcaption-margin-bottom`, `--prose-figcaption-text-wrap`, `--prose-small-font-size` | `--font-sizing` (the rhythm follows it), `--prose-space`, `--prose-space-fluid`, `--prose-space-cq`, `--prose-indent`; the emoji in the text; `--link-prominence: subtle` on the prose | **Removed** in the prose pass. See §12. |
 | `.divider--vertical`, `--subtle`, `--quiet`, `--accent`, `--dotted`, `--sm`, `--md`, `--lg`; `.menu__separator`, `.batch-actions__separator`, `.combobox__separator`; `--divider-border-*`; styling of bare `hr` | `aria-orientation="vertical"`, `.divider`, `.divider--strong`, `.divider--dashed`; `.divider` (`<li role="separator">` in lists); `--divider-width`, `--divider-style`, `--divider-color` | **Removed** in the divider pass. See §15. |
 | `.skeleton--title`, `--circle`, `--round`, `--chip`, `--rect`, `--inline`, `--static`, `--sm`, `--md`, `--lg`, `--w-25`, `--w-33`, `--w-40`, `--w-60`, `--w-66`; `.card.skeleton`, `.card--skeleton`; `--skeleton-animation`, `--skeleton-bg` | `--heading`, `--avatar`, `--badge`, `--media`, `--skeleton-width`; a card with `aria-busy` and shapes inside; `--skeleton-motion`, `--skeleton-color` | **Removed** in the skeleton pass. See §26. |
 | `.card--bordered`, `--hollow`, `--flush`, `--dense`, `--panel`, `--bands`, `--sticky-header`, `--sticky-footer`, `--dynamic-corners`, `--sizes-fixed`, `--sizes-cq`, `.is-loading` on a card; `.card__link`, `__date`, `__canvas`, `__head`, `__foot`, `__band--ruled`, `__band--bordered`, `__band--flush`; `.card__content` around every card's parts; `--card-density`; `.section`; bare `<dialog>` styling, `--dialog-scroll` | Default card (bordered), `--plain`, `--compact`, `.card__body--scrollable`, `--ruled`, `--scrollable`; `.link.link--plain.link--stretched`; parts as direct children (`.card__content` only beside a thumb); `.ui-compact`; `.stack` with a divider; `.dialog` class, `.dialog--scrollable` | **Removed** in the surfaces pass. Card is a molecule. See §10 and §2. |
+| A `form method="dialog"` around a lone header close button, and the rule that made a lone button in one subtle and small; `--dialog-close-button-prominence`, `--dialog-close-button-size`; `dialog.padding`; `.dialog` opened with `show()`; `aria-modal` on a dialog | `.button.button--plain.button--icon` with `commandfor="{id}" command="close"`; the button's own classes; `dialog.cushion`; a `.popover`; nothing (`showModal()` makes the page inert) | **Removed** in the dialog pass. Navigation drawers take `.dialog--start`. See §2. |
 | `.popover--anchored`, `--lg`, `--xl`, `--full*`, `--left`, `--right`, `--bottom-left`, `--bottom-end`; bare `[popover]` styling; inline `anchor-name` / `position-anchor` on invoked popovers; a banner or bare text in a popover; `aria-haspopup="dialog"` on popovers that aren't dialogs; `.tooltip--left`, `--right`, `--anchored`; `.has-tooltip`; `popovertarget` on a tooltip; `role="tooltip"`; cards in tooltips; `--tooltip-font-size`, `--tooltip-line-height`, `--popover-bg`, `--popover-padding` and the other popover surface tokens | `.popover` (anchored by default), `--end-aligned`, `--start`, `--end`, `--popover-max-width`; `.tooltip--start`, `--end`; `interestfor` only; `aria-hidden` (label) or `aria-describedby` (description); a popover hovercard for rich content | **Removed** in the floating-layers pass. See §3, §23. |
-| `.button-group--tight`, `--segmented`, `--stacked`, `--stretch`, `--fill-items`, `--center`, `--justify-center`, `--justify-end`, `--space-between`, `--dense`, `--sm`, `--round`, `__content`, `__fill`; `.menu__item`, `__item--destructive`, `__text`, `__label`, `__content`, `--submenu`; `<header>` in a menu; `role="menu"`, `menuitem*`, `role="none"` on menu items, `aria-haspopup="menu"`; `role="toolbar"` without arrow-key script; `.batch-actions--contrast`, `--flush`, `--scrollable`, `data-state`, a count badge in the summary; `--menu-item-*`, `--menu-density` | `.button-group--joined`, `--vertical`, `--fill`, a `justify-*` utility or the container, `--compact`, `.buttons-sm`, `.buttons-round`, a text atom; `.button` in a `<li>`, `.button--danger`; `<li class="menu__heading">` with a text atom; no menu roles; `role="group"` with a label; `.batch-actions--strong`, `--plain`, `hidden`, the summary text in `role="status"` | **Removed** in the action-sets pass. Menu is a molecule. See §3b, §14, §18b. |
+| `.button-group--tight`, `--segmented`, `--stacked`, `--stretch`, `--fill-items`, `--center`, `--justify-center`, `--justify-end`, `--space-between`, `--dense`, `--sm`, `--round`, `__content`, `__fill`; `.menu__item`, `__item--destructive`, `__text`, `__label`, `__content`, `--submenu`; `<header>` in a menu; `role="menu"`, `menuitem*`, `role="none"` on menu items, `aria-haspopup="menu"`; `role="toolbar"` without arrow-key script; `.batch-actions--contrast`, `--flush`, `data-state`, a count badge in the summary; `--menu-item-*`, `--menu-density` | `.button-group--joined`, `--vertical`, `--fill`, a `justify-*` utility or the container, `--compact`, `.buttons-sm`, `.buttons-round`, a text atom; `.button` in a `<li>`, `.button--danger`; `<li class="menu__heading">` with a text atom; no menu roles; `role="group"` with a label; `.batch-actions--strong`, `--plain`, `hidden`, the summary text in `role="status"` | **Removed** in the action-sets pass. Menu is a molecule. See §3b, §14, §18b. |
 | `.breadcrumb__list`, `__item`, `__link`, `.is-current` in a breadcrumb; `--breadcrumb-font-size`, `--breadcrumb-current-font-weight`, `--breadcrumb-color`; `.nav-tree*`; `.navigation-tree__list`, `__item`, `__item--nested`, `__link`, `__text`, `__label`, `--indicator`, `--toc`, `--flush`; `--nav-tree-*`; `.pagination--center`, `--end`, `--between`, `__ellipsis`, an `<hr class="divider">` as a page gap; `.is-active` on the current page; `.page-count`, `__info`, `__jump`, `--center`, `--start`, `--end`; `.stepper__list`, `__content`, `__label`, `__desc`, `__indicator-text`, `--inline`; `.is-active` on steps; `<nav>` around a stepper of plain steps | Bare `ol`, `li` and `.link` with a text atom on the list; `.navigation-tree` with bare lists and `.button` items, `aria-current` for the current item, `.navigation-tree__heading` in an `<li>`; `.pagination__gap` (`aria-hidden`), `aria-current="page"` alone; a cluster with `.small-text` and a jump form; `ol.stepper` > `li.stepper__item` > `.stepper__step`, `aria-current="step"` alone, hidden state text in the title | **Removed** in the wayfinding pass. See §16, §16b, §17, §30. |
-| `.workspace` | `.app__workspace` | Do not use. |
-| Responsive visibility synonyms (§31D) | First name in each row | Do not use synonyms. |
+| `.legend`, bare `fieldset`/`legend` styling, `.fieldset--bordered`, `--loose`, `--lg`, `--dense`, `.fieldset__description`; `.field__result`, `__output`, `__errors`, `.label`/`.hint`/`.output`/`.error-message` aliases, `.field--sm`/`--lg`/`--loose`/`--dense`, `.inline-field`, `.fields-grid`, `.fields-inline`; generated " (Required)" and `.required`; `role="alert"` on server-rendered errors; `.choice--sm`/`--lg`/`--compact`, `.choices--compact`, `<small>` descriptions, `.controls-sm`/`-lg` on choices; `.form__submission`, `--right`, `--left`, `--form-submission-align`; `.inline-form`; `--form-choice*`, `--form-submission-*`, `--field-inner-gap`, `--fieldset-inner-gap` | `.fieldset__legend label`, `.fieldset` in a `.card`, `.fieldset__hint`; `<output class="small-text">`, `.field__error`, the `.label` text atom, `.field--inline`, `.form--aligned`, `.grid`; "(optional)" written in the label; `aria-describedby` + `aria-invalid`; the box size, `.small-text` in `.choice__label`; `.form__actions button-group` with a `justify-*` utility; `.cluster`; `--choice-*`, `--choices-*`, `--form-*`, `--field-*`, `--fieldset-gap` | **Removed** in the form-composition pass. See §7b. |
+| `.accordion--flush`, `--transparent`, `--ruled`, `--no-icon`; `.accordion-group--tight`, `--no-icons`; `.accordion__icon`, `.accordion__heading`; `--accordion-variation`; `--accordion-open-bg`, `--accordion-hover-border`, `--accordion-inner-border-*`, `--accordion-summary-*` | `.accordion--plain`; `.accordion-group--joined`; the built-in state icon; a text atom on the summary; `--accordion-prominence`; `--accordion-bg`, `--accordion-hover-bg`, `--accordion-inset` | **Removed** in the accordion pass. Accordion is a molecule. See §4. |
+| `.combobox--ghost`, `--flush`, `--invalid`, `--disabled`, `comboboxes-*`; `.combobox__listbox--anchored`, `--in-flow`; inline `anchor-name` / `position-anchor` on a combobox; `__option-main`, `__option-desc`, `__group-header`; dividers in a listbox; `.is-selected`, `data-focused`, `data-expanded`; `--combobox-density`, `--combobox-variation`; the combobox control tokens | `.combobox--plain`, `--subtle`, `--round`, `--sm`, `--lg` on the shared text-control base; `aria-invalid`, `disabled` on the input; `popover="manual"` on the list; a `.lockup`; `__group-label` in a `role="group"`; `.is-active` with `aria-activedescendant`, `aria-selected`, `aria-expanded`; `--combobox-size`, `--combobox-prominence`, `--combobox-corners`; the input tokens | **Removed** in the combobox pass. Combobox is a molecule. See §28. |
+| `.empty-state--flush`, `--bordered`, `--left`, `--error`, `[data-status]` on an empty state; `__icon-well`, `__hgroup`, an icon straight in `__visual`; `--empty-state-density`, `--empty-state-align`; `aria-labelledby` on an empty-state `<div>`; the empty state's `cq` type mode; `empty-state.icon-well-*`, `icon-*`, `title-color`, `padding-*`, `max-width` tokens | No padding by default (a `padding-block-*` utility for more), `--subtle`, `--start`, `--danger` and the other intents; an `.icon-box` in `__visual`; `--ui-sizing: compact`; a `<div>` (a `<section>` only as a page's whole content) with a `role="status"` element for the announcement; fixed text atoms; `empty-state.gap`, `compact-gap`, `content-max-width`, `description-color`, `subtle-*`, `--icon-box-intent` | **Removed** in the empty state pass. Empty state is a molecule. See §27. |
+| `.header-container`, `.header--borderless`, `--flush`; a row built inside the header (`.wrapper.flex.justify-content-between`, `.inline--between`) and padding utilities on it; `aria-label` on the banner; `--header-mobile-height`, `--header-desktop-height` and the global `--header-height` rule; `--header-color-palette`, `--header-color-scheme`, `--header-contained-height`, `--header-container-gap`, `--header-backdrop-filter` | Two `.header__bar`s in one `<header>`, `.header--plain`, `--header-padding-inline`; `.header__bar` with `.header__nav`; no label (one banner per page); `--header-height` set by the product on `:root` when the header is taller than 4rem; `.color-scheme-*` / `.color-palette-*` utilities, `--header-filter` | **Removed** in the header pass. See §33. |
+| `.table__caption`, `__caption--bottom`; `.table--zebra`, `--sm`, `--simple`, `--fixed`, `--flush`, `--head-cells-long`, `--sticky-header`, `--sticky-footer`, `--sticky-1st-column`; `.table__col--num`, `--numeric`, `--center`, `--fit`, `--counter`, `--expand`, `--auto`, `--min-*`; `.table__cell--long`, `--start`, `--index`, `--actions`, `--fill`, `--xs`…`--xl`; `[data-numeric]`, `[data-center]`, `[data-fit]`, `[data-nowrap]`; `aria-sort` on the sort button; `table.font-*`, `head-font-*`, `header-cell-font-weight`, `caption-*` tokens | A text atom on `<caption>`; `.table--striped`, `--compact`, `--plain`, `--sticky-head`, `--sticky-foot`, `--sticky-first-column`; `.table__cell--numeric`, `--center`, `--fit`, `--nowrap` (cells) and `.table__col--*` (widths); `aria-sort` on the `<th>`; body text tokens; `--table-inset` | **Removed** in the table pass. See §13. |
+| `.split--auto*`, `--auto-below-*`, `--auto-in-container-below-*`, `--reverse`, `--stretch`, `--panels`, `--cushioned`; `--split-sidebar-width`, `--split-min-width`; `.grid-carousel`, `--bleed` alias, viewport grid classes (`sm:grid--N-col` … `xl:`, `md:grid*`, `max-md:grid--carousel` and its aliases), `@max-md:carousel`; `--display`, `--flex-wrap`, `--direction`, `--justify` hooks; padding utilities added to a `.wrapper`; `wrapper` on a card; `.sidebar__scroller`, `.sidebar--flush`, `--right`, `.app__sidebar`, `.is-open`, the automatic sidebar drawer, `--site-header-height`; `.app__aside`, `.app__footer`, `.workspace`, `.app--locked`, `.main--panels`; `layout/sidebar.css`, the footer in `layout/app.css` | The split wraps on its own, `--end`, `--align-items: stretch`, the default gap; `--split-side-width`, `--split-main-min-width`; `.grid--carousel`, `--carousel-bleed`, `grid--N-col` (a maximum count that reflows) or `@xs:` … `@7xl:` container variants, `@max-3xl:grid--carousel`; `--justify-content`, `.inline--between`/`--end`, `.cluster--between`/`--end`; the wrapper's own gutter (`--wrapper-gutter`); `max-width-*` + `margin-inline-auto`; `.sidebar__body`, `__body--flush`, `--end`, `.sidebar`, a `.dialog--drawer`, `--header-height`; `.app__workspace`, `.footer`, `.app--viewport`, `.main--viewport`; `organisms/sidebar.css`, `organisms/footer.css` | **Removed** in the layout pass. See §19, §19b, §19c, §19d, §22, §34, §35. |
+| Third names and synonyms: `.mg-*`, `.pd-*`, `.bd-*`, `.rd-*`, `.fs-*`, `.fw-*`, `.d-*`, `.sr`, `.bold`, `.mono`, `.pre`, `.nowrap`, `.round`, `.squared`, `.cq*`; valueless `.padding`, `.margin`, `.gap`; left/right names (`.ml-*`, `.pr-*`, `.border-l`, `.rounded-r`, `.text-left`, `.margin-left-*`); `.margin-top-*`/`-bottom-*` and `.padding-start-*`/`-end-*`; `.font-size-*`, `.line-height-*`; `.font-weight-100` … `-900`; `.z-0` … `.z-50`; `.width-dialog`, `-popover`, `-sidebar`, `-prose`, `-shell`, `-wide`, `.width-*`, `.height-*`, `.block-*`, `.size-grow`, `.max-width-*`, `.min-width-*`; `.bg-effect-*`, `.bg-blurred-*`, `.bg-color`, `.color-accent` and the other `.color-*` text colours; `.shadow-raised`, `-inset`, `-0`, `.no-shadow`, palette shadows (`.shadow-aqua` …); `.backdrop`; `.focus-none`, `.outline-none`, `.focus-container`, `.focus-border`, `.focus-ring-inset`; `.underline-none`; `.hide` (unconditional), `{condition}:show`, `hide-decor`, `flex-auto`, the §31 synonyms, the `2xs`/`xs` viewport sizes; `.ui-dense`, `.ui-default`, `.spacing-mode-*`, `.font-sizing-compact--on-desk`, `.viewport-fit-cover`; `utilities/spacing-blocks.css` | `.m-*`, `.p-*`, `.border`, `.rounded-*`, a text atom, `.font-bold`, `.hidden`, `.sr-only`, `.font-mono`, `.whitespace-pre`, `.whitespace-nowrap`, `.rounded-full`, `.rounded-none`, `.container-inline`; `.p-md`, `.m-md`, `.gap-md`; `.ms-*`, `.pe-*`, `.border-s`, `.rounded-e`, `.text-start`; `.mt-*`/`.mb-*`, `.ps-*`/`.pe-*`; `.small-text`, `.text`, `.large-text`; `.font-normal` … `.font-bold`; `.z-base` … `.z-tooltip`; the component's token, `.inline-size-*`, `.max-inline-size-*`, `.min-inline-size-*`, `.block-size-*`, `.size-*`, `.grow`; `.bg-translucent-subtle`, `.bg-translucent`, `-strong`; `.bg-surface`, `.text-accent` …; `.shadow-lg`, `.shadow-inner`, `.shadow-none`, `.shadow-accent` …; `<dialog>`'s `::backdrop`; `.focus-within`, `--inset`, `--border`; `.link--plain`; `.hidden` or `[hidden]`, `{other condition}:hide`; `.ui-compact`, `.fine:ui-compact`; `utilities/sizing.css`. Container sizes moved to Tailwind's container scale (`@sm:` 40em is now `@2xl:`, `@md:` 48em `@3xl:`, `@lg:` 60em `@5xl:`), `lg:` to 64rem; `.border-muted`/`.border-quiet` set the colour only; `.border` is 1px | **Removed** in the utilities pass. See §31, §36. |
+| `.deck` and its parts and modifiers in the library, `--deck-*` tokens, `organisms/deck.css`, §29; recipe demo scripts that toggle states, `.is-open` on a sidebar and hand-made backdrops; inline `style` in recipes beyond token hooks; `.font-size-md`, `.font-weight-medium`, `.heading-1`, `.lead-text`; §32 patterns A–C | The Cadence recipe's `cadence/deck.css`; one story per state with static markup, dialogs and popovers opened in `play`; a `.dialog--drawer.dialog--start`; `hidden` and token hooks (`--value`, `--skeleton-width`, `--avatar-bg`, `--dialog-width`) only; text atoms and `.font-*` utilities; the five recipes in §32 | **Removed** in the recipes pass. See §32. |
 
 ### v1 Scope
-- **In core:** `telemetry` (to be refactored onto status, text and icon atoms), `batch-actions`.
-- **Out of core:** `deck` is a stress-test showcase moving to `packages/storybook/stories/recipes/`. Do not use it in new library work or treat it as a pattern to copy.
+- **In core:** `telemetry` (a description list on status, text and icon atoms), `batch-actions`.
+- **Out of core:** `deck` is the Cadence recipe's own CSS (`packages/storybook/stories/recipes/cadence/deck.css`), with no tokens, no package export and no blog twin. Do not use it in library work or treat it as a pattern to copy.
 
 ---
 
@@ -74,6 +84,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 DFH-Components/
 ├── tokens/
 │   ├── 1-global.json          # Tier 1: Foundation tokens (palettes, scales, units)
+│   ├── theme.json             # Theme source for the colour tokens (seeds, lightness curves, white and black, each role's colour per mode)
 │   ├── 2-semantic.json        # Tier 2: Semantic UI tokens (light-dark(), surfaces, focus, shadows)
 │   └── 3-component.json       # Tier 3: Component tokens (button, dialog, popover, accordion)
 ├── packages/
@@ -82,10 +93,10 @@ DFH-Components/
 │   │   │   ├── reset.css      # Modern accessible CSS reset
 │   │   │   ├── variables.css  # Auto-compiled CSS custom properties (DO NOT edit directly)
 │   │   │   ├── index.css      # Core entrypoint importing layout, components & utilities
-│   │   │   ├── atoms/         # Foundational indivisible primitives (text, button, tab, input, badge, icon, etc.)
-│   │   │   ├── molecules/     # Simple combined units (card, field, lockup, tab-list, avatar, banner, telemetry, popover, etc.)
-│   │   │   ├── organisms/     # Complex composite assemblies (dialog, table, tabbed-content, header, etc.)
-│   │   │   ├── layout/        # 1D/2D spatial layout primitives (cluster, grid, inline, split, stack, wrapper, sidebar, app)
+│   │   │   ├── atoms/         # Foundational indivisible primitives (text, button, tab, input, badge, avatar, icon, etc.)
+│   │   │   ├── molecules/     # Simple combined units (card, field, lockup, tab-list, avatar-group, banner, telemetry, popover, etc.)
+│   │   │   ├── organisms/     # Complex composite assemblies (dialog, table, tabbed-content, header, footer, sidebar, etc.)
+│   │   │   ├── layout/        # 1D/2D spatial layout primitives (cluster, grid, inline, split, stack, wrapper; app and main shell)
 │   │   │   ├── utilities/     # Low-specificity utility classes (spacing, border, typography, accessibility, display, flex, layout-helpers)
 │   │   │   └── overrides.css  # Custom extension layer for project-specific overrides
 │   ├── docs/                  # @design-for-humans/docs (Astro documentation portal)
@@ -94,6 +105,8 @@ DFH-Components/
 │   │   │   ├── layouts/       # Astro page shells & layout wrappers
 │   │   │   └── pages/         # Documentation routes (/components, /components/atoms/button, etc.)
 │   │   └── public/            # Public assets (icons.svg, favicon)
+│   ├── theme-engine/          # Builds the colour ramps from tokens/theme.json and gates Tier 2 contrast (core of the future Token Designer)
+│   ├── token-designer/        # Token Designer prototype (Vite app): edit tokens/theme.json visually, with live ramps, contrast and preview
 │   ├── figma-sync/            # Token compilation & Figma export tooling
 │   │   ├── compile-tokens.js      # Node token compiler (W3C DTCG -> CSS variables)
 │   │   ├── export-figma-tokens.js # Figma exporter (Tokens Studio & Honza Toman Variables)
@@ -103,12 +116,12 @@ DFH-Components/
 │   └── storybook/             # @design-for-humans/storybook
 │       ├── .storybook/        # Storybook configuration with @storybook/addon-a11y
 │       └── stories/           # Component stories with automated axe WCAG checks
-│           ├── atoms/         # Stories for indivisible primitives (button, input, badge, icon, etc.)
-│           ├── molecules/     # Stories for composed units (card, field, lockup, avatar, banner, etc.)
+│           ├── atoms/         # Stories for indivisible primitives (button, input, badge, avatar, icon, etc.)
+│           ├── molecules/     # Stories for composed units (card, field, lockup, avatar-group, banner, etc.)
 │           ├── organisms/     # Stories for complex assemblies (dialog, table, tabs, etc.)
 │           ├── layout/        # Stories for 1D/2D layout primitives (grid, stack, cluster, inline, split, etc.)
 │           ├── utilities/     # Stories for utility classes (spacing, border, typography, flex, etc.)
-│           ├── recipes/       # Stories for composite workflows and domain showcases (tally-sprout, cadence-dashboard, deck, etc.)
+│           ├── recipes/       # Stories for composite workflows and domain showcases (app header, command palette, filter sidebar, tally-sprout, cadence-dashboard)
 │           └── tokens/        # Stories for tokens (shadows, elevation, etc.)
 ├── docs/                      # Architecture, principles, and handover documentation
 │   ├── PRINCIPLES.md          # Core design and engineering principles (outranks AGENTS.md)
@@ -146,7 +159,12 @@ DFH-Components/
 | :--- | :--- | :--- |
 | `npm run build:tokens` | Root | Compiles `tokens/*.json` into `packages/css/src/variables.css`. |
 | `npm run export:figma` | Root | Exports Tokens Studio and Native Figma Variables JSON into `packages/figma-sync/dist/`. |
+| `npm run build:palette` | Root | Builds the Tier 1 colour ramps from `tokens/theme.json` and checks every Tier 2 pairing in light and dark; `-- --write` replaces the `color` block of `tokens/1-global.json` and the colour roles in `tokens/2-semantic.json` (only when the gate passes). Edit the theme, never the generated colours or role values. |
+| `npm run test:theme` | Root | Runs the theme engine's `node --test` suite. |
+| `npm run designer` | Root | Starts the Token Designer prototype on `http://localhost:5180`. **Global colors:** ramps and their lightness curves. **Semantic colors:** a palette colour per role and mode, with each pairing's contrast. **Save** writes `theme.json`; **Publish** (dev only, gate must pass) also writes the colour tokens and runs `build:tokens` and `export:figma`. |
 | `npm run sync:icons` | Root | Propagates `icons/icons.svg` to CSS package, Storybook, Astro docs, and Craft CMS blog. |
+| `npm run watch:blog` | Root | Watches `packages/css/src/{atoms,molecules,organisms,layout,utilities}` and mirrors each saved file to its blog SCSS twin, then recompiles the blog CSS. Twins with blog-only code differences are reported, not written. |
+| `npm run sync:blog` | Root | One-off mirror. `-- --check` lists differences; `-- card.css` overwrites the named twins. Never touches tokens, `_tier3.scss`, Sass-authored files or the overview twig. |
 
 ### 3. Linting & Testing Status
 - **Formatting:** Prettier (`^3.0.0`) configured via package.json.
@@ -162,7 +180,7 @@ The component library operates in tandem with the live site repository:
 - **Blog Repo:** `designforhumans-blog` (`/Users/paulwoods/Sites/designforhumans-blog`)
 
 ### Synchronization Conventions:
-1. **Utility & Atom Parity:** When modifying CSS utilities or atoms in `packages/css/src/utilities/`, mirror corresponding changes into `designforhumans-blog/web/styles/scss/library/utilities/`.
+1. **Utility & Atom Parity:** Component and utility CSS is mirrored into `designforhumans-blog/web/styles/scss/library/<tier>/_<name>.scss` by `npm run sync:blog` (or `watch:blog`). Files the script reports as Sass-authored (`utilities/_accessibility`, `utilities/_responsive-helpers`) and new components (which need a `@forward`) are ported by hand.
 1b. **Component Overview Page:** Each component pass also updates `designforhumans-blog/templates/_component-library.twig`, the one-page overview, to the new markup. Blog Tier 3 tokens live in `web/styles/scss/library/theme/_tier3.scss` and are kept in step by hand.
 2. **Sass Recompilation:** After updating SCSS in `designforhumans-blog`, recompile shared stylesheets using:
    ```bash
@@ -176,7 +194,7 @@ The component library operates in tandem with the live site repository:
 
 ### 1. Token Architecture (W3C DTCG 3-Tier)
 - **Tier 1 (Global):** `tokens/1-global.json` — Foundation values (`palette.*`, `space.*`, `font.*`).
-- **Tier 2 (Semantic):** `tokens/2-semantic.json` — Functional UI roles using `light-dark()` (`surface.*`, `foreground.*`, `border.*`, `shadow.*`, `focus.*`).
+- **Tier 2 (Semantic):** `tokens/2-semantic.json` — Functional UI roles using `light-dark()` (`surface.*`, `foreground.*`, `border.*`, `shadow.*`, `focus.*`). Colour roles point straight at the palette, `light-dark({color.neutral.800}, {color.neutral.000})`, and are written from `tokens/theme.json`; there are no in-between "bridge" colours. The `.color-palette-inverted` block is generated by swapping each role's two branches.
 - **Tier 3 (Component):** `tokens/3-component.json` — Specific component variables (`button.*`, `dialog.*`, `table.*`).
 - **CSS Variable Mapping:** Formatted as `--<domain>-<prop>` (e.g. `--surface-card`, `--focus-ring-color`).
 - **Component Private Manifest:** Local component variables use `--_<component>-<prop>` (e.g. `--_button-bg`, `--_card-padding`).
@@ -187,14 +205,9 @@ The component library operates in tandem with the live site repository:
 - **Sub-elements:** BEM double-underscore syntax: `.card__header`, `.card__title`, `.card__body`, `.card__footer`, `.field__label`
 
 ### 3. Spatial Layout Primitives vs. Utilities Law
-- **Spatial Layout Primitives** (`.inline`, `.stack`, `.grid`, `.cluster`, `.split`, `.wrapper`, `.sidebar`, `.app`) are structural orchestration components managing geometry, gap, and child distribution.
-- **Display Utilities** MUST NOT use bare component names. Display utilities use explicit prefixes:
-  - `display: block` $\rightarrow$ `.d-block`, `.display-block`
-  - `display: inline` $\rightarrow$ `.d-inline`, `.display-inline` *(DO NOT use `.inline` which clobbers the layout primitive)*
-  - `display: inline-block` $\rightarrow$ `.d-inline-block`, `.display-inline-block`
-  - `display: contents` $\rightarrow$ `.d-contents`, `.display-contents`
-  - `display: none` $\rightarrow$ `.d-none`, `.display-none`, `.hidden`, `.hide`
-- **Utility Shorthands:** Standard hyphenated prefixes (`.p-sm`, `.m-md`, `.ms-sm`, `.me-sm`, `.rounded-md`, `.border-0`, `.border-t`, `.font-bold`, `.truncate`, `.text-nowrap`, `.z-10`, `.sr`). Never generate bare single-letter tags (`.p`, `.m`, `.b`).
+- **Spatial Layout Primitives** (`.inline`, `.stack`, `.grid`, `.cluster`, `.split`, `.wrapper`, `.app`, `.app__workspace`, `.main`) are structural orchestration components managing geometry, gap, and child distribution. Their hooks (`--gap`, `--align-items`, `--justify-content`, `--grid-min`, `--split-*`) are registered with `inherits: false`, so they stay on the element they are set on, and their gaps step down under `--ui-sizing: compact`. `.sidebar` and `.footer` are organisms.
+- **Utilities** (§36) set one property each, on logical properties, from Tier 2 tokens. Each has at most two names: the verbose one (`.padding-inline-sm`, `.display-none`) and Tailwind's shorthand where it means the same (`.px-sm`, `.hidden`). Markup uses the shorthand: `.p-sm`, `.mx-auto`, `.ps-sm`, `.gap-sm`, `.border`, `.border-t`, `.rounded-md`, `.font-bold`, `.text-muted`, `.text-start`, `.truncate`, `.whitespace-nowrap`, `.z-sticky`, `.sr-only`. Spacing keeps Tailwind's prefixes with the library's step names. No left/right names (use `s`/`e`), no bare single letters, and `display: inline` is `.display-inline` only (`.inline` is the layout primitive). `npm run check:utilities` enforces the names.
+- **Not utilities:** type size (use a text atom), a row or column of things (use a layout primitive), a component's width or surface (set its token). Don't add `.items-center` to `.inline` or `.cluster` (they centre already) or `.justify-between` to `.inline` (use `.inline--between`).
 
 ---
 
@@ -223,7 +236,7 @@ with every stylesheet in its layer. Until then the order above is enforced by im
 
 > **Fundamental Axiom:** *Organisms orchestrate layout geometry; Atoms dictate elemental styling.*
 
-In Design For Humans, composites (the `.card` and `.banner` molecules; the `.dialog`, `.empty-state`, `.table` and `.tabbed-content` organisms) compose foundational **Atoms** (`.button`, `.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.text`, `.caption`, `.badge`, `.status`, `.chip`, `.kbd`, `.icon`).
+In Design For Humans, composites (the `.card`, `.banner`, `.lockup`, `.telemetry` and `.empty-state` molecules; the `.dialog`, `.table` and `.tabbed-content` organisms) compose foundational **Atoms** (`.button`, `.heading`, `.subheading`, `.small-heading`, `.micro-heading`, `.display-title`, `.text`, `.small-text`, `.label`, `.badge`, `.status`, `.chip`, `.kbd`, `.icon`, `.avatar`).
 
 ### 1. The Zero-Specificity Cascade Rule
 All component primitives are wrapped in `:where(...)` to ensure a level playing field with zero specificity `(0, 0, 0)`. Because organisms are imported downstream from atoms in the stylesheet cascade, **any typography property declared on an organism hook (even `inherit` or `font-size: 1rem`) will clobber atom utility classes placed on that element**.
@@ -237,7 +250,7 @@ All component primitives are wrapped in `:where(...)` to ensure a level playing 
 ```
 
 ### 2. Constraints on Organism Element Hooks
-Organism sub-element hooks (`.card__title`, `.card__subtitle`, `.card__band`, `.empty-state__title`, `.empty-state__description`, `.stepper__title`, `.stepper__description`, `.menu__heading`, `.combobox__group-header`, etc.) are **structural layout hooks only**:
+Organism sub-element hooks (`.card__title`, `.card__subtitle`, `.card__band`, `.empty-state__title`, `.empty-state__description`, `.stepper__title`, `.stepper__description`, `.menu__heading`, `.combobox__group-label`, etc.) are **structural layout hooks only**:
 - **ALLOWED declarations:** `margin: 0; min-inline-size: 0; text-wrap: balance; flex: 1; align-self: stretch; color: var(--_...-color); user-select: none;`
 - **FORBIDDEN declarations:** `font-size`, `font-family`, `font-weight`, `line-height`, `letter-spacing`, `text-transform`, or `inherit`.
 
@@ -251,10 +264,10 @@ Text atoms are **fixed** by default: each takes one step of the scale at every w
 | cq | `.font-sizing-cq` on a container with `container-type: inline-size` | Grows with the container (`cqi`) |
 | compact | `.font-sizing-compact`, `.ui-compact`, any `--compact` container | One step down |
 
-Some organisms set the mode themselves: `.dialog`, `.combobox`, `.empty-state` and `.stepper` use `cq` (with `container-type: inline-size`); `.card`, `.menu`, `.navigation-tree`, `.table`, `.banner` and `.accordion` reset to fixed (a dialog passes `cq` to its card through `--card-font-sizing`). The docs site puts `.font-sizing-fluid` on its article.
+Some organisms set the mode themselves: `.dialog` and `.stepper` use `cq` (with `container-type: inline-size`); `.card`, `.menu`, `.navigation-tree`, `.table`, `.banner` and `.accordion` reset to fixed (a dialog passes `cq` to its card through `--card-font-sizing`). Prose takes no mode of its own: it follows the mode around it, and so does its rhythm. The docs site puts `.font-sizing-fluid` on its article.
 
 ### 4. Container Density & Sizing Orchestration (`--ui-sizing: compact` & `--font-sizing: compact`)
-When an organism or molecule enters compact density (the only density modifier is `--compact`; `--dense` is legacy) (`.stepper--compact`, `.card--compact`, `.menu--compact`, `.table--compact`, `.combobox--compact`), declare:
+When an organism or molecule enters compact density (the only density modifier is `--compact`; `--dense` is legacy) (`.stepper--compact`, `.card--compact`, `.menu--compact`, `.table--compact`, `.accordion--compact`, `.empty-state--compact`), declare:
 ```css
 --ui-sizing: compact;
 ```
@@ -276,18 +289,19 @@ Canonical markup and per-component rules live in `docs/markup/`, one file per co
 | [Modal Dialog Primitive (Native HTML `<dialog>` composed with `.card`)](docs/markup/02-modal-dialog.md) |
 | [Popover](docs/markup/03-popover.md) |
 | [Menu](docs/markup/03b-menu.md) |
-| [Accordion Primitive (Native `<details>` / `<summary>`)](docs/markup/04-accordion.md) |
+| [Accordion](docs/markup/04-accordion.md) |
 | [Badge, Status, Chip & Kbd Primitives](docs/markup/05-badge-status-chip-kbd.md) |
-| [Avatar Primitive & Avatar Groups](docs/markup/06-avatar.md) |
-| [Lockup Primitive (Paired Typographic Micro-Container)](docs/markup/06b-lockup.md) |
+| [Avatar & Avatar Group](docs/markup/06-avatar.md) |
+| [Lockup](docs/markup/06b-lockup.md) |
 | [Input & Form Control Primitives](docs/markup/07-form-controls.md) |
+| [Form Composition: Field, Fieldset, Choices & Form](docs/markup/07b-form-composition.md) |
 | [Skip Link Primitive (WCAG 2.4.1 Bypass Blocks)](docs/markup/07-skip-link.md) |
 | [Link & Block Link Primitives](docs/markup/08-link-block-link.md) |
 | [Icon & Icon Box Primitives](docs/markup/09-icon-icon-box.md) |
 | [Card Primitive](docs/markup/10-card.md) |
 | [Banner](docs/markup/11-banner.md) |
-| [Prose Primitive (Rich Text & Editorial Layout)](docs/markup/12-prose.md) |
-| [Table Primitive](docs/markup/13-table.md) |
+| [Prose](docs/markup/12-prose.md) |
+| [Table](docs/markup/13-table.md) |
 | [Button Group](docs/markup/14-button-group.md) |
 | [Divider Primitive](docs/markup/15-divider.md) |
 | [Breadcrumb](docs/markup/16-breadcrumb.md) |
@@ -295,22 +309,27 @@ Canonical markup and per-component rules live in `docs/markup/`, one file per co
 | [Pagination](docs/markup/17-pagination-page-count.md) |
 | [Toast (Banners in a Live Stack)](docs/markup/18-toast.md) |
 | [Batch Actions](docs/markup/18b-batch-actions.md) |
-| [Wrapper Primitive (Content Width Constraints & Alignment)](docs/markup/19-wrapper.md) |
-| [Grid & Grid Carousel Primitives (`.grid`, `.grid--carousel`)](docs/markup/19b-grid-grid-carousel.md) |
+| [Wrapper](docs/markup/19-wrapper.md) |
+| [Grid](docs/markup/19b-grid-grid-carousel.md) |
+| [Split](docs/markup/19c-split.md) |
+| [App Shell (`.app`, `.app__workspace`, `.main`)](docs/markup/19d-app-shell.md) |
 | [Text & Heading Primitives (Typography Presets)](docs/markup/20-text-heading.md) |
 | [Banner Dock (Site Announcements Pinned to the Page Edge)](docs/markup/21-banner-dock.md) |
-| [Stack, Inline & Cluster Primitives (1D Layout Flows)](docs/markup/22-stack-inline-cluster.md) |
+| [Stack, Inline & Cluster](docs/markup/22-stack-inline-cluster.md) |
 | [Tooltip](docs/markup/23-tooltip.md) |
 | [Tabs (Tab Atom, Tab List Molecule & Tabbed Content Organism)](docs/markup/24-tabs.md) |
 | [Progress & Meter Primitives](docs/markup/25-progress-meter.md) |
 | [Skeleton Primitive (Content Loading Placeholders)](docs/markup/26-skeleton.md) |
-| [Empty State Primitive (Zero-Data Views & Onboarding)](docs/markup/27-empty-state.md) |
-| [Combobox Primitive (Search & Select)](docs/markup/28-combobox.md) |
-| [Deck (Out of v1 Core — Moving to Recipes)](docs/markup/29-deck.md) |
+| [Empty State](docs/markup/27-empty-state.md) |
+| [Combobox](docs/markup/28-combobox.md) |
 | [Stepper](docs/markup/30-stepper.md) |
-| [Telemetry & Stat Pill Primitives (Metrics, Badges & Strips)](docs/markup/30-telemetry.md) |
-| [Responsive Visibility & Adaptive Disclosure Helpers](docs/markup/31-responsive-visibility.md) |
+| [Telemetry](docs/markup/30-telemetry.md) |
+| [Responsive Helpers](docs/markup/31-responsive-visibility.md) |
 | [Component Recipes & Composed Patterns](docs/markup/32-recipes.md) |
+| [Header](docs/markup/33-header.md) |
+| [Sidebar](docs/markup/34-sidebar.md) |
+| [Footer](docs/markup/35-footer.md) |
+| [Utilities](docs/markup/36-utilities.md) |
 
 ---
 

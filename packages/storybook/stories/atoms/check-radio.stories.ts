@@ -25,8 +25,6 @@ const meta: Meta<CheckArgs> = {
     docs: {
       description: {
         component: `
-### Checkbox & Radio
-
 Native checkboxes and radios, coloured with \`accent-color\`. The browser draws the box, so it stays legible in forced colours.
 
 | Axis | Modifiers | Container flag |
@@ -137,7 +135,7 @@ export const InAFieldset: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md stack">
       <fieldset class="fieldset">
-        <legend class="legend">Deliverables</legend>
+        <legend class="fieldset__legend label">Deliverables</legend>
         <div class="choices">
           ${choice('checkbox', 'Automated axe scan', 'checked')}
           ${choice('checkbox', 'Keyboard review')}
@@ -145,7 +143,7 @@ export const InAFieldset: Story = {
         </div>
       </fieldset>
       <fieldset class="fieldset">
-        <legend class="legend">Frequency</legend>
+        <legend class="fieldset__legend label">Frequency</legend>
         <div class="choices choices--inline">
           ${choice('radio', 'Daily', 'name="freq" checked')}
           ${choice('radio', 'Weekly', 'name="freq"')}

@@ -44,7 +44,7 @@ A placeholder that holds the space of content still loading, so nothing moves wh
     </hgroup>
   </header>
   <div class="card__body">
-    <p class="visually-hidden" role="status">Loading team activity…</p>
+    <p class="sr-only" role="status">Loading team activity…</p>
     <span class="skeleton skeleton--media" aria-hidden="true"></span>
     <p class="text">
       <span class="skeleton skeleton--text" aria-hidden="true"></span>

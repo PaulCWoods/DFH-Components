@@ -55,6 +55,7 @@
   --_status-font-size: var(--status-font-size, 0.875rem);
   --_status-font-weight: var(--status-font-weight, 700);
   --_status-text-transform: var(--status-text-transform, none);
+  --_status-min-size: var(--status-min-size, 2rem);
   --_status-padding-block: var(--status-padding-block, 0.375rem);
   --_status-padding-inline: var(--status-padding-inline, 0.5rem);
   --_status-gap: var(--status-gap, 0.25rem);
@@ -111,6 +112,7 @@
   }
 
   @container style(--status-prominence: plain) {
+    --_status-min-size: 0px;
     --_status-bg: transparent;
     --_status-border-color: transparent;
     --_status-padding-inline: 0;
@@ -121,6 +123,7 @@
   /* Size */
   @container style(--status-size: sm) or style(--ui-sizing: compact) {
     --_status-font-size: var(--status-sm-font-size, 0.75rem);
+    --_status-min-size: 0px;
     --_status-padding-block: var(--status-sm-padding-block, 0.25rem);
     --_status-padding-inline: var(--status-sm-padding-inline, 0.375rem);
   }
@@ -136,6 +139,7 @@
   gap: var(--_status-gap);
   flex-shrink: 0;
   box-sizing: border-box;
+  min-block-size: var(--_status-min-size);
   padding-block: var(--_status-padding-block);
   padding-inline: var(--_status-padding-inline);
   vertical-align: middle;
@@ -234,6 +238,7 @@
 }
 
 :where(.status--plain) {
+  --_status-min-size: 0px;
   --_status-bg: transparent;
   --_status-text: var(--_status-tone);
   --_status-border-color: transparent;
@@ -258,6 +263,7 @@
    ========================================================================== */
 :where(.status--sm) {
   --_status-font-size: var(--status-sm-font-size, 0.75rem);
+  --_status-min-size: 0px;
   --_status-padding-block: var(--status-sm-padding-block, 0.125rem);
   --_status-padding-inline: var(--status-sm-padding-inline, 0.25rem);
 }

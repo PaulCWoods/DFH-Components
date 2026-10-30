@@ -1,66 +1,50 @@
-# 30. Telemetry & Stat Pill Primitives (Metrics, Badges & Strips)
+# 30. Telemetry
+A labelled value: "Uptime 99.98%". A molecule built on a description list, so each label is a term and its value the description. The telemetry draws the surface and lays out the parts; type comes from text atoms. The audit is in `docs/audit/identity-values.md`.
+
+| Block | Options | Container flags |
+| :--- | :--- | :--- |
+| `.telemetry` | `--icon-start`, `--inline`, `--plain`, `--round`, `--compact` | `--telemetry-icon-placement: start`, `--telemetry-prominence: plain`, `--telemetry-corners: round`, `--ui-sizing: compact` |
+| `.telemetry-group` | `--ruled` | |
+
+## A. Group
 ```html
-<!-- 1. Standard Telemetry Metric Pill -->
-<div class="telemetry">
-  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
-  <div class="telemetry__content">
-    <span class="telemetry__label">Listeners</span>
-    <strong class="telemetry__value">14,820</strong>
-  </div>
-</div>
-
-<!-- 2. Metric with Unit Suffix and Semantic Trend -->
-<div class="telemetry">
-  <div class="telemetry__content">
-    <span class="telemetry__label">Buffer Latency</span>
-    <strong class="telemetry__value">42<span class="telemetry__unit">ms</span></strong>
-  </div>
-  <span class="telemetry__trend" data-trend="positive" aria-label="Decreased by 4ms">
-    -4ms
-  </span>
-</div>
-
-<!-- 3. Semantic Definition List Telemetry Strip (.telemetry-strip--ruled) -->
-<dl class="telemetry-group telemetry-strip--ruled" aria-label="Station live telemetry">
+<dl class="telemetry-group" aria-label="Station">
   <div class="telemetry">
-    <dt class="telemetry__label">
-      <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+    <dt class="small-text text-muted">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
       Listeners
     </dt>
-    <dd class="telemetry__value">14,820</dd>
+    <dd class="small-heading">14,820</dd>
   </div>
   <div class="telemetry">
-    <dt class="telemetry__label">
-      <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
-      Peak Today
-    </dt>
-    <dd class="telemetry__value">28,450</dd>
-  </div>
-  <div class="telemetry" data-status="online">
-    <dt class="telemetry__label">
-      <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Circle"/></svg>
-      Uptime
-    </dt>
-    <dd class="telemetry__value">99.98%</dd>
+    <dt class="small-text text-muted">Latency</dt>
+    <dd class="small-heading">42<span class="small-text">ms</span></dd>
   </div>
 </dl>
+```
+- **Label** (`dt`): a text atom, with an optional leading icon.
+- **Value** (`dd`): a text atom; a unit is a smaller atom inside it. Values use tabular figures.
+- **One metric:** `<dl class="telemetry">` with its `dt` and `dd` directly inside.
+- **`--ruled`** on the group makes one bordered strip with a divider between items.
+- **`--icon-start`** moves the label's icon into a gutter at the start of the box: 24px (`--telemetry-lead-icon-size`), centred on the label and value. The markup is unchanged; the icon stays in the `dt`, because a `<dl>` item may only hold terms and descriptions. Items without an icon get no gutter. Set `--telemetry-icon-placement: start` on a group or region to do the same for every item in it.
 
-<!-- 4. Dashboard KPI Stat Card (.telemetry--card .telemetry--stacked) -->
-<div class="telemetry telemetry--card telemetry--stacked">
-  <svg class="telemetry__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Progress"/></svg>
-  <div class="telemetry__content">
-    <span class="telemetry__label">Total Listen Hours</span>
-    <strong class="telemetry__value" style="font-size: var(--typography-font-size-2);">128,450<span class="telemetry__unit">hrs</span></strong>
-    <span class="telemetry__trend telemetry__trend--positive">
-      +18.2% vs previous period
+## B. Trends and States
+A trend or state is a plain status in the value, with an icon and signed text, so it is never colour alone.
+```html
+<div class="telemetry">
+  <dt class="small-text text-muted">Listen hours</dt>
+  <dd class="heading">
+    128,450
+    <span class="status status--plain status--success">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
+      +18.2%
     </span>
-  </div>
-</div>
-
-<!-- 5. Compact Telemetry Pill (.telemetry--compact) -->
-<div class="telemetry telemetry--compact">
-  <span class="telemetry__label">FPS</span>
-  <strong class="telemetry__value">60</strong>
+  </dd>
 </div>
 ```
+Pick the intent by meaning, not direction: a rising drop-off rate is `--danger`. Where the sign isn't enough, add hidden text: `<span class="sr-only">up</span>` or "up 12.4% on last week".
 
+## C. Rules
+- **Not a live region.** Values that tick over every second would flood a screen reader. If a change matters, announce it in a separate `role="status"`.
+- **No KPI cards.** A large stat with a description is a `.card` holding a telemetry.
+- **Removed:** `.telemetry__icon`, `__content`, `__label`, `__value`, `__unit`, `__trend`, `__status`, `[data-trend]`, `[data-status]`, the telemetry intents; `--pill` (use `--round`), `--subtle` (use `--plain`), `--bordered` (the default), `--sm` (use `--compact`), `--stacked` (the default), `--icon-end`, `--card`; `--telemetry-variation`, `--telemetry-density`; `.telemetry-strip` (use `.telemetry-group--ruled`); `.stat-pill`.

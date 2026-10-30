@@ -7,101 +7,31 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-## Table Primitive
+A data table: rules, padding, alignment and sticky edges. Cell content is atoms (text atoms, \`.status\`, \`.button\`, \`.lockup\`). Sorting, selection and paging are the page's job; the table styles their states.
 
-Accessible, token-driven tabular data foundation featuring keyboard-accessible responsive containers (\`tabindex="0"\`), CSS scroll-state container queries for dynamic depth drop shadows, semantic header scopes (\`scope="col"\` / \`scope="row"\`), tabular numeric alignments, and multi-axis sticky pinning adhering to WCAG 2.2 Level AA / AAA standards.
-
----
-
-### Canonical Semantic Markup Signature
+### Markup
 \`\`\`html
-<div class="table-container" tabindex="0" role="region" aria-label="Quarterly Financial Summary">
-  <table class="table table--striped table--hover">
-    <caption class="table__caption">Quarterly Financial Summary</caption>
+<div class="table-container" tabindex="0" role="region" aria-labelledby="plants">
+  <table class="table">
+    <caption id="plants" class="small-heading">Plants for dry shade</caption>
     <thead>
-      <tr>
-        <th scope="col" class="table__col--fill">Category</th>
-        <th scope="col" class="table__col--sm table__col--num">Q1</th>
-        <th scope="col" class="table__col--sm table__col--num">Q2</th>
-        <th scope="col" class="table__col--sm table__col--num">Total</th>
-      </tr>
+      <tr><th scope="col">Plant</th><th scope="col" class="table__cell--numeric">Height (cm)</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">Enterprise Revenue</th>
-        <td class="table__col--num">$124,500</td>
-        <td class="table__col--num">$148,200</td>
-        <td class="table__col--num">$272,700</td>
-      </tr>
+      <tr><th scope="row">Epimedium</th><td class="table__cell--numeric">30</td></tr>
     </tbody>
-    <tfoot>
-      <tr>
-        <th scope="row">Total</th>
-        <td class="table__col--num">$124,500</td>
-        <td class="table__col--num">$148,200</td>
-        <td class="table__col--num">$272,700</td>
-      </tr>
-    </tfoot>
   </table>
 </div>
 \`\`\`
 
----
-
-### Token-Driven Column Sizing Utilities (\`.table__col--*\`)
-Eliminates inline \`style="inline-size: ..."\` on \`<col>\`, \`<th>\`, and \`<td>\` elements with tokenized widths and table-layout flex/fixed behaviors:
-- \`.table__col--index\` / \`.table__col--counter\`: 2.5rem (40px) centered row number / checkbox column.
-- \`.table__col--xs\`: 4rem (64px) extra small column (badges, ISO codes).
-- \`.table__col--sm\`: 6rem (96px) small column (time, duration, short status).
-- \`.table__col--md\`: 8rem (128px) medium column (status badges, dates, category).
-- \`.table__col--lg\`: 12rem (192px) large column (usernames, email).
-- \`.table__col--xl\`: 16rem (256px) extra large column (titles, descriptions).
-- \`.table__col--actions\`: 6.5rem (104px) end-aligned action buttons / toolbar.
-- \`.table__col--fill\` / \`.table__col--expand\`: 100% fluid flexible column.
-- \`.table__col--fit\`: Shrink-wraps column to exact content width (\`min-content\`).
-- \`.table__col--num\` / \`.table__col--numeric\`: Tabular numeric alignment (\`text-align: end; tabular-nums\`).
-
----
-
-### Column Sizing & Alignment Best Practices (Industry Guidance)
-
-Following data table UX and accessibility standards (NN/g, GOV.UK, Carbon, USWDS):
-
-| Data Type | Primary Class | Alignment | Sizing Strategy | Industry UX Rationale |
-| :--- | :--- | :--- | :--- | :--- |
-| **Identifiers / Codes** | \`.table__col--fit\` | Left / Start (\`font-mono\`) | Shrink-wrap (\`min-content\`) | **Never wrap IDs** (e.g. \`#A-01\`, SKUs, UUIDs). Wrapping breaks visual recognition and scanning. |
-| **Dates & Times** | \`.table__col--fit\` | Left or Numeric (\`font-mono\`) | Shrink-wrap (\`nowrap\`) | **Never wrap dates** across lines (e.g. \`30\` / \`Nov 2026\`). Multi-line dates cause severe misreading. |
-| **Status Badges / Chips** | \`.table__col--fit.table__col--center\` | Center | Shrink-wrap or \`.table__col--md\` | Centering applies **when a cell contains only a badge** to align its optical center. If paired with multi-line descriptive text, keep start-aligned. |
-| **Numeric & Measures** | \`.table__col--num\` / \`.table__cell--numeric\` | Right / End (\`tabular-nums\`) | Fit or Fixed (\`.table__col--sm\`) | Right-alignment aligns digits and decimal points vertically, enabling instant magnitude comparison. |
-| **Text & Descriptions** | \`.table__col--fill\` / \`.table__col--lg\` | Left / Start | Fluid flexible (\`100%\`) or truncated | Left-alignment follows natural Western reading order along the vertical left-edge anchor. |
-| **Row Selection / Index** | \`.table__col--index\` | Center | Fixed 2.5rem (40px) | Provides predictable hit target for checkboxes and sequence numerals. |
-| **Actions & Menus** | \`.table__col--fit.table__cell--center\` | Center or Right (\`end\`) | Shrink-wrap (\`min-content\`) | Keeps action buttons anchored tightly to row boundaries. **Header must use \`<span class="visually-hidden">Actions</span>\`** to eliminate visual clutter while preserving WCAG 1.3.1 accessible naming. |
-
-
----
-
-### WCAG 2.2 Conformance Matrix
-| Criterion | Level | Status | Architectural Implementation |
-| :--- | :--- | :--- | :--- |
-| **1.3.1 Info and Relationships** | A | **Pass** | Semantic \`<caption>\`, \`<thead>\`, \`<tbody>\`, \`<tfoot>\`, \`<th scope="col">\`, and \`<th scope="row">\` establish unambiguous data cell associations. |
-| **2.1.1 Keyboard** | A | **Pass** | Outer \`.table-container\` declares \`tabindex="0"\` and \`role="region"\` so keyboard users can scroll wide tables without mouse interaction. |
-| **1.4.10 Reflow** | AA | **Pass** | Prevents horizontal page blowout down to 320px viewport widths while keeping tabular content accessible. |
-| **2.4.7 Focus Visible** | AA | **Pass** | Scroll container and sort buttons receive prominent 2px focus indicators on keyboard \`:focus-visible\`. |
-| **Tabular Numbers** | Best Practice | **Pass** | \`.table__cell--numeric\` applies \`font-variant-numeric: tabular-nums lining-nums\` ensuring proportional digit alignments. |
-| **High Contrast Mode** | Best Practice | **Pass** | \`@media (prefers-contrast: more)\` automatically reinforces 2px cell borders and eliminates translucent fades. |
-
----
-
-### CSS Custom Property Token Contract
-| CSS Variable | Default Value | Fallback Ladder | Description |
-| :--- | :--- | :--- | :--- |
-| \`--_table-bg\` | \`var(--table-bg)\` | \`transparent\` | Base table background color |
-| \`--_table-border-color\` | \`var(--table-border-color)\` | \`var(--panel-border-color)\` | Perimeter border stroke color |
-| \`--_table-cell-padding-block\` | \`var(--table-cell-padding-block)\` | \`0.75rem\` (12px) | Standard cell vertical breathing room |
-| \`--_table-cell-padding-inline\` | \`var(--table-cell-padding-inline)\` | \`1rem\` (16px) | Standard cell horizontal padding |
-| \`--_table-row-stripe-bg\` | \`var(--table-row-stripe-bg)\` | \`var(--surface-translucent)\` | Alternating zebra row background |
-| \`--_table-row-hover-bg\` | \`var(--table-row-hover-bg)\` | \`var(--surface-translucent-strong)\` | Row hover highlight fill |
-| \`--_table-cell-sticky-bg\` | \`var(--table-cell-sticky-bg)\` | \`Canvas\` | Pinned sticky header/column solid surface fill |
+- **Scroll container:** \`.table-container\` scrolls a wide table. Give it \`tabindex="0"\`, \`role="region"\` and a unique name, so it can be scrolled by keyboard and found.
+- **Prominence:** default (rules between rows, a tinted head), \`--plain\` (no rules, no tint, outer cells flush with the text around it). Flag: \`--table-prominence: plain\`.
+- **Options:** \`--bordered\` (outer frame and column rules), \`--striped\`, \`--hover\` (only for rows with actions or selection), \`--compact\` (or any compact region).
+- **Sticky edges:** \`--sticky-head\`, \`--sticky-foot\`, \`--sticky-first-column\`, \`--sticky-last-column\`, inside a container with a height.
+- **Cells:** \`.table__cell--numeric\`, \`--center\`, \`--fit\`, \`--nowrap\`, \`--truncate\`. **Columns** (on a \`<col>\` or header cell): \`.table__col--index\`, \`--xs\` to \`--xl\`, \`--actions\`, \`--fill\`.
+- **Caption:** put a text atom on it (\`.small-heading\`), or \`.sr\` to hide it. The table sets no caption type.
+- **Sorting:** \`aria-sort\` on the \`<th>\`; a \`.table__sort-button\` inside, named by its text, with \`ChevronsUpDown\` when unsorted and \`ChevronDown\` when sorted.
+- **In a card:** a flush card body lines the outer cells up with the card's content (\`--table-inset\`).
         `,
       },
     },
@@ -111,641 +41,267 @@ Following data table UX and accessibility standards (NN/g, GOV.UK, Carbon, USWDS
 export default meta;
 type Story = StoryObj;
 
-/**
- * 1. Playground
- * Interactive sandbox exploring table modifiers, density, sticky columns, and stripes.
- */
+const icon = (name: string) => `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
+
+type Plant = { name: string; light: string; height: number; flowers: string; stock: number };
+const plants: Plant[] = [
+  { name: 'Epimedium', light: 'Dry shade', height: 30, flowers: 'April', stock: 42 },
+  { name: 'Geranium macrorrhizum', light: 'Dry shade', height: 40, flowers: 'May to July', stock: 118 },
+  { name: 'Brunnera', light: 'Part shade', height: 45, flowers: 'April to May', stock: 7 },
+  { name: 'Hosta', light: 'Full shade', height: 60, flowers: 'July', stock: 0 },
+  { name: 'Polystichum', light: 'Full shade', height: 75, flowers: 'None', stock: 26 },
+];
+
+const head = `
+  <thead>
+    <tr>
+      <th scope="col">Plant</th>
+      <th scope="col">Light</th>
+      <th scope="col" class="table__cell--numeric">Height (cm)</th>
+      <th scope="col">Flowers</th>
+      <th scope="col" class="table__cell--numeric">In stock</th>
+    </tr>
+  </thead>`;
+
+const rows = (list = plants) => list.map((p) => `
+    <tr>
+      <th scope="row">${p.name}</th>
+      <td>${p.light}</td>
+      <td class="table__cell--numeric">${p.height}</td>
+      <td>${p.flowers}</td>
+      <td class="table__cell--numeric">${p.stock}</td>
+    </tr>`).join('');
+
+const foot = `
+  <tfoot>
+    <tr><th scope="row" colspan="4">Total in stock</th><td class="table__cell--numeric">193</td></tr>
+  </tfoot>`;
+
+const table = (id: string, caption: string, cls = '', o: { foot?: boolean; style?: string } = {}) => `
+  <div class="table-container" tabindex="0" role="region" aria-labelledby="${id}"${o.style ? ` style="${o.style}"` : ''}>
+    <table class="table${cls ? ` ${cls}` : ''}">
+      <caption id="${id}" class="small-heading">${caption}</caption>
+      ${head}
+      <tbody>${rows()}</tbody>
+      ${o.foot ? foot : ''}
+    </table>
+  </div>`;
+
 export const Playground: Story = {
-  args: {
-    variant: 'striped',
-    density: 'standard',
-    isHoverable: true,
-    stickyHeader: true,
-    stickyFirstCol: true,
-  },
-  argTypes: {
-    variant: {
-      name: 'Variant',
-      control: { type: 'select' },
-      options: ['default', 'striped', 'bordered', 'simple'],
-      description: 'Cosmetic style of rows and grid dividers.',
-    },
-    density: {
-      name: 'Density Mode',
-      control: { type: 'inline-radio' },
-      options: ['standard', 'compact'],
-      description: 'Standard 12px/16px padding vs compact 8px/12px data table density.',
-    },
-    isHoverable: {
-      name: 'Row Hover Highlight',
-      control: { type: 'boolean' },
-      description: 'Enables .table--hover interactive row fills.',
-    },
-    stickyHeader: {
-      name: 'Sticky Header',
-      control: { type: 'boolean' },
-      description: 'Pins thead on vertical scrolling.',
-    },
-    stickyFirstCol: {
-      name: 'Sticky First Column',
-      control: { type: 'boolean' },
-      description: 'Pins first row label on horizontal scrolling.',
-    },
-  },
+  args: { prominence: 'default', bordered: false, striped: false, compact: false, footer: true },
+  argTypes: { prominence: { control: 'inline-radio', options: ['default', 'plain'] } },
   render: (args) => {
-    const classes = [
-      'table',
-      args.variant !== 'default' ? `table--${args.variant}` : '',
-      args.density === 'compact' ? 'table--compact' : '',
-      args.isHoverable ? 'table--hover' : '',
-      args.stickyHeader ? 'table--sticky-head' : '',
-      args.stickyFirstCol ? 'table--sticky-first-column' : '',
-    ].filter(Boolean).join(' ');
-
-    return `
-      <div class="wrapper wrapper--2xl">
-        <div 
-          class="table-container" 
-          tabindex="0" 
-          role="region" 
-          aria-label="Interactive Financial Matrix"
-          style="max-block-size: 22rem; overflow: auto;"
-        >
-          <table class="${classes}">
-            <caption class="table__caption">Fiscal Performance Matrix 2026</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="table__cell--fit">Region</th>
-                <th scope="col" class="table__cell--numeric">Q1 Target</th>
-                <th scope="col" class="table__cell--numeric">Q1 Actual</th>
-                <th scope="col" class="table__cell--numeric">Q2 Target</th>
-                <th scope="col" class="table__cell--numeric">Q2 Actual</th>
-                <th scope="col" class="table__cell--center">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row" class="table__cell--fit">North America</th>
-                <td class="table__cell--numeric">$500,000</td>
-                <td class="table__cell--numeric">$540,200</td>
-                <td class="table__cell--numeric">$520,000</td>
-                <td class="table__cell--numeric">$565,100</td>
-                <td class="table__cell--center"><span class="status status--success"><span class="status__text">Ahead</span></span></td>
-              </tr>
-              <tr>
-                <th scope="row" class="table__cell--fit">Europe & UK</th>
-                <td class="table__cell--numeric">$400,000</td>
-                <td class="table__cell--numeric">$415,800</td>
-                <td class="table__cell--numeric">$420,000</td>
-                <td class="table__cell--numeric">$430,400</td>
-                <td class="table__cell--center"><span class="status status--success"><span class="status__text">Ahead</span></span></td>
-              </tr>
-              <tr>
-                <th scope="row" class="table__cell--fit">Asia Pacific</th>
-                <td class="table__cell--numeric">$300,000</td>
-                <td class="table__cell--numeric">$290,100</td>
-                <td class="table__cell--numeric">$320,000</td>
-                <td class="table__cell--numeric">$315,900</td>
-                <td class="table__cell--center"><span class="status status--warning"><span class="status__text">On Track</span></span></td>
-              </tr>
-              <tr>
-                <th scope="row" class="table__cell--fit">Latin America</th>
-                <td class="table__cell--numeric">$150,000</td>
-                <td class="table__cell--numeric">$162,400</td>
-                <td class="table__cell--numeric">$160,000</td>
-                <td class="table__cell--numeric">$175,000</td>
-                <td class="table__cell--center"><span class="status status--success"><span class="status__text">Ahead</span></span></td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th scope="row" class="table__cell--fit">Total Summary</th>
-                <td class="table__cell--numeric">$1,350,000</td>
-                <td class="table__cell--numeric">$1,408,500</td>
-                <td class="table__cell--numeric">$1,420,000</td>
-                <td class="table__cell--numeric">$1,486,400</td>
-                <td class="table__cell--center"><span class="status status--accent"><span class="status__text">Approved</span></span></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    `;
+    const cls = [args.prominence === 'plain' && 'table--plain', args.bordered && 'table--bordered', args.striped && 'table--striped', args.compact && 'table--compact'].filter(Boolean).join(' ');
+    return table('pg', 'Plants for shade', cls, { foot: args.footer });
   },
 };
 
-/**
- * 2. Anatomy
- * Exploded breakdown highlighting the semantic hierarchy, caption, header scopes, and tabular cells.
- */
-export const Anatomy: Story = {
+export const Prominence: Story = {
+  name: 'Prominence and borders',
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-24); max-inline-size: 54rem;">
-      <div class="demo-card-callout" style="padding: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md); background: var(--surface-muted);">
-        <p style="margin: 0; font-size: var(--typography-font-size--1); color: var(--foreground-muted);">
-          <strong>Structural Breakdown:</strong> <code>.table-container[tabindex="0"][role="region"]</code> encloses the table to ensure keyboard-accessible scrollability. <code>caption.table__caption</code> provides context for screen readers, while <code>th[scope="col"]</code> and <code>th[scope="row"]</code> guarantee unambiguous cell association.
-        </p>
-      </div>
-
-      <div style="padding: var(--spacing-16); border: 2px dashed var(--color-accent); border-radius: var(--radius-md);">
-        <div class="table-container" tabindex="0" role="region" aria-label="Anatomy breakdown">
-          <table class="table">
-            <caption class="table__caption" style="outline: 1px dashed var(--color-accent); outline-offset: 2px;">
-              caption.table__caption (Pinned Landmark)
-            </caption>
-            <thead>
-              <tr style="outline: 1px dashed var(--color-success);">
-                <th scope="col">th[scope="col"]</th>
-                <th scope="col" class="table__cell--numeric">th.table__cell--numeric</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row" style="outline: 1px dashed var(--color-warning);">th[scope="row"]</th>
-                <td class="table__cell--numeric" style="outline: 1px dashed var(--border-color);">td.table__cell--numeric</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr style="outline: 1px dashed var(--color-accent);">
-                <th scope="row">tfoot &gt; th[scope="row"]</th>
-                <td class="table__cell--numeric">tfoot &gt; td</td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    </div>
-  `,
+    <div class="stack gap-xl">
+      ${table('pr-default', 'Default: rules between rows, a tinted head', '', { foot: true })}
+      ${table('pr-plain', 'Plain: no rules or tint, outer cells flush', 'table--plain')}
+      ${table('pr-bordered', 'Bordered: an outer frame and column rules', 'table--bordered', { foot: true })}
+      <div style="--table-prominence: plain;">${table('pr-flag', 'Plain, set by a container flag')}</div>
+    </div>`,
 };
 
-/**
- * 3. Variants
- * Visual gallery showcasing default, striped/zebra, bordered grid, simple, and multi-axis sticky tables.
- */
-export const Variants: Story = {
+export const Rows: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-32); max-inline-size: 54rem;">
-      
-      <!-- Variant 1: Striped Rows -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          1. Alternating Striped Rows (.table--striped / .table--zebra)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Striped table demo">
-          <table class="table table--striped table--hover">
-            <thead>
-              <tr>
-                <th scope="col">User</th>
-                <th scope="col">Role</th>
-                <th scope="col" class="table__cell--numeric">Logins</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Alex Morgan</th>
-                <td>Lead Engineer</td>
-                <td class="table__cell--numeric">142</td>
-              </tr>
-              <tr>
-                <th scope="row">Jordan Lee</th>
-                <td>Accessibility Specialist</td>
-                <td class="table__cell--numeric">89</td>
-              </tr>
-              <tr>
-                <th scope="row">Taylor Swift</th>
-                <td>Product Designer</td>
-                <td class="table__cell--numeric">64</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Variant 2: Bordered Grid -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          2. Bordered Grid (.table--bordered)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Bordered table demo">
-          <table class="table table--bordered">
-            <thead>
-              <tr>
-                <th scope="col">Environment</th>
-                <th scope="col">Status</th>
-                <th scope="col" class="table__cell--numeric">Uptime</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Production</th>
-                <td><span class="status status--success"><span class="status__text">Healthy</span></span></td>
-                <td class="table__cell--numeric">99.99%</td>
-              </tr>
-              <tr>
-                <th scope="row">Staging</th>
-                <td><span class="status status--accent"><span class="status__text">Active</span></span></td>
-                <td class="table__cell--numeric">99.85%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Variant 3: Simple Table -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          3. Minimalist Simple Table (.table--simple)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Simple table demo">
-          <table class="table table--simple">
-            <thead>
-              <tr>
-                <th scope="col">Metric</th>
-                <th scope="col" class="table__cell--numeric">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Total Subscriptions</th>
-                <td class="table__cell--numeric">1,420</td>
-              </tr>
-              <tr>
-                <th scope="row">Monthly Recurring Revenue</th>
-                <td class="table__cell--numeric">$28,400.00</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  `,
-};
-
-/**
- * 4. StateMatrix
- * Covers resting rows, hover states, focused sort buttons, focused scroll containers, and high-contrast modes.
- */
-export const StateMatrix: Story = {
-  render: () => `
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)); gap: var(--spacing-24); max-inline-size: 54rem;">
-      
-      <!-- Resting & Hover States -->
-      <div class="pd bd rd">
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Row Hover Highlight (.table--hover)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Hover demo">
-          <table class="table table--hover">
-            <tbody>
-              <tr><th scope="row">Resting Row</th><td class="table__cell--numeric">$100</td></tr>
-              <tr style="background-color: var(--surface-translucent-strong);"><th scope="row">Hovered Active Row</th><td class="table__cell--numeric">$250</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Sort Button Focus State -->
-      <div class="pd bd rd">
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Sort Button Focus-Visible
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Sort focus demo">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">
-                  <button type="button" class="table__sort-button" style="outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: -2px;">
-                    <span>Sort Focused</span>
-                    <svg class="icon" width="1em" height="1em" aria-hidden="true" style="opacity: 1;" focusable="false"><use href="#ChevronDown"/></svg>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-
-      <!-- Scroll Container Focus-Visible -->
-      <div class="pd bd rd">
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Scroll Container Focus-Visible
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Container focus demo" style="outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset);">
-          <table class="table">
-            <tbody>
-              <tr><th scope="row">Keyboard Scroll Focused</th><td class="table__cell--numeric">Tab Target</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- High Contrast Mode Simulation -->
-      <div class="pd bd rd">
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          High-Contrast Mode (Solid 2px Borders)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="High contrast demo">
-          <table class="table" style="--_table-inner-border-width: 2px; border-block-end: 2px solid currentColor;">
-            <thead>
-              <tr style="border-block-end: 2px solid currentColor;"><th scope="col">Header</th><th scope="col" class="table__cell--numeric">Total</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">2px High Contrast</th><td class="table__cell--numeric">100%</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  `,
-};
-
-/**
- * 5. SizesAndDensity
- * Compares standard 12px/16px padding with compact 8px/12px data table density.
- */
-export const SizesAndDensity: Story = {
-  render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-32); max-inline-size: 52rem;">
-      
-      <!-- Standard Density -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Standard Density (Padding: 0.75rem / 1rem)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Standard density">
-          <table class="table table--striped">
-            <thead><tr><th scope="col">Item</th><th scope="col" class="table__cell--numeric">Quantity</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Standard Spaced Row</th><td class="table__cell--numeric">42</td></tr>
-              <tr><th scope="row">Generous Touch Clearance</th><td class="table__cell--numeric">18</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Compact Density -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Compact Density (.table--compact / --ui-density: dense)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Compact density">
-          <table class="table table--compact table--striped">
-            <thead><tr><th scope="col">Item</th><th scope="col" class="table__cell--numeric">Quantity</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Tight Data Dashboard Row</th><td class="table__cell--numeric">42</td></tr>
-              <tr><th scope="row">Maximized Screen Efficiency</th><td class="table__cell--numeric">18</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Compact (Small) Size -->
-      <div>
-        <span style="font-size: var(--typography-font-size--1); color: var(--foreground-muted); display: block; margin-block-end: var(--spacing-8);">
-          Compact Density (.table--sm / --ui-sizing: compact)
-        </span>
-        <div class="table-container" tabindex="0" role="region" aria-label="Compact density">
-          <table class="table table--sm table--striped">
-            <thead><tr><th scope="col">Item</th><th scope="col" class="table__cell--numeric">Quantity</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Tight Data Dashboard Row</th><td class="table__cell--numeric">42</td></tr>
-              <tr><th scope="row">Maximized Screen Efficiency</th><td class="table__cell--numeric">18</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-  `,
-};
-
-/**
- * 6. ZeroClassOrchestration
- * Demonstrates CSS scroll-state container query automatic drop shadows on sticky headers and columns.
- */
-export const ZeroClassOrchestration: Story = {
-  render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-24); max-inline-size: 52rem;">
-      <div class="demo-card-callout" style="padding: var(--spacing-16); border: 1px dashed var(--border-color); border-radius: var(--radius-md); background: var(--surface-muted);">
-        <p style="margin: 0; font-size: var(--typography-font-size--1); color: var(--foreground-muted);">
-          <strong>Scroll-State Container Queries:</strong> <code>.table-container</code> specifies <code>container-type: scroll-state</code>. As soon as the user scrolls, <code>@container table-container scroll-state(scrollable: block-start)</code> dynamically projects an elevation drop shadow beneath the sticky header without requiring JavaScript scroll event listeners.
-        </p>
-      </div>
-
-      <div class="table-container" tabindex="0" role="region" aria-label="Scroll state demo" style="max-block-size: 14rem; overflow: auto; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
-        <table class="table table--sticky-head table--striped">
-          <thead>
-            <tr><th scope="col">Component</th><th scope="col">Spec</th><th scope="col" class="table__cell--numeric">Status</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">Button</th><td>WCAG 2.2 AAA</td><td class="table__cell--numeric">Pass</td></tr>
-            <tr><th scope="row">Dialog</th><td>WCAG 2.2 AA</td><td class="table__cell--numeric">Pass</td></tr>
-            <tr><th scope="row">Card</th><td>WCAG 2.2 AA</td><td class="table__cell--numeric">Pass</td></tr>
-            <tr><th scope="row">Table</th><td>WCAG 2.2 AAA</td><td class="table__cell--numeric">Pass</td></tr>
-            <tr><th scope="row">Tabs</th><td>WCAG 2.2 AAA</td><td class="table__cell--numeric">Pass</td></tr>
-            <tr><th scope="row">Popover</th><td>WCAG 2.2 AA</td><td class="table__cell--numeric">Pass</td></tr>
+    <div class="stack gap-xl">
+      ${table('rows-striped', 'Striped', 'table--striped')}
+      <div class="table-container" tabindex="0" role="region" aria-labelledby="rows-hover">
+        <table class="table table--hover">
+          <caption id="rows-hover" class="small-heading">Hover, for rows with actions</caption>
+          <thead><tr><th scope="col">Plant</th><th scope="col" class="table__cell--numeric">In stock</th><th scope="col" class="table__col--actions"><span class="sr-only">Actions</span></th></tr></thead>
+          <tbody>${plants.slice(0, 3).map((p) => `
+            <tr><th scope="row">${p.name}</th><td class="table__cell--numeric">${p.stock}</td><td class="table__col--actions"><button type="button" class="button button--subtle button--sm">Reorder<span class="sr-only"> ${p.name}</span></button></td></tr>`).join('')}
           </tbody>
         </table>
       </div>
-    </div>
-  `,
+    </div>`,
 };
 
-/**
- * 7. RealWorldRecipes
- * Production patterns: Card Flush Integration and Full Multi-Axis Sticky Table.
- */
-export const RealWorldRecipes: Story = {
+export const Compact: Story = {
   render: () => `
-    <div style="display: flex; flex-direction: column; gap: var(--spacing-32); max-inline-size: 56rem;">
-      
-      <!-- Recipe 1: Seamless Card Integration -->
-      <section style="display: flex; flex-direction: column; gap: var(--spacing-12);">
-        <h4 class="small-heading">
-          Recipe 1: Table inside Card (.card__body--flush)
-        </h4>
-        <article class="card">
-          <header class="card__header">
-            <hgroup class="card__hgroup">
-              <h3 class="card__title subheading">Quarterly Revenue Summary</h3>
-              <p class="card__subtitle">Aggregated cloud subscription billings</p>
-            </hgroup>
-          </header>
-          <div class="card__body card__body--flush">
-            <div class="table-container" tabindex="0" role="region" aria-label="Card table">
-              <table class="table table--striped table--hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Product Tier</th>
-                    <th scope="col">Active Tenants</th>
-                    <th scope="col" class="table__cell--numeric">MRR</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Enterprise Fleet</th>
-                    <td>128</td>
-                    <td class="table__cell--numeric">$128,000.00</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Professional Team</th>
-                    <td>412</td>
-                    <td class="table__cell--numeric">$41,200.00</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Starter Developer</th>
-                    <td>1,050</td>
-                    <td class="table__cell--numeric">$10,500.00</td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th scope="row">Grand Total</th>
-                    <td>1,590</td>
-                    <td class="table__cell--numeric">$179,700.00</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
-          <footer class="card__footer" style="display: flex; justify-content: flex-end; gap: var(--spacing-8);">
-            <button type="button" class="button button--subtle"><span>Export CSV</span></button>
-            <button type="button" class="button button--strong button--accent"><span>Generate Invoice</span></button>
-          </footer>
-        </article>
-      </section>
-
-      <!-- Recipe 2: Multi-Axis Sticky Financial Sheet -->
-      <section style="display: flex; flex-direction: column; gap: var(--spacing-12);">
-        <h4 class="small-heading">
-          Recipe 2: Multi-Axis Pinned Spreadsheet Table
-        </h4>
-        <div class="table-container" tabindex="0" role="region" aria-label="Pinned spreadsheet" style="max-block-size: 18rem; overflow: auto; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
-          <table class="table table--sticky-head table--sticky-foot table--sticky-first-column table--sticky-last-column table--striped table--hover">
-            <thead>
-              <tr>
-                <th scope="col" class="table__cell--fit">Account</th>
-                <th scope="col" class="table__cell--long">Department</th>
-                <th scope="col" class="table__cell--long">Cost Center</th>
-                <th scope="col" class="table__cell--numeric">Q1</th>
-                <th scope="col" class="table__cell--numeric">Q2</th>
-                <th scope="col" class="table__cell--numeric">Q3</th>
-                <th scope="col" class="table__cell--numeric">Q4</th>
-                <th scope="col" class="table__cell--fit table__cell--center"><span class="visually-hidden">Action</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row" class="table__cell--fit">Global Infra</th>
-                <td class="table__cell--long">Engineering & DevOps</td>
-                <td class="table__cell--long">CC-ENG-01</td>
-                <td class="table__cell--numeric">$45,000</td>
-                <td class="table__cell--numeric">$48,000</td>
-                <td class="table__cell--numeric">$52,000</td>
-                <td class="table__cell--numeric">$55,000</td>
-                <td class="table__cell--fit table__cell--center">
-                  <button type="button" class="button button--subtle button--sm"><span>Edit</span></button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row" class="table__cell--fit">Design Systems</th>
-                <td class="table__cell--long">Product Experience</td>
-                <td class="table__cell--long">CC-DS-04</td>
-                <td class="table__cell--numeric">$18,000</td>
-                <td class="table__cell--numeric">$19,500</td>
-                <td class="table__cell--numeric">$21,000</td>
-                <td class="table__cell--numeric">$22,500</td>
-                <td class="table__cell--fit table__cell--center">
-                  <button type="button" class="button button--subtle button--sm"><span>Edit</span></button>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th scope="row" class="table__cell--fit">Consolidated</th>
-                <td colspan="2" class="table__cell--long">Total Operating Expenditure</td>
-                <td class="table__cell--numeric">$63,000</td>
-                <td class="table__cell--numeric">$67,500</td>
-                <td class="table__cell--numeric">$73,000</td>
-                <td class="table__cell--numeric">$77,500</td>
-                <td class="table__cell--fit table__cell--center">
-                  <span class="status status--success"><span class="status__text">Closed</span></span>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </section>
-
-    </div>
-  `,
+    <div class="stack gap-xl">
+      ${table('cp-mod', 'Compact', 'table--compact', { foot: true })}
+      <div class="ui-compact">${table('cp-region', 'In a compact region', '', { foot: true })}</div>
+    </div>`,
 };
 
-/**
- * 7. Token-Driven Column Sizing Helpers (`.table__col--*`)
- * Demonstrates tokenized column width classes (`.table__col--index`, `.table__col--sm`,
- * `.table__col--fill`, `.table__col--md`, `.table__col--actions`, `.table__col--num`) eliminating inline styles.
- */
-export const ColumnSizing: Story = {
-  render: () => `
-    <div class="stack demo-constrained--lg gap-lg">
-      <div class="table-container" tabindex="0" role="region" aria-label="Media asset queue with token column sizing">
-        <table class="table table--striped table--hover">
-          <caption class="table__caption">Media Broadcast Queue (Token-Driven Column Widths)</caption>
+export const StickyEdges: Story = {
+  name: 'Sticky edges',
+  render: () => {
+    const many = [...plants, ...plants, ...plants].map((p, i) => ({ ...p, name: `${p.name} ${i + 1}` }));
+    return `
+      <div class="table-container" tabindex="0" role="region" aria-labelledby="sticky" style="max-block-size: 18rem; max-inline-size: 36rem;">
+        <table class="table table--sticky-head table--sticky-foot table--sticky-first-column table--sticky-last-column">
+          <caption id="sticky" class="sr-only">Stock by plant, scrollable</caption>
           <thead>
             <tr>
-              <th scope="col" class="table__col--index"><span class="visually-hidden">Position</span>#</th>
-              <th scope="col" class="table__col--sm">Time</th>
-              <th scope="col" class="table__col--fill">Asset Title</th>
-              <th scope="col" class="table__col--sm">Type</th>
-              <th scope="col" class="table__col--sm table__col--num">Duration</th>
-              <th scope="col" class="table__col--md">Status</th>
-              <th scope="col" class="table__col--actions"><span class="visually-hidden">Actions</span></th>
+              <th scope="col" class="table__cell--nowrap">Plant</th>
+              <th scope="col" class="table__cell--nowrap">Light</th>
+              <th scope="col" class="table__cell--numeric">Height (cm)</th>
+              <th scope="col" class="table__cell--nowrap">Flowers</th>
+              <th scope="col" class="table__cell--nowrap">Supplier</th>
+              <th scope="col" class="table__cell--numeric">In stock</th>
             </tr>
           </thead>
+          <tbody>${many.map((p) => `
+            <tr><th scope="row" class="table__cell--nowrap">${p.name}</th><td class="table__cell--nowrap">${p.light}</td><td class="table__cell--numeric">${p.height}</td><td class="table__cell--nowrap">${p.flowers}</td><td class="table__cell--nowrap">Woodland Nurseries Ltd</td><td class="table__cell--numeric">${p.stock}</td></tr>`).join('')}
+          </tbody>
+          <tfoot><tr><th scope="row" colspan="5">Total in stock</th><td class="table__cell--numeric">579</td></tr></tfoot>
+        </table>
+      </div>`;
+  },
+};
+
+export const Sorting: Story = {
+  render: () => `
+    <div class="table-container" tabindex="0" role="region" aria-labelledby="sort">
+      <table class="table">
+        <caption id="sort" class="small-heading">Sorted by height, ascending</caption>
+        <thead>
+          <tr>
+            <th scope="col"><button type="button" class="table__sort-button">Plant${icon('ChevronsUpDown')}</button></th>
+            <th scope="col">Light</th>
+            <th scope="col" class="table__cell--numeric" aria-sort="ascending"><button type="button" class="table__sort-button">Height (cm)${icon('ChevronDown')}</button></th>
+            <th scope="col" class="table__cell--numeric"><button type="button" class="table__sort-button">In stock${icon('ChevronsUpDown')}</button></th>
+          </tr>
+        </thead>
+        <tbody>${plants.map((p) => `
+          <tr><th scope="row">${p.name}</th><td>${p.light}</td><td class="table__cell--numeric">${p.height}</td><td class="table__cell--numeric">${p.stock}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`,
+};
+
+export const Columns: Story = {
+  name: 'Alignment and columns',
+  render: () => `
+    <div class="table-container" tabindex="0" role="region" aria-labelledby="cols">
+      <table class="table">
+        <caption id="cols" class="small-heading">Orders</caption>
+        <colgroup>
+          <col class="table__col--index">
+          <col class="table__col--sm">
+          <col class="table__col--fill">
+          <col class="table__col--md">
+          <col class="table__col--sm">
+          <col class="table__col--actions">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col" class="table__cell--center">#</th>
+            <th scope="col">Order</th>
+            <th scope="col">Note</th>
+            <th scope="col" class="table__cell--center">Status</th>
+            <th scope="col" class="table__cell--numeric">Total</th>
+            <th scope="col"><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="table__cell--center">1</td>
+            <td class="table__cell--nowrap font-mono">ORD-1042</td>
+            <td><span class="table__cell--truncate" style="display: block;">Leave by the side gate, behind the water butt, next to the greenhouse</span></td>
+            <td class="table__cell--center"><span class="status status--success">${icon('Check')}<span class="status__text">Sent</span></span></td>
+            <td class="table__cell--numeric">£48.20</td>
+            <td class="table__col--actions"><button type="button" class="button button--subtle button--sm">View<span class="sr-only"> order ORD-1042</span></button></td>
+          </tr>
+          <tr>
+            <td class="table__cell--center">2</td>
+            <td class="table__cell--nowrap font-mono">ORD-1043</td>
+            <td>Gift wrap</td>
+            <td class="table__cell--center"><span class="status">${icon('Progress')}<span class="status__text">Packing</span></span></td>
+            <td class="table__cell--numeric">£1,206.00</td>
+            <td class="table__col--actions"><button type="button" class="button button--subtle button--sm">View<span class="sr-only"> order ORD-1043</span></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`,
+};
+
+export const CellContent: Story = {
+  name: 'Cell content',
+  render: () => `
+    <div class="table-container" tabindex="0" role="region" aria-labelledby="content">
+      <table class="table">
+        <caption id="content" class="small-heading">Team</caption>
+        <thead><tr><th scope="col">Person</th><th scope="col">Role</th><th scope="col">Access</th><th scope="col" class="table__col--actions"><span class="sr-only">Actions</span></th></tr></thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <div class="inline">
+                <span class="avatar avatar--sm" aria-hidden="true">MC</span>
+                <span class="lockup"><span class="small-heading">Marcus Chen</span><span class="small-text text-muted">mchen@urbanmail.net</span></span>
+              </div>
+            </th>
+            <td><span class="text">Head gardener</span></td>
+            <td><span class="status status--accent">${icon('Star')}<span class="status__text">Owner</span></span></td>
+            <td class="table__col--actions">
+              <div class="button-group">
+                <button type="button" class="button button--subtle button--sm">Edit<span class="sr-only"> Marcus Chen</span></button>
+                <button type="button" class="button button--subtle button--sm button--danger">Remove<span class="sr-only"> Marcus Chen</span></button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <div class="inline">
+                <span class="avatar avatar--sm" aria-hidden="true">AR</span>
+                <span class="lockup"><span class="small-heading">Aisha Rahman</span><span class="small-text text-muted">aisha@fernhill.org</span></span>
+              </div>
+            </th>
+            <td><span class="text">Volunteer</span></td>
+            <td><span class="status">${icon('User')}<span class="status__text">Member</span></span></td>
+            <td class="table__col--actions">
+              <div class="button-group">
+                <button type="button" class="button button--subtle button--sm">Edit<span class="sr-only"> Aisha Rahman</span></button>
+                <button type="button" class="button button--subtle button--sm button--danger">Remove<span class="sr-only"> Aisha Rahman</span></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`,
+};
+
+export const InACard: Story = {
+  name: 'In a card',
+  render: () => `
+    <article class="card" style="max-inline-size: 40rem;">
+      <header class="card__header">
+        <h3 class="card__title subheading" id="card-table">Stock</h3>
+      </header>
+      <div class="card__body card__body--flush">
+        <div class="table-container" tabindex="0" role="region" aria-labelledby="card-table">
+          <table class="table">
+            <thead><tr><th scope="col">Plant</th><th scope="col" class="table__cell--numeric">In stock</th></tr></thead>
+            <tbody>${plants.slice(0, 3).map((p) => `<tr><th scope="row">${p.name}</th><td class="table__cell--numeric">${p.stock}</td></tr>`).join('')}</tbody>
+          </table>
+        </div>
+      </div>
+      <footer class="card__footer">
+        <button type="button" class="button">Export</button>
+      </footer>
+    </article>`,
+};
+
+export const RightToLeft: Story = {
+  render: () => `
+    <div dir="rtl" lang="ar">
+      <div class="table-container" tabindex="0" role="region" aria-labelledby="rtl">
+        <table class="table table--bordered">
+          <caption id="rtl" class="small-heading">النباتات</caption>
+          <thead><tr><th scope="col">النبات</th><th scope="col" class="table__cell--numeric" aria-sort="descending"><button type="button" class="table__sort-button">الارتفاع${icon('ChevronDown')}</button></th></tr></thead>
           <tbody>
-            <tr>
-              <td class="table__col--index text-muted">1</td>
-              <td class="font-mono font-size-xs text-muted">10:45 AM</td>
-              <td>
-                <div class="stack gap-none">
-                  <span class="font-size-sm font-weight-medium">Solaris Horizon</span>
-                  <span class="font-size-xs text-muted">Aethelgard</span>
-                </div>
-              </td>
-              <td><span class="chip chip--subtle chip--sm"><span class="chip__text">Music</span></span></td>
-              <td class="table__col--num font-mono font-size-xs text-muted">03:52</td>
-              <td><span class="status status--success status--sm"><span class="status__text">Live</span></span></td>
-              <td class="table__col--actions">
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="More actions">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="table__col--index text-muted">2</td>
-              <td class="font-mono font-size-xs text-muted">10:49 AM</td>
-              <td>
-                <div class="stack gap-none">
-                  <span class="font-size-sm font-weight-medium">Station ID: Neon Morning</span>
-                  <span class="font-size-xs text-muted">WDFH Production</span>
-                </div>
-              </td>
-              <td><span class="chip chip--subtle chip--sm"><span class="chip__text">Stager</span></span></td>
-              <td class="table__col--num font-mono font-size-xs text-muted">00:15</td>
-              <td><span class="status status--accent status--sm"><span class="status__text">Next</span></span></td>
-              <td class="table__col--actions">
-                <button type="button" class="button button--subtle button--icon button--sm" aria-label="More actions">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
-                </button>
-              </td>
-            </tr>
+            <tr><th scope="row">هوستا</th><td class="table__cell--numeric">60</td></tr>
+            <tr><th scope="row">برونيرا</th><td class="table__cell--numeric">45</td></tr>
           </tbody>
         </table>
       </div>
-    </div>
-  `,
+    </div>`,
 };
-

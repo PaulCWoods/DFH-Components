@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Cadence recipe: Deck
+   --------------------------------------------------------------------------
+   The Cadence recipe's own CSS. It is not a library component, ships in no
+   package and has no blog twin (PRINCIPLES v1 scope). Everything else in the
+   deck is a library part: card, status, lockup, range, range lockup, button
+   group, meter and popover.
+
+   It adds three things:
+   1. .deck--on-air / .deck--cue: an edge colour on a .card for the deck's
+      state. The status in the card says the same in words (WCAG 1.4.1).
+   2. .deck__art: square artwork, and --vinyl, a spinning record.
+   3. .deck-dock: the docked player. The position slider runs the full width
+      along its top edge; below it, one row with the track at the start, the
+      transport in the true centre and the time and volume at the end.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Deck state on a card
+   ========================================================================== */
+:where(.deck--on-air) {
+  --_deck-edge: var(--foreground-accent, currentColor);
+  border-color: var(--_deck-edge);
+  box-shadow:
+    0 0 0 1px var(--_deck-edge),
+    0 0 1rem -0.125rem color-mix(in srgb, var(--_deck-edge) 35%, transparent);
+}
+
+:where(.deck--cue) {
+  border-color: var(--border-color-warning, currentColor);
+}
+
+/* ==========================================================================
+   2. Artwork
+   ========================================================================== */
+:where(.deck__art) {
+  --_deck-art-size: var(--deck-art-size, 5rem);
+  align-items: center;
+  background-color: var(--surface-subtle, Canvas);
+  block-size: var(--_deck-art-size);
+  border-radius: var(--radius-md, 0.375rem);
+  color: var(--foreground-muted, currentColor);
+  display: flex;
+  flex-shrink: 0;
+  inline-size: var(--_deck-art-size);
+  justify-content: center;
+  overflow: clip;
+  position: relative;
+
+  >img {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
+  }
+}
+
+/* A record: grooves, a label in the middle, and a slow spin while playing */
+:where(.deck__art--vinyl) {
+  background: radial-gradient(circle at center,
+      #1a1a1a 0%, #1a1a1a 24%, #0d0d0d 25%, #2a2a2a 26%, #111111 70%, #050505 100%);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: var(--radius-round, 9999px);
+
+  &::after {
+    background-color: var(--surface-card, Canvas);
+    block-size: 20%;
+    border: 2px solid var(--border-color-quiet, currentColor);
+    border-radius: inherit;
+    content: "";
+    inline-size: 20%;
+    position: absolute;
+  }
+
+  &.is-spinning {
+    animation: deck-spin 3s linear infinite;
+  }
+}
+
+@keyframes deck-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.deck__art--vinyl.is-spinning) {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   3. Docked player
+   ========================================================================== */
+
+/* The position slider along the top edge, full width */
+:where(.deck-dock__position) {
+  display: block;
+  block-size: auto;
+}
+
+/* One row: start, true centre, end */
+:where(.deck-dock) {
+  --deck-art-size: 2.5rem;
+  align-items: center;
+  display: grid;
+  gap: var(--spacing-md, 1rem);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  padding-block: var(--spacing-xs, 0.25rem);
+
+  > :last-child {
+    justify-self: end;
+  }
+}

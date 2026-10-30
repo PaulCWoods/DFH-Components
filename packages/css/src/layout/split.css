@@ -1,84 +1,65 @@
 /* ==========================================================================
    Design For Humans: Split Layout Primitive
    --------------------------------------------------------------------------
-   2-column responsive layout with a preferred-width sidebar and an
-   auto-expanding main pane. Uses zero-specificity (:where()) for composability.
+   Two panes side by side: a side pane at its preferred width and a main pane
+   that takes the rest. When the main pane would be narrower than its
+   minimum, the panes wrap and each takes the full width; no breakpoint is
+   needed, and it works at any zoom.
+
+   - The first child is the side pane, the last the main pane; --end puts the
+     side pane last.
+   - --nowrap keeps the panes side by side (the side pane at its width).
+   - --three: start, centre and end panes in a row that doesn't wrap.
+
+   Hooks (set on the split itself; they don't reach nested layouts):
+   --gap, --align-items, --split-side-width, --split-main-min-width,
+   --split-start-width, --split-end-width.
+
+   Density: under --ui-sizing: compact the gap steps down to the default.
+
+   Usage:
+   <div class="split split--xs">
+     <nav aria-label="Sections">…</nav>
+     <div>…main…</div>
+   </div>
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Base Split Container
-   -------------------------------------------------------------------------- */
+/* Settings stay on the element they are set on */
+@property --gap { syntax: "*"; inherits: false; }
+@property --align-items { syntax: "*"; inherits: false; }
+@property --split-side-width { syntax: "*"; inherits: false; }
+@property --split-main-min-width { syntax: "*"; inherits: false; }
+@property --split-start-width { syntax: "*"; inherits: false; }
+@property --split-end-width { syntax: "*"; inherits: false; }
 
+/* --------------------------------------------------------------------------
+   1. Base
+   -------------------------------------------------------------------------- */
 :where(.split) {
     --_gap: var(--gap, var(--spacing-cushion, 1.5rem));
-    container-type: inline-size;
+    --_split-side: var(--split-side-width, var(--spacing-block-xs, 16rem));
+    --_split-main-min: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--gap, var(--spacing, 1rem));
+    }
+
+    align-items: var(--align-items, flex-start);
     display: flex;
     flex-wrap: wrap;
     gap: var(--_gap);
-    align-items: var(--align-items, flex-start);
-    justify-content: var(--justify-content, var(--justify, normal));
 
-    /* Default: First child is sidebar, last child is main expanding pane */
-    &> :first-child {
-        flex-basis: var(--split-sidebar-width, var(--spacing-block-xs, 20rem));
+    /* The side pane */
+    > :where(:first-child) {
+        flex-basis: var(--_split-side);
         flex-grow: 1;
     }
 
-    &> :last-child {
+    /* The main pane */
+    > :where(:last-child) {
         flex-basis: 0;
         flex-grow: 999;
-        min-inline-size: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
-    }
-
-    /* ----------------------------------------------------------------------
-       2. Direction & Placement Modifiers
-       ---------------------------------------------------------------------- */
-
-    /* Reverse variant: First child is main, last child is sidebar */
-    &:where(.split--end, .split--reverse) {
-        &> :first-child {
-            flex-basis: 0;
-            flex-grow: 999;
-            min-inline-size: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
-        }
-
-        &> :last-child {
-            flex-basis: var(--split-sidebar-width, var(--spacing-block-xs, 20rem));
-            flex-grow: 1;
-            min-inline-size: 0;
-        }
-    }
-
-    /* ----------------------------------------------------------------------
-       3. Sidebar Width Modifiers (Spacing Block Scale)
-       ---------------------------------------------------------------------- */
-
-    &:where(.split--2xs) {
-        --split-sidebar-width: var(--spacing-block-2xs, 16rem);
-    }
-
-    &:where(.split--xs) {
-        --split-sidebar-width: var(--spacing-block-xs, 20rem);
-    }
-
-    &:where(.split--sm) {
-        --split-sidebar-width: var(--spacing-block-sm, 24rem);
-    }
-
-    &:where(.split--md) {
-        --split-sidebar-width: var(--spacing-block, 28rem);
-    }
-
-    &:where(.split--lg) {
-        --split-sidebar-width: var(--spacing-block-lg, 32rem);
-    }
-
-    &:where(.split--xl) {
-        --split-sidebar-width: var(--spacing-block-xl, 36rem);
-    }
-
-    &:where(.split--2xl) {
-        --split-sidebar-width: var(--spacing-block-2xl, 40rem);
+        min-inline-size: var(--_split-main-min);
     }
 }
 
@@ -89,22 +70,63 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. Modifiers
+   2. Side Pane Last
    -------------------------------------------------------------------------- */
+:where(.split--end) {
+    > :where(:first-child) {
+        flex-basis: 0;
+        flex-grow: 999;
+        min-inline-size: var(--_split-main-min);
+    }
 
-/* Tight Modifier (Zero Gap) */
-:where(.split--tight) {
-    --_gap: 0;
-}
-
-:where(.split--cushioned) {
-    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+    > :where(:last-child) {
+        flex-basis: var(--_split-side);
+        flex-grow: 1;
+        min-inline-size: 0;
+    }
 }
 
 /* --------------------------------------------------------------------------
-   5. Split Ruled
+   3. Side Pane Width
    -------------------------------------------------------------------------- */
+:where(.split--2xs) {
+    --_split-side: var(--spacing-block-2xs);
+}
 
+:where(.split--xs) {
+    --_split-side: var(--spacing-block-xs);
+}
+
+:where(.split--sm) {
+    --_split-side: var(--spacing-block-sm);
+}
+
+:where(.split--md) {
+    --_split-side: var(--spacing-block);
+}
+
+:where(.split--lg) {
+    --_split-side: var(--spacing-block-lg);
+}
+
+:where(.split--xl) {
+    --_split-side: var(--spacing-block-xl);
+}
+
+:where(.split--2xl) {
+    --_split-side: var(--spacing-block-2xl);
+}
+
+/* --------------------------------------------------------------------------
+   4. Gap Modifiers
+   -------------------------------------------------------------------------- */
+:where(.split--tight) {
+    --_gap: 0px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Ruled: a rule in the gap
+   -------------------------------------------------------------------------- */
 :where(.split--ruled) {
     @supports (rule: 1px) {
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
@@ -118,285 +140,55 @@
 }
 
 /* --------------------------------------------------------------------------
-   6. Stretched / Full-Height Panels Split (.split--stretch / .split--panels)
+   6. Never Wrap
+   The side pane keeps its width; the main pane shrinks.
    -------------------------------------------------------------------------- */
-
-:where(.split--stretch, .split--panels) {
-    align-items: stretch;
-    block-size: 100%;
-    min-block-size: 0;
-
-    &>* {
-        block-size: 100%;
-        min-block-size: 0;
-    }
-
-    @media (width < 48em) or (height < 36em) {
-        block-size: auto;
-        min-block-size: auto;
-
-        &>* {
-            block-size: auto;
-            min-block-size: auto;
-        }
-    }
-}
-
-/* --------------------------------------------------------------------------
-   7. Non-Wrapping Split (.split--nowrap)
-   -------------------------------------------------------------------------- */
-
 :where(.split--nowrap) {
     flex-wrap: nowrap;
 
-    /* Default: First child is fixed sidebar, last child expands */
-    &> :first-child {
-        flex: 0 0 var(--split-sidebar-width, var(--spacing-block-xs, 20rem));
+    > :where(:first-child) {
+        flex: 0 0 var(--_split-side);
     }
 
-    &> :last-child {
+    > :where(:last-child) {
         flex: 1 1 0%;
         min-inline-size: 0;
     }
 
-    /* Reverse: First child expands, last child is fixed sidebar */
-    &:where(.split--end, .split--reverse) {
-        &> :first-child {
+    &:where(.split--end) {
+        > :where(:first-child) {
             flex: 1 1 0%;
             min-inline-size: 0;
         }
 
-        &> :last-child {
-            flex: 0 0 var(--split-sidebar-width, var(--spacing-block-xs, 20rem));
+        > :where(:last-child) {
+            flex: 0 0 var(--_split-side);
         }
     }
 }
 
 /* --------------------------------------------------------------------------
-   7. Triple Split (.split--three)
+   7. Three Panes
+   Start and end at their width (or their content's), the centre takes the
+   rest.
    -------------------------------------------------------------------------- */
-
 :where(.split--three) {
+    --_split-start: var(--split-start-width, auto);
+    --_split-end: var(--split-end-width, auto);
+
     flex-wrap: nowrap;
 
-    /* Start / 1st Column: Fixed preferred width or content-based */
-    &> :first-child {
-        flex: 0 0 var(--split-start-width, var(--split-sidebar-width, auto));
+    > :where(:first-child) {
+        flex: 0 0 var(--_split-start);
     }
 
-    /* Center / 2nd Column: Fills remaining available space */
-    &> :nth-child(2) {
+    > :where(:nth-child(2)) {
         flex: 1 1 0%;
         min-inline-size: 0;
     }
 
-    /* End / 3rd Column: Fixed preferred width or content-based */
-    &> :last-child {
-        flex: 0 0 var(--split-end-width, var(--split-sidebar-width, auto));
+    > :where(:last-child) {
+        flex: 0 0 var(--_split-end);
         min-inline-size: 0;
-    }
-}
-
-/* --------------------------------------------------------------------------
-   8. Responsive Auto Collapse Modifiers (Viewport @media)
-   -------------------------------------------------------------------------- */
-
-@media (width <=20em) {
-    :where(.split--auto-below-2xs)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-below-2xs:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-below-2xs)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@media (width <=30em) {
-    :where(.split--auto-below-xs)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-below-xs:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-below-xs)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@media (width <=40em) {
-    :where(.split--auto-below-sm)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-below-sm:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-below-sm)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@media (width <=48em) {
-    :where(.split--auto, .split--auto-below-md)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(:where(.split--auto, .split--auto-below-md):where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three:where(.split--auto, .split--auto-below-md))> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@media (width <=60em) {
-    :where(.split--auto-below-lg)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-below-lg:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-below-lg)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@media (width <=80em) {
-    :where(.split--auto-below-xl)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-below-xl:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-below-xl)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@media (width <=96em) {
-    :where(.split--auto-below-2xl)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-below-2xl:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-below-2xl)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-/* --------------------------------------------------------------------------
-   9. Responsive Auto Collapse Modifiers (Container @container)
-   -------------------------------------------------------------------------- */
-
-@container (inline-size <=20em) {
-    :where(.split--auto-in-container-below-2xs)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-in-container-below-2xs:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-in-container-below-2xs)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@container (inline-size <=30em) {
-    :where(.split--auto-in-container-below-xs)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-in-container-below-xs:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-in-container-below-xs)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@container (inline-size <=40em) {
-    :where(.split--auto-in-container-below-sm)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-in-container-below-sm:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-in-container-below-sm)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@container (inline-size <=48em) {
-    :where(.split--auto, .split--auto-in-container-below-md)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(:where(.split--auto, .split--auto-in-container-below-md):where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three:where(.split--auto, .split--auto-in-container-below-md))> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@container (inline-size <=60em) {
-    :where(.split--auto-in-container-below-lg)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-in-container-below-lg:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-in-container-below-lg)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@container (inline-size <=80em) {
-    :where(.split--auto-in-container-below-xl)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-in-container-below-xl:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-in-container-below-xl)> :last-child {
-        flex-basis: auto;
-    }
-}
-
-@container (inline-size <=96em) {
-    :where(.split--auto-in-container-below-2xl)> :first-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--auto-in-container-below-2xl:where(.split--end, .split--reverse))> :last-child {
-        flex-basis: auto;
-    }
-
-    :where(.split--three.split--auto-in-container-below-2xl)> :last-child {
-        flex-basis: auto;
     }
 }

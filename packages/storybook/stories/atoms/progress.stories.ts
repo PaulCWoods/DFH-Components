@@ -32,8 +32,8 @@ const field = (label: string, value: number | null, classes = 'progress', readou
   return `
     <div class="field">
       <div class="field__header">
-        <label for="${id}" class="field__label">${label}</label>
-        <span class="field__result">${readout}</span>
+        <label for="${id}" class="field__label label">${label}</label>
+        <span class="small-text">${readout}</span>
       </div>
       <progress id="${id}" class="${classes}" ${value === null ? '' : `value="${value}"`} max="100">${readout}</progress>
     </div>`;
@@ -46,8 +46,6 @@ const meta: Meta<ProgressArgs> = {
     docs: {
       description: {
         component: `
-### Progress
-
 A native \`<progress>\` showing how far a task has got. Leave out \`value\` for an indeterminate bar.
 
 | Axis | Modifiers | Container flags |
@@ -64,8 +62,8 @@ A native \`<progress>\` showing how far a task has got. Leave out \`value\` for 
 \`\`\`html
 <div class="field">
   <div class="field__header">
-    <label for="upload" class="field__label">Uploading</label>
-    <span class="field__result">68%</span>
+    <label for="upload" class="field__label label">Uploading</label>
+    <span class="small-text">68%</span>
   </div>
   <progress id="upload" class="progress" value="68" max="100">68%</progress>
 </div>

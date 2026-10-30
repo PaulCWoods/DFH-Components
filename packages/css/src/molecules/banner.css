@@ -30,14 +30,13 @@
    1. Base
    ========================================================================== */
 :where(.banner) {
-  /* Children: small, subtle buttons and an icon box the same size; a tight
-     prose rhythm; fixed type */
+  /* Children: small, subtle buttons and an icon box the same size; fixed
+     type (a prose inside takes the fixed rhythm) */
   --button-size: sm;
   --button-prominence: subtle;
   --icon-box-size: sm;
   --icon-box-sm-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --font-sizing: fixed;
-  --vert-spacing: tight;
 
   /* Private manifest: intent tones (neutral by default) */
   --_banner-tone: var(--foreground, CanvasText);

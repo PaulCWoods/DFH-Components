@@ -16,6 +16,10 @@
      .text            body copy
      .small-text      hints, captions, metadata (step -1)
 
+   Form text:
+     .label           field labels and legends (step 0, bold; fixed in every
+                      mode but compact, so a form doesn't grow with the page)
+
    Sizing modes. Every atom is fixed by default: one step at every width. A
    container chooses another mode with --font-sizing (the appearance-mode
    classes .font-sizing-fluid, -cq, -compact set it) or --ui-sizing: compact:
@@ -30,6 +34,184 @@
    text is held to a comfortable measure, --body-measure), 1.4.12 (no fixed
    heights; line height set per step and overridable).
    ========================================================================== */
+
+/* ==========================================================================
+   0. Prose Elements
+   --------------------------------------------------------------------------
+   Inside .prose, bare elements take the type of the atom they stand for:
+   h1 a title, h2 a heading, h3 a subheading, h4 to h6 a small heading, text
+   blocks body text, small and captions small text. The rules sit in a nested
+   layer below the atom classes, so an atom on an element wins
+   (<p class="small-text">) and any other class keeps the prose look.
+   Spacing, lists, quotes, code, figures and tables are in molecules/prose.css.
+   ========================================================================== */
+@layer prose {
+  @scope (:where(.prose)) to (:where(.prose-end)) {
+    :where(h1) {
+      font-family: var(--title-font-family);
+      font-size: var(--title-fixed-font-size);
+      font-weight: var(--title-font-weight);
+      letter-spacing: var(--title-letter-spacing);
+      line-height: var(--title-line-height);
+      text-transform: var(--title-text-transform);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--title-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--title-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--title-compact-font-size);
+      }
+    }
+
+    :where(h2) {
+      font-family: var(--heading-font-family);
+      font-size: var(--heading-fixed-font-size);
+      font-weight: var(--heading-font-weight);
+      letter-spacing: var(--heading-letter-spacing);
+      line-height: var(--heading-line-height);
+      text-transform: var(--heading-text-transform);
+      word-spacing: var(--heading-word-spacing);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--heading-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--heading-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--heading-compact-font-size);
+      }
+    }
+
+    :where(h3) {
+      font-family: var(--subheading-font-family);
+      font-size: var(--subheading-fixed-font-size);
+      font-weight: var(--subheading-font-weight);
+      letter-spacing: var(--subheading-letter-spacing);
+      line-height: var(--subheading-line-height);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--subheading-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--subheading-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--subheading-compact-font-size);
+      }
+    }
+
+    :where(h4, h5, h6) {
+      font-family: var(--small-heading-font-family);
+      font-size: var(--small-heading-fixed-font-size);
+      font-weight: var(--small-heading-font-weight);
+      letter-spacing: var(--small-heading-letter-spacing);
+      line-height: var(--small-heading-line-height);
+      text-transform: var(--small-heading-text-transform);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--small-heading-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--small-heading-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--small-heading-compact-font-size);
+      }
+    }
+
+    :where(h1, h2, h3, h4, h5, h6) {
+      text-wrap: balance;
+    }
+
+    /* Text blocks. Lists with a class are components and keep their own
+       measure. */
+    :where(p, ul:not([class]), ol:not([class]), dl:not([class]), table:not([class]), pre) {
+      font-family: var(--body-font-family);
+      font-size: var(--body-fixed-font-size);
+      font-weight: var(--body-font-weight);
+      line-height: var(--body-line-height);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--body-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--body-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--body-compact-font-size);
+      }
+    }
+
+    :where(p, ul:not([class]), ol:not([class]), dl:not([class])) {
+      hyphens: var(--prose-hyphens, manual);
+      max-inline-size: var(--body-measure);
+      text-wrap: pretty;
+    }
+
+    :where(small, figcaption, caption) {
+      font-family: var(--body-font-family);
+      font-size: var(--body-sm-fixed-font-size);
+      font-weight: var(--body-font-weight);
+      line-height: var(--body-sm-line-height);
+      text-wrap: pretty;
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--body-sm-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--body-sm-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--body-sm-compact-font-size);
+      }
+    }
+
+    :where(strong, b, dt, th) {
+      font-weight: var(--body-strong-font-weight);
+    }
+
+    :where(code, kbd, samp, pre) {
+      font-family: var(--code-font-family);
+    }
+
+    /* Numerals: lining by default; oldstyle in running text; tabular in
+       tables; a slashed zero in code. */
+    :where(:scope) {
+      font-variant-numeric: lining-nums proportional-nums;
+    }
+
+    :where(p) {
+      font-variant-numeric: oldstyle-nums proportional-nums;
+      hanging-punctuation: first allow-end last;
+      orphans: 2;
+      widows: 2;
+    }
+
+    :where(table) {
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+
+    :where(code, kbd, samp, pre) {
+      font-variant-numeric: slashed-zero;
+    }
+  }
+}
 
 /* ==========================================================================
    1. Display Title
@@ -161,7 +343,7 @@
    ========================================================================== */
 :where(.micro-heading) {
   font-family: var(--micro-heading-font-family);
-  font-size: var(--micro-heading-font-size);
+  font-size: var(--micro-heading-fixed-font-size);
   font-weight: var(--micro-heading-font-weight);
   letter-spacing: var(--micro-heading-letter-spacing);
   line-height: var(--micro-heading-line-height);
@@ -241,5 +423,42 @@
 
   @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
     font-size: var(--body-sm-compact-font-size);
+  }
+}
+
+/* ==========================================================================
+   10. Micro Text (smaller hints, captions, metadata)
+   ========================================================================== */
+:where(.micro-text) {
+  font-family: var(--body-font-family);
+  font-size: var(--body-xs-fixed-font-size);
+  font-weight: var(--body-font-weight);
+  line-height: var(--body-xs-line-height);
+  text-wrap: pretty;
+
+  @container style(--font-sizing: fluid) {
+    font-size: var(--body-xs-fluid-font-size);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--body-xs-cq-font-size);
+  }
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--body-xs-compact-font-size);
+  }
+}
+
+/* ==========================================================================
+   11. Label (field labels and legends)
+   ========================================================================== */
+:where(.label) {
+  font-family: var(--label-font-family);
+  font-size: var(--label-font-size);
+  font-weight: var(--label-font-weight);
+  line-height: var(--label-line-height);
+
+  @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+    font-size: var(--label-compact-font-size);
   }
 }

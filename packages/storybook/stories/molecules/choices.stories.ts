@@ -1,335 +1,143 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-interface ChoicesArgs {
-  layout: 'vertical' | 'inline';
-  size: 'sm' | 'base' | 'lg';
-  density: 'default' | 'compact';
-  disabled: boolean;
-}
-
-const meta: Meta<ChoicesArgs> = {
+const meta: Meta = {
   title: 'Molecules/Choices',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Choices Primitive
+A list of checkbox or radio labels. Each \`.choice\` is a \`<label>\` holding the box and its text, and the whole row is the target. The question goes in a fieldset legend.
 
-The **Choices** primitive is a layout orchestrator and touch-target wrapper for groups of interactive form choices (checkboxes and radio buttons).
-Complies with **WCAG 2.2 Level AA / AAA** (2.5.5 / 2.5.8 Target Size, 1.4.3 Contrast, 2.4.7 Focus Visible, 1.3.1 Info & Relationships).
-
-#### Architectural Principles:
-- **Zero-Specificity Cascade Rule:** All primitives and modifiers are wrapped in \`:where(...)\` with \`(0, 0, 0)\` specificity.
-- **Expansive Touch Target:** The enclosing \`<label class="choice">\` acts as an expansive touch target with \`min-block-size: var(--_choice-min-block-size, 1.5rem)\` (24px), satisfying WCAG 2.5.8 Target Size (Minimum) AA effortlessly.
-- **Zero-JS Check Synchronization:** Wrapping native \`<input type="checkbox">\` or \`<input type="radio">\` inside \`<label class="choice">\` allows users to click anywhere on the row to toggle state natively without JavaScript.
-- **Semantic List Support:** \`:where(.choices)\` resets lists and neutralizes nested \`li\` elements with \`:where(li) { display: contents; }\`, permitting accessible \`<ul class="choices">\` markup without bullet or padding distortion.
-- **Adaptive Density:** Container queries (\`@container style(--ui-density: dense) or style(--ui-sizing: compact)\`) and explicit \`.choices--compact\` / \`.choice--sm\` classes adjust spacing and font-sizes adaptively.
-
----
-
-#### Canonical Component Markup Signatures
-
+### Markup
 \`\`\`html
-<!-- 1. Semantic Fieldset of Checkboxes -->
 <fieldset class="fieldset">
-  <legend class="legend">Accessible Audit Deliverables</legend>
+  <legend class="fieldset__legend label">Notifications</legend>
   <div class="choices">
-    <label class="choice" for="cb-axe">
-      <input type="checkbox" id="cb-axe" class="checkbox-input" checked />
-      <span>Automated axe-core compliance scanner</span>
-    </label>
-    <label class="choice" for="cb-keyboard">
-      <input type="checkbox" id="cb-keyboard" class="checkbox-input" />
-      <span>Keyboard navigation review</span>
+    <label class="choice">
+      <input type="checkbox" class="checkbox-input" name="notify" value="email" />
+      <span class="choice__label">
+        Email
+        <span class="small-text text-muted">A weekly digest</span>
+      </span>
     </label>
   </div>
 </fieldset>
-
-<!-- 2. Horizontal Radio Choices -->
-<div class="choices choices--inline">
-  <label class="choice" for="freq-daily">
-    <input type="radio" id="freq-daily" name="frequency" class="radio-input" checked />
-    <span>Daily</span>
-  </label>
-  <label class="choice" for="freq-weekly">
-    <input type="radio" id="freq-weekly" name="frequency" class="radio-input" />
-    <span>Weekly</span>
-  </label>
-</div>
-
-<!-- 3. Semantic List with Multi-Line Choice Labels -->
-<fieldset class="fieldset">
-  <legend class="legend">Notification Channels</legend>
-  <ul class="choices">
-    <li>
-      <label class="choice" for="ch-email">
-        <input type="checkbox" id="ch-email" class="checkbox-input" checked />
-        <span class="choice__label">
-          <span>Email Digest</span>
-          <small>Weekly accessibility score report delivered to your inbox</small>
-        </span>
-      </label>
-    </li>
-    <li>
-      <label class="choice" for="ch-sms">
-        <input type="checkbox" id="ch-sms" class="checkbox-input" />
-        <span class="choice__label">
-          <span>SMS Alerts</span>
-          <small>Instant notification when critical WCAG violations occur</small>
-        </span>
-      </label>
-    </li>
-  </ul>
-</fieldset>
 \`\`\`
-`,
+
+- **Rows** are at least 48px tall (32px when the product opts into fine-pointer targets) and only as wide as their text. The box sits centred on the first line.
+- **Size** follows the box: \`checkbox-input--lg\` / \`radio-input--lg\`, or the \`--check-size: lg\` flag, widens the gap beside it. The text is the body text around it.
+- **Descriptions:** \`.choice__label\` with a \`.small-text\` line.
+- **Compact:** in a compact form, fieldset or \`.ui-compact\` region, rows are 32px, the text steps to the small-control size and the box to 16px, to match the fields around them.
+- **Options:** \`--inline\` (flag \`--choices-layout: inline\`). A \`<ul class="choices">\` works too; its items step aside.
+        `,
       },
     },
-  },
-  argTypes: {
-    layout: {
-      control: 'select',
-      options: ['vertical', 'inline'],
-      description: 'Choices orientation layout',
-    },
-    size: {
-      control: 'select',
-      options: ['sm', 'base', 'lg'],
-      description: 'Choice sizing variant',
-    },
-    density: {
-      control: 'select',
-      options: ['default', 'compact'],
-      description: 'Spatial density modifier',
-    },
-    disabled: {
-      control: 'boolean',
-      description: 'Disabled interactive state',
-    },
-  },
-  args: {
-    layout: 'vertical',
-    size: 'base',
-    density: 'default',
-    disabled: false,
   },
 };
 
 export default meta;
-type Story = StoryObj<ChoicesArgs>;
+type Story = StoryObj;
 
-/**
- * 1. Default (Vertical Checkbox Choices in Fieldset)
- */
-export const Default: Story = {
+type Choice = { label: string; description?: string; checked?: boolean; disabled?: boolean };
+
+const choices = (name: string, items: Choice[], o: { type?: 'checkbox' | 'radio'; cls?: string; lg?: boolean } = {}) => {
+  const type = o.type ?? 'checkbox';
+  return `<div class="choices${o.cls ? ` ${o.cls}` : ''}">${items.map((c) => `
+    <label class="choice">
+      <input type="${type}" class="${type}-input${o.lg ? ` ${type}-input--lg` : ''}" name="${name}" value="${c.label.toLowerCase()}"${c.checked ? ' checked' : ''}${c.disabled ? ' disabled' : ''} />
+      ${c.description
+        ? `<span class="choice__label">${c.label}<span class="small-text text-muted">${c.description}</span></span>`
+        : `<span>${c.label}</span>`}
+    </label>`).join('')}</div>`;
+};
+
+const group = (legend: string, body: string) => `
+  <fieldset class="fieldset">
+    <legend class="fieldset__legend label">${legend}</legend>
+    ${body}
+  </fieldset>`;
+
+const crops: Choice[] = [{ label: 'Tomatoes', checked: true }, { label: 'Beans' }, { label: 'Squash' }, { label: 'Herbs' }];
+
+export const Playground: Story = {
+  args: { type: 'checkbox', inline: false, large: false, descriptions: false, compact: false },
+  argTypes: { type: { control: 'inline-radio', options: ['checkbox', 'radio'] } },
   render: (args) => {
-    const layoutClass = args.layout === 'inline' ? ' choices--inline' : '';
-    const densityClass = args.density === 'compact' ? ' choices--compact' : '';
-    const sizeClass = args.size === 'sm' ? ' choice--sm' : args.size === 'lg' ? ' choice--lg' : '';
-    const inputSizeClass = args.size === 'sm' ? '' : args.size === 'lg' ? ' checkbox-input--lg' : '';
-    const disabledAttr = args.disabled ? ' disabled' : '';
-
-    return `
-      <fieldset class="fieldset">
-        <legend class="legend">Accessible Audit Deliverables</legend>
-        <div class="choices${layoutClass}${densityClass}">
-          <label class="choice${sizeClass}">
-            <input type="checkbox" id="cb-opt1" class="checkbox-input${inputSizeClass}" checked${disabledAttr} />
-            <span>Automated axe-core compliance scanner</span>
-          </label>
-          <label class="choice${sizeClass}">
-            <input type="checkbox" id="cb-opt2" class="checkbox-input${inputSizeClass}"${disabledAttr} />
-            <span>Keyboard navigation and focus order audit</span>
-          </label>
-          <label class="choice${sizeClass}">
-            <input type="checkbox" id="cb-opt3" class="checkbox-input${inputSizeClass}"${disabledAttr} />
-            <span>Screen reader compatibility (VoiceOver & NVDA)</span>
-          </label>
-        </div>
-      </fieldset>
-    `;
+    const items = crops.map((c) => ({ ...c, description: args.descriptions ? `Sown in ${c.label === 'Herbs' ? 'pots' : 'beds'}` : undefined }));
+    return `<div class="${args.compact ? 'ui-compact' : ''}" style="max-inline-size: 32rem;">
+      ${group('What will you grow?', choices('playground', items, { type: args.type, cls: args.inline ? 'choices--inline' : '', lg: args.large }))}
+    </div>`;
   },
 };
 
-/**
- * 2. Inline Radio Choices (.choices--inline)
- */
-export const InlineChoices: Story = {
+export const Compact: Story = {
   render: () => `
-    <fieldset class="fieldset">
-      <legend class="legend">Audit Frequency</legend>
-      <div class="choices choices--inline">
-        <label class="choice">
-          <input type="radio" name="audit-freq" id="freq-daily" class="radio-input" checked />
-          <span>Daily</span>
-        </label>
-        <label class="choice">
-          <input type="radio" name="audit-freq" id="freq-weekly" class="radio-input" />
-          <span>Weekly</span>
-        </label>
-        <label class="choice">
-          <input type="radio" name="audit-freq" id="freq-monthly" class="radio-input" />
-          <span>Monthly</span>
-        </label>
-        <label class="choice">
-          <input type="radio" name="audit-freq" id="freq-quarterly" class="radio-input" />
-          <span>Quarterly</span>
-        </label>
+    <form class="form form--compact" style="max-inline-size: 24rem;" onsubmit="event.preventDefault();">
+      <div class="field">
+        <label for="compact-name" class="field__label label">Full name</label>
+        <input id="compact-name" class="input" autocomplete="name" />
       </div>
-    </fieldset>
-  `,
+      ${group('What will you grow?', choices('compact-crops', crops.map((c) => ({ ...c, description: c.label === 'Tomatoes' ? 'Sown in beds' : undefined }))))}
+      ${group('Plot size', choices('compact-size', [{ label: 'Half plot', checked: true }, { label: 'Full plot' }], { type: 'radio', cls: 'choices--inline' }))}
+    </form>`,
 };
 
-/**
- * 3. Multi-Line Labels with Descriptions (.choice__label)
- */
-export const MultiLineDescriptions: Story = {
-  render: () => `
-    <fieldset class="fieldset" style="max-inline-size: 32rem;">
-      <legend class="legend">Notification Preferences</legend>
-      <div class="choices">
-        <label class="choice">
-          <input type="checkbox" id="notify-email" class="checkbox-input" checked />
-          <span class="choice__label">
-            <span>Email Digest</span>
-            <small>Weekly accessibility score report delivered directly to your inbox.</small>
-          </span>
-        </label>
-        <label class="choice">
-          <input type="checkbox" id="notify-slack" class="checkbox-input" checked />
-          <span class="choice__label">
-            <span>Slack Integration</span>
-            <small>Real-time notifications sent to your team channel when regressions occur.</small>
-          </span>
-        </label>
-        <label class="choice">
-          <input type="checkbox" id="notify-sms" class="checkbox-input" />
-          <span class="choice__label">
-            <span>Critical Incident SMS</span>
-            <small>Urgent SMS alert triggered only for Level AA failures on production routes.</small>
-          </span>
-        </label>
-      </div>
-    </fieldset>
-  `,
+export const Radios: Story = {
+  render: () => group('Plot size', choices('plot-size', [{ label: 'Half plot', checked: true }, { label: 'Full plot' }, { label: 'Raised bed' }], { type: 'radio' })),
 };
 
-/**
- * 4. Semantic List Markup (`<ul class="choices">`)
- */
-export const SemanticList: Story = {
+export const WithDescriptions: Story = {
+  name: 'With descriptions',
+  render: () => `<div style="max-inline-size: 28rem;">${group('Notifications', choices('notify', [
+    { label: 'Email', description: 'A weekly digest of plot news', checked: true },
+    { label: 'Text message', description: 'Only when a frost warning is issued' },
+    { label: 'Push', description: 'Unavailable in this browser', disabled: true },
+  ]))}</div>`,
+};
+
+export const Inline: Story = {
+  render: () => group('Watering days', choices('days', ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => ({ label: d, checked: i % 3 === 0 })), { cls: 'choices--inline' })),
+};
+
+export const Large: Story = {
+  name: 'Large boxes',
+  render: () => group('Plot size', choices('plot-size-lg', [{ label: 'Half plot', checked: true }, { label: 'Full plot' }], { type: 'radio', lg: true })),
+};
+
+export const AsAList: Story = {
+  name: 'As a list',
   render: () => `
     <fieldset class="fieldset">
-      <legend class="legend">Export Formats (Semantic List)</legend>
+      <legend class="fieldset__legend label">Tools to borrow</legend>
       <ul class="choices">
-        <li>
-          <label class="choice">
-            <input type="radio" name="export-fmt" id="fmt-json" class="radio-input" checked />
-            <span>JSON (Machine-readable tokens)</span>
-          </label>
-        </li>
-        <li>
-          <label class="choice">
-            <input type="radio" name="export-fmt" id="fmt-csv" class="radio-input" />
-            <span>CSV (Spreadsheet compatible)</span>
-          </label>
-        </li>
-        <li>
-          <label class="choice">
-            <input type="radio" name="export-fmt" id="fmt-pdf" class="radio-input" />
-            <span>PDF (Executive summary report)</span>
-          </label>
-        </li>
+        <li><label class="choice"><input type="checkbox" class="checkbox-input" name="tools" value="spade" /><span>Spade</span></label></li>
+        <li><label class="choice"><input type="checkbox" class="checkbox-input" name="tools" value="hoe" /><span>Hoe</span></label></li>
+        <li><label class="choice"><input type="checkbox" class="checkbox-input" name="tools" value="wheelbarrow" /><span>Wheelbarrow</span></label></li>
       </ul>
-    </fieldset>
-  `,
+    </fieldset>`,
 };
 
-/**
- * 5. Sizing Variations (.choice--sm, Base, .choice--lg)
- */
-export const SizingTiers: Story = {
+export const Invalid: Story = {
   render: () => `
-    <div class="stack gap-xl">
-      <fieldset class="fieldset">
-        <legend class="legend">Small Choices (.choice--sm / .choices--compact)</legend>
-        <div class="choices choices--compact">
-          <label class="choice choice--sm">
-            <input type="checkbox" class="checkbox-input" checked />
-            <span class="choice__label">
-              <span>Compact Option One</span>
-              <small>Space-constrained interfaces and data grids</small>
-            </span>
-          </label>
-          <label class="choice choice--sm">
-            <input type="checkbox" class="checkbox-input" />
-            <span class="choice__label">
-              <span>Compact Option Two</span>
-              <small>Minimal vertical row height</small>
-            </span>
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset class="fieldset">
-        <legend class="legend">Standard Choices (Default)</legend>
-        <div class="choices">
-          <label class="choice">
-            <input type="checkbox" class="checkbox-input" checked />
-            <span class="choice__label">
-              <span>Standard Option</span>
-              <small>Default 1rem text with 1.25rem (20px) control</small>
-            </span>
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset class="fieldset">
-        <legend class="legend">Large Choices (.choice--lg)</legend>
-        <div class="choices">
-          <label class="choice choice--lg">
-            <input type="checkbox" class="checkbox-input checkbox-input--lg" checked />
-            <span class="choice__label">
-              <span>Large Option</span>
-              <small>High-visibility touch targets for kiosk or onboarding flows</small>
-            </span>
-          </label>
-        </div>
-      </fieldset>
-    </div>
-  `,
+    <fieldset class="fieldset" aria-describedby="terms-error">
+      <legend class="fieldset__legend label">Plot agreement</legend>
+      <p id="terms-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Agree to the plot terms to continue</p>
+      <div class="choices">
+        <label class="choice"><input type="checkbox" class="checkbox-input" name="terms" aria-invalid="true" /><span>I agree to the plot terms</span></label>
+      </div>
+    </fieldset>`,
 };
 
-/**
- * 6. Interactive States & Inline Links
- */
-export const StatesAndLinks: Story = {
-  render: () => `
-    <div class="stack gap-lg">
-      <fieldset class="fieldset">
-        <legend class="legend">Choices with Embedded Interactive Links</legend>
-        <div class="choices">
-          <label class="choice">
-            <input type="checkbox" class="checkbox-input" required />
-            <span>I have read and agree to the <a href="#terms" class="link">Terms of Service</a> and <a href="#privacy" class="link">Privacy Charter</a>.</span>
-          </label>
-        </div>
-      </fieldset>
+export const LongLabels: Story = {
+  name: 'Long labels wrap',
+  render: () => `<div style="max-inline-size: 18rem;">${group('Consent', choices('consent', [
+    { label: 'I agree that my name and plot number can appear on the shared rota in the shed' },
+    { label: 'Send me the newsletter' },
+  ]))}</div>`,
+};
 
-      <fieldset class="fieldset">
-        <legend class="legend">Disabled Choices</legend>
-        <div class="choices">
-          <label class="choice">
-            <input type="checkbox" class="checkbox-input" checked disabled />
-            <span>Locked Setting (Checked &amp; Disabled)</span>
-          </label>
-          <label class="choice">
-            <input type="checkbox" class="checkbox-input" disabled />
-            <span>Unavailable Feature (Unchecked &amp; Disabled)</span>
-          </label>
-        </div>
-      </fieldset>
-    </div>
-  `,
+export const RightToLeft: Story = {
+  name: 'Right to left',
+  render: () => `<div dir="rtl" style="max-inline-size: 28rem;">${group('What will you grow?', choices('rtl', crops))}</div>`,
 };

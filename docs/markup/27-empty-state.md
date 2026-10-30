@@ -1,115 +1,65 @@
-# 27. Empty State Primitive (Zero-Data Views & Onboarding)
+# 27. Empty State
+The block shown where content would be when there is none: a search or filter miss, a first use, a cleared queue, a region that failed to load. A molecule: it lays out a visual, a title, a description and actions; the parts are atoms (an icon box, text atoms, buttons) that style themselves. The audit is in `docs/audit/empty-state.md`.
+
+| Axis | Modifiers (on `.empty-state`) | Flag |
+| :--- | :--- | :--- |
+| Prominence | default (no frame, no padding), `--subtle` (dashed, tinted, padded) | none |
+| Density | default, `--compact` | `--ui-sizing: compact` (`.ui-compact`) |
+| Intent | neutral, `--accent`, `--info`, `--success`, `--warning`, `--danger` | `--icon-box-intent` |
+| Alignment | centred, `--start` | none |
+
+## A. Markup
 ```html
-<!-- 1. Standalone Empty State (Search / Filter Miss) -->
-<section class="empty-state" aria-labelledby="empty-search-title">
-  <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+<div class="empty-state">
+  <div class="empty-state__visual">
+    <span class="icon-box" aria-hidden="true">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+    </span>
   </div>
   <div class="empty-state__content">
-    <h3 id="empty-search-title" class="empty-state__title heading">No items found</h3>
-    <p class="empty-state__description text-muted">
-      Try adjusting your search criteria or clear your current filters.
-    </p>
+    <h3 class="empty-state__title subheading">No plants match “fern”</h3>
+    <p class="empty-state__description small-text">Check the spelling, or clear the filters to see all 40 plants.</p>
   </div>
   <div class="empty-state__actions">
-    <button type="button" class="button button--strong button--accent button--sm">
-      <span>Clear Filters</span>
-    </button>
+    <button type="button" class="button">Clear filters</button>
   </div>
-</section>
-
-<!-- 2. Onboarding / Initial Setup with Primary & Secondary Actions -->
-<section class="empty-state empty-state--bordered" aria-labelledby="empty-setup-title">
-  <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
-  </div>
-  <div class="empty-state__content">
-    <h3 id="empty-setup-title" class="empty-state__title heading">Create your first project</h3>
-    <p class="empty-state__description text-muted">
-      Organize design tokens, layout primitives, and composite recipes in a unified space.
-    </p>
-  </div>
-  <div class="empty-state__actions">
-    <button type="button" class="button button--strong button--accent">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
-      <span>New Project</span>
-    </button>
-    <button type="button" class="button">
-      <span>Import Repository</span>
-    </button>
-  </div>
-</section>
-
-<!-- 3. Nested Inside Card Primitive (Card Companion) -->
-<article class="card bg-card" aria-labelledby="card-empty-title">
-  <header class="card__header split align-items-center">
-    <h4 class="card__title font-size-0 font-bold">Activity</h4>
-    <span class="status status--sm"><span class="status__text">Zero</span></span>
-  </header>
-  <div class="card__body">
-    <div class="empty-state empty-state--flush empty-state--compact" aria-labelledby="card-empty-title">
-      <div class="empty-state__visual" aria-hidden="true">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-      </div>
-      <div class="empty-state__content">
-        <h5 id="card-empty-title" class="empty-state__title small-heading">All caught up!</h5>
-        <p class="empty-state__description text-muted small-text">
-          No pending tasks or unread notifications in this view.
-        </p>
-      </div>
-    </div>
-  </div>
-
-</article>
-
-<!-- 4. Table Cell Empty State -->
-<table class="table">
-  <tbody>
-    <tr>
-      <td colspan="100%">
-        <div class="empty-state empty-state--compact" aria-labelledby="tbl-empty-title">
-          <div class="empty-state__visual" aria-hidden="true">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-          </div>
-          <div class="empty-state__content">
-            <h4 id="tbl-empty-title" class="empty-state__title small-heading">No matching records</h4>
-            <p class="empty-state__description text-muted">Try clearing search filters.</p>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- 5. Semantic Status Variants (Success, Warning, Error / Danger) -->
-<section class="empty-state empty-state--success" aria-labelledby="success-empty-title">
-  <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-  </div>
-  <div class="empty-state__content">
-    <h3 id="success-empty-title" class="empty-state__title">Sync complete</h3>
-    <p class="empty-state__description">All 717 tokens are synchronized.</p>
-  </div>
-</section>
-
-<section class="empty-state empty-state--warning" aria-labelledby="warn-empty-title">
-  <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
-  </div>
-  <div class="empty-state__content">
-    <h3 id="warn-empty-title" class="empty-state__title">Subscription expiring</h3>
-    <p class="empty-state__description">Renew plan to preserve permissions.</p>
-  </div>
-</section>
-
-<section class="empty-state empty-state--error" aria-labelledby="err-empty-title">
-  <div class="empty-state__visual" aria-hidden="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-  </div>
-  <div class="empty-state__content">
-    <h3 id="err-empty-title" class="empty-state__title">Connection failed</h3>
-    <p class="empty-state__description">Unable to load remote repository.</p>
-  </div>
-</section>
+</div>
 ```
+- **Parts** are layout hooks only. Type comes from the text atom on the title (`.subheading`, or `.small-heading` when compact) and the description (`.small-text`, muted by the empty state). Actions are `.button`s, or a `.button-group`.
+- **The visual** is an `.icon-box`, which the empty state makes large, subtle and round (small when compact), with a 1.5em icon. Or an illustration (`<img alt="">` or an `aria-hidden` `<svg>`), capped at 10rem.
+- **Padding:** none by default. The empty state sits in something that has its own (a card body, a table cell, a dialog, a page section). Add room with a `padding-block-*` utility.
+- **`hidden`** works on it: show it with `hidden = false`, not an inline `display`.
 
+## B. Semantics and Announcing
+- A `<div>`, not a landmark. Use a `<section>` with a heading only when the empty state is the whole content of a page or panel.
+- The heading level fits the page outline; the class sets the size. In a table cell, the title can be a `<p>`.
+- When a search or filter empties a list, put the news in a `role="status"` element that is on the page from the start ("No plants match", or the result count). The empty state isn't a live region: one added with its content isn't reliably announced, and a whole block would be read out.
+
+## C. Intent
+```html
+<div class="empty-state empty-state--success">
+  <div class="empty-state__visual">
+    <span class="icon-box" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
+  </div>
+  <div class="empty-state__content">
+    <h3 class="empty-state__title subheading">All caught up</h3>
+    <p class="empty-state__description small-text">No plants need watering today.</p>
+  </div>
+</div>
+```
+Intent tints the icon box and colours its icon (it sets `--icon-box-intent`). Colour never carries the meaning alone (WCAG 1.4.1): the icon and the title say what happened.
+
+## D. Placement
+- **In a card:** inside `.card__body`. Use `--compact` in a small card.
+- **In a table:** one row, one cell with `colspan` spanning every column; keep the header row so the columns stay named.
+- **In a narrow sidebar:** `--compact` and `--start`, or a `.ui-compact` region.
+- **A slot or drop zone:** `--subtle`.
+
+## E. Writing
+- The title says what is empty: "No plants match “fern”", not "No results".
+- The description says why, or what to do next.
+- At most one primary action. A first-use state shows the action that fills it.
+- An error that leaves a region empty can be a `--danger` empty state with a "Try again" button. A page-level error is a banner with `role="alert"` (§11).
+
+## F. Rules
+- **Removed:** the `cq` type mode and size container; `--flush` (no padding is the default); `--bordered` (use `--subtle`); `--left` (use `--start`); `--error` and `[data-status]` (use `--danger` and the other intents); `__icon-well` (use an `.icon-box` in `__visual`); `__hgroup`; `--empty-state-density` (use `--ui-sizing: compact`) and `--empty-state-align`; the card and table rules; `aria-labelledby` on a `<div>`; the well, icon, title, padding and status tokens.

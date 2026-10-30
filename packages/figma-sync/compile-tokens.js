@@ -139,50 +139,50 @@ function compileFluidValue(val, globalTokens = null) {
 }
 
 /**
- * Mapping of resting Tier 2 tokens to their inverted equivalents for Tier 3 component tokens.
- * When a component references a Tier 2 semantic surface, foreground, or border,
- * its inverted counterpart is automatically emitted into the color-palette-inverted block.
+ * The inverted palette (.color-palette-inverted): every Tier 2 surface,
+ * foreground and border colour written as light-dark(a, b) swaps to
+ * light-dark(b, a), so an inverted region takes the other mode's colours.
+ * Filled from 2-semantic.json by buildInvertedRoles(); Tier 3 tokens that
+ * reference these roles are inverted through the same map.
  */
-const TIER2_INVERTED_MAPPINGS = {
-  // Surfaces
-  '{surface.card}': 'light-dark(var(--surface-color-darker), var(--surface-color-lighter))',
-  '{surface}': 'light-dark(var(--surface-color-dark), var(--surface-color-light))',
-  '{surface.default}': 'light-dark(var(--surface-color-dark), var(--surface-color-light))',
-  '{surface.subtle}': 'light-dark(var(--surface-color-dark), var(--surface-color-light))',
-  '{surface.muted}': 'light-dark(var(--surface-color-dark-muted), var(--surface-color-light-muted))',
-  '{surface.card-inverted}': 'light-dark(var(--surface-color-lighter), var(--surface-color-darker))',
-  '{surface.inverted}': 'light-dark(var(--surface-color-light), var(--surface-color-dark))',
-  '{surface.dark}': 'light-dark(var(--surface-color-darker), var(--surface-color-dark))',
-  '{surface.darker}': 'var(--surface-color-darker)',
-  '{surface.accent-strong}': 'light-dark(var(--surface-color-accent-strong-dark), var(--surface-color-accent-strong-light))',
-  '{surface.accent}': 'light-dark(var(--surface-color-accent-dark), var(--surface-color-accent-light))',
-  '{surface.accent-muted}': 'light-dark(var(--surface-color-accent-muted-dark), var(--surface-color-accent-muted-light))',
-  '{surface.danger}': 'light-dark(var(--surface-color-danger-dark), var(--surface-color-danger-light))',
-  '{surface.warning}': 'light-dark(var(--surface-color-warning-dark), var(--surface-color-warning-light))',
-  '{surface.success}': 'light-dark(var(--surface-color-success-dark), var(--surface-color-success-light))',
+const TIER2_INVERTED_MAPPINGS = {};
+const invertedTier2Vars = [];
 
-  // Foregrounds
-  '{foreground}': 'light-dark(var(--foreground-color-light), var(--foreground-color-dark))',
-  '{foreground.default}': 'light-dark(var(--foreground-color-light), var(--foreground-color-dark))',
-  '{foreground.strong}': 'light-dark(var(--foreground-color-lighter), var(--foreground-color-darker))',
-  '{foreground.muted}': 'light-dark(var(--foreground-color-light-muted), var(--foreground-color-dark-muted))',
-  '{foreground.inverted}': 'light-dark(var(--foreground-color-dark), var(--foreground-color-light))',
-  '{foreground.inverted-strong}': 'light-dark(var(--foreground-color-darker), var(--foreground-color-lighter))',
-  '{foreground.accent}': 'light-dark(var(--foreground-color-accent-light), var(--foreground-color-accent-dark))',
-  '{foreground.accent-hover}': 'light-dark(var(--foreground-color-accent-light-hover), var(--foreground-color-accent-dark-hover))',
-  '{foreground.accent-pressed}': 'light-dark(var(--foreground-color-accent-light-pressed), var(--foreground-color-accent-dark-pressed))',
-  '{foreground.danger}': 'light-dark(var(--foreground-color-danger-light), var(--foreground-color-danger-dark))',
-  '{foreground.danger-hover}': 'light-dark(var(--foreground-color-danger-light-hover), var(--foreground-color-danger-dark-hover))',
-  '{foreground.danger-pressed}': 'light-dark(var(--foreground-color-danger-light-pressed), var(--foreground-color-danger-dark-pressed))',
-  '{foreground.success}': 'light-dark(var(--foreground-color-success-light), var(--foreground-color-success-dark))',
-  '{foreground.warning}': 'light-dark(var(--foreground-color-warning-light), var(--foreground-color-warning-dark))',
+/* Splits light-dark(a, b) at its top-level comma; null for any other value */
+function splitLightDark(val) {
+  const m = /^light-dark\((.*)\)$/s.exec(val.trim());
+  if (!m) return null;
+  let depth = 0;
+  for (let i = 0; i < m[1].length; i++) {
+    const ch = m[1][i];
+    if (ch === '(') depth++;
+    else if (ch === ')') depth--;
+    else if (ch === ',' && depth === 0) return [m[1].slice(0, i).trim(), m[1].slice(i + 1).trim()];
+  }
+  return null;
+}
 
-  // Borders
-  '{border.color.accent}': 'light-dark(var(--border-color-accent-dark), var(--border-color-accent-light))',
-  '{border.color.danger}': 'light-dark(var(--border-color-danger-dark), var(--border-color-danger-light))',
-  '{border.color.success}': 'light-dark(var(--border-color-success-dark), var(--border-color-success-light))',
-  '{border.color.warning}': 'light-dark(var(--border-color-warning-dark), var(--border-color-warning-light))',
-};
+function buildInvertedRoles(semanticJson) {
+  const walk = (obj, path) => {
+    for (const [key, value] of Object.entries(obj)) {
+      if (key.startsWith('$') || !value || typeof value !== 'object') continue;
+      const next = [...path, key];
+      if (!('$value' in value)) {
+        walk(value, next);
+        continue;
+      }
+      const parts = typeof value.$value === 'string' ? splitLightDark(value.$value) : null;
+      if (!parts) continue;
+      const css = resolveReferences(`light-dark(${parts[1]}, ${parts[0]})`);
+      const name = next.join('-').replace(/-default$/, '');
+      TIER2_INVERTED_MAPPINGS[`{${next.join('.')}}`] = css;
+      if (key === 'default') TIER2_INVERTED_MAPPINGS[`{${path.join('.')}}`] = css;
+      invertedTier2Vars.push(`  --${name}: ${css};`);
+    }
+  };
+  for (const group of ['surface', 'foreground']) if (semanticJson?.[group]) walk(semanticJson[group], [group]);
+  if (semanticJson?.border?.color) walk(semanticJson.border.color, ['border', 'color']);
+}
 
 /**
  * Recursively flattens nested token objects into CSS variable paths.
@@ -761,6 +761,7 @@ function compileTokens() {
     const discoveredFluidSteps = discoverFluidStepReferences([semanticJson, componentJson]);
 
     // 3. Generate fluid system with dynamic compound steps
+    buildInvertedRoles(semanticJson);
     const fluidSystem = generateFluidSystem(globalJson, discoveredFluidSteps, scaleParams);
     const shadowSystem = generateShadowSystem(semanticJson);
 
@@ -851,20 +852,21 @@ ${allSupportsMappings.join('\n')}
 }`;
     }
 
-    // Build Tier 3 inverted palette blocks for components
+    // Build the inverted palette blocks: Tier 2 roles, then the Tier 3 tokens that read them
+    const invertedVars = [...invertedTier2Vars, ...invertedTier3Vars];
     let invertedBlock = '';
-    if (invertedTier3Vars.length > 0) {
+    if (invertedVars.length > 0) {
       invertedBlock = `
 /* ==========================================================================
-   Tier 3 Inverted Component Palette Blocks
+   Inverted Palette Blocks (Tier 2 roles and the Tier 3 tokens that read them)
    ========================================================================== */
 :where(.color-palette-inverted, .colors-inverted) {
-${invertedTier3Vars.join('\n')}
+${invertedVars.join('\n')}
 }
 
 * {
   @container style(--color-palette: inverted) {
-${invertedTier3Vars.join('\n')}
+${invertedVars.join('\n')}
   }
 }`;
     }

@@ -41,8 +41,12 @@
 
 /* ==========================================================================
    1. Inline Link (:where(.link))
+   --------------------------------------------------------------------------
+   A bare link inside .prose (and not inside .prose-end) is an inline link
+   too, so CMS output needs no class. --link-prominence: subtle on the prose
+   gives body-coloured links.
    ========================================================================== */
-:where(.link) {
+:where(.link, .prose a:not([class], .prose-end a)) {
   --_link-color: var(--link-color, var(--foreground-accent, LinkText));
   --_link-decoration-line: underline;
   --_link-hover-decoration-line: underline;

@@ -1,220 +1,140 @@
 /* ==========================================================================
-   Field Primitive
+   Design For Humans: Field
    --------------------------------------------------------------------------
-   Accessible form field wrapper uniting labels, hints, inputs, and validation errors.
+   One control with its label, and optionally a hint, an error and an
+   output. The field orders and spaces the parts; type comes from text atoms
+   on them (.label, .small-text).
 
-   Usage:
+   Order: label, hint, error, control. The error comes before the control,
+   so a screen-reader user hears it before reaching the field and a
+   magnifier user sees it beside the label.
+
+   Errors: link the hint and error to the control with aria-describedby and
+   set aria-invalid="true" on the control. An error has no role; a script
+   that inserts one after the page loads may add role="alert". It starts
+   with a Warning icon, so the error is never colour alone.
+
+   Required and optional are written in the label, never generated: mark the
+   fewer case, usually "(optional)".
+
+   Options: --inline (the label beside its control). A form lays out many
+   fields (.form--aligned); a disabled control dims its whole field.
+
    <div class="field">
-     <label for="email" class="field__label">Email Address</label>
-     <p id="email-hint" class="field__hint">We will never share your email.</p>
-     <input id="email" type="email" class="input" aria-describedby="email-hint" />
+     <label for="email" class="field__label label">Email address</label>
+     <p id="email-hint" class="field__hint small-text">We only use it to reply.</p>
+     <p id="email-error" class="field__error small-text">
+       <svg class="icon" …><use href="#Warning"/></svg>
+       Enter an email address in the correct format, like name@example.com
+     </p>
+     <input id="email" type="email" class="input" aria-describedby="email-hint email-error" aria-invalid="true" />
    </div>
    ========================================================================== */
 
 /* ==========================================================================
-   Base Field Wrapper Primitive (:where(.field))
+   1. Base: the parts in a column
    ========================================================================== */
 :where(.field) {
-  --_field-inner-gap: var(--field-inner-gap, var(--spacing-8, 0.5rem));
-  --_inline-field-label-width: var(--inline-field-label-width, var(--spacing-192, 12rem));
+  /* Private manifest */
+  --_field-gap: var(--field-gap, 0.5rem);
+  --_field-inline-gap: var(--field-inline-gap, 0.75rem);
+  --_field-label-gap: var(--field-label-gap, 0.25rem);
+  --_field-label-width: var(--field-label-width, 12rem);
 
-  /* Container Style Queries */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_field-inner-gap: var(--spacing-4, 0.25rem);
-    --_inline-field-label-width: var(--inline-compact-field-label-width, var(--spacing-128, 8rem));
+  /* Density */
+  @container style(--ui-sizing: compact) {
+    --_field-gap: var(--field-compact-gap, 0.25rem);
   }
 
-  /* Layout & Display */
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  inline-size: 100%;
+  gap: var(--_field-gap);
+  margin: 0;
+  min-inline-size: 0;
 
-  /* Spacing */
-  gap: var(--_field-inner-gap);
-
-  /* Container opacity on disabled state */
-  &:has(:disabled, [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled, 0.4);
-  }
-
-  /* Automatically show accessible required text on label when control has :required or [aria-required="true"] */
-  &:not(:has(.required)):has(:required, [aria-required="true"]) :where(.field__label, .label):not(:has(.required))::after {
-    content: " (Required)";
-    font-weight: var(--font-weight-regular, 400);
-    margin-inline-start: var(--spacing-8, 0.5rem);
-    font-size: var(--body-sm-font-size, 0.875em);
-    color: var(--foreground-muted, currentColor);
+  /* A disabled control dims its field, unless a disabled fieldset already does */
+  &:where(:has(:disabled, [aria-disabled="true"]:not([role="option"])):not(:disabled *, [aria-disabled="true"] *)) {
+    opacity: var(--opacity-disabled, 0.5);
   }
 }
 
 /* ==========================================================================
-   Density & Size Modifiers
+   2. Parts
    ========================================================================== */
-:where(.field--compact, .field--dense, .field--sm) {
-  --_field-inner-gap: var(--spacing-4, 0.25rem);
+
+/* A label with an output or a link at the other end */
+:where(.field__header) {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_field-gap) var(--_field-inline-gap);
+  justify-content: space-between;
 }
 
-:where(.field--loose, .field--lg) {
-  --_field-inner-gap: var(--spacing-12, 0.75rem);
+:where(.field__label) {
+  margin: 0;
+  min-inline-size: 0;
+}
+
+:where(.field__hint) {
+  color: var(--field-hint-color, currentColor);
+  margin: 0;
+  margin-block-start: calc((var(--_field-gap) - var(--_field-label-gap)) * -1);
+  min-inline-size: 0;
+}
+
+/* One message, a <p> with a Warning icon; or a <ul> of them. It may also
+   sit in a fieldset, for an error about the whole group. */
+:where(.field__error) {
+  color: var(--field-error-color, currentColor);
+  margin: 0;
+  margin-block-start: calc((var(--_field-gap) - var(--_field-label-gap)) * -1);
+  min-inline-size: 0;
+
+  &:where(:not(ul)) {
+    align-items: start;
+    display: flex;
+    gap: var(--_field-gap, 0.5rem);
+  }
+
+  > :where(.icon) {
+    flex-shrink: 0;
+    margin-block: calc((1lh - 1em) / 2);
+  }
+
+  &:where(ul) {
+    padding-inline-start: 1.25em;
+  }
 }
 
 /* ==========================================================================
-   Inline Field Container (:where(.inline-field))
+   3. Inline: the label beside its control
    ========================================================================== */
-:where(.inline-field) {
-  --direction: row;
-  display: var(--inline-field-display, inline-flex);
+:where(.field--inline) {
   align-items: center;
+  column-gap: var(--_field-inline-gap);
   flex-direction: row;
   flex-wrap: wrap;
-  column-gap: var(--field-inline-gap, var(--spacing-12, 0.75rem));
+
+  /* The control keeps its own width rather than filling the row */
+  > :where(*) {
+    flex-grow: 0;
+  }
+
+  /* Hint and error drop below the row */
+  > :where(.field__hint, .field__error) {
+    flex-basis: 100%;
+    order: 1;
+  }
 }
 
-:where(.fields-grid) {
-  container-type: inline-size;
-
-  @container (inline-size > 32em) {
-    > :where(.field) {
-      display: var(--field-grid-display, grid);
-      grid-template-columns: var(--_inline-field-label-width) 1fr;
-      grid-template-areas: "label input" "label hint" "label errors";
-      align-items: baseline;
-      column-gap: var(--field-inline-gap, var(--spacing-12, 0.75rem));
-
-      :where(.field__label, .label, label) {
-        grid-area: label;
-      }
-
-      :where(.field__input, .input, .select, select, textarea, .textarea, .button-group, .cluster, .check-group, .radio-group) {
-        grid-area: input;
-      }
-
-      :where(.field__hint) {
-        grid-area: hint;
-      }
-
-      :where(.field__error) {
-        grid-area: errors;
-      }
+/* ==========================================================================
+   4. Preferences
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.field) {
+    &:where(:has(:disabled, [aria-disabled="true"]:not([role="option"]))) {
+      opacity: 1;
     }
   }
-}
-
-
-/* ==========================================================================
-   Fields Grid Container (:where(.fields-inline))
-   ========================================================================== */
-
-:where(.fields-inline) {
-  --_fields-inline-gap: var(--fields-inline-gap, var(--field-gap, var(--spacing-16, 1rem)));
-  --_fields-inline-width: var(--fields-inline-width, var(--spacing-block-xs, 256px));
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--_fields-inline-width)), 1fr));
-
-  /* Container Style Queries */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_fields-inline-gap: var(--spacing-8, 0.5rem);
-  }
-
-  @supports (width: stretch) {
-    inline-size: stretch;
-  }
-
-  @supports not (width: stretch) {
-    inline-size: 100%;
-  }
-
-  /* Spacing */
-  gap: var(--_fields-inline-gap);
-}
-
-/* ==========================================================================
-   Field Sub-Elements (Header, Label, Hint, Output, Errors)
-   ========================================================================== */
-:where(.field__header) {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  inline-size: 100%;
-  gap: var(--field-header-gap, var(--spacing-8, 0.5rem));
-}
-
-:where(.field__label, .label, .switch__label) {
-  --_label-font-family: var(--label-font-family, var(--body-font-family, inherit));
-  --_label-font-size: var(--label-font-size, var(--typography-font-size-0, 1rem));
-  --_label-font-weight: var(--label-font-weight, var(--font-weight-bold, 700));
-  --_label-line-height: var(--label-line-height, var(--typography-line-height--1, 1.4));
-
-  font-family: var(--_label-font-family);
-  font-size: var(--_label-font-size);
-  font-weight: var(--_label-font-weight);
-  line-height: var(--_label-line-height);
-  color: var(--label-color, var(--foreground, currentColor));
-  cursor: pointer;
-
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_label-font-size: var(--label-compact-font-size, var(--typography-font-size--1, 0.875rem));
-    --_label-font-weight: var(--label-compact-font-weight, var(--font-weight-medium, 500));
-    --_label-line-height: var(--label-compact-line-height, var(--typography-line-height--1, 1.4));
-  }
-}
-
-:where(.field__hint, .hint) {
-  --_field-hint-font-family: var(--body-font-family, inherit);
-  --_field-hint-font-size: var(--body-sm-font-size, var(--typography-font-size--1, 0.875rem));
-  --_field-hint-font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
-  --_field-hint-line-height: var(--body-sm-line-height, var(--typography-line-height-4, 1.4));
-
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_field-hint-font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.75rem));
-  }
-
-  margin: 0;
-  font-family: var(--_field-hint-font-family);
-  font-size: var(--_field-hint-font-size);
-  font-weight: var(--_field-hint-font-weight);
-  line-height: var(--_field-hint-line-height);
-  color: var(--field-hint-color, var(--foreground-muted, currentColor));
-}
-
-:where(.field__output, .field__result, .output) {
-  --_field-output-font-family: var(--output-font-family, var(--body-font-family, inherit));
-  --_field-output-font-size: var(--output-font-size, var(--body-sm-font-size, var(--typography-font-size--1, 0.875rem)));
-  --_field-output-font-weight: var(--output-font-weight, var(--body-font-weight, var(--font-weight-regular, 400)));
-  --_field-output-line-height: var(--output-line-height, var(--body-sm-line-height, var(--typography-line-height-4, 1.4)));
-
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_field-output-font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.75rem));
-  }
-
-  margin: 0;
-  font-family: var(--_field-output-font-family);
-  font-size: var(--_field-output-font-size);
-  font-weight: var(--_field-output-font-weight);
-  line-height: var(--_field-output-line-height);
-}
-
-:where(.field__errors, .field__error, .field .errors, .error-message) {
-  --_field-error-font-family: var(--body-font-family, inherit);
-  --_field-error-font-size: var(--body-sm-font-size, var(--typography-font-size--1, 0.875rem));
-  --_field-error-font-weight: var(--body-font-weight, var(--font-weight-regular, 400));
-  --_field-error-line-height: var(--body-sm-line-height, var(--typography-line-height-4, 1.4));
-
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_field-error-font-size: var(--body-sm-compact-font-size, var(--typography-font-size--2, 0.75rem));
-  }
-
-  margin: 0;
-  font-family: var(--_field-error-font-family);
-  font-size: var(--_field-error-font-size);
-  font-weight: var(--_field-error-font-weight);
-  line-height: var(--_field-error-line-height);
-  color: var(--field-error-color, var(--foreground-danger, #d32f2f));
-}
-
-ul:where(.field__errors, .field__error, .field .errors) {
-  padding-inline-start: 1.5em;
-  list-style: disc;
 }

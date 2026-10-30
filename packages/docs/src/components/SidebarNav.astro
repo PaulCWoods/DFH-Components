@@ -1,0 +1,175 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  currentPath?: string;
+  currentSection?: string;
+  /** Keeps ids unique when the navigation is rendered twice (sidebar and drawer) */
+  prefix?: string;
+  /** Also show the site's main sections (they sit in the header at wide widths) */
+  withMain?: boolean;
+}
+
+const { currentSection = '' } = Astro.props;
+const { currentPath = '', prefix = 'side', withMain = false } = Astro.props;
+
+const navSections = [
+  {
+    title: 'Getting Started',
+    items: [
+      { label: 'Introduction', href: '/' },
+      { label: 'Composition Law', href: '/getting-started/composition-law', badge: 'Rule' },
+      { label: 'Accessibility (WCAG 2.2)', href: '/getting-started/accessibility', badge: 'AAA' },
+    ],
+  },
+  {
+    title: 'Design Tokens',
+    items: [
+      { label: 'Token Architecture', href: '/tokens' },
+      { label: 'Colors & Palettes', href: '/tokens#colors' },
+      { label: 'Typography Scale', href: '/tokens#typography' },
+      { label: 'Spacing & Elevation', href: '/tokens#surfaces' },
+    ],
+  },
+  {
+    title: 'Layout Primitives',
+    items: [
+      { label: 'App Shell (.app)', href: '/components/layout/app' },
+      { label: 'Sidebar (.sidebar)', href: '/components/layout/sidebar', badge: 'New' },
+      { label: 'Split (.split)', href: '/components/layout/split' },
+      { label: 'Grid (.grid)', href: '/components/layout/grid' },
+      { label: 'Cluster & Stack', href: '/components/layout/cluster' },
+    ],
+  },
+  {
+    title: 'Atoms',
+    items: [
+      { label: 'Button', href: '/components/atoms/button', badge: 'Core' },
+      { label: 'Tab Primitive', href: '/components/atoms/tab', badge: 'Updated' },
+      { label: 'Badge & Chip', href: '/components/atoms/badge' },
+      { label: 'Input & Textarea', href: '/components/atoms/input' },
+      { label: 'Select & Switch', href: '/components/atoms/switch' },
+      { label: 'Typography Atoms', href: '/components/atoms/text' },
+    ],
+  },
+  {
+    title: 'Molecules',
+    items: [
+      { label: 'Tab List (Navigation)', href: '/components/molecules/tab-list', badge: 'New' },
+      { label: 'Field & Fieldset', href: '/components/molecules/field' },
+      { label: 'Button Group', href: '/components/molecules/button-group' },
+      { label: 'Banner & Alert', href: '/components/molecules/banner' },
+      { label: 'Popover & Tooltip', href: '/components/molecules/popover' },
+      { label: 'Batch Actions', href: '/components/molecules/batch-actions' },
+      { label: 'Telemetry', href: '/components/molecules/telemetry' },
+      { label: 'Accordion', href: '/components/molecules/accordion' },
+      { label: 'Combobox', href: '/components/molecules/combobox' },
+    ],
+  },
+  {
+    title: 'Organisms',
+    items: [
+      { label: 'Card', href: '/components/organisms/card' },
+      { label: 'Dialog (Native Modal)', href: '/components/organisms/dialog', badge: 'HTML5' },
+      { label: 'Menu & Context Menu', href: '/components/organisms/menu' },
+      { label: 'Table', href: '/components/organisms/table' },
+      { label: 'Tabs Organism', href: '/components/organisms/tabs' },
+      { label: 'Header Landmark', href: '/components/organisms/header' },
+    ],
+  },
+  {
+    title: 'Composite Recipes',
+    items: [
+      { label: 'Command Palette', href: '/recipes/command-palette', badge: 'Cmd+K' },
+      { label: 'Cadence Dashboard', href: '/recipes/cadence-dashboard' },
+      { label: 'Filter Sidebar', href: '/recipes/filter-sidebar' },
+    ],
+  },
+];
+---
+
+{withMain && (
+  <nav class="tab-list tab-list--segmented tab-list--fill tab-list--sm tab-list--subtle" aria-label="Main Navigation">
+      <ul>
+        <li>
+          <a
+            href="/"
+            class="tab"
+            aria-current={currentSection === 'overview' ? 'page' : undefined}
+          >
+            <span class="tab__text">Overview</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/components"
+            class="tab"
+            aria-current={currentSection === 'components' ? 'page' : undefined}
+          >
+            <span class="tab__text">Components</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/tokens"
+            class="tab"
+            aria-current={currentSection === 'tokens' ? 'page' : undefined}
+          >
+            <span class="tab__text">Tokens</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/guidelines"
+            class="tab"
+            aria-current={currentSection === 'guidelines' ? 'page' : undefined}
+          >
+            <span class="tab__text">Guidelines</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+)}
+
+<nav class="tab-list tab-list--flush tab-list--tight tab-list--sm tab-list--segmented tab-list--plain tab-list--vertical overflow-visible" aria-label="Documentation Sections">
+  <ul>
+    {navSections.map((section, idx) => {
+      const sectionId = `${prefix}-nav-sec-${idx}`;
+      return (
+        <li class="mb-md">
+          <button
+            type="button"
+            class="button button--plain button--sm button--icon nav-section-toggle"
+            aria-expanded="true"
+            aria-controls={sectionId}
+          >
+            <span class="sr-only">Toggle {section.title}</span>
+            <Icon name="ChevronDown" size={16} class="icon--disclosure" />
+          </button>
+          <span class="tab-list__content micro-heading">{section.title}</span>
+          <ul id={sectionId}>
+            {section.items.map((item) => {
+              const isActive = currentPath === item.href;
+              return (
+                <li>
+                  <a
+                    href={item.href}
+                    class="tab"
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <span class="tab__text">{item.label}</span>
+                    {item.badge && (
+                      <span class:list={['status', 'status--sm', isActive ? 'status--accent' : 'status--subtle']}>
+                        <span class="status__text">{item.badge}</span>
+                      </span>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

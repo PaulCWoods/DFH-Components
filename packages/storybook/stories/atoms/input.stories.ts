@@ -33,8 +33,8 @@ const field = (label: string, control: (id: string) => string, hint = '') => {
   const id = `input-demo-${++uid}`;
   return `
     <div class="field">
-      <label for="${id}" class="field__label">${label}</label>
-      ${hint ? `<p id="${id}-hint" class="field__hint">${hint}</p>` : ''}
+      <label for="${id}" class="field__label label">${label}</label>
+      ${hint ? `<p id="${id}-hint" class="field__hint small-text">${hint}</p>` : ''}
       ${control(id)}
     </div>`;
 };
@@ -46,8 +46,6 @@ const meta: Meta<InputArgs> = {
     docs: {
       description: {
         component: `
-### Input
-
 A single-line text field. Input, select and textarea share one base (\`atoms/input.css\`), so the axes, flags and states below apply to all three.
 
 | Axis | Modifiers | Container flags |
@@ -63,7 +61,7 @@ A single-line text field. Input, select and textarea share one base (\`atoms/inp
 
 \`\`\`html
 <div class="field">
-  <label for="email" class="field__label">Email</label>
+  <label for="email" class="field__label label">Email</label>
   <input id="email" type="email" class="input" autocomplete="email" />
 </div>
 \`\`\`
@@ -90,7 +88,8 @@ A single-line text field. Input, select and textarea share one base (\`atoms/inp
   render: (args) => `
     <div class="demo-stage demo-constrained--md">
       <div class="field">
-        <label for="input-playground" class="field__label">${args.label}</label>
+        <label for="input-playground" class="field__label label">${args.label}</label>
+        ${args.invalid ? '<p id="input-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter an email address in the form name@example.com.</p>' : ''}
         <input
           id="input-playground"
           type="${args.type}"
@@ -100,7 +99,6 @@ A single-line text field. Input, select and textarea share one base (\`atoms/inp
           ${args.disabled ? 'disabled' : ''}
           ${args.readonly ? 'readonly value="Read-only value"' : ''}
         />
-        ${args.invalid ? '<p id="input-playground-error" class="field__error">Enter an email address in the form name@example.com.</p>' : ''}
       </div>
     </div>
   `,
@@ -172,9 +170,9 @@ export const States: Story = {
       ${field('Resting', (id) => `<input id="${id}" type="text" class="input" placeholder="Placeholder text" />`)}
       ${field('Filled', (id) => `<input id="${id}" type="text" class="input" value="Ada Lovelace" />`)}
       <div class="field">
-        <label for="input-invalid" class="field__label">Invalid</label>
+        <label for="input-invalid" class="field__label label">Invalid</label>
+        <p id="input-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter an email address in the form name@example.com.</p>
         <input id="input-invalid" type="email" class="input" value="ada@" aria-invalid="true" aria-describedby="input-invalid-error" />
-        <p id="input-invalid-error" class="field__error">Enter an email address in the form name@example.com.</p>
       </div>
       ${field('Read-only', (id) => `<input id="${id}" type="text" class="input" value="INV-2048" readonly />`)}
       ${field('Disabled', (id) => `<input id="${id}" type="text" class="input" value="Locked" disabled />`)}
@@ -188,18 +186,18 @@ export const States: Story = {
 export const ContainerFlags: Story = {
   render: () => `
     <div class="demo-stage stack">
-      <div class="cluster align-items-end" style="--controls-prominence: subtle; --controls-corners: round;">
+      <div class="cluster items-end" style="--controls-prominence: subtle; --controls-corners: round;">
         <span class="sb-demo-tag">--controls-prominence: subtle; --controls-corners: round</span>
         ${field('Name', (id) => `<input id="${id}" type="text" class="input" />`)}
         ${field('Role', (id) => `<select id="${id}" class="select"><option>Designer</option><option>Engineer</option></select>`)}
         <button type="button" class="button"><span>Save</span></button>
       </div>
-      <div class="cluster align-items-end controls-sm">
+      <div class="cluster items-end controls-sm">
         <span class="sb-demo-tag">.controls-sm</span>
         ${field('Filter', (id) => `<input id="${id}" type="search" class="input" />`)}
         <button type="button" class="button"><span>Go</span></button>
       </div>
-      <div class="cluster align-items-end" style="--input-prominence: plain;">
+      <div class="cluster items-end" style="--input-prominence: plain;">
         <span class="sb-demo-tag">--input-prominence: plain</span>
         ${field('Title', (id) => `<input id="${id}" type="text" class="input" value="Untitled" />`)}
       </div>
@@ -215,8 +213,8 @@ export const Flush: Story = {
     <div class="demo-stage demo-constrained--md">
       <div class="card">
         <div class="card__header inline gap-sm focus-within">
-          <svg class="icon text-color-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-          <input type="search" class="input input--flush focus-none flex-grow" aria-label="Search commands" placeholder="Search commands" />
+          <svg class="icon text-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+          <input type="search" class="input input--flush grow" aria-label="Search commands" placeholder="Search commands" />
         </div>
       </div>
     </div>
@@ -243,7 +241,7 @@ export const Types: Story = {
 export const ColorAndFile: Story = {
   render: () => `
     <div class="demo-stage stack">
-      <div class="cluster align-items-end">
+      <div class="cluster items-end">
         ${['color-input--sm', '', 'color-input--lg']
           .map((m, i) => field(['sm', 'default', 'lg'][i], (id) => `<input id="${id}" type="color" class="${['color-input', m].filter(Boolean).join(' ')}" value="#00a39a" />`))
           .join('')}

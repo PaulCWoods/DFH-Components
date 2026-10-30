@@ -1,23 +1,40 @@
 /* ==========================================================================
    Design For Humans: Stack Layout Primitive
    --------------------------------------------------------------------------
-   1-dimensional vertical flow container with token-driven gap spacing.
-   Uses zero-specificity (:where()) for composability.
+   A column with a gap between its children. Children stretch to the
+   stack's width.
+
+   Hooks (set on the stack itself; they don't reach nested layouts):
+   --gap, --align-items, --justify-content.
+
+   Density: under --ui-sizing: compact the gap steps down (the default gap
+   to the compact step, --cushioned to the default).
+
+   Usage:
+   <div class="stack">…</div>
+   <ul class="stack" role="list">…</ul>
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Base Stack Container
-   -------------------------------------------------------------------------- */
+/* Settings stay on the element they are set on */
+@property --gap { syntax: "*"; inherits: false; }
+@property --align-items { syntax: "*"; inherits: false; }
+@property --justify-content { syntax: "*"; inherits: false; }
 
+/* --------------------------------------------------------------------------
+   1. Base
+   -------------------------------------------------------------------------- */
 :where(.stack) {
     --_gap: var(--gap, var(--spacing, 1rem));
-    --direction: column;
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--gap, var(--spacing-compact, 0.5rem));
+    }
+
     align-items: var(--align-items, stretch);
-    display: var(--display, flex);
+    display: flex;
     flex-direction: column;
-    flex-wrap: var(--flex-wrap, nowrap);
     gap: var(--_gap);
-    justify-content: var(--justify-content, var(--justify, normal));
+    justify-content: var(--justify-content, normal);
 }
 
 :where(.stack):where(ul, ol) {
@@ -27,22 +44,23 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Modifiers
+   2. Gap Modifiers
    -------------------------------------------------------------------------- */
-
-/* Tight Modifier (Zero Gap) */
 :where(.stack--tight) {
-    --_gap: 0;
+    --_gap: 0px;
 }
 
 :where(.stack--cushioned) {
-    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+    --_gap: var(--spacing-cushion, 2rem);
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--spacing, 1rem);
+    }
 }
 
 /* --------------------------------------------------------------------------
-   3. Stack Ruled
+   3. Ruled: a rule in each gap
    -------------------------------------------------------------------------- */
-
 :where(.stack--ruled) {
     @supports (rule: 1px) {
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);

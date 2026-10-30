@@ -8,81 +8,16 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Faceted Filter Sidebar & Catalog Recipe
+A catalogue page: filters in a side pane, results in a grid, with the active filters as removable chips above them.
 
-The **Filter Sidebar & Catalog** recipe demonstrates a production-grade, accessible catalog and asset browsing layout orchestrating Design For Humans primitives into a responsive 2-column faceted layout.
+**Composes:** header (§33), wrapper and split (§19, §19c), card (§10), accordion (§4), fieldset and choices (§7b), combobox with chips (§28), range and switch (§7), chip and status (§5), grid (§19b), empty state (§27), skeleton (§26).
 
----
-
-#### 1. Composed Primitives & Architecture
-- **Layout Orchestrators:** Outer constraint via \`.wrapper.wrapper--2xl\`, responsive sidebar-to-main folding via \`.split.split--sm\`, and auto-filling multi-column catalog via \`.grid.grid--sm\`.
-- **Sidebar Disclosures (\`.accordion\` & \`.accordion-group\`):** Native \`<details class="accordion">\` sections containing multi-select combobox tag filters, checkbox choices, range sliders, and switch toggles.
-- **Multi-Select Combobox Filter (\`.combobox.combobox--sm\`):** Searchable tag selector with removable chips (\`.combobox__tags\` + \`.chip\` + \`.chip__remove\`) for rapid tag filtering.
-- **Segmented Switch Facets (\`.switch.switch--sm\`):** Zero-JS binary toggles for compliance benchmarks and release maturity.
-- **Dismissible Filter Chips:** Active filter bar using canonical \`.chip\` with \`.chip__remove\` triggers.
-- **Empty State Primitive (\`.empty-state\`):** Accessible zero-match presentation with "Reset All Filters" when criteria produce 0 results.
-- **Skeleton Primitive (\`.skeleton\`):** Responsive placeholder card grid with \`aria-busy="true"\` for asynchronous catalog data fetching.
-
----
-
-#### 2. Canonical Semantic Markup Signature
-
-\`\`\`html
-<main class="wrapper wrapper--2xl padding-block-md">
-  <div class="split split--sm">
-    
-    <!-- Sidebar Facets -->
-    <aside class="stack gap-md">
-      <article class="card card--compact card--ruled bg-card">
-        <header class="card__header inline justify-content-between">
-          <h2 class="card__title font-size-0">Filters</h2>
-          <button type="reset" class="button button--subtle button--sm"><span>Reset</span></button>
-        </header>
-
-        <div class="card__body card__body--flush">
-          <div class="accordion-group accordion-group--tight">
-            
-            <!-- Tag Combobox Facet -->
-            <details class="accordion" open>
-              <summary>Technologies</summary>
-              <div class="padding-block-sm">
-                <div class="combobox combobox--sm">
-                  <div class="combobox__control">
-                    <div class="combobox__tags">
-                      <span class="chip chip--subtle chip--sm"><span class="chip__text">TypeScript</span><button type="button" class="chip__remove" aria-label="Remove TypeScript"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button></span>
-                    </div>
-                    <input type="text" class="combobox__input" role="combobox" placeholder="Add tag..." />
-                  </div>
-                </div>
-              </div>
-            </details>
-
-            <!-- Switch Facet -->
-            <details class="accordion" open>
-              <summary>Standard Strictness</summary>
-              <div class="padding-block-sm">
-                <label class="switch switch--sm">
-                  <span class="switch__label">Strict AAA</span>
-                  <input type="checkbox" role="switch" class="visually-hidden" checked />
-                  <span class="switch__control"><span class="switch__option--off">Off</span><span class="switch__option--on">On</span></span>
-                </label>
-              </div>
-            </details>
-
-          </div>
-        </div>
-      </article>
-    </aside>
-
-    <!-- Main Catalog Grid / Content -->
-    <div class="stack gap-md">
-      <!-- Toolbar with active chips & sort -->
-      <!-- Component Card Grid or Empty State -->
-    </div>
-
-  </div>
-</main>
-\`\`\`
+**Decisions:**
+- **The filters are one form** in a compact, ruled card, so its controls step down together (\`--ui-sizing: compact\`). Each facet is a plain accordion holding a fieldset; the summary is the visible label and the legend repeats it for screen readers (\`sr-only\`), so the group has a name.
+- **The split wraps on its own.** Filters come first in the source because they're read first; on a narrow screen they sit above the results.
+- **Active filters** are a list of removable chips, each remove button naming its value. The result count is a \`role="status"\` line, so a change is announced.
+- **Result cards** link from the title, stretched over the card (\`.link--stretched\`). Stock is a status with text, never colour alone.
+- **No results** keeps the filters and the chips, and offers to clear them. **Loading** marks the grid \`aria-busy\` with skeleton cards and says so in the status line.
         `,
       },
     },
@@ -92,581 +27,186 @@ The **Filter Sidebar & Catalog** recipe demonstrates a production-grade, accessi
 export default meta;
 type Story = StoryObj;
 
-/**
- * 1. Faceted Catalog Layout
- * 2-column split with collapsible sidebar facets (combobox tag picker, checkboxes, range sliders, switches)
- * and an auto-filling 3-column component card grid.
- */
-export const Standard: Story = {
-  render: () => `
-    <div class="stack gap-0 min-h-screen bg-color-muted">
-      
-      <!-- Top Navigation Banner -->
-      <header class="header header--sticky header--translucent padding-block-sm">
-        <div class="wrapper inline justify-content-between align-items-center">
-          <div class="inline gap-sm align-items-center">
-            <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
-            <h1 class="title font-size-lg margin-0">Component Catalog</h1>
-          </div>
-          <div class="inline gap-sm align-items-center">
-            <span class="status status--success"><span class="status__text">36 Components</span></span>
-          </div>
-        </div>
-      </header>
+const icon = (name: string) =>
+  `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
-      <!-- Main Layout Body (.split 2-column sidebar layout) -->
-      <main class="wrapper wrapper--2xl padding-block-md">
-        <div class="split split--sm">
-          
-          <!-- Column 1: Sidebar Facets -->
-          <aside class="stack gap-md">
-            <article class="card card--compact card--ruled bg-card">
-              <header class="card__header inline justify-content-between align-items-center">
-                <h2 class="card__title font-size-0">Filters</h2>
-                <button type="button" class="button button--subtle button--sm"><span>Reset</span></button>
-              </header>
+const chip = (label: string) =>
+  `<li><span class="chip chip--subtle"><span class="chip__text">${label}</span><button type="button" class="chip__remove" aria-label="Remove ${label}">${icon('Close')}</button></span></li>`;
 
-              <div class="card__body card__body--flush">
-                <div class="accordion-group accordion-group--tight">
-                  
-                  <!-- Facet 1: Technology Tags (Multi-Select Combobox Primitive) -->
-                  <details class="accordion" open>
-                    <summary>Technology Tags</summary>
-                    <div class="padding-block-sm stack gap-xs">
-                      <div class="combobox combobox--sm">
-                        <div class="combobox__control">
-                          <div class="combobox__tags">
-                            <span class="chip chip--subtle chip--sm">
-                              <span class="chip__text">TypeScript</span>
-                              <button type="button" class="chip__remove" aria-label="Remove TypeScript filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
-                            </span>
-                            <span class="chip chip--subtle chip--sm">
-                              <span class="chip__text">ARIA 1.2</span>
-                              <button type="button" class="chip__remove" aria-label="Remove ARIA 1.2 filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
-                            </span>
-                          </div>
-                          <input 
-                            type="text" 
-                            class="combobox__input" 
-                            role="combobox" 
-                            placeholder="Add tag..." 
-                            aria-label="Filter by technology tag" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </details>
+const choice = (name: string, value: string, label: string, checked = false) =>
+  `<label class="choice"><input type="checkbox" class="checkbox-input" name="${name}" value="${value}"${checked ? ' checked' : ''} /><span>${label}</span></label>`;
 
-                  <!-- Facet 2: Compliance Standard (Checkboxes) -->
-                  <details class="accordion" open>
-                    <summary>WCAG Benchmark</summary>
-                    <div class="choices stack gap-xs padding-block-sm">
-                      <label class="choice" for="filter-aa">
-                        <input type="checkbox" id="filter-aa" class="checkbox-input" checked />
-                        <span>Level AA (Standard)</span>
-                      </label>
-                      <label class="choice" for="filter-aaa">
-                        <input type="checkbox" id="filter-aaa" class="checkbox-input" checked />
-                        <span>Level AAA (Strict)</span>
-                      </label>
-                      <label class="choice" for="filter-508">
-                        <input type="checkbox" id="filter-508" class="checkbox-input" />
-                        <span>Section 508</span>
-                      </label>
-                    </div>
-                  </details>
+const facet = (title: string, body: string, open = true) => `
+  <details class="accordion accordion--plain"${open ? ' open' : ''}>
+    <summary>${title}</summary>
+    <fieldset class="fieldset pb-sm">
+      <legend class="fieldset__legend sr-only">${title}</legend>
+      ${body}
+    </fieldset>
+  </details>`;
 
-                  <!-- Facet 3: Component Category (Checkboxes) -->
-                  <details class="accordion" open>
-                    <summary>Category</summary>
-                    <div class="choices stack gap-xs padding-block-sm">
-                      <label class="choice" for="cat-forms">
-                        <input type="checkbox" id="cat-forms" class="checkbox-input" checked />
-                        <span>Form Controls (8)</span>
-                      </label>
-                      <label class="choice" for="cat-nav">
-                        <input type="checkbox" id="cat-nav" class="checkbox-input" checked />
-                        <span>Navigation & Menus (6)</span>
-                      </label>
-                      <label class="choice" for="cat-overlays">
-                        <input type="checkbox" id="cat-overlays" class="checkbox-input" />
-                        <span>Overlays & Dialogs (4)</span>
-                      </label>
-                    </div>
-                  </details>
+const colours = ['White', 'Blue', 'Pink', 'Purple', 'Yellow'];
 
-                  <!-- Facet 4: Touch Target Scale (Range Slider) -->
-                  <details class="accordion">
-                    <summary>Min Touch Target</summary>
-                    <div class="field padding-block-sm">
-                      <div class="field__header inline justify-content-between align-items-center">
-                        <label for="target-range" class="field__label">Size</label>
-                        <output for="target-range" class="field__output">48px (AAA)</output>
-                      </div>
-                      <input id="target-range" type="range" class="range range--sm" min="24" max="56" value="48" style="--value: 75%;" />
-                    </div>
-                  </details>
-
-                  <!-- Facet 5: Feature Flags (Segmented Switches) -->
-                  <details class="accordion">
-                    <summary>Feature Flags</summary>
-                    <div class="stack gap-sm padding-block-sm">
-                      <label class="switch switch--sm flex justify-content-between align-items-center">
-                        <span class="switch__label">Zero-JS State</span>
-                        <input type="checkbox" role="switch" class="visually-hidden" checked />
-                        <span class="switch__control" aria-hidden="true">
-                          <span class="switch__option switch__option--off">Off</span>
-                          <span class="switch__option switch__option--on">On</span>
-                        </span>
-                      </label>
-                      <label class="switch switch--sm flex justify-content-between align-items-center">
-                        <span class="switch__label">High Contrast</span>
-                        <input type="checkbox" role="switch" class="visually-hidden" />
-                        <span class="switch__control" aria-hidden="true">
-                          <span class="switch__option switch__option--off">Off</span>
-                          <span class="switch__option switch__option--on">On</span>
-                        </span>
-                      </label>
-                    </div>
-                  </details>
-
-                </div>
-              </div>
-            </article>
-          </aside>
-
-          <!-- Column 2: Main Content Area -->
-          <div class="stack gap-md">
-            
-            <!-- Filter Bar / Toolbar -->
-            <div class="card card--compact bg-card">
-              <div class="inline-responsive inline-responsive--md justify-content-between align-items-center gap-sm">
-                
-                <!-- Active Filter Dismissible Chips -->
-                <div class="cluster gap-xs align-items-center">
-                  <span class="small-text text-color-muted">Active:</span>
-                  <span class="chip chip--subtle">
-                    <span class="chip__text">Level AA</span>
-                    <button type="button" class="chip__remove" aria-label="Remove Level AA filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
-                  </span>
-                  <span class="chip chip--subtle">
-                    <span class="chip__text">Form Controls</span>
-                    <button type="button" class="chip__remove" aria-label="Remove Form Controls filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
-                  </span>
-                  <span class="chip chip--subtle">
-                    <span class="chip__text">TypeScript</span>
-                    <button type="button" class="chip__remove" aria-label="Remove TypeScript filter"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
-                  </span>
-                </div>
-
-                <!-- Sort Control -->
-                <div class="inline gap-xs align-items-center">
-                  <label for="catalog-sort" class="small-text text-color-muted white-space-nowrap">Sort by:</label>
-                  <select id="catalog-sort" class="select select--sm">
-                    <option value="popularity">Most Popular</option>
-                    <option value="az">Name (A–Z)</option>
-                    <option value="compliance">WCAG Rating</option>
-                  </select>
-                </div>
-
-              </div>
+const filters = (selected: { light: string[]; colours: string[] }) => `
+  <form class="card card--compact card--ruled" aria-labelledby="filters-title">
+    <header class="card__header">
+      <h2 id="filters-title" class="card__title small-heading">Filters</h2>
+      <button type="reset" class="button button--plain button--sm">Clear</button>
+    </header>
+    <div class="card__body card__body--flush">
+      <div class="accordion-group">
+        ${facet(
+          'Light',
+          `<div class="choices">
+            ${choice('light', 'sun', 'Full sun', selected.light.includes('sun'))}
+            ${choice('light', 'part', 'Part shade', selected.light.includes('part'))}
+            ${choice('light', 'shade', 'Full shade', selected.light.includes('shade'))}
+          </div>`,
+        )}
+        ${facet(
+          'Flower colour',
+          `<div class="combobox">
+            <div class="combobox__control">
+              <span class="combobox__tags">
+                ${selected.colours.map((c) => `<span class="chip chip--subtle"><span class="chip__text">${c}</span><button type="button" class="chip__remove" aria-label="Remove ${c}">${icon('Close')}</button></span>`).join('')}
+              </span>
+              <input class="combobox__input" role="combobox" aria-label="Flower colour" aria-expanded="false"
+                aria-controls="colour-list" aria-autocomplete="list" autocomplete="off" placeholder="Add a colour" />
             </div>
-
-            <!-- Auto-Filling Component Grid (.grid .grid--sm) -->
-            <ul class="grid grid--sm">
-              
-              <!-- Card 1: Combobox -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">Combobox Primitive</a></h3>
-                    <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
-                  </header>
-                  <div class="card__body">
-                    <p class="text">Searchable single and multi-select floating listboxes with focus delegation and chips.</p>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="chip chip--subtle"><span class="chip__text">Forms</span></span>
-                    <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Card 2: Empty State -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">Empty State Primitive</a></h3>
-                    <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
-                  </header>
-                  <div class="card__body">
-                    <p class="text">Communicates zero-data status, search misses, and system feedback with accessible recovery actions.</p>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="chip chip--subtle"><span class="chip__text">Feedback</span></span>
-                    <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Card 3: Menu -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">Menu Primitive</a></h3>
-                    <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
-                  </header>
-                  <div class="card__body">
-                    <p class="text">Dedicated action lists and context menus with keyboard shortcuts and anchored popover integration.</p>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="chip chip--subtle"><span class="chip__text">Navigation</span></span>
-                    <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Card 4: Skeleton -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">Skeleton Primitive</a></h3>
-                    <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
-                  </header>
-                  <div class="card__body">
-                    <p class="text">Accessible shimmer placeholders engineered to eliminate layout shift (CLS) during data loading.</p>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="chip chip--subtle"><span class="chip__text">Feedback</span></span>
-                    <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Card 5: Segmented Switch -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">Segmented Switch</a></h3>
-                    <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
-                  </header>
-                  <div class="card__body">
-                    <p class="text">Binary toggle switch with anchor-positioned sliding indicator and zero-JS state management.</p>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="chip chip--subtle"><span class="chip__text">Forms</span></span>
-                    <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Card 6: Modal Dialog -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">Modal Dialog</a></h3>
-                    <span class="status status--success"><span class="status__text">WCAG AAA</span></span>
-                  </header>
-                  <div class="card__body">
-                    <p class="text">Native top-layer dialog container with backdrop blur, discrete transitions, and escape traps.</p>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="chip chip--subtle"><span class="chip__text">Overlays</span></span>
-                    <button type="button" class="button button--subtle button--sm"><span>View Docs</span></button>
-                  </footer>
-                </article>
-              </li>
-
+            <ul id="colour-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Colours" aria-multiselectable="true">
+              ${colours.map((c, i) => `<li id="colour-${i}" class="combobox__option" role="option" aria-selected="${selected.colours.includes(c)}"><span>${c}</span>${icon('Check').replace('class="icon"', 'class="icon combobox__check"')}</li>`).join('')}
             </ul>
-
-          </div>
-
-        </div>
-      </main>
-
+          </div>`,
+        )}
+        ${facet(
+          'Height',
+          `<div class="field">
+            <div class="field__header">
+              <label for="height" class="field__label label">Up to</label>
+              <output for="height" class="small-text">60 cm</output>
+            </div>
+            <input id="height" name="height" type="range" class="range" min="10" max="150" step="10" value="60" style="--value: 36%;" />
+          </div>`,
+          false,
+        )}
+        ${facet(
+          'Availability',
+          `<div class="stack gap-xs">
+            <label class="switch"><span class="switch__label label">In stock only</span><input type="checkbox" role="switch" class="sr-only" name="stock" checked /><span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span></label>
+            <label class="switch"><span class="switch__label label">Native species</span><input type="checkbox" role="switch" class="sr-only" name="native" /><span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span></label>
+          </div>`,
+          false,
+        )}
+      </div>
     </div>
-  `,
+  </form>`;
+
+const plants = [
+  ['Epimedium', 'Heart-shaped leaves and spurred spring flowers. Copes with dry shade.', true],
+  ['Brunnera', 'Forget-me-not blue flowers over silver-veined leaves.', true],
+  ['Pulmonaria', 'Spotted leaves and early flowers that open pink and turn blue.', false],
+  ['Tiarella', 'Foamy white spikes in late spring; spreads by runners.', true],
+  ['Geranium macrorrhizum', 'Scented, evergreen ground cover with pink flowers.', true],
+  ['Polystichum', 'An evergreen shield fern for the back of a shady border.', false],
+] as const;
+
+const plantCard = ([name, desc, inStock]: (typeof plants)[number]) => `
+  <li>
+    <article class="card">
+      <header class="card__header">
+        <h3 class="card__title small-heading"><a href="#" class="link link--plain link--stretched">${name}</a></h3>
+      </header>
+      <div class="card__body"><p class="small-text">${desc}</p></div>
+      <footer class="card__footer inline inline--between">
+        <span class="small-text font-bold">£8.50</span>
+        ${inStock ? '<span class="status status--success">' + icon('Check') + '<span class="status__text">In stock</span></span>' : '<span class="status"><span class="status__text">Pre-order</span></span>'}
+      </footer>
+    </article>
+  </li>`;
+
+const skeletonCard = (w: string) => `
+  <li>
+    <div class="card">
+      <header class="card__header"><div class="small-heading"><span class="skeleton skeleton--heading ${w}" aria-hidden="true"></span></div></header>
+      <div class="card__body">
+        <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true"></span><span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span></p>
+      </div>
+      <footer class="card__footer inline inline--between">
+        <span class="skeleton skeleton--badge" aria-hidden="true"></span>
+        <span class="skeleton skeleton--badge" aria-hidden="true"></span>
+      </footer>
+    </div>
+  </li>`;
+
+const toolbar = (active: string[], count: string) => `
+  <div class="inline inline--between">
+    <p class="small-text text-muted" role="status">${count}</p>
+    <div class="field field--inline">
+      <label for="sort" class="field__label label">Sort</label>
+      <select id="sort" class="select select--sm">
+        <option>Name</option>
+        <option>Height</option>
+        <option>Price</option>
+      </select>
+    </div>
+  </div>
+  ${active.length ? `<ul class="cluster gap-xs" aria-label="Active filters">${active.map(chip).join('')}</ul>` : ''}`;
+
+const page = (side: string, results: string) => `
+  <a href="#main" class="skip-link">Skip to results</a>
+  <header class="header">
+    <div class="header__bar">
+      <a href="#" class="link link--plain small-heading">Woodland Plants</a>
+    </div>
+  </header>
+  <main id="main" class="wrapper py-lg stack">
+    <h1 class="heading">Shade plants</h1>
+    <div class="split split--sm">
+      <div>${side}</div>
+      <div class="stack">${results}</div>
+    </div>
+  </main>`;
+
+const defaults = { light: ['part', 'shade'], colours: ['Blue', 'White'] };
+
+export const Default: Story = {
+  render: () =>
+    page(
+      filters(defaults),
+      `${toolbar(['Part shade', 'Full shade', 'Blue', 'White', 'In stock'], '6 plants')}
+      <ul class="grid grid--xs" role="list">${plants.map(plantCard).join('')}</ul>`,
+    ),
 };
 
-/**
- * 2. Zero Matches / Empty State Catalog View
- * Demonstrates the catalog layout when facet filter combinations return 0 results, seamlessly composing
- * the .empty-state primitive in the main content container with recovery actions.
- */
-export const EmptyFilterResults: Story = {
-  render: () => `
-    <div class="stack gap-0 min-h-screen bg-color-muted">
-      
-      <!-- Top Navigation Banner -->
-      <header class="header header--sticky header--translucent padding-block-sm">
-        <div class="wrapper inline justify-content-between align-items-center">
-          <div class="inline gap-sm align-items-center">
-            <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
-            <h1 class="title font-size-lg margin-0">Component Catalog</h1>
-          </div>
-          <div class="inline gap-sm align-items-center">
-            <span class="status status--warning"><span class="status__text">0 Results</span></span>
-          </div>
-        </div>
-      </header>
-
-      <!-- Main Layout Body -->
-      <main class="wrapper wrapper--2xl padding-block-md">
-        <div class="split split--sm">
-          
-          <!-- Column 1: Sidebar Facets -->
-          <aside class="stack gap-md">
-            <article class="card card--compact card--ruled bg-card">
-              <header class="card__header inline justify-content-between align-items-center">
-                <h2 class="card__title font-size-0">Filters (Active)</h2>
-                <button type="button" class="button button--subtle button--sm text-accent"><span>Reset all</span></button>
-              </header>
-
-              <div class="card__body card__body--flush">
-                <div class="accordion-group accordion-group--tight">
-                  <details class="accordion" open>
-                    <summary>Benchmark</summary>
-                    <div class="choices stack gap-xs padding-block-sm">
-                      <label class="choice"><input type="checkbox" class="checkbox-input" checked /><span>Strict Section 508</span></label>
-                    </div>
-                  </details>
-                  <details class="accordion" open>
-                    <summary>Category</summary>
-                    <div class="choices stack gap-xs padding-block-sm">
-                      <label class="choice"><input type="checkbox" class="checkbox-input" checked /><span>Audio / Video Player</span></label>
-                    </div>
-                  </details>
-                </div>
-              </div>
-            </article>
-          </aside>
-
-          <!-- Column 2: Main Area Featuring Empty State Primitive -->
-          <div class="stack gap-md">
-            
-            <!-- Filter Bar -->
-            <div class="card card--compact bg-card">
-              <div class="cluster gap-xs align-items-center">
-                <span class="small-text text-color-muted">Active:</span>
-                <span class="chip chip--subtle"><span class="chip__text">Strict Section 508</span><button type="button" class="chip__remove" aria-label="Remove Strict Section 508"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button></span>
-                <span class="chip chip--subtle"><span class="chip__text">Audio / Video</span><button type="button" class="chip__remove" aria-label="Remove Audio / Video"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button></span>
-              </div>
+export const NoResults: Story = {
+  parameters: { docs: { description: { story: 'Nothing matches: the filters and chips stay, and the empty state offers to clear them.' } } },
+  render: () =>
+    page(
+      filters({ light: ['sun'], colours: ['Yellow'] }),
+      `${toolbar(['Full sun', 'Yellow', 'In stock'], 'No plants')}
+      <div class="card">
+        <div class="card__body">
+          <div class="empty-state">
+            <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('Search')}</span></div>
+            <div class="empty-state__content">
+              <h2 class="empty-state__title small-heading">No plants match these filters</h2>
+              <p class="empty-state__description small-text">Few yellow-flowered shade plants like full sun. Remove a filter, or clear them all.</p>
             </div>
-
-            <!-- Empty State Container -->
-            <article class="card bg-card">
-              <div class="empty-state empty-state--flush padding-block-xl" aria-labelledby="catalog-empty-title">
-                <div class="empty-state__visual" aria-hidden="true">
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
-                </div>
-                <div class="empty-state__content">
-                  <h3 id="catalog-empty-title" class="empty-state__title">No matching components found</h3>
-                  <p class="empty-state__description">
-                    No components match both "Strict Section 508" and "Audio / Video". Try clearing one or more active filters.
-                  </p>
-                </div>
-                <div class="empty-state__actions">
-                  <button type="button" class="button button--strong button--accent">
-                    <span>Clear All Filters</span>
-                  </button>
-                  <button type="button" class="button button--placeholder">
-                    <span>Request Audio/Video Primitive</span>
-                  </button>
-                </div>
-              </div>
-            </article>
-
+            <div class="empty-state__actions">
+              <button type="button" class="button button--strong button--accent">Clear filters</button>
+            </div>
           </div>
-
         </div>
-      </main>
-
-    </div>
-  `,
+      </div>`,
+    ),
 };
 
-/**
- * 3. Asynchronous Data Fetching / Skeleton Catalog Grid
- * Demonstrates the catalog layout while asynchronous component data is loading, composing
- * the .skeleton primitive across the 3-column auto-filling card grid.
- */
-export const CatalogLoadingState: Story = {
-  render: () => `
-    <div class="stack gap-0 min-h-screen bg-color-muted">
-      
-      <!-- Top Navigation Banner -->
-      <header class="header header--sticky header--translucent padding-block-sm">
-        <div class="wrapper inline justify-content-between align-items-center">
-          <div class="inline gap-sm align-items-center">
-            <svg class="icon text-accent" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg>
-            <h1 class="title font-size-lg margin-0">Component Catalog</h1>
-          </div>
-          <div class="inline gap-sm align-items-center">
-            <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.5rem;"></span>
-          </div>
-        </div>
-      </header>
-
-      <!-- Main Layout Body -->
-      <main class="wrapper wrapper--2xl padding-block-md">
-        <div class="split split--sm">
-          
-          <!-- Column 1: Sidebar Facets -->
-          <aside class="stack gap-md">
-            <article class="card card--compact card--ruled bg-card">
-              <header class="card__header inline justify-content-between align-items-center">
-                <h2 class="card__title font-size-0">Filters</h2>
-                <button type="button" class="button button--subtle button--sm" disabled><span>Reset</span></button>
-              </header>
-
-              <div class="card__body card__body--flush">
-                <div class="accordion-group accordion-group--tight">
-                  <details class="accordion" open>
-                    <summary>WCAG Benchmark</summary>
-                    <div class="choices stack gap-xs padding-block-sm">
-                      <label class="choice"><input type="checkbox" class="checkbox-input" checked disabled /><span>Level AA (Standard)</span></label>
-                      <label class="choice"><input type="checkbox" class="checkbox-input" checked disabled /><span>Level AAA (Strict)</span></label>
-                    </div>
-                  </details>
-                </div>
-              </div>
-            </article>
-          </aside>
-
-          <!-- Column 2: Main Area in Loading State -->
-          <div class="stack gap-md">
-            
-            <!-- Toolbar Skeleton -->
-            <div class="card card--compact bg-card">
-              <div class="inline justify-content-between align-items-center">
-                <div class="cluster gap-xs align-items-center">
-                  <span class="skeleton" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1rem;"></span>
-                  <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4.5rem; --skeleton-height: 1.5rem;"></span>
-                  <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 5.5rem; --skeleton-height: 1.5rem;"></span>
-                </div>
-                <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 8rem; --skeleton-height: 2rem;"></span>
-              </div>
-            </div>
-
-            <!-- Auto-Filling Skeleton Card Grid -->
-            <p class="visually-hidden" role="status">Loading component catalog…</p>
-            <ul class="grid grid--sm" aria-busy="true" aria-label="Loading component catalog">
-              
-              <!-- Skeleton Card 1 -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
-                  </header>
-                  <div class="card__body stack gap-xs">
-                    <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
-                    <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Skeleton Card 2 -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 66%;"></span>
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
-                  </header>
-                  <div class="card__body stack gap-xs">
-                    <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
-                    <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Skeleton Card 3 -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
-                  </header>
-                  <div class="card__body stack gap-xs">
-                    <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text" aria-hidden="true" style="--skeleton-width: 66%;"></span>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
-                    <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Skeleton Card 4 -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 33%;"></span>
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
-                  </header>
-                  <div class="card__body stack gap-xs">
-                    <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
-                    <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Skeleton Card 5 -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--heading skeleton--w-50" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
-                  </header>
-                  <div class="card__body stack gap-xs">
-                    <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text skeleton--w-50" aria-hidden="true"></span>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
-                    <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
-                  </footer>
-                </article>
-              </li>
-
-              <!-- Skeleton Card 6 -->
-              <li>
-                <article class="card">
-                  <header class="card__header inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--heading" aria-hidden="true" style="--skeleton-width: 66%;"></span>
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 4rem; --skeleton-height: 1.25rem;"></span>
-                  </header>
-                  <div class="card__body stack gap-xs">
-                    <span class="skeleton skeleton--text" aria-hidden="true"></span>
-                    <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>
-                  </div>
-                  <footer class="card__footer inline justify-content-between align-items-center">
-                    <span class="skeleton skeleton--badge" aria-hidden="true" style="--skeleton-width: 3rem; --skeleton-height: 1.25rem;"></span>
-                    <span class="skeleton skeleton--button" aria-hidden="true" style="--skeleton-width: 5rem; --skeleton-height: 1.75rem;"></span>
-                  </footer>
-                </article>
-              </li>
-
-            </ul>
-
-          </div>
-
-        </div>
-      </main>
-
-    </div>
-  `,
+export const Loading: Story = {
+  parameters: { docs: { description: { story: 'Results loading: skeleton cards in an `aria-busy` grid; the status line says so.' } } },
+  render: () =>
+    page(
+      filters(defaults),
+      `${toolbar(['Part shade', 'Full shade', 'Blue', 'White', 'In stock'], 'Loading plants…')}
+      <ul class="grid grid--xs" role="list" aria-busy="true">${['skeleton--w-50', 'skeleton--w-75', 'skeleton--w-50', 'skeleton--w-90', 'skeleton--w-75', 'skeleton--w-50'].map(skeletonCard).join('')}</ul>`,
+    ),
 };

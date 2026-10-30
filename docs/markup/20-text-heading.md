@@ -13,6 +13,7 @@ Nine atoms, one step of the scale each. The class sets the look; choose the elem
 | `.large-text` | Lead paragraphs | 1 |
 | `.text` | Body copy | 0 |
 | `.small-text` | Hints, captions, metadata | −1 |
+| `.label` | Form labels and legends (bold; fixed in every mode but compact) | 0 |
 
 - **Fixed by default.** Fluid, `cq` and compact sizing come from the container (§ Core Law 3).
 - Headings balance their lines; body text uses `text-wrap: pretty`.

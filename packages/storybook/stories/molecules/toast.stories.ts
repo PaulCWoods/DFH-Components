@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Toast
-
 Banners floated in a corner of the viewport. A toast is a banner with \`.toast\`, which adds a shadow and entry and exit transitions. The stack places them.
 
 ### Markup
@@ -22,7 +20,7 @@ Banners floated in a corner of the viewport. A toast is a banner with \`.toast\`
   <div class="banner__body"><p class="text">Settings saved.</p></div>
   <button type="button" class="button button--icon banner__action">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-    <span class="visually-hidden">Dismiss</span>
+    <span class="sr-only">Dismiss</span>
   </button>
 </div>
 \`\`\`
@@ -58,7 +56,7 @@ const toast = (intent: string, title: string, text: string, action = '') => `
     ${action}
     <button type="button" class="button button--icon banner__action" onclick="this.closest('.toast').remove()">
       ${icon('Close')}
-      <span class="visually-hidden">Dismiss</span>
+      <span class="sr-only">Dismiss</span>
     </button>
   </div>`;
 
@@ -139,7 +137,7 @@ export const Dismissal: Story = {
         <div class="banner__body"><p class="text">Setting <code>hidden</code> fades a toast out.</p></div>
         <button type="button" class="button button--icon banner__action" onclick="this.closest('.toast').hidden = true">
           ${icon('Close')}
-          <span class="visually-hidden">Dismiss</span>
+          <span class="sr-only">Dismiss</span>
         </button>
       </div>
     </div>

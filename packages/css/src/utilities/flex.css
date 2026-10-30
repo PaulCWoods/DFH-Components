@@ -1,162 +1,166 @@
 /* ==========================================================================
-   Design For Humans: Flex Layout Utilities
+   Design For Humans: Flex Utilities
    --------------------------------------------------------------------------
-   Low-specificity (:where()) utility classes for 1-dimensional flexbox layouts.
-   Direct parity with the Design For Humans blog architecture (_flex.scss).
+   Direction, wrapping, alignment and growth for a flex or grid container
+   and its items. A row or column of things is a layout primitive (.inline,
+   .cluster, .stack), which already aligns; use these to adjust one.
    ========================================================================== */
 
-/* Display */
-:where(.flex) {
-  align-items: stretch;
-  display: flex;
-  flex-direction: row;
+/* --------------------------------------------------------------------------
+   1. Direction
+   -------------------------------------------------------------------------- */
+
+:where(.flex-direction-row, .flex-row) {
+    flex-direction: row;
 }
 
-:where(.inline-flex) {
-  display: inline-flex;
+:where(.flex-direction-row-reverse, .flex-row-reverse) {
+    flex-direction: row-reverse;
 }
 
-/* Direction */
-:where(.flex-direction-row, .flex-dir-row, .flex-row) {
-  flex-direction: row;
+:where(.flex-direction-column, .flex-col) {
+    flex-direction: column;
 }
 
-:where(.flex-direction-row-reverse, .flex-dir-row-rev, .flex-row-rev) {
-  flex-direction: row-reverse;
+:where(.flex-direction-column-reverse, .flex-col-reverse) {
+    flex-direction: column-reverse;
 }
 
-:where(.flex-direction-column, .flex-dir-col, .flex-col) {
-  flex-direction: column;
+
+/* --------------------------------------------------------------------------
+   2. Wrapping
+   -------------------------------------------------------------------------- */
+
+:where(.flex-wrap-wrap, .flex-wrap) {
+    flex-wrap: wrap;
 }
 
-:where(.flex-direction-column-reverse, .flex-dir-col-rev, .flex-col-rev) {
-  flex-direction: column-reverse;
+:where(.flex-wrap-nowrap, .flex-nowrap) {
+    flex-wrap: nowrap;
 }
 
-/* Wrap */
-:where(.flex-wrap) {
-  flex-wrap: wrap;
+:where(.flex-wrap-wrap-reverse, .flex-wrap-reverse) {
+    flex-wrap: wrap-reverse;
 }
 
-:where(.flex-nowrap, .nowrap) {
-  flex-wrap: nowrap;
-}
 
-/* Align Items (Cross Axis) */
-:where(.align-items-start, .align-items-flex-start, .items-start) {
-  align-items: start;
+/* --------------------------------------------------------------------------
+   3. Alignment
+   -------------------------------------------------------------------------- */
+
+:where(.align-items-start, .items-start) {
+    align-items: start;
 }
 
 :where(.align-items-center, .items-center) {
-  align-items: center;
+    align-items: center;
 }
 
-:where(.align-items-end, .align-items-flex-end, .items-end) {
-  align-items: end;
+:where(.align-items-end, .items-end) {
+    align-items: end;
 }
 
 :where(.align-items-stretch, .items-stretch) {
-  align-items: stretch;
+    align-items: stretch;
 }
 
 :where(.align-items-baseline, .items-baseline) {
-  align-items: baseline;
+    align-items: baseline;
 }
 
-/* Justify Content (Main Axis) */
-:where(.justify-content-start, .justify-content-flex-start, .justify-start) {
-  justify-content: start;
+:where(.justify-content-start, .justify-start) {
+    justify-content: start;
 }
 
 :where(.justify-content-center, .justify-center) {
-  justify-content: center;
+    justify-content: center;
 }
 
-:where(.justify-content-end, .justify-content-flex-end, .justify-end) {
-  justify-content: end;
+:where(.justify-content-end, .justify-end) {
+    justify-content: end;
 }
 
-:where(.justify-content-between, .justify-between) {
-  justify-content: space-between;
+:where(.justify-content-space-between, .justify-between) {
+    justify-content: space-between;
 }
 
-:where(.justify-content-around, .justify-around) {
-  justify-content: space-around;
+:where(.justify-content-space-around, .justify-around) {
+    justify-content: space-around;
 }
 
-:where(.justify-content-evenly, .justify-evenly) {
-  justify-content: space-evenly;
-}
-
-
-/* Align Self (Cross Axis) */
-:where(.align-self-start, .align-self-flex-start, .self-start) {
-  align-self: start;
-}
-
-:where(.align-self-center, .self-center) {
-  align-self: center;
-}
-
-:where(.align-self-end, .align-self-flex-end, .self-end) {
-  align-self: end;
-}
-
-:where(.align-self-stretch, .self-stretch) {
-  align-self: stretch;
-}
-
-:where(.align-self-baseline, .self-baseline) {
-  align-self: baseline;
+:where(.justify-content-space-evenly, .justify-evenly) {
+    justify-content: space-evenly;
 }
 
 :where(.align-self-auto, .self-auto) {
-  align-self: auto;
+    align-self: auto;
 }
 
-/* Justify Self (Main Axis) */
-:where(.justify-self-start, .justify-self-flex-start) {
-  justify-self: start;
+:where(.align-self-start, .self-start) {
+    align-self: start;
+}
+
+:where(.align-self-center, .self-center) {
+    align-self: center;
+}
+
+:where(.align-self-end, .self-end) {
+    align-self: end;
+}
+
+:where(.align-self-stretch, .self-stretch) {
+    align-self: stretch;
+}
+
+:where(.align-self-baseline, .self-baseline) {
+    align-self: baseline;
+}
+
+:where(.justify-self-start) {
+    justify-self: start;
 }
 
 :where(.justify-self-center) {
-  justify-self: center;
+    justify-self: center;
 }
 
-:where(.justify-self-end, .justify-self-flex-end) {
-  justify-self: end;
+:where(.justify-self-end) {
+    justify-self: end;
 }
 
-/* flex-grow */
+:where(.justify-self-stretch) {
+    justify-self: stretch;
+}
 
-:where(.flex-grow-1, .grow, .flex-grow) {
-  flex-grow: 1;
+
+/* --------------------------------------------------------------------------
+   4. Growth
+   -------------------------------------------------------------------------- */
+
+:where(.flex-grow-1, .grow) {
+    flex-grow: 1;
 }
 
 :where(.flex-grow-0, .grow-0) {
-  flex-grow: 0;
+    flex-grow: 0;
 }
 
-/* flex-shrink */
-
-:where(.flex-shrink-1, .shrink, .flex-shrink) {
-  flex-shrink: 1;
+:where(.flex-shrink-1, .shrink) {
+    flex-shrink: 1;
 }
 
 :where(.flex-shrink-0, .shrink-0) {
-  flex-shrink: 0;
+    flex-shrink: 0;
 }
-
-/* flex shorthand */
 
 :where(.flex-1) {
-  flex: 1;
-}
-
-:where(.flex-0) {
-  flex: 0;
+    flex: 1 1 0%;
 }
 
 :where(.flex-auto) {
-  flex: auto;
+    flex: 1 1 auto;
+}
+
+:where(.flex-none) {
+    flex: none;
 }

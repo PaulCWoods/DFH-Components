@@ -26,9 +26,9 @@ const {
 } = Astro.props;
 ---
 
-<header class="component-header prose-end margin-bottom-xl prose">
+<header class="component-header prose-end mb-xl prose">
   <!-- Breadcrumbs -->
-  <nav class="breadcrumb margin-bottom prose-end" aria-label="Breadcrumbs">
+  <nav class="breadcrumb mb-md prose-end" aria-label="Breadcrumbs">
     <ol class="small-text">
       <li><a href="/" class="link">Docs</a></li>
       <li><a href="/components" class="link">Components</a></li>
@@ -38,10 +38,10 @@ const {
   </nav>
 
   <!-- Title & Prominence Badges -->
-  <div class="split split--end margin-bottom">
-    <div class="stack gap-0">
-      <h1 class="title margin-0">{title}</h1>
-      <div class="inline align-items-center gap-sm">
+  <div class="split split--end mb-md">
+    <div class="stack">
+      <h1 class="title m-0">{title}</h1>
+      <div class="inline gap-sm">
       <span class="chip chip--sm">
         <span class="chip__text">{type}</span>
       </span>
@@ -55,7 +55,7 @@ const {
     </div>
 
     <!-- Quick External Action Links -->
-    <div class="inline align-items-center gap-xs">
+    <div class="inline gap-xs">
       <a
         href={`http://localhost:6006/?path=/docs/${storybookPath}`}
         target="_blank"
@@ -81,7 +81,7 @@ const {
     </div>
   </div>
   <!-- Lede Paragraph -->
-  <p class="lede text-muted margin-bottom-md">
+  <p class="lede text-muted mb-md">
     {description}
   </p>
 

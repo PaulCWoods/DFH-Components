@@ -32,39 +32,6 @@
    ========================================================================== */
 
 /* ==========================================================================
-   0. Properties and Keyframes
-   ========================================================================== */
-@property --fade-length-start {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --fade-length-end {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@keyframes --edge-fade {
-  0% {
-    --fade-length-start: 0px;
-    --fade-length-end: 3.5rem;
-  }
-
-  10%,
-  90% {
-    --fade-length-start: 3.5rem;
-    --fade-length-end: 3.5rem;
-  }
-
-  100% {
-    --fade-length-start: 3.5rem;
-    --fade-length-end: 0px;
-  }
-}
-
-/* ==========================================================================
    1. Base Tab List (:where(.tab-list))
    ========================================================================== */
 :where(.tab-list) {
@@ -341,8 +308,12 @@
     }
   }
 
-  :where(.button) + :where(.tab-list__content) {
+  :where(.button)+ :where(.tab-list__content) {
     padding-inline-start: 0px;
+  }
+
+  :where(.button:has(+ .tab-list__content)) {
+    margin-inline-start: calc(var(--_tab-list-inset) - var(--_button-padding-inline));
   }
 }
 
@@ -352,31 +323,41 @@
 
 /* --------------------------------------------------------------------------
    3.5 Scrollable (.tab-list--scrollable)
-   One row that scrolls, with edges that fade while there is more to see.
+   One row that scrolls, its edges fading only where there is more to see.
+   No scrollbar gutter: a reserved gutter clips the last tab and hides the
+   end fade.
    -------------------------------------------------------------------------- */
 :where(.tab-list--scrollable) {
+  --_scroll-fade-size: var(--scroll-fade-size, 3rem);
+  --_scroll-fade-to: to right;
+
   flex-wrap: nowrap;
-  overflow: auto;
-  scrollbar-gutter: stable;
   max-inline-size: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
 
   @supports (inline-size: stretch) {
     max-inline-size: stretch;
   }
 
-  @supports (animation-timeline: scroll(root)) {
-    mask-image: linear-gradient(to right, transparent, #000 var(--fade-length-start), #000 calc(100% - var(--fade-length-end)), transparent);
-    mask-size: 100% 100%;
-    mask-repeat: no-repeat;
-    animation: --edge-fade linear both;
+  &:where(:dir(rtl)) {
+    --_scroll-fade-to: to left;
+  }
+
+  /* The shared scroll fade (utilities/scroll-fade.css) */
+  @supports (animation-timeline: scroll()) {
+    animation: --scroll-fade-start linear both, --scroll-fade-end linear both;
+    animation-range: 0 var(--_scroll-fade-size), calc(100% - var(--_scroll-fade-size)) 100%;
     animation-timeline: scroll(self inline);
-    animation-range: 0% 12%, 88% 100%;
+    mask-image: linear-gradient(var(--_scroll-fade-to), transparent, black calc(var(--scroll-fade-start) * var(--_scroll-fade-size)), black calc(100% - var(--scroll-fade-end) * var(--_scroll-fade-size)), transparent);
   }
 }
 
 :where(.tab-list--scrollable):where(.tab-list--vertical, .tab-list--end) {
-  @supports (animation-timeline: scroll(root)) {
-    mask-image: linear-gradient(transparent, #000 var(--fade-length-start), #000 calc(100% - var(--fade-length-end)), transparent);
+  --_scroll-fade-to: to bottom;
+
+  @supports (animation-timeline: scroll()) {
     animation-timeline: scroll(self block);
   }
 }

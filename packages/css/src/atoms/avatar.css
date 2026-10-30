@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Design For Humans: Avatar
+   --------------------------------------------------------------------------
+   Who someone is: a photo, initials or an icon in a shape. An avatar is
+   never interactive; a button or link that opens a profile contains one.
+
+   | Axis    | Modifiers                         | Container flag                 |
+   | ------- | --------------------------------- | ------------------------------ |
+   | Size    | (48px) --sm (32px) --lg (64px)    | --avatar-size-step: sm, lg     |
+   | Corners | (round) --square                  | --avatar-corners: square       |
+   | Look    | --accent, --placeholder, --count  |                                |
+
+   A compact container (--ui-sizing: compact) steps each size down one. A
+   one-off size (a 96px portrait) sets --avatar-size. A custom colour sets
+   --avatar-bg and --avatar-text together.
+
+   Naming:
+   - Beside a visible name (a lockup): decorative, aria-hidden="true", and
+     an image inside takes alt="".
+   - On its own with a photo: the <img alt="Sam Rivera"> names it.
+   - On its own with initials or an icon: role="img" aria-label="Sam Rivera".
+
+   Presence: a dot badge in the bottom corner, hidden from screen readers,
+   with the status in the name ("Sam Rivera, online") or visible text.
+   The avatar pulls a corner badge onto its round edge.
+
+   <span class="avatar" role="img" aria-label="Sam Rivera, online">
+     SR
+     <span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span>
+   </span>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.avatar) {
+  /* Private manifest */
+  --_avatar-size: var(--avatar-size, 3rem);
+  --_avatar-font-size: var(--avatar-font-size, 1rem);
+  --_avatar-radius: var(--avatar-radius, 50%);
+  --_avatar-bg: var(--avatar-bg, Canvas);
+  --_avatar-text: var(--avatar-text, CanvasText);
+  --_avatar-border-width: var(--avatar-border-width, 1px);
+  --_avatar-border-color: var(--avatar-border-color, currentColor);
+  --_avatar-border-style: solid;
+  /* How far a corner badge moves in to sit on a round edge (1 - 1/√2) / 2 */
+  --_avatar-badge-inset: calc(var(--_avatar-size) * 0.146);
+
+  /* ------------------------------------------------------------------------
+     Container flags, declared before the modifier classes
+     ------------------------------------------------------------------------ */
+  @container style(--avatar-size-step: sm) or style(--ui-sizing: compact) {
+    --_avatar-size: var(--avatar-sm-size, 2rem);
+    --_avatar-font-size: var(--avatar-sm-font-size, 0.875rem);
+  }
+
+  @container style(--avatar-size-step: lg) {
+    --_avatar-size: var(--avatar-lg-size, 4rem);
+    --_avatar-font-size: var(--avatar-lg-font-size, 1.25rem);
+  }
+
+  @container style(--avatar-corners: square) {
+    --_avatar-radius: var(--avatar-square-radius, 0.25rem);
+    --_avatar-badge-inset: 0px;
+  }
+
+  align-items: center;
+  background-color: var(--_avatar-bg);
+  block-size: var(--_avatar-size);
+  border: var(--_avatar-border-width) var(--_avatar-border-style) var(--_avatar-border-color);
+  border-radius: var(--_avatar-radius);
+  box-sizing: border-box;
+  color: var(--_avatar-text);
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: var(--_avatar-font-size);
+  font-weight: var(--avatar-font-weight, bold);
+  inline-size: var(--_avatar-size);
+  justify-content: center;
+  line-height: 1;
+  position: relative;
+  user-select: none;
+  vertical-align: middle;
+
+  /* An <img class="avatar"> is the photo itself */
+  &:where(img) {
+    object-fit: cover;
+  }
+
+  /* A photo fills the shape and rounds itself, so a badge can overhang */
+  > :where(img, picture) {
+    block-size: 100%;
+    border-radius: inherit;
+    display: block;
+    inline-size: 100%;
+    object-fit: cover;
+  }
+
+  > :where(.icon) {
+    block-size: 50%;
+    inline-size: 50%;
+  }
+
+  /* A corner badge sits on the round edge, ringed in the surface colour */
+  > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
+    box-shadow: 0 0 0 var(--avatar-group-ring-width, 2px) var(--avatar-group-ring-color, Canvas);
+    margin: var(--_avatar-badge-inset);
+  }
+}
+
+/* Custom colour without a text colour: pick one where the browser can */
+@supports (color: contrast-color(red)) {
+  :where(.avatar[style*="--avatar-bg"]:not([style*="--avatar-text"])) {
+    --_avatar-text: contrast-color(var(--_avatar-bg));
+  }
+}
+
+/* ==========================================================================
+   2. Size and corners
+   ========================================================================== */
+:where(.avatar--sm) {
+  --_avatar-size: var(--avatar-sm-size, 2rem);
+  --_avatar-font-size: var(--avatar-sm-font-size, 0.875rem);
+}
+
+:where(.avatar--lg) {
+  --_avatar-size: var(--avatar-lg-size, 4rem);
+  --_avatar-font-size: var(--avatar-lg-font-size, 1.25rem);
+
+  @container style(--ui-sizing: compact) {
+    --_avatar-size: var(--avatar-size, 3rem);
+    --_avatar-font-size: var(--avatar-font-size, 1rem);
+  }
+}
+
+:where(.avatar--square) {
+  --_avatar-radius: var(--avatar-square-radius, 0.25rem);
+  --_avatar-badge-inset: 0px;
+}
+
+/* ==========================================================================
+   3. Looks
+   ========================================================================== */
+:where(.avatar--accent) {
+  --_avatar-bg: var(--avatar-accent-bg, Highlight);
+  --_avatar-border-color: var(--avatar-accent-bg, Highlight);
+  --_avatar-text: var(--avatar-accent-text, HighlightText);
+}
+
+/* An empty slot: "add a member" */
+:where(.avatar--placeholder) {
+  --_avatar-bg: transparent;
+  --_avatar-border-color: var(--avatar-placeholder-border-color, currentColor);
+  --_avatar-border-style: dashed;
+}
+
+/* "+3": the people a group doesn't show */
+:where(.avatar--count) {
+  --_avatar-text: var(--avatar-count-text, currentColor);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   4. Preferences
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.avatar) {
+    --_avatar-border-color: CanvasText;
+  }
+}

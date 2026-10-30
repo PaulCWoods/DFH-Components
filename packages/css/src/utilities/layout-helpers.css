@@ -1,59 +1,17 @@
 /* ==========================================================================
-   Design For Humans: Dimension, Position & Overflow Utilities
+   Design For Humans: Position, Overflow & Stacking Utilities
    --------------------------------------------------------------------------
-   Comprehensive, zero-specificity (:where()) dimension, positioning, and
-   overflow helper classes.
+   Positioning, overflow, overscroll, isolation and z-index by role.
+   A z-index names the layer an element belongs to; there are no numbers.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Dimension Utilities (Width & Height)
+   1. Position
    -------------------------------------------------------------------------- */
 
-/* Full Viewport Height & Width */
-:where(.min-h-screen, .min-block-screen) {
-    min-block-size: 100vh;
-    min-block-size: 100dvh;
+:where(.position-static, .static) {
+    position: static;
 }
-
-:where(.w-screen, .inline-screen) {
-    inline-size: 100vw;
-    inline-size: 100dvw;
-}
-
-:where(.h-screen, .block-screen) {
-    block-size: 100vh;
-    block-size: 100dvh;
-}
-
-/* Full Width & Height */
-:where(.w-full, .inline-full) {
-    inline-size: 100%;
-}
-
-:where(.h-full, .block-full) {
-    block-size: 100%;
-}
-
-:where(.w-auto, .inline-auto) {
-    inline-size: auto;
-}
-
-:where(.h-auto, .block-auto) {
-    block-size: auto;
-}
-
-/* Zero Minimum Dimensions (Prevents Flex/Grid Overflow Blowout) */
-:where(.min-h-0, .min-block-0) {
-    min-block-size: 0;
-}
-
-:where(.min-w-0, .min-inline-0) {
-    min-inline-size: 0;
-}
-
-/* --------------------------------------------------------------------------
-   2. Positioning Utilities
-   -------------------------------------------------------------------------- */
 
 :where(.position-relative, .relative) {
     position: relative;
@@ -63,20 +21,18 @@
     position: absolute;
 }
 
-:where(.position-sticky, .sticky) {
-    position: sticky;
-}
-
-:where(.position-static, .static) {
-    position: static;
-}
-
 :where(.position-fixed, .fixed) {
     position: fixed;
 }
 
+:where(.position-sticky, .sticky) {
+    position: sticky;
+}
+
+
 /* --------------------------------------------------------------------------
-   3. Overflow & Overscroll Utilities
+   2. Overflow
+   A scrolling region needs something focusable in it, or tabindex="0" and a label.
    -------------------------------------------------------------------------- */
 
 :where(.overflow-visible) {
@@ -95,36 +51,51 @@
     overflow: auto;
 }
 
+:where(.overflow-scroll) {
+    overflow: scroll;
+}
+
+:where(.overflow-x-hidden) {
+    overflow-x: hidden;
+}
+
 :where(.overflow-x-auto) {
     overflow-x: auto;
+}
+
+:where(.overflow-y-hidden) {
+    overflow-y: hidden;
 }
 
 :where(.overflow-y-auto) {
     overflow-y: auto;
 }
 
-/* Overscroll Behavior Utilities (WCAG 2.1 Reflow & Scroll Chaining Containment) */
-:where(.overscroll-contain) {
-    overscroll-behavior: contain;
-}
 
-:where(.overscroll-none) {
-    overscroll-behavior: none;
-}
+/* --------------------------------------------------------------------------
+   3. Overscroll and scrollbar
+   -------------------------------------------------------------------------- */
 
-:where(.overscroll-auto) {
+:where(.overscroll-behavior-auto, .overscroll-auto) {
     overscroll-behavior: auto;
 }
 
-:where(.overscroll-y-contain) {
+:where(.overscroll-behavior-contain, .overscroll-contain) {
+    overscroll-behavior: contain;
+}
+
+:where(.overscroll-behavior-none, .overscroll-none) {
+    overscroll-behavior: none;
+}
+
+:where(.overscroll-behavior-y-contain, .overscroll-y-contain) {
     overscroll-behavior-y: contain;
 }
 
-:where(.overscroll-y-none) {
+:where(.overscroll-behavior-y-none, .overscroll-y-none) {
     overscroll-behavior-y: none;
 }
 
-/* Scrollbar Gutter Utilities (Prevent Layout Shift on Dynamic Content) */
 :where(.scrollbar-gutter-stable) {
     scrollbar-gutter: stable;
 }
@@ -133,56 +104,40 @@
     scrollbar-gutter: auto;
 }
 
+
 /* --------------------------------------------------------------------------
-   4. Isolation Utilities
+   4. Stacking
    -------------------------------------------------------------------------- */
 
-:where(.isolate) {
+:where(.isolation-isolate, .isolate) {
     isolation: isolate;
 }
-
-/* --------------------------------------------------------------------------
-   5. Accessible Backdrop (Modal Drawers & Overlays)
-   -------------------------------------------------------------------------- */
-
-:where(.backdrop) {
-    position: fixed;
-    inset: 0;
-    background-color: var(--dialog-backdrop, rgba(0, 0, 0, 0.45));
-    backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
-    -webkit-backdrop-filter: var(--dialog-backdrop-filter, blur(4px));
-    z-index: calc(var(--z-modal, 100) - 1);
-}
-
-/* --------------------------------------------------------------------------
-   6. Z-Index Utilities
-   -------------------------------------------------------------------------- */
 
 :where(.z-auto) {
     z-index: auto;
 }
 
-:where(.z-0, .z-base) {
+:where(.z-base) {
     z-index: var(--z-index-base, 0);
 }
 
-:where(.z-10, .z-sticky) {
+:where(.z-sticky) {
     z-index: var(--z-index-sticky, 100);
 }
 
-:where(.z-20, .z-overlay) {
+:where(.z-overlay) {
     z-index: var(--z-index-overlay, 300);
 }
 
-:where(.z-30, .z-dialog) {
+:where(.z-dialog) {
     z-index: var(--z-index-dialog, 400);
 }
 
-:where(.z-40, .z-popover) {
+:where(.z-popover) {
     z-index: var(--z-index-popover, 500);
 }
 
-:where(.z-50, .z-toast) {
+:where(.z-toast) {
     z-index: var(--z-index-toast, 600);
 }
 

@@ -1,5 +1,5 @@
 # 15. Divider Primitive
-A rule between groups. Organisms (menu, combobox, batch actions, button group) place it; they never restyle it. Classes only: a bare `<hr>` gets a quiet rule from the reset. The audit is in `docs/audit/divider.md`.
+A rule between groups. Components (menu, batch actions, button group) place it; they never restyle it. Classes only: a bare `<hr>` gets a quiet rule from the reset. The audit is in `docs/audit/divider.md`.
 
 | Axis | Values |
 | :--- | :--- |

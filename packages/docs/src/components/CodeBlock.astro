@@ -19,8 +19,8 @@ const cleanCode = code.trim();
 ---
 
 <div class:list={['code-block prose-end card card--compact', className]}>
-    <div class="code-block__header card__header inline inline--between align-items-center">
-      <div class="inline align-items-center gap-xs">
+    <div class="code-block__header card__header inline inline--between">
+      <div class="inline gap-xs">
         {title ? (
           <span class="micro-heading text-muted">{title}</span>
         ) : (
@@ -36,16 +36,16 @@ const cleanCode = code.trim();
         data-code={cleanCode}
       >
         <Icon name="Duplicate" size={14} class="copy-icon" />
-        <Icon name="Check" size={14} class="check-icon hide" />
+        <Icon name="Check" size={14} class="check-icon hidden" />
         <span class="copy-label">Copy</span>
       </button>
     </div>
-    <pre class="pre code-block__pre" tabindex="0"><code>{cleanCode}</code></pre>
+    <pre class="whitespace-pre code-block__pre" tabindex="0"><code>{cleanCode}</code></pre>
 </div>
 
 <style>
   .code-block {
-    margin-block: var(--spacing-16, 1rem);
+    margin-block: var(--spacing-cushion, 1rem);
     background-color: var(--surface-subtle, var(--surface, Canvas));
     border-radius: var(--radius-md, 0.5rem);
     overflow: hidden;

@@ -30,7 +30,7 @@ const categories = [
     title: 'Organisms',
     description: 'Complex composite assemblies that orchestrate layout geometry without clobbering nested atoms.',
     items: [
-      { name: 'Card & Deck', href: '/components/organisms/card', desc: 'Multi-region content containers with ruled headers, bodies, and footers.' },
+      { name: 'Card', href: '/components/organisms/card', desc: 'Multi-region content containers with ruled headers, bodies, and footers.' },
       { name: 'Dialog', href: '/components/organisms/dialog', badge: 'HTML5', badgeClass: 'status--subtle', desc: 'Native HTML5 dialog with declarative Invoker Commands.' },
       { name: 'Menu & Context Menu', href: '/components/organisms/menu', desc: 'Keyboard-navigable action menus and dropdown option lists.' },
       { name: 'Table', href: '/components/organisms/table', desc: 'Dense data grids with sticky headers, numeric alignments, and sortable columns.' },
@@ -40,9 +40,9 @@ const categories = [
 ---
 
 <DocLayout title="Components Catalog" currentSection="components" currentPath="/components">
-  <div class="margin-bottom-xl">
-    <div class="inline align-items-center gap-sm margin-bottom-xs">
-      <h1 class="display-title margin-0">Component Library</h1>
+  <div class="mb-xl">
+    <div class="inline gap-sm mb-xs">
+      <h1 class="display-title m-0">Component Library</h1>
       <span class="status status--accent status--sm"><span class="status__text">WCAG 2.2 Ready</span></span>
     </div>
     <p class="lede text-muted">
@@ -50,15 +50,15 @@ const categories = [
     </p>
 
     <!-- Featured Component Spotlight Banner -->
-    <div class="card card--translucent margin-block-lg padding-md">
-      <div class="split split--end align-items-center gap-md">
+    <div class="card card--translucent my-lg p-md">
+      <div class="split split--end items-center gap-md">
         <div class="stack gap-xs">
-          <div class="inline align-items-center gap-xs">
+          <div class="inline gap-xs">
             <span class="status status--accent status--strong status--sm"><span class="status__text">Featured Prototype</span></span>
             <span class="micro-heading text-muted">Atom Primitive</span>
           </div>
-          <h2 class="heading margin-0">Button Component Prototype</h2>
-          <p class="small-text text-muted margin-0">
+          <h2 class="heading m-0">Button Component Prototype</h2>
+          <p class="small-text text-muted m-0">
             Interactive playground, anatomy variations, target-size ergonomics (48px AAA), WCAG 2.2 compliance matrix, design tokens, and Do’s & Don’ts.
           </p>
         </div>
@@ -76,24 +76,24 @@ const categories = [
   <div class="stack gap-xl">
     {categories.map((cat) => (
       <section class="component-category">
-        <div class="margin-bottom-sm">
-          <h2 class="heading margin-0">{cat.title}</h2>
-          <p class="small-text text-muted margin-0">{cat.description}</p>
+        <div class="mb-sm">
+          <h2 class="heading m-0">{cat.title}</h2>
+          <p class="small-text text-muted m-0">{cat.description}</p>
         </div>
 
-        <div class="grid md:grid--2-col lg:grid--3-col gap-md">
+        <div class="grid grid--3-col grid--xs gap-md">
           {cat.items.map((item) => (
             <a href={item.href} class="card link link--plain p-md block">
               <div class="stack gap-xs">
-                <div class="inline inline--between align-items-center">
-                  <span class="font-weight-bold text-accent">{item.name}</span>
+                <div class="inline inline--between">
+                  <span class="font-bold text-accent">{item.name}</span>
                   {item.badge && (
                     <span class:list={['status', 'status--sm', item.badgeClass || 'status--subtle']}>
                       <span class="status__text">{item.badge}</span>
                     </span>
                   )}
                 </div>
-                <p class="small-text text-muted margin-0">{item.desc}</p>
+                <p class="small-text text-muted m-0">{item.desc}</p>
               </div>
             </a>
           ))}

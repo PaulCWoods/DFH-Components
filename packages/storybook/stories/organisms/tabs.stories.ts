@@ -14,7 +14,7 @@ const panel = (title: string, body: string) =>
 const ACCOUNT = [
   { tab: '<span class="tab__text">Overview</span>', panel: panel('Overview', 'Plan, usage and recent activity for this account.') },
   {
-    tab: '<span class="tab__text">Security</span><span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">2</span></span><span class="visually-hidden">, 2 to review</span>',
+    tab: '<span class="tab__text">Security</span><span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">2</span></span><span class="sr-only">, 2 to review</span>',
     panel: panel('Security', 'Passkeys, sessions and two-factor authentication.'),
   },
   { tab: '<span class="tab__text">Notifications</span>', panel: panel('Notifications', 'Email and push preferences.') },
@@ -30,8 +30,6 @@ const meta: Meta<TabbedArgs> = {
     docs: {
       description: {
         component: `
-### Tabbed Content
-
 Lays out a tab list and its panels. Layout only: the list and its tabs style themselves (see **Molecules/Tab List**).
 
 | Modifier | Layout |

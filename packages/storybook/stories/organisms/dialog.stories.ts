@@ -1,650 +1,406 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-interface DialogArgs {
-  title: string;
-  subtitle?: string;
-  content: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  isDrawer?: boolean;
-  isScrollable?: boolean;
-}
-
-const meta: Meta<DialogArgs> = {
+const meta: Meta = {
   title: 'Organisms/Dialog',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Dialog & Drawer Primitives
+A native \`<dialog class="dialog">\` opened as a modal: top-layer placement, size, backdrop, motion and the page's scroll lock. The surface is a \`.card\` inside it, and every button in it is an ordinary \`.button\`. A non-modal floating panel is a popover, not a dialog opened with \`show()\`.
 
-The **Dialog** primitive uses the native HTML \`<dialog>\` element for top-layer positioning, viewport constraints, backdrop dimming, and browser-managed focus trapping.
-Content layout and surfaces are cleanly composed using the **Card** primitive.
-Supports both centered modal dialogs and slide-out panels via the **\`.dialog--drawer\`** modifier.
-
----
-
-#### 1. Canonical Semantic Markup Signatures
-AI agents and developers MUST strictly use the following semantic patterns:
-
+### Markup
 \`\`\`html
-<!-- 1. Centered Modal Dialog -->
-<button type="button" class="button button--strong button--accent" commandfor="confirm-dialog" command="show-modal" aria-haspopup="dialog">
-  <span>Open Confirmation Dialog</span>
+<button type="button" class="button" commandfor="rename-dialog" command="show-modal">
+  <span>Rename</span>
 </button>
 
-<dialog id="confirm-dialog" class="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
-  <article class="card">
+<dialog id="rename-dialog" class="dialog" aria-labelledby="rename-title">
+  <div class="card">
     <header class="card__header">
-      <hgroup class="card__hgroup">
-        <h2 id="dialog-title" class="card__title heading">Publish Verification Report</h2>
-        <p class="card__subtitle font-bold text-muted">Immutable Audit Manifest</p>
-      </hgroup>
-      <form method="dialog">
-        <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="confirm-dialog" command="close">
-          <span class="visually-hidden">Close dialog</span>
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-        </button>
-      </form>
+      <h2 id="rename-title" class="card__title small-heading">Rename plot</h2>
+      <button type="button" class="button button--plain button--icon" commandfor="rename-dialog" command="close">
+        <span class="sr-only">Close</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      </button>
     </header>
-
-    <div class="card__body card__body--scrollable">
-      <p id="dialog-desc">Publishing will generate an immutable verification hash and notify subscribed reviewers.</p>
-    </div>
-
+    <div class="card__body">…</div>
     <footer class="card__footer justify-end">
       <form method="dialog" class="button-group">
-        <button type="submit" class="button button--subtle" commandfor="confirm-dialog" command="close">
-          <span>Cancel</span>
-        </button>
-        <button type="submit" value="confirm" class="button button--strong button--accent">
-          <span>Publish Report</span>
-        </button>
+        <button type="submit" value="cancel" class="button"><span>Cancel</span></button>
+        <button type="submit" value="save" class="button button--strong button--accent"><span>Save</span></button>
       </form>
     </footer>
-  </article>
-</dialog>
-
-<!-- 2. Slide-Out Drawer (.dialog--drawer) -->
-<dialog id="settings-drawer" class="dialog dialog--drawer" aria-labelledby="drawer-title">
-  <article class="card">
-    <header class="card__header">
-      <h2 id="drawer-title" class="card__title heading">Workspace Settings</h2>
-      <form method="dialog">
-        <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="settings-drawer" command="close">
-          <span class="visually-hidden">Close drawer</span>
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-        </button>
-      </form>
-    </header>
-    <div class="card__body card__body--scrollable">
-      <!-- Drawer content -->
-    </div>
-  </article>
-</dialog>
-
-<!-- 3. Whole-Card Scrollable Modal (.dialog--scrollable) -->
-<dialog id="terms-dialog" class="dialog dialog--scrollable" aria-labelledby="terms-title">
-  <article class="card">
-    <header class="card__header">
-      <h2 id="terms-title" class="card__title heading">Terms & Conditions</h2>
-    </header>
-    <div class="card__body">
-      <!-- Long body copy -->
-    </div>
-    <footer class="card__footer">
-      <button type="button" class="button button--strong button--accent">Accept</button>
-    </footer>
-  </article>
+  </div>
 </dialog>
 \`\`\`
 
----
+| Axis | Values |
+| :--- | :--- |
+| Placement | centred (default); \`.dialog--drawer\` (inline end); \`.dialog--drawer.dialog--start\` (inline start) |
+| Scroll | \`.card__body--scrollable\` (the body, between a pinned header and footer); \`.dialog--scrollable\` (the whole card) |
 
-#### 2. WCAG 2.2 Conformance Matrix
-
-| Criterion | Level | Implementation Strategy |
-| :--- | :---: | :--- |
-| **2.1.1 Keyboard Accessibility** | **A** | Native browser behavior: \`Escape\` dismisses the modal, Space/Enter activate buttons, and Tab is strictly trapped within top layer. |
-| **2.4.3 Focus Order** | **A** | Focus automatically moves to the first interactive element on open, and returns cleanly to trigger upon dismissal. |
-| **4.1.2 Name, Role, Value** | **A** | Native \`<dialog>\` provides dialog role; associated via \`aria-labelledby\` to \`card__title\` and \`aria-describedby\` to body description. |
-| **1.4.3 / 1.4.11 Contrast** | **AA** | Translucent backdrop (\`::backdrop\`) dims background with 50% opacity and 4px blur, isolating foreground modal contrast. |
-| **Modern Animation Standards** | **Standard** | Uses top-layer discrete transitions with \`@starting-style\` and \`transition-behavior: allow-discrete;\` without JavaScript RAF loops. |
-
----
-
-#### 3. CSS Custom Property Contract Table
-
-| Custom Property | Fallback | Intended Purpose |
-| :--- | :--- | :--- |
-| \`--_dialog-width\` | \`--spacing-block\` (36rem) | Maximum modal box width |
-| \`--_dialog-drawer-max-width\` | \`28rem\` | Slide-out panel width for \`.dialog--drawer\` |
-| \`--_dialog-backdrop-color\` | \`rgba(0, 0, 0, 0.5)\` | Backdrop dimming canvas color |
-| \`--_dialog-backdrop-filter\` | \`blur(4px)\` | Backdrop frosted glass filter |
-| \`--_dialog-cushion\` | \`--spacing-cushion\` (2rem) | Margin buffer preventing modal touching viewport borders |
-| \`--_dialog-max-height\` | \`90vb\` | Maximum vertical height before inner scrolling engages |
-| \`--_dialog-transition\` | \`--duration-md\` (250ms) | Entry and exit scale/fade animation speed |
-`,
+- **Opening and closing.** \`command="show-modal"\` (or \`showModal()\`) opens it; \`command="close"\` on the header's close button and a \`form method="dialog"\` around the footer actions close it, and the submit button's \`value\` becomes the dialog's \`returnValue\`. Escape closes it. \`closedby="any"\` adds light dismiss where supported; leave it off a dialog holding unsaved input.
+- **Focus.** The first focusable element takes focus, or the one with \`autofocus\`: the first field of a form, the safe action of a destructive confirmation. Focus returns to the opener on close.
+- **Semantics.** Name it with \`aria-labelledby\`. A confirmation that interrupts takes \`role="alertdialog"\` and \`aria-describedby\` on its message. No \`aria-modal\` (\`showModal()\` makes the page inert). \`aria-haspopup="dialog"\` on the opener is optional.
+- **Size.** \`--dialog-width\` (36rem) on one dialog or a region; \`--dialog-drawer-width\` for drawers. There are no size modifiers. On a narrow screen a drawer leaves a 3rem strip of the page beside it.
+- **Scroll lock.** While a modal is open the page doesn't scroll and keeps its scrollbar gutter.
+- **Motion.** Fades and moves in over \`--duration-sm\`; exit mirrors entry. Reduced motion keeps the fade only; more contrast drops the backdrop blur.
+- **Without a card** (an image, a video), the dialog draws a card's surface itself.
+        `,
       },
     },
-  },
-  argTypes: {
-    title: {
-      description: 'Modal title text',
-      control: 'text',
-      defaultValue: 'Publish Verification Report',
-    },
-    subtitle: {
-      description: 'Supporting subtitle',
-      control: 'text',
-      defaultValue: 'Immutable Audit Manifest',
-    },
-    content: {
-      description: 'Modal body copy',
-      control: 'text',
-      defaultValue: 'Publishing will generate an immutable verification hash and notify subscribed accessibility reviewers.',
-    },
-    confirmLabel: {
-      description: 'Primary action button text',
-      control: 'text',
-      defaultValue: 'Publish Report',
-    },
-    cancelLabel: {
-      description: 'Dismiss button text',
-      control: 'text',
-      defaultValue: 'Cancel',
-    },
-    isDrawer: {
-      description: 'Render as slide-out drawer (.dialog--drawer)',
-      control: 'boolean',
-      defaultValue: false,
-    },
-    isScrollable: {
-      description: 'Make entire card scrollable (.dialog--scrollable)',
-      control: 'boolean',
-      defaultValue: false,
-    },
-  },
-  render: (args) => {
-    const dialogId = 'playground-dialog-demo';
-    const drawerClass = args.isDrawer ? 'dialog--drawer' : '';
-    const scrollableClass = args.isScrollable ? 'dialog--scrollable' : '';
-    const dialogClasses = ['dialog', drawerClass, scrollableClass].filter(Boolean).join(' ');
-
-    setTimeout(() => {
-      const openBtn = document.getElementById('playground-open-btn');
-      const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
-      if (openBtn && dialog) {
-        openBtn.onclick = () => dialog.showModal();
-      }
-    }, 0);
-
-    return `
-      <div class="demo-stage demo-constrained--md stack" style="align-items: center; justify-content: center; min-block-size: 10rem;">
-        <button 
-          id="playground-open-btn" 
-          type="button" 
-          class="button button--strong button--accent"
-          commandfor="${dialogId}" 
-          command="show-modal"
-          aria-haspopup="dialog"
-        >
-          <span>${args.isDrawer ? 'Open Slide-Out Drawer' : 'Open Modal Dialog'}</span>
-        </button>
-
-        <dialog 
-          id="${dialogId}" 
-          class="${dialogClasses}" 
-          aria-labelledby="${dialogId}-title" 
-          aria-describedby="${dialogId}-desc"
-        >
-          <article class="card">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h2 id="${dialogId}-title" class="card__title heading">${args.title}</h2>
-                ${args.subtitle ? `<p class="card__subtitle font-bold text-muted">${args.subtitle}</p>` : ''}
-              </hgroup>
-              <form method="dialog">
-                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                  <span class="visually-hidden">Close</span>
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-                </button>
-              </form>
-            </header>
-
-            <div class="card__body${args.isScrollable ? '' : ' card__body--scrollable'}">
-              <p id="${dialogId}-desc">${args.content}</p>
-            </div>
-
-            <footer class="card__footer justify-end">
-              <form method="dialog" class="button-group">
-                <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
-                  <span>${args.cancelLabel || 'Cancel'}</span>
-                </button>
-                <button type="submit" value="confirm" class="button button--strong button--accent">
-                  <span>${args.confirmLabel || 'Confirm'}</span>
-                </button>
-              </form>
-            </footer>
-          </article>
-        </dialog>
-      </div>
-    `;
   },
 };
 
 export default meta;
-type Story = StoryObj<DialogArgs>;
+type Story = StoryObj;
 
-/**
- * 1. Playground (Interactive Sandbox)
- * Test modal titles, copy, buttons, and drawer orientation via Storybook controls.
- */
+const icon = (name: string) =>
+  `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
+
+const opener = (id: string, label: string, cls = 'button') =>
+  `<button type="button" class="${cls}" commandfor="${id}" command="show-modal" aria-haspopup="dialog"><span>${label}</span></button>`;
+
+const closeButton = (id: string, label = 'Close') =>
+  `<button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><span class="sr-only">${label}</span>${icon('Close')}</button>`;
+
+const actions = (cancel = 'Cancel', confirm = 'Save', value = 'save') => `
+  <footer class="card__footer justify-end">
+    <form method="dialog" class="button-group">
+      <button type="submit" value="cancel" class="button"><span>${cancel}</span></button>
+      <button type="submit" value="${value}" class="button button--strong button--accent"><span>${confirm}</span></button>
+    </form>
+  </footer>`;
+
+const paragraphs = (n: number) =>
+  Array.from(
+    { length: n },
+    (_, i) =>
+      `<p class="text">${i + 1}. Plot holders share the tool locker, the water butts and the compost bays. Return tools clean, close the butt lids after use, and turn the compost on your rota week.</p>`,
+  ).join('');
+
+const tree = (label: string) => `
+  <nav class="navigation-tree" aria-labelledby="${label}">
+    <ul role="list">
+      <li><a href="#" class="button" aria-current="page">Plots</a></li>
+      <li><a href="#" class="button">Rota</a></li>
+      <li><a href="#" class="button">Tool locker</a></li>
+      <li><a href="#" class="button">Members</a></li>
+    </ul>
+  </nav>`;
+
+/* Opens the story's dialog on the canvas so its contents are seen and checked.
+   Docs pages don't run play, so the openers stay the way in there. */
+const openOnLoad: Story['play'] = async ({ canvasElement }) => {
+  canvasElement.querySelector<HTMLDialogElement>('dialog')?.showModal();
+};
+
 export const Playground: Story = {
   args: {
-    title: 'Publish Verification Report',
-    subtitle: 'Immutable Audit Manifest',
-    content: 'Publishing will generate an immutable verification hash and notify subscribed accessibility reviewers.',
-    confirmLabel: 'Publish Report',
-    cancelLabel: 'Cancel',
-    isDrawer: false,
-    isScrollable: false,
+    placement: 'centred',
+    scroll: 'body',
+    lightDismiss: false,
+    paragraphs: 6,
   },
-};
-
-/**
- * 2. Anatomy & Structure Breakdown
- * Shows Trigger button, native `<dialog>`, frosted ::backdrop, composed Card, header, body, and footer.
- */
-export const Anatomy: Story = {
-  render: () => {
-    const dialogId = 'anatomy-dialog-demo';
-
-    setTimeout(() => {
-      const openBtn = document.getElementById('anatomy-open-btn');
-      const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
-      if (openBtn && dialog) {
-        openBtn.onclick = () => dialog.showModal();
-      }
-    }, 0);
-
+  argTypes: {
+    placement: { control: 'inline-radio', options: ['centred', 'drawer end', 'drawer start'] },
+    scroll: { control: 'inline-radio', options: ['body', 'whole card'] },
+    lightDismiss: { control: 'boolean', description: '`closedby="any"`' },
+    paragraphs: { control: { type: 'range', min: 1, max: 20 } },
+  },
+  render: (args) => {
+    const cls = [
+      'dialog',
+      args.placement !== 'centred' && 'dialog--drawer',
+      args.placement === 'drawer start' && 'dialog--start',
+      args.scroll === 'whole card' && 'dialog--scrollable',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    const bodyScroll = args.scroll === 'body' ? ' card__body--scrollable" tabindex="0" aria-label="Rules' : '';
     return `
-      <div class="demo-stage demo-constrained--lg stack">
-        <div class="demo-label">1. Trigger Button &rarr; 2. &lt;dialog&gt; &rarr; 3. ::backdrop &rarr; 4. Composed Card with Header/Body/Footer</div>
-        
-        <div style="display: flex; justify-content: center; padding-block: var(--spacing-16);">
-          <button 
-            id="anatomy-open-btn" 
-            type="button" 
-            class="button button--strong button--accent"
-            commandfor="${dialogId}" 
-            command="show-modal"
-            aria-haspopup="dialog"
-          >
-            <span>Open Anatomy Dialog Demo</span>
-          </button>
+      ${opener('playground-dialog', 'Open dialog')}
+      <dialog id="playground-dialog" class="${cls}" aria-labelledby="playground-title"${args.lightDismiss ? ' closedby="any"' : ''}>
+        <div class="card">
+          <header class="card__header">
+            <h2 id="playground-title" class="card__title small-heading">Locker rules</h2>
+            ${closeButton('playground-dialog')}
+          </header>
+          <div class="card__body stack${bodyScroll}">${paragraphs(args.paragraphs)}</div>
+          ${actions('Cancel', 'Agree', 'agree')}
         </div>
-
-        <dialog 
-          id="${dialogId}" 
-          class="dialog" 
-          aria-labelledby="anatomy-title" 
-          aria-describedby="anatomy-desc"
-        >
-          <article class="card">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h2 id="anatomy-title" class="card__title heading">WCAG 2.2 Modal Architecture</h2>
-                <p class="card__subtitle font-bold text-muted">Native Top-Layer Focus Trapping</p>
-              </hgroup>
-              <form method="dialog">
-                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                  <span class="visually-hidden">Close dialog</span>
-                  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-                </button>
-              </form>
-            </header>
-
-            <div class="card__body card__body--scrollable">
-              <p id="anatomy-desc">
-                This dialog utilizes native browser top-layer positioning with <code>display: block</code> and <code>allow-discrete</code> transitions.
-                Press <kbd class="kbd">Escape</kbd> to dismiss at any time.
-              </p>
-            </div>
-
-            <footer class="card__footer justify-end">
-              <form method="dialog" class="button-group">
-                <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
-                  <span>Dismiss</span>
-                </button>
-                <button type="submit" class="button button--strong button--accent">
-                  <span>Understood</span>
-                </button>
-              </form>
-            </footer>
-          </article>
-        </dialog>
-      </div>
-    `;
+      </dialog>`;
   },
+  play: openOnLoad,
 };
 
-/**
- * 3. Modal Confirmation Dialog
- * Standard confirmation dialog composed with Card primitive and native `<form method="dialog">`.
- */
-export const ModalConfirmation: Story = {
-  render: () => {
-    const dialogId = 'modal-confirm-demo';
-
-    setTimeout(() => {
-      const openBtn = document.getElementById('open-confirm-modal-btn');
-      const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
-      if (openBtn && dialog) {
-        openBtn.onclick = () => dialog.showModal();
-      }
-    }, 0);
-
-    return `
-      <div class="demo-stage demo-constrained--md stack" style="align-items: center; padding-block: var(--spacing-24);">
-        <button 
-          id="open-confirm-modal-btn" 
-          type="button" 
-          class="button button--strong button--accent"
-          commandfor="${dialogId}" 
-          command="show-modal"
-          aria-haspopup="dialog"
-        >
-          <span>Trigger Confirmation Modal</span>
-        </button>
-
-        <dialog id="${dialogId}" class="dialog" aria-labelledby="modal-confirm-title">
-          <article class="card">
-            <header class="card__header">
-              <h3 id="modal-confirm-title" class="card__title heading">Approve Deployment to Production</h3>
-              <form method="dialog">
-                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${dialogId}" command="close">
-                  <span class="visually-hidden">Close</span>
-                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                </button>
-              </form>
-            </header>
-            <div class="card__body card__body--scrollable">
-              <p>Deploying will update the live production environment to version 2.4.0 with automated rollback enabled.</p>
-            </div>
-            <footer class="card__footer justify-end">
-              <form method="dialog" class="button-group">
-                <button type="submit" class="button button--subtle" commandfor="${dialogId}" command="close">
-                  <span>Cancel</span>
-                </button>
-                <button type="submit" class="button button--strong button--accent">
-                  <span>Approve & Deploy</span>
-                </button>
-              </form>
-            </footer>
-          </article>
-        </dialog>
-      </div>
-    `;
+export const Confirmation: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'A confirmation interrupts to ask for a decision: `role="alertdialog"`, the message in `aria-describedby`, and `autofocus` on the safe action. The danger action says what it does and carries an icon. `--dialog-width` narrows this one.',
+      },
+    },
   },
-};
-
-/**
- * 4. Slide-Out Drawer (.dialog--drawer)
- * Full-height slide-out drawer sliding from the viewport edge.
- */
-export const SlideOutDrawer: Story = {
-  render: () => {
-    const dialogId = 'demo-drawer-panel';
-
-    setTimeout(() => {
-      const openBtn = document.getElementById('open-drawer-panel-btn');
-      const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
-      if (openBtn && dialog) {
-        openBtn.onclick = () => dialog.showModal();
-      }
-    }, 0);
-
-    return `
-      <div class="demo-stage demo-constrained--md stack" style="align-items: center; padding-block: var(--spacing-24);">
-        <button 
-          id="open-drawer-panel-btn" 
-          type="button" 
-          class="button"
-          commandfor="${dialogId}" 
-          command="show-modal"
-          aria-haspopup="dialog"
-        >
-          <span>Open Slide-Out Drawer (.dialog--drawer)</span>
-        </button>
-
-        <dialog 
-          id="${dialogId}" 
-          class="dialog dialog--drawer" 
-          aria-labelledby="drawer-panel-title"
-        >
-          <article class="card">
-            <header class="card__header">
-              <h3 id="drawer-panel-title" class="card__title heading">Quick Settings Drawer</h3>
-              <form method="dialog">
-                <button 
-                  type="submit" 
-                  class="button button--plain button--icon button--icon-lg" 
-                  commandfor="${dialogId}"
-                  command="close"
-                >
-                  <span class="visually-hidden">Close drawer</span>
-                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                </button>
-              </form>
-            </header>
-
-            <div class="card__body stack card__body--scrollable">
-              <p style="color: var(--foreground-muted);">Manage accessibility preferences and workspace layout.</p>
-              <div class="field">
-                <label class="choice" for="cb-high-contrast-drawer">
-                  <input type="checkbox" id="cb-high-contrast-drawer" class="checkbox-input" checked />
-                  <span>High-Contrast Focus Indicators</span>
-                </label>
-              </div>
-              <div class="field">
-                <label class="choice" for="cb-reduced-motion-drawer">
-                  <input type="checkbox" id="cb-reduced-motion-drawer" class="checkbox-input" />
-                  <span>Reduce Page Animations</span>
-                </label>
-              </div>
-            </div>  
-
-            <footer class="card__footer">
-              <form method="dialog" class="form__submission" style="display: flex; justify-content: flex-end;">
-                <button 
-                  type="submit" 
-                  class="button button--strong button--accent"
-                  commandfor="${dialogId}"
-                  command="close"
-                >
-                  <span>Save & Close</span>
-                </button>
-              </form>
-            </footer>
-          </article>
-        </dialog>
-      </div>
-    `;
-  },
-};
-
-/**
- * 5. Whole-Card Scrollable Dialog (.dialog--scrollable)
- * Allows the entire card (header, body, and footer) to scroll as a unified container
- * when content exceeds the dialog max-height or viewport height, instead of fixing the header/footer.
- */
-export const WholeCardScrollable: Story = {
-  render: () => {
-    const dialogId = 'scrollable-card-dialog-demo';
-
-    setTimeout(() => {
-      const openBtn = document.getElementById('open-scrollable-dialog-btn');
-      const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
-      if (openBtn && dialog) {
-        openBtn.onclick = () => dialog.showModal();
-      }
-    }, 0);
-
-    return `
-      <div class="demo-stage demo-constrained--md stack" style="align-items: center; padding-block: var(--spacing-24);">
-        <button 
-          id="open-scrollable-dialog-btn" 
-          type="button" 
-          class="button"
-          commandfor="${dialogId}" 
-          command="show-modal"
-          aria-haspopup="dialog"
-        >
-          <span>Open Whole-Card Scrollable Dialog (.dialog--scrollable)</span>
-        </button>
-
-        <dialog 
-          id="${dialogId}" 
-          class="dialog dialog--scrollable" 
-          aria-labelledby="${dialogId}-title"
-        >
-          <article class="card" style="inline-size: 28rem;">
-            <header class="card__header">
-              <hgroup class="card__hgroup">
-                <h3 id="${dialogId}-title" class="card__title heading">Whole-Card Scrollable Modal</h3>
-                <p class="card__subtitle font-bold text-muted">Header scrolls with card content</p>
-              </hgroup>
-              <form method="dialog">
-                <button 
-                  type="submit" 
-                  class="button button--plain button--icon button--icon-lg" 
-                  commandfor="${dialogId}"
-                  command="close"
-                >
-                  <span class="visually-hidden">Close</span>
-                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                </button>
-              </form>
-            </header>
-
-            <div class="card__body stack">
-              <p>
-                By default, DFH dialogs fix the header and footer in place while only the body scrolls.
-                Applying <code>.dialog--scrollable</code> (or <code>.card--scrollable</code>) enables the entire card
-                to scroll as a single unified container.
-              </p>
-              <p>
-                <strong>Terms of Service &amp; Data Processing Agreement:</strong>
-              </p>
-              <p>
-                1. Data Collection: All token-driven design parameters and automated accessibility telemetry
-                are recorded in local storage and never transmitted to external services without explicit consent.
-              </p>
-              <p>
-                2. WCAG 2.2 Level AA / AAA Conformance: Component authors must ensure all custom tokens preserve
-                at least a 4.5:1 text contrast ratio and a 3:1 contrast ratio for user interface controls.
-              </p>
-              <p>
-                3. Keyboard Navigation: All modal dialogues must provide keyboard-accessible dismiss mechanisms
-                (Escape key or declarative invoker command buttons).
-              </p>
-              <p>
-                4. Top-Layer Architecture: Using native HTML <code>&lt;dialog&gt;</code> guarantees proper top-layer focus trapping
-                without requiring complex manual tab indexing or focus listeners.
-              </p>
-            </div>
-
-            <footer class="card__footer justify-end">
-              <form method="dialog" class="button-group">
-                <button 
-                  type="submit" 
-                  class="button button--subtle" 
-                  commandfor="${dialogId}"
-                  command="close"
-                >
-                  <span>Decline</span>
-                </button>
-                <button 
-                  type="submit" 
-                  class="button button--strong button--accent"
-                  commandfor="${dialogId}"
-                  command="close"
-                >
-                  <span>Accept Terms</span>
-                </button>
-              </form>
-            </footer>
-          </article>
-        </dialog>
-      </div>
-    `;
-  },
-};
-
-/**
- * 6. Real-World Recipes & UI Compositions
- * Common production patterns: Destructive project deletion modal & Navigation drawer with stacked menu.
- */
-export const RealWorldRecipes: Story = {
-  render: () => {
-    const deleteDialogId = 'recipe-delete-dialog';
-
-    setTimeout(() => {
-      const openBtn = document.getElementById('open-delete-dialog-btn');
-      const dialog = document.getElementById(deleteDialogId) as HTMLDialogElement | null;
-      if (openBtn && dialog) {
-        openBtn.onclick = () => dialog.showModal();
-      }
-    }, 0);
-
-    return `
-      <div class="stack demo-constrained--lg">
-        <div class="demo-label">Recipe A: Destructive Confirmation Dialog</div>
-        <div class="demo-stage" style="display: flex; justify-content: center; padding-block: var(--spacing-24);">
-          <button 
-            id="open-delete-dialog-btn" 
-            type="button" 
-            class="button button--danger"
-            commandfor="${deleteDialogId}" 
-            command="show-modal"
-            aria-haspopup="dialog"
-          >
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-            <span>Delete Entire Project</span>
-          </button>
+  render: () => `
+    ${opener('delete-dialog', 'Delete plot', 'button button--danger')}
+    <dialog id="delete-dialog" class="dialog" role="alertdialog" aria-labelledby="delete-title" aria-describedby="delete-message" style="--dialog-width: 28rem;">
+      <div class="card">
+        <header class="card__header">
+          <h2 id="delete-title" class="card__title small-heading">Delete plot A-14?</h2>
+        </header>
+        <div class="card__body">
+          <p id="delete-message" class="text">Its sowing records and rota weeks go too. This can't be undone.</p>
         </div>
-
-        <dialog id="${deleteDialogId}" class="dialog" aria-labelledby="del-title">
-          <article class="card">
-            <header class="card__header">
-              <h3 id="del-title" class="card__title heading" style="color: var(--foreground-danger);">Permanently Delete Project?</h3>
-              <form method="dialog">
-                <button type="submit" class="button button--plain button--icon button--icon-lg" commandfor="${deleteDialogId}" command="close">
-                  <span class="visually-hidden">Cancel</span>
-                  <svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-                </button>
-              </form>
-            </header>
-            <div class="card__body card__body--scrollable">
-              <p>
-                This action <strong>cannot be reversed</strong>. All associated audit logs, Figma variable sync bindings, and team permissions will be permanently expunged.
-              </p>
-            </div>
-            <footer class="card__footer justify-end">
-              <form method="dialog" class="button-group">
-                <button type="submit" class="button button--subtle" commandfor="${deleteDialogId}" command="close">
-                  <span>Cancel</span>
-                </button>
-                <button type="submit" value="delete" class="button button--danger">
-                  <span>Yes, Delete Project</span>
-                </button>
-              </form>
-            </footer>
-          </article>
-        </dialog>
+        <footer class="card__footer justify-end">
+          <form method="dialog" class="button-group">
+            <button type="submit" value="cancel" class="button" autofocus><span>Keep plot</span></button>
+            <button type="submit" value="delete" class="button button--strong button--danger">${icon('Delete')}<span>Delete plot</span></button>
+          </form>
+        </footer>
       </div>
-    `;
+    </dialog>`,
+  play: openOnLoad,
+};
+
+export const FormDialog: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The card is the `form method="dialog"`, so Enter in a field submits it. `autofocus` puts focus in the first field. Cancel is a close command rather than a second submit button, so Enter never cancels. The submit button\'s `value` becomes `returnValue`, read here in the `close` event.',
+      },
+    },
   },
+  render: () => `
+    <div class="stack">
+      <div>${opener('rename-dialog', 'Rename plot')}</div>
+      <p id="rename-result" class="small-text text-muted" role="status"></p>
+    </div>
+    <dialog id="rename-dialog" class="dialog" aria-labelledby="rename-title"
+      onclose="document.getElementById('rename-result').textContent = 'returnValue: ' + (this.returnValue || '(none)'); this.returnValue = ''">
+      <form method="dialog" class="card">
+        <header class="card__header">
+          <h2 id="rename-title" class="card__title small-heading">Rename plot</h2>
+          ${closeButton('rename-dialog')}
+        </header>
+        <div class="card__body">
+          <div class="field">
+            <label for="plot-name" class="field__label label">Plot name</label>
+            <p id="plot-name-hint" class="field__hint small-text">Shown on the rota and the gate board.</p>
+            <input id="plot-name" name="name" class="input" value="A-14" required aria-describedby="plot-name-hint" autofocus />
+          </div>
+        </div>
+        <footer class="card__footer justify-end">
+          <div class="button-group">
+            <button type="button" class="button" commandfor="rename-dialog" command="close"><span>Cancel</span></button>
+            <button type="submit" value="save" class="button button--strong button--accent"><span>Save</span></button>
+          </div>
+        </footer>
+      </form>
+    </dialog>`,
+  play: openOnLoad,
+};
+
+export const ScrollingBody: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`.card__body--scrollable`: the header and footer stay put and the body scrolls. The body is focusable and named, so keyboard users can scroll it.',
+      },
+    },
+  },
+  render: () => `
+    ${opener('rules-dialog', 'Read the rules')}
+    <dialog id="rules-dialog" class="dialog" aria-labelledby="rules-title">
+      <div class="card">
+        <header class="card__header">
+          <h2 id="rules-title" class="card__title small-heading">Site rules</h2>
+          ${closeButton('rules-dialog')}
+        </header>
+        <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Site rules">${paragraphs(14)}</div>
+        ${actions('Cancel', 'Agree', 'agree')}
+      </div>
+    </dialog>`,
+  play: openOnLoad,
+};
+
+export const WholeCardScrolls: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: '`.dialog--scrollable`: the header, body and footer scroll as one, for long reading where the actions belong at the end.',
+      },
+    },
+  },
+  render: () => `
+    ${opener('terms-dialog', 'Read the terms')}
+    <dialog id="terms-dialog" class="dialog dialog--scrollable" aria-labelledby="terms-title">
+      <div class="card" tabindex="0" aria-label="Terms">
+        <header class="card__header">
+          <h2 id="terms-title" class="card__title small-heading">Tenancy terms</h2>
+          ${closeButton('terms-dialog')}
+        </header>
+        <div class="card__body stack">${paragraphs(14)}</div>
+        ${actions('Decline', 'Accept', 'accept')}
+      </div>
+    </dialog>`,
+  play: openOnLoad,
+};
+
+const settingsDrawer = (id: string, cls: string) => `
+  ${opener(id, 'Settings')}
+  <dialog id="${id}" class="dialog dialog--drawer${cls}" aria-labelledby="${id}-title">
+    <div class="card">
+      <header class="card__header">
+        <h2 id="${id}-title" class="card__title small-heading">Settings</h2>
+        ${closeButton(id)}
+      </header>
+      <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Settings">
+        <div class="field">
+          <label for="${id}-reminder" class="field__label label">Rota reminder</label>
+          <select id="${id}-reminder" class="select">
+            <option>The day before</option>
+            <option>On the day</option>
+            <option>Never</option>
+          </select>
+        </div>
+        ${paragraphs(3)}
+      </div>
+      ${actions()}
+    </div>
+  </dialog>`;
+
+export const DrawerEnd: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`.dialog--drawer`: a full-height panel on the inline end, for settings and details. It slides in from that edge, and leaves a 3rem strip of the page on a narrow screen.',
+      },
+    },
+  },
+  render: () => settingsDrawer('settings-drawer', ''),
+  play: openOnLoad,
+};
+
+export const DrawerStart: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`.dialog--drawer.dialog--start`: the drawer on the inline start, for navigation, where the navigation sits on a wide screen. Opened by a menu button.',
+      },
+    },
+  },
+  render: () => `
+    <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="show-modal" aria-haspopup="dialog">
+      <span class="sr-only">Menu</span>${icon('Navigation')}
+    </button>
+    <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-drawer-title">
+      <div class="card">
+        <header class="card__header">
+          <h2 id="nav-drawer-title" class="card__title small-heading">Allotment</h2>
+          ${closeButton('nav-drawer', 'Close menu')}
+        </header>
+        <div class="card__body card__body--scrollable">${tree('nav-drawer-title')}</div>
+      </div>
+    </dialog>`,
+  play: openOnLoad,
+};
+
+export const RightToLeft: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'In right-to-left text the start drawer opens from the right and slides in from that edge. Nothing in the markup changes but `dir`.',
+      },
+    },
+  },
+  render: () => `
+    <div dir="rtl" lang="ar">
+      <button type="button" class="button button--plain button--icon" commandfor="rtl-drawer" command="show-modal" aria-haspopup="dialog">
+        <span class="sr-only">القائمة</span>${icon('Navigation')}
+      </button>
+      <dialog id="rtl-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="rtl-drawer-title">
+        <div class="card">
+          <header class="card__header">
+            <h2 id="rtl-drawer-title" class="card__title small-heading">الحديقة</h2>
+            ${closeButton('rtl-drawer', 'إغلاق')}
+          </header>
+          <div class="card__body card__body--scrollable">
+            <nav class="navigation-tree" aria-labelledby="rtl-drawer-title">
+              <ul role="list">
+                <li><a href="#" class="button" aria-current="page">القطع</a></li>
+                <li><a href="#" class="button">المناوبات</a></li>
+                <li><a href="#" class="button">الأدوات</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </dialog>
+    </div>`,
+  play: openOnLoad,
+};
+
+export const LightDismiss: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`closedby="any"`: a click on the backdrop closes it, as well as Escape and the buttons. Where it isn\'t supported, Escape and the buttons still work. Leave it off a dialog holding unsaved input.',
+      },
+    },
+  },
+  render: () => `
+    ${opener('rota-dialog', 'This week\'s rota')}
+    <dialog id="rota-dialog" class="dialog" aria-labelledby="rota-title" closedby="any">
+      <div class="card">
+        <header class="card__header">
+          <h2 id="rota-title" class="card__title small-heading">This week's rota</h2>
+          ${closeButton('rota-dialog')}
+        </header>
+        <div class="card__body">
+          <p class="text">Compost: plots A-12 to A-16. Water butts: plot B-3. Gate board: plot C-7.</p>
+        </div>
+      </div>
+    </dialog>`,
+  play: openOnLoad,
+};
+
+export const WithoutACard: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Content that isn\'t a card, such as a single image, sits straight in the dialog, which then draws a card\'s surface around it.',
+      },
+    },
+  },
+  render: () => `
+    ${opener('plan-dialog', 'View site plan')}
+    <dialog id="plan-dialog" class="dialog" aria-labelledby="plan-title" closedby="any">
+      <figure class="stack">
+        <div class="inline inline--between">
+          <figcaption id="plan-title" class="small-heading">Site plan</figcaption>
+          ${closeButton('plan-dialog')}
+        </div>
+        <svg viewBox="0 0 320 180" role="img" aria-label="Three rows of plots, A to C, with the tool locker by the gate">
+          <rect x="1" y="1" width="318" height="178" fill="none" stroke="currentColor" />
+          ${['A', 'B', 'C']
+            .map(
+              (row, r) =>
+                [0, 1, 2, 3]
+                  .map((c) => `<rect x="${20 + c * 60}" y="${20 + r * 50}" width="50" height="40" fill="none" stroke="currentColor" />`)
+                  .join('') + `<text x="270" y="${45 + r * 50}" fill="currentColor" font-size="14">${row}</text>`,
+            )
+            .join('')}
+        </svg>
+      </figure>
+    </dialog>`,
+  play: openOnLoad,
 };

@@ -18,8 +18,6 @@ const meta: Meta<SkeletonArgs> = {
     docs: {
       description: {
         component: `
-### Skeleton
-
 A placeholder that holds the space of content still loading, so nothing moves when it arrives.
 
 | Use | Markup |
@@ -36,7 +34,7 @@ A placeholder that holds the space of content still loading, so nothing moves wh
 \`\`\`html
 <section aria-busy="true" aria-labelledby="feed-title">
   <h2 id="feed-title" class="heading">Activity</h2>
-  <p class="visually-hidden" role="status">Loading activity…</p>
+  <p class="sr-only" role="status">Loading activity…</p>
   <div class="small-heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
   <p class="text">
     <span class="skeleton skeleton--text" aria-hidden="true"></span>
@@ -131,7 +129,7 @@ export const Companions: Story = {
         ['.status', '<span class="status status--success{s}"{a}><span class="status__text">Published</span></span>'],
         ['.chip', '<span class="chip chip--subtle{s}"{a}><span class="chip__text">TypeScript</span></span>'],
         ['.input', '<input type="text" class="input{s}" value="Alex Morgan"{a} aria-label="Name" />'],
-        ['.avatar', '<div class="avatar{s}"{a}><span>AM</span></div>'],
+        ['.avatar', '<div class="avatar{s}"{a}>AM</div>'],
       ]
         .map(
           ([label, html]) => `
@@ -189,7 +187,7 @@ export const LoadingCard: Story = {
           </hgroup>
         </header>
         <div class="card__body">
-          <p class="visually-hidden" role="status">Loading team activity…</p>
+          <p class="sr-only" role="status">Loading team activity…</p>
           <span class="skeleton skeleton--media" aria-hidden="true"></span>
           <p class="text">
             <span class="skeleton skeleton--text" aria-hidden="true"></span>

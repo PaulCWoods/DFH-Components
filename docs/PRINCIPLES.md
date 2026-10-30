@@ -27,6 +27,7 @@ Every component works for everyone, at any size, before it looks good. Accessibi
 - Every component must work from the smallest practical container up to the largest, with no horizontal scroll except in components that scroll by design (tables, carousels).
 - Components respond to their container (container queries), not the viewport. Media queries belong only to the app shell and to user-preference features such as `pointer` and `prefers-*`.
 - Layout is fluid by default (auto-fit grids, intrinsic sizing, `clamp()`); fixed breakpoints are the exception and must be justified.
+- Where a size is named, it is Tailwind's: viewport `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem, `2xl` 96rem; container `@xs` 20rem through `@7xl` 80rem. One scale serves the responsive helpers, the grid's container column counts, `.inline-responsive--{size}` and card's responsive prominence.
 
 **Content first**
 
@@ -65,7 +66,7 @@ A variant exists only if it serves a different need, not a different taste. Vari
 - They must not share modifier names. There is one density modifier, `--compact`; `--dense` is not used.
 - `--compact` sets `--ui-sizing: compact` on the container, so nested layout primitives tighten their gaps, typography atoms step down, and nested controls step down to their `--sm` size, all through `@container style(--ui-sizing: compact)`. This is the one density flag; per-component density flags (`--ui-density`, `--control-density`, `--menu-density` and similar) are migrated to it.
 - To step down type alone without changing geometry or controls, set `--font-sizing: compact` on the region.
-- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8). Text fields are the one exception (see §9): they can't take a buffer, so `--sm` text controls are 32px, visual and target alike.
+- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8). Text fields are one exception (see §9): they can't take a buffer, so `--sm` text controls are 32px, visual and target alike. Choice rows in a compact container are the other: the row is the target, so it is 32px to sit with compact fields.
 
 **Pointer is opt-in**
 
@@ -84,10 +85,10 @@ A variant exists only if it serves a different need, not a different taste. Vari
 
 Complex components are assembled from simpler ones, and every layer has one job.
 
-1. **Layout primitives** (stack, cluster, grid, split, inline) own space and arrangement. They hold no content styling.
-2. **Atoms** are indivisible and meaningful alone (button, input, link, badge).
-3. **Molecules** combine atoms for one purpose (card, banner, menu, button group, batch actions, breadcrumb, navigation tree, pagination, stepper, telemetry).
-4. **Organisms** combine molecules and primitives into a complete region (table, dialog, header).
+1. **Layout primitives** (stack, inline, cluster, grid, split, wrapper, and the app shell: app, workspace, main) own space and arrangement. They hold no content styling, and their settings (`--gap`, `--align-items` and the like) stay on the element they are set on.
+2. **Atoms** are indivisible and meaningful alone (button, input, link, badge, avatar).
+3. **Molecules** combine atoms for one purpose (card, banner, menu, button group, batch actions, breadcrumb, navigation tree, pagination, stepper, field, fieldset, choices, avatar group, lockup, telemetry, prose, accordion, combobox, empty state).
+4. **Organisms** combine molecules and primitives into a complete region (table, dialog, header, footer, sidebar, form).
 
 Structural components (layout, bands, headers) and content components (prose, media, data) are kept separate and combined, so a card is a structure that can hold any content.
 
@@ -119,10 +120,13 @@ Naming follows one convention across the library (block, element, modifier), and
 **Utility names**
 
 - A utility has at most two names: a verbose one and a shorthand.
-- The verbose name is the CSS property followed by the value: `.font-weight-bold`, `.text-align-center`, `.text-color-muted`, `.white-space-nowrap`.
+- The verbose name is the CSS property followed by the value, on the logical property where there is one: `.font-weight-bold`, `.text-align-center`, `.text-color-muted`, `.white-space-nowrap`, `.padding-inline-sm`.
 - The shorthand is Tailwind's name for the same declaration, with the same meaning: `.font-bold`, `.text-center`, `.text-muted`. Where Tailwind has no name, or its name means something else, there is no shorthand.
-- No bare single words that could clash with a component (`.bold`, `.mono`, `.pre`, `.title`, `.inline`).
-- Examples in AGENTS, stories and docs use the shorthand.
+- **One exception, spacing:** it keeps Tailwind's prefixes (`p`, `px`, `pt`, `ps`, `m`, `gap-x` …) with the library's step names (`.p-sm`, `.mt-lg`), because Tailwind's numbers map to no step here.
+- Sides are logical: `t`/`b` are block start and end, `s`/`e` inline start and end. No left or right names.
+- No bare single words that could clash with a component (`.bold`, `.mono`, `.pre`, `.title`, `.inline`). The bare words allowed are Tailwind's for the same declaration (`.flex`, `.hidden`, `.relative`, `.truncate` …), and the valueless defaults `.border`, `.rounded`, `.shadow`.
+- Utilities read Tier 2 tokens only. They set one property each and never do a component's job: no type sizes (text atoms), no arrangement (layout primitives), no component widths (tokens).
+- Examples in AGENTS, stories and docs use the shorthand. `npm run check:utilities` enforces the names.
 
 **Scope for v1**
 
@@ -130,9 +134,9 @@ The core library holds components that are common across web applications. Domai
 
 | Component | v1 status | Action |
 | --- | --- | --- |
-| `telemetry` | In core | Refactor to compose standard atoms (badge, text, icon) rather than its own type and trend styles. |
+| `telemetry` | In core | A description list of labelled values. Type comes from text atoms, trends and states from the status atom (done in the identity pass). |
 | `batch-actions` | In core | A molecule: a placement and frame around a summary and a button group, for tables and card grids. |
-| `deck` | Out of core | Move from `packages/css/src/organisms/` to a recipe in `packages/storybook/stories/recipes/`. It remains a stress test of the token system, not a library component. |
+| `deck` | Out of core | Done: the Cadence recipe's own CSS in `packages/storybook/stories/recipes/cadence/`. Its tier 3 tokens are gone; it is a stress test, not a library component. |
 
 A new component enters the core only if it serves a need that recurs across unrelated products; otherwise it is a recipe.
 
@@ -248,12 +252,20 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | How are badge, chip, status and kbd told apart? | By job. Attached count or dot: badge. State of a thing: status. Value or tag, optionally removable: chip. Key: kbd. There is no separate "label" atom. |
 | What is a status's default look? | The outline pill, like every other default prominence. `--strong`, `--subtle` and `--plain` (dot and text) follow the shared axis. |
 | Must a badge sit in a corner? | No. It can sit inline after its host's label or in a logical corner, as long as it belongs to a host. |
-| Is `data-status` an intent? | No. It is presence (online, away, busy) and belongs on avatar only. Other components use intent modifiers. |
+| Is `data-status` an intent? | No, and it is gone. Presence (online, away, busy) is a dot badge on an avatar with the state in its name; everything else uses intent modifiers. |
+| How is an avatar named? | By context. Beside a visible name: `aria-hidden`. A photo on its own: its `alt`. Initials or an icon on its own: `role="img"` and `aria-label`. An avatar is never interactive; a button or link around it carries the name and the target. |
+| How is presence shown? | A dot badge in the avatar's bottom corner, hidden from screen readers, with the state in the accessible name or visible text. No coloured rings. |
+| What is a telemetry? | A `<dl>`: each label a `dt`, each value a `dd`, with text atoms for type. A trend or state is a plain status with an icon and signed text. It is never a live region. |
+| How does prose relate to the text atoms? | Prose styles bare elements only. Each element takes the type of the atom it stands for, from a nested layer under the atom classes, so an atom class on an element wins. Prose sets the rhythm, which follows `--font-sizing`; there is no separate spacing axis. A bare link is a `.link`. |
+| Where does `aria-sort` go, and who sorts? | On the `<th>` of the sorted column, never on the button. The button is named by its visible text. The page's script sorts and sets the state; the library only styles it. |
 | Can Storybook demos use library components as captions? | No. Demo captions use the Storybook-only `.sb-demo-tag`. |
 | How is text centred in badge, status and chip? | Wrap the text in `.badge__text`, `.status__text` or `.chip__text`, which sets `text-box: trim-both cap alphabetic`. Trimming has no effect on the flex container itself, and padding-block is sized for trimmed text. |
 | Are form controls styled by element or by class? | By class only (`.input`, `.select`, `.textarea`, `.checkbox-input`, `.radio-input`, `.range`). The reset gives bare fields their browser rendering back. |
 | How does a small text control meet the hit-area rule? | Text fields can't take a `::after` buffer, so `--sm` is 32px, matching a small button: above the 24px minimum (WCAG 2.5.8), below the 48px touch target. Use it where the pointer is fine, or scope it with `fine:ui-compact` so touch screens keep the default size. |
 | Do valid fields get a success colour? | No. Only invalid fields are styled, always with an error message. |
+| Where does a field's error go, and is it an alert? | Between the hint and the control, starting with a Warning icon, linked with `aria-describedby` and `aria-invalid="true"`. No role unless a script inserts it after the page loads. |
+| Who writes "required" or "optional"? | The author, in the label: mark the fewer case, usually "(optional)". CSS never generates it. |
+| How big is a checkbox or radio row? | At least `--spacing-target-min` (48px, or 32px with fine-pointer targets), only as wide as its text, the box centred on the first line. In a compact container it is 32px with small-control text and a 16px box, to match the compact fields around it: like a small text control, the row is its own target, so it is the second exception to the 48px rule (above 24px, WCAG 2.5.8). |
 | Does the empty track of a progress bar or meter need 3:1? | No, provided every bar has a name and states its value as text beside it. The bar then backs up the text instead of carrying the information alone. High-contrast mode adds an outline. |
 | Can a meter take an intent class? | No. Its colour follows its value through `low`, `high` and `optimum`, so a class could make the colour disagree with the value. Without thresholds it fills in accent. |
 | How is a link marked, and what changes on hover? | By an underline at the full link colour; link colour alone is too close to body text (WCAG 1.4.1). Hover thickens the underline. There is no hover colour, so nothing else has to reach 4.5:1. |

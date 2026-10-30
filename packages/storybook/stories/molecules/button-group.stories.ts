@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Button Group
-
 A set of related buttons laid out together: a row by default, or a column. The group lays the buttons out; they keep their own look. It has no alignment options: a \`justify-*\` utility on the group, or the layout around it, decides where the buttons sit. Rows of actions with headings and shortcuts are a menu.
 
 ### Markup
@@ -19,8 +17,8 @@ A set of related buttons laid out together: a row by default, or a column. The g
 </div>
 
 <div class="button-group button-group--joined" role="radiogroup" aria-label="Range">
-  <label class="button"><input type="radio" name="range" class="visually-hidden" checked><span>Day</span></label>
-  <label class="button"><input type="radio" name="range" class="visually-hidden"><span>Week</span></label>
+  <label class="button"><input type="radio" name="range" class="sr-only" checked><span>Day</span></label>
+  <label class="button"><input type="radio" name="range" class="sr-only"><span>Week</span></label>
 </div>
 \`\`\`
 
@@ -41,7 +39,7 @@ const icon = (name: string) =>
   `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
 const radios = (name: string, labels: string[]) =>
-  labels.map((l, i) => `<label class="button"><input type="radio" name="${name}" value="${l.toLowerCase()}" class="visually-hidden"${i === 0 ? ' checked' : ''} /><span>${l}</span></label>`).join('');
+  labels.map((l, i) => `<label class="button"><input type="radio" name="${name}" value="${l.toLowerCase()}" class="sr-only"${i === 0 ? ' checked' : ''} /><span>${l}</span></label>`).join('');
 
 export const Playground: Story = {
   args: { joined: false, vertical: false, fill: false, ruled: false, compact: false, prominence: 'default', round: false },
@@ -76,9 +74,9 @@ export const Joined: Story = {
 
       <h3 class="small-heading">Toggles: aria-pressed</h3>
       <div class="button-group button-group--joined" role="group" aria-label="Text style">
-        <button type="button" class="button button--icon" aria-pressed="true">${icon('Bold')}<span class="visually-hidden">Bold</span></button>
-        <button type="button" class="button button--icon" aria-pressed="false">${icon('Italic')}<span class="visually-hidden">Italic</span></button>
-        <button type="button" class="button button--icon" aria-pressed="false">${icon('Link')}<span class="visually-hidden">Link</span></button>
+        <button type="button" class="button button--icon" aria-pressed="true">${icon('Bold')}<span class="sr-only">Bold</span></button>
+        <button type="button" class="button button--icon" aria-pressed="false">${icon('Italic')}<span class="sr-only">Italic</span></button>
+        <button type="button" class="button button--icon" aria-pressed="false">${icon('Link')}<span class="sr-only">Link</span></button>
       </div>
 
       <h3 class="small-heading">Subtle, round and compact</h3>

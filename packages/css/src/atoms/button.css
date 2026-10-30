@@ -287,6 +287,13 @@
     padding-inline-end: var(--_button-padding-block);
   }
 
+  /* Avatar support in Buttons */
+  > :where(.avatar) {
+    max-block-size: calc(var(--_button-min-size) - (var(--_button-border-width) * 2) - (var(--_button-padding-block) * 2));
+    max-inline-size: calc(var(--_button-min-size) - (var(--_button-border-width) * 2) - (var(--_button-padding-block) * 2));
+    border-radius: calc(var(--_button-radius) - var(--_button-border-width) - var(--_button-padding-block));
+  }
+
   /* Small Text fix */
   :where(small) {
     font-size: 0.75em;
@@ -349,6 +356,16 @@
   --_button-active-color-palette: initial;
 }
 
+:where(.button--flush) {
+  --_button-padding-inline: 0;
+  --_button-hover-bg: transparent;
+  --_button-hover-text: var(--foreground-accent-hover);
+  --_button-hover-border-color: transparent;
+  --_button-active-bg: transparent;
+  --_button-active-text: var(--foreground-accent-pressed);
+  --_button-active-border-color: transparent;
+}
+
 /* Strong, and the selected states that render as strong: a current page
    or step (aria-current), a selection, a checked input, a pressed toggle.
    A pressed toggle with its own check icon (.icon--on) shows the check
@@ -400,14 +417,6 @@
     --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
     --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   }
-}
-
-
-
-:where(.button--flush) {
-  --_button-padding-block: 0;
-  --_button-padding-inline: 0;
-  --_button-min-size: 0;
 }
 
 /* ==========================================================================
@@ -503,7 +512,7 @@
 :where(.button--icon) {
   --_button-padding-inline: var(--_button-padding-block);
 
-  > :where(span:not(.button__icon, .badge), .button__text) {
+  > :where(span:not(.button__icon, .badge, .avatar), .button__text) {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -538,7 +547,7 @@
   @container style(--ui-labels: hidden) {
     --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
-    > :where(span:not(.button__icon, .badge), .button__text, .ui-label) {
+    > :where(span:not(.button__icon, .badge, .avatar), .button__text, .ui-label) {
       position: absolute;
       inline-size: 1px;
       block-size: 1px;
@@ -573,7 +582,7 @@
 :where(.button:not(.button--labeled):has(.icon).hide-labels) {
   --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
-  > :where(span:not(.button__icon, .badge), .button__text, .ui-label) {
+  > :where(span:not(.button__icon, .badge, .avatar), .button__text, .ui-label) {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -605,53 +614,7 @@
 }
 
 /* ==========================================================================
-   8. Avatar Button (.button--avatar)
-   ========================================================================== */
-:where(.avatar-group--stackable:not(:hover)),
-:where(.avatar-group--stacked) {
-  :where(.button--avatar) {
-    --_button-bg: var(--button-bg, var(--surface-card, Canvas));
-  }
-}
-
-:where(.button--avatar) {
-  --_button-padding-inline: var(--button-padding-block, 0.25rem);
-  --_button-radius: var(--avatar-radius, var(--button-radius, var(--radius-md, 0.25rem)));
-  block-size: var(--_button-min-size);
-  overflow: hidden;
-  position: relative;
-
-  &:where([data-status]) {
-    --_button-border-color: var(--avatar-status-color, var(--button-border-color, currentColor));
-  }
-
-  &:where([data-status="online"], .avatar--status-online) {
-    --_button-border-color: var(--avatar-online-status-color, var(--foreground-success, currentColor));
-  }
-
-  &:where([data-status="away"], .avatar--status-away) {
-    --_button-border-color: var(--avatar-away-status-color, var(--foreground-warning, currentColor));
-  }
-
-  &:where([data-status="busy"], .avatar--status-busy) {
-    --_button-border-color: var(--avatar-busy-status-color, var(--foreground-danger, currentColor));
-  }
-
-  &:where([data-status="offline"], .avatar--status-offline) {
-    --_button-border-color: var(--avatar-offline-status-color, var(--foreground-muted, currentColor));
-  }
-
-  :where(img, picture) {
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: cover;
-    border-radius: inherit;
-    display: block;
-  }
-}
-
-/* ==========================================================================
-   9. Link Resets & Text (:where(a.button), .button__text)
+   8. Link Resets & Text (:where(a.button), .button__text)
    ========================================================================== */
 :where(a.button) {
   text-decoration: none;
@@ -662,7 +625,7 @@
   }
 }
 
-:where(.button > span:not(.button__icon, .badge, .status, .chip), .button__text) {
+:where(.button > span:not(.button__icon, .badge, .status, .chip, .avatar), .button__text) {
   padding-block: var(--_button-padding-block);
   text-box: trim-both cap alphabetic;
 
@@ -678,7 +641,7 @@
 }
 
 /* ==========================================================================
-   10. Accessibility & User Preferences
+   9. Accessibility & User Preferences
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   :where(.button, a.button) {

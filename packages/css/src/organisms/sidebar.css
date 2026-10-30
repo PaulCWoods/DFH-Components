@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Design For Humans: Sidebar
+   --------------------------------------------------------------------------
+   A side panel beside the main content: section navigation, filters, tools.
+   An organism: the sidebar draws the panel (surface, edge, sticky) and lays
+   out its parts; what's in them (a navigation tree, a tab list, fields)
+   styles itself.
+
+   | Axis        | Values                                  | Flag |
+   | :---------- | :-------------------------------------- | :--- |
+   | Prominence  | default (surface and edge), --floating  | none |
+   | Placement   | start (default), --end; in flow, --sticky | none |
+   | Width       | default, --rail                         | none |
+
+   Parts: __header, __band, __body (scrolls when the sidebar has a height),
+   __footer. --ruled draws a rule between them. __body--flush takes the
+   body's padding off, so a flush list runs edge to edge.
+
+   Sticky: pinned beside the scrolling page, as tall as the screen less a
+   sticky header (--header-height, 4rem by default).
+
+   Small screens: the sidebar never becomes a drawer on its own. In an
+   .app__workspace it stacks above the main below 48em; or the product puts
+   the same navigation in a .dialog--drawer, opened by a menu button.
+
+   Semantics: a navigation sidebar is a <nav aria-label>; a filter or tool
+   panel is an <aside aria-label> or a <div>.
+
+   Usage:
+   <nav class="sidebar sidebar--sticky" aria-label="Sections">
+     <div class="sidebar__header">…</div>
+     <div class="sidebar__body">…</div>
+   </nav>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base: the panel
+   ========================================================================== */
+:where(.sidebar) {
+  /* Private manifest */
+  --_sidebar-bg: var(--sidebar-bg, var(--surface-card, Canvas));
+  --_sidebar-border-color: var(--sidebar-border-color, var(--border-color-quiet, currentColor));
+  --_sidebar-border-style: var(--sidebar-border-style, solid);
+  --_sidebar-border-width: var(--sidebar-border-width, var(--border-width, 1px));
+  --_sidebar-padding: var(--sidebar-padding, var(--spacing-cushion, 1rem));
+  --_sidebar-width: var(--sidebar-width, 18rem);
+  --_sidebar-min-width: var(--sidebar-min-width, 14rem);
+  --_sidebar-offset: 0px;
+  --_sidebar-rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+
+  background-color: var(--_sidebar-bg);
+  border-inline-end: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
+  box-sizing: border-box;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  inline-size: 100%;
+  max-inline-size: var(--_sidebar-width);
+  min-inline-size: var(--_sidebar-min-width);
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   2. Parts
+   ========================================================================== */
+:where(.sidebar__header, .sidebar__footer) {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--spacing-compact, 0.5rem);
+  justify-content: space-between;
+  padding: var(--_sidebar-padding);
+}
+
+:where(.sidebar__band) {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  padding: calc(var(--_sidebar-padding) / 2) var(--_sidebar-padding);
+}
+
+/* Scrolls when the sidebar has a height (sticky, or in a viewport shell) */
+:where(.sidebar__body) {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--_sidebar-padding);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+/* Parts next to each other share the padding between them */
+:where(.sidebar__header, .sidebar__band) + :where(.sidebar__body, .sidebar__band) {
+  padding-block-start: calc(var(--_sidebar-padding) / 2);
+}
+
+:where(.sidebar__body):has(+ :where(.sidebar__footer)) {
+  padding-block-end: calc(var(--_sidebar-padding) / 2);
+}
+
+:where(.sidebar__header):has(+ :where(.sidebar__body, .sidebar__band)) {
+  padding-block-end: calc(var(--_sidebar-padding) / 2);
+}
+
+/* The footer sits at the bottom */
+:where(.sidebar__footer) {
+  margin-block-start: auto;
+}
+
+/* Edge to edge: a flush list lines its labels up with the header */
+:where(.sidebar__body--flush) {
+  --tab-list-inset: var(--_sidebar-padding);
+
+  padding-inline: 0;
+}
+
+/* ==========================================================================
+   3. Modifiers
+   ========================================================================== */
+
+/* A rule between the parts */
+:where(.sidebar--ruled) {
+  > :where(.sidebar__header, .sidebar__band) {
+    border-block-end: var(--_sidebar-rule);
+  }
+
+  > :where(.sidebar__footer) {
+    border-block-start: var(--_sidebar-rule);
+  }
+}
+
+/* At the end of the row: the edge is on the other side */
+:where(.sidebar--end) {
+  border-inline-end: 0;
+  border-inline-start: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
+}
+
+/* A floating panel: inset, rounded, raised */
+:where(.sidebar--floating) {
+  background-color: var(--sidebar-bg, var(--surface-layer, Canvas));
+  border: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
+  border-radius: var(--radius-md, 0.5rem);
+  box-shadow: var(--shadow-md, none);
+  margin: var(--spacing-compact, 0.5rem);
+}
+
+/* A narrow rail of icon buttons */
+:where(.sidebar--rail) {
+  --_sidebar-width: var(--sidebar-rail-width, 4.5rem);
+  --_sidebar-min-width: var(--sidebar-rail-width, 4.5rem);
+  --_sidebar-padding: var(--spacing-compact, 0.5rem);
+
+  align-items: center;
+
+  > :where(.sidebar__header, .sidebar__footer) {
+    justify-content: center;
+  }
+
+  > :where(.sidebar__body) {
+    scrollbar-width: none;
+  }
+}
+
+/* Pinned beside the scrolling page */
+:where(.sidebar--sticky) {
+  align-self: flex-start;
+  block-size: calc(100dvb - var(--_sidebar-offset));
+  inset-block-start: var(--_sidebar-offset);
+  position: sticky;
+}
+
+/* Below a sticky header */
+:where(:root:has(.header--sticky) .sidebar--sticky) {
+  --_sidebar-offset: var(--header-height, 4rem);
+}
+
+/* ==========================================================================
+   4. Preferences
+   ========================================================================== */
+@media (prefers-contrast: more) {
+  :where(.sidebar) {
+    --_sidebar-border-width: var(--border-width-md, 2px);
+  }
+
+  :where(.sidebar--floating) {
+    box-shadow: none;
+  }
+}

@@ -1,158 +1,138 @@
 /* ==========================================================================
-   Design For Humans: Choices Primitive
+   Design For Humans: Choices
    --------------------------------------------------------------------------
-   Container and item wrapper patterns for grouped interactive choices
-   (checkboxes and radio buttons) with adaptive spatial density, inline
-   flex layouts, semantic list support, and WCAG 2.2 Level AA/AAA compliant
-   target sizes.
+   A list of checkbox or radio labels. Each .choice is a <label> holding the
+   box and its text; the whole row is the target. The question they answer
+   goes in a fieldset legend.
 
-   Usage:
+   Rows are at least --spacing-target-min tall (48px; 32px when the product
+   opts into fine-pointer targets) and only as wide as their text. The box
+   sits centred on the first line of text. The gap beside the box follows
+   the box size (--lg, or the --check-size: lg flag). The text matches the
+   text controls beside it (--choice-font-size); a description is
+   .small-text.
+
+   Compact (--ui-sizing: compact, from a compact form, fieldset or
+   .ui-compact): 32px rows, small-control text and a 16px box, so choices
+   match the compact fields around them. Like a small text control, the row is its
+   own target: above the 24px minimum (WCAG 2.5.8), below 48px.
+
+   Options: --inline (flag --choices-layout: inline).
+
    <fieldset class="fieldset">
-     <legend class="legend">Accessible Options</legend>
+     <legend class="fieldset__legend label">Notifications</legend>
      <div class="choices">
-       <label class="choice" for="opt-1">
-         <input type="checkbox" id="opt-1" class="checkbox-input" />
-         <span>Option One</span>
+       <label class="choice">
+         <input type="checkbox" class="checkbox-input" name="notify" value="email" />
+         <span class="choice__label">
+           Email
+           <span class="small-text text-muted">A weekly digest</span>
+         </span>
        </label>
+       …
      </div>
    </fieldset>
    ========================================================================== */
 
 /* ==========================================================================
-   1. Choices Container Primitive (:where(.choices))
+   1. Choices: a column of rows, or a wrapping line
    ========================================================================== */
 :where(.choices) {
-  /* --------------------------------------------------------------------------
-     Local Variables & Fallback Ladder
-     -------------------------------------------------------------------------- */
-  --_choices-row-gap: var(--form-choices-row-gap, var(--spacing-16, 1rem));
-  --_choices-col-gap: var(--form-choices-col-gap, var(--spacing-24, 1.5rem));
+  /* Private manifest */
+  --_choices-column-gap: var(--choices-column-gap, 1.5rem);
 
-  /* --------------------------------------------------------------------------
-     Style Container Queries (@container style(...))
-     -------------------------------------------------------------------------- */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_choices-row-gap: var(--spacing-8, 0.5rem);
-    --_choices-col-gap: var(--spacing-16, 1rem);
+  /* Density */
+  @container style(--ui-sizing: compact) {
+    --_choices-column-gap: var(--choices-compact-column-gap, 1rem);
   }
 
+  /* Layout flag (the --inline class does the same) */
   @container style(--choices-layout: inline) {
     flex-direction: row;
     flex-wrap: wrap;
   }
 
-  /* Layout & Display */
+  align-items: flex-start;
+  column-gap: var(--_choices-column-gap);
   display: flex;
   flex-direction: column;
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 
-  /* Spacing */
-  gap: var(--_choices-row-gap) var(--_choices-col-gap);
-
-  :where(li) {
+  /* A <ul> of choices: the items step aside */
+  > :where(li) {
     display: contents;
   }
+}
 
-  /* Inline Layout Modifier */
-  &:where(.choices--inline) {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  /* Density & Compact Modifier */
-  &:where(.choices--compact, .choices--dense) {
-    --_choices-row-gap: var(--spacing-8, 0.5rem);
-    --_choices-col-gap: var(--spacing-16, 1rem);
-  }
+:where(.choices--inline) {
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 /* ==========================================================================
-   2. Choice Item Primitive (:where(.choice))
+   2. Choice: the box and its text, the whole row a target
    ========================================================================== */
 :where(.choice) {
-  /* --------------------------------------------------------------------------
-     Local Variables & Fallback Ladder
-     -------------------------------------------------------------------------- */
-  --_choice-inner-gap: var(--form-choice-inner-gap, var(--spacing-16, 1rem));
-  --_choice-font-size: var(--form-choice-font-size, var(--choice-font-size, var(--typography-font-size-0, 1rem)));
-  --_choice-line-height: var(--choice-line-height, var(--check-box-size, 1.25rem));
-  --_choice-color: var(--form-choice-color, var(--foreground, currentColor));
-  --_choice-min-block-size: var(--choice-min-block-size, var(--spacing-24, 1.5rem));
+  /* Private manifest */
+  --_choice-gap: var(--choice-gap, 0.75rem);
+  --_choice-target: var(--spacing-target-min, 3rem);
+  --_choice-font-size: var(--choice-font-size, 1rem);
 
-  /* Spatial Gap */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_choice-inner-gap: var(--spacing-8, 0.5rem);
+  /* Density: smaller rows, text and box, to sit with compact fields. The
+     row stays the target, so the box can drop to 16px. */
+  @container style(--ui-sizing: compact) {
+    --_choice-gap: var(--choice-compact-gap, 0.5rem);
+    --_choice-target: min(var(--spacing-target-min, 3rem), var(--choice-compact-target, 2rem));
+    --_choice-font-size: var(--choice-compact-font-size, 0.875rem);
   }
 
-  /* Typographic Scaling */
-  @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_choice-font-size: var(--typography-font-size--1, 0.875rem);
-    --_choice-min-block-size: var(--spacing-20, 1.25rem);
+  @container style(--ui-sizing: compact) and (not style(--check-size: lg)) {
+    --check-size: sm;
   }
 
-  /* Size Modifiers (.choice--sm, .choice--compact, .choice--lg) */
-  :where(.controls-sm) &,
-  &:where(.choice--sm, .choice--compact) {
-    --_choice-inner-gap: var(--spacing-8, 0.5rem);
-    --_choice-font-size: var(--form-choice-sm-font-size, var(--typography-font-size--1, 0.875rem));
-    --_choice-line-height: var(--check-box-size, 1.25rem);
-    --_choice-min-block-size: var(--spacing-20, 1.25rem);
+  @container style(--check-size: lg) {
+    --_choice-gap: var(--choice-lg-gap, 1rem);
   }
 
-  :where(.controls-lg) &,
-  &:where(.choice--lg) {
-    --_choice-inner-gap: var(--spacing-24, 1.5rem);
-    --_choice-font-size: var(--form-choice-lg-font-size, var(--typography-font-size-1, 1.125rem));
-    --_choice-line-height: var(--check-lg-box-size, 1.5rem);
-    --_choice-min-block-size: var(--spacing-32, 2rem);
+  &:where(:has(> .checkbox-input--lg, > .radio-input--lg)) {
+    --_choice-gap: var(--choice-lg-gap, 1rem);
+
+    @container style(--ui-sizing: compact) {
+      --_choice-gap: var(--choice-compact-gap, 0.5rem);
+    }
   }
 
-  /* Layout & Display */
-  display: inline-flex;
   align-items: start;
-  min-block-size: var(--_choice-min-block-size);
-  user-select: none;
+  box-sizing: border-box;
   cursor: pointer;
-
-  /* Spacing */
-  gap: var(--_choice-inner-gap);
-
-  /* Typography */
-  font-family: var(--form-choice-font-family, var(--body-font-family, inherit));
+  display: inline-flex;
   font-size: var(--_choice-font-size);
-  line-height: var(--_choice-line-height);
-  color: var(--_choice-color);
+  gap: var(--_choice-gap);
+  max-inline-size: 100%;
+  min-block-size: var(--_choice-target);
+  padding-block: max(0px, (var(--_choice-target) - 1lh) / 2);
+  touch-action: manipulation;
 
-  > :where(input:is([type="checkbox"], [type="radio"])) {
-    flex-shrink: 0;
+  /* The box, centred on the first line of text */
+  > :where(.checkbox-input, .radio-input) {
+    font: inherit;
+    margin-block: calc((1lh - var(--_check-size, 1.25rem)) / 2);
   }
 
-  :where(a) {
-    position: relative;
-    z-index: 1;
-    user-select: auto;
-  }
-
-  /* Disabled State (Zero Specificity via :where) */
-  &:where(:disabled, [aria-disabled="true"], :has(:disabled, [aria-disabled="true"])) {
+  /* A disabled choice dims, unless a disabled fieldset already does */
+  &:where(:has(:disabled)) {
     cursor: not-allowed;
+
+    &:where(:not(:disabled *, [aria-disabled="true"] *)) {
+      opacity: var(--opacity-disabled, 0.5);
+    }
   }
 }
 
-/* ==========================================================================
-   3. Choice Sub-Elements (:where(.choice__label))
-   ========================================================================== */
 :where(.choice__label) {
   display: flex;
   flex-direction: column;
   min-inline-size: 0;
-
-  :where(small, .choice__description) {
-    display: block;
-    color: var(--foreground-muted, currentColor);
-    font-size: var(--typography-font-size--1, 0.875rem);
-    line-height: var(--line-height-relaxed, 1.4);
-  }
 }

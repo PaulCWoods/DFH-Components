@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Card
-
 A surface with named parts. The card draws its frame (surface, border, radius, shadow) and the geometry of its parts; typography comes from the text atoms, and what goes in the body is content, not part of the card.
 
 ### Markup
@@ -41,7 +39,7 @@ Parts (\`__thumb\`, \`__header\`, \`__band\`, \`__body\`, \`__footer\`) are dire
 - \`--translucent\` is a material that combines with any prominence that has a fill.
 - \`--ruled\` draws rules between parts; \`.card__band\` (\`--subtle\`) is a full-width strip between them.
 - Dialog and popover set \`--card-prominence: strong\` for the card they hold. A card resets the flag for cards nested inside it.
-- \`@max-sm:card--plain\` and \`@max-xs:card--plain\` drop the frame while the nearest size container is narrow.
+- \`@max-2xl:card--plain\` (below 42rem) and \`@max-md:card--plain\` (below 28rem) drop the frame while the nearest size container is narrow.
 
 ### Linked card
 Put \`.link.link--plain.link--stretched\` in the title. The whole card becomes the target, the focus ring is drawn on the card's perimeter, other controls are lifted above the link, and hover raises the shadow where hover exists.
@@ -163,7 +161,7 @@ export const Prominence: Story = {
       ${prominenceCard('card--strong', 'Strong', 'Raised with a shadow, for cards that float: popovers, menus, dialogs.')}
       ${prominenceCard('card--subtle', 'Subtle', 'A tinted surface with no border.')}
       ${prominenceCard('card--plain', 'Plain', 'No surface, border or shadow. Keeps its padding.')}
-      <div style="background: linear-gradient(135deg, var(--surface-color-accent-strong-light), var(--surface-darker)); padding: var(--spacing-16);">
+      <div style="background: linear-gradient(135deg, var(--surface-accent-strong), var(--surface-darker)); padding: var(--spacing-16);">
         <article class="card card--strong card--translucent" style="--card-translucency: 25%;">
           <header class="card__header"><h3 class="card__title heading">Translucent</h3></header>
           <div class="card__body"><p class="text">A material on top of any prominence with a fill.</p></div>
@@ -233,11 +231,11 @@ export const Density: Story = {
 
 export const Responsive: Story = {
   render: () => `
-    <p class="small-text text-muted">Each frame is a size container. <code>@max-sm:card--plain</code> drops the frame below 40em; drag the corner to resize.</p>
+    <p class="small-text text-muted">Each frame is a size container. <code>@max-2xl:card--plain</code> drops the frame below 42rem; drag the corner to resize.</p>
     <div class="container-inline" style="resize: horizontal; overflow: auto; inline-size: 30rem; max-inline-size: 100%; border: 1px dashed var(--border-color-quiet); padding: var(--spacing-8);">
-      <article class="card card--strong @max-sm:card--plain">
+      <article class="card card--strong @max-2xl:card--plain">
         <header class="card__header"><h3 class="card__title heading">Plain while narrow</h3></header>
-        <div class="card__body"><p class="text">Gains its border, radius and shadow as the container grows past 40em.</p></div>
+        <div class="card__body"><p class="text">Gains its border, radius and shadow as the container grows past 42rem.</p></div>
       </article>
     </div>
   `,
@@ -322,7 +320,7 @@ export const Loading: Story = {
         </hgroup>
       </header>
       <div class="card__body">
-        <p class="visually-hidden" role="status">Loading team activity…</p>
+        <p class="sr-only" role="status">Loading team activity…</p>
         <p class="text">
           <span class="skeleton skeleton--text" aria-hidden="true"></span>
           <span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span>

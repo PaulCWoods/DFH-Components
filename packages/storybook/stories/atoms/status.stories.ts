@@ -54,8 +54,6 @@ const meta: Meta<StatusArgs> = {
     docs: {
       description: {
         component: `
-### Status
-
 The **state of a thing**: text with an optional dot or icon, in tables, lists, cards and headers ("Passed", "Live", "2 Overdue").
 
 - A count attached to a host is a **Badge**.
@@ -121,7 +119,7 @@ export const ProminenceAndIntent: Story = {
     <div class="demo-stage stack">
       ${PROMINENCES.map(
     (p) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           <span class="sb-demo-label" style="inline-size: 6rem;">${p}</span>
           ${INTENTS.map((i) => `<span class="${statusClasses(p, i)}"><span class="status__text">${LABEL[i]}</span></span>`).join('')}
         </div>`
@@ -139,7 +137,7 @@ export const WithIcons: Story = {
       ${(['plain', 'default', 'strong'] as Prominence[])
       .map(
         (p) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           ${INTENTS.map((i) => `<span class="${statusClasses(p, i, false, true)}">${iconFor(i)}<span class="status__text">${LABEL[i]}</span></span>`).join('')}
         </div>`
       )
@@ -157,7 +155,7 @@ export const SizesAndCorners: Story = {
       ${[false, true]
       .map(
         (round) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           ${INTENTS.map((i) => `<span class="${statusClasses('default', i, false, round)}"><span class="status__text">${LABEL[i]}</span></span>`).join('')}
           ${INTENTS.map((i) => `<span class="${statusClasses('default', i, true, round)}"><span class="status__text">${LABEL[i]}</span></span>`).join('')}
         </div>`
@@ -175,7 +173,7 @@ export const InATable: Story = {
     <div class="demo-stage">
       <div class="table-container" tabindex="0" role="region" aria-label="Deployments">
         <table class="table">
-          <caption class="table__caption">Deployments</caption>
+          <caption class="small-heading">Deployments</caption>
           <thead><tr><th scope="col">Service</th><th scope="col">State</th><th scope="col">Audit</th></tr></thead>
           <tbody>
             <tr><th scope="row">Web</th><td><span class="status status--plain status--success"><span class="status__text">Operational</span></span></td><td><span class="status status--success status--sm"><span class="status__text">Passed</span></span></td></tr>

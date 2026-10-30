@@ -37,11 +37,11 @@ const {
       <!-- Center Stage: Content Area -->
       <main id="main-content" class="main">
         {isProse ? (
-          <article class="prose font-sizing-fluid wrapper wrapper--xl padding-block-breathe">
+          <article class="prose font-sizing-fluid wrapper wrapper--xl py-breathe">
             <slot />
           </article>
         ) : (
-          <div class="doc-content-wrapper wrapper wrapper--xl padding-block-breathe">
+          <div class="doc-content-wrapper wrapper wrapper--xl py-breathe">
             <slot />
           </div>
         )}
@@ -58,14 +58,7 @@ const {
 
 <style>
   .doc-content-wrapper {
-    max-inline-size: 72rem;
-    padding-inline: var(--spacing-16, 1rem);
-  }
-
-  @media (min-width: 48em) {
-    .doc-content-wrapper {
-      padding-inline: var(--spacing-32, 2rem);
-    }
+    --wrapper-max-width: 72rem;
   }
 </style>
 

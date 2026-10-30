@@ -17,8 +17,8 @@ const SIZES: Size[] = ['sm', 'default', 'lg'];
 
 const switchEl = (label: string, mods: string[] = [], attrs = '', hint = '') => `
   <label class="${['switch', ...mods.filter(Boolean)].join(' ')}">
-    <span class="switch__label">${label}${hint ? ` <small>${hint}</small>` : ''}</span>
-    <input type="checkbox" role="switch" class="visually-hidden" ${attrs} />
+    <span class="switch__label label">${label}${hint ? ` <span class="small-text text-muted">${hint}</span>` : ''}</span>
+    <input type="checkbox" role="switch" class="sr-only" ${attrs} />
     <span class="switch__control" aria-hidden="true">
       <span class="switch__option switch__option--off">Off</span>
       <span class="switch__option switch__option--on">On</span>
@@ -32,8 +32,6 @@ const meta: Meta<SwitchArgs> = {
     docs: {
       description: {
         component: `
-### Switch
-
 A segmented Off / On toggle: a label wrapping a checkbox with \`role="switch"\`. State is read with \`:has(:checked)\`, so no script is needed.
 
 | Axis | Modifiers | Container flags |
@@ -49,8 +47,8 @@ A segmented Off / On toggle: a label wrapping a checkbox with \`role="switch"\`.
 
 \`\`\`html
 <label class="switch">
-  <span class="switch__label">Notifications</span>
-  <input type="checkbox" role="switch" class="visually-hidden" />
+  <span class="switch__label label">Notifications</span>
+  <input type="checkbox" role="switch" class="sr-only" />
   <span class="switch__control" aria-hidden="true">
     <span class="switch__option switch__option--off">Off</span>
     <span class="switch__option switch__option--on">On</span>

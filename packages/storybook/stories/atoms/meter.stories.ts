@@ -25,8 +25,8 @@ const field = (label: string, value: number, attrs = '', classes = 'meter', read
   return `
     <div class="field">
       <div class="field__header">
-        <label for="${id}" class="field__label">${label}</label>
-        <span class="field__result">${readout}</span>
+        <label for="${id}" class="field__label label">${label}</label>
+        <span class="small-text">${readout}</span>
       </div>
       <meter id="${id}" class="${classes}" value="${value}" ${/\bmax=/.test(attrs) ? '' : 'min="0" max="100"'} ${attrs}>${readout}</meter>
     </div>`;
@@ -39,8 +39,6 @@ const meta: Meta<MeterArgs> = {
     docs: {
       description: {
         component: `
-### Meter
-
 A native \`<meter>\`: a measurement within a known range, such as disk use or a score.
 
 | Axis | Modifiers | Container flags |
@@ -56,8 +54,8 @@ A native \`<meter>\`: a measurement within a known range, such as disk use or a 
 \`\`\`html
 <div class="field">
   <div class="field__header">
-    <label for="disk" class="field__label">Disk use</label>
-    <span class="field__result">72 GB of 100 GB</span>
+    <label for="disk" class="field__label label">Disk use</label>
+    <span class="small-text">72 GB of 100 GB</span>
   </div>
   <meter id="disk" class="meter" value="72" min="0" max="100" low="60" high="85" optimum="20">72 GB</meter>
 </div>

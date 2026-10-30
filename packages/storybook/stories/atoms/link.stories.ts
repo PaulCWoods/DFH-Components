@@ -28,8 +28,6 @@ const meta: Meta<LinkArgs> = {
     docs: {
       description: {
         component: `
-### Link
-
 The inline link sits in text and takes the size of that text. The block link is a full-width navigational callout whose label wraps, with a trailing arrow.
 
 | Atom | Axes | Container flags |
@@ -84,7 +82,7 @@ export const Prominence: Story = {
       <p class="text">Tags: <a href="#" class="link link--subtle">Web standards</a>, <a href="#" class="link link--subtle">CSS variables</a>, <a href="#" class="link link--subtle">Accessibility</a></p>
       <span class="sb-demo-tag">--plain: navigation only, underlined on hover and focus</span>
       <nav aria-label="Footer">
-        <ul class="cluster list-none padding-0 margin-0">
+        <ul class="cluster list-none p-0 m-0">
           <li><a href="#" class="link link--plain">Privacy</a></li>
           <li><a href="#" class="link link--plain">Accessibility statement</a></li>
           <li><a href="#" class="link link--plain">Contact</a></li>
@@ -100,7 +98,7 @@ export const Prominence: Story = {
 export const External: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md">
-      <p class="text">Review the official <a href="https://www.w3.org/TR/WCAG22/" class="link" target="_blank" rel="noopener noreferrer">WCAG 2.2 standard<span class="visually-hidden"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a> for the full list.</p>
+      <p class="text">Review the official <a href="https://www.w3.org/TR/WCAG22/" class="link" target="_blank" rel="noopener noreferrer">WCAG 2.2 standard<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a> for the full list.</p>
     </div>
   `,
 };

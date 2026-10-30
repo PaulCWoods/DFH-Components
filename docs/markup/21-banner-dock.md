@@ -24,7 +24,7 @@
       </div>
       <button type="button" class="button button--icon banner__action">
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-        <span class="visually-hidden">Dismiss notice</span>
+        <span class="sr-only">Dismiss notice</span>
       </button>
     </div>
   </div>

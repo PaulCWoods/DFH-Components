@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Pagination
-
 Moves between the pages of one list: a button group of page links. Pagination makes the number buttons square and adds a gap marker for skipped pages; the group's options and a \`justify-*\` utility set the rest.
 
 ### Markup
@@ -16,14 +14,14 @@ Moves between the pages of one list: a button group of page links. Pagination ma
 <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
   <a class="button button--icon" href="/page/1">
     <svg class="icon icon--dir" …><use href="#ChevronLeft"/></svg>
-    <span class="visually-hidden">Previous page</span>
+    <span class="sr-only">Previous page</span>
   </a>
   <a class="button" href="/page/1"><span>1</span></a>
   <a class="button" href="/page/2" aria-current="page"><span>2</span></a>
   <a class="button" href="/page/3"><span>3</span></a>
   <span class="pagination__gap" aria-hidden="true">…</span>
   <a class="button" href="/page/10"><span>10</span></a>
-  <a class="button button--icon" href="/page/3">…<span class="visually-hidden">Next page</span></a>
+  <a class="button button--icon" href="/page/3">…<span class="sr-only">Next page</span></a>
 </nav>
 \`\`\`
 
@@ -44,12 +42,12 @@ const icon = (name: string) =>
   `<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
 const prev = (current: number) => current > 1
-  ? `<a class="button button--icon" href="#page-${current - 1}">${icon('ChevronLeft')}<span class="visually-hidden">Previous page</span></a>`
-  : `<a class="button button--icon" aria-disabled="true">${icon('ChevronLeft')}<span class="visually-hidden">Previous page</span></a>`;
+  ? `<a class="button button--icon" href="#page-${current - 1}">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`
+  : `<a class="button button--icon" aria-disabled="true">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`;
 
 const next = (current: number, total: number) => current < total
-  ? `<a class="button button--icon" href="#page-${current + 1}">${icon('ChevronRight')}<span class="visually-hidden">Next page</span></a>`
-  : `<a class="button button--icon" aria-disabled="true">${icon('ChevronRight')}<span class="visually-hidden">Next page</span></a>`;
+  ? `<a class="button button--icon" href="#page-${current + 1}">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`
+  : `<a class="button button--icon" aria-disabled="true">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`;
 
 const page = (n: number, current: number) =>
   `<a class="button" href="#page-${n}"${n === current ? ' aria-current="page"' : ''}><span>${n}</span></a>`;
@@ -109,11 +107,11 @@ export const PageCount: Story = {
   render: () => `
     <div class="stack">
       ${pagination(2, 10, 'buttons-subtle justify-center', 'Pagination with page count')}
-      <div class="cluster justify-between">
+      <div class="cluster cluster--between">
         <p class="small-text text-muted">Page 2 of 10</p>
-        <form class="inline-form" onsubmit="event.preventDefault();">
-          <div class="inline-field">
-            <label for="pg-jump" class="field__label">Go to page</label>
+        <form class="cluster" onsubmit="event.preventDefault();">
+          <div class="field field--inline">
+            <label for="pg-jump" class="field__label label">Go to page</label>
             <input class="input" type="number" id="pg-jump" name="page" min="1" max="10" value="2" style="inline-size: 5rem;">
           </div>
           <button class="button button--subtle" type="submit"><span>Go</span></button>

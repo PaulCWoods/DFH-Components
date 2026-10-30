@@ -153,3 +153,53 @@ The field, fieldset and choices stories (1,072 lines) use the old conformance-ma
     - `form.*`: gap, actions gap.
 
     The choices tokens move out of `form.*`. No Tier 1 fallbacks, and no `--ui-density` queries. Stories are rewritten in the current shape, as Molecules/Field, Molecules/Fieldset, Molecules/Choices and a new Organisms/Form, each with a playground, one story per option, and right to left. Usage in stories, recipes, the docs site and the blog migrates by script. *Recommended: yes.*
+
+All approved as recommended.
+
+## Migration done
+
+### CSS and tokens
+- **Label text atom:** `.label` in `atoms/text.css`, from the `--label-*` tokens plus a new `label-compact.font-size` (step −1). It is fixed in every sizing mode but compact, so a form doesn't grow with the page.
+- **Field** (219 → 137 lines): parts in a column, ordered label, hint, error, control. It sets no type. Hint and error colours come from `--field-hint-color` and `--field-error-color`, with no hex. The error is a flex row with its Warning icon centred on the first line (`1lh` maths); a `<ul>` error is a list. `--inline` puts the label beside the control, which keeps its own width; hint and error drop below the row. A disabled control dims its field, unless a disabled fieldset already does. The aliases, size and density modifiers, generated required text, `.inline-field`, `.fields-grid` and `.fields-inline` are gone.
+- **Fieldset** (129 → 78 lines): classes only. `row-gap` now works; the legend floats into the column with no margins. `__hint` replaces `__description`. `--compact` stays; `--bordered`, `--loose`, `--lg` and `--dense` go. A disabled fieldset dims its content.
+- **Choices** (157 → 118 lines): rows are at least `--spacing-target-min` tall and only as wide as their text. The box is centred on the first line. The gap follows the box size. No type, no size modifiers, no `.controls-sm`/`-lg` scoping. A disabled choice dims.
+- **Form** (116 → 95 lines): a column with the form gap. `--compact` (now in `:where()`) sets `--ui-sizing: compact`. `--aligned` is a named container (`form`): above 32rem, fields and fieldsets become a two-column grid with labels and legends baseline-aligned to the first line of their controls, and the actions line up with the controls. `.form__actions` adds space above a button group. `.form__submission` and `.inline-form` are gone.
+- **Switch:** the `small` description styling is gone; the label takes `.label`, and a description takes `.small-text text-muted`.
+- **Input:** a dead `.inline-form`/`.inline-field` rule removed.
+- **Tokens:** `field.*` (6), `fieldset.*` (2), `choices.*` (2), `choice.*` (2), `form.*` (3). The choices tokens left `form.*`.
+
+### Correction to question 5
+The question said choice rows step down to 32px in a compact container. PRINCIPLES §2 says compact steps the visual, not the target. Rows stay at `--spacing-target-min`: 48px, or 32px only where the product has opted into fine-pointer targets. Compact makes the text and gaps smaller.
+
+### Added during the pass
+- **Aligned form placement** (asked for after review): above 32rem, a field's hint sits beneath its label in the first column, and its error beneath the control in the second, so the control lines up with its label. Source order stays label, hint, error, control. A legend beside choices aligns with the first choice even when a hint comes between them.
+- **Compact choices** (asked for after review): in a compact container, rows are 32px (`choice.compact-target`) with small-control text (`choice.font-size`, `choice.compact-font-size`, from the control tokens), a 16px box (`check.sm-box-size`, set by the choice through `--check-size: sm`, so a box outside a choice keeps 20px) and a smaller gap, so choices match the compact fields around them. This replaces the correction above: like small text controls, compact choice rows are their own 32px target, and PRINCIPLES now records them as the second exception to the 48px rule. The choice sets its own font size because the row is part of the control, as a text control does.
+- In an aligned form, a legend directly above choices lines up with the first row's text, which sits centred in a 48px row, rather than with the radio's baseline.
+
+### Markup
+- Stories rewritten (1,072 → 532 lines): Molecules/Field, Molecules/Fieldset and Molecules/Choices, plus a new Organisms/Form. Each has a playground, one story per option, and right to left.
+- Migrated by script across stories, recipes, the docs site and `docs/markup`:
+  - `.label` on labels, legends and switch labels;
+  - `.small-text` on hints, errors and outputs;
+  - `fieldset__legend` and `fieldset__hint`;
+  - `<small>` descriptions are now `.small-text text-muted`;
+  - errors moved before their controls, with a Warning icon and no `role="alert"`;
+  - `form__actions button-group`, `field--inline` and `.cluster`.
+- `docs/markup/07b-form-composition.md` is new. §7 D and G point to it, §20 lists `.label`, and §17's jump form is a cluster with an inline field.
+
+### Found while testing
+- Axe on 158 affected stories, light and dark: nothing new. `Molecules/Field › Disabled` flags its disabled hint, which 1.4.3 exempts. The other failures were already there:
+  - combobox `aria-expanded`, for the combobox pass;
+  - sidebar stories with hard-coded light backgrounds in dark mode;
+  - heading order in two layout recipes;
+  - the warning-status contrast, for the palette work;
+  - the tally skeleton's empty table headers.
+
+### Blog
+- SCSS regenerated for field, fieldset, choices, form, text, switch and input. Tier 2 gains `--label-compact-font-size`. Tier 3's form block is replaced; the blog previously had no hint or error colour, so both fell back to the text colour.
+- `_contact.twig`:
+  - its fields had no classes, so they had rendered as browser defaults since the form-controls pass;
+  - they now take `.input`/`.textarea`, `.label`, and one error per field before its control (Warning icon, `aria-describedby`, `aria-invalid`);
+  - Subject is marked "(optional)", and the submit button sits in `.form__actions`.
+- `blog/_form.scss` drops its `.field .errors` rule.
+- `_component-library.twig`: the form demo is migrated. Its error is a `<p>` with an icon before the input, the fieldset hint is linked, and the submit button is strong accent.

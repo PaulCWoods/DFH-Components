@@ -8,6 +8,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
 | Prominence | default (layer surface and border; a shadow when floating), `--strong` (inverted), `--plain` (no surface) |
 | Corners | `--round` |
 | Density | `--compact` (sets `--ui-sizing: compact`) |
+| Overflow | wraps by default; `--scrollable` keeps one row |
 
 - **A group, not a toolbar.** The bar is a `<div role="group">` with a label naming what is selected. `role="toolbar"` promises arrow keys between its controls; use it only if the product adds that script.
 - **Summary.** Text in an element with `role="status"` (`.batch-actions__summary`), so a changed count is announced. Keep the bar in the page and toggle `hidden`, so the live region exists before the count changes. No count badge: the text already says it.
@@ -33,7 +34,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
   <hr class="divider" aria-hidden="true">
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-    <span class="visually-hidden">Clear selection</span>
+    <span class="sr-only">Clear selection</span>
   </button>
 </div>
 ```
@@ -53,7 +54,21 @@ The bar shown while items are selected: how many, the actions on them, and a way
 </article>
 ```
 
-## C. Strong and Round
+## C. Scrollable
+```html
+<div class="batch-actions batch-actions--inline batch-actions--scrollable" role="group" aria-label="Selected files">
+  <p class="batch-actions__summary small-heading" role="status">12 selected</p>
+  <hr class="divider" aria-hidden="true">
+  <div class="batch-actions__actions button-group buttons-subtle">…</div>
+  <hr class="divider" aria-hidden="true">
+  <button type="button" class="button button--plain button--icon batch-actions__dismiss">…</button>
+</div>
+```
+- For narrow spaces and long action lists. The summary and the dismiss button stay in place; only the actions scroll.
+- Each edge of the actions fades while there is more to scroll that way (the shared scroll fade, `utilities/scroll-fade.css`). It follows the writing direction. Without scroll-driven animations the actions still scroll, without the fade.
+- Tab reaches every action and scrolls it into view; focus rings aren't clipped. Keep the most used actions first.
+
+## D. Strong and Round
 ```html
 <div class="batch-actions batch-actions--strong batch-actions--round" role="group" aria-label="Selected photos">…</div>
 ```

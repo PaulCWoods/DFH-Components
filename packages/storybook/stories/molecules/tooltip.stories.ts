@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Tooltip
-
 A short line of plain text about a control, shown while the control is hovered or focused. Anything richer, or anything with a link or button in it, is a popover opened with \`interestfor\` (a hovercard).
 
 ### Markup
@@ -16,7 +14,7 @@ A short line of plain text about a control, shown while the control is hovered o
 <!-- Label: the tooltip repeats the button's name -->
 <button type="button" class="button button--icon" interestfor="tip-bold" aria-keyshortcuts="Meta+B">
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
-  <span class="visually-hidden">Bold</span>
+  <span class="sr-only">Bold</span>
 </button>
 <div id="tip-bold" popover="hint" class="tooltip" aria-hidden="true">Bold ⌘B</div>
 
@@ -46,7 +44,7 @@ const icon = (name: string) =>
 /* A label tooltip on an icon button */
 const iconTip = (id: string, iconName: string, name: string, tip: string, cls = '', keys = '') => `
   <button type="button" class="button button--icon" interestfor="${id}"${keys ? ` aria-keyshortcuts="${keys}"` : ''}>
-    ${icon(iconName)}<span class="visually-hidden">${name}</span>
+    ${icon(iconName)}<span class="sr-only">${name}</span>
   </button>
   <div id="${id}" popover="hint" class="tooltip${cls ? ` ${cls}` : ''}" aria-hidden="true">${tip}</div>`;
 

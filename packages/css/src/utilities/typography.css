@@ -1,265 +1,175 @@
 /* ==========================================================================
-   Design For Humans: Typography & Text Utilities
+   Design For Humans: Typography Utilities
    --------------------------------------------------------------------------
-   Modular type scale, weights, alignments, text colors, and wrapping utilities.
-   Direct parity with the Design For Humans blog architecture.
+   Family, weight, style, alignment, case and wrapping. Type size and line
+   height belong to the text atoms (.small-text, .text, .heading …), which
+   follow --font-sizing; there are no size utilities.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Font Family Utilities (Sans, Serif, Mono, Display)
+   1. Font family
    -------------------------------------------------------------------------- */
 
-:where(.font-family-sans, .font-family-sans-serif, .font-sans, .sans) {
-   font-family: var(--typography-font-family-sans);
+:where(.font-family-sans, .font-sans) {
+    font-family: var(--body-font-family, sans-serif);
 }
 
-:where(.font-family-serif, .font-serif, .serif) {
-   font-family: var(--typography-font-family-serif);
+:where(.font-family-serif, .font-serif) {
+    font-family: var(--body-alt-font-family, serif);
 }
 
-:where(.font-family-mono, .font-family-monospace, .font-mono, .mono) {
-   font-family: var(--typography-font-family-mono);
+:where(.font-family-mono, .font-mono) {
+    font-family: var(--code-font-family, monospace);
 }
 
-:where(.font-family-display, .font-family-display) {
-   font-family: var(--typography-font-family-display);
+:where(.font-family-display) {
+    font-family: var(--title-font-family, sans-serif);
 }
+
 
 /* --------------------------------------------------------------------------
-   2. Font Size Utilities (Type Scale -2 to 3)
+   2. Font weight
    -------------------------------------------------------------------------- */
 
-:where(.font-size-xs, .font-size--2, .fs-xs) {
-   font-size: var(--typography-font-size--2);
+:where(.font-weight-normal, .font-normal) {
+    font-weight: var(--font-weight-regular, 400);
 }
 
-:where(.font-size-sm, .font-size--1, .fs-sm) {
-   font-size: var(--typography-font-size--1);
+:where(.font-weight-medium, .font-medium) {
+    font-weight: var(--font-weight-medium, 500);
 }
 
-:where(.font-size-base, .font-size-0, .fs-base) {
-   font-size: var(--typography-font-size-0);
+:where(.font-weight-semibold, .font-semibold) {
+    font-weight: var(--font-weight-semibold, 600);
 }
 
-:where(.font-size-lg, .font-size-1, .fs-lg) {
-   font-size: var(--typography-font-size-1);
+:where(.font-weight-bold, .font-bold) {
+    font-weight: var(--font-weight-bold, 700);
 }
 
-:where(.font-size-xl, .font-size-2, .fs-xl) {
-   font-size: var(--typography-font-size-2);
-}
-
-:where(.font-size-2xl, .font-size-3, .fs-2xl) {
-   font-size: var(--typography-font-size-3);
-}
 
 /* --------------------------------------------------------------------------
-   2. Font Weight Utilities
+   3. Font style
    -------------------------------------------------------------------------- */
-:where(.font-weight-100, .fw-100) {
-   font-weight: 100;
-}
 
-:where(.font-weight-200, .fw-200) {
-   font-weight: 200;
-}
-
-:where(.font-weight-300, .fw-300) {
-   font-weight: 300;
-}
-
-:where(.font-weight-400, .fw-400, .font-weight-regular, .font-normal, .regular) {
-   font-weight: var(--font-weight-regular, 400);
-}
-
-:where(.font-weight-500, .fw-500, .font-weight-medium, .font-medium) {
-   font-weight: 500;
-}
-
-:where(.font-weight-600, .fw-600, .font-weight-semibold, .font-semibold, .semibold) {
-   font-weight: 600;
-}
-
-:where(.font-weight-700, .fw-700, .font-weight-bold, .font-bold, .bold) {
-   font-weight: var(--font-weight-bold, 700);
-}
-
-:where(.font-weight-800, .fw-800, .font-weight-heavy, .font-heavy) {
-   font-weight: 800;
-}
-
-:where(.font-weight-900, .fw-900, .font-weight-black, .font-black) {
-   font-weight: 900;
-}
-
-:where(.font-weight-bolder, .bolder) {
-   font-weight: bolder;
-}
-
-/* --------------------------------------------------------------------------
-   3. Font Style Utilities
-   -------------------------------------------------------------------------- */
 :where(.font-style-italic, .italic) {
-   font-style: italic;
+    font-style: italic;
 }
 
-:where(.font-style-normal, .roman) {
-   font-style: normal;
+:where(.font-style-normal, .not-italic) {
+    font-style: normal;
 }
 
-/* --------------------------------------------------------------------------
-   4. Line Height Utilities
-   -------------------------------------------------------------------------- */
-:where(.line-height-2xs) {
-   line-height: var(--typography-line-height--3);
-}
-
-:where(.line-height-xs) {
-   line-height: var(--typography-line-height--2);
-}
-
-:where(.line-height-sm) {
-   line-height: var(--typography-line-height--1);
-}
-
-:where(.line-height-base) {
-   line-height: var(--typography-line-height-base, var(--body-line-height, 1.5));
-}
-
-:where(.line-height-lg) {
-   line-height: var(--typography-line-height-1);
-}
-
-:where(.line-height-xl) {
-   line-height: var(--typography-line-height-2);
-}
-
-:where(.line-height-2xl) {
-   line-height: var(--typography-line-height-3);
-}
 
 /* --------------------------------------------------------------------------
-   5. Text Alignment Utilities (Logical Bidirectional Start/End)
+   4. Alignment
+   Logical: start and end follow the writing direction.
    -------------------------------------------------------------------------- */
-:where(.text-align-left, .text-left) {
-   text-align: start;
+
+:where(.text-align-start, .text-start) {
+    text-align: start;
 }
 
-:where(.text-align-right, .text-right) {
-   text-align: end;
+:where(.text-align-end, .text-end) {
+    text-align: end;
 }
 
 :where(.text-align-center, .text-center) {
-   text-align: center;
+    text-align: center;
 }
 
 :where(.text-align-justify, .text-justify) {
-   text-align: justify;
+    text-align: justify;
 }
 
+
 /* --------------------------------------------------------------------------
-   6. Text Transform Utilities
+   5. Case
    -------------------------------------------------------------------------- */
+
 :where(.text-transform-uppercase, .uppercase) {
-   font-variant-numeric: lining-nums;
-   text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 :where(.text-transform-lowercase, .lowercase) {
-   font-variant-numeric: oldstyle-nums;
-   text-transform: lowercase;
+    text-transform: lowercase;
 }
 
 :where(.text-transform-capitalize, .capitalize) {
-   font-variant-numeric: lining-nums;
-   text-transform: capitalize;
+    text-transform: capitalize;
 }
+
+:where(.text-transform-none, .normal-case) {
+    text-transform: none;
+}
+
 
 /* --------------------------------------------------------------------------
-   7. Text Wrap & Overflow Utilities
+   6. White space
    -------------------------------------------------------------------------- */
-:where(.white-space-normal) {
-   white-space: normal;
+
+:where(.white-space-normal, .whitespace-normal) {
+    white-space: normal;
 }
 
-:where(.white-space-nowrap, .text-nowrap, .nowrap) {
-   white-space: nowrap;
+:where(.white-space-nowrap, .whitespace-nowrap) {
+    white-space: nowrap;
 }
 
-:where(.white-space-pre, .pre) {
-   white-space: pre;
+:where(.white-space-pre, .whitespace-pre) {
+    white-space: pre;
 }
 
-:where(.white-space-pre-line, .pre-line) {
-   white-space: pre-line;
+:where(.white-space-pre-line, .whitespace-pre-line) {
+    white-space: pre-line;
 }
 
-:where(.white-space-pre-wrap, .pre-wrap) {
-   white-space: pre-wrap;
+:where(.white-space-pre-wrap, .whitespace-pre-wrap) {
+    white-space: pre-wrap;
 }
 
-:where(.overflow-wrap-break-word, .break-word) {
-   word-wrap: break-word;
+
+/* --------------------------------------------------------------------------
+   7. Wrapping
+   -------------------------------------------------------------------------- */
+
+:where(.text-wrap-wrap, .text-wrap) {
+    text-wrap: wrap;
 }
 
-:where(.overflow-wrap-anywhere, .wrap-anywhere, .break-anywhere) {
-   overflow-wrap: anywhere;
+:where(.text-wrap-nowrap, .text-nowrap) {
+    text-wrap: nowrap;
 }
 
+:where(.text-wrap-balance, .text-balance) {
+    text-wrap: balance;
+}
+
+:where(.text-wrap-pretty, .text-pretty) {
+    text-wrap: pretty;
+}
+
+:where(.overflow-wrap-break-word, .wrap-break-word) {
+    overflow-wrap: break-word;
+}
+
+:where(.overflow-wrap-anywhere, .wrap-anywhere) {
+    overflow-wrap: anywhere;
+}
+
+/* One line, cut with an ellipsis */
 :where(.truncate) {
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
-}
-
-:where(.text-wrap-pretty, .wrap-pretty, .text-pretty) {
-   text-wrap: pretty;
-}
-
-:where(.text-wrap-balance, .wrap-balance, .text-balance) {
-   text-wrap: balance;
-}
-
-/* --------------------------------------------------------------------------
-   8. Text Box Utilities
-   -------------------------------------------------------------------------- */
-:where(.text-box-both-cap-alpha) {
-   text-box: trim-both cap alphabetic;
-}
-
-:where(.text-box-cap-ideographic) {
-   text-box-edge: cap ideographic;
-}
-
-:where(.text-box-cap-text) {
-   text-box-edge: cap text;
-}
-
-:where(.text-box-ex-alpha) {
-   text-box-edge: ex alphabetic;
-}
-
-:where(.text-box-both) {
-   text-box-trim: trim-both;
-}
-
-:where(.text-box-start) {
-   text-box-trim: trim-start;
-}
-
-:where(.text-box-end) {
-   text-box-trim: trim-end;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
 /* --------------------------------------------------------------------------
-   9. Text Decoration Utilities
+   8. Text box
+   Trims the space above the cap height and below the baseline.
    -------------------------------------------------------------------------- */
 
-:is(a, .link):where(.underline-none) {
-   text-decoration: none;
-
-   &:is(:hover, :active, :focus) {
-      text-decoration: none;
-   }
+:where(.text-box-trim-both) {
+    text-box: trim-both cap alphabetic;
 }

@@ -22,7 +22,7 @@
 
 :where(.range-lockup) {
   --_range-lockup-gap: var(--range-lockup-gap, 0.5rem);
-  --_range-lockup-output-font-size: var(--body-sm-font-size, 0.875rem);
+  --_range-lockup-output-font-size: var(--body-sm-fixed-font-size, 0.875rem);
   --_range-lockup-bg: transparent;
   --_range-lockup-border-color: transparent;
   --_range-lockup-padding-inline: 0px;

@@ -54,7 +54,7 @@ Nested links to the sections of a site or a page: a docs sidebar, a table of con
   <a href="/settings/notifications" class="button">
     <span>Notifications</span>
     <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span>
-    <span class="visually-hidden">, 3 unread</span>
+    <span class="sr-only">, 3 unread</span>
   </a>
 </li>
 ```

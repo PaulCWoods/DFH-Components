@@ -27,7 +27,7 @@ One message with an intent, in one row: an optional icon, the body and optional 
   </div>
   <button type="button" class="button button--icon banner__action">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-    <span class="visually-hidden">Dismiss</span>
+    <span class="sr-only">Dismiss</span>
   </button>
 </div>
 ```

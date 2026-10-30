@@ -21,8 +21,6 @@ const meta: Meta<ListArgs> = {
     docs: {
       description: {
         component: `
-### Tab List
-
 A row or column of tabs: a \`role="tablist"\` that switches panels (see **Organisms/Tabbed Content**), or a \`<nav>\` of links. The list owns every axis of its tabs and draws one selection indicator that slides to the selected tab.
 
 | Axis | Modifiers | Flag |
@@ -182,7 +180,7 @@ export const NestedNavigation: Story = {
         <ul>
           <li>
             <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nested-start">
-              <span class="visually-hidden">Getting started</span>${icon('ChevronDown')}
+              <span class="sr-only">Getting started</span>${icon('ChevronDown')}
             </button>
             <span class="tab-list__content small-heading">Getting started</span>
             <ul id="nested-start">
@@ -193,7 +191,7 @@ export const NestedNavigation: Story = {
           </li>
           <li>
             <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nested-components">
-              <span class="visually-hidden">Components</span>${icon('ChevronDown')}
+              <span class="sr-only">Components</span>${icon('ChevronDown')}
             </button>
             <span class="tab-list__content small-heading">Components</span>
             <ul id="nested-components">

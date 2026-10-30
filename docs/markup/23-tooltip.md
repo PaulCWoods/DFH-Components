@@ -20,7 +20,7 @@ A short line of plain text about a control, shown while the control is hovered o
 ```html
 <button type="button" class="button button--icon" interestfor="tip-bold" aria-keyshortcuts="Meta+B">
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
-  <span class="visually-hidden">Bold</span>
+  <span class="sr-only">Bold</span>
 </button>
 <div id="tip-bold" popover="hint" class="tooltip" aria-hidden="true">Bold ⌘B</div>
 ```

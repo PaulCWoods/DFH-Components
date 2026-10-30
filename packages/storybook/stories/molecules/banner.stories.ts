@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Banner
-
 One message with an intent, in one row: an optional icon, the body and optional actions. A banner with media, or a title, body and footer of controls, is a card. An alert is a role on a banner, not a component; \`.banner-dock\` pins a banner to the page edge and \`.toast\` floats one in a corner.
 
 ### Markup
@@ -20,7 +18,7 @@ One message with an intent, in one row: an optional icon, the body and optional 
   </div>
   <button type="button" class="button button--icon banner__action">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-    <span class="visually-hidden">Dismiss</span>
+    <span class="sr-only">Dismiss</span>
   </button>
 </div>
 \`\`\`
@@ -64,7 +62,7 @@ const intentIcon: Record<string, string> = {
 const dismiss = `
   <button type="button" class="button button--icon banner__action" onclick="this.closest('.banner').hidden = true">
     ${icon('Close')}
-    <span class="visually-hidden">Dismiss</span>
+    <span class="sr-only">Dismiss</span>
   </button>`;
 
 const banner = (classes: string, body: string, opts: { intent?: string; action?: string } = {}) => `
@@ -187,8 +185,8 @@ export const DensityAndCorners: Story = {
       </div>
       ${banner('banner--round', '<p class="text font-bold">Continue?</p>', {
         action: `<div class="cluster banner__action">
-          <button type="button" class="button button--icon">${icon('Close')}<span class="visually-hidden">Cancel</span></button>
-          <button type="button" class="button button--icon button--strong button--accent">${icon('Check')}<span class="visually-hidden">Continue</span></button>
+          <button type="button" class="button button--icon">${icon('Close')}<span class="sr-only">Cancel</span></button>
+          <button type="button" class="button button--icon button--strong button--accent">${icon('Check')}<span class="sr-only">Continue</span></button>
         </div>`,
       })}
       ${banner('banner--round', '<p class="text">A round banner keeps concentric corners when its message wraps onto a second line, because it never becomes a pill.</p>', { intent: 'warning', action: dismiss })}

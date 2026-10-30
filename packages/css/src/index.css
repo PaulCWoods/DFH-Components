@@ -22,6 +22,7 @@
 @import './atoms/link.css' layer(atoms);
 @import './atoms/icon.css' layer(atoms);
 @import './atoms/badge.css' layer(atoms);
+@import './atoms/avatar.css' layer(atoms);
 @import './atoms/chip.css' layer(atoms);
 @import './atoms/status.css' layer(atoms);
 @import './atoms/kbd.css' layer(atoms);
@@ -42,7 +43,7 @@
    2. Molecules (Focused combinations of 2-3 atoms)
    -------------------------------------------------------------------------- */
 @import './molecules/lockup.css' layer(molecules);
-@import './molecules/avatar.css' layer(molecules);
+@import './molecules/avatar-group.css' layer(molecules);
 @import './molecules/field.css' layer(molecules);
 @import './molecules/fieldset.css' layer(molecules);
 @import './molecules/choices.css' layer(molecules);
@@ -63,18 +64,19 @@
 @import './molecules/tab-list.css' layer(molecules);
 @import './molecules/navigation-tree.css' layer(molecules);
 @import './molecules/prose.css' layer(molecules);
+@import './molecules/accordion.css' layer(molecules);
+@import './molecules/combobox.css' layer(molecules);
+@import './molecules/empty-state.css' layer(molecules);
 
 /* --------------------------------------------------------------------------
    3. Organisms (Complex, high-level assemblies & interactive flows)
    -------------------------------------------------------------------------- */
-@import './organisms/deck.css' layer(organisms);
 @import './organisms/dialog.css' layer(organisms);
-@import './organisms/accordion.css' layer(organisms);
-@import './organisms/combobox.css' layer(organisms);
 @import './organisms/table.css' layer(organisms);
 @import './organisms/tabbed-content.css' layer(organisms);
-@import './organisms/empty-state.css' layer(organisms);
+@import './organisms/footer.css' layer(organisms);
 @import './organisms/header.css' layer(organisms);
+@import './organisms/sidebar.css' layer(organisms);
 @import './organisms/form.css' layer(organisms);
 
 /* --------------------------------------------------------------------------
@@ -85,7 +87,6 @@
 @import './layout/grid.css' layer(layout);
 @import './layout/inline.css' layer(layout);
 @import './layout/main.css' layer(layout);
-@import './layout/sidebar.css' layer(layout);
 @import './layout/split.css' layer(layout);
 @import './layout/stack.css' layer(layout);
 @import './layout/wrapper.css' layer(layout);
@@ -93,7 +94,6 @@
 /* --------------------------------------------------------------------------
    5. Utilities (Immutable override layer)
    -------------------------------------------------------------------------- */
-@import './utilities/accessibility.css' layer(utilities);
 @import './utilities/appearance-modes.css' layer(utilities);
 @import './utilities/border.css' layer(utilities);
 @import './utilities/color-scheme.css' layer(utilities);
@@ -104,10 +104,13 @@
 @import './utilities/flex.css' layer(utilities);
 @import './utilities/focus-helpers.css' layer(utilities);
 @import './utilities/layout-helpers.css' layer(utilities);
-@import './utilities/responsive-helpers.css' layer(utilities);
+@import './utilities/scroll-fade.css' layer(utilities);
 @import './utilities/shadow.css' layer(utilities);
-@import './utilities/spacing-blocks.css' layer(utilities);
+@import './utilities/sizing.css' layer(utilities);
 @import './utilities/spacing.css' layer(utilities);
 @import './utilities/typography.css' layer(utilities);
+/* Last, so hiding wins over the other utilities */
+@import './utilities/accessibility.css' layer(utilities);
+@import './utilities/responsive-helpers.css' layer(utilities);
 
 @import './overrides.css' layer(overrides);

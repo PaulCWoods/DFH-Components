@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Design For Humans: Avatar Group
+   --------------------------------------------------------------------------
+   Several people: avatars in a row, spaced or stacked. A group of named
+   people is a labelled list; a group beside a list of their names is
+   aria-hidden.
+
+   Options: --stacked (each avatar overlaps the one before by
+   --avatar-group-overlap, a share of its size, and is ringed in the
+   surface colour so the edges show on any background; set
+   --avatar-group-ring-color to the surface the group sits on).
+
+   <ul class="avatar-group avatar-group--stacked" aria-label="Project members">
+     <li><span class="avatar" role="img" aria-label="Sam Rivera">SR</span></li>
+     <li><img class="avatar" src="…" alt="Ade Okafor" /></li>
+     <li><span class="avatar avatar--count" role="img" aria-label="3 more members">+3</span></li>
+   </ul>
+   ========================================================================== */
+
+:where(.avatar-group) {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--avatar-group-gap, 0.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  > :where(li) {
+    display: contents;
+  }
+}
+
+:where(.avatar-group--stacked) {
+  flex-wrap: nowrap;
+  gap: 0;
+  isolation: isolate;
+
+  :where(.avatar) {
+    box-shadow: 0 0 0 var(--avatar-group-ring-width, 2px) var(--avatar-group-ring-color, Canvas);
+  }
+
+  /* Each avatar after the first tucks under the one before */
+  > :where(.avatar) + :where(.avatar),
+  > :where(li) + :where(li) > :where(.avatar) {
+    margin-inline-start: calc(var(--_avatar-size) * var(--avatar-group-overlap, 0.33) * -1);
+  }
+}

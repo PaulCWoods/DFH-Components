@@ -12,7 +12,8 @@
    Placement: floating (default; fixed at the bottom centre of the
    viewport), --docked (sticks to the bottom of its scroll container),
    --inline (in flow). Prominence: default, --strong (inverted), --plain.
-   Also --round and --compact.
+   Also --round, --compact and --scrollable (one row; the actions scroll
+   between a fixed summary and dismiss button).
 
    <div class="batch-actions" role="group" aria-label="Selected files">
      <p class="batch-actions__summary small-heading" role="status">3 selected</p>
@@ -139,6 +140,51 @@
   --_batch-actions-radius: var(--batch-actions-radius, var(--panel-radius, 0));
 
   position: static;
+}
+
+/* ==========================================================================
+   3b. Scrollable
+   --------------------------------------------------------------------------
+   One row where space is short: the summary and the dismiss button stay
+   put, and the actions between them scroll, their edges fading where there
+   is more (the shared scroll fade, utilities/scroll-fade.css). The actions
+   are padded by the focus ring's reach, so a ring isn't clipped.
+   ========================================================================== */
+:where(.batch-actions--scrollable) {
+  flex-wrap: nowrap;
+
+  > :where(.batch-actions__summary, .batch-actions__dismiss, .divider) {
+    flex: none;
+  }
+
+  > :where(.batch-actions__summary) {
+    white-space: nowrap;
+  }
+
+  > :where(.batch-actions__actions) {
+    --_scroll-fade-size: var(--scroll-fade-size, 3rem);
+    --_scroll-fade-to: to right;
+    --_batch-actions-ring: calc(var(--focus-ring-width, 2px) + var(--focus-ring-offset, 2px));
+
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    margin: calc(var(--_batch-actions-ring) * -1);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: var(--_batch-actions-ring);
+    scrollbar-width: none;
+
+    &:where(:dir(rtl)) {
+      --_scroll-fade-to: to left;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      animation: --scroll-fade-start linear both, --scroll-fade-end linear both;
+      animation-range: 0 var(--_scroll-fade-size), calc(100% - var(--_scroll-fade-size)) 100%;
+      animation-timeline: scroll(self inline);
+      mask-image: linear-gradient(var(--_scroll-fade-to), transparent, black calc(var(--scroll-fade-start) * var(--_scroll-fade-size)), black calc(100% - var(--scroll-fade-end) * var(--_scroll-fade-size)), transparent);
+    }
+  }
 }
 
 /* ==========================================================================

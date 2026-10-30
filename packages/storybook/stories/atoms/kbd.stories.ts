@@ -20,8 +20,6 @@ const meta: Meta<KbdArgs> = {
     docs: {
       description: {
         component: `
-### Kbd
-
 A keyboard key or shortcut. It has no intent and no prominence.
 
 | Axis | Modifiers | Container flag |
@@ -71,7 +69,7 @@ export const KeysAndCombinations: Story = {
       ${[false, true]
         .map(
           (small) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           ${['Esc', 'Enter', '↑', '↓', '⌘ + K', 'Shift + ⌘ + P', 'Ctrl + Alt + Delete'].map((k) => kbd(k, small)).join('')}
         </div>`
         )

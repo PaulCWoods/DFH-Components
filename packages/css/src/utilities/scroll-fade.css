@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Design For Humans: Scroll Fade
+   --------------------------------------------------------------------------
+   One row that scrolls, its edges fading only where there is more to see:
+   no fade at the start until it scrolls, none at the end once it reaches
+   it. Progressive enhancement: where scroll-driven animations aren't
+   supported, the row still scrolls, without the fade.
+
+   Components build it in (.tab-list--scrollable, .batch-actions--scrollable)
+   using the properties and keyframes below; .scroll-fade gives it to any
+   other row.
+
+   The fade follows the writing direction, and grows over the first and last
+   --scroll-fade-size of travel, so it behaves the same on short and long
+   rows. Keyboard users reach every item with Tab; focus scrolls it into
+   view.
+
+   Usage:
+   <div class="cluster scroll-fade">…chips…</div>
+   ========================================================================== */
+
+@property --scroll-fade-start {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --scroll-fade-end {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes --scroll-fade-start {
+  from {
+    --scroll-fade-start: 0;
+  }
+
+  to {
+    --scroll-fade-start: 1;
+  }
+}
+
+@keyframes --scroll-fade-end {
+  from {
+    --scroll-fade-end: 1;
+  }
+
+  to {
+    --scroll-fade-end: 0;
+  }
+}
+
+:where(.scroll-fade) {
+  --_scroll-fade-size: var(--scroll-fade-size, 3rem);
+  --_scroll-fade-to: to right;
+
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+
+  &:where(:dir(rtl)) {
+    --_scroll-fade-to: to left;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    animation: --scroll-fade-start linear both, --scroll-fade-end linear both;
+    animation-range: 0 var(--_scroll-fade-size), calc(100% - var(--_scroll-fade-size)) 100%;
+    animation-timeline: scroll(self inline);
+    mask-image: linear-gradient(var(--_scroll-fade-to), transparent, black calc(var(--scroll-fade-start) * var(--_scroll-fade-size)), black calc(100% - var(--scroll-fade-end) * var(--_scroll-fade-size)), transparent);
+  }
+}

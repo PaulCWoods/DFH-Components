@@ -1,0 +1,363 @@
+/* ==========================================================================
+   Design For Humans: Combobox
+   --------------------------------------------------------------------------
+   A text field that filters a list of options: single select, or multi-
+   select with chips. A molecule: the frame is the shared text-control base
+   (atoms/input.css), the buttons are .button atoms, chips are .chip atoms
+   and option text is text atoms.
+
+   The library ships no script. The product's script opens the list, filters
+   it, moves the active option and sets the states this file styles:
+   aria-expanded, .is-active (with aria-activedescendant), aria-selected,
+   aria-disabled. Where no typing is needed, prefer .select--custom.
+
+   | Axis       | Modifiers (on .combobox) | Flags                                         |
+   | ---------- | ------------------------ | --------------------------------------------- |
+   | Size       | (default) --sm --lg      | --combobox-size, --controls-size              |
+   | Prominence | (outline) --subtle --plain | --combobox-prominence, --controls-prominence |
+   | Corners    | --round                  | --combobox-corners, --controls-corners        |
+
+   A compact region steps the field to --sm and the options' text down.
+
+   The list is popover="manual": in the top layer no card or dialog clips it.
+   It anchors to its own control through a scoped anchor name, below it and
+   flipping above when there is no room. .combobox__listbox--static is a
+   list that is always shown (a command palette).
+
+   WCAG 2.2:
+   - 2.4.7 / 2.4.13 Focus: the field's ring shows while its input has focus;
+     the active option has an inset ring.
+   - 2.5.5 Target Size: options are at least 48px tall (or the product's
+     fine-pointer target); clear and toggle buttons keep a 48px hit area.
+   - 1.4.1 Use of Color: selected options show a check icon.
+
+   Usage:
+   <div class="combobox">
+     <div class="combobox__control">
+       <input id="plant" class="combobox__input" role="combobox" aria-expanded="false"
+              aria-controls="plant-list" aria-autocomplete="list" />
+       <button type="button" class="button button--plain button--icon combobox__toggle"
+               tabindex="-1" aria-label="Show plants">…</button>
+     </div>
+     <ul id="plant-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Plants">
+       <li id="plant-1" class="combobox__option" role="option" aria-selected="false">Epimedium …</li>
+     </ul>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.combobox) {
+  /* Private manifest: the list and its options */
+  --_combobox-listbox-bg: var(--combobox-listbox-bg, var(--surface-card, Canvas));
+  --_combobox-listbox-border-color: var(--combobox-listbox-border-color, var(--panel-border-color, currentColor));
+  --_combobox-listbox-border-width: var(--combobox-listbox-border-width, var(--panel-border-width, 1px));
+  --_combobox-listbox-radius: var(--combobox-listbox-radius, var(--panel-radius, 0.25rem));
+  --_combobox-listbox-shadow: var(--combobox-listbox-shadow, var(--shadow-md, none));
+  --_combobox-listbox-max-size: var(--combobox-listbox-max-height, 18rem);
+  --_combobox-listbox-padding: var(--combobox-listbox-padding, 0.25rem);
+  --_combobox-listbox-offset: var(--combobox-listbox-offset, 0.25rem);
+  --_combobox-option-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+  --_combobox-option-padding-block: var(--combobox-option-padding-block, 0.5rem);
+  --_combobox-option-padding-inline: var(--combobox-option-padding-inline, 0.75rem);
+  --_combobox-option-radius: var(--combobox-option-radius, var(--radius-sm, 0.25rem));
+  --_combobox-option-hover-bg: var(--combobox-option-hover-bg, var(--surface-translucent, transparent));
+  --_combobox-option-selected-color: var(--combobox-option-selected-color, var(--foreground-accent, currentColor));
+  --_combobox-font-size: var(--body-fixed-font-size, 1rem);
+  --_combobox-gap: calc(var(--spacing, 1rem) / 2);
+
+  /* ------------------------------------------------------------------------
+     Container Flags: the options step down with the field
+     ------------------------------------------------------------------------ */
+  @container style(--ui-sizing: compact) or style(--controls-size: sm) or style(--combobox-size: sm) {
+    --_combobox-font-size: var(--body-compact-font-size, 0.875rem);
+    --_combobox-option-padding-block: calc(var(--spacing, 1rem) / 4);
+    --_combobox-option-padding-inline: calc(var(--spacing, 1rem) / 2);
+  }
+
+  /* The list anchors to this combobox's own control */
+  anchor-scope: --combobox;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  inline-size: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   2. Modifiers (set the flags the control reads; see atoms/input.css)
+   ========================================================================== */
+:where(.combobox--sm) {
+  --combobox-size: sm;
+  --_combobox-font-size: var(--body-compact-font-size, 0.875rem);
+  --_combobox-option-padding-block: calc(var(--spacing, 1rem) / 4);
+  --_combobox-option-padding-inline: calc(var(--spacing, 1rem) / 2);
+}
+
+:where(.combobox--lg) {
+  --combobox-size: lg;
+}
+
+:where(.combobox--subtle) {
+  --combobox-prominence: subtle;
+}
+
+:where(.combobox--plain) {
+  --combobox-prominence: plain;
+}
+
+:where(.combobox--round) {
+  --combobox-corners: round;
+}
+
+/* ==========================================================================
+   3. Control (the frame is the text-control base)
+   ========================================================================== */
+:where(.combobox__control) {
+  anchor-name: --combobox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--_combobox-gap);
+  inline-size: 100%;
+  cursor: text;
+
+  /* Buttons in the field fit inside it; their hit area stays 48px */
+  --_combobox-button-size: max(1.5rem, calc(var(--_control-min-size) - var(--_control-border-width) * 2 - var(--_control-padding-block) * 2));
+  --button-min-size: var(--_combobox-button-size);
+  --button-sm-min-size: var(--_combobox-button-size);
+  --button-lg-min-size: var(--_combobox-button-size);
+
+  > :where(.button) {
+    flex: none;
+    margin-inline-end: calc(var(--_control-padding-inline) / -2);
+    margin-inline-start: auto;
+  }
+}
+
+:where(.combobox__input) {
+  flex: 1 1 5rem;
+  min-inline-size: 3ch;
+  min-block-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--_control-placeholder-color);
+    opacity: 1;
+  }
+
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    display: none;
+  }
+}
+
+:where(.combobox__icon-start) {
+  flex: none;
+  color: var(--foreground-muted, currentColor);
+  pointer-events: none;
+}
+
+/* The toggle's chevron turns while the list is open */
+:where(.combobox__toggle) :where(.icon) {
+  transition: rotate var(--duration-sm, 150ms) var(--timefunc-ease-in-out, ease-in-out);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+:where(.combobox:has([role="combobox"][aria-expanded="true"]) .combobox__toggle .icon) {
+  rotate: 180deg;
+}
+
+/* Chips before the input */
+:where(.combobox__tags) {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--_combobox-gap) / 2);
+  padding-block: var(--_control-padding-block);
+}
+
+/* ==========================================================================
+   4. List
+   ========================================================================== */
+:where(.combobox__listbox) {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-block-size: var(--_combobox-listbox-max-size);
+  margin: 0;
+  padding: var(--_combobox-listbox-padding);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  font-size: var(--_combobox-font-size);
+  color: var(--foreground, CanvasText);
+  background-color: var(--_combobox-listbox-bg);
+  border: var(--_combobox-listbox-border-width) solid var(--_combobox-listbox-border-color);
+  border-radius: var(--_combobox-listbox-radius);
+  box-shadow: var(--_combobox-listbox-shadow);
+
+  /* Popover: below the control, flipping above when there is no room */
+  &:where([popover]) {
+    position-anchor: --combobox;
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: flip-block;
+    inset: auto;
+    margin-block: var(--_combobox-listbox-offset);
+    min-inline-size: anchor-size(inline);
+
+    /* A closed popover stays hidden: display: flex would override that */
+    &:not(:popover-open) {
+      display: none;
+    }
+  }
+
+  /* Without the popover attribute: under the control, shown while open */
+  &:where(:not([popover], .combobox__listbox--static)) {
+    position: absolute;
+    z-index: var(--z-index-dropdown, 100);
+    inset-block-start: calc(100% + var(--_combobox-listbox-offset));
+    inset-inline: 0;
+  }
+}
+
+:where(.combobox:not(:has([role="combobox"][aria-expanded="true"])) > .combobox__listbox:not([popover], .combobox__listbox--static)) {
+  display: none;
+}
+
+/* A list with no options left hides; .combobox__empty says so */
+:where(.combobox__listbox:not(:has([role="option"]:not([hidden])))) {
+  display: none;
+}
+
+/* Always shown, in flow (a command palette) */
+:where(.combobox__listbox--static) {
+  max-block-size: none;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   5. Options
+   ========================================================================== */
+:where(.combobox__option) {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--_combobox-gap);
+  min-block-size: var(--_combobox-option-min-size);
+  padding-block: var(--_combobox-option-padding-block);
+  padding-inline: var(--_combobox-option-padding-inline);
+  border-radius: var(--_combobox-option-radius);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--duration-sm, 150ms) var(--timefunc-ease-in-out, ease-in-out);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--_combobox-option-hover-bg);
+    }
+  }
+
+  /* Active (keyboard) option, set with aria-activedescendant */
+  &:where(.is-active) {
+    background-color: var(--_combobox-option-hover-bg);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
+    outline-offset: calc(var(--focus-ring-width, 2px) * -1);
+  }
+
+  &:where([aria-selected="true"]) {
+    color: var(--_combobox-option-selected-color);
+  }
+
+  &:where([aria-disabled="true"]) {
+    opacity: var(--opacity-disabled, 0.4);
+    cursor: not-allowed;
+  }
+
+  &:where([hidden]) {
+    display: none;
+  }
+}
+
+/* The check shows on selected options only */
+:where(.combobox__check) {
+  flex: none;
+  margin-inline-start: auto;
+}
+
+:where(.combobox__option:not([aria-selected="true"]) .combobox__check) {
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   6. Groups and no results
+   A grouped list is a <div role="listbox"> of <ul role="group">s; a rule
+   separates the groups (a separator isn't allowed in a listbox).
+   ========================================================================== */
+:where(.combobox__listbox [role="group"]) {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &+ :where([role="group"]) {
+    margin-block-start: var(--_combobox-listbox-padding);
+    padding-block-start: var(--_combobox-listbox-padding);
+    border-block-start: var(--rule-width, 1px) solid var(--rule-color, currentColor);
+  }
+
+  &:where([hidden]) {
+    display: none;
+  }
+}
+
+:where(.combobox__group-label) {
+  margin: 0;
+  padding-block: var(--_combobox-option-padding-block) calc(var(--_combobox-option-padding-block) / 2);
+  padding-inline: var(--_combobox-option-padding-inline);
+  color: var(--foreground-muted, currentColor);
+  user-select: none;
+}
+
+:where(.combobox__empty) {
+  margin: 0;
+  padding-block: var(--spacing, 1rem);
+  padding-inline: var(--_combobox-option-padding-inline);
+  text-align: center;
+  color: var(--foreground-muted, currentColor);
+}
+
+/* ==========================================================================
+   7. Forced colours and more contrast
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.combobox__option[aria-selected="true"]) {
+    color: Highlight;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.combobox__listbox) {
+    border-width: calc(var(--_combobox-listbox-border-width) * 2);
+  }
+}

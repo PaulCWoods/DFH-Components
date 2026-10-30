@@ -48,7 +48,7 @@
   --_navigation-tree-rule: var(--_navigation-tree-rule-width) var(--navigation-tree-rule-style, solid) var(--navigation-tree-rule-color, currentColor);
   --_navigation-tree-current-bg: var(--navigation-tree-current-bg, transparent);
   --_navigation-tree-current-color: var(--navigation-tree-current-color, var(--foreground, CanvasText));
-  --_navigation-tree-rail-width: var(--navigation-tree-rail-width, 4px);
+  --_navigation-tree-rail-width: var(--navigation-tree-rail-width, 2px);
   --_navigation-tree-rail-color: var(--navigation-tree-rail-color, currentColor);
   --_navigation-tree-heading-color: var(--navigation-tree-heading-color, currentColor);
 
@@ -84,7 +84,7 @@
   }
 
   /* A nested list starts under its parent's label */
-  :where(li) > :where(ol, ul) {
+  :where(li)> :where(ol, ul) {
     margin-block-start: var(--_navigation-tree-gap);
     margin-inline-start: var(--_navigation-tree-inset);
   }
@@ -98,7 +98,7 @@
 /* ==========================================================================
    2. Items: buttons, full width, content at the start
    ========================================================================== */
-:where(.navigation-tree) :where(li) > :where(.button) {
+:where(.navigation-tree) :where(li)> :where(.button) {
   inline-size: 100%;
   justify-content: flex-start;
   text-align: start;
@@ -135,12 +135,9 @@
     --_button-active-color-palette: initial;
 
     /* The rail fills the button's start edge, over its border: as wide as
-       the rail width or the button's radius, whichever is greater, with its
-       start corners following the button's, so it sits flush in the curve */
+       the rail width or the button's radius, whichever is greater */
     &::before {
       background-color: var(--_navigation-tree-rail-color);
-      border-end-start-radius: var(--_button-radius);
-      border-start-start-radius: var(--_button-radius);
       content: "";
       inline-size: max(var(--_navigation-tree-rail-width), var(--_button-radius));
       inset-block: calc(var(--_button-border-width) * -1);
@@ -155,7 +152,7 @@
    ========================================================================== */
 /* The line drops from the parent's label; the children's rows start right
    after it */
-:where(.navigation-tree--ruled) :where(li) > :where(ol, ul) {
+:where(.navigation-tree--ruled) :where(li)> :where(ol, ul) {
   border-inline-start: var(--_navigation-tree-rule);
 }
 
@@ -182,7 +179,7 @@
    5. Forced colours: the rail uses a system colour
    ========================================================================== */
 @media (forced-colors: active) {
-  :where(.navigation-tree) :where(li) > :where(.button[aria-current])::before {
+  :where(.navigation-tree) :where(li)> :where(.button[aria-current])::before {
     background-color: Highlight;
   }
 }

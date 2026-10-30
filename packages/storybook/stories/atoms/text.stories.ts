@@ -51,8 +51,6 @@ const meta: Meta<TextArgs> = {
     docs: {
       description: {
         component: `
-### Text
-
 Typography presets, one step of the modular scale each. Put the class on the element whose meaning fits (an \`h2\` can look like a \`.small-heading\`); the class sets the look, the element sets the outline.
 
 | Class | Job | Step |

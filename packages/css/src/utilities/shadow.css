@@ -1,20 +1,16 @@
 /* ==========================================================================
-   Design For Humans: Shadow & Elevation Utilities
+   Design For Humans: Shadow Utilities
    --------------------------------------------------------------------------
-   Comprehensive, zero-specificity (:where()) elevation helpers mapping
-   directly to 3-layer Gaussian blur tokens and CSS @function architecture.
-   Provides basic fallbacks (none) adhering to unstyled resilience principles.
-   Direct parity with Design For Humans blog architecture (_shadow.scss).
+   Elevation from the 3-layer shadow tokens. A colour class sets
+   --shadow-color, which the shadow tokens read.
    ========================================================================== */
 
-/* ==========================================================================
-   1. Canonical Elevation Utilities
-   --------------------------------------------------------------------------
-   Maps to resting and raised 3-layer depth tokens.
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   1. Elevation
+   -------------------------------------------------------------------------- */
 
-:where(.shadow-none, .shadow-0, .no-shadow) {
-    box-shadow: var(--shadow-none, none);
+:where(.shadow-none) {
+    box-shadow: none;
 }
 
 :where(.shadow-sm) {
@@ -25,25 +21,25 @@
     box-shadow: var(--shadow-md, none);
 }
 
-:where(.shadow-lg, .shadow-raised) {
+:where(.shadow-lg) {
     box-shadow: var(--shadow-lg, none);
 }
 
-:where(.shadow-inner, .shadow-inset) {
+:where(.shadow-inner) {
     box-shadow: var(--shadow-inner, none);
 }
 
-/* ==========================================================================
-   2. Light Elevation Utilities
-   --------------------------------------------------------------------------
-   Low-contrast variants for quiet cards on clean, minimal surfaces.
-   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   2. Light elevation
+   Quieter shadows for plain surfaces.
+   -------------------------------------------------------------------------- */
 
 :where(.shadow-sm-light) {
     box-shadow: var(--shadow-sm-light, none);
 }
 
-:where(.shadow-md-light, .shadow-light) {
+:where(.shadow-md-light) {
     box-shadow: var(--shadow-md-light, none);
 }
 
@@ -51,33 +47,94 @@
     box-shadow: var(--shadow-lg-light, none);
 }
 
-:where(.shadow-inner-light, .shadow-inset-light) {
+:where(.shadow-inner-light) {
     box-shadow: var(--shadow-inner-light, none);
 }
 
-/* ==========================================================================
-   3. Contextual Shadow Color Modifiers
-   --------------------------------------------------------------------------
-   Overrides --shadow-color locally. Automatically cascades into all 3 layers
-   of var(--shadow-*) across all browsers including Firefox.
-   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   3. Colour
+   A tint of an intent. Never the only sign of the intent (WCAG 1.4.1).
+   The shadow tokens are resolved on :root, so a colour class resolves them
+   again here with its own --shadow-color: .shadow-md.shadow-accent.
+   -------------------------------------------------------------------------- */
 
 :where(.shadow-accent) {
-    --shadow-color: color-mix(in srgb, var(--color-purple-500, Highlight), transparent 75%);
+    --shadow-color: color-mix(in oklch, var(--foreground-accent, CanvasText), transparent 75%);
+    --shadow-sm:
+        var(--_shadow-sm-layer-1) var(--shadow-color),
+        var(--_shadow-sm-layer-2) var(--shadow-color),
+        var(--_shadow-sm-layer-3) var(--shadow-color);
+    --shadow-md:
+        var(--_shadow-md-layer-1) var(--shadow-color),
+        var(--_shadow-md-layer-2) var(--shadow-color),
+        var(--_shadow-md-layer-3) var(--shadow-color);
+    --shadow-lg:
+        var(--_shadow-lg-layer-1) var(--shadow-color),
+        var(--_shadow-lg-layer-2) var(--shadow-color),
+        var(--_shadow-lg-layer-3) var(--shadow-color);
+    --shadow-inner:
+        var(--_shadow-inner-layer-1) var(--shadow-color),
+        var(--_shadow-inner-layer-2) var(--shadow-color),
+        var(--_shadow-inner-layer-3) var(--shadow-color);
 }
 
-:where(.shadow-aqua, .shadow-teal) {
-    --shadow-color: color-mix(in srgb, var(--color-aqua-500, Highlight), transparent 75%);
+:where(.shadow-success) {
+    --shadow-color: color-mix(in oklch, var(--foreground-success, CanvasText), transparent 75%);
+    --shadow-sm:
+        var(--_shadow-sm-layer-1) var(--shadow-color),
+        var(--_shadow-sm-layer-2) var(--shadow-color),
+        var(--_shadow-sm-layer-3) var(--shadow-color);
+    --shadow-md:
+        var(--_shadow-md-layer-1) var(--shadow-color),
+        var(--_shadow-md-layer-2) var(--shadow-color),
+        var(--_shadow-md-layer-3) var(--shadow-color);
+    --shadow-lg:
+        var(--_shadow-lg-layer-1) var(--shadow-color),
+        var(--_shadow-lg-layer-2) var(--shadow-color),
+        var(--_shadow-lg-layer-3) var(--shadow-color);
+    --shadow-inner:
+        var(--_shadow-inner-layer-1) var(--shadow-color),
+        var(--_shadow-inner-layer-2) var(--shadow-color),
+        var(--_shadow-inner-layer-3) var(--shadow-color);
 }
 
-:where(.shadow-danger, .shadow-red) {
-    --shadow-color: color-mix(in srgb, var(--color-red-500, Red), transparent 75%);
+:where(.shadow-warning) {
+    --shadow-color: color-mix(in oklch, var(--foreground-warning, CanvasText), transparent 75%);
+    --shadow-sm:
+        var(--_shadow-sm-layer-1) var(--shadow-color),
+        var(--_shadow-sm-layer-2) var(--shadow-color),
+        var(--_shadow-sm-layer-3) var(--shadow-color);
+    --shadow-md:
+        var(--_shadow-md-layer-1) var(--shadow-color),
+        var(--_shadow-md-layer-2) var(--shadow-color),
+        var(--_shadow-md-layer-3) var(--shadow-color);
+    --shadow-lg:
+        var(--_shadow-lg-layer-1) var(--shadow-color),
+        var(--_shadow-lg-layer-2) var(--shadow-color),
+        var(--_shadow-lg-layer-3) var(--shadow-color);
+    --shadow-inner:
+        var(--_shadow-inner-layer-1) var(--shadow-color),
+        var(--_shadow-inner-layer-2) var(--shadow-color),
+        var(--_shadow-inner-layer-3) var(--shadow-color);
 }
 
-:where(.shadow-success, .shadow-green) {
-    --shadow-color: color-mix(in srgb, var(--color-green-500, Green), transparent 75%);
-}
-
-:where(.shadow-warning, .shadow-amber) {
-    --shadow-color: color-mix(in srgb, var(--color-amber-500, Yellow), transparent 75%);
+:where(.shadow-danger) {
+    --shadow-color: color-mix(in oklch, var(--foreground-danger, CanvasText), transparent 75%);
+    --shadow-sm:
+        var(--_shadow-sm-layer-1) var(--shadow-color),
+        var(--_shadow-sm-layer-2) var(--shadow-color),
+        var(--_shadow-sm-layer-3) var(--shadow-color);
+    --shadow-md:
+        var(--_shadow-md-layer-1) var(--shadow-color),
+        var(--_shadow-md-layer-2) var(--shadow-color),
+        var(--_shadow-md-layer-3) var(--shadow-color);
+    --shadow-lg:
+        var(--_shadow-lg-layer-1) var(--shadow-color),
+        var(--_shadow-lg-layer-2) var(--shadow-color),
+        var(--_shadow-lg-layer-3) var(--shadow-color);
+    --shadow-inner:
+        var(--_shadow-inner-layer-1) var(--shadow-color),
+        var(--_shadow-inner-layer-2) var(--shadow-color),
+        var(--_shadow-inner-layer-3) var(--shadow-color);
 }

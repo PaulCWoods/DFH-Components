@@ -6,14 +6,17 @@
 
    | Axis | Modifiers     | Container flag                                   |
    | ---- | ------------- | ------------------------------------------------ |
-   | Size | (20px) --lg   | --check-size: lg (--ui-sizing: compact steps lg to default) |
+   | Size | (20px) --lg   | --check-size: lg (--ui-sizing: compact steps lg to default), sm |
+
+   --check-size: sm (16px) is set by a compact .choice, whose row is the
+   target. It has no class: a box on its own must stay at least 20px.
 
    No intent: a checkbox has a state, not a status. Invalid
    (:user-invalid, [aria-invalid="true"]) turns it danger.
 
    Accessibility:
-   - 2.5.8 Target Size: the box is 20px or 24px. Wrap it in a .choice label,
-     so the whole label row is the target.
+   - 2.5.8 Target Size: the box is 20px or 24px (16px in a compact .choice).
+     Wrap it in a .choice label, so the whole label row is the target.
    - 2.4.7 Focus Visible: ring with offset.
 
    Usage:
@@ -30,6 +33,10 @@
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
      ------------------------------------------------------------------------ */
+  @container style(--check-size: sm) {
+    --_check-size: var(--check-sm-box-size, 1rem);
+  }
+
   @container style(--check-size: lg) {
     --_check-size: var(--check-lg-box-size, 1.5rem);
   }

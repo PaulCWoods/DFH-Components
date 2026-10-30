@@ -1,18 +1,28 @@
 /* ==========================================================================
    Design For Humans: Main Layout Primitive
    --------------------------------------------------------------------------
-   Primary application landmark container with token-driven cushion padding,
-   full-bleed .main--flush modifier, and viewport-constrained .main--viewport
-   modifier for internal panel and split scrolling layouts.
+   The page's main landmark. It keeps a cushion of padding round its content;
+   when its content is a .wrapper, the wrapper's gutter does the inline part.
+
+   - --flush: no padding (a full-bleed page, or panes that draw their own).
+   - --viewport: as tall as its track and no taller, for panes that scroll
+     inside it (in an .app--viewport shell). It scrolls as a page again at
+     small widths or heights.
+
+   Usage:
+   <main id="main" class="main">
+     <div class="wrapper stack">…</div>
+   </main>
    ========================================================================== */
 
 :where(.main) {
+    box-sizing: border-box;
     padding: var(--spacing-cushion, 1rem);
+}
 
-    :where(.app > &:where(main)) {
-        grid-area: main;
-        min-block-size: 0;
-    }
+/* A wrapper inside brings its own gutter */
+:where(.main:has(> .wrapper)) {
+    padding-inline: 0;
 }
 
 :where(.main--flush) {
@@ -20,21 +30,17 @@
 }
 
 /* --------------------------------------------------------------------------
-   Viewport & Panel Main Landmark (.main--viewport / .main--panels)
-   Constrains height to grid track without scrolling outer landmark, allowing
-   nested .split, .card, or custom panels to manage internal scrolling.
+   Viewport: panes scroll inside, the main doesn't
    -------------------------------------------------------------------------- */
-
-:where(.main--viewport, .main--panels) {
+:where(.main--viewport) {
     block-size: 100%;
-    min-block-size: 0;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
+    min-block-size: 0;
+    overflow: hidden;
 
-    @media (width < 48em) or (height < 36em) {
+    @media (width < 48rem) or (height < 36rem) {
         block-size: auto;
-        min-block-size: 0;
         overflow: visible;
     }
 }

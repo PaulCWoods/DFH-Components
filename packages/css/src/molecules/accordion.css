@@ -1,0 +1,288 @@
+/* ==========================================================================
+   Design For Humans: Accordion
+   --------------------------------------------------------------------------
+   One disclosure: a native <details> whose <summary> names a section and
+   whose content opens below it. A molecule: the accordion draws the frame,
+   the summary's layout and the state icon; what the summary says is a text
+   atom, and the content is anything.
+
+   | Axis        | Values                 | Flag                           |
+   | :---------- | :--------------------- | :----------------------------- |
+   | Prominence  | default, --plain       | --accordion-prominence: plain  |
+   | Density     | default, --compact     | --ui-sizing: compact           |
+
+   Default is a bordered frame with no surface of its own, the same open or
+   closed. --plain has no frame: a rule above and below, no inline padding,
+   so the summary lines up with the text around it.
+
+   Groups: .accordion-group stacks accordions; --joined shares their borders.
+   Plain accordions in a group sit one rule apart. name="…" on the <details>
+   allows one open item at a time.
+
+   Inset: --accordion-inset pads the summary and content (a flush card body
+   sets it to the card's padding).
+
+   Type: the summary is bold body text. A summary with a class takes its type
+   from that class, so give it a text atom (<summary class="subheading">).
+
+   WCAG 2.2:
+   - 2.1.1 Keyboard: the native summary opens with Enter and Space.
+   - 2.4.7 Focus Visible: the ring is inset on the summary.
+   - 2.5.5 Target Size: the summary is at least 48px tall, or the product's
+     fine-pointer target (--spacing-target-min).
+
+   Usage:
+   <details class="accordion">
+     <summary>Section title</summary>
+     <p>Content.</p>
+   </details>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.accordion) {
+  /* Private manifest */
+  --_accordion-bg: var(--accordion-bg, transparent);
+  --_accordion-border-color: var(--accordion-border-color, var(--panel-border-color, currentColor));
+  --_accordion-border-style: var(--accordion-border-style, var(--panel-border-style, solid));
+  --_accordion-border-width: var(--accordion-border-width, var(--panel-border-width, 1px));
+  --_accordion-border-inline-width: var(--_accordion-border-width);
+  --_accordion-border-start-width: var(--_accordion-border-width);
+  --_accordion-radius: var(--accordion-radius, var(--panel-radius, 0.25rem));
+  --_accordion-padding-block: var(--accordion-padding, var(--spacing, 1rem));
+  --_accordion-padding-inline: var(--accordion-padding, var(--spacing, 1rem));
+  --_accordion-inset: var(--accordion-inset, var(--_accordion-padding-inline));
+  --_accordion-bleed: 0px;
+  --_accordion-summary-radius: calc(var(--_accordion-radius) - var(--_accordion-border-width));
+  --_accordion-hover-bg: var(--accordion-hover-bg, var(--surface-translucent, transparent));
+  --_accordion-icon-size: var(--accordion-icon-size, 1em);
+  --_accordion-icon-stroke: var(--border-width, 2px);
+  --_accordion-font-size: var(--body-fixed-font-size, inherit);
+  --_accordion-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+  --_accordion-transition: var(--accordion-transition, var(--duration-sm, 150ms));
+  --_accordion-timefunc: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifiers, so a modifier beats a flag.
+     e.g. .faq { --accordion-prominence: plain; --ui-sizing: compact; }
+     ------------------------------------------------------------------------ */
+  @container style(--ui-sizing: compact) {
+    --_accordion-padding-block: var(--accordion-compact-padding-block, 0.5rem);
+    --_accordion-padding-inline: var(--accordion-compact-padding-inline, 0.75rem);
+    --_accordion-font-size: var(--body-compact-font-size, inherit);
+  }
+
+  @container style(--accordion-prominence: plain) {
+    --_accordion-border-color: var(--rule-color, currentColor);
+    --_accordion-border-style: var(--rule-style, solid);
+    --_accordion-border-width: var(--rule-width, 1px);
+    --_accordion-border-inline-width: 0px;
+    --_accordion-radius: 0px;
+    --_accordion-inset: var(--accordion-inset, 0px);
+    --_accordion-bleed: max(0px, calc(var(--spacing, 1rem) / 2 - var(--_accordion-inset)));
+    --_accordion-summary-radius: var(--radius-sm, 0.25rem);
+  }
+
+  /* Fixed type, whatever the page's mode */
+  --font-sizing: fixed;
+
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding-block-end: 0;
+  font-size: var(--_accordion-font-size);
+  background-color: var(--_accordion-bg);
+  border-color: var(--_accordion-border-color);
+  border-style: var(--_accordion-border-style);
+  border-width: var(--_accordion-border-start-width) var(--_accordion-border-inline-width) var(--_accordion-border-width);
+  border-radius: var(--_accordion-radius);
+  transition: padding-block-end var(--_accordion-transition) var(--_accordion-timefunc);
+
+  &[open] {
+    padding-block-end: var(--_accordion-padding-block);
+  }
+
+  /* Reduced motion and more contrast */
+  @media (prefers-reduced-motion: reduce) {
+    --_accordion-transition: 0s;
+  }
+
+  @media (prefers-contrast: more) {
+    --_accordion-border-width: calc(var(--accordion-border-width, var(--panel-border-width, 1px)) * 2);
+  }
+}
+
+/* ==========================================================================
+   2. Summary
+   ========================================================================== */
+:where(.accordion > summary) {
+  display: flex;
+  align-items: center;
+  gap: var(--_accordion-padding-inline);
+  min-block-size: var(--_accordion-min-size);
+  box-sizing: border-box;
+  margin-inline: calc(var(--_accordion-bleed) * -1);
+  padding-block: var(--_accordion-padding-block);
+  padding-inline: calc(var(--_accordion-inset) + var(--_accordion-bleed));
+  border-radius: var(--_accordion-summary-radius);
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  text-box: trim-both cap alphabetic;
+  transition: background-color var(--_accordion-transition) var(--_accordion-timefunc);
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  /* State icon: a plus whose upright bar closes into a minus */
+  &::after {
+    content: "";
+    flex: none;
+    inline-size: var(--_accordion-icon-size);
+    block-size: var(--_accordion-icon-size);
+    margin-inline-start: auto;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% var(--_accordion-icon-stroke) no-repeat,
+      linear-gradient(currentColor, currentColor) center / var(--_accordion-icon-stroke) 100% no-repeat;
+    transition: background-size var(--_accordion-transition) var(--_accordion-timefunc);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--_accordion-hover-bg);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: calc(var(--focus-ring-width, 2px) * -1);
+  }
+}
+
+/* Bold body text, unless a class (a text atom) sets the type */
+:where(.accordion > summary:not([class])) {
+  font-weight: var(--font-weight-bold, 700);
+}
+
+:where(.accordion[open] > summary) {
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+
+  &::after {
+    background-size: 100% var(--_accordion-icon-stroke), var(--_accordion-icon-stroke) 0%;
+  }
+}
+
+/* ==========================================================================
+   3. Content
+   An inset handed down by a card stops here, so nested accordions use their
+   own. The content's height animates where interpolate-size is supported.
+   ========================================================================== */
+:where(.accordion > :not(summary)) {
+  --accordion-inset: initial;
+}
+
+:where(.accordion)::details-content {
+  padding-inline: var(--_accordion-inset);
+}
+
+@supports (interpolate-size: allow-keywords) {
+  :where(.accordion)::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size, content-visibility;
+    transition-duration: var(--_accordion-transition);
+    transition-timing-function: var(--_accordion-timefunc);
+    transition-behavior: allow-discrete;
+  }
+
+  :where(.accordion[open])::details-content {
+    block-size: auto;
+    overflow: visible;
+  }
+}
+
+/* ==========================================================================
+   4. Modifiers (pure token maps)
+   --plain sets the private variables only, so accordions nested in its
+   content keep their own prominence.
+   ========================================================================== */
+:where(.accordion--plain) {
+  --_accordion-border-color: var(--rule-color, currentColor);
+  --_accordion-border-style: var(--rule-style, solid);
+  --_accordion-border-width: var(--rule-width, 1px);
+  --_accordion-border-inline-width: 0px;
+  --_accordion-radius: 0px;
+  --_accordion-inset: var(--accordion-inset, 0px);
+  --_accordion-bleed: max(0px, calc(var(--spacing, 1rem) / 2 - var(--_accordion-inset)));
+  --_accordion-summary-radius: var(--radius-sm, 0.25rem);
+}
+
+:where(.accordion--compact) {
+  --ui-sizing: compact;
+  --_accordion-padding-block: var(--accordion-compact-padding-block, 0.5rem);
+  --_accordion-padding-inline: var(--accordion-compact-padding-inline, 0.75rem);
+  --_accordion-font-size: var(--body-compact-font-size, inherit);
+}
+
+/* A plain accordion after another shares its rule */
+:where(.accordion + .accordion) {
+  @container style(--accordion-prominence: plain) {
+    --_accordion-border-start-width: 0px;
+  }
+
+  &:where(.accordion--plain) {
+    --_accordion-border-start-width: 0px;
+  }
+}
+
+/* ==========================================================================
+   5. Group
+   ========================================================================== */
+:where(.accordion-group) {
+  --_accordion-group-gap: var(--accordion-group-gap, 0.5rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--_accordion-group-gap);
+
+  /* Plain accordions sit one rule apart */
+  @container style(--accordion-prominence: plain) {
+    --_accordion-group-gap: 0px;
+  }
+
+  &:where(:has(> .accordion--plain)) {
+    --_accordion-group-gap: 0px;
+  }
+}
+
+/* Joined: shared borders, outer corners rounded */
+:where(.accordion-group--joined) {
+  --_accordion-group-gap: 0px;
+
+  > :where(.accordion + .accordion) {
+    --_accordion-border-start-width: 0px;
+  }
+
+  > :where(.accordion:not(:first-child)) {
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+
+    > :where(summary) {
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+    }
+  }
+
+  > :where(.accordion:not(:last-child)) {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+
+    > :where(summary) {
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+    }
+  }
+}

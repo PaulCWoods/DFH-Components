@@ -38,7 +38,7 @@ const field = (label: string, control: (id: string) => string) => {
   const id = `select-demo-${++uid}`;
   return `
     <div class="field">
-      <label for="${id}" class="field__label">${label}</label>
+      <label for="${id}" class="field__label label">${label}</label>
       ${control(id)}
     </div>`;
 };
@@ -50,8 +50,6 @@ const meta: Meta<SelectArgs> = {
     docs: {
       description: {
         component: `
-### Select
-
 A native \`<select>\`. It shares the text control base with input and textarea (size, prominence, corners, flags and states: see **Atoms/Input**). This atom adds the chevron and the customizable select.
 
 | Axis | Modifiers | Container flags |
@@ -65,7 +63,7 @@ A native \`<select>\`. It shares the text control base with input and textarea (
 
 \`\`\`html
 <div class="field">
-  <label for="role" class="field__label">Role</label>
+  <label for="role" class="field__label label">Role</label>
   <select id="role" class="select">
     <option value="lead">Accessibility lead</option>
   </select>
@@ -87,14 +85,14 @@ A native \`<select>\`. It shares the text control base with input and textarea (
   render: (args) => `
     <div class="demo-stage demo-constrained--md">
       <div class="field">
-        <label for="select-playground" class="field__label">${args.label}</label>
+        <label for="select-playground" class="field__label label">${args.label}</label>
+        ${args.invalid ? '<p id="select-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>' : ''}
         <select
           id="select-playground"
           class="${selectClasses(args.size, args.prominence, args.round, args.custom)}"
           ${args.invalid ? 'aria-invalid="true" aria-describedby="select-playground-error"' : ''}
           ${args.disabled ? 'disabled' : ''}
         >${OPTIONS}</select>
-        ${args.invalid ? '<p id="select-playground-error" class="field__error">Choose a role.</p>' : ''}
       </div>
     </div>
   `,
@@ -147,9 +145,9 @@ export const States: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md stack">
       <div class="field">
-        <label for="select-invalid" class="field__label">Invalid</label>
+        <label for="select-invalid" class="field__label label">Invalid</label>
+        <p id="select-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>
         <select id="select-invalid" class="select" aria-invalid="true" aria-describedby="select-invalid-error">${OPTIONS}</select>
-        <p id="select-invalid-error" class="field__error">Choose a role.</p>
       </div>
       ${field('Disabled', (id) => `<select id="${id}" class="select" disabled>${OPTIONS}</select>`)}
       ${field('List box (size="4")', (id) => `<select id="${id}" class="select" size="4">${OPTIONS}</select>`)}
@@ -164,7 +162,7 @@ export const Custom: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md">
       <div class="field">
-        <label for="select-custom" class="field__label">Conformance target</label>
+        <label for="select-custom" class="field__label label">Conformance target</label>
         <select id="select-custom" class="select select--custom">
           <button type="button"><selectedcontent></selectedcontent></button>
           <option value="a">WCAG 2.2 A</option>

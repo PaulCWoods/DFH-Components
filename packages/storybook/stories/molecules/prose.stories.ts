@@ -7,79 +7,23 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Prose Molecule Primitive
+Styles bare HTML (CMS and Markdown output) so it reads like the rest of the library without classes. \`.prose-end\` ends the scope, so a card or widget inside an article keeps its own styles.
 
-Rhythmic long-form editorial content container formatting rich text, blog posts, documentation, and technical articles. Operates with zero-specificity (\`:where()\`) resets, native \`hanging-punctuation\`, oldstyle figures, proportional list markers, and responsive vertical rhythm conforming to WCAG 2.2 Level AA / AAA standards (1.4.8 Visual Presentation, 1.4.12 Text Spacing, and 66ch reading measure).
-
-By default, \`.prose\` enforces fixed scale steps (\`--font-sizing: fixed; --vert-spacing: fixed;\`). Sizing seamlessly adapts to fluid or container query scaling when placed in \`.font-sizing-fluid\` or \`.font-sizing-cq\` contexts via modern CSS container style queries.
-
----
-
-### Canonical Semantic Markup Signatures
-
-#### 1. Editorial Article Container (Default Fixed Scale)
+### Markup
 \`\`\`html
 <article class="prose">
-  <h1>Designing for Humans in the Age of Agents</h1>
-  <p>Introductory paragraph formatted with optimal line length and typographic balance.</p>
-
-  <h2>The Three-Tier Token Architecture</h2>
-  <p>Paragraph containing an <a href="/tokens">accessible hyperlink</a> and inline <code>code</code>.</p>
-
-  <blockquote>
-    <p>Accessibility is the universal baseline that enables comprehension for both humans and AI agents.</p>
-  </blockquote>
-
-  <pre><code>/* Token Compilation */
-:where(textarea) {
-  field-sizing: content;
-}</code></pre>
+  <h1>Title</h1>
+  <p>Text with a <a href="/guide">link</a>.</p>
+  <div class="prose-end">…a widget…</div>
 </article>
 \`\`\`
 
-#### 2. Scaling & Spacing Modes
-\`\`\`html
-<!-- Fluid Scaled Prose (via font-sizing utility) -->
-<div class="font-sizing-fluid">
-  <article class="prose">...</article>
-</div>
-
-<!-- Container Query Adaptive Prose (via font-sizing utility) -->
-<div class="font-sizing-cq" style="container-type: inline-size;">
-  <article class="prose">...</article>
-</div>
-
-<!-- Tight Vertical Spacing (Sidebars & Cards) -->
-<article class="prose prose--tight">...</article>
-\`\`\`
-
----
-
-### WCAG 2.2 Conformance Matrix
-| Criterion | Level | Status | Architectural Implementation |
-| :--- | :--- | :--- | :--- |
-| **1.4.1 Use of Color** | A | **Pass** | Hyperlinks inside prose enforce persistent underlines with 0.15em offset and distinct typography. |
-| **1.4.3 Contrast (Minimum)** | AA (4.5:1) | **Pass** | Prose copy satisfies >= 4.5:1 on light surface and >= 7:1 on dark surfaces (\`--surface-dark\`). |
-| **1.4.8 Visual Presentation** | AAA | **Pass** | Line length is restricted to \`min(66ch, 100%)\`; line spacing is 1.5; paragraph margin exceeds 1.5em; no justified text. |
-| **1.4.12 Text Spacing** | AA | **Pass** | Survives user stylesheet expansions (line-height 1.5, letter-spacing 0.12em, word-spacing 0.16em) with zero clipping. |
-| **2.4.7 Focus Visible** | AA | **Pass** | In-prose links display high-contrast 2px focus ring with 2px offset on \`:focus-visible\`. |
-| **2.3.3 Reduced Motion** | AAA | **Pass** | Transitions on hyperlinks and interactive elements respect \`prefers-reduced-motion: reduce\`. |
-| **RTL Bidirectional Support** | AAA | **Pass** | Blockquotes and lists automatically mirror logical inline borders and indentations in \`[dir="rtl"]\` mode. |
-
----
-
-### CSS Custom Property Token Contract
-| CSS Variable | Default Value | Fallback Ladder | Description |
-| :--- | :--- | :--- | :--- |
-| \`--font-sizing\` | \`fixed\` | \`fixed\` | Base font sizing mode (\`fixed\` by default) |
-| \`--vert-spacing\` | \`fixed\` | \`fixed\` | Base spacing rhythm (\`fixed\` by default) |
-| \`--vert-spacing\` | \`var(--spacing, 1rem)\` | \`1rem\` | Inter-block vertical margin |
-| \`--inset-spacing\` | \`var(--prose-inset-space-fixed, 1.5em)\` | \`1.5em\` | List and blockquote indentation |
-| \`--prose-body-line-length\` | \`66ch\` | \`66ch\` | Maximum reading measure for body paragraphs |
-| \`--prose-link-underline\` | \`underline\` | \`underline\` | Inline hyperlink underline decoration |
-| \`--prose-link-underline-offset\` | \`0.15em\` | \`0.15em\` | Baseline clearance distance for underlines |
-| \`--prose-blockquote-border-width\` | \`var(--border-width, 1px)\` | \`1px\` | Accent quote leading border stroke |
-| \`--prose-hr-thickness\` | \`var(--border-width, 1px)\` | \`1px\` | Horizontal rule stroke |
+- **Type:** each element takes the type of the text atom it stands for: \`h1\` a title, \`h2\` a heading, \`h3\` a subheading, \`h4\`–\`h6\` a small heading, text blocks body text, \`small\` and captions small text. A text atom on an element wins (\`<p class="small-text">\`).
+- **Sizing:** prose follows the sizing mode around it. Put \`.font-sizing-fluid\` or \`.font-sizing-cq\` on the prose or a region; the rhythm between blocks follows too. Compact (\`.ui-compact\`, \`.font-sizing-compact\`) halves the rhythm.
+- **Links:** a bare link is a \`.link\`. \`--link-prominence: subtle\` on the prose makes links body-coloured.
+- **Lists, tables and rules** are styled only without a class: a classed list, \`.table\` or \`.divider\` is a component and styles itself.
+- **Code blocks** are a dark band in both themes and wrap long lines. Inline code has a subtle tint.
+- **Measure:** text blocks stop at \`--body-measure\` (66ch). The wrapper sets the column width.
         `,
       },
     },
@@ -89,476 +33,188 @@ By default, \`.prose\` enforces fixed scale steps (\`--font-sizing: fixed; --ver
 export default meta;
 type Story = StoryObj;
 
-/**
- * 1. Playground
- * Interactive sandbox toggling spacing modes and rich content elements.
- */
+const article = `
+  <h1>Planting a shade garden</h1>
+  <p>Most gardens have a corner the sun never reaches. Rather than fight it, plant for it: ferns, hostas and woodland bulbs thrive in 3 to 4 hours of dappled light, and need about 30% less water than a sunny border.</p>
+  <h2>Start with the soil</h2>
+  <p>Shade under trees is usually dry. Dig in leaf mould before you plant, and read the <a href="#soil">soil guide</a> if your ground is heavy clay.</p>
+  <h3>What to buy</h3>
+  <ul>
+    <li>Leaf mould or composted bark</li>
+    <li>A slow-release feed
+      <ul>
+        <li>Organic, if you grow vegetables nearby</li>
+      </ul>
+    </li>
+    <li>Mulch for the first summer</li>
+  </ul>
+  <h4>Before you plant</h4>
+  <p>Water each pot until it stops bubbling. <small>Plants sold in peat dry out fastest.</small></p>`;
+
 export const Playground: Story = {
-  args: {
-    scalingMode: 'fixed',
-    spacingTight: false,
-    showQuote: true,
-    showCode: true,
-    showFigure: true,
-    showList: true,
-  },
-  argTypes: {
-    scalingMode: {
-      name: 'Scaling Mode',
-      control: { type: 'inline-radio' },
-      options: ['fixed', 'fluid', 'cq', 'compact'],
-      description: 'Font sizing orchestration mode applied via .font-sizing-* container utilities.',
-    },
-    spacingTight: {
-      name: 'Tight Spacing (.prose--tight)',
-      control: { type: 'boolean' },
-      description: 'Halves vertical block margins for compact drawer and card layouts.',
-    },
-    showQuote: {
-      name: 'Show Blockquote',
-      control: { type: 'boolean' },
-    },
-    showCode: {
-      name: 'Show Code Block',
-      control: { type: 'boolean' },
-    },
-    showFigure: {
-      name: 'Show Figure with Caption',
-      control: { type: 'boolean' },
-    },
-    showList: {
-      name: 'Show Hierarchical List',
-      control: { type: 'boolean' },
-    },
-  },
+  args: { sizing: 'inherit', subtleLinks: false },
+  argTypes: { sizing: { control: 'inline-radio', options: ['inherit', 'fluid', 'cq', 'compact'] } },
   render: (args) => {
-    const utilityClass = args.scalingMode !== 'fixed' ? `font-sizing-${args.scalingMode}` : '';
-    const tightClass = args.spacingTight ? 'prose--tight' : '';
-    const className = ['prose', tightClass].filter(Boolean).join(' ');
-
-    return `
-      <div class="${utilityClass}" style="max-inline-size: 52rem; margin-inline: auto; padding: var(--spacing-24); background-color: var(--surface-card); border: var(--border-width, 1px) solid var(--border-quiet); border-radius: var(--radius-lg);">
-        <p class="micro-heading" style="color: var(--foreground-muted); margin-block-end: var(--spacing-8);">
-          Scaling: ${args.scalingMode} (Default: fixed) | Tight: ${args.spacingTight ? 'Yes (.prose--tight)' : 'No'}
-        </p>
-        <article class="${className}">
-          <h1>Interactive Editorial Prose</h1>
-          <p>
-            Digital accessibility and web standards are not aesthetic constraints — they are the foundational architecture enabling software comprehension for human beings and autonomous AI agents alike.
-          </p>
-
-          <h2>Core Principles of Component Architecture</h2>
-          <p>
-            When design tokens and zero-specificity styles are combined, applications achieve resilience across themes without fragile CSS selector wars. Explore our <a href="#">token specifications</a> for deep details.
-          </p>
-
-          ${args.showList ? `
-            <ul>
-              <li><strong>Zero-Specificity Foundation:</strong> Powered exclusively by <code>:where()</code>.</li>
-              <li><strong>Rhythmic Measure:</strong> Capped at 66 characters per line for optimal scanning.</li>
-              <li><strong>Container Queries:</strong> Seamlessly adapts between fixed, fluid, and cq modes.</li>
-            </ul>
-          ` : ''}
-
-          ${args.showQuote ? `
-            <blockquote>
-              <p>
-                "Accessibility is the universal baseline that enables comprehension for both humans and AI agents."
-              </p>
-            </blockquote>
-          ` : ''}
-
-          ${args.showCode ? `
-            <pre><code>/* Pure CSS Zero-JS Layout */
-:where(.prose) {
-  --font-sizing: fixed;
-  --vert-spacing: fixed;
-  max-inline-size: min(var(--prose-body-line-length, 66ch), none);
-}</code></pre>
-          ` : ''}
-
-          ${args.showFigure ? `
-            <figure>
-              <img 
-                src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" 
-                alt="Minimalist design workbench with laptop and notebook" 
-                loading="lazy"
-                style="border-radius: var(--radius); width: 100%; height: auto;"
-              />
-              <figcaption>
-                <p>Figure 1: Architectural clarity through mathematical scale ratios and standardized token ladders.</p>
-              </figcaption>
-            </figure>
-          ` : ''}
-
-          <p class="emoji check">
-            Fully validated with zero axe accessibility violations across all display modes.
-          </p>
-        </article>
-      </div>
-    `;
+    const cls = args.sizing === 'inherit' ? '' : ` font-sizing-${args.sizing}`;
+    const style = args.subtleLinks ? ' style="--link-prominence: subtle;"' : '';
+    return `<div style="container-type: inline-size;"><article class="prose${cls}"${style}>${article}</article></div>`;
   },
 };
 
-/**
- * 2. Anatomy
- * Structural breakdown of editorial typography elements inside the `.prose` container.
- */
-export const Anatomy: Story = {
+export const TextAndHeadings: Story = {
+  name: 'Text and headings',
   render: () => `
-    <div class="stack" style="gap: var(--spacing-24); max-inline-size: 52rem; margin-inline: auto;">
-      <div class="card" style="padding: var(--spacing-24);">
-        <header style="margin-block-end: var(--spacing-16);">
-          <span class="sb-demo-tag">Prose Anatomy</span>
-          <h3 class="heading" style="margin-block-start: var(--spacing-8);">Semantic Hierarchy Breakdown</h3>
-          <p class="text" style="color: var(--foreground-muted); margin: 0;">
-            The <code>.prose</code> primitive automatically formats native HTML semantic elements with zero utility classes needed on children.
-          </p>
-        </header>
-
-        <article class="prose">
-          <div style="padding: var(--spacing-12); background-color: var(--surface); border-radius: var(--radius-sm); border-inline-start: 3px solid var(--foreground-accent); margin-block-end: var(--spacing-12);">
-            <span class="micro-heading" style="color: var(--foreground-accent);">h1 Element &bull; Title Preset</span>
-            <h1 style="margin: 0;">Main Editorial Title</h1>
-          </div>
-
-          <div style="padding: var(--spacing-12); background-color: var(--surface); border-radius: var(--radius-sm); border-inline-start: 3px solid var(--foreground-accent); margin-block-end: var(--spacing-12);">
-            <span class="micro-heading" style="color: var(--foreground-accent);">h2 Element &bull; Heading Preset</span>
-            <h2 style="margin: 0;">Major Section Heading</h2>
-          </div>
-
-          <div style="padding: var(--spacing-12); background-color: var(--surface); border-radius: var(--radius-sm); border-inline-start: 3px solid var(--foreground-accent); margin-block-end: var(--spacing-12);">
-            <span class="micro-heading" style="color: var(--foreground-accent);">p Element &bull; Body Copy with Hyperlink</span>
-            <p style="margin: 0;">
-              Prose paragraphs utilize <code>hanging-punctuation: first allow-end last</code> and oldstyle proportional numerals for exceptional editorial flow. Here is an <a href="#">inline link</a> demonstration.
-            </p>
-          </div>
-
-          <div style="padding: var(--spacing-12); background-color: var(--surface); border-radius: var(--radius-sm); border-inline-start: 3px solid var(--foreground-accent);">
-            <span class="micro-heading" style="color: var(--foreground-accent);">blockquote Element &bull; Leading Accent Border</span>
-            <blockquote style="margin: 0;">
-              <p>Blockquotes automatically adopt logical inline borders with calibrated inset padding.</p>
-            </blockquote>
-          </div>
-        </article>
-      </div>
-    </div>
-  `,
+    <article class="prose">
+      ${article}
+      <h5>Small heading (h5)</h5>
+      <p>Text with <strong>strong</strong>, <em>emphasis with <em>nested</em> emphasis</em>, <u>an annotation</u>, <del>a deletion</del> and <ins>an insertion</ins>, H<sub>2</sub>O and E = mc<sup>2</sup>, <kbd>Ctrl</kbd> + <kbd>S</kbd>, and <code>inline code</code>.</p>
+      <p class="small-text">A paragraph with a text atom: <code>p.small-text</code> keeps its small size inside prose.</p>
+    </article>`,
 };
 
-/**
- * 3. Variants
- * Complete showcase of prose variations: Default Fixed, Fluid Scale, Container Adaptive, and Tight.
- */
-export const Variants: Story = {
+export const Links: Story = {
   render: () => `
-    <div class="stack" style="gap: var(--spacing-32); max-inline-size: 54rem; margin-inline: auto;">
-      <!-- Variant 1: Default Fixed Scale Prose -->
-      <section class="card" style="padding: var(--spacing-24);">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">1. Default Fixed Rhythm (.prose)</span>
-        <article class="prose">
-          <h2>Fixed Scale Rhythm (Default)</h2>
-          <p>
-            By default, <code>.prose</code> locks text strictly to fixed scale steps (<code>1rem</code> body copy and static heading increments) with predictable spacing:
-          </p>
-          <ul>
-            <li>Fixed vertical space: <code>var(--spacing, 1rem)</code></li>
-            <li>Fixed padding inset: <code>var(--prose-inset-space-fixed, 1.5em)</code></li>
-          </ul>
-        </article>
-      </section>
-
-      <!-- Variant 2: Fluid Scaled Prose -->
-      <section class="card font-sizing-fluid" style="padding: var(--spacing-24);">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">2. Fluid Scaling (.font-sizing-fluid)</span>
-        <article class="prose">
-          <h2>Fluid Viewport Scaling</h2>
-          <p>
-            When wrapped in <code>.font-sizing-fluid</code>, prose adapts margins and font scaling smoothly to viewport width using dual-ratio <code>clamp()</code> formulas.
-          </p>
-          <ul>
-            <li>Fluid vertical space: <code>var(--spacing-breathe)</code></li>
-            <li>Fluid padding inset: <code>calc(var(--spacing-cushion) * 1.5)</code></li>
-          </ul>
-        </article>
-      </section>
-
-      <!-- Variant 3: Container Query Adaptive -->
-      <section class="card font-sizing-cq" style="padding: var(--spacing-24); container-type: inline-size;">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">3. Container Adaptive (.font-sizing-cq)</span>
-        <article class="prose">
-          <h2>Container Query Sizing</h2>
-          <p>
-            When wrapped in <code>.font-sizing-cq</code>, headings and body scale relative to immediate container width via <code>cqi</code> units — ideal for multi-pane dashboards and split layouts.
-          </p>
-          <ul>
-            <li>Container query vertical space: <code>var(--spacing-cq-breathe)</code></li>
-            <li>Zero viewport dependency</li>
-          </ul>
-        </article>
-      </section>
-
-      <!-- Variant 4: Tight Spacing -->
-      <section class="card" style="padding: var(--spacing-24);">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">4. Compact Rhythm (.prose--tight)</span>
-        <article class="prose prose--tight">
-          <h2>Compact Spacing for Cards & Drawers</h2>
-          <p>
-            Halves vertical rhythm margins (<code>calc(var(--spacing) / 2)</code>), ideal for modal explanations, drawers, and dense side panels.
-          </p>
-        </article>
-      </section>
-
-      <!-- Variant 5: Accessible Emoji Markers -->
-      <section class="card" style="padding: var(--spacing-24);">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">5. Accessible Emoji Callouts</span>
-        <article class="prose">
-          <p class="emoji check">Audit completed with 100% WCAG 2.2 AA / AAA conformance.</p>
-          <p class="emoji idea">Tip: Leverage native CSS container queries for component-level responsiveness.</p>
-          <p class="emoji warning">Warning: Never hardcode fixed pixel colors in components.</p>
-          <p class="emoji star">Featured: Native HTML dialog provides automatic focus management.</p>
-        </article>
-      </section>
-
-      <!-- Variant 6: Scoped Boundary Cancellation (.prose-end) -->
-      <section class="card" style="padding: var(--spacing-24);">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">6. Scoped Boundary Cancellation (.prose-end)</span>
-        <article class="prose">
-          <h2>Active Prose Section</h2>
-          <p>
-            This paragraph is formatted inside the <code>@scope (:where(.prose)) to (:where(.prose-end))</code> boundary with standard editorial spacing and measure.
-          </p>
-
-          <!-- Cancelled sub-tree -->
-          <div class="prose-end" style="margin-block: var(--spacing-16); padding: var(--spacing-16); background-color: var(--surface); border: 1px dashed var(--border-quiet); border-radius: var(--radius-md);">
-            <div class="cluster" style="align-items: center; justify-content: space-between;">
-              <span class="sb-demo-tag">Opt-Out Sub-tree: .prose-end</span>
-              <button type="button" class="button button--sm button--strong button--accent"><span>Interactive Action</span></button>
-            </div>
-            <p style="margin: var(--spacing-8) 0 0 0; font-size: 0.875rem; color: var(--foreground-muted);">
-              Elements inside <code>.prose-end</code> completely escape <code>@scope</code> prose styling, preventing conflicts with complex nested UI components.
-            </p>
-          </div>
-
-          <p>
-            Subsequent editorial content automatically resumes standard prose formatting.
-          </p>
-        </article>
-      </section>
-    </div>
-  `,
+    <div class="stack">
+      <article class="prose">
+        <p>A bare link in prose is a <a href="#a">link atom</a>: link colour, an underline that thickens on hover, and the focus ring.</p>
+      </article>
+      <article class="prose" style="--link-prominence: subtle;">
+        <p>With <code>--link-prominence: subtle</code> on the prose, <a href="#b">links</a> are body-coloured and the underline marks them.</p>
+      </article>
+    </div>`,
 };
 
-/**
- * 4. StateMatrix
- * High contrast mode, dark surface context, and bidirectional RTL layout.
- */
-export const StateMatrix: Story = {
+export const Lists: Story = {
   render: () => `
-    <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
-      <!-- Context 1: Dark Surface Container -->
-      <div class="card" style="padding: var(--spacing-24); background-color: var(--surface-dark); color: var(--foreground-on-dark);">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">Context: Dark Surface Container</span>
-        <article class="prose" style="color: inherit;">
-          <h2 style="color: inherit;">High Contrast Dark Mode</h2>
-          <p style="color: inherit;">
-            Prose inherits <code>--foreground-on-dark</code> seamlessly on deep backgrounds while code blocks and quotes retain clear contrast boundaries.
-          </p>
-          <pre><code>// Dark Mode Code Syntax
-const mode = "dark";</code></pre>
-        </article>
-      </div>
-
-      <!-- Context 2: Right-to-Left (RTL) Layout -->
-      <div dir="rtl" class="card" style="padding: var(--spacing-24); text-align: right;">
-        <span class="sb-demo-tag" style="margin-block-end: var(--spacing-8);">Context: dir="rtl" Bidirectional</span>
-        <article class="prose">
-          <h2>تصميم للإنسان: المعايير القياسية للويب</h2>
-          <p>
-            تعد إمكانية الوصول الرقمي ومعايير الويب من الركائز الأساسية لتوفير تجربة مستخدم استثنائية وسلسة للجميع.
-          </p>
-          <blockquote>
-            <p>
-              عندما نصمم مع وضع إمكانية الوصول في الاعتبار، فإننا ننشئ حلولاً أفضل للجميع في كل مكان.
-            </p>
-          </blockquote>
-        </article>
-      </div>
-    </div>
-  `,
-};
-
-/**
- * 5. SizesAndDensity
- * Nested hierarchical lists demonstrating counter sequences and marker typography.
- */
-export const SizesAndDensity: Story = {
-  render: () => `
-    <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
-      <div class="card" style="padding: var(--spacing-24);">
-        <header style="margin-block-end: var(--spacing-16);">
-          <span class="sb-demo-tag">Ordered & Unordered Markers</span>
-          <h3 class="heading" style="margin-block-start: var(--spacing-8);">Proportional List Hierarchy</h3>
-          <p class="text" style="color: var(--foreground-muted); margin: 0;">
-            Nested ordered lists cycle through decimal, lower-latin, and lower-roman sequences with lining numerals.
-          </p>
-        </header>
-
-        <article class="prose">
+    <article class="prose">
+      <ol>
+        <li>Clear the bed
           <ol>
-            <li>First primary numerical item with detailed text explanation.</li>
-            <li>
-              Second primary numerical item containing nested sub-lists:
+            <li>Lift the turf
               <ol>
-                <li>Secondary sub-item styled with lowercase alphabetical marker</li>
-                <li>
-                  Another secondary item with tertiary sub-nesting:
-                  <ol>
-                    <li>Tertiary nested item with lowercase roman numerals</li>
-                    <li>Final deeply nested numbered requirement</li>
-                  </ol>
-                </li>
+                <li>Stack it upside down to rot</li>
+                <li>Use it as loam next year</li>
               </ol>
             </li>
-            <li>Second primary numerical item</li>
+            <li>Fork out roots</li>
           </ol>
-        </article>
-      </div>
-    </div>
-  `,
+        </li>
+        <li>Dig in leaf mould</li>
+        <li>Plant and water</li>
+      </ol>
+      <dl>
+        <dt>Dappled shade</dt>
+        <dd>Light filtered through a canopy for most of the day.</dd>
+        <dt>Deep shade</dt>
+        <dd>Less than two hours of direct sun, often under evergreens.</dd>
+      </dl>
+    </article>`,
 };
 
-/**
- * 6. ZeroClassOrchestration
- * Pure semantic HTML with zero classes on children, orchestrated via container style queries.
- */
-export const ZeroClassOrchestration: Story = {
+export const QuotesAndRules: Story = {
+  name: 'Quotes and rules',
   render: () => `
-    <div class="stack" style="gap: var(--spacing-24); max-inline-size: 54rem; margin-inline: auto;">
-      <div class="card" style="padding: var(--spacing-24);">
-        <header style="margin-block-end: var(--spacing-16);">
-          <span class="sb-demo-tag">Zero-Class Orchestration</span>
-          <h3 class="heading" style="margin-block-start: var(--spacing-8);">Pure Semantic HTML Formatting</h3>
-          <p class="text" style="color: var(--foreground-muted); margin: 0;">
-            No helper classes are required on headings, paragraphs, lists, quotes, or code. Container queries and <code>:where()</code> orchestrate everything automatically.
-          </p>
-        </header>
+    <article class="prose">
+      <p>Gertrude Jekyll wrote about shade as a gift rather than a problem.</p>
+      <blockquote>
+        <p>The love of gardening is a seed once sown that never dies.</p>
+      </blockquote>
+      <hr>
+      <p>A bare <code>hr</code> uses the divider tokens, so it matches <code>.divider</code>.</p>
+    </article>`,
+};
 
-        <!-- Container declaring style query -->
-        <div style="--vert-spacing: tight; padding: var(--spacing-16); background-color: var(--surface); border-radius: var(--radius-md); border: 1px dashed var(--border-quiet);">
-          <p class="micro-heading" style="color: var(--foreground-accent); margin-block-end: var(--spacing-4);">
-            Container style: --vert-spacing: tight;
-          </p>
-          <div class="prose">
-            <h3>Standard In-Flow Heading</h3>
-            <p>
-              Paragraph inside <code>--prose-spacing: tight</code> automatically tightens vertical margins to <code>calc(var(--spacing) / 2)</code> without needing <code>.prose--tight</code> class.
-            </p>
-            <ul>
-              <li>Item in tight spacing mode</li>
-              <li>Saves vertical real estate dynamically</li>
-            </ul>
+export const Code: Story = {
+  render: () => `
+    <article class="prose">
+      <p>Let a textarea grow with its content using <code>field-sizing</code>:</p>
+      <pre><code>:where(textarea) {
+  field-sizing: content;
+  min-block-size: 3lh;
+}
+
+/* Long lines wrap rather than scroll: a very long comment that runs on past the edge of the column to show the wrapping. */</code></pre>
+    </article>`,
+};
+
+export const Figures: Story = {
+  render: () => `
+    <article class="prose">
+      <p>The border in its second spring.</p>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&amp;q=60" alt="Ferns and hostas under a birch tree" width="800" height="533" loading="lazy">
+        <figcaption>Figure 1: Ferns, hostas and Solomon's seal under a silver birch.</figcaption>
+      </figure>
+      <p>The text after a figure keeps the same rhythm.</p>
+    </article>`,
+};
+
+export const Tables: Story = {
+  render: () => `
+    <article class="prose">
+      <table>
+        <caption>Plants for dry shade</caption>
+        <thead>
+          <tr><th scope="col">Plant</th><th scope="col">Height</th><th scope="col">Flowers</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Epimedium</th><td>30cm</td><td>April</td></tr>
+          <tr><th scope="row">Geranium macrorrhizum</th><td>40cm</td><td>May to July</td></tr>
+          <tr><th scope="row">Brunnera</th><td>45cm</td><td>April to May</td></tr>
+        </tbody>
+      </table>
+      <p>A wide table needs a <code>.table</code> in a scroll wrapper (§13).</p>
+    </article>`,
+};
+
+export const SizingModes: Story = {
+  name: 'Sizing modes',
+  render: () => {
+    const sample = `<h2>Start with the soil</h2><p>Shade under trees is usually dry. Dig in leaf mould before you plant.</p><p>Water each pot until it stops bubbling.</p>`;
+    return `
+      <div class="stack">
+        <p class="small-heading">Fixed (default)</p>
+        <article class="prose">${sample}</article>
+        <p class="small-heading">Fluid</p>
+        <article class="prose font-sizing-fluid">${sample}</article>
+        <p class="small-heading">Container (cq)</p>
+        <div style="container-type: inline-size; max-inline-size: 30rem;"><article class="prose font-sizing-cq">${sample}</article></div>
+        <p class="small-heading">In a compact region</p>
+        <div class="ui-compact"><article class="prose">${sample}</article></div>
+      </div>`;
+  },
+};
+
+export const ProseEnd: Story = {
+  name: 'Prose end',
+  render: () => `
+    <article class="prose">
+      <h2>Ending the scope</h2>
+      <p>Everything inside <code>.prose-end</code> is outside prose: no margins, no element type.</p>
+      <div class="prose-end">
+        <div class="card">
+          <header class="card__header">
+            <h3 class="card__title small-heading">A card in an article</h3>
+          </header>
+          <div class="card__body">
+            <p class="text">Its heading and text take their atoms, not the prose look. <a class="link" href="#c">Its links</a> need a class.</p>
           </div>
         </div>
       </div>
-    </div>
-  `,
+      <p>Prose carries on after it.</p>
+    </article>`,
 };
 
-/**
- * 7. RealWorldRecipes
- * Production UI recipes: Complete Editorial Blog Post & Technical Documentation Article.
- */
-export const RealWorldRecipes: Story = {
+export const RightToLeft: Story = {
   render: () => `
-    <div class="stack" style="gap: var(--spacing-32); max-inline-size: 54rem; margin-inline: auto;">
-      <!-- Recipe 1: Complete Editorial Blog Post -->
-      <section class="card" style="padding: var(--spacing-32);">
-        <article class="prose">
-          <p class="micro-heading" style="color: var(--foreground-accent); margin-block-end: var(--spacing-4);">
-            Architecture RFC &bull; Web Standards
-          </p>
-          <h1>Designing for Humans in the Age of Autonomous AI Agents</h1>
-          <p class="large-text">
-            Digital accessibility and web standards are not aesthetic constraints — they are the foundational architecture enabling software comprehension for human beings and autonomous AI agents alike.
-          </p>
-
-          <hr />
-
-          <h2>The Three-Tier Token Architecture</h2>
-          <p>
-            Design systems thrive when foundations are cleanly decoupled from semantic context. By separating global palettes from semantic intent and component scoping, applications remain flexible across light and dark color schemes:
-          </p>
-
-          <ul>
-            <li><strong>Tier 1 Global:</strong> Raw color ramps, modular typography scale (-2 to 8), and touch targets.</li>
-            <li><strong>Tier 2 Semantic:</strong> Intent-driven surface and foreground tokens using native <code>light-dark()</code>.</li>
-            <li><strong>Tier 3 Component:</strong> Scoped custom properties tailored for buttons, cards, dialogs, and banners.</li>
-          </ul>
-
-          <blockquote>
-            <p>
-              When we design for extreme accessibility, we make digital experiences universally superior for all users.
-            </p>
-          </blockquote>
-
-          <h3>Declarative Native Controls</h3>
-          <p>
-            Modern CSS enables zero-JavaScript auto-expanding textareas and native popover tethering:
-          </p>
-
-          <pre><code>/* Native Modern CSS */
-:where(textarea) {
-  field-sizing: content;
-  min-block-size: 3lh;
-}</code></pre>
-
-          <figure>
-            <img 
-              src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80" 
-              alt="Abstract digital network visualization"
-              loading="lazy"
-              style="border-radius: var(--radius); width: 100%; height: auto;"
-            />
-            <figcaption>
-              <p>Figure 1: Token-driven design architecture connecting semantic styles with accessible web standards.</p>
-            </figcaption>
-          </figure>
-
-          <p class="emoji idea">
-            Tip: Always verify color contrast ratios against adjacent background surfaces to guarantee a minimum 4.5:1 ratio.
-          </p>
-        </article>
-      </section>
-
-      <!-- Recipe 2: Technical API Reference & Documentation -->
-      <section class="card" style="padding: var(--spacing-24);">
-        <article class="prose prose--tight">
-          <p class="micro-heading" style="color: var(--foreground-muted); margin-block-end: var(--spacing-4);">
-            API Reference &bull; Keyboard Shortcuts
-          </p>
-          <h2>Command Palette Interaction Model</h2>
-          <p>
-            Press <kbd>Cmd</kbd> + <kbd>K</kbd> (or <kbd>Ctrl</kbd> + <kbd>K</kbd> on Windows/Linux) to trigger the universal quick search dialog.
-          </p>
-
-          <p>
-            Navigation follows roving tabindex: use <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> arrow keys to traverse results, and press <kbd>Enter</kbd> to activate.
-          </p>
-
-          <pre><code>// Keyboard Listener Example
-window.addEventListener('keydown', (e) => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    openCommandPalette();
-  }
-});</code></pre>
-
-          <p class="emoji check">
-            Meets WCAG 2.1.1 Keyboard and 2.4.7 Focus Visible requirements out of the box.
-          </p>
-        </article>
-      </section>
-    </div>
-  `,
+    <article class="prose" dir="rtl" lang="ar">
+      <h2>ابدأ بالتربة</h2>
+      <p>الظل تحت الأشجار عادة ما يكون جافًا. أضف السماد الورقي قبل الزراعة، واقرأ <a href="#d">دليل التربة</a>.</p>
+      <ul>
+        <li>سماد ورقي</li>
+        <li>غطاء للتربة</li>
+      </ul>
+      <blockquote><p>الحديقة تعلم الصبر.</p></blockquote>
+      <pre><code>:where(textarea) { field-sizing: content; }</code></pre>
+    </article>`,
 };

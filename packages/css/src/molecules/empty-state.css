@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Design For Humans: Empty State
+   --------------------------------------------------------------------------
+   The block shown where content would be when there is none: a search or
+   filter miss, a first use, a cleared queue, a region that failed to load.
+   A molecule: it lays out a visual, a title, a description and actions in a
+   column; the parts are atoms (an icon box, text atoms, buttons) that style
+   themselves.
+
+   | Axis        | Values                                   | Flag                       |
+   | :---------- | :--------------------------------------- | :------------------------- |
+   | Prominence  | default (no frame), --subtle (dashed)    | none                       |
+   | Density     | default, --compact                       | --ui-sizing: compact       |
+   | Intent      | neutral, --accent --info --success --warning --danger | --icon-box-intent |
+   | Alignment   | centred, --start                         | none                       |
+
+   Default has no padding or frame: it sits in something that has its own
+   (a card body, a table cell, a dialog, a section). --subtle draws a dashed,
+   tinted frame with padding, for a slot waiting for content or a drop zone.
+
+   The visual is an .icon-box, which the empty state makes large, subtle and
+   round (small in a compact region), or an illustration (<img> or <svg>).
+   Intent tints the icon box and colours its icon; the icon and the title
+   must still say what it means.
+
+   Semantics: a <div>, not a landmark. Use a <section> only when it is the
+   whole content of a page or panel. The heading level fits the outline. When
+   a search or filter empties a list, the product announces it in a
+   role="status" element already on the page; the empty state is not a live
+   region.
+
+   Usage:
+   <div class="empty-state">
+     <div class="empty-state__visual">
+       <span class="icon-box" aria-hidden="true">
+         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+       </span>
+     </div>
+     <div class="empty-state__content">
+       <h3 class="empty-state__title subheading">No plants match “fern”</h3>
+       <p class="empty-state__description small-text">Check the spelling, or clear the filters.</p>
+     </div>
+     <div class="empty-state__actions">
+       <button type="button" class="button">Clear filters</button>
+     </div>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.empty-state) {
+  /* Private manifest */
+  --_empty-state-gap: var(--empty-state-gap, 1rem);
+  --_empty-state-content-max-width: var(--empty-state-content-max-width, 28rem);
+  --_empty-state-align: center;
+  --_empty-state-text-align: center;
+
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     Declared before the modifiers, so a modifier beats a flag.
+     ------------------------------------------------------------------------ */
+  @container style(--ui-sizing: compact) {
+    --_empty-state-gap: var(--empty-state-compact-gap, 0.5rem);
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: var(--_empty-state-align);
+  gap: var(--_empty-state-gap);
+  box-sizing: border-box;
+  margin: 0;
+  min-inline-size: 0;
+  text-align: var(--_empty-state-text-align);
+}
+
+/* The display above would otherwise beat the hidden attribute */
+:where(.empty-state[hidden]) {
+  display: none;
+}
+
+/* ==========================================================================
+   2. Parts (layout hooks only: type comes from the atoms on them)
+   ========================================================================== */
+:where(.empty-state__visual) {
+  /* The icon box inside: large, subtle and round; small when compact */
+  --icon-box-size: lg;
+  --icon-box-prominence: subtle;
+  --icon-box-corners: round;
+  --icon-size: 1.5em;
+
+  @container style(--ui-sizing: compact) {
+    --icon-box-size: sm;
+    --icon-size: 1.25em;
+  }
+
+  display: flex;
+  justify-content: var(--_empty-state-align);
+
+  /* An illustration keeps to a modest size */
+  > :where(img, svg:not(.icon)) {
+    block-size: auto;
+    max-inline-size: min(100%, 10rem);
+  }
+}
+
+:where(.empty-state__content) {
+  display: flex;
+  flex-direction: column;
+  align-items: var(--_empty-state-align);
+  gap: calc(var(--_empty-state-gap) / 2);
+  max-inline-size: var(--_empty-state-content-max-width);
+}
+
+:where(.empty-state__title) {
+  margin: 0;
+  min-inline-size: 0;
+  text-wrap: balance;
+}
+
+:where(.empty-state__description) {
+  color: var(--empty-state-description-color, var(--foreground-muted, currentColor));
+  margin: 0;
+  min-inline-size: 0;
+  text-wrap: pretty;
+}
+
+:where(.empty-state__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: var(--_empty-state-align);
+  gap: calc(var(--_empty-state-gap) / 2);
+}
+
+/* ==========================================================================
+   3. Modifiers
+   ========================================================================== */
+
+/* Prominence: a dashed, tinted frame */
+:where(.empty-state--subtle) {
+  background-color: var(--empty-state-subtle-bg, var(--surface-translucent, transparent));
+  border: var(--border-width-1, 1px) dashed var(--empty-state-subtle-border-color, var(--border-color-quiet, currentColor));
+  border-radius: var(--panel-radius, var(--radius-md, 0.5rem));
+  padding: var(--empty-state-subtle-padding, 2rem);
+}
+
+/* Density: steps the atoms inside down too */
+:where(.empty-state--compact) {
+  --ui-sizing: compact;
+  --_empty-state-gap: var(--empty-state-compact-gap, 0.5rem);
+}
+
+/* Alignment */
+:where(.empty-state--start) {
+  --_empty-state-align: flex-start;
+  --_empty-state-text-align: start;
+}
+
+/* Intent: set on the icon box */
+:where(.empty-state--accent) {
+  --icon-box-intent: accent;
+}
+
+:where(.empty-state--info) {
+  --icon-box-intent: info;
+}
+
+:where(.empty-state--success) {
+  --icon-box-intent: success;
+}
+
+:where(.empty-state--warning) {
+  --icon-box-intent: warning;
+}
+
+:where(.empty-state--danger) {
+  --icon-box-intent: danger;
+}
+
+/* ==========================================================================
+   4. Preferences
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.empty-state--subtle) {
+    border-color: CanvasText;
+  }
+}

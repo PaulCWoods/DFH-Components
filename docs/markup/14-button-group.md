@@ -41,9 +41,9 @@ In a flex container (here a card footer) the group is only as wide as its button
 ## C. Joined: exclusive choice
 ```html
 <div class="button-group button-group--joined" role="radiogroup" aria-label="Range">
-  <label class="button"><input type="radio" name="range" value="day" class="visually-hidden" checked><span>Day</span></label>
-  <label class="button"><input type="radio" name="range" value="week" class="visually-hidden"><span>Week</span></label>
-  <label class="button"><input type="radio" name="range" value="month" class="visually-hidden"><span>Month</span></label>
+  <label class="button"><input type="radio" name="range" value="day" class="sr-only" checked><span>Day</span></label>
+  <label class="button"><input type="radio" name="range" value="week" class="sr-only"><span>Week</span></label>
+  <label class="button"><input type="radio" name="range" value="month" class="sr-only"><span>Month</span></label>
 </div>
 ```
 
@@ -52,11 +52,11 @@ In a flex container (here a card footer) the group is only as wide as its button
 <div class="button-group button-group--joined" role="group" aria-label="Text style">
   <button type="button" class="button button--icon" aria-pressed="true">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
-    <span class="visually-hidden">Bold</span>
+    <span class="sr-only">Bold</span>
   </button>
   <button type="button" class="button button--icon" aria-pressed="false">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Italic"/></svg>
-    <span class="visually-hidden">Italic</span>
+    <span class="sr-only">Italic</span>
   </button>
 </div>
 ```

@@ -57,20 +57,18 @@ Reference implementation of the shared axes. Intent (`--accent`, `--danger`) set
 
 <!-- Icon-Only Button (MANDATORY: use .visually-hidden text for translation & voice control) -->
 <button type="button" class="button button--icon">
-  <span class="visually-hidden">Search site</span>
+  <span class="sr-only">Search site</span>
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
     <use href="#Search"/>
   </svg>
 </button>
 
 <!-- Avatar Button -->
-<button type="button" class="button button--avatar button--round" aria-label="Alex Morgan profile">
-  <img src="https://example.com/avatar.jpg" alt="" width="40" height="40" style="object-fit: cover; border-radius: inherit;" />
-</button>
+<button type="button" class="button button--plain button--icon button--round" aria-label="Alex Morgan profile"><span class="avatar avatar--sm" aria-hidden="true"><img src="https://example.com/avatar.jpg" alt="" /></span></button>
 
 <!-- Button-Like Checkbox Toggle Switch (Zero-JS state management) -->
 <label class="button">
-  <input type="checkbox" class="visually-hidden" />
+  <input type="checkbox" class="sr-only" />
   <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
   <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   <span>Switch</span>
@@ -79,12 +77,12 @@ Reference implementation of the shared axes. Intent (`--accent`, `--danger`) set
 <!-- Button-Like Radio Group Choices -->
 <div class="cluster">
   <label class="button">
-    <input type="radio" name="choice-demo" class="visually-hidden" checked />
+    <input type="radio" name="choice-demo" class="sr-only" checked />
     <span>Choice 1</span>
     <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   </label>
   <label class="button">
-    <input type="radio" name="choice-demo" class="visually-hidden" />
+    <input type="radio" name="choice-demo" class="sr-only" />
     <span>Choice 2</span>
     <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
   </label>

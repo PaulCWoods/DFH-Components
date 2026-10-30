@@ -26,7 +26,7 @@
 </nav>
 
 <!-- External: no space between text and icon; say it opens a new tab -->
-<a href="https://www.w3.org" class="link" target="_blank" rel="noopener noreferrer">W3C guidelines<span class="visually-hidden"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a>
+<a href="https://www.w3.org" class="link" target="_blank" rel="noopener noreferrer">W3C guidelines<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a>
 
 <!-- On a dark band -->
 <section class="color-scheme-dark">
@@ -46,7 +46,7 @@
 <a href="/topics/wcag" class="block-link block-link--subtle block-link--sm">…</a>
 
 <!-- A list of block links, set once on the container -->
-<ul class="stack list-none padding-0 margin-0" style="--block-link-prominence: subtle;">
+<ul class="stack list-none p-0 m-0" style="--block-link-prominence: subtle;">
   <li>
     <a href="/topics/wcag" class="block-link">
       <span class="block-link__text">WCAG 2.2 guidelines</span>

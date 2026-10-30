@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Batch Actions
-
 The bar shown while items are selected: how many, the actions on them, and a way to clear the selection. A placement and a frame around a summary and a button group.
 
 ### Markup
@@ -23,14 +21,14 @@ The bar shown while items are selected: how many, the actions on them, and a way
   <hr class="divider" aria-hidden="true">
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
     <svg class="icon" …><use href="#Close"/></svg>
-    <span class="visually-hidden">Clear selection</span>
+    <span class="sr-only">Clear selection</span>
   </button>
 </div>
 \`\`\`
 
 - **A group, not a toolbar:** \`role="toolbar"\` promises arrow keys, and the library ships no script.
 - **Summary** is text in \`role="status"\`, so a changed count is announced. Keep the bar in the page and toggle \`hidden\`; it fades and slides away.
-- **Placement:** floating (default, fixed at the bottom centre), \`--docked\`, \`--inline\`. **Prominence:** default, \`--strong\` (inverted), \`--plain\`. Also \`--round\` and \`--compact\`.
+- **Placement:** floating (default, fixed at the bottom centre), \`--docked\`, \`--inline\`. **Prominence:** default, \`--strong\` (inverted), \`--plain\`. Also \`--round\`, \`--compact\` and \`--scrollable\` (one row: the actions scroll with a fade between a fixed summary and dismiss button).
 
 The floating stories sit in a stage with a transform, so the fixed bar stays inside it.
         `,
@@ -45,23 +43,26 @@ type Story = StoryObj;
 const icon = (name: string) =>
   `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
-const actions = (cls = 'buttons-subtle') => `
+const actions = (cls = 'buttons-subtle', more = false) => `
   <div class="batch-actions__actions button-group ${cls}">
     <button type="button" class="button">${icon('Download')}<span>Export</span></button>
-    <button type="button" class="button">${icon('Edit')}<span>Edit</span></button>
+    <button type="button" class="button">${icon('Edit')}<span>Edit</span></button>${more ? `
+    <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
+    <button type="button" class="button">${icon('Share')}<span>Share</span></button>
+    <button type="button" class="button">${icon('Print')}<span>Print</span></button>` : ''}
     <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>
   </div>`;
 
 const dismiss = `
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    ${icon('Close')}<span class="visually-hidden">Clear selection</span>
+    ${icon('Close')}<span class="sr-only">Clear selection</span>
   </button>`;
 
-const bar = (cls: string, label: string, count = '3 selected', attrs = '') => `
+const bar = (cls: string, label: string, count = '3 selected', attrs = '', more = false) => `
   <div class="batch-actions${cls ? ` ${cls}` : ''}" role="group" aria-label="${label}"${attrs}>
     <p class="batch-actions__summary small-heading" role="status">${count}</p>
     <hr class="divider" aria-hidden="true">
-    ${actions()}
+    ${actions('buttons-subtle', more)}
     <hr class="divider" aria-hidden="true">
     ${dismiss}
   </div>`;
@@ -74,15 +75,16 @@ const stage = (inner: string, note: string) => `
   </div>`;
 
 export const Playground: Story = {
-  args: { prominence: 'default', round: false, compact: false },
+  args: { prominence: 'default', round: false, compact: false, scrollable: false },
   argTypes: {
     prominence: { control: 'inline-radio', options: ['default', 'strong', 'plain'] },
   },
   render: (args) => {
     const cls = [args.prominence !== 'default' && `batch-actions--${args.prominence}`,
       args.round && 'batch-actions--round',
-      args.compact && 'batch-actions--compact'].filter(Boolean).join(' ');
-    return stage(bar(cls, 'Selected files'), 'Floating: fixed at the bottom centre.');
+      args.compact && 'batch-actions--compact',
+      args.scrollable && 'batch-actions--scrollable'].filter(Boolean).join(' ');
+    return stage(bar(cls, 'Selected files', '3 selected', '', args.scrollable), 'Floating: fixed at the bottom centre.');
   },
 };
 
@@ -93,8 +95,8 @@ export const Selection: Story = {
     const clear = `const s=this.closest('[data-demo]');s.querySelectorAll('input:checked').forEach(c=>c.checked=false);s.querySelector('.batch-actions').hidden=true;s.querySelector('input').focus();`;
     return `
       <div data-demo style="transform: translate(0); min-block-size: 20rem; padding: 1.5rem;">
-        <fieldset class="stack">
-          <legend class="small-heading">Files</legend>
+        <fieldset class="fieldset">
+          <legend class="fieldset__legend small-heading">Files</legend>
           ${files.map((f) => `<label class="choice"><input type="checkbox" class="checkbox-input" onchange="${update}" /><span>${f}</span></label>`).join('')}
         </fieldset>
         <div class="batch-actions batch-actions--round" role="group" aria-label="Selected files" hidden>
@@ -103,7 +105,7 @@ export const Selection: Story = {
           ${actions()}
           <hr class="divider" aria-hidden="true">
           <button type="button" class="button button--plain button--icon batch-actions__dismiss" onclick="${clear}">
-            ${icon('Close')}<span class="visually-hidden">Clear selection</span>
+            ${icon('Close')}<span class="sr-only">Clear selection</span>
           </button>
         </div>
       </div>`;
@@ -124,6 +126,25 @@ export const Prominence: Story = {
     </div>`,
 };
 
+export const Scrollable: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Where space is short, `--scrollable` keeps the bar to one row. The count and the dismiss button stay put; the actions between them scroll, and each edge fades only where there is more to see (scroll-driven animations; without them the actions still scroll). Tab reaches every action and scrolls it into view.',
+      },
+    },
+  },
+  render: () => `
+    <div class="stack">
+      <div style="max-inline-size: 26rem;">
+        ${bar('batch-actions--inline batch-actions--scrollable', 'Selected files, scrollable', '12 selected', '', true)}
+      </div>
+      <div style="max-inline-size: 26rem;" dir="rtl">
+        ${bar('batch-actions--inline batch-actions--scrollable batch-actions--round', 'Selected files, scrollable, right to left', '12 selected', '', true)}
+      </div>
+    </div>`,
+};
+
 export const DockedInACard: Story = {
   name: 'Docked in a card',
   render: () => `
@@ -132,7 +153,7 @@ export const DockedInACard: Story = {
       <div class="card__body">
         <table class="table table--compact" style="inline-size: 100%;">
           <thead>
-            <tr><th scope="col"><span class="visually-hidden">Selected</span></th><th scope="col">Variety</th><th scope="col">Location</th></tr>
+            <tr><th scope="col"><span class="sr-only">Selected</span></th><th scope="col">Variety</th><th scope="col">Location</th></tr>
           </thead>
           <tbody>
             <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Brandywine" checked /></td><td>Brandywine</td><td>Bed A-02</td></tr>

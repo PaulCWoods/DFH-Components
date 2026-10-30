@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Design For Humans: Footer
+   --------------------------------------------------------------------------
+   The band at the bottom of a page or app: site links, legal text, contact
+   details. An organism on the header's model: the footer draws the band and
+   lays out its rows; what's in a row (a cluster of links, small text, a
+   grid of link lists) styles itself.
+
+   Parts: .footer__bar is a row, capped at --footer-max-width (the site
+   width) and centred, so it lines up with .wrapper. The last part sits at
+   the end. Two rows are two bars, with a rule between them.
+
+   Semantics: a <footer> that is a direct child of <body> (or .app) is the
+   contentinfo landmark: one per page, with no aria-label. Link lists in it
+   are a <nav aria-label> when they navigate the site.
+
+   Usage:
+   <footer class="footer">
+     <div class="footer__bar">
+       <p class="small-text">© 2026 Woodland Plants</p>
+       <nav aria-label="Footer">
+         <ul class="cluster small-text" role="list">…</ul>
+       </nav>
+     </div>
+   </footer>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base: the band
+   ========================================================================== */
+:where(.footer) {
+  /* Private manifest */
+  --_footer-bg: var(--footer-bg, var(--surface-card, Canvas));
+  --_footer-border-color: var(--footer-border-color, var(--border-color-quiet, currentColor));
+  --_footer-border-style: var(--footer-border-style, solid);
+  --_footer-border-width: var(--footer-border-width, var(--border-width, 1px));
+  --_footer-padding-block: var(--footer-padding-block, 1rem);
+  --_footer-padding-inline: var(--footer-padding-inline, 1rem);
+  --_footer-gap: var(--footer-gap, var(--spacing, 1rem));
+  --_footer-max-width: var(--footer-max-width, var(--site-width, 75rem));
+
+  background-color: var(--_footer-bg);
+  border-block-start: var(--_footer-border-width) var(--_footer-border-style) var(--_footer-border-color);
+  box-sizing: border-box;
+  container: footer / inline-size;
+  display: block;
+  inline-size: 100%;
+  padding-inline: var(--safe-area-inset-left, 0px) var(--safe-area-inset-right, 0px);
+}
+
+/* At the bottom of the page, clear the home indicator */
+:where(.footer:last-child) {
+  padding-block-end: var(--safe-area-inset-bottom, 0px);
+}
+
+/* ==========================================================================
+   2. Parts
+   ========================================================================== */
+:where(.footer__bar) {
+  align-items: center;
+  box-sizing: content-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--_footer-gap);
+  margin-inline: auto;
+  max-inline-size: var(--_footer-max-width);
+  padding-block: var(--_footer-padding-block);
+  padding-inline: var(--_footer-padding-inline);
+
+  /* A single part (a grid of link lists) fills the row */
+  > :where(:only-child) {
+    flex: 1 1 auto;
+  }
+
+  /* The last part sits at the end */
+  > :where(:last-child:not(:first-child)) {
+    margin-inline-start: auto;
+  }
+
+  /* Two rows: a rule between them */
+  & + :where(.footer__bar) {
+    border-block-start: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+  }
+}
+
+/* ==========================================================================
+   3. Preferences
+   ========================================================================== */
+@media (prefers-contrast: more) {
+  :where(.footer) {
+    --_footer-border-width: var(--border-width-md, 2px);
+  }
+}

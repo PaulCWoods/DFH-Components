@@ -1,6 +1,7 @@
 {
   "$description": "Design For Humans - Tier 3 Component Design Tokens (W3C DTCG Standard)",
   "accordion": {
+    "$description": "Accordion molecule (details and summary) and accordion group tokens",
     "border-width": {
       "$value": "{panel.border-width}",
       "$type": "border"
@@ -13,26 +14,6 @@
       "$value": "{panel.border-style}",
       "$type": "strokeStyle"
     },
-    "hover-border": {
-      "$value": "{border.color.accent}",
-      "$type": "color"
-    },
-    "inner-border-width": {
-      "$value": "{rule.width}",
-      "$type": "dimension"
-    },
-    "inner-border-color": {
-      "$value": "{rule.color}",
-      "$type": "border"
-    },
-    "inner-border-style": {
-      "$value": "{rule.style}",
-      "$type": "strokeStyle"
-    },
-    "open-bg": {
-      "$value": "{surface.card}",
-      "$type": "color"
-    },
     "radius": {
       "$value": "{radius.md}",
       "$type": "dimension"
@@ -40,6 +21,30 @@
     "padding": {
       "$value": "{spacing}",
       "$type": "dimension"
+    },
+    "compact-padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Summary and content padding in a compact accordion"
+    },
+    "compact-padding-inline": {
+      "$value": "{spacing.12}",
+      "$type": "dimension"
+    },
+    "hover-bg": {
+      "$value": "{surface.translucent}",
+      "$type": "color",
+      "$description": "Summary tint on hover, as a plain button's"
+    },
+    "icon-size": {
+      "$value": "1em",
+      "$type": "dimension",
+      "$description": "The plus/minus state icon; follows the summary text"
+    },
+    "group-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Gap between accordions in a group"
     },
     "transition": {
       "$value": "{duration.sm}",
@@ -51,88 +56,107 @@
     }
   },
   "avatar": {
-    "$type": "component",
-    "$description": "User profile avatar and avatar group tokens",
+    "$description": "Avatar atom and avatar group tokens",
     "size": {
       "$value": "{spacing.48}",
-      "$type": "dimension",
-      "$description": "Default avatar diameter (3rem / 48px meets WCAG 2.5.5 target size)"
-    },
-    "xs-size": {
-      "$value": "{spacing.24}",
-      "$type": "dimension",
-      "$description": "Extra small avatar diameter (1.5rem / 24px)"
+      "$type": "dimension"
     },
     "sm-size": {
       "$value": "{spacing.32}",
-      "$type": "dimension",
-      "$description": "Small avatar diameter (2rem / 32px meets WCAG 2.5.8 target size)"
+      "$type": "dimension"
     },
     "lg-size": {
       "$value": "{spacing.64}",
-      "$type": "dimension",
-      "$description": "Large avatar diameter (4rem / 64px)"
-    },
-    "xl-size": {
-      "$value": "{spacing.96}",
-      "$type": "dimension",
-      "$description": "Extra large avatar diameter (6rem / 96px)"
+      "$type": "dimension"
     },
     "radius": {
       "$value": "{radius.round}",
-      "$type": "dimension",
-      "$description": "Default circular radius for avatars"
+      "$type": "dimension"
     },
     "square-radius": {
       "$value": "{radius}",
-      "$type": "dimension",
-      "$description": "Corner radius for squircle / square avatars"
+      "$type": "dimension"
     },
     "border-width": {
-      "$value": "{border.width}",
-      "$type": "dimension",
-      "$description": "Border stroke width for avatar outline"
+      "$value": "{border.width.thin}",
+      "$type": "dimension"
     },
     "border-color": {
-      "$value": "{border.color}",
-      "$type": "color",
-      "$description": "Border stroke color for avatar outline"
+      "$value": "{border.color.quiet}",
+      "$type": "color"
     },
     "bg": {
-      "$value": "{surface.card}",
-      "$type": "color",
-      "$description": "Background surface for text/icon avatars"
+      "$value": "{surface.muted}",
+      "$type": "color"
     },
     "text": {
       "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Text/icon foreground color"
+      "$type": "color"
     },
     "font-size": {
       "$value": "{typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Initials font size inside avatar"
+      "$description": "Initials at the default size"
+    },
+    "sm-font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension"
+    },
+    "lg-font-size": {
+      "$value": "{typography.font-size.1}",
+      "$type": "dimension"
     },
     "font-weight": {
       "$value": "{font-weight.bold}",
-      "$type": "fontWeight",
-      "$description": "Font weight for initials and counts"
+      "$type": "fontWeight"
+    },
+    "accent-bg": {
+      "$value": "{surface.accent-strong}",
+      "$type": "color"
+    },
+    "accent-text": {
+      "$value": "{foreground.inverted}",
+      "$type": "color"
+    },
+    "count-text": {
+      "$value": "{foreground.muted}",
+      "$type": "color"
     },
     "placeholder-border-color": {
       "$value": "{border.color.quiet}",
-      "$type": "color",
-      "$description": "Dashed border color for placeholder avatars"
+      "$type": "color"
+    },
+    "group-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
     },
     "group-overlap": {
-      "$value": "-0.75rem",
+      "$value": "0.33",
+      "$type": "number",
+      "$description": "Share of an avatar hidden by the next in a stacked group"
+    },
+    "group-ring-width": {
+      "$value": "{border.width}",
       "$type": "dimension",
-      "$description": "Negative margin for overlapping stacked avatar groups"
+      "$description": "Ring in the surface colour around stacked avatars"
+    },
+    "group-ring-color": {
+      "$value": "{surface}",
+      "$type": "color"
+    }
+  },
+  "lockup": {
+    "$description": "Lockup tokens",
+    "gap": {
+      "$value": "{spacing.0}",
+      "$type": "dimension",
+      "$description": "Space between a lockup's lines"
     }
   },
   "badge": {
     "$description": "Count or dot attached to a host element. Colour comes from the Tier 2 intent roles.",
     "font-size": {
-      "$value": "{body-sm.font-size}",
+      "$value": "{body-sm-fixed.font-size}",
       "$type": "dimension"
     },
     "font-weight": {
@@ -165,7 +189,7 @@
   "status": {
     "$description": "State of a thing: text with an optional dot or icon. Colour comes from the Tier 2 intent roles.",
     "font-size": {
-      "$value": "{body-sm.font-size}",
+      "$value": "{body-sm-fixed.font-size}",
       "$type": "dimension"
     },
     "font-weight": {
@@ -175,6 +199,11 @@
     "text-transform": {
       "$value": "none",
       "$type": "other"
+    },
+    "min-size": {
+      "$value": "{spacing.target-sm}",
+      "$type": "dimension",
+      "$description": "A status's minimum height: the small button's, so the two line up side by side. Plain, small and compact statuses take their content's height."
     },
     "padding-block": {
       "$value": "{spacing.6}",
@@ -225,7 +254,7 @@
       "$type": "fontFamilies"
     },
     "font-size": {
-      "$value": "{body-sm.font-size}",
+      "$value": "{body-sm-fixed.font-size}",
       "$type": "dimension"
     },
     "padding-block": {
@@ -838,7 +867,7 @@
   "chip": {
     "$description": "Token representing a value: a selected option, an active filter, a category or tag.",
     "font-size": {
-      "$value": "{body-sm.font-size}",
+      "$value": "{body-sm-fixed.font-size}",
       "$type": "dimension"
     },
     "font-weight": {
@@ -848,6 +877,11 @@
     "text-transform": {
       "$value": "none",
       "$type": "other"
+    },
+    "min-size": {
+      "$value": "{spacing.target-sm}",
+      "$type": "dimension",
+      "$description": "A chip's minimum height: the small button's, so the two line up side by side. Plain, small and compact chips take their content's height."
     },
     "padding-block": {
       "$value": "{spacing.6}",
@@ -887,94 +921,34 @@
       "$type": "dimension"
     }
   },
-  "deck": {
-    "$type": "component",
-    "$description": "Media and audio playback deck container tokens",
-    "bg": {
-      "$value": "{surface.card}",
-      "$type": "color",
-      "$description": "Deck container background surface"
-    },
-    "border-width": {
-      "$value": "{panel.border-width}",
-      "$type": "dimension",
-      "$description": "Deck perimeter border stroke width"
-    },
-    "border-color": {
-      "$value": "{panel.border-color}",
-      "$type": "border",
-      "$description": "Deck perimeter border color"
-    },
-    "border-style": {
-      "$value": "{panel.border-style}",
-      "$type": "strokeStyle",
-      "$description": "Deck perimeter border stroke style"
-    },
-    "radius": {
-      "$value": "{panel.radius}",
-      "$type": "dimension",
-      "$description": "Deck container corner rounding"
-    },
-    "padding": {
-      "$value": "{spacing.16}",
-      "$type": "dimension",
-      "$description": "Deck container interior padding"
-    },
-    "gap": {
-      "$value": "{spacing.12}",
-      "$type": "dimension",
-      "$description": "Deck section gap"
-    },
-    "art-size": {
-      "$value": "{spacing.80}",
-      "$type": "dimension",
-      "$description": "Album or media art thumbnail dimensions"
-    },
-    "art-radius": {
-      "$value": "{radius.md}",
-      "$type": "dimension",
-      "$description": "Album or media art corner rounding"
-    },
-    "play-size": {
-      "$value": "{spacing.48}",
-      "$type": "dimension",
-      "$description": "Primary play/pause button touch target diameter"
-    },
-    "transition": {
-      "$value": "{duration.sm}",
-      "$type": "duration",
-      "$description": "State transition timing"
-    },
-    "on-air-border": {
-      "$value": "{foreground.accent}",
-      "$type": "color",
-      "$description": "Active broadcast on-air perimeter highlight color"
-    }
-  },
   "dialog": {
-    "transition": {
-      "$value": "{duration.md}",
-      "$type": "duration"
+    "width": {
+      "$value": "{spacing.block}",
+      "$type": "dimension",
+      "$description": "Inline size of a modal dialog; set --dialog-width on one dialog to change it"
     },
-    "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
-      "$type": "other"
+    "drawer-width": {
+      "$value": "{spacing.block-sm}",
+      "$type": "dimension",
+      "$description": "Inline size of a drawer"
     },
-    "shadow": {
-      "$value": "{shadow.lg}",
-      "$type": "shadow"
-    },
-    "padding": {
+    "cushion": {
       "$value": "{spacing.cushion}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Space kept between a centred dialog and the screen edge"
+    },
+    "max-height": {
+      "$value": "calc(100dvb - {spacing.cushion} * 2)",
+      "$type": "dimension",
+      "$description": "Tallest a centred dialog grows before its body scrolls"
     },
     "radius": {
       "$value": "{radius.lg}",
       "$type": "dimension"
     },
-    "max-height": {
-      "$value": "calc(100dvh - {spacing.cushion} * 2)",
-      "$type": "dimension"
+    "shadow": {
+      "$value": "{shadow.lg}",
+      "$type": "shadow"
     },
     "backdrop-color": {
       "$value": "{color.backdrop}",
@@ -984,15 +958,13 @@
       "$value": "var(--surface-layer-filter)",
       "$type": "other"
     },
-    "width": {
-      "$value": "{spacing.block}",
-      "$type": "dimension",
-      "$description": "Inline size of a modal dialog"
+    "transition": {
+      "$value": "{duration.sm}",
+      "$type": "duration"
     },
-    "drawer-width": {
-      "$value": "{spacing.block-sm}",
-      "$type": "dimension",
-      "$description": "Inline size of a drawer"
+    "timefunc": {
+      "$value": "{timefunc.ease-in-out}",
+      "$type": "other"
     }
   },
   "divider": {
@@ -1021,101 +993,62 @@
   },
   "empty-state": {
     "$type": "component",
-    "$description": "Zero-data views, search misses, and onboarding layout tokens",
-    "padding-block": {
-      "$value": "{spacing.48}",
-      "$type": "dimension",
-      "$description": "Empty state container vertical padding"
-    },
-    "padding-inline": {
-      "$value": "{spacing.24}",
-      "$type": "dimension",
-      "$description": "Empty state container horizontal padding"
-    },
+    "$description": "Layout of the block shown where content would be: a search miss, a first use, a cleared queue",
     "gap": {
       "$value": "{spacing.16}",
       "$type": "dimension",
-      "$description": "Vertical gap between visual well, copy, and action buttons"
+      "$description": "Space between the visual, the text and the actions"
     },
-    "max-width": {
+    "compact-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Space between the parts in a compact region"
+    },
+    "content-max-width": {
       "$value": "28rem",
       "$type": "dimension",
-      "$description": "Max reading width for empty state content"
-    },
-    "icon-well-size": {
-      "$value": "4.5rem",
-      "$type": "dimension",
-      "$description": "Diameter of circular visual container"
-    },
-    "icon-well-bg": {
-      "$value": "{surface.muted}",
-      "$type": "color",
-      "$description": "Background surface fill for the visual container"
-    },
-    "icon-well-radius": {
-      "$value": "{radius.round}",
-      "$type": "dimension",
-      "$description": "Corner radius for the visual container"
-    },
-    "icon-scale": {
-      "$value": "1.5",
-      "$type": "number",
-      "$description": "Dimensions of the empty state icon"
-    },
-    "icon-color": {
-      "$value": "{foreground.muted}",
-      "$type": "color",
-      "$description": "Icon stroke and fill color"
-    },
-    "title-color": {
-      "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Heading text color for the empty state title"
+      "$description": "Measure of the title and description"
     },
     "description-color": {
       "$value": "{foreground.muted}",
       "$type": "color",
-      "$description": "Description copy text color"
+      "$description": "Description text colour"
     },
-    "icon-well-success-bg": {
-      "$value": "{surface.success}",
-      "$type": "color",
-      "$description": "Background surface fill for success state icon well"
+    "subtle-padding": {
+      "$value": "{spacing.32}",
+      "$type": "dimension",
+      "$description": "Padding inside the dashed frame of --subtle"
     },
-    "icon-success-color": {
-      "$value": "{foreground.success}",
+    "subtle-bg": {
+      "$value": "{surface.translucent}",
       "$type": "color",
-      "$description": "Icon color for success state"
+      "$description": "Tint inside the dashed frame of --subtle"
     },
-    "icon-well-warning-bg": {
-      "$value": "{surface.warning}",
+    "subtle-border-color": {
+      "$value": "{border.color.quiet}",
       "$type": "color",
-      "$description": "Background surface fill for warning state icon well"
-    },
-    "icon-warning-color": {
-      "$value": "{foreground.warning}",
-      "$type": "color",
-      "$description": "Icon color for warning state"
-    },
-    "icon-well-error-bg": {
-      "$value": "{surface.danger}",
-      "$type": "color",
-      "$description": "Background surface fill for error state icon well"
-    },
-    "icon-error-color": {
-      "$value": "{foreground.danger}",
-      "$type": "color",
-      "$description": "Icon color for error state"
+      "$description": "Dashed frame colour of --subtle"
     }
   },
   "field": {
     "gap": {
-      "$value": "{spacing.breathe}",
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Space between a field's label, hint, error and control"
+    },
+    "compact-gap": {
+      "$value": "{spacing.4}",
       "$type": "dimension"
     },
-    "inner-gap": {
-      "$value": "{spacing.8}",
-      "$type": "dimension"
+    "inline-gap": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Space between label and control in an inline field or an aligned form"
+    },
+    "label-width": {
+      "$value": "{spacing.192}",
+      "$type": "dimension",
+      "$description": "Label column width in an aligned form"
     },
     "hint-color": {
       "$value": "{foreground.muted}",
@@ -1127,35 +1060,73 @@
     }
   },
   "fieldset": {
-    "inner-gap": {
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Space between a fieldset's legend, hint and controls"
+    },
+    "compact-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension"
+    }
+  },
+  "choices": {
+    "column-gap": {
+      "$value": "{spacing.24}",
+      "$type": "dimension",
+      "$description": "Space between inline choices"
+    },
+    "compact-column-gap": {
       "$value": "{spacing.16}",
       "$type": "dimension"
     }
   },
+  "choice": {
+    "gap": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "Space between the box and its label text"
+    },
+    "lg-gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Space beside a large box"
+    },
+    "compact-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Space beside the box in a compact container"
+    },
+    "font-size": {
+      "$value": "{control.font-size}",
+      "$type": "dimension",
+      "$description": "Choice text, matching the text controls beside it"
+    },
+    "compact-font-size": {
+      "$value": "{control-sm.font-size}",
+      "$type": "dimension",
+      "$description": "Choice text in a compact container, matching small text controls"
+    },
+    "compact-target": {
+      "$value": "{spacing.target-sm}",
+      "$type": "dimension",
+      "$description": "Row height in a compact container (32px, as for small text controls)"
+    }
+  },
   "form": {
-    "submission-gap": {
+    "gap": {
       "$value": "{spacing.breathe}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Space between fields and fieldsets"
     },
-    "submission-inner-gap": {
+    "compact-gap": {
       "$value": "{spacing.16}",
       "$type": "dimension"
     },
-    "submission-align": {
-      "$value": "right",
-      "$type": "other"
-    },
-    "choice-inner-gap": {
-      "$value": "{spacing.16}",
-      "$type": "dimension"
-    },
-    "choices-row-gap": {
-      "$value": "{spacing.16}",
-      "$type": "dimension"
-    },
-    "choices-col-gap": {
-      "$value": "{spacing.24}",
-      "$type": "dimension"
+    "actions-space": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Extra space above the form actions"
     }
   },
   "check": {
@@ -1168,57 +1139,162 @@
       "$value": "{spacing.24}",
       "$type": "dimension",
       "$description": "Large checkbox and radio box size"
+    },
+    "sm-box-size": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Small box, only inside a label that is the target (a compact .choice)"
     }
   },
   "header": {
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Header surface"
+    },
     "border-width": {
       "$value": "{app.border-width}",
       "$type": "dimension",
-      "$description": "Standard border stroke thickness for application header landmark"
+      "$description": "Bottom border width"
     },
     "border-color": {
       "$value": "{app.border-color}",
       "$type": "color",
-      "$description": "Standard border stroke color for application header landmark"
+      "$description": "Bottom border colour"
     },
     "border-style": {
       "$value": "{app.border-style}",
       "$type": "strokeStyle",
-      "$description": "Standard border stroke style for application header landmark"
+      "$description": "Bottom border style"
+    },
+    "padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Block padding of a bar"
+    },
+    "compact-padding-block": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Block padding of a bar in a compact header"
+    },
+    "padding-inline": {
+      "$value": "{spacing.cushion}",
+      "$type": "dimension",
+      "$description": "Inline padding of a bar"
+    },
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Space between the parts of a bar"
+    },
+    "max-width": {
+      "$value": "{site-width}",
+      "$type": "dimension",
+      "$description": "Width cap of a bar, so it lines up with .wrapper"
+    },
+    "shadow": {
+      "$value": "{shadow.md}",
+      "$type": "shadow",
+      "$description": "Shadow while a sticky header is stuck"
+    },
+    "translucency": {
+      "$value": "{translucency.subtle}",
+      "$type": "number",
+      "$description": "How see-through --translucent is"
+    },
+    "filter": {
+      "$value": "{surface.layer-filter}",
+      "$type": "other",
+      "$description": "Backdrop filter of --translucent"
+    },
+    "z-index": {
+      "$value": "{z-index.sticky}",
+      "$type": "number",
+      "$description": "Stacking order of a sticky header"
     }
   },
   "sidebar": {
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Sidebar surface"
+    },
     "border-width": {
       "$value": "{app.border-width}",
       "$type": "dimension",
-      "$description": "Standard border stroke thickness for application sidebar layout primitive"
+      "$description": "Edge border width"
     },
     "border-color": {
       "$value": "{app.border-color}",
       "$type": "color",
-      "$description": "Standard border stroke color for application sidebar layout primitive"
+      "$description": "Edge border colour"
     },
     "border-style": {
       "$value": "{app.border-style}",
       "$type": "strokeStyle",
-      "$description": "Standard border stroke style for application sidebar layout primitive"
+      "$description": "Edge border style"
+    },
+    "padding": {
+      "$value": "{spacing.cushion}",
+      "$type": "dimension",
+      "$description": "Padding of the sidebar parts"
+    },
+    "width": {
+      "$value": "18rem",
+      "$type": "dimension",
+      "$description": "Preferred width"
+    },
+    "min-width": {
+      "$value": "14rem",
+      "$type": "dimension",
+      "$description": "Narrowest width"
+    },
+    "rail-width": {
+      "$value": "4.5rem",
+      "$type": "dimension",
+      "$description": "Width of --rail"
     }
   },
   "footer": {
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Footer surface"
+    },
     "border-width": {
       "$value": "{app.border-width}",
       "$type": "dimension",
-      "$description": "Standard border stroke thickness for application footer landmark"
+      "$description": "Top border width"
     },
     "border-color": {
       "$value": "{app.border-color}",
       "$type": "color",
-      "$description": "Standard border stroke color for application footer landmark"
+      "$description": "Top border colour"
     },
     "border-style": {
       "$value": "{app.border-style}",
       "$type": "strokeStyle",
-      "$description": "Standard border stroke style for application footer landmark"
+      "$description": "Top border style"
+    },
+    "padding-block": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Block padding of a bar"
+    },
+    "padding-inline": {
+      "$value": "{spacing.cushion}",
+      "$type": "dimension",
+      "$description": "Inline padding of a bar"
+    },
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Gap between the parts of a bar"
+    },
+    "max-width": {
+      "$value": "{site-width}",
+      "$type": "dimension",
+      "$description": "Width cap of a bar's content, lined up with .wrapper"
     }
   },
   "input": {
@@ -1459,140 +1535,60 @@
     }
   },
   "prose": {
-    "vert-space": {
-      "$value": "calc({spacing.breathe} * 1.25)",
+    "space": {
+      "$value": "{spacing}",
       "$type": "dimension",
-      "$description": "Vertical rhythm space between block elements in prose content"
+      "$description": "Space between blocks in prose at fixed sizing. Compact sizing halves it"
     },
-    "vert-space-cq": {
-      "$value": "calc({spacing.cq-breathe} * 1.25)",
+    "space-fluid": {
+      "$value": "{spacing.breathe}",
       "$type": "dimension",
-      "$description": "Vertical rhythm space between block elements in prose content"
+      "$description": "Space between blocks in prose at fluid sizing"
     },
-    "inset-space": {
-      "$value": "calc({spacing.breathe} * 1.5)",
+    "space-cq": {
+      "$value": "{spacing.cq-breathe}",
       "$type": "dimension",
-      "$description": "Indentation spacing for lists and blockquotes"
+      "$description": "Space between blocks in prose at container-query sizing"
     },
-    "inset-space-cq": {
-      "$value": "calc({spacing.cq-breathe} * 1.5)",
-      "$type": "dimension",
-      "$description": "Indentation spacing for lists and blockquotes"
-    },
-    "inset-space-fixed": {
+    "indent": {
       "$value": "calc({spacing} * 1.5)",
       "$type": "dimension",
-      "$description": "Indentation spacing for lists and blockquotes"
+      "$description": "Inline-start indent for lists, description details and blockquotes"
     },
-    "body-font-family": {
-      "$value": "inherit",
-      "$type": "fontFamilies",
-      "$description": "Body font family for prose text"
-    },
-    "body-hyphens": {
+    "hyphens": {
       "$value": "none",
       "$type": "other",
-      "$description": "Hyphenation rules for prose body text"
-    },
-    "body-line-length": {
-      "$value": "{body.measure}",
-      "$type": "dimension",
-      "$description": "Max optimal line length for readable prose body text"
-    },
-    "body-text-wrap": {
-      "$value": "none",
-      "$type": "other",
-      "$description": "Text wrapping mode for prose body text on wider screens"
-    },
-    "block-width": {
-      "$value": "calc(var(--site-width, 75rem) * 0.75)",
-      "$type": "dimension",
-      "$description": "Maximum block inline size for prose content"
+      "$description": "Hyphenation for prose paragraphs and lists (none or auto)"
     },
     "blockquote-border-width": {
       "$value": "{border.width.4}",
       "$type": "dimension",
-      "$description": "Border thickness for blockquotes"
+      "$description": "Inline-start rule on a blockquote"
     },
     "figcaption-color": {
       "$value": "{foreground.muted}",
       "$type": "color",
-      "$description": "Text color for figure captions"
+      "$description": "Text colour of figure captions"
     },
-    "figcaption-text-wrap": {
-      "$value": "balance",
-      "$type": "other",
-      "$description": "Text wrapping for figure captions"
-    },
-    "figcaption-margin-bottom": {
-      "$value": "calc({spacing.cushion} * 2)",
-      "$type": "dimension",
-      "$description": "Bottom margin following figure captions"
-    },
-    "underline-offset": {
-      "$value": "{underline.offset}",
-      "$type": "dimension",
-      "$description": "Text underline offset for inline semantics in prose"
-    },
-    "underline-thickness": {
-      "$value": "{underline.thickness}",
-      "$type": "dimension",
-      "$description": "Text underline thickness for inline semantics in prose"
-    },
-    "underline-color": {
-      "$value": "{underline.color}",
+    "code-bg": {
+      "$value": "{surface.translucent}",
       "$type": "color",
-      "$description": "Text underline color for inline semantics in prose"
+      "$description": "Tint behind inline code"
     },
-    "link-color": {
-      "$value": "inherit",
+    "code-block-bg": {
+      "$value": "{surface.dark}",
       "$type": "color",
-      "$description": "Link color in prose body"
+      "$description": "Background of a code block (dark in both themes)"
     },
-    "link-font-weight": {
-      "$value": "inherit",
-      "$type": "fontWeight",
-      "$description": "Link font weight in prose body"
-    },
-    "link-hover-color": {
-      "$value": "{foreground.accent-hover}",
+    "code-block-text": {
+      "$value": "{foreground.on-dark}",
       "$type": "color",
-      "$description": "Link hover text color in prose"
-    },
-    "link-active-color": {
-      "$value": "{foreground.accent-pressed}",
-      "$type": "color",
-      "$description": "Link active text color in prose"
-    },
-    "link-underline": {
-      "$value": "underline",
-      "$type": "other",
-      "$description": "Link underline style in prose"
-    },
-    "link-underline-offset": {
-      "$value": "{underline.offset}",
-      "$type": "dimension",
-      "$description": "Link underline offset in prose"
-    },
-    "link-underline-thickness": {
-      "$value": "{underline.thickness}",
-      "$type": "dimension",
-      "$description": "Link underline thickness in prose"
-    },
-    "link-underline-color": {
-      "$value": "{foreground.accent}",
-      "$type": "color",
-      "$description": "Link underline color in prose"
-    },
-    "small-font-size": {
-      "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension",
-      "$description": "Font size for small text in prose"
+      "$description": "Text colour of a code block"
     },
     "scroll-margin": {
-      "$value": "calc(var(--site-header-height, 0px) + {spacing.scroll-margin})",
+      "$value": "{spacing.scroll-margin}",
       "$type": "dimension",
-      "$description": "Scroll margin clearance for anchored headings in prose"
+      "$description": "Space kept above an anchored element when it is scrolled to. A product with a sticky header adds the header height here"
     }
   },
   "meter": {
@@ -1859,26 +1855,6 @@
       "$type": "color",
       "$description": "Background color the table"
     },
-    "font-family": {
-      "$value": "{body.font-family}",
-      "$type": "fontFamilies",
-      "$description": "Base font family for table cells"
-    },
-    "font-size": {
-      "$value": "{body-fixed.font-size}",
-      "$type": "dimension",
-      "$description": "Base font size for table cells"
-    },
-    "font-weight": {
-      "$value": "{body.font-weight}",
-      "$type": "fontWeight",
-      "$description": "Base font weight for table cells"
-    },
-    "line-height": {
-      "$value": "{body.line-height}",
-      "$type": "number",
-      "$description": "Line height for table text"
-    },
     "cell-padding-block": {
       "$value": "{spacing.12}",
       "$type": "dimension",
@@ -1890,12 +1866,12 @@
       "$description": "Horizontal cell padding"
     },
     "compact-cell-padding-block": {
-      "$value": "{spacing.4}",
+      "$value": "{spacing.8}",
       "$type": "dimension",
       "$description": "Compact vertical cell padding"
     },
     "compact-cell-padding-inline": {
-      "$value": "{spacing.8}",
+      "$value": "{spacing.12}",
       "$type": "dimension",
       "$description": "Compact horizontal cell padding"
     },
@@ -1907,31 +1883,6 @@
     "cell-sticky-filter": {
       "$value": "{surface-layer.filter}",
       "$description": "Filter for sticky table cells"
-    },
-    "header-cell-font-weight": {
-      "$value": "{font-weight.bold}",
-      "$type": "fontWeight",
-      "$description": "Font weight for table header cells"
-    },
-    "head-font-family": {
-      "$value": "{body.font-family}",
-      "$type": "fontFamilies",
-      "$description": "Base font family for table cells"
-    },
-    "head-font-size": {
-      "$value": "{body-fixed.font-size}",
-      "$type": "dimension",
-      "$description": "Base font size for table cells"
-    },
-    "head-font-weight": {
-      "$value": "{font-weight.bold}",
-      "$type": "fontWeight",
-      "$description": "Base font weight for table cells"
-    },
-    "head-line-height": {
-      "$value": "{body.line-height}",
-      "$type": "number",
-      "$description": "Line height for table text"
     },
     "head-bg": {
       "$value": "{surface.translucent}",
@@ -1983,20 +1934,50 @@
       "$type": "color",
       "$description": "Alternating background color for striped table rows"
     },
-    "caption-color": {
-      "$value": "{foreground.muted}",
-      "$type": "color",
-      "$description": "Text color for table captions"
-    },
-    "caption-font-size": {
-      "$value": "{body-sm.font-size}",
-      "$type": "dimension",
-      "$description": "Font size for table captions"
-    },
     "radius": {
       "$value": "{radius}",
       "$type": "dimension",
       "$description": "Outer corner radius for card/contained tables"
+    },
+    "inset": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Inline padding of the first and last cells. A flush card body sets it to the card padding; --plain sets it to 0"
+    },
+    "col-index-width": {
+      "$value": "calc({spacing.16} * 2.5)",
+      "$type": "dimension",
+      "$description": "Width of an index, counter or checkbox column"
+    },
+    "col-xs-width": {
+      "$value": "{spacing.64}",
+      "$type": "dimension",
+      "$description": "Extra-small column width"
+    },
+    "col-sm-width": {
+      "$value": "calc({spacing.16} * 6)",
+      "$type": "dimension",
+      "$description": "Small column width (times, durations, short states)"
+    },
+    "col-md-width": {
+      "$value": "{spacing.128}",
+      "$type": "dimension",
+      "$description": "Medium column width (dates, statuses, categories)"
+    },
+    "col-lg-width": {
+      "$value": "{spacing.192}",
+      "$type": "dimension",
+      "$description": "Large column width (names, emails, tags)"
+    },
+    "col-xl-width": {
+      "$value": "{spacing.256}",
+      "$type": "dimension",
+      "$description": "Extra-large column width (titles, notes, descriptions)"
+    },
+    "col-actions-width": {
+      "$value": "calc({spacing.16} * 6.5)",
+      "$type": "dimension",
+      "$description": "Width of an actions column"
     }
   },
   "switch": {
@@ -2217,7 +2198,7 @@
       "$description": "Rule colour; decorative, the indicator carries the state"
     },
     "indicator-width": {
-      "$value": "{border.width.2}",
+      "$value": "{border.width.4}",
       "$type": "dimension",
       "$description": "Selection line width on underline tabs"
     },
@@ -2269,147 +2250,62 @@
     }
   },
   "telemetry": {
-    "$type": "component",
-    "$description": "Telemetry stat pill, metric badge, and dashboard telemetry strip tokens",
+    "$description": "Telemetry tokens: a labelled value",
     "bg": {
       "$value": "{surface.layer}",
-      "$type": "color",
-      "$description": "Default background fill for telemetry stat pill"
+      "$type": "color"
     },
     "border-width": {
       "$value": "{border.width.thin}",
-      "$type": "dimension",
-      "$description": "Border stroke width for telemetry container"
+      "$type": "dimension"
     },
     "border-color": {
       "$value": "{panel.border-color}",
-      "$type": "color",
-      "$description": "Border stroke color for telemetry container"
-    },
-    "border-style": {
-      "$value": "{panel.border-style}",
-      "$type": "strokeStyle",
-      "$description": "Border stroke style for telemetry container"
+      "$type": "color"
     },
     "radius": {
       "$value": "{radius.sm}",
-      "$type": "dimension",
-      "$description": "Corner radius for telemetry container"
+      "$type": "dimension"
     },
     "padding-block": {
       "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Vertical padding for telemetry container"
+      "$type": "dimension"
     },
     "padding-inline": {
       "$value": "{spacing.12}",
-      "$type": "dimension",
-      "$description": "Horizontal padding for telemetry container"
+      "$type": "dimension"
     },
     "gap": {
-      "$value": "{spacing.12}",
-      "$type": "dimension",
-      "$description": "Gap between telemetry icon and content"
-    },
-    "inner-gap": {
       "$value": "{spacing.4}",
       "$type": "dimension",
-      "$description": "Gap between telemetry label and value"
+      "$description": "Space between label and value"
     },
-    "label-font-family": {
-      "$value": "{micro-heading.font-family}",
-      "$type": "fontFamilies",
-      "$description": "Telemetry metric label font family"
-    },
-    "label-font-size": {
-      "$value": "{typography.font-size.minus-2}",
+    "icon-gap": {
+      "$value": "{spacing.8}",
       "$type": "dimension",
-      "$description": "Telemetry metric label font size (Step -2: 0.64rem / 10px)"
+      "$description": "Space between the icon and the label"
     },
-    "label-font-weight": {
-      "$value": "{body.font-weight}",
-      "$type": "fontWeight",
-      "$description": "Telemetry metric label font weight"
-    },
-    "label-line-height": {
-      "$value": "1",
-      "$type": "number",
-      "$description": "Telemetry metric label line height"
-    },
-    "label-letter-spacing": {
-      "$value": "{typography.spacing.loose}",
+    "lead-icon-size": {
+      "$value": "{spacing.24}",
       "$type": "dimension",
-      "$description": "Telemetry metric label letter spacing"
+      "$description": "Icon size in the inline-start gutter (--icon-start)"
     },
-    "label-text-transform": {
-      "$value": "{micro-heading.text-transform}",
-      "$type": "other",
-      "$description": "Telemetry metric label text transform"
-    },
-    "label-color": {
-      "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Telemetry metric label text color"
-    },
-    "value-font-family": {
-      "$value": "{body.font-family}",
-      "$type": "fontFamilies",
-      "$description": "Telemetry value font family"
-    },
-    "value-font-size": {
-      "$value": "{body-fixed.font-size}",
+    "lead-icon-gap": {
+      "$value": "{spacing.12}",
       "$type": "dimension",
-      "$description": "Telemetry value font size (Step 0: 1rem / 16px)"
-    },
-    "value-font-weight": {
-      "$value": "{body-strong.font-weight}",
-      "$type": "fontWeight",
-      "$description": "Telemetry value font weight"
-    },
-    "value-line-height": {
-      "$value": "1",
-      "$type": "number",
-      "$description": "Telemetry value line height"
-    },
-    "value-color": {
-      "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Telemetry value text color"
-    },
-    "icon-size": {
-      "$value": "{spacing.16}",
-      "$type": "dimension",
-      "$description": "Telemetry leading icon dimensions"
-    },
-    "icon-color": {
-      "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Telemetry leading icon color"
+      "$description": "Space between the gutter icon and the label and value"
     },
     "compact-padding-block": {
       "$value": "{spacing.4}",
-      "$type": "dimension",
-      "$description": "Compact telemetry vertical padding"
+      "$type": "dimension"
     },
     "compact-padding-inline": {
       "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Compact telemetry horizontal padding"
+      "$type": "dimension"
     },
-    "compact-gap": {
+    "group-gap": {
       "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Compact telemetry content gap"
-    },
-    "card-padding": {
-      "$value": "{spacing.16}",
-      "$type": "dimension",
-      "$description": "Telemetry card variant interior padding"
-    },
-    "card-value-font-size": {
-      "$value": "{typography.font-size.2}",
-      "$type": "dimension",
-      "$description": "Large telemetry card value font size (Step 2: 1.5625rem)"
+      "$type": "dimension"
     }
   },
   "textarea": {
@@ -2673,136 +2569,68 @@
     }
   },
   "combobox": {
-    "$type": "component",
-    "$description": "Searchable combobox and popup listbox primitive tokens",
-    "min-height": {
-      "$value": "{spacing.target}",
-      "$type": "dimension",
-      "$description": "Combobox input control minimum block size (WCAG 2.5.5 touch target)"
-    },
-    "bg": {
-      "$value": "{surface.card}",
-      "$type": "color",
-      "$description": "Combobox input control surface fill"
-    },
-    "border-color": {
-      "$value": "{panel.border-color}",
-      "$type": "border",
-      "$description": "Combobox resting border stroke color"
-    },
-    "border-width": {
-      "$value": "{panel.border-width}",
-      "$type": "dimension",
-      "$description": "Combobox border thickness"
-    },
-    "radius": {
-      "$value": "{panel.radius}",
-      "$type": "dimension",
-      "$description": "Combobox input container corner radius"
-    },
-    "padding-block": {
-      "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Combobox input control vertical inner clearance"
-    },
-    "padding-inline": {
-      "$value": "{spacing.12}",
-      "$type": "dimension",
-      "$description": "Combobox input control horizontal inner clearance"
-    },
-    "gap": {
-      "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Gap between chips, input, and actions inside control"
-    },
-    "color": {
-      "$value": "{foreground}",
-      "$type": "color",
-      "$description": "Combobox input and option text color"
-    },
-    "placeholder-color": {
-      "$value": "{foreground.muted}",
-      "$type": "color",
-      "$description": "Combobox placeholder text color"
-    },
+    "$description": "Combobox molecule: the list and its options. The field's frame comes from the input tokens.",
     "listbox-bg": {
       "$value": "{surface.card}",
-      "$type": "color",
-      "$description": "Combobox listbox dropdown background"
+      "$type": "color"
     },
     "listbox-border-color": {
       "$value": "{panel.border-color}",
-      "$type": "border",
-      "$description": "Combobox listbox border color"
+      "$type": "border"
     },
     "listbox-border-width": {
       "$value": "{panel.border-width}",
-      "$type": "dimension",
-      "$description": "Combobox listbox border width"
+      "$type": "dimension"
     },
     "listbox-radius": {
-      "$value": "{radius}",
-      "$type": "dimension",
-      "$description": "Combobox listbox corner radius"
+      "$value": "{panel.radius}",
+      "$type": "dimension"
     },
     "listbox-shadow": {
       "$value": "{shadow.md}",
-      "$type": "shadow",
-      "$description": "Combobox listbox floating elevation shadow"
+      "$type": "shadow"
     },
     "listbox-max-height": {
       "$value": "18rem",
       "$type": "dimension",
-      "$description": "Combobox listbox maximum scrollable height"
+      "$description": "Longest list before it scrolls"
     },
     "listbox-padding": {
       "$value": "{spacing.4}",
-      "$type": "dimension",
-      "$description": "Combobox listbox container internal padding"
-    },
-    "listbox-gap": {
-      "$value": "2px",
-      "$type": "dimension",
-      "$description": "Gap between options in listbox"
+      "$type": "dimension"
     },
     "option-padding-block": {
       "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Combobox option vertical padding"
+      "$type": "dimension"
     },
     "option-padding-inline": {
       "$value": "{spacing.12}",
-      "$type": "dimension",
-      "$description": "Combobox option horizontal padding"
+      "$type": "dimension"
     },
     "option-radius": {
       "$value": "{radius.sm}",
-      "$type": "dimension",
-      "$description": "Combobox option corner radius"
+      "$type": "dimension"
     },
     "option-hover-bg": {
       "$value": "{surface.translucent}",
-      "$type": "color",
-      "$description": "Combobox option hover background fill"
-    },
-    "option-selected-bg": {
-      "$value": "{surface.translucent}",
-      "$type": "color",
-      "$description": "Combobox option selected state background fill"
+      "$type": "color"
     },
     "option-selected-color": {
       "$value": "{foreground.accent}",
       "$type": "color",
-      "$description": "Combobox option selected state text color"
+      "$description": "Selected options also show a check icon"
     }
   },
   "wrapper": {
-    "$type": "component",
-    "$description": "Page and section content constraint wrapper tokens",
     "max-width": {
       "$value": "{site-width}",
       "$type": "dimension",
-      "$description": "Default max width for wrapper content"
+      "$description": "Width cap of the content"
+    },
+    "gutter": {
+      "$value": "{spacing.cushion}",
+      "$type": "dimension",
+      "$description": "Inline space kept beside the content"
     }
   }
 }

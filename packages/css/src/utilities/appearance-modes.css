@@ -1,89 +1,26 @@
 /* ==========================================================================
-   Design For Humans: Font-size-mode Utilities
+   Design For Humans: Mode Classes
    --------------------------------------------------------------------------
-   Low-specificity (:where()) classes that set the sizing mode for everything inside:
-   text atoms are fixed by default, and these switch a region to fluid, cq or
-   compact. Direct parity with the Design For Humans blog (_font-size-mode.scss).
+   A mode class sets a flag that the components inside read; it styles nothing
+   itself. Type sizing (--font-sizing): text atoms are fixed by default, and
+   these switch a region to fluid, cq or compact. Density (--ui-sizing):
+   .ui-compact, or .fine:ui-compact where the primary pointer is fine. Controls
+   (--controls-prominence, --controls-size, --controls-corners).
    ========================================================================== */
 :where(.font-sizing-fixed) {
     --font-sizing: fixed;
-    --vert-spacing: fixed;
-    --prose-font-sizing: fixed;
-    --prose-vert-spacing: fixed;
 }
 
 :where(.font-sizing-compact) {
     --font-sizing: compact;
-    --vert-spacing: tight;
-    --prose-font-sizing: compact;
-    --prose-vert-spacing: tight;
 }
 
 :where(.font-sizing-cq) {
     --font-sizing: cq;
-    --vert-spacing: cq;
-    --prose-font-sizing: cq;
-    --prose-vert-spacing: cq;
 }
 
 :where(.font-sizing-fluid) {
     --font-sizing: fluid;
-    --vert-spacing: fluid;
-    --prose-font-sizing: fluid;
-    --prose-vert-spacing: fluid;
-}
-
-:where(.font-sizing-tight) {
-    --font-sizing: fixed;
-    --vert-spacing: tight;
-    --prose-font-sizing: fixed;
-    --prose-vert-spacing: tight;
-}
-
-:where(.font-sizing-compact--on-desk) {
-    @media screen and (pointer: fine) and (hover: hover) {
-        --font-sizing: compact;
-        --vert-spacing: tight;
-        --prose-font-sizing: compact;
-        --prose-vert-spacing: tight;
-    }
-}
-
-:where(.vert-spacing-fluid) {
-    --vert-spacing: fluid;
-    --prose-vert-spacing: fluid;
-}
-
-:where(.vert-spacing-cq) {
-    --vert-spacing: cq;
-    --prose-vert-spacing: cq;
-}
-
-:where(.vert-spacing-fixed) {
-    --vert-spacing: fixed;
-    --prose-vert-spacing: fixed;
-}
-
-:where(.vert-spacing-tight) {
-    --vert-spacing: tight;
-    --prose-vert-spacing: tight;
-}
-
-:where(.spacing-mode-fixed) {
-    --spacing-breathe: var(--spacing);
-    --spacing-cushion: var(--spacing);
-    --spacing-cq-breathe: var(--spacing);
-    --spacing-cq-cushion: var(--spacing);
-}
-
-:where(.spacing-mode-cq) {
-    --spacing-breathe: var(--spacing-cq-breathe);
-    --spacing-cushion: var(--spacing-cq-cushion);
-}
-
-:where(.ui-default) {
-    --ui-sizing: default;
-    --ui-density: default;
 }
 
 :where(.ui-compact) {
@@ -93,7 +30,6 @@
     --spacing-cq-breathe: var(--spacing);
     --spacing-cq-cushion: var(--spacing);
     --font-sizing: compact;
-    --vert-spacing: tight;
     font-size: var(--body-compact-font-size);
 }
 
@@ -107,17 +43,8 @@
         --spacing-cq-breathe: var(--spacing);
         --spacing-cq-cushion: var(--spacing);
         --font-sizing: compact;
-        --vert-spacing: tight;
         font-size: var(--body-compact-font-size);
     }
-}
-
-:where(.ui-dense) {
-    --ui-density: dense;
-    --spacing-breathe: var(--spacing);
-    --spacing-cushion: var(--spacing);
-    --spacing-cq-breathe: var(--spacing);
-    --spacing-cq-cushion: var(--spacing);
 }
 
 :where(.controls-plain) {
@@ -138,12 +65,4 @@
 
 :where(.controls-round) {
     --controls-corners: round;
-}
-
-:where(.viewport-fit-cover) {
-    --viewport-fit: cover;
-    --safe-area-inset-right: env(safe-area-inset-right);
-    --safe-area-inset-bottom: env(safe-area-inset-bottom);
-    --safe-area-inset-left: env(safe-area-inset-left);
-    --safe-area-inset-top: env(safe-area-inset-top);
 }

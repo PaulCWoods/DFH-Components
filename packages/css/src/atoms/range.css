@@ -263,6 +263,6 @@
   display: flex;
   justify-content: space-between;
   inline-size: 100%;
-  font-size: var(--body-sm-font-size, 0.875rem);
+  font-size: var(--body-sm-fixed-font-size, 0.875rem);
   color: var(--foreground-muted, currentColor);
 }

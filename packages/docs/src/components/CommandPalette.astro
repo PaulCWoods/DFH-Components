@@ -1,244 +1,165 @@
 ---
 import Icon from './Icon.astro';
 
+/* Same markup as the Command Palette recipe: the card is the combobox, its
+   header holds the control and its body the static list (§28 D). */
 const searchIndex = [
-  { title: 'Button Primitive', desc: 'Indivisible button atom with --strong, --subtle, --plain modifiers', href: '/components/atoms/button', category: 'Atoms', icon: 'Check' },
-  { title: 'Badge & Chip', desc: 'Status badges, live counters, dismissible tag tokens', href: '/components/atoms/badge', category: 'Atoms', icon: 'Bookmark' },
-  { title: 'Input & Form Controls', desc: 'Accessible text inputs, textareas, selects, search fields', href: '/components/atoms/input', category: 'Atoms', icon: 'Edit' },
-  { title: 'Switch & Checkbox', desc: 'Toggle switches, custom radio choices, zero-JS toggles', href: '/components/atoms/switch', category: 'Atoms', icon: 'Radio' },
-  { title: 'Typography Atoms', desc: 'Modular scale headings, small-heading, micro-heading, text', href: '/components/atoms/text', category: 'Atoms', icon: 'Text' },
-  { title: 'Card & Deck', desc: 'Content surface containers, interactive deck stacks, header & footer', href: '/components/organisms/card', category: 'Organisms', icon: 'Grid' },
-  { title: 'Dialog & Modal', desc: 'Native HTML5 dialog with top-layer positioning and focus trapping', href: '/components/organisms/dialog', category: 'Organisms', icon: 'Expand' },
-  { title: 'Menu & Context Menu', desc: 'Keyboard-navigable menus, anchored popover dropdowns, shortcuts', href: '/components/organisms/menu', category: 'Organisms', icon: 'List' },
-  { title: 'Combobox & Listbox', desc: 'Searchable auto-complete listbox, tags, chips, keyboard focus', href: '/components/organisms/combobox', category: 'Organisms', icon: 'Search' },
-  { title: 'Tabs Organism', desc: 'Accessible tablists with automatic keyboard switching and indicator bar', href: '/components/organisms/tabs', category: 'Organisms', icon: 'SortableHorizontal' },
-  { title: 'Accordion Disclosures', desc: 'Native details/summary disclosures, accordion-groups, indicator icons', href: '/components/organisms/accordion', category: 'Organisms', icon: 'ChevronDown' },
-  { title: 'Table Organism', desc: 'Data grids, column sorting, pagination, compact modes', href: '/components/organisms/table', category: 'Organisms', icon: 'Grid' },
-  { title: 'Token Architecture', desc: '3-tier DTCG design tokens: Global, Semantic, and Component', href: '/tokens', category: 'Tokens', icon: 'Disc' },
-  { title: 'Organism-Atom Law', desc: 'Core architectural rule: Organisms orchestrate layout; Atoms dictate style', href: '/getting-started/composition-law', category: 'Guidelines', icon: 'Code' },
-  { title: 'WCAG 2.2 Guidelines', desc: 'Level AA and AAA compliance rules, target sizing, contrast ratios', href: '/getting-started/accessibility', category: 'Guidelines', icon: 'Circle' },
+  { title: 'Button', desc: 'Actions, with prominence, intent and size', href: '/components/atoms/button', category: 'Atoms', icon: 'Point' },
+  { title: 'Badge, status and chip', desc: 'Counts, states and removable values', href: '/components/atoms/badge', category: 'Atoms', icon: 'Bookmark' },
+  { title: 'Form controls', desc: 'Inputs, selects, textareas, checkboxes and switches', href: '/components/atoms/input', category: 'Atoms', icon: 'Edit' },
+  { title: 'Text', desc: 'Headings and body text at each step of the scale', href: '/components/atoms/text', category: 'Atoms', icon: 'List' },
+  { title: 'Accordion', desc: 'Disclosures built on details and summary', href: '/components/molecules/accordion', category: 'Molecules', icon: 'ChevronDown' },
+  { title: 'Card', desc: 'A surface with header, body and footer', href: '/components/molecules/card', category: 'Molecules', icon: 'Grid' },
+  { title: 'Combobox', desc: 'A field that filters a list', href: '/components/molecules/combobox', category: 'Molecules', icon: 'Search' },
+  { title: 'Menu', desc: 'Lists of actions in a popover or panel', href: '/components/molecules/menu', category: 'Molecules', icon: 'List' },
+  { title: 'Dialog', desc: 'Modal panels and drawers', href: '/components/organisms/dialog', category: 'Organisms', icon: 'Expand' },
+  { title: 'Table', desc: 'Data with sorting, selection and sticky parts', href: '/components/organisms/table', category: 'Organisms', icon: 'Grid' },
+  { title: 'Tabs', desc: 'Tab lists and tabbed content', href: '/components/organisms/tabs', category: 'Organisms', icon: 'SortableHorizontal' },
+  { title: 'Tokens', desc: 'Global, semantic and component tiers', href: '/tokens', category: 'Guides', icon: 'Disc' },
+  { title: 'Accessibility', desc: 'WCAG 2.2 rules, target sizes and contrast', href: '/getting-started/accessibility', category: 'Guides', icon: 'Circle' },
 ];
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const categories = [...new Set(searchIndex.map((i) => i.category))];
 ---
 
-<dialog id="cmd-palette" class="dialog" aria-label="Global search and command palette">
-  <article class="card card--ruled">
-    
-    <!-- Combobox Search Header -->
-    <header class="card__header card__header--flush">
-      <div class="combobox combobox--flush">
-        <div class="combobox__control gap-cushion">
-          <Icon name="Search" size={20} class="text-muted" />
-          <input
-            id="cmd-input"
-            type="search"
-            class="combobox__input"
-            role="combobox"
-            aria-expanded="true"
-            aria-autocomplete="list"
-            aria-controls="cmd-listbox"
-            placeholder="Search components, tokens, guidelines... (e.g. button, dialog, tokens)"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button
-            type="button"
-            id="cmd-close-btn"
-            class="button button--plain button--icon button--sm"
-          >
-            <span class="visually-hidden">Close command palette</span>
-            <Icon name="Close" size={16} />
-          </button>
-        </div>
+<dialog id="cmd-palette" class="dialog" aria-label="Search" closedby="any">
+  <div class="card card--ruled combobox combobox--plain">
+    <header class="card__header">
+      <div class="combobox__control">
+        <Icon name="Search" class="combobox__icon-start" />
+        <input
+          id="cmd-input"
+          type="search"
+          class="combobox__input"
+          role="combobox"
+          aria-label="Search"
+          aria-expanded="true"
+          aria-autocomplete="list"
+          aria-controls="cmd-listbox"
+          placeholder="Search components and guides"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="button" class="button button--plain button--icon" commandfor="cmd-palette" command="close">
+          <span class="sr-only">Close</span>
+          <Icon name="Close" />
+        </button>
       </div>
     </header>
 
-    <!-- Filtered Results Listbox -->
-    <div class="card__body card__body--flush card__body--scrollable max-height-sm">
-      <ul
-        id="cmd-listbox"
-        role="listbox"
-        class="combobox__listbox combobox__listbox--static padding-xs margin-0 list-style-none"
-        aria-label="Documentation search suggestions"
-      >
-        {searchIndex.map((item, idx) => (
-          <li
-            role="option"
-            id={`cmd-opt-${idx}`}
-            class="combobox__option"
-            aria-selected="false"
-            data-search={`${item.title} ${item.desc} ${item.category}`.toLowerCase()}
-            data-href={item.href}
-          >
-            <div class="inline align-items-center gap-sm">
-              <Icon name={item.icon} size={18} class="text-muted flex-shrink-0" />
-              <div class="combobox__option-main">
-                <span class="font-weight-medium font-size-sm">{item.title}</span>
-                <span class="combobox__option-desc small-text">{item.desc}</span>
-              </div>
-            </div>
-            <div class="cluster gap-xs align-items-center flex-shrink-0">
-              <span class="chip chip--subtle chip--sm"><span class="chip__text">{item.category}</span></span>
-              <kbd class="kbd">↵</kbd>
-            </div>
-          </li>
+    <div class="card__body card__body--scrollable" tabindex="0" aria-label="Results">
+      <div id="cmd-listbox" class="combobox__listbox combobox__listbox--static" role="listbox" aria-label="Results">
+        {categories.map((cat) => (
+          <ul role="group" aria-labelledby={`cmd-g-${slug(cat)}`}>
+            <li id={`cmd-g-${slug(cat)}`} role="presentation" class="combobox__group-label micro-heading">{cat}</li>
+            {searchIndex.filter((i) => i.category === cat).map((item) => (
+              <li
+                role="option"
+                id={`cmd-opt-${slug(item.title)}`}
+                class="combobox__option"
+                aria-selected="false"
+                data-href={item.href}
+              >
+                <Icon name={item.icon} class="text-muted" />
+                <span class="lockup grow">
+                  <span class="small-heading">{item.title}</span>
+                  <span class="small-text text-muted">{item.desc}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         ))}
-      </ul>
-
-      <!-- Zero-Results Empty State -->
-      <div id="cmd-empty" class="combobox__empty" hidden>
-        <div class="empty-state__content stack gap-xs align-items-center">
-          <h3 class="empty-state__title micro-heading">No results found</h3>
-          <p class="empty-state__description small-text text-muted">Try searching for "button", "tokens", "dialog", or "WCAG".</p>
+      </div>
+      <div id="cmd-empty" class="empty-state empty-state--compact" hidden>
+        <div class="empty-state__content">
+          <h2 class="empty-state__title small-heading">Nothing matches</h2>
+          <p class="empty-state__description small-text">Try a component name, such as “button” or “dialog”.</p>
         </div>
       </div>
+      <p id="cmd-status" class="sr-only" role="status"></p>
     </div>
 
-    <!-- Footer with Keyboard Hints -->
-    <footer class="card__footer">
-      <div class="inline inline--between align-items-center text-muted font-size-xs">
-        <div class="cluster gap-sm">
-          <span><kbd class="kbd">↑↓</kbd> Navigate</span>
-          <span><kbd class="kbd">↵</kbd> Select</span>
-          <span><kbd class="kbd">Esc</kbd> Close</span>
-        </div>
-        <span>Design For Humans v2.2</span>
-      </div>
+    <footer class="card__footer cluster small-text text-muted">
+      <span><kbd class="kbd">↑</kbd> <kbd class="kbd">↓</kbd> to move</span>
+      <span><kbd class="kbd">↵</kbd> to choose</span>
+      <span><kbd class="kbd">Esc</kbd> to close</span>
     </footer>
-
-  </article>
+  </div>
 </dialog>
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', () => {
     const dialog = document.getElementById('cmd-palette');
     const input = document.getElementById('cmd-input');
-    const closeBtn = document.getElementById('cmd-close-btn');
-    const searchBtn = document.getElementById('header-search-btn');
     const listbox = document.getElementById('cmd-listbox');
-    const emptyState = document.getElementById('cmd-empty');
+    const empty = document.getElementById('cmd-empty');
+    const status = document.getElementById('cmd-status');
+    const searchBtn = document.getElementById('header-search-btn');
     if (!dialog || !input || !listbox) return;
 
     const options = Array.from(listbox.querySelectorAll('[role="option"]'));
+    const visible = () => options.filter((o) => !o.hidden);
 
-    const updateActiveDescendant = (activeOpt) => {
-      options.forEach((opt) => {
-        const isCurrent = opt === activeOpt;
-        opt.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
-        opt.classList.toggle('is-selected', isCurrent);
-        opt.classList.toggle('is-active', isCurrent);
-      });
-      if (activeOpt) {
-        input.setAttribute('aria-activedescendant', activeOpt.id);
-        activeOpt.scrollIntoView({ block: 'nearest' });
+    const setActive = (o) => {
+      options.forEach((x) => x.classList.toggle('is-active', x === o));
+      if (o) {
+        input.setAttribute('aria-activedescendant', o.id);
+        o.scrollIntoView({ block: 'nearest' });
       } else {
         input.removeAttribute('aria-activedescendant');
       }
     };
 
-    const openPalette = () => {
-      dialog.showModal();
+    const filter = () => {
+      const q = input.value.trim().toLowerCase();
+      options.forEach((o) => (o.hidden = !!q && !o.textContent.toLowerCase().includes(q)));
+      listbox.querySelectorAll('[role="group"]').forEach((g) => (g.hidden = !g.querySelector('[role="option"]:not([hidden])')));
+      const n = visible().length;
+      if (empty) empty.hidden = n > 0;
+      if (status) status.textContent = q ? (n ? `${n} result${n === 1 ? '' : 's'}` : 'No results') : '';
+      setActive(visible()[0] || null);
+    };
+
+    const go = (o) => {
+      const href = o && o.dataset.href;
+      dialog.close();
+      if (href) window.location.href = href;
+    };
+
+    const open = () => {
       input.value = '';
-      input.setAttribute('aria-expanded', 'true');
-      filter('');
+      filter();
+      dialog.showModal();
       input.focus();
     };
 
-    const closePalette = () => {
-      input.setAttribute('aria-expanded', 'false');
-      input.removeAttribute('aria-activedescendant');
-      dialog.close();
-    };
-
-    // Global Cmd+K / Ctrl+K shortcut
     window.addEventListener('keydown', (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        if (dialog.open) {
-          closePalette();
-        } else {
-          openPalette();
-        }
+        if (dialog.open) dialog.close();
+        else open();
       }
     });
+    if (searchBtn) searchBtn.addEventListener('click', open);
 
-    if (searchBtn) {
-      searchBtn.addEventListener('click', openPalette);
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closePalette);
-    }
-
-    // Backdrop click close
-    dialog.addEventListener('click', (e) => {
-      if (e.target === dialog) {
-        closePalette();
-      }
-    });
-
-    const filter = (query) => {
-      const q = query.trim().toLowerCase();
-      let visibleCount = 0;
-      let firstVisible = null;
-
-      options.forEach((opt) => {
-        const text = opt.getAttribute('data-search') || '';
-        const match = !q || text.includes(q);
-        opt.hidden = !match;
-        if (match) {
-          visibleCount++;
-          if (!firstVisible) firstVisible = opt;
-        }
-      });
-
-      if (emptyState) {
-        emptyState.hidden = visibleCount > 0;
-      }
-
-      updateActiveDescendant(firstVisible);
-    };
-
-    input.addEventListener('input', (e) => {
-      filter(e.target.value);
-    });
-
-    // Arrow navigation
+    input.addEventListener('input', filter);
     input.addEventListener('keydown', (e) => {
-      const visibleOptions = options.filter((opt) => !opt.hidden);
-      if (visibleOptions.length === 0) return;
-
-      const currentIdx = visibleOptions.findIndex((opt) => opt.getAttribute('aria-selected') === 'true');
-
-      if (e.key === 'ArrowDown') {
+      const v = visible();
+      const cur = v.findIndex((o) => o.classList.contains('is-active'));
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
-        const nextIdx = currentIdx < visibleOptions.length - 1 ? currentIdx + 1 : 0;
-        updateActiveDescendant(visibleOptions[nextIdx]);
-      } else if (e.key === 'ArrowUp') {
+        if (!v.length) return;
+        const step = e.key === 'ArrowDown' ? 1 : -1;
+        setActive(v[(cur + step + v.length) % v.length]);
+      } else if (e.key === 'Enter' && cur > -1) {
         e.preventDefault();
-        const prevIdx = currentIdx > 0 ? currentIdx - 1 : visibleOptions.length - 1;
-        updateActiveDescendant(visibleOptions[prevIdx]);
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        const selected = visibleOptions.find((opt) => opt.getAttribute('aria-selected') === 'true');
-        if (selected) {
-          const href = selected.getAttribute('data-href');
-          if (href) {
-            closePalette();
-            window.location.href = href;
-          }
-        }
+        go(v[cur]);
       }
     });
-
-    // Option click
-    options.forEach((opt) => {
-      opt.addEventListener('click', () => {
-        const href = opt.getAttribute('data-href');
-        if (href) {
-          closePalette();
-          window.location.href = href;
-        }
-      });
+    options.forEach((o) => {
+      o.addEventListener('mousedown', (e) => e.preventDefault());
+      o.addEventListener('click', () => go(o));
     });
   });
 </script>

@@ -1,0 +1,299 @@
+/* ==========================================================================
+   Design For Humans: Sizing Utilities
+   --------------------------------------------------------------------------
+   Inline and block sizes from the Tier 2 block scale (--spacing-block-2xs …
+   --spacing-block-2xl). Minimum and maximum sizes never exceed the space
+   available. Components size themselves from their tokens; set the token
+   rather than a size class on a component.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Inline size
+   -------------------------------------------------------------------------- */
+
+:where(.inline-size-2xs, .w-2xs) {
+    inline-size: var(--spacing-block-2xs, 8rem);
+}
+
+:where(.inline-size-xs, .w-xs) {
+    inline-size: var(--spacing-block-xs, 16rem);
+}
+
+:where(.inline-size-sm, .w-sm) {
+    inline-size: var(--spacing-block-sm, 24rem);
+}
+
+:where(.inline-size-md, .w-md) {
+    inline-size: var(--spacing-block, 36rem);
+}
+
+:where(.inline-size-lg, .w-lg) {
+    inline-size: var(--spacing-block-lg, 48rem);
+}
+
+:where(.inline-size-xl, .w-xl) {
+    inline-size: var(--spacing-block-xl, 64rem);
+}
+
+:where(.inline-size-2xl, .w-2xl) {
+    inline-size: var(--spacing-block-2xl, 80rem);
+}
+
+:where(.inline-size-full, .w-full) {
+    inline-size: 100%;
+}
+
+:where(.inline-size-auto, .w-auto) {
+    inline-size: auto;
+}
+
+:where(.inline-size-screen, .w-screen) {
+    inline-size: 100dvi;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Minimum and maximum inline size
+   -------------------------------------------------------------------------- */
+
+:where(.min-inline-size-2xs, .min-w-2xs) {
+    min-inline-size: min(var(--spacing-block-2xs, 8rem), 100%);
+}
+
+:where(.min-inline-size-xs, .min-w-xs) {
+    min-inline-size: min(var(--spacing-block-xs, 16rem), 100%);
+}
+
+:where(.min-inline-size-sm, .min-w-sm) {
+    min-inline-size: min(var(--spacing-block-sm, 24rem), 100%);
+}
+
+:where(.min-inline-size-md, .min-w-md) {
+    min-inline-size: min(var(--spacing-block, 36rem), 100%);
+}
+
+:where(.min-inline-size-lg, .min-w-lg) {
+    min-inline-size: min(var(--spacing-block-lg, 48rem), 100%);
+}
+
+:where(.min-inline-size-xl, .min-w-xl) {
+    min-inline-size: min(var(--spacing-block-xl, 64rem), 100%);
+}
+
+:where(.min-inline-size-2xl, .min-w-2xl) {
+    min-inline-size: min(var(--spacing-block-2xl, 80rem), 100%);
+}
+
+:where(.min-inline-size-0, .min-w-0) {
+    min-inline-size: 0;
+}
+
+:where(.max-inline-size-2xs, .max-w-2xs) {
+    max-inline-size: min(var(--spacing-block-2xs, 8rem), 100%);
+}
+
+:where(.max-inline-size-xs, .max-w-xs) {
+    max-inline-size: min(var(--spacing-block-xs, 16rem), 100%);
+}
+
+:where(.max-inline-size-sm, .max-w-sm) {
+    max-inline-size: min(var(--spacing-block-sm, 24rem), 100%);
+}
+
+:where(.max-inline-size-md, .max-w-md) {
+    max-inline-size: min(var(--spacing-block, 36rem), 100%);
+}
+
+:where(.max-inline-size-lg, .max-w-lg) {
+    max-inline-size: min(var(--spacing-block-lg, 48rem), 100%);
+}
+
+:where(.max-inline-size-xl, .max-w-xl) {
+    max-inline-size: min(var(--spacing-block-xl, 64rem), 100%);
+}
+
+:where(.max-inline-size-2xl, .max-w-2xl) {
+    max-inline-size: min(var(--spacing-block-2xl, 80rem), 100%);
+}
+
+:where(.max-inline-size-full, .max-w-full) {
+    max-inline-size: 100%;
+}
+
+:where(.max-inline-size-none, .max-w-none) {
+    max-inline-size: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Block size
+   -------------------------------------------------------------------------- */
+
+:where(.block-size-2xs, .h-2xs) {
+    block-size: var(--spacing-block-2xs, 8rem);
+}
+
+:where(.block-size-xs, .h-xs) {
+    block-size: var(--spacing-block-xs, 16rem);
+}
+
+:where(.block-size-sm, .h-sm) {
+    block-size: var(--spacing-block-sm, 24rem);
+}
+
+:where(.block-size-md, .h-md) {
+    block-size: var(--spacing-block, 36rem);
+}
+
+:where(.block-size-lg, .h-lg) {
+    block-size: var(--spacing-block-lg, 48rem);
+}
+
+:where(.block-size-xl, .h-xl) {
+    block-size: var(--spacing-block-xl, 64rem);
+}
+
+:where(.block-size-2xl, .h-2xl) {
+    block-size: var(--spacing-block-2xl, 80rem);
+}
+
+:where(.block-size-full, .h-full) {
+    block-size: 100%;
+}
+
+:where(.block-size-auto, .h-auto) {
+    block-size: auto;
+}
+
+:where(.block-size-screen, .h-screen) {
+    block-size: 100dvb;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Minimum and maximum block size
+   -------------------------------------------------------------------------- */
+
+:where(.min-block-size-2xs, .min-h-2xs) {
+    min-block-size: var(--spacing-block-2xs, 8rem);
+}
+
+:where(.min-block-size-xs, .min-h-xs) {
+    min-block-size: var(--spacing-block-xs, 16rem);
+}
+
+:where(.min-block-size-sm, .min-h-sm) {
+    min-block-size: var(--spacing-block-sm, 24rem);
+}
+
+:where(.min-block-size-md, .min-h-md) {
+    min-block-size: var(--spacing-block, 36rem);
+}
+
+:where(.min-block-size-lg, .min-h-lg) {
+    min-block-size: var(--spacing-block-lg, 48rem);
+}
+
+:where(.min-block-size-xl, .min-h-xl) {
+    min-block-size: var(--spacing-block-xl, 64rem);
+}
+
+:where(.min-block-size-2xl, .min-h-2xl) {
+    min-block-size: var(--spacing-block-2xl, 80rem);
+}
+
+:where(.min-block-size-0, .min-h-0) {
+    min-block-size: 0;
+}
+
+:where(.min-block-size-screen, .min-h-screen) {
+    min-block-size: 100dvb;
+}
+
+:where(.max-block-size-2xs, .max-h-2xs) {
+    max-block-size: var(--spacing-block-2xs, 8rem);
+}
+
+:where(.max-block-size-xs, .max-h-xs) {
+    max-block-size: var(--spacing-block-xs, 16rem);
+}
+
+:where(.max-block-size-sm, .max-h-sm) {
+    max-block-size: var(--spacing-block-sm, 24rem);
+}
+
+:where(.max-block-size-md, .max-h-md) {
+    max-block-size: var(--spacing-block, 36rem);
+}
+
+:where(.max-block-size-lg, .max-h-lg) {
+    max-block-size: var(--spacing-block-lg, 48rem);
+}
+
+:where(.max-block-size-xl, .max-h-xl) {
+    max-block-size: var(--spacing-block-xl, 64rem);
+}
+
+:where(.max-block-size-2xl, .max-h-2xl) {
+    max-block-size: var(--spacing-block-2xl, 80rem);
+}
+
+:where(.max-block-size-full, .max-h-full) {
+    max-block-size: 100%;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Both sizes
+   A square: an icon well, a media slot, a placeholder.
+   -------------------------------------------------------------------------- */
+
+:where(.size-unit) {
+    inline-size: var(--spacing, 1rem);
+    block-size: var(--spacing, 1rem);
+}
+
+:where(.size-target) {
+    inline-size: var(--spacing-target, 3rem);
+    block-size: var(--spacing-target, 3rem);
+}
+
+:where(.size-2xs) {
+    inline-size: var(--spacing-block-2xs, 8rem);
+    block-size: var(--spacing-block-2xs, 8rem);
+}
+
+:where(.size-xs) {
+    inline-size: var(--spacing-block-xs, 16rem);
+    block-size: var(--spacing-block-xs, 16rem);
+}
+
+:where(.size-sm) {
+    inline-size: var(--spacing-block-sm, 24rem);
+    block-size: var(--spacing-block-sm, 24rem);
+}
+
+:where(.size-md) {
+    inline-size: var(--spacing-block, 36rem);
+    block-size: var(--spacing-block, 36rem);
+}
+
+:where(.size-lg) {
+    inline-size: var(--spacing-block-lg, 48rem);
+    block-size: var(--spacing-block-lg, 48rem);
+}
+
+:where(.size-xl) {
+    inline-size: var(--spacing-block-xl, 64rem);
+    block-size: var(--spacing-block-xl, 64rem);
+}
+
+:where(.size-2xl) {
+    inline-size: var(--spacing-block-2xl, 80rem);
+    block-size: var(--spacing-block-2xl, 80rem);
+}
+
+:where(.size-full) {
+    inline-size: 100%;
+    block-size: 100%;
+}

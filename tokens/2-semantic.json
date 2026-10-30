@@ -15,6 +15,10 @@
     },
     "stronger": {
       "$value": "{translucency.90}"
+    },
+    "faint": {
+      "$value": "{translucency.95}",
+      "$description": "A surface barely tinted: the inverted surface mixed this far towards transparent (--surface-translucent)."
     }
   },
   "blur": {
@@ -57,100 +61,6 @@
       "$description": "Translucent surface layer for sticky navigation and floating panels"
     }
   },
-  "surface-color": {
-    "$type": "color",
-    "$description": "Base surface color tones before light-dark() resolution",
-    "light": {
-      "$value": "{color.neutral.000}"
-    },
-    "light-muted": {
-      "$value": "{color.neutral.100}"
-    },
-    "lighter": {
-      "$value": "{color.white}"
-    },
-    "dark": {
-      "$value": "{color.neutral.1000}"
-    },
-    "dark-muted": {
-      "$value": "{color.neutral.900}"
-    },
-    "darker": {
-      "$value": "{color.black}"
-    },
-    "accent-light": {
-      "$value": "{color.purple.200}"
-    },
-    "accent-strong-light": {
-      "$value": "{color.purple.700}"
-    },
-    "accent-strong-dark": {
-      "$value": "{color.purple.300}"
-    },
-    "accent-dark": {
-      "$value": "{color.purple.800}"
-    },
-    "complementary-light": {
-      "$value": "{color.olive.200}"
-    },
-    "complementary-strong-light": {
-      "$value": "{color.olive.700}"
-    },
-    "complementary-strong-dark": {
-      "$value": "{color.olive.300}"
-    },
-    "complementary-dark": {
-      "$value": "{color.olive.800}"
-    },
-    "danger-light": {
-      "$value": "{color.red.100}"
-    },
-    "danger-dark": {
-      "$value": "{color.red.900}"
-    },
-    "danger-strong-light": {
-      "$value": "{color.red.300}"
-    },
-    "danger-strong-dark": {
-      "$value": "{color.red.700}"
-    },
-    "warning-light": {
-      "$value": "{color.amber.100}"
-    },
-    "info-light": {
-      "$value": "{color.aqua.100}"
-    },
-    "warning-dark": {
-      "$value": "{color.amber.900}"
-    },
-    "info-dark": {
-      "$value": "{color.aqua.900}"
-    },
-    "warning-strong-light": {
-      "$value": "{color.amber.300}"
-    },
-    "info-strong-light": {
-      "$value": "{color.aqua.300}"
-    },
-    "warning-strong-dark": {
-      "$value": "{color.amber.700}"
-    },
-    "info-strong-dark": {
-      "$value": "{color.aqua.700}"
-    },
-    "success-light": {
-      "$value": "{color.green.100}"
-    },
-    "success-dark": {
-      "$value": "{color.green.900}"
-    },
-    "success-strong-light": {
-      "$value": "{color.green.300}"
-    },
-    "success-strong-dark": {
-      "$value": "{color.green.700}"
-    }
-  },
   "surface-layer": {
     "filter": {
       "$value": "{blur.lg}",
@@ -167,63 +77,63 @@
     "$type": "color",
     "$description": "Surface and container background fills",
     "default": {
-      "$value": "light-dark({surface-color.light}, {surface-color.dark})",
+      "$value": "light-dark({color.neutral.000}, {color.neutral.1000})",
       "$description": "Default canvas / page viewport background"
     },
     "subtle": {
-      "$value": "light-dark({surface-color.light}, {surface-color.dark})",
+      "$value": "light-dark({color.neutral.000}, {color.neutral.1000})",
       "$description": "Default canvas / page viewport background"
     },
     "muted": {
-      "$value": "light-dark({surface-color.light-muted}, {surface-color.dark-muted})",
+      "$value": "light-dark({color.neutral.100}, {color.neutral.900})",
       "$description": "Subtle surface background for page canvas"
     },
     "inverted": {
-      "$value": "light-dark({surface-color.dark}, {surface-color.light})",
+      "$value": "light-dark({color.neutral.1000}, {color.neutral.000})",
       "$description": "Inverted contrast background for tooltips and contrast banners"
     },
     "card": {
-      "$value": "light-dark({surface-color.lighter}, {surface-color.darker})",
+      "$value": "light-dark({color.white}, {color.black})",
       "$description": "Elevated card, dialog, popover, and panel background"
     },
     "card-inverted": {
-      "$value": "light-dark({surface-color.darker}, {surface-color.lighter})",
+      "$value": "light-dark({color.black}, {color.white})",
       "$description": "Inverted contrast card, dialog, popover, and panel background"
     },
     "dark": {
-      "$value": "light-dark({surface-color.dark}, {surface-color.darker})",
+      "$value": "light-dark({color.neutral.1000}, {color.black})",
       "$description": "Dark container background for footer and media asides"
     },
     "darker": {
-      "$value": "{surface-color.darker}",
+      "$value": "{color.black}",
       "$description": "Maximum depth background for deep containers"
     },
     "layer": {
-      "$value": "light-dark(color-mix(in srgb, {surface-color.lighter}, transparent {surface-layer.translucency}), color-mix(in srgb, {surface-color.darker}, transparent {surface-layer.translucency}))",
+      "$value": "light-dark(color-mix(in srgb, {color.white}, transparent {surface-layer.translucency}), color-mix(in srgb, {color.black}, transparent {surface-layer.translucency}))",
       "$description": "Layer surface background for floating or sticky elements"
     },
     "accent": {
-      "$value": "light-dark({surface-color.accent-light}, {surface-color.accent-dark})",
+      "$value": "light-dark({color.purple.200}, {color.purple.800})",
       "$description": "Light tint accent surface for badges and highlighted areas"
     },
     "accent-dark": {
-      "$value": "{surface-color.accent-dark}",
+      "$value": "{color.purple.800}",
       "$description": "Deep accent surface"
     },
     "accent-strong": {
-      "$value": "light-dark({surface-color.accent-strong-light}, {surface-color.accent-strong-dark})",
+      "$value": "light-dark({color.purple.700}, {color.purple.300})",
       "$description": "High-contrast accent surface for primary interactive elements"
     },
     "complementary": {
-      "$value": "light-dark({surface-color.complementary-light}, {surface-color.complementary-dark})",
+      "$value": "light-dark({color.olive.200}, {color.olive.800})",
       "$description": "Light tint complementary surface for badges and highlighted areas"
     },
     "complementary-dark": {
-      "$value": "{surface-color.complementary-dark}",
+      "$value": "{color.olive.800}",
       "$description": "Deep complementary surface"
     },
     "complementary-strong": {
-      "$value": "light-dark({surface-color.complementary-strong-light}, {surface-color.complementary-strong-dark})",
+      "$value": "light-dark({color.olive.700}, {color.olive.300})",
       "$description": "High-contrast complementary surface for primary interactive elements"
     },
     "translucent": {
@@ -235,314 +145,144 @@
       "$description": "Stronger hover tint on interactive surfaces"
     },
     "shade": {
-      "$value": "light-dark(color-mix(in srgb, {surface-color.dark}, transparent {translucency.95}), color-mix(in srgb, {surface-color.darker}, transparent {translucency.70}))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.1000}, transparent {translucency.95}), color-mix(in srgb, {color.black}, transparent {translucency.70}))",
       "$description": "Darker shade for gentle emphasis"
     },
     "danger": {
-      "$value": "light-dark({surface-color.danger-light}, {surface-color.danger-dark})",
+      "$value": "light-dark({color.red.100}, {color.red.900})",
       "$description": "Destructive or error alert banner background"
     },
     "danger-strong": {
-      "$value": "light-dark({surface-color.danger-strong-dark}, {surface-color.danger-strong-light})",
+      "$value": "light-dark({color.red.700}, {color.red.300})",
       "$description": "High-contrast danger surface for strong alert banners and callouts"
     },
     "warning": {
-      "$value": "light-dark({surface-color.warning-light}, {surface-color.warning-dark})",
-      "$description": "Cautionary or pending review alert banner background"
-    },
-    "info": {
-      "$value": "light-dark({surface-color.info-light}, {surface-color.info-dark})",
+      "$value": "light-dark({color.amber.100}, {color.amber.900})",
       "$description": "Cautionary or pending review alert banner background"
     },
     "warning-strong": {
-      "$value": "light-dark({surface-color.warning-strong-dark}, {surface-color.warning-strong-light})",
+      "$value": "light-dark({color.amber.700}, {color.amber.300})",
       "$description": "High-contrast warning surface for strong alert banners and callouts"
     },
-    "info-strong": {
-      "$value": "light-dark({surface-color.info-strong-dark}, {surface-color.info-strong-light})",
-      "$description": "High-contrast info surface for strong alert banners and callouts"
-    },
     "success": {
-      "$value": "light-dark({surface-color.success-light}, {surface-color.success-dark})",
+      "$value": "light-dark({color.green.100}, {color.green.900})",
       "$description": "Positive feedback or completed status banner background"
     },
     "success-strong": {
-      "$value": "light-dark({surface-color.success-strong-dark}, {surface-color.success-strong-light})",
+      "$value": "light-dark({color.green.700}, {color.green.300})",
       "$description": "High-contrast success surface for strong alert banners and callouts"
-    }
-  },
-  "foreground-color": {
-    "$type": "color",
-    "$description": "Base foreground color tones before light-dark() resolution",
-    "dark": {
-      "$value": "{color.neutral.800}"
     },
-    "dark-muted": {
-      "$value": "{color.neutral.700}"
+    "info": {
+      "$value": "light-dark({color.aqua.100}, {color.aqua.900})",
+      "$description": "Cautionary or pending review alert banner background"
     },
-    "darker": {
-      "$value": "{color.black}"
-    },
-    "light": {
-      "$value": "{color.neutral.000}"
-    },
-    "light-muted": {
-      "$value": "{color.neutral.300}"
-    },
-    "lighter": {
-      "$value": "{color.white}"
-    },
-    "accent-dark": {
-      "$value": "{color.purple.700}"
-    },
-    "accent-dark-hover": {
-      "$value": "{color.purple.600}"
-    },
-    "accent-dark-pressed": {
-      "$value": "{color.purple.800}"
-    },
-    "accent-light": {
-      "$value": "{color.purple.300}"
-    },
-    "accent-light-hover": {
-      "$value": "{color.purple.200}"
-    },
-    "accent-light-pressed": {
-      "$value": "{color.purple.400}"
-    },
-    "complementary-dark": {
-      "$value": "{color.olive.700}"
-    },
-    "complementary-dark-hover": {
-      "$value": "{color.olive.600}"
-    },
-    "complementary-dark-pressed": {
-      "$value": "{color.olive.800}"
-    },
-    "complementary-light": {
-      "$value": "{color.olive.300}"
-    },
-    "complementary-light-hover": {
-      "$value": "{color.olive.200}"
-    },
-    "complementary-light-pressed": {
-      "$value": "{color.olive.400}"
-    },
-    "danger-dark": {
-      "$value": "{color.red.700}"
-    },
-    "danger-dark-hover": {
-      "$value": "{color.red.600}"
-    },
-    "danger-dark-pressed": {
-      "$value": "{color.red.800}"
-    },
-    "danger-light": {
-      "$value": "{color.red.300}"
-    },
-    "danger-light-hover": {
-      "$value": "{color.red.200}"
-    },
-    "danger-light-pressed": {
-      "$value": "{color.red.400}"
-    },
-    "warning-dark": {
-      "$value": "{color.amber.700}"
-    },
-    "info-dark": {
-      "$value": "{color.aqua.700}"
-    },
-    "warning-dark-hover": {
-      "$value": "{color.amber.600}"
-    },
-    "info-dark-hover": {
-      "$value": "{color.aqua.600}"
-    },
-    "warning-dark-pressed": {
-      "$value": "{color.amber.800}"
-    },
-    "info-dark-pressed": {
-      "$value": "{color.aqua.800}"
-    },
-    "warning-light": {
-      "$value": "{color.amber.300}"
-    },
-    "info-light": {
-      "$value": "{color.aqua.300}"
-    },
-    "warning-light-hover": {
-      "$value": "{color.amber.200}"
-    },
-    "info-light-hover": {
-      "$value": "{color.aqua.200}"
-    },
-    "warning-light-pressed": {
-      "$value": "{color.amber.400}"
-    },
-    "info-light-pressed": {
-      "$value": "{color.aqua.400}"
-    },
-    "success-dark": {
-      "$value": "{color.green.700}"
-    },
-    "success-dark-hover": {
-      "$value": "{color.green.600}"
-    },
-    "success-dark-pressed": {
-      "$value": "{color.green.800}"
-    },
-    "success-light": {
-      "$value": "{color.green.300}"
-    },
-    "success-light-hover": {
-      "$value": "{color.green.200}"
-    },
-    "success-light-pressed": {
-      "$value": "{color.green.400}"
+    "info-strong": {
+      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$description": "High-contrast info surface for strong alert banners and callouts"
     }
   },
   "foreground": {
     "$type": "color",
     "$description": "Text, typography, and icon color fills",
     "default": {
-      "$value": "light-dark({foreground-color.dark}, {foreground-color.light})",
+      "$value": "light-dark({color.neutral.800}, {color.neutral.000})",
       "$description": "High-contrast primary body copy and headings (WCAG AAA >= 7:1)"
     },
     "strong": {
-      "$value": "light-dark({foreground-color.darker}, {foreground-color.lighter})",
+      "$value": "light-dark({color.black}, {color.white})",
       "$description": "High-contrast prominent copy"
     },
     "inverted": {
-      "$value": "light-dark({foreground-color.light}, {foreground-color.dark})",
+      "$value": "light-dark({color.neutral.000}, {color.neutral.800})",
       "$description": "Text on inverted backgrounds"
     },
     "inverted-strong": {
-      "$value": "light-dark({foreground-color.lighter}, {foreground-color.darker})",
+      "$value": "light-dark({color.white}, {color.black})",
       "$description": "Strong text on inverted backgrounds"
     },
     "on-dark": {
-      "$value": "{foreground-color.light}",
+      "$value": "{color.neutral.000}",
       "$description": "Light text on dark hero sections"
     },
     "white": {
-      "$value": "{foreground-color.lighter}",
+      "$value": "{color.white}",
       "$description": "Light text on dark hero sections"
     },
     "muted": {
-      "$value": "light-dark({foreground-color.dark-muted}, {foreground-color.light-muted})",
+      "$value": "light-dark({color.neutral.700}, {color.neutral.300})",
       "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
     },
     "accent": {
-      "$value": "light-dark({foreground-color.accent-dark}, {foreground-color.accent-light})",
+      "$value": "light-dark({color.purple.600}, {color.purple.400})",
       "$description": "Brand links, active navigation items, focus states"
     },
     "accent-hover": {
-      "$value": "light-dark({foreground-color.accent-dark-hover}, {foreground-color.accent-light-hover})",
+      "$value": "light-dark({color.purple.700}, {color.purple.300})",
       "$description": "Hover state for links and accent buttons"
     },
     "accent-pressed": {
-      "$value": "light-dark({foreground-color.accent-dark-pressed}, {foreground-color.accent-light-pressed})",
+      "$value": "light-dark({color.purple.800}, {color.purple.200})",
       "$description": "Active / pressed state for links and accent buttons"
     },
     "complementary": {
-      "$value": "light-dark({foreground-color.complementary-dark}, {foreground-color.complementary-light})",
+      "$value": "light-dark({color.olive.700}, {color.olive.300})",
       "$description": "Complementary links, active navigation items, focus states"
     },
     "complementary-hover": {
-      "$value": "light-dark({foreground-color.complementary-dark-hover}, {foreground-color.complementary-light-hover})",
+      "$value": "light-dark({color.olive.600}, {color.olive.200})",
       "$description": "Complementary state for links and accent buttons"
     },
     "complementary-pressed": {
-      "$value": "light-dark({foreground-color.complementary-dark-pressed}, {foreground-color.complementary-light-pressed})",
+      "$value": "light-dark({color.olive.800}, {color.olive.400})",
       "$description": "Active / pressed state for complementary buttons"
     },
     "danger": {
-      "$value": "light-dark({foreground-color.danger-dark}, {foreground-color.danger-light})",
+      "$value": "light-dark({color.red.600}, {color.red.400})",
       "$description": "Destructive button text, form error messages"
     },
     "danger-hover": {
-      "$value": "light-dark({foreground-color.danger-dark-hover}, {foreground-color.danger-light-hover})",
+      "$value": "light-dark({color.red.700}, {color.red.300})",
       "$description": "Destructive button hover state"
     },
     "danger-pressed": {
-      "$value": "light-dark({foreground-color.danger-dark-pressed}, {foreground-color.danger-light-pressed})",
+      "$value": "light-dark({color.red.800}, {color.red.200})",
       "$description": "Destructive button pressed state"
     },
     "success": {
-      "$value": "light-dark({foreground-color.success-dark}, {foreground-color.success-light})",
+      "$value": "light-dark({color.green.600}, {color.green.400})",
       "$description": "Success checkmark icons and completed status text"
     },
     "success-hover": {
-      "$value": "light-dark({foreground-color.success-dark-hover}, {foreground-color.success-light-hover})",
+      "$value": "light-dark({color.green.700}, {color.green.300})",
       "$description": "Success hover state"
     },
     "success-pressed": {
-      "$value": "light-dark({foreground-color.success-dark-pressed}, {foreground-color.success-light-pressed})",
+      "$value": "light-dark({color.green.800}, {color.green.200})",
       "$description": "Success pressed state"
     },
     "warning": {
-      "$value": "light-dark({foreground-color.warning-dark}, {foreground-color.warning-light})",
+      "$value": "light-dark({color.amber.600}, {color.amber.400})",
       "$description": "Warning callout text and pending status icons"
     },
-    "info": {
-      "$value": "light-dark({foreground-color.info-dark}, {foreground-color.info-light})",
-      "$description": "info callout text and pending status icons"
-    },
     "warning-hover": {
-      "$value": "light-dark({foreground-color.warning-dark-hover}, {foreground-color.warning-light-hover})",
+      "$value": "light-dark({color.amber.700}, {color.amber.300})",
       "$description": "Warning hover state"
     },
-    "info-hover": {
-      "$value": "light-dark({foreground-color.info-dark-hover}, {foreground-color.info-light-hover})",
-      "$description": "info hover state"
-    },
     "warning-pressed": {
-      "$value": "light-dark({foreground-color.warning-dark-pressed}, {foreground-color.warning-light-pressed})",
+      "$value": "light-dark({color.amber.800}, {color.amber.200})",
       "$description": "Warning pressed state"
     },
+    "info": {
+      "$value": "light-dark({color.aqua.600}, {color.aqua.400})",
+      "$description": "info callout text and pending status icons"
+    },
+    "info-hover": {
+      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$description": "info hover state"
+    },
     "info-pressed": {
-      "$value": "light-dark({foreground-color.info-dark-pressed}, {foreground-color.info-light-pressed})",
+      "$value": "light-dark({color.aqua.800}, {color.aqua.200})",
       "$description": "info pressed state"
-    }
-  },
-  "border-color": {
-    "$type": "color",
-    "$description": "Base border color tones before light-dark() resolution",
-    "accent-dark": {
-      "$value": "{color.purple.600}"
-    },
-    "accent-light": {
-      "$value": "{color.purple.400}"
-    },
-    "complementary-dark": {
-      "$value": "{color.olive.600}"
-    },
-    "complementary-light": {
-      "$value": "{color.olive.400}"
-    },
-    "danger-dark": {
-      "$value": "{color.red.600}"
-    },
-    "danger-light": {
-      "$value": "{color.red.400}"
-    },
-    "warning-dark": {
-      "$value": "{color.amber.600}"
-    },
-    "info-dark": {
-      "$value": "{color.aqua.600}"
-    },
-    "warning-light": {
-      "$value": "{color.amber.400}"
-    },
-    "info-light": {
-      "$value": "{color.aqua.400}"
-    },
-    "success-dark": {
-      "$value": "{color.green.600}"
-    },
-    "success-light": {
-      "$value": "{color.green.400}"
     }
   },
   "border": {
@@ -566,28 +306,28 @@
         "$description": "Form control boundary: 67% of the text colour, at least 3:1 against the page in both schemes (WCAG 1.4.11)"
       },
       "accent": {
-        "$value": "light-dark({border-color.accent-light}, {border-color.accent-dark})",
+        "$value": "{color.purple.500}",
         "$description": "Active interactive border color"
       },
       "complementary": {
-        "$value": "light-dark({border-color.complementary-light}, {border-color.complementary-dark})",
+        "$value": "light-dark({color.olive.600}, {color.olive.500})",
         "$description": "Complementary interactive border color"
       },
       "danger": {
-        "$value": "light-dark({border-color.danger-light}, {border-color.danger-dark})",
+        "$value": "{color.red.500}",
         "$description": "Invalid input field border"
       },
       "warning": {
-        "$value": "light-dark({border-color.warning-light}, {border-color.warning-dark})",
+        "$value": "{color.amber.500}",
         "$description": "Warning field border"
       },
-      "info": {
-        "$value": "light-dark({border-color.info-light}, {border-color.info-dark})",
-        "$description": "info field border"
-      },
       "success": {
-        "$value": "light-dark({border-color.success-light}, {border-color.success-dark})",
+        "$value": "{color.green.500}",
         "$description": "Valid input field border"
+      },
+      "info": {
+        "$value": "{color.aqua.500}",
+        "$description": "info field border"
       }
     },
     "width": {
@@ -654,6 +394,51 @@
     "default": {
       "$value": "{spacing.16}",
       "$description": "Standard 1rem layout spacing baseline"
+    },
+    "compact": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Gap between items in a compact region (layout primitives step down to it)"
+    },
+    "2xs": {
+      "$value": "{spacing.2}",
+      "$type": "dimension",
+      "$description": "Spacing step 2xs (2px): margin, padding and gap utilities"
+    },
+    "xs": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Spacing step xs (4px): margin, padding and gap utilities"
+    },
+    "sm": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Spacing step sm (8px): margin, padding and gap utilities"
+    },
+    "md": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Spacing step md (16px): margin, padding and gap utilities"
+    },
+    "lg": {
+      "$value": "{spacing.32}",
+      "$type": "dimension",
+      "$description": "Spacing step lg (32px): margin, padding and gap utilities"
+    },
+    "xl": {
+      "$value": "{spacing.48}",
+      "$type": "dimension",
+      "$description": "Spacing step xl (48px): margin, padding and gap utilities"
+    },
+    "2xl": {
+      "$value": "{spacing.64}",
+      "$type": "dimension",
+      "$description": "Spacing step 2xl (64px): margin, padding and gap utilities"
+    },
+    "3xl": {
+      "$value": "{spacing.128}",
+      "$type": "dimension",
+      "$description": "Spacing step 3xl (128px): margin, padding and gap utilities"
     },
     "target": {
       "$value": "{spacing.48}",
@@ -807,11 +592,6 @@
     }
   },
   "body-sm": {
-    "font-size": {
-      "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension",
-      "$description": "Small text: footnotes, hints and metadata (step -1)"
-    },
     "line-height": {
       "$value": "{typography.line-height.minus-1}",
       "$type": "number"
@@ -821,7 +601,7 @@
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Small text size (step -1; compact steps to -2)"
+      "$description": "Small text: footnotes, hints and metadata (step -1; compact steps to -2)"
     }
   },
   "body-sm-compact": {
@@ -833,7 +613,7 @@
   },
   "body-sm-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.-1}",
+      "$value": "{typography.font-size.cq.-2}",
       "$type": "dimension",
       "$description": "Small text size (step -1; compact steps to -2)"
     }
@@ -843,6 +623,40 @@
       "$value": "{fluid.typography.font-size.minus-1}",
       "$type": "dimension",
       "$description": "Small text size (step -1; compact steps to -2)"
+    }
+  },
+  "body-xs": {
+    "line-height": {
+      "$value": "{typography.line-height.minus-2}",
+      "$type": "number"
+    }
+  },
+  "body-xs-fixed": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension",
+      "$description": "Small text: footnotes, hints and metadata (step -2; compact steps to -3)"
+    }
+  },
+  "body-xs-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-2}",
+      "$type": "dimension",
+      "$description": "Small text size (step -2; compact steps to -3)"
+    }
+  },
+  "body-xs-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.-2}",
+      "$type": "dimension",
+      "$description": "Small text size (step -2; compact steps to -3)"
+    }
+  },
+  "body-xs-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.minus-2}",
+      "$type": "dimension",
+      "$description": "Small text size (step -2; compact steps to -3)"
     }
   },
   "body-lg-fixed": {
@@ -889,6 +703,13 @@
     "line-height": {
       "$value": "{typography.line-height.minus-1}",
       "$type": "number"
+    }
+  },
+  "label-compact": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension",
+      "$description": "Label and legend size in compact regions (Step -1)"
     }
   },
   "heading": {
@@ -1046,10 +867,6 @@
       "$value": "{body.font-family}",
       "$type": "fontFamilies"
     },
-    "font-size": {
-      "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension"
-    },
     "font-weight": {
       "$value": "{body-strong.font-weight}",
       "$type": "fontWeight"
@@ -1065,6 +882,12 @@
     "text-transform": {
       "$value": "uppercase",
       "$type": "other"
+    }
+  },
+  "micro-heading-fixed": {
+    "font-size": {
+      "$value": "{typography.font-size.minus-1}",
+      "$type": "dimension"
     }
   },
   "micro-heading-compact": {
@@ -1298,18 +1121,6 @@
     "full": {
       "$value": "{radius.50pc}",
       "$type": "dimension"
-    }
-  },
-  "header": {
-    "mobile-height": {
-      "$value": "3.75rem",
-      "$type": "dimension",
-      "$description": "Standard application header height"
-    },
-    "desktop-height": {
-      "$value": "5rem",
-      "$type": "dimension",
-      "$description": "Standard application header height"
     }
   },
   "underline": {

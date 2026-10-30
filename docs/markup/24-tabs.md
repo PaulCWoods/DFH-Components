@@ -11,7 +11,7 @@ Three tiers that work as one. The audit is in `docs/audit/tab.md`.
 | Size | (default), `--sm` | `--tab-list-size`; a compact container steps to `--sm` |
 | Corners | (default), `--round` | `--tab-list-corners` |
 
-Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scrollable` (one row that scrolls; lists wrap by default), `--fill`, `--floating`, `--docked` (fixed to the bottom of the viewport), `--flush`, `--tight`. Organism: `.tabbed-content--vertical` and `--end` put the list beside the panels and make it vertical.
+Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scrollable` (one row that scrolls, each edge fading while there is more that way; lists wrap by default. The fade is the shared scroll fade, `utilities/scroll-fade.css`, and needs scroll-driven animations; without them the row still scrolls), `--fill`, `--floating`, `--docked` (fixed to the bottom of the viewport), `--flush`, `--tight`. Organism: `.tabbed-content--vertical` and `--end` put the list beside the panels and make it vertical.
 
 - **Selected state is ARIA only:** `aria-selected="true"` in a tablist, `aria-current` (any value but `"false"`) in navigation. No class.
 - **Every variant marks the selected tab at 3:1 or more** with a line (underline) or a fill (segmented), plus bold. Plain lists have no rule or border, so the selected tab also takes the accent colour.
@@ -30,7 +30,7 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
   <a href="/repo/issues" class="tab">
     <span class="tab__text">Issues</span>
     <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span>
-    <span class="visually-hidden">, 14 open</span>
+    <span class="sr-only">, 14 open</span>
   </a>
   <a href="/repo/pulls" class="tab"><span class="tab__text">Pull requests</span></a>
 </nav>
@@ -99,12 +99,12 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
 <!-- One row that scrolls, edges fading while there is more -->
 <nav class="tab-list tab-list--scrollable" aria-label="Filters">…</nav>
 
-<!-- Vertical, flush in a flush sidebar -->
-<aside class="sidebar sidebar--flush" aria-label="Settings">
-  <div class="sidebar__scroller">
+<!-- Vertical, flush in a flush sidebar body -->
+<div class="sidebar">
+  <div class="sidebar__body sidebar__body--flush">
     <nav class="tab-list tab-list--vertical tab-list--flush" aria-label="Settings sections">…</nav>
   </div>
-</aside>
+</div>
 
 <!-- Floating bar docked to the bottom of the viewport -->
 <nav class="tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked md:hide" aria-label="App">

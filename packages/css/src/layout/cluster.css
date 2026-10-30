@@ -1,22 +1,42 @@
 /* ==========================================================================
    Design For Humans: Cluster Layout Primitive
    --------------------------------------------------------------------------
-   Inline-flex container with automatic wrapping for grouped tags, buttons,
-   and badges. Uses zero-specificity (:where()) for composability.
+   A row that wraps: tags, buttons, statuses, links. Items are centred on the
+   cross axis and keep their own width; the cluster fills its parent.
+
+   Hooks (set on the cluster itself; they don't reach nested layouts):
+   --gap, --align-items, --justify-content.
+
+   Density: under --ui-sizing: compact the gap steps down (the default gap
+   to the compact step, --cushioned to the default).
+
+   Usage:
+   <div class="cluster">…</div>
+   <div class="cluster cluster--between">…start… …end…</div>
+   <ul class="cluster" role="list">…</ul>
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Base Cluster Container
-   -------------------------------------------------------------------------- */
+/* Settings stay on the element they are set on */
+@property --gap { syntax: "*"; inherits: false; }
+@property --align-items { syntax: "*"; inherits: false; }
+@property --justify-content { syntax: "*"; inherits: false; }
 
+/* --------------------------------------------------------------------------
+   1. Base
+   -------------------------------------------------------------------------- */
 :where(.cluster) {
     --_gap: var(--gap, var(--spacing, 1rem));
-    --direction: row;
-    align-items: var(--align-items, stretch);
-    display: inline-flex;
+    --_justify: var(--justify-content, normal);
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--gap, var(--spacing-compact, 0.5rem));
+    }
+
+    align-items: var(--align-items, center);
+    display: flex;
     flex-wrap: wrap;
     gap: var(--_gap);
-    justify-content: var(--justify-content, var(--justify, normal));
+    justify-content: var(--_justify);
 }
 
 :where(.cluster):where(ul, ol) {
@@ -26,21 +46,37 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Modifiers
+   2. Distribution
    -------------------------------------------------------------------------- */
 
-:where(.cluster--tight) {
-    --_gap: 0;
+/* The first and last items at the two ends */
+:where(.cluster--between) {
+    --_justify: space-between;
 }
 
-:where(.cluster--cushioned) {
-    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
+/* Packed to the end */
+:where(.cluster--end) {
+    --_justify: flex-end;
 }
 
 /* --------------------------------------------------------------------------
-   3. Cluster Ruled
+   3. Gap Modifiers
    -------------------------------------------------------------------------- */
+:where(.cluster--tight) {
+    --_gap: 0px;
+}
 
+:where(.cluster--cushioned) {
+    --_gap: var(--spacing-cushion, 2rem);
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--spacing, 1rem);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. Ruled: a rule in each gap
+   -------------------------------------------------------------------------- */
 :where(.cluster--ruled) {
     @supports (rule: 1px) {
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);

@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Breadcrumb
-
 The trail of ancestors of the current page: a line of links ending in the current page. The breadcrumb lays out the trail and draws the separators; type comes from a text atom on the list, and the links are \`.link\` atoms, made plain.
 
 ### Markup

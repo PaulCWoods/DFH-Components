@@ -14,8 +14,6 @@ const meta: Meta<ShadowArgs> = {
     docs: {
       description: {
         component: `
-### Developer & Designer Notes: Elevation, Shadows & CSS @function Architecture
-
 Design For Humans implements an ergonomic, token-driven shadow architecture combining **3-layer Gaussian blur stacks**, native **CSS Values and Units Level 5 \`@function\`**, and **100% backward-compatible variable composition**.
 
 Designed in full compliance with **WCAG 2.2 Level AA / AAA** standards:
@@ -117,31 +115,31 @@ type Story = StoryObj<ShadowArgs>;
 export const CanonicalElevations: Story = {
   render: () => `
     <div class="grid" style="--grid-min-col: 15rem; gap: var(--spacing-24);">
-      <article class="card padding" style="box-shadow: var(--shadow-none);">
+      <article class="card p-md" style="box-shadow: var(--shadow-none);">
         <h4 class="card__title small-heading">None (Flat)</h4>
         <p class="small-text text-muted"><code>var(--shadow-none)</code></p>
         <p class="small-text">Resting on canvas with zero elevation projection.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-sm);">
+      <article class="card p-md" style="box-shadow: var(--shadow-sm);">
         <h4 class="card__title small-heading">Small (sm)</h4>
         <p class="small-text text-muted"><code>var(--shadow-sm)</code></p>
         <p class="small-text">Subtle resting cards, interactive buttons, and badges.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-md);">
+      <article class="card p-md" style="box-shadow: var(--shadow-md);">
         <h4 class="card__title small-heading">Medium (md)</h4>
         <p class="small-text text-muted"><code>var(--shadow-md)</code></p>
         <p class="small-text">Elevated cards, popovers, dropdown menus, and hover states.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-lg);">
+      <article class="card p-md" style="box-shadow: var(--shadow-lg);">
         <h4 class="card__title small-heading">Large (lg)</h4>
         <p class="small-text text-muted"><code>var(--shadow-lg)</code></p>
         <p class="small-text">Modal dialogs, command palettes, notifications, and flyouts.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-inner); background: var(--surface-muted);">
+      <article class="card p-md" style="box-shadow: var(--shadow-inner); background: var(--surface-muted);">
         <h4 class="card__title small-heading">Inner (Inset)</h4>
         <p class="small-text text-muted"><code>var(--shadow-inner)</code></p>
         <p class="small-text">Recessed wells, form inputs, pressed buttons, and scroll tracks.</p>
@@ -157,25 +155,25 @@ export const CanonicalElevations: Story = {
 export const LightElevations: Story = {
   render: () => `
     <div class="grid" style="--grid-min-col: 15rem; gap: var(--spacing-24);">
-      <article class="card padding" style="box-shadow: var(--shadow-sm-light);">
+      <article class="card p-md" style="box-shadow: var(--shadow-sm-light);">
         <h4 class="card__title small-heading">Small Light</h4>
         <p class="small-text text-muted"><code>var(--shadow-sm-light)</code></p>
         <p class="small-text">Ultra-subtle resting card elevation.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-md-light);">
+      <article class="card p-md" style="box-shadow: var(--shadow-md-light);">
         <h4 class="card__title small-heading">Medium Light</h4>
         <p class="small-text text-muted"><code>var(--shadow-md-light)</code></p>
         <p class="small-text">Gentle popover and card hover elevation.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-lg-light);">
+      <article class="card p-md" style="box-shadow: var(--shadow-lg-light);">
         <h4 class="card__title small-heading">Large Light</h4>
         <p class="small-text text-muted"><code>var(--shadow-lg-light)</code></p>
         <p class="small-text">Quiet floating dialog and flyout elevation.</p>
       </article>
 
-      <article class="card padding" style="box-shadow: var(--shadow-inner-light); background: var(--surface-muted);">
+      <article class="card p-md" style="box-shadow: var(--shadow-inner-light); background: var(--surface-muted);">
         <h4 class="card__title small-heading">Inner Light</h4>
         <p class="small-text text-muted"><code>var(--shadow-inner-light)</code></p>
         <p class="small-text">Gentle inset well on muted surfaces.</p>
@@ -192,29 +190,29 @@ export const FunctionRecoloredShadows: Story = {
   render: () => `
     <div class="grid" style="--grid-min-col: 15rem; gap: var(--spacing-24);">
       <!-- Aqua Glow using --shadow-md() -->
-      <article class="card padding" style="--shadow-color: color-mix(in srgb, var(--color-aqua-500), transparent 70%); box-shadow: var(--shadow-md); box-shadow: --shadow-md(color-mix(in srgb, var(--color-aqua-500), transparent 70%)); border-color: var(--color-aqua-500);">
-        <h4 class="card__title" style="color: var(--color-aqua-500);">Aqua Glow</h4>
+      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-aqua-500), transparent 70%); box-shadow: var(--shadow-md); box-shadow: --shadow-md(color-mix(in srgb, var(--color-aqua-500), transparent 70%)); border-color: var(--color-aqua-500);">
+        <h4 class="card__title small-heading">Aqua Glow</h4>
         <p class="small-text text-muted"><code>--shadow-md(color-mix(...))</code></p>
         <p class="small-text">Active selections, live telemetry indicators, and focused cards.</p>
       </article>
 
       <!-- Purple Brand using --shadow-md() -->
-      <article class="card padding" style="--shadow-color: color-mix(in srgb, var(--color-purple-500), transparent 70%); box-shadow: var(--shadow-md); box-shadow: --shadow-md(color-mix(in srgb, var(--color-purple-500), transparent 70%)); border-color: var(--color-purple-500);">
-        <h4 class="card__title" style="color: var(--color-purple-500);">Purple Brand</h4>
+      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-purple-500), transparent 70%); box-shadow: var(--shadow-md); box-shadow: --shadow-md(color-mix(in srgb, var(--color-purple-500), transparent 70%)); border-color: var(--color-purple-500);">
+        <h4 class="card__title small-heading">Purple Brand</h4>
         <p class="small-text text-muted"><code>--shadow-md(color-mix(...))</code></p>
         <p class="small-text">Brand hero features, premium tiers, and active highlights.</p>
       </article>
 
       <!-- Danger Red using --shadow-lg() -->
-      <article class="card padding" style="--shadow-color: color-mix(in srgb, var(--color-red-500), transparent 70%); box-shadow: var(--shadow-lg); box-shadow: --shadow-lg(color-mix(in srgb, var(--color-red-500), transparent 70%)); border-color: var(--color-red-500);">
-        <h4 class="card__title" style="color: var(--color-red-500);">Red Alert</h4>
+      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-red-500), transparent 70%); box-shadow: var(--shadow-lg); box-shadow: --shadow-lg(color-mix(in srgb, var(--color-red-500), transparent 70%)); border-color: var(--color-red-500);">
+        <h4 class="card__title small-heading">Red Alert</h4>
         <p class="small-text text-muted"><code>--shadow-lg(color-mix(...))</code></p>
         <p class="small-text">Destructive action modals and critical error alerts.</p>
       </article>
 
       <!-- Inset Amber using --shadow-inner() -->
-      <article class="card padding" style="--shadow-color: color-mix(in srgb, var(--color-amber-500), transparent 70%); box-shadow: var(--shadow-inner); box-shadow: --shadow-inner(color-mix(in srgb, var(--color-amber-500), transparent 70%)); background: var(--surface-muted); border-color: var(--color-amber-500);">
-        <h4 class="card__title" style="color: var(--color-amber-500);">Amber Inset</h4>
+      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-amber-500), transparent 70%); box-shadow: var(--shadow-inner); box-shadow: --shadow-inner(color-mix(in srgb, var(--color-amber-500), transparent 70%)); background: var(--surface-muted); border-color: var(--color-amber-500);">
+        <h4 class="card__title small-heading">Amber Inset</h4>
         <p class="small-text text-muted"><code>--shadow-inner(color-mix(...))</code></p>
         <p class="small-text">Warning wells, pending review inputs, and caution meters.</p>
       </article>
@@ -229,13 +227,13 @@ export const FunctionRecoloredShadows: Story = {
 export const ContextualColorOverride: Story = {
   render: () => `
     <div class="grid" style="--grid-min-col: 15rem; gap: var(--spacing-24);">
-      <article class="card padding" style="--shadow-color: color-mix(in srgb, var(--color-purple-700), transparent 75%); box-shadow: var(--shadow-md); border-color: var(--color-purple-500);">
+      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-purple-700), transparent 75%); box-shadow: var(--shadow-md); border-color: var(--color-purple-500);">
         <h4 class="card__title small-heading">Contextual Purple</h4>
         <p class="small-text text-muted"><code>--shadow-color: ...; box-shadow: var(--shadow-md);</code></p>
         <p class="small-text">Inherits locally scoped <code>--shadow-color</code> through all 3 layers seamlessly.</p>
       </article>
 
-      <article class="card padding" style="--shadow-color: color-mix(in srgb, var(--color-aqua-700), transparent 75%); box-shadow: var(--shadow-md); border-color: var(--color-aqua-500);">
+      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-aqua-700), transparent 75%); box-shadow: var(--shadow-md); border-color: var(--color-aqua-500);">
         <h4 class="card__title small-heading">Contextual Aqua</h4>
         <p class="small-text text-muted"><code>--shadow-color: ...; box-shadow: var(--shadow-md);</code></p>
         <p class="small-text">Guarantees 100% feature parity across both modern and legacy browsers.</p>
@@ -263,7 +261,7 @@ export const Playground: Story = {
 
     return `
       <div style="display: flex; justify-content: center; padding-block: var(--spacing-32); background: var(--surface-${args.surface});">
-        <article class="card padding" style="inline-size: 24rem; ${shadowStyle}">
+        <article class="card p-md" style="inline-size: 24rem; ${shadowStyle}">
           <header class="card__header">
             <h3 class="card__title subheading">Elevation Playground</h3>
           </header>

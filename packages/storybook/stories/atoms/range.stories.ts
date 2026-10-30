@@ -26,8 +26,8 @@ const field = (label: string, value: number, classes = 'range', attrs = '') => {
   return `
     <div class="field">
       <div class="field__header">
-        <label for="${id}" class="field__label">${label}</label>
-        <output for="${id}" class="field__output">${value}%</output>
+        <label for="${id}" class="field__label label">${label}</label>
+        <output for="${id}" class="small-text">${value}%</output>
       </div>
       <input id="${id}" type="range" class="${classes}" min="0" max="100" value="${value}" style="--value: ${value}%;" ${SYNC} ${attrs} />
     </div>`;
@@ -40,8 +40,6 @@ const meta: Meta<RangeArgs> = {
     docs: {
       description: {
         component: `
-### Range
-
 An \`<input type="range">\` slider with a token-driven track, fill and thumb.
 
 | Axis | Modifiers | Container flags |
@@ -57,8 +55,8 @@ An \`<input type="range">\` slider with a token-driven track, fill and thumb.
 \`\`\`html
 <div class="field">
   <div class="field__header">
-    <label for="volume" class="field__label">Volume</label>
-    <output for="volume" class="field__output">65%</output>
+    <label for="volume" class="field__label label">Volume</label>
+    <output for="volume" class="small-text">65%</output>
   </div>
   <input id="volume" type="range" class="range" min="0" max="100" value="65" style="--value: 65%;" />
 </div>
@@ -145,7 +143,7 @@ export const Steps: Story = {
   render: () => `
     <div class="demo-stage demo-constrained--md">
       <div class="field">
-        <label for="range-steps" class="field__label">Text size</label>
+        <label for="range-steps" class="field__label label">Text size</label>
         <input id="range-steps" type="range" class="range" min="0" max="100" step="25" value="50" style="--value: 50%;" list="range-steps-list" ${SYNC} />
         <datalist id="range-steps-list">
           <option value="0"></option><option value="25"></option><option value="50"></option><option value="75"></option><option value="100"></option>

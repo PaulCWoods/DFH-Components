@@ -1,117 +1,112 @@
 /* ==========================================================================
-   Form Primitive
+   Design For Humans: Form
    --------------------------------------------------------------------------
-   Top-level form layout container and accessible action submission bar.
+   Fields and fieldsets in order, then the actions. The form owns the space
+   between them, density for everything inside, and the space before its
+   actions. Columns and grids come from the layout primitives (.grid); a
+   row of fields and a button is a .cluster.
 
-   Usage:
+   Options:
+     --compact   one switch for the whole form (--ui-sizing: compact)
+     --aligned   every label in one column beside its control, once the
+                 form is wider than 32rem, with its hint beneath it and the
+                 error beneath the control; below that, labels stack
+
+   The actions are a button group; align them with a justify-* utility.
+
    <form class="form">
-     <div class="field">...</div>
-     <div class="form__submission form__submission--right">
-       <button type="submit" class="button button--strong button--accent"><span>Submit</span></button>
+     <div class="field">…</div>
+     <fieldset class="fieldset">…</fieldset>
+     <div class="form__actions button-group justify-end">
+       <button type="submit" class="button button--strong button--accent"><span>Send</span></button>
      </div>
    </form>
    ========================================================================== */
 
 /* ==========================================================================
-   Base Form Container (:where(.form, form))
+   1. Base: a column
    ========================================================================== */
 :where(.form) {
-  --_form-gap: var(--field-gap, var(--spacing-16, 1rem));
+  /* Private manifest */
+  --_form-gap: var(--form-gap, 1.5rem);
+  --_form-actions-space: var(--form-actions-space, 0.5rem);
 
-  /* Container Style Queries */
-  @container style(--ui-density: dense) or style(--ui-sizing: compact) {
-    --_form-gap: var(--spacing-8, 0.5rem);
+  /* Density */
+  @container style(--ui-sizing: compact) {
+    --_form-gap: var(--form-compact-gap, 1rem);
   }
 
-  /* Layout & Display */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-
-  @supports (width: stretch) {
-    inline-size: stretch;
-  }
-
-  @supports not (width: stretch) {
-    inline-size: 100%;
-  }
-
-  /* Spacing */
   gap: var(--_form-gap);
+  margin: 0;
+}
+
+:where(.form__actions) {
+  margin-block-start: var(--_form-actions-space);
 }
 
 /* ==========================================================================
-   Compact Form (:where(.form--compact))
+   2. Density
    ========================================================================== */
-
-.form--compact {
-  --_form-gap: var(--spacing-8, 0.5rem);
+:where(.form--compact) {
+  --ui-sizing: compact;
+  --_form-gap: var(--form-compact-gap, 1rem);
 }
 
 /* ==========================================================================
-   Inline Form Container (:where(.inline-form))
+   3. Aligned: labels in a column beside their controls
    ========================================================================== */
-:where(.inline-form) {
-  --direction: row;
-  display: var(--inline-form-display, inline-flex);
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--form-inline-gap, var(--spacing-16, 1rem));
+:where(.form--aligned) {
+  container: form / inline-size;
 }
 
-/* ==========================================================================
-   Form Submission Action Bar Primitive (:where(.form__submission))
-   ========================================================================== */
-:where(.form__submission) {
-  --_form-submission-gap: var(--form-submission-gap, var(--spacing-16, 1rem));
-  --_form-submission-inner-gap: var(--form-submission-inner-gap, var(--spacing-16, 1rem));
+@container form (inline-size > 32rem) {
+  :where(.form--aligned) {
+    :where(.field:not(.field--inline), .fieldset) {
+      align-items: baseline;
+      column-gap: var(--field-inline-gap, 0.75rem);
+      display: grid;
+      grid-template-columns: var(--field-label-width, 12rem) minmax(0, 1fr);
+      row-gap: var(--_field-gap, var(--_fieldset-gap));
 
-  /* Layout & Sizing */
-  inline-size: 100%;
-  margin-block-start: var(--_form-submission-gap);
+      /* The label or legend in the first column, its hint beneath it;
+         the control in the second column beside the label, its error
+         beneath the control. Source order (label, hint, error, control)
+         is unchanged, so screen readers still meet the error first. */
+      > * {
+        grid-column: 2;
+      }
 
-  &:not(.button) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--_form-submission-inner-gap);
-  }
+      > :where(.field__label, .field__header, .fieldset__legend) {
+        grid-column: 1;
+        grid-row: 1;
+      }
 
-  /* Alignment via Container Style Queries */
-  @container style(--form-submission-align: right) {
-    &:not(.button) {
-      justify-content: flex-end;
+      > :where(.field__hint, .fieldset__hint) {
+        grid-column: 1;
+        grid-row: 2;
+      }
     }
 
-    &.button {
-      margin-inline-start: auto;
-    }
-  }
-
-  @container style(--form-submission-align: left) {
-    &:not(.button) {
-      justify-content: flex-start;
+    :where(.field:not(.field--inline), .fieldset:has(> .choices)) > :where(.field__error) {
+      grid-row: 2;
     }
 
-    &.button {
-      margin-inline-end: auto;
+    /* A legend beside choices lines up with the first row's text, which
+       sits centred in a target-tall row */
+    :where(.fieldset__legend:has(~ .choices)) {
+      align-self: start;
+      padding-block-start: max(0px, (var(--spacing-target-min, 3rem) - 1lh) / 2);
+
+      @container style(--ui-sizing: compact) {
+        padding-block-start: max(0px, (min(var(--spacing-target-min, 3rem), var(--choice-compact-target, 2rem)) - 1lh) / 2);
+      }
     }
-  }
 
-  /* Utility Modifier Fallbacks */
-  &.form__submission--right {
-    justify-content: flex-end;
-
-    &.button {
-      margin-inline-start: auto;
-    }
-  }
-
-  &.form__submission--left {
-    justify-content: flex-start;
-
-    &.button {
-      margin-inline-end: auto;
+    /* The actions line up with the controls */
+    > :where(.form__actions) {
+      margin-inline-start: calc(var(--field-label-width, 12rem) + var(--field-inline-gap, 0.75rem));
     }
   }
 }

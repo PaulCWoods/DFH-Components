@@ -126,11 +126,18 @@
    | Size       | (48px) --sm --lg  | --icon-box-size (--ui-sizing: compact steps to sm) |
    | Prominence | (plain) --subtle  | --icon-box-prominence           |
    | Corners    | --round           | --icon-box-corners              |
+   | Intent     | (text colour) --accent --info --success --warning --danger | --icon-box-intent |
+
+   Intent colours the icon, and a subtle box takes the intent's tint. The
+   icon (and the text beside it) must still say what the intent means.
    ========================================================================== */
 :where(.icon-box) {
   --_icon-box-size: var(--icon-box-min-size, 3rem);
   --_icon-box-radius: var(--icon-box-radius, 0.25rem);
   --_icon-box-bg: transparent;
+  --_icon-box-tint: var(--surface-translucent, transparent);
+  --_icon-box-color: inherit;
+  --_icon-box-frame: none;
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -150,11 +157,37 @@
   }
 
   @container style(--icon-box-prominence: subtle) {
-    --_icon-box-bg: var(--surface-translucent, transparent);
+    --_icon-box-bg: var(--_icon-box-tint);
+    --_icon-box-frame: 1px solid transparent;
   }
 
   @container style(--icon-box-corners: round) {
     --_icon-box-radius: var(--radius-round, 9999px);
+  }
+
+  @container style(--icon-box-intent: accent) {
+    --_icon-box-tint: var(--surface-accent, transparent);
+    --_icon-box-color: var(--foreground-accent, currentColor);
+  }
+
+  @container style(--icon-box-intent: info) {
+    --_icon-box-tint: var(--surface-info, transparent);
+    --_icon-box-color: var(--foreground-info, currentColor);
+  }
+
+  @container style(--icon-box-intent: success) {
+    --_icon-box-tint: var(--surface-success, transparent);
+    --_icon-box-color: var(--foreground-success, currentColor);
+  }
+
+  @container style(--icon-box-intent: warning) {
+    --_icon-box-tint: var(--surface-warning, transparent);
+    --_icon-box-color: var(--foreground-warning, currentColor);
+  }
+
+  @container style(--icon-box-intent: danger) {
+    --_icon-box-tint: var(--surface-danger, transparent);
+    --_icon-box-color: var(--foreground-danger, currentColor);
   }
 
   /* Layout & Geometry */
@@ -169,6 +202,12 @@
   /* Surface */
   border-radius: var(--_icon-box-radius);
   background-color: var(--_icon-box-bg);
+  color: var(--_icon-box-color);
+
+  /* A subtle box keeps its shape in forced colours, where the tint is
+     dropped and the transparent outline is drawn */
+  outline: var(--_icon-box-frame);
+  outline-offset: -1px;
 }
 
 /* --------------------------------------------------------------------------
@@ -187,9 +226,35 @@
 }
 
 :where(.icon-box--subtle) {
-  --_icon-box-bg: var(--surface-translucent, transparent);
+  --_icon-box-bg: var(--_icon-box-tint);
+  --_icon-box-frame: 1px solid transparent;
 }
 
 :where(.icon-box--round) {
   --_icon-box-radius: var(--radius-round, 9999px);
+}
+
+:where(.icon-box--accent) {
+  --_icon-box-tint: var(--surface-accent, transparent);
+  --_icon-box-color: var(--foreground-accent, currentColor);
+}
+
+:where(.icon-box--info) {
+  --_icon-box-tint: var(--surface-info, transparent);
+  --_icon-box-color: var(--foreground-info, currentColor);
+}
+
+:where(.icon-box--success) {
+  --_icon-box-tint: var(--surface-success, transparent);
+  --_icon-box-color: var(--foreground-success, currentColor);
+}
+
+:where(.icon-box--warning) {
+  --_icon-box-tint: var(--surface-warning, transparent);
+  --_icon-box-color: var(--foreground-warning, currentColor);
+}
+
+:where(.icon-box--danger) {
+  --_icon-box-tint: var(--surface-danger, transparent);
+  --_icon-box-color: var(--foreground-danger, currentColor);
 }

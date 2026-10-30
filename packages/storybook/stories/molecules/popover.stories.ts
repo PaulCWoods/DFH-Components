@@ -7,8 +7,6 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-# Popover
-
 A layer anchored to the control that opens it. It holds a card or a menu and draws no surface, padding or type of its own. A short line of text about a control is a tooltip instead.
 
 ### Markup
@@ -115,8 +113,8 @@ export const Content: Story = {
         <header class="card__header"><h3 class="card__title heading" id="ct-settings-title">Preferences</h3></header>
         <div class="card__body stack">
           <label class="switch">
-            <span class="switch__label">High contrast</span>
-            <input type="checkbox" role="switch" class="visually-hidden" />
+            <span class="switch__label label">High contrast</span>
+            <input type="checkbox" role="switch" class="sr-only" />
             <span class="switch__control" aria-hidden="true">
               <span class="switch__option switch__option--off">Off</span>
               <span class="switch__option switch__option--on">On</span>

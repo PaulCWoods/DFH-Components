@@ -1,21 +1,45 @@
 /* ==========================================================================
    Design For Humans: Inline & Responsive Inline Layout Primitives
    --------------------------------------------------------------------------
-   Horizontal 1D flow (.inline) and container-driven auto-directional inline
-   rows (.inline-responsive--*) that switch from stack to inline flow.
-   Uses zero-specificity (:where()) for composability.
+   .inline is a row that doesn't wrap: items centred on the cross axis, the
+   last one free to shrink. Use .cluster when items should wrap.
+
+   .inline-responsive--{size} is a column that becomes a row once its
+   container reaches the size (xs 20rem … 7xl 80rem, Tailwind's container scale). It needs a container ancestor
+   (container-type: inline-size); without one it stays a column.
+
+   Hooks (set on the row itself; they don't reach nested layouts):
+   --gap, --align-items, --justify-content.
+
+   Density: under --ui-sizing: compact the gap steps down (the default gap
+   to the compact step, --cushioned to the default).
+
+   Usage:
+   <div class="inline">…icon… …text…</div>
+   <div class="inline inline--between">…start… …end…</div>
+   <div class="inline-responsive inline-responsive--2xl">…</div>
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. Base Inline & Responsive Container
-   -------------------------------------------------------------------------- */
+/* Settings stay on the element they are set on */
+@property --gap { syntax: "*"; inherits: false; }
+@property --align-items { syntax: "*"; inherits: false; }
+@property --justify-content { syntax: "*"; inherits: false; }
 
+/* --------------------------------------------------------------------------
+   1. Base
+   -------------------------------------------------------------------------- */
 :where(.inline, .inline-responsive) {
     --_gap: var(--gap, var(--spacing, 1rem));
-    display: var(--display, flex);
-    flex-wrap: var(--flex-wrap, nowrap);
+    --_justify: var(--justify-content, normal);
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--gap, var(--spacing-compact, 0.5rem));
+    }
+
+    display: flex;
+    flex-wrap: nowrap;
     gap: var(--_gap);
-    justify-content: var(--justify-content, var(--justify, normal));
+    justify-content: var(--_justify);
 }
 
 :where(.inline, .inline-responsive):where(ul, ol) {
@@ -24,50 +48,50 @@
     padding: 0;
 }
 
-/* Vertical Stack Default for Responsive Flow */
-:where(.inline-responsive) {
-    --direction: column;
-    align-items: var(--align-items, stretch);
-    flex-direction: column;
-}
-
-/* Horizontal Inline Flow */
+/* A row */
 :where(.inline) {
-    --direction: row;
     align-items: var(--align-items, center);
     flex-direction: row;
 }
 
+/* A column until its container is wide enough (section 5) */
+:where(.inline-responsive) {
+    align-items: var(--align-items, stretch);
+    flex-direction: column;
+}
+
 /* --------------------------------------------------------------------------
-   2. Modifiers
+   2. Distribution
    -------------------------------------------------------------------------- */
 
-/* Tight Modifier (Zero Gap) */
+/* The first and last items at the two ends */
+:where(.inline--between, .inline-responsive--between) {
+    --_justify: space-between;
+}
+
+/* Packed to the end */
+:where(.inline--end, .inline-responsive--end) {
+    --_justify: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   3. Gap Modifiers
+   -------------------------------------------------------------------------- */
 :where(.inline--tight, .inline-responsive--tight) {
-    --_gap: 0;
+    --_gap: 0px;
 }
 
 :where(.inline--cushioned, .inline-responsive--cushioned) {
-    --_gap: var(--spacing-cushion, var(--spacing-64, 4rem));
-}
+    --_gap: var(--spacing-cushion, 2rem);
 
-/* Space-Between / Distributed Modifier */
-:where(.inline--between, .inline-responsive--between) {
-    justify-content: space-between;
-
-    @supports not (width: stretch) {
-        inline-size: 100%;
-    }
-
-    @supports (width: stretch) {
-        inline-size: stretch;
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--spacing, 1rem);
     }
 }
 
 /* --------------------------------------------------------------------------
-   3. Ruled Modifier
+   4. Ruled: a rule in each gap
    -------------------------------------------------------------------------- */
-
 :where(.inline--ruled, .inline-responsive--ruled) {
     @supports (rule: 1px) {
         rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
@@ -81,61 +105,82 @@
 }
 
 /* --------------------------------------------------------------------------
-   4. Responsive Inline Modifiers (@container)
-   Switches from vertical stack to horizontal row when container width exceeds breakpoint.
+   5. Responsive: a row once the nearest container reaches the size
+   Container sizes: xs 20rem, sm 24, md 28, lg 32, xl 36, 2xl 42, 3xl 48,
+   4xl 56, 5xl 64, 6xl 72, 7xl 80 (Tailwind's container scale).
    -------------------------------------------------------------------------- */
-
-@container (width > 20em) {
-    :where(.inline-responsive--2xs) {
-        --direction: row;
-        align-items: var(--align-items, center);
-        flex-direction: row;
-    }
-}
-
-@container (width > 30em) {
+@container (width >= 20rem) {
     :where(.inline-responsive--xs) {
-        --direction: row;
         align-items: var(--align-items, center);
         flex-direction: row;
     }
 }
 
-@container (width > 40em) {
+@container (width >= 24rem) {
     :where(.inline-responsive--sm) {
-        --direction: row;
         align-items: var(--align-items, center);
         flex-direction: row;
     }
 }
 
-@container (width > 48em) {
+@container (width >= 28rem) {
     :where(.inline-responsive--md) {
-        --direction: row;
         align-items: var(--align-items, center);
         flex-direction: row;
     }
 }
 
-@container (width > 60em) {
+@container (width >= 32rem) {
     :where(.inline-responsive--lg) {
-        --direction: row;
         align-items: var(--align-items, center);
         flex-direction: row;
     }
 }
 
-@container (width > 80em) {
+@container (width >= 36rem) {
     :where(.inline-responsive--xl) {
-        --direction: row;
         align-items: var(--align-items, center);
         flex-direction: row;
     }
 }
 
-@container (width > 96em) {
+@container (width >= 42rem) {
     :where(.inline-responsive--2xl) {
-        --direction: row;
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 48rem) {
+    :where(.inline-responsive--3xl) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 56rem) {
+    :where(.inline-responsive--4xl) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 64rem) {
+    :where(.inline-responsive--5xl) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 72rem) {
+    :where(.inline-responsive--6xl) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 80rem) {
+    :where(.inline-responsive--7xl) {
         align-items: var(--align-items, center);
         flex-direction: row;
     }

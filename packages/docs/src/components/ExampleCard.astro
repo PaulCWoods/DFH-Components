@@ -33,12 +33,12 @@ const {
       <slot />
     </div>
   </div>
-    <header class="card__header inline inline--between align-items-center">
+    <header class="card__header inline inline--between">
       <div class="card__hgroup">
-        <h3 class="small-heading margin-0">{title}</h3>
-        {subtitle && <p class="card__subtitle small-text text-muted margin-0">{subtitle}</p>}
+        <h3 class="small-heading m-0">{title}</h3>
+        {subtitle && <p class="card__subtitle small-text text-muted m-0">{subtitle}</p>}
       </div>
-      <div class="inline align-items-center gap-xs">
+      <div class="inline gap-xs">
         {code && <code class="small-text">{code}</code>}
         {badge && (
           <span class:list={['status status--sm', `status--${badgeTone}`]}>
@@ -50,7 +50,7 @@ const {
     </header>
     <div class="card__body">
       {description ? (
-        <p class="text-muted small-text margin-0">{description}</p>
+        <p class="text-muted small-text m-0">{description}</p>
       ) : (
         <slot name="description" />
       )}

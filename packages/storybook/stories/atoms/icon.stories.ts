@@ -45,8 +45,6 @@ const meta: Meta<IconArgs> = {
     docs: {
       description: {
         component: `
-### Icon
-
 A glyph from the sprite (\`icons/icons.svg\`, one filled family). It is sized in \`em\`, so it follows the text around it, and coloured by the text (\`currentColor\`). Use an icon only where it speeds recognition (PRINCIPLES §6).
 
 | Axis | Modifiers | Notes |
@@ -107,7 +105,7 @@ export const Gallery: Story = {
         ${spriteIds()
           .map(
             (id) => `
-          <li class="stack align-items-center" style="--gap: var(--spacing-4); padding-block: var(--spacing-8);">
+          <li class="stack items-center" style="--gap: var(--spacing-4); padding-block: var(--spacing-8);">
             <span class="heading">${icon(id)}</span>
             <code class="small-text">${id}</code>
           </li>`
@@ -144,7 +142,7 @@ export const Intents: Story = {
   render: () => `
     <div class="demo-stage cluster">
       ${INTENTS.map(
-        (i) => `<span class="inline align-items-center" style="--gap: var(--spacing-4);">${icon(INTENT_ICON[i], iconClasses('default', i))}<span class="small-text">${i}</span></span>`
+        (i) => `<span class="inline" style="--gap: var(--spacing-4);">${icon(INTENT_ICON[i], iconClasses('default', i))}<span class="small-text">${i}</span></span>`
       ).join('')}
     </div>
   `,
@@ -159,7 +157,7 @@ export const Direction: Story = {
       ${['ltr', 'rtl']
         .map(
           (dir) => `
-        <div dir="${dir}" class="cluster align-items-center">
+        <div dir="${dir}" class="cluster">
           <span class="sb-demo-tag">${dir}</span>
           <a href="#next" class="link"><span>${dir === 'rtl' ? 'التالي' : 'Next'}</span> ${icon('ArrowRight', 'icon icon--dir')}</a>
           <span>${icon('ChevronRight', 'icon icon--dir')} ${icon('ArrowEnd', 'icon icon--dir')}</span>
@@ -180,7 +178,7 @@ export const IconBox: Story = {
       ${['', 'icon-box--subtle', 'icon-box--subtle icon-box--round']
         .map(
           (mods) => `
-        <div class="cluster align-items-center">
+        <div class="cluster">
           ${['icon-box--sm', '', 'icon-box--lg']
             .map((size) => `<span class="${['icon-box', size, mods].filter(Boolean).join(' ')}" aria-hidden="true">${icon('Bell')}</span>`)
             .join('')}
@@ -188,7 +186,7 @@ export const IconBox: Story = {
         </div>`
         )
         .join('')}
-      <div class="cluster align-items-center" style="--ui-sizing: compact;">
+      <div class="cluster" style="--ui-sizing: compact;">
         <span class="icon-box icon-box--subtle" aria-hidden="true">${icon('Bell')}</span>
         <span class="sb-demo-tag">--ui-sizing: compact</span>
       </div>

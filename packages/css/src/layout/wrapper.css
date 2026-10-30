@@ -1,68 +1,92 @@
 /* ==========================================================================
-   Design For Humans: Wrapper Layout Container
+   Design For Humans: Wrapper Layout Primitive
    --------------------------------------------------------------------------
-   Centers content with max-inline-size boundaries and size token modifiers.
-   Uses zero-specificity (:where()) for composability.
+   Centres content and caps its width. A gutter on each side keeps the
+   content off the screen edge; the cap applies to the content, so a wrapped
+   page lines up with a header bar at any width.
+
+   - Sizes --2xs … --2xl cap it at a block step instead of the site width.
+   - --start and --end align it to one side; --middle centres its content
+     vertically in the space it is given.
+   - A wrapper inside a wrapper has no gutter of its own.
+
+   Tokens: --wrapper-max-width (the site width), --wrapper-gutter (the
+   cushion step). Set either on a wrapper to change it there.
+
+   Usage:
+   <main id="main" class="main">
+     <div class="wrapper stack">…</div>
+   </main>
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Base Wrapper Container
+   1. Base
    -------------------------------------------------------------------------- */
-
 :where(.wrapper) {
+    --_wrapper-max: var(--wrapper-max-width, var(--site-width, 75rem));
+    --_wrapper-gutter: var(--wrapper-gutter, var(--spacing-cushion, 1rem));
+
     box-sizing: border-box;
     inline-size: 100%;
-    max-inline-size: var(--wrapper-max-width, var(--site-width, 75rem));
     margin-inline: auto;
+    max-inline-size: calc(var(--_wrapper-max) + 2 * var(--_wrapper-gutter));
+    padding-inline: var(--_wrapper-gutter);
+}
 
-    /* Alignment Modifiers */
-    &:where(.wrapper--start) {
-        margin-inline-start: 0;
-    }
+/* The outer wrapper already keeps the edge clear */
+:where(.wrapper .wrapper) {
+    --_wrapper-gutter: 0px;
+}
 
-    &:where(.wrapper--end) {
-        margin-inline-end: 0;
-    }
+/* --------------------------------------------------------------------------
+   2. Alignment
+   -------------------------------------------------------------------------- */
+:where(.wrapper--start) {
+    margin-inline-start: 0;
+}
 
-    /* ----------------------------------------------------------------------
-       2. Size Modifiers (Spacing Block Scale)
-       ---------------------------------------------------------------------- */
+:where(.wrapper--end) {
+    margin-inline-end: 0;
+}
 
-    &:where(.wrapper--2xs) {
-        --wrapper-max-width: var(--spacing-block-2xs, 16rem);
-    }
+/* Content centred vertically in the space the wrapper is given */
+:where(.wrapper--middle) {
+    align-content: center;
+    display: grid;
+    min-block-size: 100%;
+}
 
-    &:where(.wrapper--xs) {
-        --wrapper-max-width: var(--spacing-block-xs, 20rem);
-    }
+/* --------------------------------------------------------------------------
+   3. Sizes
+   -------------------------------------------------------------------------- */
+:where(.wrapper--2xs) {
+    --_wrapper-max: var(--spacing-block-2xs);
+}
 
-    &:where(.wrapper--sm) {
-        --wrapper-max-width: var(--spacing-block-sm, 24rem);
-    }
+:where(.wrapper--xs) {
+    --_wrapper-max: var(--spacing-block-xs);
+}
 
-    &:where(.wrapper--md) {
-        --wrapper-max-width: var(--spacing-block, 28rem);
-    }
+:where(.wrapper--sm) {
+    --_wrapper-max: var(--spacing-block-sm);
+}
 
-    &:where(.wrapper--lg) {
-        --wrapper-max-width: var(--spacing-block-lg, 32rem);
-    }
+:where(.wrapper--md) {
+    --_wrapper-max: var(--spacing-block);
+}
 
-    &:where(.wrapper--xl) {
-        --wrapper-max-width: var(--spacing-block-xl, 36rem);
-    }
+:where(.wrapper--lg) {
+    --_wrapper-max: var(--spacing-block-lg);
+}
 
-    &:where(.wrapper--2xl) {
-        --wrapper-max-width: var(--spacing-block-2xl, 40rem);
-    }
+:where(.wrapper--xl) {
+    --_wrapper-max: var(--spacing-block-xl);
+}
 
-    /* ----------------------------------------------------------------------
-       3. Vertical Centering Modifier
-       ---------------------------------------------------------------------- */
+:where(.wrapper--2xl) {
+    --_wrapper-max: var(--spacing-block-2xl);
+}
 
-    &:where(.wrapper--middle) {
-        align-content: center;
-        display: grid;
-        min-block-size: 100%;
-    }
+:where(.wrapper--fill) {
+    --_wrapper-max: none;
 }

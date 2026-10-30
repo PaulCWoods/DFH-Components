@@ -13,7 +13,7 @@ Moves between the pages of one list: a button group (§14) of page links. Pagina
 <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
   <a class="button button--icon" href="/page/4">
     <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronLeft"/></svg>
-    <span class="visually-hidden">Previous page</span>
+    <span class="sr-only">Previous page</span>
   </a>
   <a class="button" href="/page/1"><span>1</span></a>
   <span class="pagination__gap" aria-hidden="true">…</span>
@@ -24,7 +24,7 @@ Moves between the pages of one list: a button group (§14) of page links. Pagina
   <a class="button" href="/page/12"><span>12</span></a>
   <a class="button button--icon" href="/page/6">
     <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronRight"/></svg>
-    <span class="visually-hidden">Next page</span>
+    <span class="sr-only">Next page</span>
   </a>
 </nav>
 ```
@@ -39,13 +39,13 @@ Moves between the pages of one list: a button group (§14) of page links. Pagina
 ```
 
 ## C. Page Count (a Pattern)
-There is no page-count component: it is a cluster with a status and a jump form. The form markup follows §7 until the form-composition pass settles `inline-form` and `inline-field`.
+There is no page-count component: it is a cluster with a status and a jump form. The jump form is a cluster holding an inline field (§7) and its button.
 ```html
-<div class="cluster justify-between">
+<div class="cluster cluster--between">
   <p class="small-text text-muted">Page 2 of 10</p>
-  <form class="inline-form" action="/archive">
-    <div class="inline-field">
-      <label for="page-jump" class="field__label">Go to page</label>
+  <form class="cluster" action="/archive">
+    <div class="field field--inline">
+      <label for="page-jump" class="field__label label">Go to page</label>
       <input class="input" type="number" id="page-jump" name="page" min="1" max="10" value="2">
     </div>
     <button class="button button--subtle" type="submit"><span>Go</span></button>

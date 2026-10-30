@@ -17,6 +17,7 @@ The inventory and migration are recorded in `docs/audit/badge-chip.md`.
 - Intents: `--accent`, `--info`, `--danger`, `--warning` and `--success`. Info is aqua, with its own Tier 2 roles.
 - Container flags: `--badge-intent`, `--badge-size`; `--status-prominence`, `--status-intent`, `--status-size`, `--status-corners`; `--chip-prominence`, `--chip-size`, `--chip-corners`; `--kbd-size`.
 - A compact container (`--ui-sizing: compact`) steps all four to `--sm`.
+- **Height:** a default status or chip is at least as tall as a small button (`--status-min-size`, `--chip-min-size`, both `spacing.target-sm`, 32px), so they line up side by side. Plain, `--sm` and compact ones take their content's height.
 - `data-status` (online, away, busy) is presence and belongs on `.avatar` only. Never put it on these atoms.
 - Story captions are not components: in Storybook, label demo regions with `.sb-demo-tag`, never with a badge.
 - Wrap the text in `.badge__text`, `.status__text` or `.chip__text`. It trims the text box to cap height (`text-box: trim-both cap alphabetic`) so the text centres optically; padding-block is sized for trimmed text. Bare text still renders, just slightly off-centre and shorter. Scripts that change the text must update the `__text` span, not the parent.
@@ -30,7 +31,7 @@ The inventory and migration are recorded in `docs/audit/badge-chip.md`.
 <a href="/issues" class="tab">
   <span class="tab__text">Issues</span>
   <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span>
-  <span class="visually-hidden">, 14 open</span>
+  <span class="sr-only">, 14 open</span>
 </a>
 
 <!-- Status: the text carries the state (WCAG 1.4.1) -->

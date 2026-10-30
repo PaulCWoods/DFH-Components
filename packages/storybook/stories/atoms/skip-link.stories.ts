@@ -13,7 +13,7 @@ const focusFirst: Story['play'] = async ({ canvasElement }) => {
 const page = (skip: string, id: string) => `
   <div class="demo-stage demo-constrained--md" style="position: relative;">
     ${skip}
-    <header class="p-md"><span class="small-text text-color-muted">Site header and navigation</span></header>
+    <header class="p-md"><span class="small-text text-muted">Site header and navigation</span></header>
     <main id="${id}" tabindex="-1" class="p-md"><p class="text">Main content. Press Tab inside the frame to show the skip link.</p></main>
   </div>`;
 
@@ -24,8 +24,6 @@ const meta: Meta<SkipLinkArgs> = {
     docs: {
       description: {
         component: `
-### Skip Link
-
 Lets keyboard and screen reader users jump past repeated navigation to the main content (WCAG 2.4.1). Put it first in \`<body>\` and point it at a landmark, such as \`<main id="main">\`.
 
 | Variant | Behaviour |

@@ -12,7 +12,8 @@
    | Corners    | --round              | --switch-corners, --controls-corners       |
 
    A compact container (--ui-sizing: compact) steps the switch to --sm.
-   Label typography comes from .switch__label in field.css.
+   Type comes from text atoms on the label (.label, and .small-text for a
+   description).
 
    Accessibility:
    - 4.1.2: a native checkbox with role="switch" carries name and state.
@@ -22,7 +23,7 @@
 
    Usage:
    <label class="switch">
-     <span class="switch__label">Notifications</span>
+     <span class="switch__label label">Notifications</span>
      <input type="checkbox" role="switch" class="visually-hidden" />
      <span class="switch__control" aria-hidden="true">
        <span class="switch__option switch__option--off">Off</span>
@@ -117,12 +118,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--switch-label-gap, 0.25rem);
-
-    small {
-      font-size: var(--body-sm-font-size, 0.875rem);
-      font-weight: var(--font-weight-regular, 400);
-      color: var(--foreground-muted, currentColor);
-    }
   }
 
   /* ------------------------------------------------------------------------

@@ -48,6 +48,7 @@
   --_chip-font-size: var(--chip-font-size, 0.875rem);
   --_chip-font-weight: var(--chip-font-weight, 700);
   --_chip-text-transform: var(--chip-text-transform, none);
+  --_chip-min-size: var(--chip-min-size, 2rem);
   --_chip-padding-block: var(--chip-padding-block, 0.375rem);
   --_chip-padding-inline: var(--chip-padding-inline, 0.5rem);
   --_chip-gap: var(--chip-gap, 0.25rem);
@@ -64,6 +65,7 @@
   }
 
   @container style(--chip-prominence: plain) {
+    --_chip-min-size: 0px;
     --_chip-bg: transparent;
     --_chip-border-color: transparent;
     --_chip-padding-inline: 0;
@@ -71,6 +73,7 @@
 
   @container style(--chip-size: sm) or style(--ui-sizing: compact) {
     --_chip-font-size: var(--chip-sm-font-size, 0.75rem);
+    --_chip-min-size: 0px;
     --_chip-padding-block: var(--chip-sm-padding-block, 0.25rem);
     --_chip-padding-inline: var(--chip-sm-padding-inline, 0.375rem);
   }
@@ -85,6 +88,7 @@
   gap: var(--_chip-gap);
   flex-shrink: 0;
   box-sizing: border-box;
+  min-block-size: var(--_chip-min-size);
   padding-block: var(--_chip-padding-block);
   padding-inline: var(--_chip-padding-inline);
   vertical-align: middle;
@@ -175,6 +179,7 @@
 }
 
 :where(.chip--plain) {
+  --_chip-min-size: 0px;
   --_chip-bg: transparent;
   --_chip-border-color: transparent;
   --_chip-padding-inline: 0;
@@ -185,6 +190,7 @@
    ========================================================================== */
 :where(.chip--sm) {
   --_chip-font-size: var(--chip-sm-font-size, 0.75rem);
+  --_chip-min-size: 0px;
   --_chip-padding-block: var(--chip-sm-padding-block, 0.125rem);
   --_chip-padding-inline: var(--chip-sm-padding-inline, 0.25rem);
 }
