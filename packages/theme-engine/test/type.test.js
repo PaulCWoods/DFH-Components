@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applyTypeStyles, evalCalc, figmaTextStyles, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
+import { SYSTEM_STACKS, roleFont, roleStack, applyTypeStyles, evalCalc, figmaTextStyles, fontCovers, pickWeights, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -127,4 +127,52 @@ test('a line height written as a number becomes a percentage for Figma', () => {
   const edited = structuredClone(semantic);
   edited.heading['line-height'].$value = 1.2;
   assert.equal(figmaTextStyles(edited).heading.$value.lineHeight, '120%');
+});
+
+test('a variable Google font asks for its axes as ranges, in Google\'s order', () => {
+  const [, , link] = fontLinks({
+    fonts: {
+      inter: { source: 'google', family: 'Inter', axes: { wght: [100, 900], opsz: [14, 32] }, italic: true },
+      flex: { source: 'google', family: 'Roboto Flex', axes: { wght: [100, 1000], GRAD: [-200, 150], wdth: [25, 151] } },
+    },
+  });
+  assert.ok(link.includes('family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900'));
+  assert.ok(link.includes('family=Roboto+Flex:wdth,wght,GRAD@25..151,100..1000,-200..150'));
+});
+
+test('a variable stored font gets a weight range in @font-face', () => {
+  const faces = fontFaces({ fonts: { v: { source: 'local', family: 'House', axes: { wght: [200, 800] }, files: [{ path: 'fonts/house.woff2' }] } } });
+  assert.match(faces, /font-weight: 200 800;/);
+});
+
+test('the first weights ticked are those nearest 400 and 700', () => {
+  assert.deepEqual(pickWeights([100, 200, 300, 400, 500, 600, 700, 800, 900]), [400, 700]);
+  assert.deepEqual(pickWeights([600, 700, 800]), [600, 700]);
+  assert.deepEqual(pickWeights([400]), [400]);
+  assert.deepEqual(pickWeights([]), [400, 700]);
+});
+
+test('a font covers the weights it loads, a variable font its whole range', () => {
+  assert.ok(fontCovers({ source: 'google', weights: [400, 700] }, 700));
+  assert.ok(!fontCovers({ source: 'google', weights: [400, 700] }, 800));
+  assert.ok(fontCovers({ source: 'adobe', axes: { wght: [100, 900] } }, 650));
+  assert.ok(fontCovers({ source: 'system' }, 800));
+});
+
+test('a family can share another\'s font or take a system stack, and loads nothing of its own', () => {
+  const type = structuredClone(theme.type);
+  type.families.display = { use: 'sans' };
+  type.families.mono = { system: 'monospace' };
+  const links = fontLinks(type).join('\n');
+  assert.ok(links.includes('family=Inter'));
+  assert.ok(!links.includes('Plus+Jakarta') && !links.includes('JetBrains'));
+  const typo = typeGlobal(type, global.typography);
+  assert.equal(typo['font-family'].display.$value, '{typography.font-family.sans}');
+  assert.equal(typo['font-family'].mono.$value, SYSTEM_STACKS.monospace);
+  const vars = typeCssVars(type);
+  assert.equal(vars['--typography-font-family-display'], 'var(--typography-font-family-sans)');
+  assert.equal(roleFont(type, 'display').family, 'Inter');
+  assert.equal(roleStack(type, 'mono'), SYSTEM_STACKS.monospace);
+  /* and migrating those tokens gives the roles back */
+  assert.deepEqual(migrateType({ ...global, typography: typo }, semantic).families, type.families);
 });

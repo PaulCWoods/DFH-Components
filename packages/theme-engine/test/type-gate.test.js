@@ -76,3 +76,27 @@ test('a heading looser than body, and two look-alike styles, are reported', () =
   assert.ok(reports.some((r) => r.rule === 'line-height' && r.style === 'heading'));
   assert.ok(reports.some((r) => r.rule === 'distinct' && r.style === 'body'));
 });
+
+test('a style whose weight its font doesn\'t load is reported; a variable range covers it', () => {
+  const { reports } = edit((t) => (t.fonts['plus-jakarta-sans'].weights = [600, 700]));
+  assert.ok(reports.some((r) => r.rule === 'weight' && r.style === 'display-title'));
+  const variable = edit((t) => {
+    delete t.fonts['plus-jakarta-sans'].weights;
+    t.fonts['plus-jakarta-sans'].axes = { wght: [200, 800] };
+  });
+  assert.ok(!variable.reports.some((r) => r.rule === 'weight'));
+});
+
+test('a shared family takes its font\'s weights; a missing or looping one fails', () => {
+  const { reports } = edit((t) => {
+    t.families.display = { use: 'sans' };
+    t.fonts.inter.weights = [400, 700];
+  });
+  assert.ok(reports.some((r) => r.rule === 'weight' && r.style === 'display-title'));
+  const { failures } = edit((t) => {
+    t.families.display = { use: 'serif' };
+    t.families.serif = { use: 'display' };
+    t.families.mono = { system: 'typewriter' };
+  });
+  assert.deepEqual(rules(failures).sort(), ['reference:display', 'reference:mono', 'reference:serif']);
+});

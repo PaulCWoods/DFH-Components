@@ -44,22 +44,100 @@ export const fluidSteps = (type) => {
 const quote = (name) => `"${name}"`;
 export const fontStack = (font) => [font.family && quote(font.family), font.fallback].filter(Boolean).join(', ');
 
+/* A variable font lists its axes as ranges, { wght: [100, 900], opsz: [14, 32] },
+   in place of a list of weights. Google wants the axes in its URL sorted
+   lower case first (ital, opsz, wght), then upper case (GRAD), each tuple
+   in that order. */
+const axisOrder = (a, b) => {
+  const [la, lb] = [a === a.toLowerCase(), b === b.toLowerCase()];
+  if (la !== lb) return la ? -1 : 1;
+  return a < b ? -1 : a > b ? 1 : 0;
+};
+const googleFamily = (f) => {
+  const name = f.family.replace(/ /g, '+');
+  const axes = Object.entries(f.axes ?? {});
+  if (axes.length) {
+    const tags = [...(f.italic ? ['ital'] : []), ...axes.map(([t]) => t)].sort(axisOrder);
+    const tuple = (ital) => tags.map((t) => (t === 'ital' ? ital : `${f.axes[t][0]}..${f.axes[t][1]}`)).join(',');
+    return `family=${name}:${tags.join(',')}@${f.italic ? `${tuple(0)};${tuple(1)}` : tuple()}`;
+  }
+  const weights = [...(f.weights ?? [400])].sort((a, b) => a - b);
+  return f.italic
+    ? `family=${name}:ital,wght@${[0, 1].flatMap((i) => weights.map((w) => `${i},${w}`)).join(';')}`
+    : `family=${name}:wght@${weights.join(';')}`;
+};
+
+/* The weights a font has loaded: a range for a variable font, else a list.
+   A system font's weights aren't known, so it covers any. */
+export const fontWeights = (font) => {
+  if (!font || font.source === 'system') return null;
+  if (font.axes?.wght) return { range: font.axes.wght };
+  if (font.source === 'local') return { list: [...new Set((font.files ?? []).map((f) => f.weight ?? 400))].sort((a, b) => a - b) };
+  return { list: [...(font.weights ?? [400])].sort((a, b) => a - b) };
+};
+export const fontCovers = (font, weight) => {
+  const w = fontWeights(font);
+  if (!w) return true;
+  return w.range ? weight >= w.range[0] && weight <= w.range[1] : w.list.includes(weight);
+};
+
+/* --------------------------------------------------------------------------
+   Family roles. A role names a font ({ font: 'inter' }), shares another
+   role's ({ use: 'sans' }: one font fewer to load), or takes a system stack
+   ({ system: 'monospace' }: nothing to load).
+   -------------------------------------------------------------------------- */
+export const SYSTEM_STACKS = {
+  'sans-serif': 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  serif: 'Georgia, Cambria, "Times New Roman", Times, serif',
+  monospace: 'ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace',
+};
+
+/* The font key a role ends on, following `use`; null for a system stack or a loop */
+export const roleFontKey = (type, role, seen = new Set()) => {
+  const f = type.families?.[role];
+  if (!f || seen.has(role)) return null;
+  seen.add(role);
+  return f.use ? roleFontKey(type, f.use, seen) : f.font ?? null;
+};
+export const roleFont = (type, role) => type.fonts?.[roleFontKey(type, role)] ?? null;
+
+/* The CSS stack a role gives, for samples */
+export const roleStack = (type, role, seen = new Set()) => {
+  const f = type.families?.[role];
+  if (!f || seen.has(role)) return '';
+  seen.add(role);
+  if (f.use) return roleStack(type, f.use, seen);
+  if (f.system) return SYSTEM_STACKS[f.system] ?? '';
+  return type.fonts?.[f.font] ? fontStack(type.fonts[f.font]) : '';
+};
+
+/* The fonts some role ends on: only these are loaded */
+export const usedFonts = (type) => {
+  if (!type.families) return new Set(Object.keys(type.fonts ?? {}));
+  return new Set(Object.keys(type.families).map((r) => roleFontKey(type, r)).filter(Boolean));
+};
+const loadedFonts = (type) => {
+  const used = usedFonts(type);
+  return Object.entries(type.fonts ?? {}).filter(([k]) => used.has(k)).map(([, f]) => f);
+};
+
+/* The two weights to tick first: those nearest 400 and 700 that the family has */
+export const pickWeights = (available, want = [400, 700]) => {
+  if (!available?.length) return want;
+  const nearest = (t, from) => from.reduce((a, b) => (Math.abs(b - t) < Math.abs(a - t) ? b : a));
+  const first = nearest(want[0], available);
+  const rest = available.filter((w) => w !== first);
+  return rest.length ? [first, nearest(want[1], rest)].sort((a, b) => a - b) : [first];
+};
+
 /* The <link> a product puts in its page head for the web fonts, by source */
 export const fontLinks = (type) => {
-  const fonts = Object.values(type.fonts ?? {});
+  const fonts = loadedFonts(type);
   const google = fonts.filter((f) => f.source === 'google');
   const adobe = [...new Set(fonts.filter((f) => f.source === 'adobe').map((f) => f.kit))];
   const links = [];
   if (google.length) {
-    const families = google
-      .map((f) => {
-        const weights = [...(f.weights ?? [400])].sort((a, b) => a - b);
-        const name = f.family.replace(/ /g, '+');
-        return f.italic
-          ? `family=${name}:ital,wght@${[0, 1].flatMap((i) => weights.map((w) => `${i},${w}`)).join(';')}`
-          : `family=${name}:wght@${weights.join(';')}`;
-      })
-      .join('&');
+    const families = google.map(googleFamily).join('&');
     links.push('<link rel="preconnect" href="https://fonts.googleapis.com" />');
     links.push('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
     links.push(`<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${families}&display=swap" />`);
@@ -70,12 +148,12 @@ export const fontLinks = (type) => {
 
 /* @font-face rules for fonts stored in the project */
 export const fontFaces = (type, { base = '' } = {}) =>
-  Object.values(type.fonts ?? {})
+  loadedFonts(type)
     .filter((f) => f.source === 'local')
     .flatMap((f) =>
       (f.files ?? []).map(
         (file) =>
-          `@font-face {\n  font-family: ${quote(f.family)};\n  src: url("${base}${file.path}") format("${file.path.endsWith('.woff2') ? 'woff2' : 'woff'}");\n  font-weight: ${file.weight ?? 400};\n  font-style: ${file.style ?? 'normal'};\n  font-display: swap;\n}`,
+          `@font-face {\n  font-family: ${quote(f.family)};\n  src: url("${base}${file.path}") format("${file.path.endsWith('.woff2') ? 'woff2' : 'woff'}");\n  font-weight: ${f.axes?.wght ? f.axes.wght.join(' ') : file.weight ?? 400};\n  font-style: ${file.style ?? 'normal'};\n  font-display: swap;\n}`,
       ),
     )
     .join('\n\n');
@@ -97,7 +175,8 @@ export const typeGlobal = (type, typography = {}) => {
     out['font-family'][name] = setValue(out['font-family'][name], fontStack(font));
   }
   for (const [role, family] of Object.entries(type.families ?? {})) {
-    out['font-family'][role] = setValue(out['font-family'][role], `{typography.font-family.${family.font}}`);
+    const value = family.use ? `{typography.font-family.${family.use}}` : family.system ? SYSTEM_STACKS[family.system] : `{typography.font-family.${family.font}}`;
+    out['font-family'][role] = setValue(out['font-family'][role], value);
   }
 
   /* The scale, and the fluid settings the compiler reads */
@@ -246,7 +325,15 @@ export const migrateType = (global, semantic) => {
       ? { source: 'google', family, weights: google, fallback: parts.slice(1).join(', ') }
       : { source: 'system', family, fallback: parts.slice(1).join(', ') };
   }
-  const families = Object.fromEntries(roles.map((r) => [r, { font: lastKey(refOf(typo['font-family'][r].$value), 'typography.font-family.') }]));
+  const families = Object.fromEntries(
+    roles.map((r) => {
+      const value = typo['font-family'][r].$value;
+      const target = lastKey(refOf(value), 'typography.font-family.');
+      if (roles.includes(target)) return [r, { use: target }];
+      const system = Object.keys(SYSTEM_STACKS).find((k) => SYSTEM_STACKS[k] === value);
+      return [r, system && !target ? { system } : { font: target }];
+    }),
+  );
 
   /* Styles: what each one sets today */
   const styles = {};
@@ -324,7 +411,9 @@ export const typeCssVars = (type) => {
   const vars = {};
   for (const [name, font] of Object.entries(type.fonts ?? {})) vars[`--typography-font-family-${name}`] = fontStack(font);
   for (const [role, family] of Object.entries(type.families ?? {})) {
-    if (family.font) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.font})`;
+    if (family.use) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.use})`;
+    else if (family.system) vars[`--typography-font-family-${role}`] = SYSTEM_STACKS[family.system] ?? '';
+    else if (family.font) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.font})`;
   }
   const viewports = type.fluid.viewports ?? ['25rem', '80rem'];
   const fluid = fluidSteps(type);

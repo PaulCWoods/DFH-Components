@@ -109,6 +109,7 @@ Checked on save and before Publish, like the contrast gate. **Fails** block Publ
 - **Report:** a size below 12px (step -2 is 11.1px today).
 - **Report:** body text line height below 1.5 (WCAG 1.4.8, AAA); a heading line height above body's; a style that grows in fluid mode but not in cq, or the other way round.
 - **Report:** two styles that differ only in weight or case at the same size (they may not read as different levels).
+- **Report:** a style whose weight its font doesn't load (the browser fakes bold or falls back). A variable font covers any weight in its range; a system font covers every weight.
 
 ### Designer
 
@@ -135,9 +136,9 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
 
    These are findings 5 and 6, left for phase 6. A style with a step off the scale fails its reference and skips the size checks, so one mistake gives one failure. The look-alike check compares headings with headings and body styles with body styles only, since a heading and body text at one size are meant to differ by weight.
 3. **Designer, Global tab.** Done 30 October 2026 (`packages/token-designer/src/type.ts`). The header switches between Colors and Typography (`#type` in the address).
-   - **Fonts:** each font set in itself, with a sample of each weight it loads. The dialog takes a Google family (searched from Google's own list through the dev server, with that family's weights and a fallback for its category), an Adobe kit ID and CSS family name, files stored in the project (path, weight, style per line), or a system font. A rename carries the roles with it. A font a role uses can't be removed.
+   - **Fonts:** each font set in itself, with a sample of each weight it loads. The dialog takes a Google family (searched from Google's own list through the dev server, with that family's weights and a fallback for its category), an Adobe kit ID and CSS family name, files stored in the project (path, weight, style per line), or a system font. A rename carries the roles with it. A font a role uses can't be removed. New fonts start with the two weights nearest 400 and 700. A Google family with a weight axis can load as a variable font: a weight range (prefilled with the family's) in place of the weight list, plus any of its other axes (optical size, width and so on), written as `"axes": { "wght": [100, 900], "opsz": [14, 32] }`. Adobe and stored fonts have a "This is a variable font" box; the designer can't check, so it takes the person's word, and a stored variable font's `@font-face` gets `font-weight: min max`. The weight menu on a style card marks weights its font doesn't load.
    - **Page head:** the `<link>`s and `@font-face` rules to copy.
-   - **Families:** each role's font, with a line set in it.
+   - **Families:** each role's font, with a line set in it. A role can also share another role's font (`{ "use": "sans" }`) or take a system stack (`{ "system": "monospace" }`, also `sans-serif` and `serif`), so a theme can load one font. Only fonts some role ends on are loaded; the font cards say which aren't.
    - **Scale:** base size, and the ratio with named presets.
    - **Fluid range:** the two widths, the start ratio, and the end base and ratio.
    - **Steps:** every step fixed and at both ends of the range, how much it grows, the styles fixed at it and an "Ag" at its size. Below that, every gate result with an icon and words.

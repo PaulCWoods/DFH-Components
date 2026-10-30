@@ -12,10 +12,11 @@
    Report: a size below 12px; body text line height below 1.5 (WCAG
            1.4.8); a heading line height above body's; a cq size that
            differs from the fluid one; two styles of the same kind that
-           differ only in weight or case at the same size.
+           differ only in weight or case at the same size; a style whose
+           weight its font doesn't load (the browser fakes it or falls back).
    ========================================================================== */
 
-import { fluidSteps, scaleSteps } from './type.js';
+import { SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, resolveToken, roleFont, scaleSteps } from './type.js';
 
 export const HIERARCHY = ['display-title', 'title', 'heading', 'subheading', 'small-heading'];
 export const HEADINGS = [...HIERARCHY, 'micro-heading'];
@@ -54,6 +55,17 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
   const fonts = names(type.fonts);
   for (const [role, family] of Object.entries(type.families ?? {})) {
     if (family.font != null && !fonts.includes(family.font)) fail('reference', role, `family ${role} uses font "${family.font}", which isn't in fonts`);
+    if (family.system && !SYSTEM_STACKS[family.system]) fail('reference', role, `family ${role} uses system stack "${family.system}", which isn't one of ${Object.keys(SYSTEM_STACKS).join(', ')}`);
+    if (family.use) {
+      if (!type.families[family.use]) fail('reference', role, `family ${role} uses family "${family.use}", which doesn't exist`);
+      for (let r = role, seen = new Set(); type.families[r]?.use; r = type.families[r].use) {
+        if (seen.has(r)) {
+          fail('reference', role, `family ${role} goes round in a loop of "same as" families`);
+          break;
+        }
+        seen.add(r);
+      }
+    }
   }
   const families = names(type.families);
   const weights = names(semantic['font-weight']);
@@ -145,6 +157,18 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
         }
       }
     }
+  }
+
+  /* Weights: each style's weight is one its font loads */
+  for (const [name, s] of Object.entries(styles)) {
+    const weight = s.weight ?? styles.body?.weight;
+    const role = s.family ?? styles.body?.family;
+    const font = roleFont(type, role);
+    if (!weight || !font || !weights.includes(weight)) continue;
+    const value = Number(resolveToken(`font-weight.${weight}`, [semantic, global]));
+    if (!Number.isFinite(value) || fontCovers(font, value)) continue;
+    const w = fontWeights(font);
+    report('weight', name, `uses ${weight} (${value}); ${font.family} loads ${w.range ? `${w.range[0]} to ${w.range[1]}` : w.list.join(', ')}`);
   }
 
   return { rows, failures: rows.filter((r) => r.level === 'fail'), reports: rows.filter((r) => r.level === 'report') };
