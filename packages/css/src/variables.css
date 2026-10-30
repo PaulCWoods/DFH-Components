@@ -136,10 +136,13 @@
   --typography-font-family-georgia: "Georgia", Cambria, "Times New Roman", Times, serif;
   --typography-font-family-jetbrains-mono: "JetBrains Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --typography-font-family-plus-jakarta-sans: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
-  --typography-font-family-sans: var(--typography-font-family-inter);
-  --typography-font-family-serif: var(--typography-font-family-georgia);
-  --typography-font-family-mono: var(--typography-font-family-jetbrains-mono);
-  --typography-font-family-display: var(--typography-font-family-plus-jakarta-sans);
+  --typography-font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --typography-font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+  --typography-font-family-mono: ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;
+  --typography-font-family-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --typography-font-family-pt-sans: "PT Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --typography-font-family-pt-serif: "PT Serif", Cambria, "Times New Roman", Times, serif;
+  --typography-font-family-pt-mono: "PT Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --typography-font-size-base: 1rem;
   --typography-ratio: 1.2;
   --typography-fluid-scale-mobile-base: 1rem;
@@ -420,7 +423,7 @@
   --body-sm-line-height: var(--typography-line-height--1);
   --body-sm-fixed-font-size: var(--typography-font-size--1);
   --body-sm-compact-font-size: var(--typography-font-size--2);
-  --body-sm-cq-font-size: var(--typography-font-size-cq--2);
+  --body-sm-cq-font-size: var(--typography-font-size-cq--1);
   --body-sm-fluid-font-size: var(--typography-font-size-fluid--1);
   --body-xs-line-height: var(--typography-line-height--2);
   --body-xs-fixed-font-size: var(--typography-font-size--2);
@@ -482,7 +485,7 @@
   --display-title-font-family: var(--title-font-family);
   --display-title-font-weight: var(--font-weight-heavy);
   --display-title-line-height: var(--title-line-height);
-  --display-title-letter-spacing: var(--typography-spacing-tight);
+  --display-title-letter-spacing: var(--typography-spacing-compact);
   --display-title-text-transform: none;
   --display-title-fixed-font-size: var(--typography-font-size-5);
   --display-title-compact-font-size: var(--typography-font-size-4);
@@ -583,6 +586,8 @@
   --z-index-popover: var(--z-index-500);
   --z-index-toast: var(--z-index-600);
   --z-index-tooltip: var(--z-index-700);
+  --micro-heading-fluid-font-size: var(--typography-font-size-fluid--1);
+  --micro-heading-cq-font-size: var(--typography-font-size-cq--1);
 
   /* Source: 3-component.json */
   --accordion-border-width: var(--panel-border-width);

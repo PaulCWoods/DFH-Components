@@ -157,7 +157,8 @@ Structure comes first from type, space and alignment, and only then from borders
 
 - The library must not load fonts. No remote `@import` (such as Google Fonts) appears in library CSS; it blocks rendering, makes third-party requests consumers have not agreed to, and fails offline.
 - Font tokens in `1-global.json` default to system font stacks, so the library is complete without any web font.
-- Storybook (`.storybook/preview-head.html`) and the documentation site load their own fonts in the page head. The documentation explains how consumers either link or self-host a font such as Inter and point the font tokens at it.
+- The theme's fonts (`tokens/theme.json`) reach a page through `packages/css/src/fonts.css`, generated with the tokens and never imported by `index.css`: its `@font-face` rules for stored fonts, and a `:root` block that puts each role's font first. A product that wants the theme's fonts links them and `fonts.css`; without them it gets the system stacks.
+- Storybook (`.storybook/preview-head.html`) and the documentation site load the theme's fonts in the page head, between `<!-- theme fonts -->` markers that `npm run build:type` and the designer's Publish rewrite, and import `fonts.css`. Figma takes the theme's fonts for the family roles.
 
 ## 5. Colour: OKLCH, semantic roles and surfaces
 

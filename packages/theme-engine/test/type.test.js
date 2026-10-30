@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { SYSTEM_STACKS, roleFont, roleStack, applyTypeStyles, evalCalc, figmaTextStyles, fontCovers, pickWeights, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
+import { leadingSteps, SYSTEM_STACKS, fontsCss, roleFont, roleStack, applyTypeStyles, evalCalc, figmaTextStyles, fontCovers, pickWeights, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -14,7 +14,7 @@ test('the scale is base × ratio to the power of the step', () => {
 });
 
 test('a fluid step runs from the small scale to the large one', () => {
-  const steps = fluidSteps({ scale: { base: '1rem', ratio: 1.2, steps: [0, 1] }, fluid: { min: { ratio: 1.2 }, max: { base: '1.2rem', ratio: 1.25 } } });
+  const steps = fluidSteps({ scale: { base: '1rem', ratio: 1.2, steps: [0, 1] }, fluid: { max: { base: '1.2rem', ratio: 1.25 } } });
   assert.deepEqual(steps, { 0: [1, 1.2], 1: [1.2, 1.5] });
 });
 
@@ -24,8 +24,26 @@ test('the tokens already say what the theme says', () => {
   assert.deepEqual(applyTypeStyles(semantic, theme.type, { global }), semantic);
 });
 
-test('migrating today\'s tokens gives the theme back', () => {
-  assert.deepEqual(migrateType(global, semantic), theme.type);
+test('migrating today\'s tokens gives the scale and styles back', () => {
+  /* The role tokens now name system stacks and the fonts sit in fonts.css,
+     so migration (a one-off, before the theme existed) can't recover them */
+  const { scale, fluid, styles } = migrateType(global, semantic);
+  assert.deepEqual({ scale, fluid, styles }, { scale: theme.type.scale, fluid: theme.type.fluid, styles: theme.type.styles });
+});
+
+test('role tokens name system stacks; fonts.css points them at the theme\'s fonts', () => {
+  const type = structuredClone(theme.type);
+  type.fonts.georgia = { source: 'system', family: 'Georgia', fallback: 'serif' };
+  type.families.serif = { font: 'georgia' };
+  type.families.display = { use: 'sans' };
+  const typo = typeGlobal(type, global.typography);
+  assert.equal(typo['font-family'].sans.$value, SYSTEM_STACKS['sans-serif']);
+  assert.equal(typo['font-family'].mono.$value, SYSTEM_STACKS.monospace);
+  assert.equal(typo['font-family'].serif.$value, '{typography.font-family.georgia}');
+  assert.equal(typo['font-family'].display.$value, '{typography.font-family.sans}');
+  const css = fontsCss(type);
+  assert.match(css, /--typography-font-family-sans: "Inter", /);
+  assert.ok(!css.includes('font-family-serif') && !css.includes('font-family-display'));
 });
 
 test('a style that grows to another step points at that range', () => {
@@ -42,12 +60,28 @@ test('a fixed style has no fluid or cq size', () => {
   assert.deepEqual(groups, ['label.font-size', 'label-compact.font-size']);
 });
 
-test('changing a line height writes the number; an equal one keeps its reference', () => {
+test('a style\'s line height is a step on the line-height scale; an equal one keeps its reference', () => {
   const type = structuredClone(theme.type);
-  type.styles.heading.lineHeight = 1.2;
+  type.styles.heading.leading = -2;
   const out = applyTypeStyles(semantic, type, { global });
-  assert.equal(out.heading['line-height'].$value, 1.2);
-  assert.equal(out.body['line-height'].$value, semantic.body['line-height'].$value);
+  assert.equal(out.heading['line-height'].$value, '{typography.line-height.minus-2}');
+  /* display-title points at title's line height, the same step: left as written */
+  assert.equal(out['display-title']['line-height'].$value, semantic['display-title']['line-height'].$value);
+  assert.deepEqual(leadingSteps(type), { '-5': 0.888, '-4': 0.999, '-3': 1.124, '-2': 1.264, '-1': 1.422, 0: 1.6, 1: 1.8 });
+});
+
+test('changing the line-height scale rewrites its steps', () => {
+  const type = structuredClone(theme.type);
+  type.leading.base = 1.5;
+  const typo = typeGlobal(type, global.typography);
+  assert.equal(typo['line-height']['0'].$value, '1.5');
+  assert.equal(typo['line-height']['minus-3'].$value, 'calc(1.5 * pow(1.125, -3))');
+});
+
+test('a change to a cq step is written, though cq steps exist only in the CSS', () => {
+  const type = structuredClone(theme.type);
+  type.styles.heading.cq = { from: 1, to: 2 };
+  assert.equal(applyTypeStyles(semantic, type, { global })['heading-cq']['font-size'].$value, '{typography.font-size.cq.1-2}');
 });
 
 test('a family is its quoted name, then the fallback', () => {
@@ -82,7 +116,9 @@ test('the preview properties match the compiled CSS', () => {
   for (const [name, value] of Object.entries(typeCssVars(theme.type))) {
     /* Scale and families exactly; a text style's value may point another way
        (heading's family is var(--body-font-family) in the CSS) but must exist */
-    if (name.startsWith('--typography-') || name.startsWith('--fluid-')) assert.equal(compiled(name), value, name);
+    /* A role on a web font is a system stack in the CSS; fonts.css gives the preview's value */
+    if (/^--typography-font-family-(sans|serif|mono|display)$/.test(name)) assert.ok(compiled(name) !== undefined, name);
+    else if (name.startsWith('--typography-') || name.startsWith('--fluid-')) assert.equal(compiled(name), value, name);
     else assert.ok(compiled(name) !== undefined, `${name} is compiled`);
   }
   /* Every var() a style points at is a compiled property */
@@ -173,6 +209,4 @@ test('a family can share another\'s font or take a system stack, and loads nothi
   assert.equal(vars['--typography-font-family-display'], 'var(--typography-font-family-sans)');
   assert.equal(roleFont(type, 'display').family, 'Inter');
   assert.equal(roleStack(type, 'mono'), SYSTEM_STACKS.monospace);
-  /* and migrating those tokens gives the roles back */
-  assert.deepEqual(migrateType({ ...global, typography: typo }, semantic).families, type.families);
 });

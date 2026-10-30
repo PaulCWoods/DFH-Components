@@ -16,7 +16,7 @@
            weight its font doesn't load (the browser fakes it or falls back).
    ========================================================================== */
 
-import { SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, resolveToken, roleFont, scaleSteps } from './type.js';
+import { SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, leadingSteps, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
 
 export const HIERARCHY = ['display-title', 'title', 'heading', 'subheading', 'small-heading'];
 export const HEADINGS = [...HIERARCHY, 'micro-heading'];
@@ -81,7 +81,11 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
       }
     }
     if (s.lineHeight !== undefined && !(s.lineHeight > 0)) fail('reference', name, `line height ${s.lineHeight} isn't a positive number`);
+    if (s.leading !== undefined && leadingSteps(type)[s.leading] === undefined) fail('reference', name, `line height step ${s.leading} isn't on the line-height scale`);
   }
+
+  /* The line-height scale tightens step by step downward */
+  if (type.leading && !(type.leading.ratio > 1)) fail('scale', null, `line-height ratio ${type.leading.ratio} isn't above 1`);
 
   /* The scale increases step to step, fixed and at both ends of the range */
   const fixed = scaleSteps(type);
@@ -126,7 +130,8 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
   }
 
   /* Line heights: body text at least 1.5; headings no looser than body */
-  const lineHeight = (name) => styles[name]?.lineHeight ?? (BODY.includes(name) ? styles.body?.lineHeight : undefined);
+  const own = (name) => styleLeading(type, styles[name]);
+  const lineHeight = (name) => own(name) ?? (BODY.includes(name) ? own('body') : undefined);
   const bodyLh = lineHeight('body');
   for (const name of BODY.filter((n) => styles[n])) {
     const lh = lineHeight(name);

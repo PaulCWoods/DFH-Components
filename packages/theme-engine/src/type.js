@@ -5,9 +5,9 @@
    block of 1-global.json and the text styles of 2-semantic.json, the way
    applyRoles writes the colour roles.
 
-   The system sets five values: the base size and scale ratio (the fixed
-   scale), the ratio at the smallest viewport (with the base size, the small
-   end of fluid type) and the base size and ratio at the largest viewport.
+   The system sets four values: the base size and scale ratio (the fixed
+   scale, which is also the small end of fluid type) and the base size and
+   ratio at the largest viewport.
    A style's fluid size runs from its step on the small scale to the same
    step on the large one, or to another step (growTo) for a bigger change.
    ========================================================================== */
@@ -29,11 +29,25 @@ export const scaleSteps = (type) => {
   return out;
 };
 
+/* The line-height scale: base × ratio^n, -5 to 1 by default. A style picks a
+   step (leading: -3); tighter steps for larger type. */
+export const leadingSteps = (type) => {
+  const { base = 1.6, ratio = 1.125, steps: [lo, hi] = [-5, 1] } = type.leading ?? {};
+  const out = {};
+  for (let n = lo; n <= hi; n++) out[n] = round(base * ratio ** n, 3);
+  return out;
+};
+/* The CSS a step's token holds: 1.6, calc(1.6 * 1.125), calc(1.6 * pow(1.125, -3)) */
+const leadingCalc = ({ base = 1.6, ratio = 1.125 } = {}, n) => (n === 0 ? String(base) : n === 1 ? `calc(${base} * ${ratio})` : `calc(${base} * pow(${ratio}, ${n}))`);
+/* A style's line height as a number: its step's, or a number written in the theme */
+export const styleLeading = (type, style) => (style?.leading !== undefined ? leadingSteps(type)[style.leading] : style?.lineHeight);
+
 /* Each step's size at the smallest and largest viewport */
 export const fluidSteps = (type) => {
   const [lo, hi] = type.scale.steps ?? [-2, 8];
   const base = rem(type.scale.base);
-  const minRatio = type.fluid.min.ratio ?? type.scale.ratio;
+  /* The small scale is the fixed one: the base size and the scale's ratio */
+  const minRatio = type.scale.ratio;
   const maxBase = rem(type.fluid.max.base);
   const out = {};
   for (let n = lo; n <= hi; n++) out[n] = [round(base * minRatio ** n), round(maxBase * type.fluid.max.ratio ** n)];
@@ -111,6 +125,47 @@ export const roleStack = (type, role, seen = new Set()) => {
   return type.fonts?.[f.font] ? fontStack(type.fonts[f.font]) : '';
 };
 
+/* --------------------------------------------------------------------------
+   System by default (PRINCIPLES §4). The published role tokens name system
+   stacks, so the library is complete without a web font. The theme's web
+   fonts reach a page through fonts.css: its @font-face rules and a :root
+   block that points each role at its font. Figma and the designer's preview
+   take the theme's fonts directly.
+   -------------------------------------------------------------------------- */
+const GENERIC = { serif: 'serif', monospace: 'monospace' };
+const genericOf = (font) => GENERIC[(font?.fallback ?? '').split(',').at(-1).trim()] ?? 'sans-serif';
+const isWeb = (font) => font && font.source !== 'system';
+
+/* The role token's value: a reference, a system font's stack or a system stack */
+export const roleToken = (type, role) => {
+  const f = type.families?.[role] ?? {};
+  if (f.use) return `{typography.font-family.${f.use}}`;
+  if (f.system) return SYSTEM_STACKS[f.system];
+  const font = type.fonts?.[f.font];
+  return isWeb(font) ? SYSTEM_STACKS[genericOf(font)] : `{typography.font-family.${f.font}}`;
+};
+
+/* Each role that names a web font, and the stack that puts the font first */
+export const roleOverrides = (type) =>
+  Object.fromEntries(
+    Object.entries(type.families ?? {})
+      .filter(([, f]) => !f.use && !f.system && isWeb(type.fonts?.[f.font]))
+      .map(([role, f]) => [role, fontStack(type.fonts[f.font])]),
+  );
+
+/* fonts.css: what a page links (with the font <link>s) to use the theme's fonts */
+export const fontsCss = (type, { base = '' } = {}) => {
+  const overrides = Object.entries(roleOverrides(type));
+  const faces = fontFaces(type, { base });
+  return [
+    "/* Generated from tokens/theme.json by npm run build:type (or Publish). Not imported by index.css:\n   a page that loads the theme's fonts links this too. Without it, the font tokens use system stacks. */",
+    faces,
+    overrides.length ? `:root {\n${overrides.map(([role, stack]) => `  --typography-font-family-${role}: ${stack};`).join('\n')}\n}` : '',
+  ]
+    .filter(Boolean)
+    .join('\n\n') + '\n';
+};
+
 /* The fonts some role ends on: only these are loaded */
 export const usedFonts = (type) => {
   if (!type.families) return new Set(Object.keys(type.fonts ?? {}));
@@ -175,8 +230,7 @@ export const typeGlobal = (type, typography = {}) => {
     out['font-family'][name] = setValue(out['font-family'][name], fontStack(font));
   }
   for (const [role, family] of Object.entries(type.families ?? {})) {
-    const value = family.use ? `{typography.font-family.${family.use}}` : family.system ? SYSTEM_STACKS[family.system] : `{typography.font-family.${family.font}}`;
-    out['font-family'][role] = setValue(out['font-family'][role], value);
+    out['font-family'][role] = setValue(out['font-family'][role], roleToken(type, role));
   }
 
   /* The scale, and the fluid settings the compiler reads */
@@ -184,7 +238,7 @@ export const typeGlobal = (type, typography = {}) => {
   out.ratio = setValue(out.ratio, type.scale.ratio, { $type: 'number' });
   const fluid = (out['fluid-scale'] = out['fluid-scale'] ?? {});
   fluid['mobile-base'] = setValue(fluid['mobile-base'], type.scale.base);
-  fluid['mobile-ratio'] = setValue(fluid['mobile-ratio'], type.fluid.min.ratio ?? type.scale.ratio);
+  fluid['mobile-ratio'] = setValue(fluid['mobile-ratio'], type.scale.ratio);
   fluid['desktop-base'] = setValue(fluid['desktop-base'], type.fluid.max.base);
   fluid['desktop-ratio'] = setValue(fluid['desktop-ratio'], type.fluid.max.ratio);
   const [minVp, maxVp] = type.fluid.viewports ?? ['25rem', '80rem'];
@@ -194,6 +248,14 @@ export const typeGlobal = (type, typography = {}) => {
   out['font-size'] = out['font-size'] ?? { $type: 'dimension' };
   for (const [n, size] of Object.entries(scaleSteps(type))) {
     out['font-size'][stepKey(+n)] = setValue(out['font-size'][stepKey(+n)], `${size}rem`);
+  }
+
+  /* The line-height scale */
+  if (type.leading) {
+    out['line-height'] = out['line-height'] ?? { $type: 'number' };
+    for (const n of Object.keys(leadingSteps(type)).map(Number)) {
+      out['line-height'][stepKey(n)] = setValue(out['line-height'][stepKey(n)], leadingCalc(type.leading, n));
+    }
   }
   return out;
 };
@@ -225,7 +287,8 @@ export const styleTokens = (name, style) => {
   const out = [];
   if (style.family) out.push([name, 'font-family', `{typography.font-family.${style.family}}`, 'fontFamily']);
   if (style.weight) out.push([name, 'font-weight', `{font-weight.${style.weight}}`, 'fontWeight']);
-  if (style.lineHeight !== undefined) out.push([name, 'line-height', style.lineHeight, 'number']);
+  if (style.leading !== undefined) out.push([name, 'line-height', `{typography.line-height.${stepKey(style.leading)}}`, 'number']);
+  else if (style.lineHeight !== undefined) out.push([name, 'line-height', style.lineHeight, 'number']);
   if (style.letterSpacing) out.push([name, 'letter-spacing', `{typography.spacing.${style.letterSpacing}}`, 'dimension']);
   if (style.case) out.push([name, 'text-transform', style.case, 'string']);
 
@@ -262,7 +325,9 @@ export const applyTypeStyles = (semantic, type, { global = {} } = {}) => {
       if (current !== undefined) {
         const files = [out, global];
         const want = refOf(value) ? resolveToken(refOf(value), files) : value;
-        if (sameValue(resolveToken(`${group}.${key}`, files), want)) continue;
+        const have = resolveToken(`${group}.${key}`, files);
+        /* cq steps exist only in the compiled CSS: compare those as written */
+        if (want === undefined || have === undefined ? current.$value === value : sameValue(have, want)) continue;
       }
       put(out, group, key, value, tokenType);
     }
@@ -344,7 +409,12 @@ export const migrateType = (global, semantic) => {
     if (famRef) style.family = lastKey(resolveRef(famRef, files, 'typography.font-family.'), 'typography.font-family.');
     const weightRef = refOf(own['font-weight']?.$value);
     if (weightRef) style.weight = lastKey(resolveRef(weightRef, files, 'font-weight.'), 'font-weight.');
-    if (own['line-height']) style.lineHeight = round(evalCalc(resolveToken(`${name}.line-height`, files)), 3);
+    if (own['line-height']) {
+      const lhRef = resolveRef(refOf(own['line-height'].$value) ?? '', files, 'typography.line-height.');
+      const key = lastKey(lhRef, 'typography.line-height.');
+      if (key !== undefined) style.leading = key.startsWith('minus-') ? -Number(key.slice(6)) : Number(key);
+      else style.lineHeight = round(evalCalc(resolveToken(`${name}.line-height`, files)), 3);
+    }
     const lsRef = refOf(own['letter-spacing']?.$value);
     if (lsRef) style.letterSpacing = lastKey(resolveRef(lsRef, files, 'typography.spacing.'), 'typography.spacing.');
     if (own['text-transform']) style.case = resolveToken(`${name}.text-transform`, files);
@@ -375,9 +445,14 @@ export const migrateType = (global, semantic) => {
     fonts,
     families,
     scale: { base: typo['font-size-base'].$value, ratio: Number(typo.ratio.$value), steps: [-2, 8] },
+    leading: (() => {
+      const lh = typo['line-height'];
+      const keys = Object.keys(lh).filter((k) => !k.startsWith('$')).map((k) => (k.startsWith('minus-') ? -Number(k.slice(6)) : Number(k)));
+      const base = evalCalc(lh['0'].$value);
+      return { base, ratio: round(evalCalc(lh['1'].$value) / base, 4), steps: [Math.min(...keys), Math.max(...keys)] };
+    })(),
     fluid: {
       viewports: [typo['fluid-scale']['min-viewport']?.$value ?? '25rem', typo['fluid-scale']['max-viewport']?.$value ?? '80rem'],
-      min: { ratio: Number(typo['fluid-scale']['mobile-ratio'].$value) },
       max: { base: typo['fluid-scale']['desktop-base'].$value, ratio: Number(typo['fluid-scale']['desktop-ratio'].$value) },
     },
     styles,
@@ -418,6 +493,7 @@ export const typeCssVars = (type) => {
   const viewports = type.fluid.viewports ?? ['25rem', '80rem'];
   const fluid = fluidSteps(type);
   for (const [n, size] of Object.entries(scaleSteps(type))) vars[`--typography-font-size-${n}`] = `${size}rem`;
+  if (type.leading) for (const n of Object.keys(leadingSteps(type))) vars[`--typography-line-height-${n}`] = leadingCalc(type.leading, +n);
   for (const [n, [min, max]] of Object.entries(fluid)) {
     vars[`--fluid-typography-font-size-${n}`] = fluidClamp(min, max, viewports);
     vars[`--typography-font-size-fluid-${n}`] = fluidClamp(min, max, viewports);

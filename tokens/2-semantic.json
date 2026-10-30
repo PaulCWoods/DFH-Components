@@ -613,7 +613,7 @@
   },
   "body-sm-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.-2}",
+      "$value": "{typography.font-size.cq.-1}",
       "$type": "dimension",
       "$description": "Small text size (step -1; compact steps to -2)"
     }
@@ -961,7 +961,7 @@
       "$type": "number"
     },
     "letter-spacing": {
-      "$value": "{typography.spacing.tight}",
+      "$value": "{typography.spacing.compact}",
       "$type": "dimension"
     },
     "text-transform": {
@@ -1572,6 +1572,18 @@
           "$value": "{duration.0}"
         }
       }
+    }
+  },
+  "micro-heading-fluid": {
+    "font-size": {
+      "$value": "{fluid.typography.font-size.minus-1}",
+      "$type": "dimension"
+    }
+  },
+  "micro-heading-cq": {
+    "font-size": {
+      "$value": "{typography.font-size.cq.-1}",
+      "$type": "dimension"
     }
   }
 }

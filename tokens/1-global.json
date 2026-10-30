@@ -794,16 +794,25 @@
         "$value": "\"Plus Jakarta Sans\", \"Inter\", system-ui, -apple-system, sans-serif"
       },
       "sans": {
-        "$value": "{typography.font-family.inter}"
+        "$value": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif"
       },
       "serif": {
-        "$value": "{typography.font-family.georgia}"
+        "$value": "Georgia, Cambria, \"Times New Roman\", Times, serif"
       },
       "mono": {
-        "$value": "{typography.font-family.jetbrains-mono}"
+        "$value": "ui-monospace, Menlo, Monaco, Consolas, \"Courier New\", monospace"
       },
       "display": {
-        "$value": "{typography.font-family.plus-jakarta-sans}"
+        "$value": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif"
+      },
+      "pt-sans": {
+        "$value": "\"PT Sans\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+      },
+      "pt-serif": {
+        "$value": "\"PT Serif\", Cambria, \"Times New Roman\", Times, serif"
+      },
+      "pt-mono": {
+        "$value": "\"PT Mono\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
       }
     },
     "font-size-base": {

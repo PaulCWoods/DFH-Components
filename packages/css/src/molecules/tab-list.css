@@ -328,7 +328,7 @@
   }
 
   :where(.button:has(+ .tab-list__content)) {
-    margin-inline-start: calc(var(--_tab-list-inset) - var(--_button-padding-inline));
+    margin-inline-start: calc(var(--_tab-list-inset) - 0.5rem);
   }
 }
 

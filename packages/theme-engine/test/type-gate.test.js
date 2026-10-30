@@ -21,7 +21,7 @@ test('today\'s theme passes, with the known reports', () => {
   assert.deepEqual(failures, []);
   assert.deepEqual(rules(reports).sort(), [
     'floor:body-sm', 'floor:body-xs', 'floor:micro-heading',
-    'line-height:body-sm', 'line-height:body-xs', 'modes:body-sm',
+    'line-height:body-sm', 'line-height:body-xs',
   ]);
 });
 
@@ -69,7 +69,7 @@ test('a style\'s sizes follow the system unless it grows to another step', () =>
 
 test('a heading looser than body, and two look-alike styles, are reported', () => {
   const { failures, reports } = edit((t) => {
-    t.styles.heading.lineHeight = 1.8;
+    t.styles.heading.leading = 1;
     t.styles['body-lg'].size = 0;
   });
   assert.deepEqual(failures, []);
@@ -90,6 +90,7 @@ test('a style whose weight its font doesn\'t load is reported; a variable range 
 test('a shared family takes its font\'s weights; a missing or looping one fails', () => {
   const { reports } = edit((t) => {
     t.families.display = { use: 'sans' };
+    delete t.fonts.inter.axes;
     t.fonts.inter.weights = [400, 700];
   });
   assert.ok(reports.some((r) => r.rule === 'weight' && r.style === 'display-title'));

@@ -69,7 +69,6 @@ A `type` section in `tokens/theme.json`, beside the colour theme, so the designe
   "scale": { "base": "1rem", "ratio": 1.2, "steps": [-2, 8] },
   "fluid": {
     "viewports": ["25rem", "80rem"],
-    "min": { "ratio": 1.2 },
     "max": { "base": "1.2rem", "ratio": 1.2 }
   },
   "styles": {
@@ -140,7 +139,7 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
    - **Page head:** the `<link>`s and `@font-face` rules to copy.
    - **Families:** each role's font, with a line set in it. A role can also share another role's font (`{ "use": "sans" }`) or take a system stack (`{ "system": "monospace" }`, also `sans-serif` and `serif`), so a theme can load one font. Only fonts some role ends on are loaded; the font cards say which aren't.
    - **Scale:** base size, and the ratio with named presets.
-   - **Fluid range:** the two widths, the start ratio, and the end base and ratio.
+   - **Fluid range:** the two widths, and the end base and ratio (named ratios or a custom one, as for the scale). The start of the range is the scale itself: its base and ratio. (Until 30 October the start had its own ratio, which the Scale panel's ratio didn't change.)
    - **Steps:** every step fixed and at both ends of the range, how much it grows, the styles fixed at it and an "Ag" at its size. Below that, every gate result with an icon and words.
    - The preview takes the type properties (`typeCssVars`, tested against the compiled CSS) and loads the theme's fonts. The header status counts both gates. Publish writes the type tokens too, and is blocked by either gate; publishing the unchanged theme rewrites the tokens byte for byte.
 4. **Designer, Semantic tab.** Done 30 October 2026 ("Text styles").
@@ -154,8 +153,16 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
    - **Coverage:** all 14 styles at their fixed size, and the same 14 under `compact/`.
    - **References:** each property follows its references down to a Tier 1 token (or a Tier 2 weight), because the Tokens Studio sets don't carry every text group. Every reference resolves inside the exported file.
    - **Fixes finding 4:** the title takes the display family, and the line heights point at steps that exist. Fluid and container sizes stay web only (Figma has one size per style). Native Figma Variables can't carry text styles, so they come through Tokens Studio.
-6. **Fixes the tool makes possible:** the mode gaps (finding 5), the floor (finding 6) and the stacks (finding 7), each as a theme change you approve in the designer.
-7. **Blog mirror.**
+6. **Fixes the tool makes possible.** Done 30 October 2026, as chosen:
+   - **Mode gaps (finding 5):** micro-heading now grows with the system (fluid and cq 13.3 to 16px; `text.css` has the two branches). body-sm's cq size follows its fluid size. label stays fixed, like the controls it labels. body-xs's compact size stays at step -2, the floor of the scale.
+   - **Floor (finding 6) and line heights:** left as reports (micro-heading and body-sm compact, and body-xs, at 11.1px; body-sm 1.422 and body-xs 1.264).
+   - **Stacks (finding 7): system by default.** The role tokens (`typography.font-family.sans` and the rest) are now system stacks: a role on a web font writes the stack for its kind (sans-serif, serif or monospace), a role on a system font points at that font, a shared role points at its role. `fonts.css` carries the theme's fonts: `@font-face` for stored fonts and a `:root` block that puts each role's web font first. Storybook and the docs import it and get their font links from the theme, so the heads can't drift (Storybook was still loading JetBrains Mono after the theme moved to PT Mono). Figma takes the theme's fonts for the roles.
+   - **Line height from a scale.** The tokens already had one (`typography.line-height`, 1.6 × 1.125ⁿ, steps -5 to 1) and every style pointed at a step, but the theme flattened them to bare numbers. The theme now holds the scale (`"leading": { "base": 1.6, "ratio": 1.125, "steps": [-5, 1] }`) and each style picks a step (`"leading": -3`). The Global tab has a Line height card (base, ratio, and each step with the styles on it); a style card's line height is a menu of steps. A number (`lineHeight`) still works for a theme that has one, shown as "Custom". Publishing the converted theme leaves the tokens as they were.
+   - **Engine fix:** a change to a cq step wasn't written, because cq steps exist only in the compiled CSS and both sides of the "same value" check came back empty. Those are now compared as written.
+7. **Blog mirror.** Done 30 October 2026. The blog keeps its own type theme: Sass-built scales (`theme/_sassvars.scss`, `mixins/_font-size.scss`), its Adobe fonts named first in `_tier1.scss`, and its own heading sizes. That is the product side of "system by default": a product that loads its fonts names them in its own tokens, as `fonts.css` does for the library's theme. Ported:
+   - `text.css`: micro-heading's fluid and cq rules (`sync:blog`).
+   - `_tier2.scss`: `--micro-heading-fluid-font-size` and `--micro-heading-cq-font-size` (step -1, which the blog's cq scale has). The blog's body-sm cq size was already step -1.
+   - Nothing changed in the overview twig: no markup changed.
 
 ## Answers
 

@@ -1,0 +1,9 @@
+/* Generated from tokens/theme.json by npm run build:type (or Publish). Not imported by index.css:
+   a page that loads the theme's fonts links this too. Without it, the font tokens use system stacks. */
+
+:root {
+  --typography-font-family-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --typography-font-family-serif: "PT Serif", Cambria, "Times New Roman", Times, serif;
+  --typography-font-family-mono: "PT Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --typography-font-family-display: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
+}

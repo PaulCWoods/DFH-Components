@@ -350,6 +350,14 @@
   text-transform: var(--micro-heading-text-transform);
   text-wrap: balance;
 
+  @container style(--font-sizing: fluid) {
+    font-size: var(--micro-heading-fluid-font-size);
+  }
+
+  @container style(--font-sizing: cq) {
+    font-size: var(--micro-heading-cq-font-size);
+  }
+
   @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
     font-size: var(--micro-heading-compact-font-size);
   }
