@@ -46,6 +46,8 @@
 | Card intent and subtle telemetry | Done | [surfaces](audit/surfaces.md), [identity](audit/identity-values.md) |
 | Typography (theme engine for the type scale, line-height scale and text styles; font sources, variable fonts, system stacks by default with a generated `fonts.css`; gate; Typography section in the Token Designer; Figma text styles) | Done, blog mirrored | [audit](audit/typography.md) |
 | Fluid spacing (`space` theme section, engine, `build:space`, roles breathe-sm to cushion-lg, Spacing section in the Token Designer, Figma per-mode fix) | Done, blog mirrored | [audit](audit/fluid-spacing.md) |
+| Thumbnail atom (`.thumbnail`, §6c; Cadence's record moved onto it) | Done, blog mirrored | [audit](audit/thumbnail.md) |
+| Docs site (rebuilt from scratch: markup docs feed the pages, library-only shell, `components.designforhumans.blog`) | Planned | [plan](audit/docs-site.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
