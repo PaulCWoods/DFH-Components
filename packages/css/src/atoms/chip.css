@@ -59,12 +59,12 @@
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
      ------------------------------------------------------------------------ */
-  @container style(--chip-prominence: subtle) {
+  @container style(--chip-prominence: subtle) or style(--elements-prominence: subtle) {
     --_chip-bg: var(--surface-translucent, transparent);
     --_chip-border-color: transparent;
   }
 
-  @container style(--chip-prominence: plain) {
+  @container style(--chip-prominence: plain) or style(--elements-prominence: plain) {
     --_chip-min-size: 0px;
     --_chip-bg: transparent;
     --_chip-border-color: transparent;

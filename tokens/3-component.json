@@ -809,6 +809,16 @@
       "$type": "shadow",
       "$description": "Raised shadow for strong (floating) cards"
     },
+    "intent-ring-width": {
+      "$value": "{border.width.thin}",
+      "$type": "dimension",
+      "$description": "Extra ring outside the border of a card with an intent, so the state shows at more than one pixel without moving the content"
+    },
+    "intent-shadow-transparency": {
+      "$value": "75%",
+      "$type": "number",
+      "$description": "How far an intent card's shadow colour is mixed towards transparent (the .shadow-accent utility uses the same)"
+    },
     "hover-shadow": {
       "$value": "{shadow.raised}",
       "$type": "shadow",
@@ -2267,6 +2277,11 @@
     "bg": {
       "$value": "{surface.layer}",
       "$type": "color"
+    },
+    "subtle-bg": {
+      "$value": "{surface.translucent}",
+      "$type": "color",
+      "$description": "Fill of a subtle telemetry (--subtle), which has no border"
     },
     "border-width": {
       "$value": "{border.width.thin}",

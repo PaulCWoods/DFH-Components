@@ -33,7 +33,7 @@
   align-items: center;
   block-size: var(--_control-min-size);
   min-inline-size: 0;
-  padding-inline-end: calc(var(--_control-padding-inline) * 2 + var(--_select-icon-size));
+  padding-inline-end: calc(var(--_control-padding-inline) + var(--_control-inner-gap) + var(--_select-icon-size));
   white-space: nowrap;
   cursor: pointer;
 
@@ -68,6 +68,7 @@
    ========================================================================== */
 :where(.select--custom) {
   @supports (appearance: base-select) {
+
     &,
     &::picker(select) {
       appearance: base-select;
@@ -136,6 +137,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+
       &::picker-icon,
       &::picker(select) {
         transition: none;

@@ -42,7 +42,8 @@
 | Utilities (two names each, Tier 2 spacing steps, Tailwind sizes, responsive helpers, modes, `check:utilities`) | Done | [audit](audit/utilities.md) |
 | Dialog (modal only, close commands, scroll lock, start-side drawer, faster motion) | Done | [audit](audit/dialog.md) |
 | Recipes (states as stories, no inline styles, deck out of core, one command palette) | Done | [audit](audit/recipes.md) |
-| Colour palette (generated ramps, contrast gate, theme engine, Token Designer with Global and Semantic tabs; bridge colours removed) | In progress: curve choice pending, then Publish | [audit](audit/palette.md) |
+| Colour palette (generated ramps, contrast gate, theme engine, Token Designer with Global and Semantic tabs; bridge colours removed) | Done | [audit](audit/palette.md) |
+| Card intent and subtle telemetry | Done | [surfaces](audit/surfaces.md), [identity](audit/identity-values.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
@@ -63,7 +64,7 @@ Container-prefixed modifiers (`@max-sm:card--plain`, `@max-sm:hide`) need an anc
 
 Patterns the deck needed that the library lacks. Each waits for its component's next pass, or a second use.
 
-- **Card intent:** an edge colour for the live, selected or current card (`.card--accent` and the other intents), paired with a status that says it in words (WCAG 1.4.1). Cadence fakes it with `.deck--on-air` and `.deck--cue`. This is the strongest candidate: take it in the card's next pass.
+- **Card intent:** done (`.card--accent` and the other intents; see `audit/surfaces.md`). Cadence's decks use it.
 - **Thumbnail atom:** square artwork with a size token, a fallback icon and avatar-style corner badges, for album art, product shots and file previews. Avatars are round and for people; icon boxes hold icons; `card__thumb` serves only a card's image. Cadence uses `.deck__art`.
 - **Range scale labels:** start and end labels under a slider (elapsed and remaining time, a price range, 0 to 100). Range lockup shows one value only.
 - **Three-zone bar:** start, a true centre and end, for a media player, an editor toolbar or a wizard footer. Header bars and between-clusters don't centre the middle part. Cadence uses `.deck-dock`, a `1fr auto 1fr` grid.
@@ -82,19 +83,17 @@ The tool should:
 
 The warning and accent contrast failures are resolved by the generated palette: every gated pairing passes, and axe finds no colour failures in the status, text-colour or recipe stories (see `audit/palette.md`).
 
-**Blog:** the library's Tier 2 no longer has the bridge colours (`surface-color.*`, `foreground-color.*`, `border-color.*-light/-dark`); roles point at the palette. The blog's `_tier2.scss`, `_tier3.scss`, `_color-palette.scss` and `_index-card.scss` still use them. Drop them in the palette's blog mirror; the inverted palette is now generated, so the blog's hand list can follow the library's.
+**Blog:** mirrored. The blog takes the library's gated steps with its own brand hues (accent aqua, complementary blue), and the gate passes with that mapping. See `audit/palette.md`.
 
 ### Other carried items
 
 - A `.split` that is a direct child of another `.split` sizes itself with its own `--split-side-width`, because the parent's pane rules read `--_split-side` on the child. Wrap it in a plain element (the Token Designer does), or have the pane rules read a separate variable, in the layout's next pass.
-- Telemetry still uses `data-status`. Handle it in its own pass (empty state dropped it).
 - The docs sidebar links to a `/components/atoms/badge` page, and to `/components/layout/*` pages, that don't exist.
 - `tabbed-content.gap` points at `{spacing.default}`, which compiles to an undefined `--spacing-default`; point it at `{spacing.16}` in the tabs' next pass.
 - A header bar is 65–66px tall; the 4rem `--header-height` fallback (scroll padding, sticky sidebar offset) is 2px short. Decide in the header's next pass whether to raise it.
-- Axe failures left after the utilities pass (full sweep, 437 stories, light and dark), none from utility CSS:
-  - disabled hint contrast (`molecules-field--disabled`) and the range output (`atoms-range--states`);
-- Glyphs to draw for the sprite, and the blog accent/info clash (`audit/icon.md`). The recipes pass adds Calendar and Folder (Cadence uses List and Grid for now).
-- The docs site's `Icon.astro` still emits icon classes removed in the icon pass (`icon--md` and the like). Move it to `--icon-size` and the canonical classes.
+- Axe failures left after the palette pass (full sweep, 454 stories, light and dark), none from the palette:
+  - disabled hint contrast (`molecules-field--disabled`, light and dark) and the range output (`atoms-range--states`, light).
+- Icon work (glyphs to draw, the tab icon scale, `Icon.astro`, the blog accent/info clash) is listed in `audit/icon-todo.md`.
 - The docs sidebar's "Composite Recipes" links (`/recipes/*`) point at pages that don't exist. Either build them from the stories or link to Storybook.
 - Tier 2 `color-mix(in srgb, …)` derivations move to `in oklch` when next touched (`audit/phase-0.md`).
 - Text sizes: Tier 2 keeps one fixed size per text atom, `--{atom}-fixed-font-size`. The plain `--body-sm-font-size` and `--body-xs-font-size` (duplicates) are gone, and `--micro-heading-font-size` is `--micro-heading-fixed-font-size`. Figma still names them `body-sm/font-size` and so on (the exporter maps them), so the Figma output is unchanged apart from two descriptions. Blog mirrored.

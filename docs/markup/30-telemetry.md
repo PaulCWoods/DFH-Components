@@ -3,7 +3,7 @@ A labelled value: "Uptime 99.98%". A molecule built on a description list, so ea
 
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.telemetry` | `--icon-start`, `--inline`, `--plain`, `--round`, `--compact` | `--telemetry-icon-placement: start`, `--telemetry-prominence: plain`, `--telemetry-corners: round`, `--ui-sizing: compact` |
+| `.telemetry` | `--icon-start`, `--inline`, `--subtle`, `--plain`, `--round`, `--compact` | `--telemetry-icon-placement: start`, `--telemetry-prominence: subtle` or `plain`, `--telemetry-corners: round`, `--ui-sizing: compact` |
 | `.telemetry-group` | `--ruled` | |
 
 ## A. Group
@@ -47,4 +47,5 @@ Pick the intent by meaning, not direction: a rising drop-off rate is `--danger`.
 ## C. Rules
 - **Not a live region.** Values that tick over every second would flood a screen reader. If a change matters, announce it in a separate `role="status"`.
 - **No KPI cards.** A large stat with a description is a `.card` holding a telemetry.
-- **Removed:** `.telemetry__icon`, `__content`, `__label`, `__value`, `__unit`, `__trend`, `__status`, `[data-trend]`, `[data-status]`, the telemetry intents; `--pill` (use `--round`), `--subtle` (use `--plain`), `--bordered` (the default), `--sm` (use `--compact`), `--stacked` (the default), `--icon-end`, `--card`; `--telemetry-variation`, `--telemetry-density`; `.telemetry-strip` (use `.telemetry-group--ruled`); `.stat-pill`.
+- **Removed:** `.telemetry__icon`, `__content`, `__label`, `__value`, `__unit`, `__trend`, `__status`, `[data-trend]`, `[data-status]`, the telemetry intents; `--pill` (use `--round`), the old `--subtle` (it meant plain; `--subtle` is now a tint), `--bordered` (the default), `--sm` (use `--compact`), `--stacked` (the default), `--icon-end`, `--card`; `--telemetry-variation`, `--telemetry-density`; `.telemetry-strip` (use `.telemetry-group--ruled`); `.stat-pill`.
+- **Prominence:** bordered by default; `--subtle` is a tint with no border (the muted surface other subtle components use; under increased contrast it gains its border back); `--plain` has no surface, border or padding.

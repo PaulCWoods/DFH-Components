@@ -131,21 +131,21 @@
   }
 
   /* Segmented, subtle: tinted tabs with no border */
-  @container style(--tab-list-style: segmented) and style(--tab-list-prominence: subtle) {
+  @container style(--tab-list-style: segmented) and (style(--tab-list-prominence: subtle) or style(--elements-prominence: subtle)) {
     --_tab-bg: var(--surface-translucent, transparent);
     --_tab-border-color: transparent;
     --_tab-hover-bg: var(--surface-translucent-strong, transparent);
   }
 
   /* Plain: no rule or border, so the selected tab also takes the accent */
-  @container style(--tab-list-prominence: plain) {
+  @container style(--tab-list-prominence: plain) or style(--elements-prominence: plain) {
     --_tab-indicator: var(--foreground-accent, LinkText);
     --_tab-selected-text: var(--foreground-accent, LinkText);
   }
 
   /* Segmented, plain: no border or fill. The selected tab sits on a tint,
      where the rest accent falls under 4.5:1, so it takes the pressed tone. */
-  @container style(--tab-list-style: segmented) and style(--tab-list-prominence: plain) {
+  @container style(--tab-list-style: segmented) and (style(--tab-list-prominence: plain) or style(--elements-prominence: plain)) {
     --_tab-border-color: transparent;
     --_tab-indicator: var(--surface-translucent-strong, transparent);
     --_tab-selected-text: var(--foreground-accent-pressed, var(--foreground-accent, LinkText));

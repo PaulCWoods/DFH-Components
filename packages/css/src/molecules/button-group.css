@@ -111,7 +111,7 @@
 
     border-radius: 0;
 
-    @container style(--button-prominence: subtle) or style(--button-prominence: plain) or style(--controls-prominence: subtle) or style(--controls-prominence: plain) {
+    @container style(--button-prominence: subtle) or style(--button-prominence: plain) or style(--controls-prominence: subtle) or style(--controls-prominence: plain) or style(--elements-prominence: subtle) or style(--elements-prominence: plain) {
       --_button-group-overlap: 0px;
     }
 

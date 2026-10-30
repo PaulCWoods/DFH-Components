@@ -49,6 +49,11 @@
   --_tab-list-dir: 1;
   --_tab-list-segmented-radius: 0px;
   --_tab-list-floating-radius: calc(var(--_tab-list-segmented-radius) + var(--_tab-list-floating-padding) + var(--_tab-list-floating-border-width));
+  /* Round and floating: concentric with pill tabs, from the tabs' height
+     rather than a pill, so a tall, wrapped or vertical bar keeps gentle
+     corners */
+  --_tab-list-tab-size: var(--tab-min-size, var(--spacing-target, 3rem));
+  --_tab-list-round-radius: calc(var(--_tab-list-tab-size) / 2 + var(--_tab-list-floating-padding) + var(--_tab-list-floating-border-width));
   --_tab-list-floating-padding-inline: var(--_tab-list-gap);
 
   /* Geometry & Colour */
@@ -74,12 +79,16 @@
     --_tab-list-floating-padding-inline: var(--_tab-list-floating-padding);
   }
 
-  @container style(--tab-list-prominence: plain) {
+  @container style(--tab-list-prominence: plain) or style(--elements-prominence: plain) {
     --_tab-list-rule-prominence: 0;
   }
 
+  @container style(--tab-list-size: sm) or style(--ui-sizing: compact) {
+    --_tab-list-tab-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
+  }
+
   @container style(--tab-list-corners: round) {
-    --_tab-list-floating-radius: var(--radius-round, 9999px);
+    --_tab-list-floating-radius: var(--_tab-list-round-radius);
   }
 
   /* Layout & Geometry */
@@ -131,7 +140,7 @@
   transition-timing-function: var(--timefunc-ease-out, ease-out);
 }
 
-@container style(--tab-list-prominence: plain) {
+@container style(--tab-list-prominence: plain) or style(--elements-prominence: plain) {
   :where(.tab-list)::before {
     background-color: var(--foreground-accent, LinkText);
   }
@@ -171,7 +180,7 @@
   }
 }
 
-@container style(--tab-list-style: segmented) and style(--tab-list-prominence: plain) {
+@container style(--tab-list-style: segmented) and (style(--tab-list-prominence: plain) or style(--elements-prominence: plain)) {
   :where(.tab-list)::before {
     background-color: var(--surface-translucent-strong, transparent);
   }
@@ -209,9 +218,14 @@
   --tab-list-size: sm;
 }
 
+/* The list's own size: the flag above reaches its tabs, this its corners */
+:where(.tab-list--sm, .tab-list.ui-compact) {
+  --_tab-list-tab-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
+}
+
 :where(.tab-list--round) {
   --tab-list-corners: round;
-  --_tab-list-floating-radius: var(--radius-round, 9999px);
+  --_tab-list-floating-radius: var(--_tab-list-round-radius);
 }
 
 /* ==========================================================================

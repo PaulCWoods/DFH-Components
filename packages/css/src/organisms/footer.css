@@ -78,13 +78,21 @@
   }
 
   /* Two rows: a rule between them */
-  & + :where(.footer__bar) {
+  &+ :where(.footer__bar) {
     border-block-start: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
   }
 }
 
 /* ==========================================================================
-   3. Preferences
+   3. Modifiers
+   ========================================================================== */
+
+:where(.footer--stretch) {
+  --_footer-max-width: none;
+}
+
+/* ==========================================================================
+   4. Preferences
    ========================================================================== */
 @media (prefers-contrast: more) {
   :where(.footer) {

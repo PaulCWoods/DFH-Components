@@ -6,6 +6,7 @@ A surface with named parts. The card draws its frame and the geometry of its par
 | :--- | :--- | :--- |
 | Prominence | default (card surface and quiet border), `--strong` (raised: shadow, for floating cards), `--subtle` (tint, no border), `--plain` (no surface, border or shadow; keeps padding) | `--card-prominence` |
 | Chrome | default (the prominence's own edge), `--flat` (no border, corners or shadow; keeps the fill), `--bordered` (a border at any prominence) | `--card-chrome` |
+| Intent | neutral (default), `--accent`, `--danger`, `--warning`, `--success`, `--info` (the whole border in the intent colour, with a ring outside it) | `--card-intent` |
 | Padding | default, `--flush` (no padding at the card's edges) | |
 | Density | default, `--compact` | `--ui-sizing: compact` |
 
@@ -13,10 +14,11 @@ A surface with named parts. The card draws its frame and the geometry of its par
 - **One modifier per axis:** prominence sets the fill, chrome the edge, flush the padding, so they combine: `.card--plain.card--bordered` is an outline, `.card--subtle.card--flat` a square tint, `.card--plain.card--flush` the content alone. Don't put `--flat` and `--bordered` on one card; they are two values of one axis.
 - **Flat** is for a card that sits in a layout as a panel (a sidebar pane, a tool column) where an edge and corners would box it in. Under increased contrast it gains a 2px border, like every card but a plain one.
 - **Flush** drops the padding at the card's edges for content that brings its own (a table, an image, a nested layout). The gaps between parts stay. A single part can go flush instead with `__body--flush` and the like.
+- **Intent** marks a card's state: live, selected, current, at risk. The whole border takes the intent colour and a ring outside it doubles the edge, so it reads at a glance; the ring doesn't take space, so a card changing state doesn't move its content. Wherever the card has a shadow (`--strong`, a linked card on hover) the shadow takes the intent colour too, the raised stack mixed 75% towards transparent (`--card-intent-shadow-transparency`); a default card gains no shadow, and increased contrast drops it as usual. It draws the border at any prominence or chrome (`.card--flat.card--accent` keeps square corners). It is never colour alone (WCAG 1.4.1): the card says the state in words too, usually with a status of the same intent in the header. Intent is a state, not decoration, so it has no responsive versions.
 - **Material:** `--translucent` combines with any prominence that has a fill.
 - **Rules and bands:** `--ruled` rules between parts, bands included. `.card__band` is a full-width strip between parts; `--subtle` tints it.
 - **Flush parts:** `__header--flush`, `__body--flush`, `__footer--flush` drop the part's padding. A flush body hands the card's padding to a flush tab list.
-- **Flags** are set on a container, never on the card. Dialog and popover set `--card-prominence: strong`; `--card-chrome: flat` or `bordered` sets the edge of every card inside. A card resets both flags for cards nested inside it; a modifier on the card beats a flag.
+- **Flags** are set on a container, never on the card. Dialog and popover set `--card-prominence: strong`; `--card-chrome: flat` or `bordered` sets the edge of every card inside, `--card-intent` their intent. A card resets the flags for cards nested inside it; a modifier on the card beats a flag.
 - **Responsive:** `@max-2xl:` (below 42rem) and `@max-md:` (below 28rem) versions of `--plain`, `--flat`, `--bordered` and `--flush` apply while the nearest size container is narrow: `@max-md:card--flat @max-md:card--flush` lets a card run edge to edge on a phone. They need an ancestor with `container-type: inline-size` (`.container-inline`, `.split`, `.sidebar`); without one the card keeps its look.
 - **Linked card:** a `.link.link--plain.link--stretched` in the title makes the whole card the target. The focus ring is drawn on the card's perimeter and other controls are lifted above the link.
 - **Scrolling:** `.card__body--scrollable` scrolls the body between a pinned header and footer (the card fills a definite container height). `.card--scrollable` scrolls the whole card. Make the scroll region focusable (`tabindex="0"`) and name it.
@@ -46,7 +48,7 @@ A surface with named parts. The card draws its frame and the geometry of its par
 </article>
 ```
 
-## B. Prominence, Chrome, Padding, Density and Material
+## B. Prominence, Chrome, Intent, Padding, Density and Material
 ```html
 <article class="card">…</article>
 <article class="card card--strong">…</article>
@@ -59,6 +61,15 @@ A surface with named parts. The card draws its frame and the geometry of its par
 <article class="card card--flat">…</article>
 <article class="card card--plain card--bordered">…</article>
 <article class="card card--plain card--flush">…</article>
+
+<!-- Intent: the state in words too -->
+<section class="card card--success" aria-labelledby="deck-a">
+  <header class="card__header">
+    <h2 id="deck-a" class="card__title heading">Deck A</h2>
+    <span class="status status--success"><span class="status__text">On air</span></span>
+  </header>
+  …
+</section>
 
 <!-- Every card in a list, set once on the container -->
 <ul class="grid list-none" style="--card-prominence: subtle;">…</ul>

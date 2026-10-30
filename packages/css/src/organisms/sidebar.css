@@ -48,6 +48,11 @@
   --_sidebar-offset: 0px;
   --_sidebar-rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
 
+  @container style(--ui-sizing: compact) {
+    --_sidebar-padding: var(--sidebar-compact-padding, var(--spacing));
+    --_sidebar-width: var(--sidebar-compact-width, 12rem);
+  }
+
   background-color: var(--_sidebar-bg);
   border-inline-end: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
   box-sizing: border-box;
@@ -71,6 +76,7 @@
   flex-shrink: 0;
   gap: var(--spacing-compact, 0.5rem);
   justify-content: space-between;
+  min-block-size: var(--spacing-target, 3rem);
   padding: var(--_sidebar-padding);
 }
 
@@ -93,7 +99,7 @@
 }
 
 /* Parts next to each other share the padding between them */
-:where(.sidebar__header, .sidebar__band) + :where(.sidebar__body, .sidebar__band) {
+:where(.sidebar__header, .sidebar__band)+ :where(.sidebar__body, .sidebar__band) {
   padding-block-start: calc(var(--_sidebar-padding) / 2);
 }
 
@@ -162,6 +168,11 @@
   > :where(.sidebar__body) {
     scrollbar-width: none;
   }
+}
+
+:where(.sidebar--compact) {
+  --_sidebar-padding: var(--sidebar-compact-padding, var(--spacing));
+  --_sidebar-width: var(--sidebar-compact-width, 12rem);
 }
 
 /* Pinned beside the scrolling page */

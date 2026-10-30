@@ -107,11 +107,11 @@
     --_status-border-color: var(--_status-tone);
   }
 
-  @container style(--status-prominence: subtle) {
+  @container style(--status-prominence: subtle) or style(--elements-prominence: subtle) {
     --_status-border-color: transparent;
   }
 
-  @container style(--status-prominence: plain) {
+  @container style(--status-prominence: plain) or style(--elements-prominence: plain) {
     --_status-min-size: 0px;
     --_status-bg: transparent;
     --_status-border-color: transparent;

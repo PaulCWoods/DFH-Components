@@ -72,7 +72,7 @@
     --_switch-padding-inline: var(--switch-lg-padding-inline, 1.5rem);
   }
 
-  @container style(--switch-prominence: subtle) or style(--controls-prominence: subtle) {
+  @container style(--switch-prominence: subtle) or style(--controls-prominence: subtle) or style(--elements-prominence: subtle) {
     --_switch-bg: var(--surface-translucent, transparent);
     --_switch-border-color: transparent;
   }

@@ -11,7 +11,9 @@
      main; below 48rem they stack, side pane first.
    - --viewport locks the shell to the screen so panes scroll inside it.
      It unlocks to a scrolling page at small widths or heights, where panes
-     would be too short to use.
+     would be too short to use. The shell and workspace clip, as their rows
+     and panes are sized to fit; the main scrolls, so content that outgrows
+     it stays reachable.
 
    Landmarks: one shell per page. Its <header> is the banner, its <footer>
    the contentinfo, and there is one <main>.

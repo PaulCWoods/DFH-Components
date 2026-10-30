@@ -113,7 +113,7 @@ export const ViewSwitcher: Story = {
         [
           { tab: `${icon('Grid')}<span class="tab__text">Grid</span>`, panel: panel('Grid', 'Reports as cards.') },
           { tab: `${icon('List')}<span class="tab__text">List</span>`, panel: panel('List', 'Reports as rows.') },
-          { tab: `${icon('ChartBar')}<span class="tab__text">Chart</span>`, panel: panel('Chart', 'Reports as a bar chart.') },
+          { tab: `${icon('BarChart')}<span class="tab__text">Chart</span>`, panel: panel('Chart', 'Reports as a bar chart.') },
         ],
         { style: 'segmented', prominence: 'subtle', round: true }
       )}

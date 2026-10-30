@@ -9,7 +9,9 @@
    - The first child is the side pane, the last the main pane; --end puts the
      side pane last.
    - --nowrap keeps the panes side by side (the side pane at its width).
-   - --three: start, centre and end panes in a row that doesn't wrap.
+   - --three: start, centre and end panes. They wrap the same way: when the
+     centre would be narrower than its minimum, a side pane moves to its own
+     row and takes the full width. With --nowrap they stay in one row.
 
    Hooks (set on the split itself; they don't reach nested layouts):
    --gap, --align-items, --split-side-width, --split-main-min-width,
@@ -170,25 +172,40 @@
 /* --------------------------------------------------------------------------
    7. Three Panes
    Start and end at their width (or their content's), the centre takes the
-   rest.
+   rest. Like two panes, they wrap instead of overflowing: the centre keeps
+   its minimum, so a side pane that no longer fits moves to its own row,
+   where it grows to the full width. --nowrap keeps one row.
    -------------------------------------------------------------------------- */
 :where(.split--three) {
     --_split-start: var(--split-start-width, auto);
     --_split-end: var(--split-end-width, auto);
 
-    flex-wrap: nowrap;
-
     > :where(:first-child) {
-        flex: 0 0 var(--_split-start);
+        flex: 1 1 var(--_split-start);
     }
 
     > :where(:nth-child(2)) {
-        flex: 1 1 0%;
-        min-inline-size: 0;
+        flex: 999 1 0%;
+        min-inline-size: var(--_split-main-min);
     }
 
     > :where(:last-child) {
-        flex: 0 0 var(--_split-end);
+        flex: 1 1 var(--_split-end);
         min-inline-size: 0;
+    }
+
+    &:where(.split--nowrap) {
+        > :where(:first-child) {
+            flex: 0 0 var(--_split-start);
+        }
+
+        > :where(:nth-child(2)) {
+            flex: 1 1 0%;
+            min-inline-size: 0;
+        }
+
+        > :where(:last-child) {
+            flex: 0 0 var(--_split-end);
+        }
     }
 }

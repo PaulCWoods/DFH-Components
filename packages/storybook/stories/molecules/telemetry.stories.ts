@@ -22,7 +22,7 @@ A labelled value: "Uptime 99.98%". A description list, so each label is a term a
 - **Label** (\`dt\`): a text atom, with an optional leading icon.
 - **Value** (\`dd\`): a text atom; a unit is a smaller text atom inside it. Values use tabular figures so they don't jump as they change.
 - **Trend or state:** a \`.status--plain\` with an arrow icon and signed text ("+12%") in the value, so it is never colour alone.
-- **Options:** \`--icon-start\` (the label's icon moves to a gutter at the start of the box, larger and centred; flag \`--telemetry-icon-placement: start\`), \`--inline\` (label beside value), \`--plain\` (flag \`--telemetry-prominence: plain\`), \`--round\` (flag \`--telemetry-corners: round\`), \`--compact\` (or any compact container).
+- **Options:** \`--icon-start\` (the label's icon moves to a gutter at the start of the box, larger and centred; flag \`--telemetry-icon-placement: start\`), \`--inline\` (label beside value), \`--subtle\` (a tint with no border) and \`--plain\` (no surface, border or padding; flag \`--telemetry-prominence\`), \`--round\` (flag \`--telemetry-corners: round\`), \`--compact\` (or any compact container).
 - **Group:** \`.telemetry-group\` is the \`<dl>\`; \`--ruled\` makes one bordered strip with dividers. A single telemetry is a \`<dl class="telemetry">\` with its \`dt\` and \`dd\` directly inside.
 - **Live values:** don't make the group a live region. If a change matters, announce it in a separate \`role="status"\`.
         `,
@@ -62,9 +62,10 @@ const server: Metric[] = [
 ];
 
 export const Playground: Story = {
-  args: { iconStart: false, inline: false, plain: false, round: false, compact: false, ruled: false, icons: true },
+  args: { iconStart: false, inline: false, prominence: 'default', round: false, compact: false, ruled: false, icons: true },
+  argTypes: { prominence: { control: 'inline-radio', options: ['default', 'subtle', 'plain'] } },
   render: (args) => {
-    const item = [args.iconStart && 'telemetry--icon-start', args.inline && 'telemetry--inline', args.plain && 'telemetry--plain', args.round && 'telemetry--round', args.compact && 'telemetry--compact'].filter(Boolean).join(' ');
+    const item = [args.iconStart && 'telemetry--icon-start', args.inline && 'telemetry--inline', args.prominence !== 'default' && `telemetry--${args.prominence}`, args.round && 'telemetry--round', args.compact && 'telemetry--compact'].filter(Boolean).join(' ');
     const items = station.map((m) => ({ ...m, icon: args.icons ? m.icon : undefined }));
     return group('Station', items, { cls: args.ruled ? 'telemetry-group--ruled' : '', item });
   },
@@ -100,6 +101,10 @@ export const Inline: Story = {
     { label: 'Bitrate', value: '320', unit: 'kbps' },
     { label: 'Sample rate', value: '48', unit: 'kHz' },
   ], { item: 'telemetry--inline telemetry--round', value: 'small-text font-bold' }),
+};
+
+export const Subtle: Story = {
+  render: () => group('Station', station, { item: 'telemetry--subtle' }),
 };
 
 export const Plain: Story = {

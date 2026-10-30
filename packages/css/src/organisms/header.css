@@ -94,12 +94,15 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--_header-gap);
-  box-sizing: content-box;
   max-inline-size: var(--_header-max-width);
   min-block-size: var(--_header-min-size);
   margin-inline: auto;
   padding-block: var(--_header-padding-block);
   padding-inline: var(--_header-padding-inline);
+
+  @supports (width: round(10px, 1px)) {
+    min-block-size: round(down, calc(var(--_header-min-size) - var(--_header-border-width)/2), 1px);
+  }
 
   /* The last part sits at the end. A visible nav has already taken the
      free space, so this margin is then zero. */
@@ -108,7 +111,7 @@
   }
 
   /* Two rows: a rule between them */
-  & + :where(.header__bar) {
+  &+ :where(.header__bar) {
     border-block-start: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
   }
 }
@@ -135,9 +138,12 @@
 
 /* Density: the bar and the atoms in it step down */
 :where(.header--compact) {
-  --ui-sizing: compact;
   --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
-  --_header-min-size: var(--spacing-target-sm, 2rem);
+  --_header-min-size: var(--spacing-target, 3rem);
+}
+
+:where(.header--stretch) {
+  --_header-max-width: none;
 }
 
 /* Placement: pinned to the top, with a shadow only while stuck */

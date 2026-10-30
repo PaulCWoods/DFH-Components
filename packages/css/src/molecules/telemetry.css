@@ -8,7 +8,7 @@
 
    | Axis       | Modifiers         | Container flag                     |
    | ---------- | ----------------- | ---------------------------------- |
-   | Prominence | (bordered) --plain | --telemetry-prominence: plain     |
+   | Prominence | (bordered) --subtle --plain | --telemetry-prominence |
    | Corners    | --round           | --telemetry-corners: round         |
    | Density    | --compact         | --ui-sizing: compact               |
    | Layout     | (label above) --inline (label beside the value)        |
@@ -46,6 +46,7 @@
   --_telemetry-gap: var(--telemetry-gap, 0.25rem);
   --_telemetry-icon-gap: var(--telemetry-icon-gap, 0.5rem);
   --_telemetry-lead-icon-size: var(--telemetry-lead-icon-size, 1.5rem);
+  --_telemetry-min-size: var(--telemetry-min-size, 3rem);
   /* The icon gutter: none until --icon-start and an icon are both present */
   --_telemetry-gutter: 0px;
 
@@ -57,7 +58,12 @@
     --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, 0.5rem);
   }
 
-  @container style(--telemetry-prominence: plain) {
+  @container style(--telemetry-prominence: subtle) or style(--elements-prominence: subtle) {
+    --_telemetry-bg: var(--telemetry-subtle-bg, var(--surface-muted, Canvas));
+    --_telemetry-border-width: 0px;
+  }
+
+  @container style(--telemetry-prominence: plain) or style(--elements-prominence: plain) {
     --_telemetry-bg: transparent;
     --_telemetry-border-width: 0px;
     --_telemetry-padding-block: 0px;
@@ -82,6 +88,7 @@
   flex-direction: column;
   gap: var(--_telemetry-gap);
   margin: 0;
+  min-block-size: var(--_telemetry-min-size);
   max-inline-size: 100%;
   min-inline-size: 0;
   padding-block: var(--_telemetry-padding-block);
@@ -134,10 +141,19 @@
 
 /* Inline: the label beside its value */
 :where(.telemetry--inline) {
-  align-items: baseline;
+  align-items: center;
   column-gap: var(--_telemetry-icon-gap);
   flex-direction: row;
   flex-wrap: wrap;
+
+  > :where(dd) {
+    align-items: center;
+  }
+}
+
+:where(.telemetry--subtle) {
+  --_telemetry-bg: var(--telemetry-subtle-bg, var(--surface-translucent, Canvas));
+  --_telemetry-border-width: 0px;
 }
 
 :where(.telemetry--plain) {
@@ -162,6 +178,7 @@
 
 :where(.telemetry--compact) {
   --ui-sizing: compact;
+  --_telemetry-min-size: var(--telemetry-compact-min-size, 2rem);
   --_telemetry-padding-block: var(--telemetry-compact-padding-block, 0.25rem);
   --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, 0.5rem);
 }
@@ -204,5 +221,16 @@
   :where(.telemetry, .telemetry-group--ruled) {
     --telemetry-border-color: CanvasText;
     --_telemetry-border-color: CanvasText;
+  }
+
+  /* A subtle telemetry's fill may not show, so it gains the border */
+  :where(.telemetry--subtle) {
+    --_telemetry-border-width: var(--telemetry-border-width, 1px);
+  }
+
+  :where(.telemetry) {
+    @container style(--telemetry-prominence: subtle) or style(--elements-prominence: subtle) {
+      --_telemetry-border-width: var(--telemetry-border-width, 1px);
+    }
   }
 }

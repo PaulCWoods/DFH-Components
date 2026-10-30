@@ -6,7 +6,7 @@ Two panes side by side: a side pane at its preferred width and a main pane that 
 | `--2xs` … `--2xl` | The side pane's width (default `--xs`, 16rem) |
 | `--end` | The side pane is the last child |
 | `--nowrap` | Never wrap: the side pane keeps its width, the main shrinks |
-| `--three` | Start, centre and end panes in one row; start and end at their width or their content's |
+| `--three` | Start, centre and end panes; start and end at their width or their content's, the centre takes the rest. When the centre would drop below its minimum, a side pane wraps to its own full-width row. With `--nowrap`, one row always |
 | `--tight`, `--ruled` | No gap; a rule in the gap |
 
 ## A. Markup

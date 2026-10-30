@@ -191,7 +191,7 @@
        on the cell's line: directly in the cell, or in a group or inline row
        there. A button inside a block (an empty state) keeps its margins. */
     > :where(.button),
-    > :where(.button-group, .cluster, .inline) > :where(.button) {
+    > :where(.button-group, .cluster, .inline)> :where(.button) {
       margin-block: calc(var(--_table-cell-padding-block) * -1);
     }
 
@@ -243,6 +243,11 @@
   --_table-body-align: top;
 }
 
+:where(.table--subtle) {
+  --_table-head-bg: transparent;
+  --_table-head-border-width: var(--_table-inner-border-width);
+}
+
 :where(.table--compact) {
   --ui-sizing: compact;
   --_table-cell-padding-block: var(--table-compact-cell-padding-block, 0.5em);
@@ -269,7 +274,7 @@
   }
 
   /* Inside a framed container, a visible caption is ruled off from the head */
-  :where(.table-container) > &:where(:has(> caption:not(.sr, .visually-hidden))) {
+  :where(.table-container)>&:where(:has(> caption:not(.sr, .visually-hidden))) {
     border-block-start: var(--_table-border-width) solid var(--_table-border-color);
   }
 
@@ -417,7 +422,7 @@
   }
 
   /* Head and foot corners sit above both sticky rows and columns */
-  :where(thead, tfoot) > :where(tr) > & {
+  :where(thead, tfoot)> :where(tr)>& {
     z-index: 3;
 
     @supports (container-type: scroll-state) {
@@ -483,27 +488,27 @@
     outline-offset: calc(var(--focus-ring-offset, 2px) * -1);
   }
 
-  :where(th:first-child) > & {
+  :where(th:first-child)>& {
     margin-inline-start: calc(var(--_table-inset) * -1);
     padding-inline-start: var(--_table-inset);
   }
 
-  :where(th:last-child) > & {
+  :where(th:last-child)>& {
     margin-inline-end: calc(var(--_table-inset) * -1);
     padding-inline-end: var(--_table-inset);
   }
 
-  :where(.table__cell--numeric) > & {
+  :where(.table__cell--numeric)>& {
     flex-direction: row-reverse;
   }
 
-  & > :where(.icon) {
+  &> :where(.icon) {
     flex: none;
     font-size: 0.75em;
     transition: scale var(--_table-transition) ease;
   }
 
-  :where([aria-sort="ascending"]) > & > :where(.icon) {
+  :where([aria-sort="ascending"])>&> :where(.icon) {
     scale: 1 -1;
   }
 }

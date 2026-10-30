@@ -213,15 +213,15 @@
       "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
     },
     "accent": {
-      "$value": "light-dark({color.purple.600}, {color.purple.400})",
+      "$value": "light-dark({color.purple.600}, {color.purple.300})",
       "$description": "Brand links, active navigation items, focus states"
     },
     "accent-hover": {
-      "$value": "light-dark({color.purple.700}, {color.purple.300})",
+      "$value": "light-dark({color.purple.700}, {color.purple.200})",
       "$description": "Hover state for links and accent buttons"
     },
     "accent-pressed": {
-      "$value": "light-dark({color.purple.800}, {color.purple.200})",
+      "$value": "light-dark({color.purple.800}, {color.purple.100})",
       "$description": "Active / pressed state for links and accent buttons"
     },
     "complementary": {
@@ -233,55 +233,55 @@
       "$description": "Complementary state for links and accent buttons"
     },
     "complementary-pressed": {
-      "$value": "light-dark({color.olive.800}, {color.olive.400})",
+      "$value": "light-dark({color.olive.800}, {color.olive.100})",
       "$description": "Active / pressed state for complementary buttons"
     },
     "danger": {
-      "$value": "light-dark({color.red.600}, {color.red.400})",
+      "$value": "light-dark({color.red.600}, {color.red.300})",
       "$description": "Destructive button text, form error messages"
     },
     "danger-hover": {
-      "$value": "light-dark({color.red.700}, {color.red.300})",
+      "$value": "light-dark({color.red.700}, {color.red.200})",
       "$description": "Destructive button hover state"
     },
     "danger-pressed": {
-      "$value": "light-dark({color.red.800}, {color.red.200})",
+      "$value": "light-dark({color.red.800}, {color.red.100})",
       "$description": "Destructive button pressed state"
     },
     "success": {
-      "$value": "light-dark({color.green.600}, {color.green.400})",
+      "$value": "light-dark({color.green.600}, {color.green.300})",
       "$description": "Success checkmark icons and completed status text"
     },
     "success-hover": {
-      "$value": "light-dark({color.green.700}, {color.green.300})",
+      "$value": "light-dark({color.green.700}, {color.green.200})",
       "$description": "Success hover state"
     },
     "success-pressed": {
-      "$value": "light-dark({color.green.800}, {color.green.200})",
+      "$value": "light-dark({color.green.800}, {color.green.100})",
       "$description": "Success pressed state"
     },
     "warning": {
-      "$value": "light-dark({color.amber.600}, {color.amber.400})",
+      "$value": "light-dark({color.amber.600}, {color.amber.300})",
       "$description": "Warning callout text and pending status icons"
     },
     "warning-hover": {
-      "$value": "light-dark({color.amber.700}, {color.amber.300})",
+      "$value": "light-dark({color.amber.700}, {color.amber.200})",
       "$description": "Warning hover state"
     },
     "warning-pressed": {
-      "$value": "light-dark({color.amber.800}, {color.amber.200})",
+      "$value": "light-dark({color.amber.800}, {color.amber.100})",
       "$description": "Warning pressed state"
     },
     "info": {
-      "$value": "light-dark({color.aqua.600}, {color.aqua.400})",
+      "$value": "light-dark({color.aqua.600}, {color.aqua.300})",
       "$description": "info callout text and pending status icons"
     },
     "info-hover": {
-      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$value": "light-dark({color.aqua.700}, {color.aqua.200})",
       "$description": "info hover state"
     },
     "info-pressed": {
-      "$value": "light-dark({color.aqua.800}, {color.aqua.200})",
+      "$value": "light-dark({color.aqua.800}, {color.aqua.100})",
       "$description": "info pressed state"
     }
   },

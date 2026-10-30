@@ -14,6 +14,7 @@
     "test:theme": "npm test --workspace=@design-for-humans/theme-engine",
     "sync:icons": "node scripts/sync-icons.js",
     "check:utilities": "node scripts/check-utilities.js",
+    "check:layout": "node scripts/check-layout.mjs",
     "sync:blog": "node scripts/sync-blog.js",
     "watch:blog": "node scripts/sync-blog.js --watch",
     "storybook": "npm run storybook --workspace=@design-for-humans/storybook",

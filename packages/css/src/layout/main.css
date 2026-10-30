@@ -6,7 +6,9 @@
 
    - --flush: no padding (a full-bleed page, or panes that draw their own).
    - --viewport: as tall as its track and no taller, for panes that scroll
-     inside it (in an .app--viewport shell). It scrolls as a page again at
+     inside it (in an .app--viewport shell). It never clips: whenever its
+     content doesn't fit (the panes stack, or a sticky header and a pane
+     outgrow it) the main scrolls instead. It scrolls as a page again at
      small widths or heights.
 
    Usage:
@@ -30,14 +32,17 @@
 }
 
 /* --------------------------------------------------------------------------
-   Viewport: panes scroll inside, the main doesn't
+   Viewport: panes scroll inside while they fit; the main scrolls when they
+   don't. A locked region scrolls, never clips, so no layout can strand its
+   content out of reach.
    -------------------------------------------------------------------------- */
 :where(.main--viewport) {
     block-size: 100%;
     display: flex;
     flex-direction: column;
     min-block-size: 0;
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
     @media (width < 48rem) or (height < 36rem) {
         block-size: auto;

@@ -35,6 +35,7 @@ Parts (\`__thumb\`, \`__header\`, \`__band\`, \`__body\`, \`__footer\`) are dire
 | :--- | :--- | :--- |
 | Prominence | default (surface and quiet border), \`--strong\` (raised, for floating cards), \`--subtle\` (tint, no border), \`--plain\` (no surface, border or shadow) | \`--card-prominence\` |
 | Chrome | default (the prominence's edge), \`--flat\` (no border, corners or shadow; keeps the fill), \`--bordered\` (a border at any prominence) | \`--card-chrome\` |
+| Intent | neutral (default), \`--accent\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` (the whole border in the intent colour, with a ring outside it) | \`--card-intent\` |
 | Padding | default, \`--flush\` (no padding at the card's edges) | |
 | Density | default, \`--compact\` | \`--ui-sizing: compact\` |
 
@@ -42,6 +43,7 @@ Parts (\`__thumb\`, \`__header\`, \`__band\`, \`__body\`, \`__footer\`) are dire
 - \`--ruled\` draws rules between parts; \`.card__band\` (\`--subtle\`) is a full-width strip between them.
 - Dialog and popover set \`--card-prominence: strong\` for the card they hold. A card resets the flag for cards nested inside it.
 - One modifier per axis: \`.card--plain.card--bordered\` is an outline, \`.card--subtle.card--flat\` a square tint, \`.card--plain.card--flush\` the content alone.
+- Intent marks a state (live, selected, at risk) and is never colour alone: the card says it in words too, usually with a status of the same intent. It draws the border at any prominence or chrome, and its ring sits outside the border, so a card changing state doesn't move its content. A strong card's shadow, and a linked card's hover shadow, take the intent colour.
 - \`@max-2xl:\` (below 42rem) and \`@max-md:\` (below 28rem) versions of \`--plain\`, \`--flat\`, \`--bordered\` and \`--flush\` apply while the nearest size container is narrow.
 
 ### Linked card
@@ -64,6 +66,7 @@ export const Playground: Story = {
   args: {
     prominence: 'default',
     chrome: 'default',
+    intent: 'neutral',
     flush: false,
     compact: false,
     ruled: false,
@@ -77,6 +80,7 @@ export const Playground: Story = {
   argTypes: {
     prominence: { control: 'inline-radio', options: ['default', 'strong', 'subtle', 'plain'] },
     chrome: { control: 'inline-radio', options: ['default', 'flat', 'bordered'] },
+    intent: { control: 'inline-radio', options: ['neutral', 'accent', 'danger', 'warning', 'success', 'info'] },
     flush: { control: 'boolean' },
     compact: { control: 'boolean' },
     ruled: { control: 'boolean' },
@@ -92,6 +96,7 @@ export const Playground: Story = {
       'card',
       args.prominence !== 'default' ? `card--${args.prominence}` : '',
       args.chrome !== 'default' ? `card--${args.chrome}` : '',
+      args.intent !== 'neutral' ? `card--${args.intent}` : '',
       args.flush ? 'card--flush' : '',
       args.compact ? 'card--compact' : '',
       args.ruled ? 'card--ruled' : '',
@@ -110,6 +115,7 @@ export const Playground: Story = {
               <h3 class="card__title heading">${title}</h3>
               <p class="card__subtitle small-text">${args.subtitle}</p>
             </hgroup>
+            ${args.intent !== 'neutral' ? `<span class="status status--subtle status--${args.intent}"><span class="status__text">${args.intent[0].toUpperCase() + args.intent.slice(1)}</span></span>` : ''}
           </header>
           <div class="card__body"><p class="text">${args.bodyText}</p></div>
           <footer class="card__footer">
@@ -188,6 +194,42 @@ export const Chrome: Story = {
       ${prominenceCard('card--plain card--bordered', 'Plain and bordered', 'An outline: no surface, a border.')}
       ${prominenceCard('card--subtle card--bordered', 'Subtle and bordered', 'A tint with a border.')}
       ${prominenceCard('card--flush', 'Flush', 'No padding at the edges, for content that brings its own.')}
+    </div>
+  `,
+};
+
+const intentCard = (cls: string, name: string, state: string, intent: string) => `
+  <article class="card ${cls}">
+    <header class="card__header">
+      <hgroup class="card__hgroup">
+        <h3 class="card__title heading">${name}</h3>
+        <p class="card__subtitle small-text">.${cls.replace(/ /g, '.')}</p>
+      </hgroup>
+      <span class="status status--subtle${intent === 'neutral' ? '' : ` status--${intent}`}"><span class="status__text">${state}</span></span>
+    </header>
+    <div class="card__body"><p class="text">The status says the state in words; the edge makes it easy to spot.</p></div>
+  </article>
+`;
+
+export const Intent: Story = {
+  parameters: { docs: { description: { story: 'The border, a ring outside it and (on strong and linked cards) the shadow take the intent colour. The status says the state in words.' } } },
+  render: () => `
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); gap: var(--spacing-24);">
+      ${intentCard('card--accent', 'Deck A', 'On air', 'accent')}
+      ${intentCard('card--warning', 'Deck B', 'Cued', 'warning')}
+      ${intentCard('card--danger', 'Payments', 'Failing', 'danger')}
+      ${intentCard('card--success', 'Backups', 'Healthy', 'success')}
+      ${intentCard('card--info', 'Release 4.2', 'Scheduled', 'info')}
+      ${intentCard('card--subtle card--accent', 'Subtle', 'Selected', 'accent')}
+      ${intentCard('card--plain card--accent', 'Plain', 'Selected', 'accent')}
+      ${intentCard('card--flat card--accent', 'Flat', 'Selected', 'accent')}
+    </div>
+    <p class="small-text text-muted" style="margin-block: var(--spacing-24) var(--spacing-16);">Wherever a card has a shadow, the shadow takes the intent colour: a strong card, and a linked card on hover.</p>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); gap: var(--spacing-24);">
+      ${intentCard('card--strong card--accent', 'Strong', 'On air', 'accent')}
+      ${intentCard('card--strong card--danger', 'Strong', 'Failing', 'danger')}
+      ${intentCard('card--strong card--success', 'Strong', 'Healthy', 'success')}
+      ${intentCard('card--strong', 'Strong, neutral', 'Idle', 'neutral')}
     </div>
   `,
 };

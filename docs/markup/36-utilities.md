@@ -42,6 +42,7 @@ A mode class sets a flag that the components inside read; it styles nothing itse
 | `.ui-compact`, `.fine:ui-compact` | `--ui-sizing: compact` (density), the latter only where the primary pointer is fine |
 | `.font-sizing-fixed`, `-fluid`, `-cq`, `-compact` | `--font-sizing` |
 | `.controls-plain`, `-subtle`, `-sm`, `-lg`, `-round` | `--controls-prominence`, `--controls-size`, `--controls-corners` |
+| `.elements-plain`, `-subtle` | `--elements-prominence`: every element with that prominence (controls, status, chip, kbd, icon box, tab list, telemetry); not containers (card, sidebar, banner, menu, accordion, table, stepper, empty state) or links |
 | `.color-scheme-light`, `-dark`, `-light-dark` | `color-scheme` |
 | `.color-palette-inverted` (`.colors-inverted`) | The palette roles |
 

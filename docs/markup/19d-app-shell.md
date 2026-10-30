@@ -8,7 +8,7 @@ The page shell: header, main and footer in rows, the main row taking the free he
 | `.app--viewport` | The shell fills the screen and panes scroll inside it. Below 48rem wide or 36rem tall it scrolls as a page again |
 | `.main` | Cushion padding round the content; no inline padding when its child is a `.wrapper` |
 | `.main--flush` | No padding |
-| `.main--viewport` | As tall as its track, for panes that scroll inside it |
+| `.main--viewport` | As tall as its track, for panes that scroll inside it. It never clips: when its content doesn't fit (the panes stack, or a sticky header and a pane outgrow it), the main scrolls |
 
 ## A. Markup
 ```html
@@ -28,5 +28,6 @@ The page shell: header, main and footer in rows, the main row taking the free he
 ## B. Rules
 - **Landmarks:** one shell per page. Its `<header>` is the banner, its `<footer>` the contentinfo, and there is one `<main>`. The skip link comes first; it is fixed, so it takes no row.
 - **Small screens:** nothing becomes a drawer on its own. A sidebar stacks above the main, or the product hides it (`max-md:hide`) and puts the same navigation in a `.dialog--drawer` opened from the header (§34).
+- **Never clip a locked region.** The shell and workspace hide overflow because their rows and panes are sized to fit; anything holding content (the main, a pane) scrolls instead, so no screen size can strand content out of reach. `npm run check:layout` tests this.
 - **Viewport:** in `.app--viewport` the main scrolls; give it `tabindex="-1"` if it holds nothing focusable near the top, so keyboard users can scroll it after the skip link.
 - **Removed:** `.workspace` (use `.app__workspace`), `.app__aside`, `.app__footer` (use `.footer`), `.app__sidebar` (use `.sidebar`), `.app--locked` (use `--viewport`), `.main--panels` (use `--viewport`), the `aside` grid row (side panes go in the workspace), the shell's scroll-state container.

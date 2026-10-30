@@ -44,18 +44,21 @@
   --_control-default-min-size: var(--input-min-size, 3rem);
   --_control-default-padding-block: var(--input-padding-block, 0.25rem);
   --_control-default-padding-inline: var(--input-padding-inline, 1rem);
+  --_control-default-inner-gap: var(--input-inner-gap, 1rem);
   --_control-default-font-size: var(--input-font-size, 1rem);
   --_control-default-line-height: var(--input-line-height, 1.25);
 
   --_control-sm-min-size: var(--input-sm-min-size, 2rem);
   --_control-sm-padding-block: var(--input-sm-padding-block, 0.125rem);
   --_control-sm-padding-inline: var(--input-sm-padding-inline, 0.75rem);
+  --_control-sm-inner-gap: var(--input-sm-inner-gap, 0.75rem);
   --_control-sm-font-size: var(--input-sm-font-size, 0.875rem);
   --_control-sm-line-height: var(--input-sm-line-height, 1.25);
 
   --_control-lg-min-size: var(--input-lg-min-size, 4rem);
   --_control-lg-padding-block: var(--input-lg-padding-block, 0.5rem);
   --_control-lg-padding-inline: var(--input-lg-padding-inline, 1.5rem);
+  --_control-lg-inner-gap: var(--input-lg-inner-gap, 1.5rem);
   --_control-lg-font-size: var(--input-lg-font-size, 1.125rem);
   --_control-lg-line-height: var(--input-lg-line-height, 1.25);
 
@@ -63,6 +66,7 @@
   --_control-min-size: var(--_control-default-min-size);
   --_control-padding-block: var(--_control-default-padding-block);
   --_control-padding-inline: var(--_control-default-padding-inline);
+  --_control-inner-gap: var(--_control-default-inner-gap);
   --_control-font-size: var(--_control-default-font-size);
   --_control-line-height: var(--_control-default-line-height);
 
@@ -92,6 +96,7 @@
     --_control-min-size: var(--_control-sm-min-size);
     --_control-padding-block: var(--_control-sm-padding-block);
     --_control-padding-inline: var(--_control-sm-padding-inline);
+    --_control-inner-gap: var(--_control-sm-inner-gap);
     --_control-font-size: var(--_control-sm-font-size);
     --_control-line-height: var(--_control-sm-line-height);
   }
@@ -100,17 +105,18 @@
     --_control-min-size: var(--_control-lg-min-size);
     --_control-padding-block: var(--_control-lg-padding-block);
     --_control-padding-inline: var(--_control-lg-padding-inline);
+    --_control-inner-gap: var(--_control-lg-inner-gap);
     --_control-font-size: var(--_control-lg-font-size);
     --_control-line-height: var(--_control-lg-line-height);
   }
 
-  @container style(--controls-prominence: subtle) {
+  @container style(--controls-prominence: subtle) or style(--elements-prominence: subtle) {
     --_control-bg: var(--surface-translucent, transparent);
     --_control-hover-bg: var(--surface-translucent-strong, transparent);
     --_control-border-width: 0px;
   }
 
-  @container style(--controls-prominence: plain) {
+  @container style(--controls-prominence: plain) or style(--elements-prominence: plain) {
     --_control-bg: transparent;
     --_control-hover-bg: var(--surface-translucent, transparent);
     --_control-sides-transparency: 100%;
@@ -160,6 +166,7 @@
       --_control-min-size: var(--_control-sm-min-size);
       --_control-padding-block: var(--_control-sm-padding-block);
       --_control-padding-inline: var(--_control-sm-padding-inline);
+      --_control-inner-gap: var(--_control-sm-inner-gap);
       --_control-font-size: var(--_control-sm-font-size);
       --_control-line-height: var(--_control-sm-line-height);
     }
@@ -168,6 +175,7 @@
       --_control-min-size: var(--_control-lg-min-size);
       --_control-padding-block: var(--_control-lg-padding-block);
       --_control-padding-inline: var(--_control-lg-padding-inline);
+      --_control-inner-gap: var(--_control-lg-inner-gap);
       --_control-font-size: var(--_control-lg-font-size);
       --_control-line-height: var(--_control-lg-line-height);
     }
@@ -418,7 +426,7 @@
   --_control-edge-color: transparent;
   --_control-hover-edge-color: transparent;
   --_control-focus-edge-color: transparent;
-  --_control-padding-inline: 0;
+  --_control-padding-inline: 0px;
 }
 
 /* ==========================================================================

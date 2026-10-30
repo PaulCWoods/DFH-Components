@@ -6,6 +6,15 @@
    these switch a region to fluid, cq or compact. Density (--ui-sizing):
    .ui-compact, or .fine:ui-compact where the primary pointer is fine. Controls
    (--controls-prominence, --controls-size, --controls-corners).
+
+   Elements (--elements-prominence): .elements-subtle and .elements-plain
+   reach every element that has that prominence: controls (button, button
+   group, input, select, textarea, combobox, switch), status, chip, kbd,
+   icon box, tab list and telemetry. Containers (card, sidebar, banner,
+   menu, accordion, table, stepper, empty state) and links ignore it: a
+   region's chrome is set on the container itself, and a plain link would
+   lose the underline that tells it apart from text. A component's own
+   modifier class beats the flag.
    ========================================================================== */
 :where(.font-sizing-fixed) {
     --font-sizing: fixed;
@@ -45,6 +54,14 @@
         --font-sizing: compact;
         font-size: var(--body-compact-font-size);
     }
+}
+
+:where(.elements-plain) {
+    --elements-prominence: plain;
+}
+
+:where(.elements-subtle) {
+    --elements-prominence: subtle;
 }
 
 :where(.controls-plain) {

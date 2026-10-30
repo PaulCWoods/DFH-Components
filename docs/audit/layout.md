@@ -211,3 +211,12 @@ All recommendations taken.
   - rewritten: `19-wrapper.md`, `19b-grid-grid-carousel.md`, `22-stack-inline-cluster.md`;
   - new: `19c-split.md`, `19d-app-shell.md`, `34-sidebar.md`, `35-footer.md`.
 - **Rule utility** (asked for during the pass): the unused `.ruled` utility became `.rule`, with `.column-rule` and `.row-rule`, for flex and grid containers that aren't primitives.
+
+## Follow-up: content out of reach
+
+Found in Cadence: from 48rem wide, `.main--viewport` hid its overflow (`main.css` loads after `app.css`, so its `overflow: hidden` beat the shell's `overflow-y: auto` for the main). Whenever the panes stacked, or the sticky station header and the deck outgrew the screen (even at 1280×800), the rest of the main couldn't be scrolled to.
+
+- **Rule:** a locked region scrolls, never clips. `.main--viewport` is now `overflow-y: auto` with `overscroll-behavior: contain`: panes that fit still scroll on their own, and when they don't, the main scrolls. The shell and workspace still clip, because their rows and panes are sized to fit.
+- **`.split--three`** didn't wrap, so at phone width its fixed start and end panes pushed the page sideways (465px in 375px). It now wraps like the two-pane split: the centre keeps `--split-main-min-width`, and a side pane that no longer fits takes its own full-width row. `--nowrap` keeps the old one-row behaviour.
+- **`npm run check:layout`** (`scripts/check-layout.mjs`): loads stories from the built Storybook in headless Chrome at 5 widths × 2 heights and reports a clipping element with visible content beyond its edge and no scroller in between, and a page wider than the screen. It found the Cadence bug (29 cases) and the three-pane overflow; both now pass. New story: Layout/App Shell → Viewport with panes.
+

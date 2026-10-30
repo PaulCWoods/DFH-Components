@@ -211,3 +211,14 @@ All approved as recommended.
 - **Responsive:** `@max-2xl:` and `@max-md:` versions of `--plain`, `--flat`, `--bordered` and `--flush`, written after the prominence ones so a responsive chrome applies over a responsive prominence.
 - **Flags:** a card resets `--card-chrome` for cards nested inside it, like `--card-prominence`. The `flush` value of the flag is gone with the change above.
 - **Increased contrast:** a bordered card gains the 2px edge even when plain; a flat card gains one like any non-plain card.
+
+## Follow-up: card intent
+
+The strongest library candidate from the Cadence deck (`audit/recipes.md`).
+
+- **Axis:** intent, `--accent`, `--danger`, `--warning`, `--success`, `--info`, and the flag `--card-intent`, reset for nested cards like the other flags.
+- **Look:** the whole border in the intent's border colour (`--border-color-{intent}`), plus an outline of `card.intent-ring-width` (1px) outside it in the same colour. Chosen with the user over a thick start edge, which fights rounded corners. The ring is an outline, so it takes no space and a card changing state doesn't shift; a stretched link's focus ring replaces it while focused.
+- **Order:** intent comes after chrome, so it draws the border on subtle, plain and flat cards too.
+- **Never colour alone:** the docs and stories pair it with a status of the same intent.
+- **Cadence:** `.deck--on-air` and `.deck--cue` are gone; the decks are `.card--success` (on air) and `.card--warning` (cued, now with a warning status to match).
+- **Tinted shadow** (asked for after review): wherever an intent card has a shadow (strong, or a linked card's hover), the shadow is the raised stack (`--_shadow-md-layer-*`) in the intent's border colour, mixed 75% towards transparent like `.shadow-accent`. The card reads its raised shadow through `--_card-raised-shadow`, which an intent replaces, so flat, plain and default cards stay shadowless. In dark mode it reads as a soft glow. New token: `card.intent-shadow-transparency` (75%). The tinted stack is the md one; a product that sets `--card-strong-shadow` to another stack keeps it on neutral cards only.

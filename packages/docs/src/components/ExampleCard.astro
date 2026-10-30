@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 ---
 
-<article class:list={['card card--compact example-card', className]}>
+<article class:list={['card card--flush card--plain example-card example-card', className]}>
   <div class="card__body card__body--flush">
     <div
       class:list={['preview-stage', previewClass]}
@@ -64,9 +64,10 @@ const {
   }
 
   .preview-stage {
-    min-block-size: 4.5rem;
+    min-block-size: var(--spacing-block-2xs);
     padding: var(--spacing-16, 1rem);
     background-color: var(--surface-subtle, #f8fafc);
+    border: var(--border-subtle);
     border-radius: var(--radius-sm, 0.25rem);
     display: flex;
     align-items: center;

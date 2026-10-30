@@ -166,15 +166,15 @@
     },
     "foreground.accent": {
       "light": "purple.600",
-      "dark": "purple.400"
+      "dark": "purple.300"
     },
     "foreground.accent-hover": {
       "light": "purple.700",
-      "dark": "purple.300"
+      "dark": "purple.200"
     },
     "foreground.accent-pressed": {
       "light": "purple.800",
-      "dark": "purple.200"
+      "dark": "purple.100"
     },
     "foreground.complementary": {
       "light": "olive.700",
@@ -186,55 +186,55 @@
     },
     "foreground.complementary-pressed": {
       "light": "olive.800",
-      "dark": "olive.400"
+      "dark": "olive.100"
     },
     "foreground.danger": {
       "light": "red.600",
-      "dark": "red.400"
+      "dark": "red.300"
     },
     "foreground.danger-hover": {
       "light": "red.700",
-      "dark": "red.300"
+      "dark": "red.200"
     },
     "foreground.danger-pressed": {
       "light": "red.800",
-      "dark": "red.200"
+      "dark": "red.100"
     },
     "foreground.success": {
       "light": "green.600",
-      "dark": "green.400"
+      "dark": "green.300"
     },
     "foreground.success-hover": {
       "light": "green.700",
-      "dark": "green.300"
+      "dark": "green.200"
     },
     "foreground.success-pressed": {
       "light": "green.800",
-      "dark": "green.200"
+      "dark": "green.100"
     },
     "foreground.warning": {
       "light": "amber.600",
-      "dark": "amber.400"
+      "dark": "amber.300"
     },
     "foreground.info": {
       "light": "aqua.600",
-      "dark": "aqua.400"
+      "dark": "aqua.300"
     },
     "foreground.warning-hover": {
       "light": "amber.700",
-      "dark": "amber.300"
+      "dark": "amber.200"
     },
     "foreground.info-hover": {
       "light": "aqua.700",
-      "dark": "aqua.300"
+      "dark": "aqua.200"
     },
     "foreground.warning-pressed": {
       "light": "amber.800",
-      "dark": "amber.200"
+      "dark": "amber.100"
     },
     "foreground.info-pressed": {
       "light": "aqua.800",
-      "dark": "aqua.200"
+      "dark": "aqua.100"
     },
     "border.color.accent": {
       "light": "purple.500",

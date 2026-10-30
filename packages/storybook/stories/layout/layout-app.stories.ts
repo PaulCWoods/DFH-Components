@@ -30,7 +30,7 @@ The page shell: header, main and footer in rows, the main row taking the free he
 | \`.app\` | Places its direct \`<header>\`/\`.header\`, \`<main>\`/\`.main\`/\`.app__workspace\` and \`<footer>\`/\`.footer\` in rows |
 | \`.app__workspace\` | Side panes (\`.sidebar\`, \`<aside>\`) beside the main; below 48em they stack, side pane first |
 | \`.app--viewport\` | Locks the shell to the screen so panes scroll inside it; unlocks to a scrolling page at small widths or heights |
-| \`.main\` | Padding round the content (inline padding drops when its child is a \`.wrapper\`); \`--flush\` for none; \`--viewport\` for panes that scroll inside it |
+| \`.main\` | Padding round the content (inline padding drops when its child is a \`.wrapper\`); \`--flush\` for none; \`--viewport\` for panes that scroll inside it (it scrolls itself whenever they don't fit, so it never clips) |
 
 - **Landmarks:** one shell per page. Its \`<header>\` is the banner, its \`<footer>\` the contentinfo, and there is one \`<main>\`. The skip link comes first and takes no row.
 - **Small screens:** a sidebar never becomes a drawer on its own. It stacks above the main, or the product hides it and puts the same navigation in a \`.dialog--drawer\` (see Organisms/Sidebar).
@@ -124,3 +124,32 @@ export const Viewport: Story = {
       ${footer}
     </div>`,
 };
+
+const pane = (id: string, title: string, n: number) => `
+  <section class="card" aria-labelledby="${id}">
+    <header class="card__header"><h2 id="${id}" class="card__title small-heading">${title}</h2></header>
+    <div class="card__body card__body--scrollable stack" tabindex="0" aria-labelledby="${id}">
+      ${Array.from({ length: n }, (_, i) => `<p class="text">${title} entry ${i + 1}: lift and divide clumps in autumn, and water them in well.</p>`).join('')}
+    </div>
+  </section>`;
+
+export const ViewportPanes: Story = {
+  name: 'Viewport with panes',
+  parameters: { docs: { description: { story: '`.main--viewport` holds two panes that scroll on their own while they sit side by side. Narrow the canvas until the split wraps: the panes stack and the main scrolls, so nothing is cut off. Below 48em, or 36em tall, the shell scrolls as a page.' } } },
+  render: () => `
+    <div class="app app--viewport">
+      <a href="#main" class="skip-link">Skip to content</a>
+      ${header()}
+      <div class="app__workspace">
+        ${sideNav()}
+        <main id="main" class="main main--viewport">
+          <div class="split grow min-h-0" style="--align-items: stretch;">
+            ${pane('pane-tasks', 'Tasks', 18)}
+            ${pane('pane-notes', 'Notes', 24)}
+          </div>
+        </main>
+      </div>
+      ${footer}
+    </div>`,
+};
+

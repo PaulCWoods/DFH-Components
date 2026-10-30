@@ -61,6 +61,10 @@
   --_icon-size: var(--icon-size-lg, 1.25em);
 }
 
+:where(.icon--stretch) {
+  --_icon-size: stretch;
+}
+
 /* ==========================================================================
    3. Intent Modifiers
    Set color, not fill, so currentColor reaches fills and strokes alike.
@@ -156,7 +160,7 @@
     --_icon-box-size: var(--icon-box-lg-min-size, 4rem);
   }
 
-  @container style(--icon-box-prominence: subtle) {
+  @container style(--icon-box-prominence: subtle) or style(--elements-prominence: subtle) {
     --_icon-box-bg: var(--_icon-box-tint);
     --_icon-box-frame: 1px solid transparent;
   }

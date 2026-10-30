@@ -38,7 +38,7 @@
     --_kbd-font-size: var(--kbd-sm-font-size, 0.75rem);
   }
 
-  @container style(--kbd-prominence: subtle) {
+  @container style(--kbd-prominence: subtle) or style(--elements-prominence: subtle) {
     --_kbd-border-block-end-width: var(--_kbd-border-width);
   }
 

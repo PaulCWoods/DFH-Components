@@ -6,32 +6,16 @@
    deck is a library part: card, status, lockup, range, range lockup, button
    group, meter and popover.
 
-   It adds three things:
-   1. .deck--on-air / .deck--cue: an edge colour on a .card for the deck's
-      state. The status in the card says the same in words (WCAG 1.4.1).
-   2. .deck__art: square artwork, and --vinyl, a spinning record.
-   3. .deck-dock: the docked player. The position slider runs the full width
+   It adds two things (a deck's state is the card's intent:
+   .card--success on air, .card--warning cued):
+   1. .deck__art: square artwork, and --vinyl, a spinning record.
+   2. .deck-dock: the docked player. The position slider runs the full width
       along its top edge; below it, one row with the track at the start, the
       transport in the true centre and the time and volume at the end.
    ========================================================================== */
 
 /* ==========================================================================
-   1. Deck state on a card
-   ========================================================================== */
-:where(.deck--on-air) {
-  --_deck-edge: var(--foreground-accent, currentColor);
-  border-color: var(--_deck-edge);
-  box-shadow:
-    0 0 0 1px var(--_deck-edge),
-    0 0 1rem -0.125rem color-mix(in srgb, var(--_deck-edge) 35%, transparent);
-}
-
-:where(.deck--cue) {
-  border-color: var(--border-color-warning, currentColor);
-}
-
-/* ==========================================================================
-   2. Artwork
+   1. Artwork
    ========================================================================== */
 :where(.deck__art) {
   --_deck-art-size: var(--deck-art-size, 5rem);
@@ -89,7 +73,7 @@
 }
 
 /* ==========================================================================
-   3. Docked player
+   2. Docked player
    ========================================================================== */
 
 /* The position slider along the top edge, full width */

@@ -56,10 +56,10 @@ const avatar = `
 const rail = `
   <div class="sidebar sidebar--rail color-scheme-dark max-md:hide">
     <div class="sidebar__header">
-      <a href="#" class="button button--plain button--icon">${icon('BrandDesignForHumans', 'icon icon--lg')}<span class="sr-only">Cadence home</span></a>
+      <a href="#" class="button button--plain button--icon">${icon('BrandDesignForHumans', 'icon icon--stretch')}<span class="sr-only">Cadence home</span></a>
     </div>
     <div class="sidebar__body">
-      <nav class="tab-list tab-list--vertical tab-list--subtle" aria-label="Sections">
+      <nav class="tab-list tab-list--vertical tab-list--segmented tab-list--sm tab-list--subtle" aria-label="Sections">
         <ul>
           ${sections.map(([ic, label, cur]) => `<li><a href="#" class="tab tab--icon"${cur ? ' aria-current="page"' : ''}>${icon(ic)}<span class="sr-only">${label}</span></a></li>`).join('')}
         </ul>
@@ -88,9 +88,9 @@ const menuTree = (labelId: string) => `
   </nav>`;
 
 const menuSidebar = `
-  <div class="sidebar sidebar--ruled max-md:hide">
+  <div class="sidebar sidebar--compact ui-compact max-md:hide">
     <div class="sidebar__header">
-      <h2 id="menu-title" class="small-heading">Broadcast</h2>
+      <h2 id="menu-title" class="heading">Broadcast</h2>
     </div>
     <div class="sidebar__body">${menuTree('menu-title')}</div>
     <div class="sidebar__footer"><p class="small-text text-muted">Engine 2.4, stream healthy</p></div>
@@ -98,10 +98,10 @@ const menuSidebar = `
 
 const menuDrawer = `
   <dialog id="menu-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="menu-drawer-title">
-    <div class="card">
-      <header class="card__header">
-        <h2 id="menu-drawer-title" class="card__title small-heading">Broadcast</h2>
-        <button type="button" class="button button--plain button--icon" commandfor="menu-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
+    <div class="card fine:ui-compact">
+      <header class="card__header align-items-center">
+        <h2 id="menu-drawer-title" class="card__title heading">Broadcast</h2>
+        <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
       </header>
       <div class="card__body card__body--scrollable">${menuTree('menu-drawer-title')}</div>
     </div>
@@ -111,7 +111,7 @@ const mobileBar = `
   <header class="header header--compact color-scheme-dark md:hide">
     <div class="header__bar">
       <div class="inline">
-        <button type="button" class="button button--plain button--icon" commandfor="menu-drawer" command="show-modal" aria-haspopup="dialog">${icon('Navigation')}<span class="sr-only">Menu</span></button>
+        <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="show-modal" aria-haspopup="dialog">${icon('Navigation')}<span class="sr-only">Menu</span></button>
         <a href="#" class="link link--plain small-heading">Cadence</a>
       </div>
       ${avatar}
@@ -119,7 +119,7 @@ const mobileBar = `
   </header>`;
 
 const tabBar = `
-  <nav class="tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked md:hide" aria-label="Sections">
+  <nav class="tab-list tab-list--segmented tab-list--round tab-list--floating scroll-fade tab-list--sm tab-list--subtle tab-list--docked md:hide" aria-label="Sections">
     <ul>
       ${sections.map(([ic, label, cur]) => `<li><a href="#" class="tab tab--icon"${cur ? ' aria-current="page"' : ''}>${icon(ic)}<span class="sr-only">${label}</span></a></li>`).join('')}
     </ul>
@@ -129,7 +129,7 @@ const tabBar = `
    Station header
    -------------------------------------------------------------------------- */
 const stationHeader = (buffering: boolean) => `
-  <header class="header header--sticky max-md:hide">
+  <header class="header header--compact header--stretch controls-sm controls-subtle header--sticky max-md:hide">
     <div class="header__bar">
       <div class="cluster">
         <label for="station" class="sr-only">Station</label>
@@ -137,16 +137,15 @@ const stationHeader = (buffering: boolean) => `
           <option selected>WDFH 98.5 FM, main studio</option>
           <option>Cadence Chill</option>
         </select>
-        ${
-          buffering
-            ? `<span class="status status--warning">${icon('Warning')}<span class="status__text">Reconnecting</span></span>`
-            : `<span class="status status--success">${icon('Record')}<span class="status__text">Live, 320k AAC</span></span>`
-        }
+        ${buffering
+    ? `<span class="status status--plain status--warning">${icon('Warning')}<span class="status__text">Reconnecting</span></span>`
+    : `<span class="status status--plain status--success">${icon('Record')}<span class="status__text">Live, 320k AAC</span></span>`
+  }
       </div>
-      <dl class="telemetry-group gap-lg @max-3xl:hide" aria-label="Station">
-        <div class="telemetry telemetry--plain"><dt class="small-text text-muted">${icon('User')}Listeners</dt><dd class="small-heading">${buffering ? '—' : '14,820'}</dd></div>
-        <div class="telemetry telemetry--plain"><dt class="small-text text-muted">Peak</dt><dd class="small-heading">28,450</dd></div>
-        <div class="telemetry telemetry--plain"><dt class="small-text text-muted">Latency</dt><dd class="small-heading">${buffering ? '250' : '42'}<span class="small-text">ms</span></dd></div>
+      <dl class="telemetry-group @max-3xl:hide" aria-label="Station">
+        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">${icon('User')}Listeners</dt><dd class="small-heading">${buffering ? '—' : '14,820'}</dd></div>
+        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">Peak</dt><dd class="small-heading">28,450</dd></div>
+        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">Latency</dt><dd class="small-heading">${buffering ? '250' : '42'}<span class="small-text">ms</span></dd></div>
       </dl>
       <div class="cluster gap-xs @max-6xl:hide-labels">
         <button type="button" class="button button--danger" aria-pressed="false">${icon('Muted')}<span>Mute all</span></button>
@@ -210,14 +209,13 @@ const art = (spinning: boolean) =>
   `<div class="deck__art deck__art--vinyl${spinning ? ' is-spinning' : ''}" aria-hidden="true"></div>`;
 
 const deck = (id: string, name: string, state: 'on-air' | 'cue') => `
-  <section class="card deck--${state}" aria-labelledby="${id}-title">
+  <section class="card ${state === 'on-air' ? 'card--strong card--success' : 'card--strong card--warning'}" aria-labelledby="${id}-title">
     <header class="card__header">
       <div class="inline grow">
-        ${
-          state === 'on-air'
-            ? `<span class="status status--success">${icon('Record')}<span class="status__text">On air</span></span>`
-            : `<span class="status">${icon('Pause')}<span class="status__text">Cued</span></span>`
-        }
+        ${state === 'on-air'
+    ? `<span class="status status--success">${icon('Record')}<span class="status__text">On air</span></span>`
+    : `<span class="status status--warning">${icon('Pause')}<span class="status__text">Cued</span></span>`
+  }
         <h2 id="${id}-title" class="micro-heading">${name}</h2>
       </div>
       ${trackInfo(id)}
@@ -335,10 +333,10 @@ const queue = (buffering: boolean) => `
       </div>
     </header>
     <div class="card__band">
-      <div class="cluster">
-        <div>
+      <div class="cluster w-full">
+        <div class="flex-grow-1">
           <label for="queue-search" class="sr-only">Search the queue</label>
-          <input id="queue-search" type="search" class="input input--sm" placeholder="Title, artist or ISRC" />
+          <input id="queue-search" type="search" class="input input--sm w-full" placeholder="Title, artist or ISRC" />
         </div>
         <div class="button-group button-group--joined buttons-sm" role="radiogroup" aria-label="Show">
           ${['All', 'Music', 'Station IDs', 'Ads'].map((t, i) => `<label class="button"><input type="radio" name="queue-type" class="sr-only"${i === 0 ? ' checked' : ''} /><span>${t}</span></label>`).join('')}
@@ -360,7 +358,7 @@ const queue = (buffering: boolean) => `
    Dock, settings and page
    -------------------------------------------------------------------------- */
 const dock = (buffering: boolean) => `
-  <footer class="footer max-md:hide">
+  <footer class="footer footer--stretch max-md:hide">
     <section aria-labelledby="dock-title">
       <h2 id="dock-title" class="sr-only">Player</h2>
       <input type="range" class="range range--sm deck-dock__position" min="0" max="232" value="134" style="--value: 58%;" aria-label="Position" aria-valuetext="2 minutes 14 seconds of 3 minutes 52 seconds" />
@@ -438,7 +436,7 @@ const page = (buffering = false) => `
         <div class="stack p-cushion">
           <h1 class="sr-only">Live desk</h1>
           ${buffering ? outage : ''}
-          <div class="split split--md">
+          <div class="split split--sm">
             ${deck('deck-a', 'Deck A', 'on-air')}
             ${queue(buffering)}
           </div>
@@ -480,7 +478,7 @@ export const StreamSettings: Story = {
 export const Deck: Story = {
   parameters: {
     layout: 'padded',
-    docs: { description: { story: 'The deck alone, on air and cued, side by side. `deck--on-air` and `deck--cue` set its edge colour; the status says the same in words.' } },
+    docs: { description: { story: 'The deck alone, on air and cued, side by side. `card--success` and `card--warning` set its edge colour; the status says the same in words.' } },
   },
   render: () => `
     <div class="grid grid--2-col grid--sm">
