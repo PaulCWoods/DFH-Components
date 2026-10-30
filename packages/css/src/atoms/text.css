@@ -363,8 +363,6 @@
   font-size: var(--body-lg-fixed-font-size);
   font-weight: var(--body-font-weight);
   line-height: var(--body-line-height);
-  max-inline-size: var(--body-measure);
-  text-wrap: pretty;
 
   @container style(--font-sizing: fluid) {
     font-size: var(--body-lg-fluid-font-size);
@@ -387,8 +385,6 @@
   font-size: var(--body-fixed-font-size);
   font-weight: var(--body-font-weight);
   line-height: var(--body-line-height);
-  max-inline-size: var(--body-measure);
-  text-wrap: pretty;
 
   @container style(--font-sizing: fluid) {
     font-size: var(--body-fluid-font-size);

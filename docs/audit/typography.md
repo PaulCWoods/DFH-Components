@@ -142,7 +142,13 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
    - **Fluid range:** the two widths, the start ratio, and the end base and ratio.
    - **Steps:** every step fixed and at both ends of the range, how much it grows, the styles fixed at it and an "Ag" at its size. Below that, every gate result with an icon and words.
    - The preview takes the type properties (`typeCssVars`, tested against the compiled CSS) and loads the theme's fonts. The header status counts both gates. Publish writes the type tokens too, and is blocked by either gate; publishing the unchanged theme rewrites the tokens byte for byte.
-4. **Designer, Semantic tab** (Publish for type came with phase 3).
+4. **Designer, Semantic tab.** Done 30 October 2026 ("Text styles").
+   - **A card per style:** its specimen, set from the theme; its sizes in every mode; and fields for family role, weight, line height, letter spacing, case, step, compact step, how it grows (not at all, with the system, or to a step), and its container size (same as fluid, or a step of its own).
+   - **Checks:** the gate's failures and reports for that style, with a status in the card's header.
+   - **Inheritance:** a field the theme leaves unset (body-lg's family) shows "Inherits". Once set it stays explicit until Reset, because writing never removes a token.
+   - **Moving a step** moves the compact and grow-to steps with it.
+   - **Preview:** in the Typography section, a specimen of every text atom in place of the sample UI. The preview's bar (shared with Colors, where it says which mode is showing) holds a sizing control (fixed, fluid, cq, compact), a width control that narrows the frame so fluid and container sizes can be watched as they grow, and the light and dark button. `typeCssVars` now writes the text styles' properties as well.
+   - Publish for type came with phase 3.
 5. **Figma text styles** from the semantic styles.
 6. **Fixes the tool makes possible:** the mode gaps (finding 5), the floor (finding 6) and the stacks (finding 7), each as a theme change you approve in the designer.
 7. **Blog mirror.**

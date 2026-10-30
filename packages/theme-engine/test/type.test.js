@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applyTypeStyles, evalCalc, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
+import { applyTypeStyles, evalCalc, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -78,8 +78,24 @@ test('calc() line heights evaluate to numbers', () => {
 
 test('the preview properties match the compiled CSS', () => {
   const css = readFileSync(new URL('../../css/src/variables.css', import.meta.url), 'utf8');
+  const compiled = (name) => css.split('\n').find((l) => l.trim().startsWith(`${name}:`))?.trim().slice(name.length + 1, -1).trim();
   for (const [name, value] of Object.entries(typeCssVars(theme.type))) {
-    const line = css.split('\n').find((l) => l.trim().startsWith(`${name}:`));
-    assert.equal(line?.trim(), `${name}: ${value};`, name);
+    /* Scale and families exactly; a text style's value may point another way
+       (heading's family is var(--body-font-family) in the CSS) but must exist */
+    if (name.startsWith('--typography-') || name.startsWith('--fluid-')) assert.equal(compiled(name), value, name);
+    else assert.ok(compiled(name) !== undefined, `${name} is compiled`);
   }
+  /* Every var() a style points at is a compiled property */
+  for (const value of Object.values(typeCssVars(theme.type))) {
+    const inner = /^var\((--[\w-]+)\)$/.exec(value)?.[1];
+    if (inner) assert.ok(compiled(inner) !== undefined, `${inner} is compiled`);
+  }
+});
+
+test('references become the compiler\'s property names', () => {
+  assert.equal(refVar('{fluid.typography.font-size.2-3}'), 'var(--typography-font-size-fluid-2-3)');
+  assert.equal(refVar('{typography.font-size.minus-1}'), 'var(--typography-font-size--1)');
+  assert.equal(refVar('{typography.font-size.cq.-2}'), 'var(--typography-font-size-cq--2)');
+  assert.equal(refVar('{font-weight.bold}'), 'var(--font-weight-bold)');
+  assert.equal(refVar(1.6), '1.6');
 });

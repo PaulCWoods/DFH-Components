@@ -343,5 +343,18 @@ export const typeCssVars = (type) => {
       vars[`--typography-font-size-cq-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports, 'cqi');
     }
   }
+  /* The text styles: each token the style sets, as the compiler names it */
+  for (const [name, style] of Object.entries(type.styles ?? {})) {
+    for (const [group, key, value] of styleTokens(name, style)) vars[`--${group}-${key}`] = refVar(value);
+  }
   return vars;
+};
+
+/* {fluid.typography.font-size.2-3} -> var(--typography-font-size-fluid-2-3),
+   {typography.font-size.minus-1} -> var(--typography-font-size--1) */
+export const refVar = (value) => {
+  const ref = refOf(value);
+  if (!ref) return String(value);
+  const path = ref.replace(/^fluid\.typography\.font-size\./, 'typography.font-size.fluid.');
+  return `var(--${path.replace(/minus-/g, '-').replace(/\./g, '-')})`;
 };

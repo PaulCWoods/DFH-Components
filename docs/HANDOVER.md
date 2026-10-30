@@ -44,7 +44,7 @@
 | Recipes (states as stories, no inline styles, deck out of core, one command palette) | Done | [audit](audit/recipes.md) |
 | Colour palette (generated ramps, contrast gate, theme engine, Token Designer with Global and Semantic tabs; bridge colours removed) | Done | [audit](audit/palette.md) |
 | Card intent and subtle telemetry | Done | [surfaces](audit/surfaces.md), [identity](audit/identity-values.md) |
-| Typography (theme engine for the type scale and text styles, font sources, gate, Typography section in the Token Designer) | Engine, gate and designer Global tab done (phases 1–3); Semantic tab next | [audit](audit/typography.md) |
+| Typography (theme engine for the type scale and text styles, font sources, gate, Typography section in the Token Designer) | Engine, gate and designer (Global and Text styles tabs) done (phases 1–4); Figma text styles next | [audit](audit/typography.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
