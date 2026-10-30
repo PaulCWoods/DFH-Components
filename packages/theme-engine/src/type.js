@@ -308,3 +308,40 @@ const resolveRef = (ref, files, prefix) => {
   }
   return ref;
 };
+
+/* --------------------------------------------------------------------------
+   Preview: the custom properties a theme sets, for a live page
+   Same names and clamp() maths as compile-tokens.js, so a page that loads
+   the library and then these values shows the theme without a rebuild.
+   -------------------------------------------------------------------------- */
+export const fluidClamp = (min, max, [minVp, maxVp], unit = 'vi') => {
+  const slope = (max - min) / (rem(maxVp) - rem(minVp));
+  const intersection = +(min - rem(minVp) * slope).toFixed(2);
+  return `clamp(${min}rem, ${intersection}rem + ${+(slope * 100).toFixed(2)}${unit}, ${max}rem)`;
+};
+
+export const typeCssVars = (type) => {
+  const vars = {};
+  for (const [name, font] of Object.entries(type.fonts ?? {})) vars[`--typography-font-family-${name}`] = fontStack(font);
+  for (const [role, family] of Object.entries(type.families ?? {})) {
+    if (family.font) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.font})`;
+  }
+  const viewports = type.fluid.viewports ?? ['25rem', '80rem'];
+  const fluid = fluidSteps(type);
+  for (const [n, size] of Object.entries(scaleSteps(type))) vars[`--typography-font-size-${n}`] = `${size}rem`;
+  for (const [n, [min, max]] of Object.entries(fluid)) {
+    vars[`--fluid-typography-font-size-${n}`] = fluidClamp(min, max, viewports);
+    vars[`--typography-font-size-fluid-${n}`] = fluidClamp(min, max, viewports);
+    vars[`--typography-font-size-cq-${n}`] = fluidClamp(min, max, viewports, 'cqi');
+  }
+  /* The ranges styles grow through (5-8), for both modes */
+  for (const style of Object.values(type.styles ?? {})) {
+    const ranges = [[style.size, style.growTo], [style.cq?.from, style.cq?.to]];
+    for (const [from, to] of ranges) {
+      if (from === undefined || to === undefined || to === from || !fluid[from] || !fluid[to]) continue;
+      vars[`--typography-font-size-fluid-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports);
+      vars[`--typography-font-size-cq-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports, 'cqi');
+    }
+  }
+  return vars;
+};

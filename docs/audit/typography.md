@@ -134,8 +134,15 @@ A **Typography** section beside **Colors**, with the same layout: preview on the
    - **modes:** body-sm's cq size runs a step below its fluid size.
 
    These are findings 5 and 6, left for phase 6. A style with a step off the scale fails its reference and skips the size checks, so one mistake gives one failure. The look-alike check compares headings with headings and body styles with body styles only, since a heading and body text at one size are meant to differ by weight.
-3. **Designer, Global tab**, with the Fonts panel (Google, Adobe and local sources, the `<link>` and `@font-face` output).
-4. **Designer, Semantic tab**, and Publish for type.
+3. **Designer, Global tab.** Done 30 October 2026 (`packages/token-designer/src/type.ts`). The header switches between Colors and Typography (`#type` in the address).
+   - **Fonts:** each font set in itself, with a sample of each weight it loads. The dialog takes a Google family (searched from Google's own list through the dev server, with that family's weights and a fallback for its category), an Adobe kit ID and CSS family name, files stored in the project (path, weight, style per line), or a system font. A rename carries the roles with it. A font a role uses can't be removed.
+   - **Page head:** the `<link>`s and `@font-face` rules to copy.
+   - **Families:** each role's font, with a line set in it.
+   - **Scale:** base size, and the ratio with named presets.
+   - **Fluid range:** the two widths, the start ratio, and the end base and ratio.
+   - **Steps:** every step fixed and at both ends of the range, how much it grows, the styles fixed at it and an "Ag" at its size. Below that, every gate result with an icon and words.
+   - The preview takes the type properties (`typeCssVars`, tested against the compiled CSS) and loads the theme's fonts. The header status counts both gates. Publish writes the type tokens too, and is blocked by either gate; publishing the unchanged theme rewrites the tokens byte for byte.
+4. **Designer, Semantic tab** (Publish for type came with phase 3).
 5. **Figma text styles** from the semantic styles.
 6. **Fixes the tool makes possible:** the mode gaps (finding 5), the floor (finding 6) and the stacks (finding 7), each as a theme change you approve in the designer.
 7. **Blog mirror.**

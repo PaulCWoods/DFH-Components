@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applyTypeStyles, evalCalc, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, scaleSteps, styleTokens, typeGlobal } from '../src/index.js';
+import { applyTypeStyles, evalCalc, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
@@ -74,4 +74,12 @@ test('font sources give the page-head links and @font-face rules', () => {
 test('calc() line heights evaluate to numbers', () => {
   assert.equal(evalCalc('calc(1.6 * pow(1.125, 0))'), 1.6);
   assert.ok(Math.abs(evalCalc('calc(1.6 * pow(1.125, -4))') - 0.9989) < 0.0001);
+});
+
+test('the preview properties match the compiled CSS', () => {
+  const css = readFileSync(new URL('../../css/src/variables.css', import.meta.url), 'utf8');
+  for (const [name, value] of Object.entries(typeCssVars(theme.type))) {
+    const line = css.split('\n').find((l) => l.trim().startsWith(`${name}:`));
+    assert.equal(line?.trim(), `${name}: ${value};`, name);
+  }
 });
