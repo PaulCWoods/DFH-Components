@@ -76,7 +76,9 @@
   --_tab-padding-inline: var(--_tab-underline-padding-inline);
   --_tab-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
   --_tab-radius: 0px;
-  --_tab-icon-scale: 1;
+  /* Icons size through the icon's own hook, so .icon--dir can still mirror
+     them (a scale here would replace the mirror) */
+  --_tab-icon-size: var(--icon-size, 1em);
   --_tab-justify: center;
   --_tab-text-align: center;
   --_tab-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
@@ -193,7 +195,7 @@
   transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
 
   :where(.icon) {
-    scale: var(--_tab-icon-scale);
+    --icon-size: var(--_tab-icon-size);
   }
 
   /* ------------------------------------------------------------------------
@@ -310,7 +312,7 @@
    ========================================================================== */
 :where(.tab--icon),
 :where(.tab:not(:has(.tab__text)):has(:where(.visually-hidden, .sr-only, .sr))) {
-  --_tab-icon-scale: 1.25;
+  --_tab-icon-size: calc(var(--icon-size, 1em) * 1.25);
   --_tab-inner-gap: 0px;
   --_tab-padding-inline: var(--_tab-padding-block);
 

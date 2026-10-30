@@ -146,6 +146,8 @@
   --typography-fluid-scale-mobile-ratio: 1.2;
   --typography-fluid-scale-desktop-base: 1.2rem;
   --typography-fluid-scale-desktop-ratio: 1.2;
+  --typography-fluid-scale-min-viewport: 25rem;
+  --typography-fluid-scale-max-viewport: 80rem;
   --typography-font-size-0: 1rem;
   --typography-font-size-1: 1.2rem;
   --typography-font-size-2: 1.44rem;
@@ -696,7 +698,7 @@
   --block-link-padding-block: var(--spacing);
   --block-link-gap: var(--spacing);
   --block-link-font-weight: var(--body-strong-font-weight);
-  --block-link-line-height: var(--typography-line-height-3);
+  --block-link-line-height: var(--small-heading-line-height);
   --block-link-radius: var(--radius);
   --block-link-transition: var(--duration-sm);
   --block-link-sm-min-size: var(--spacing-target-sm);
@@ -821,7 +823,7 @@
   --form-gap: var(--spacing-breathe);
   --form-compact-gap: var(--spacing-16);
   --form-actions-space: var(--spacing-8);
-  --check-box-size: var(--spacing-20);
+  --check-box-size: calc(var(--spacing-16) * 1.25);
   --check-lg-box-size: var(--spacing-24);
   --check-sm-box-size: var(--spacing-16);
   --header-bg: var(--surface-card);
@@ -832,6 +834,7 @@
   --header-compact-padding-block: var(--spacing-4);
   --header-padding-inline: var(--spacing-cushion);
   --header-gap: var(--spacing-16);
+  --header-height: calc(var(--spacing-target) + var(--spacing-8) * 2 + var(--app-border-width));
   --header-max-width: var(--site-width);
   --header-shadow: var(--shadow-md);
   --header-translucency: var(--translucency-subtle);
@@ -1039,7 +1042,7 @@
   --tab-list-floating-border-width: var(--panel-border-width);
   --tab-list-floating-border-color: var(--panel-border-color);
   --tab-list-docked-offset: var(--spacing-24);
-  --tabbed-content-gap: var(--spacing-default);
+  --tabbed-content-gap: var(--spacing-16);
   --telemetry-bg: var(--surface-layer);
   --telemetry-subtle-bg: var(--surface-translucent);
   --telemetry-border-width: var(--border-width-thin);
@@ -1055,17 +1058,17 @@
   --telemetry-compact-padding-inline: var(--spacing-8);
   --telemetry-group-gap: var(--spacing-8);
   --textarea-font-size: var(--control-font-size);
-  --textarea-line-height: var(--typography-line-height-4);
+  --textarea-line-height: var(--body-line-height);
   --textarea-padding-block: var(--spacing-8);
   --textarea-padding-inline: var(--spacing-16);
   --textarea-lines-min: 4;
   --textarea-lines-max: 6;
   --textarea-sm-font-size: var(--control-sm-font-size);
-  --textarea-sm-line-height: var(--typography-line-height-3);
+  --textarea-sm-line-height: var(--body-sm-line-height);
   --textarea-sm-padding-block: var(--spacing-4);
   --textarea-sm-padding-inline: var(--spacing-12);
   --textarea-lg-font-size: var(--control-lg-font-size);
-  --textarea-lg-line-height: var(--typography-line-height-5);
+  --textarea-lg-line-height: var(--body-line-height);
   --textarea-lg-padding-block: var(--spacing-12);
   --textarea-lg-padding-inline: var(--spacing-24);
   --toast-shadow: var(--shadow-md);

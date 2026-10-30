@@ -53,7 +53,7 @@ Order: label, hint, error, control. The error comes before the control, so a scr
   <input id="packets" type="number" class="input" min="1" value="2" />
 </div>
 ```
-- A disabled control dims its whole field.
+- A disabled control dims its label and itself. The hint, error and output keep full contrast: a hint often says why the control is disabled, so it must stay readable (WCAG 1.4.3 exempts only the inactive control and its label).
 - `.field__error` can be a `<ul>` when one field has several messages. It may also sit in a fieldset, for an error about the whole group.
 
 ## B. Fieldset

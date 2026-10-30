@@ -44,6 +44,7 @@
 | Recipes (states as stories, no inline styles, deck out of core, one command palette) | Done | [audit](audit/recipes.md) |
 | Colour palette (generated ramps, contrast gate, theme engine, Token Designer with Global and Semantic tabs; bridge colours removed) | Done | [audit](audit/palette.md) |
 | Card intent and subtle telemetry | Done | [surfaces](audit/surfaces.md), [identity](audit/identity-values.md) |
+| Typography (theme engine for the type scale and text styles, font sources, gate, Typography section in the Token Designer) | Engine and migration done (phase 1); gate next | [audit](audit/typography.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
@@ -58,7 +59,7 @@ The blog's component library page (`_component-library.twig`) gets a proper rewo
 
 ### Page-level size containers (found in the surfaces pass)
 
-Container-prefixed modifiers (`@max-sm:card--plain`, `@max-sm:hide`) need an ancestor with `container-type: inline-size`. Only `.split`, `.sidebar`, `.header`, `.footer` and `.container-inline` provide one, so in most layouts these classes match nothing. Make `main` and `.app__workspace` inline-size containers by default. Don't do it on `.grid` or `.stack`: an inline-size container can't shrink to its content, which breaks them in flex rows. If the surfaces pass lands first, the card classes ship and work wherever a container exists.
+Done: `.main` and `.app__workspace` are inline-size containers; `.container-type-normal` opts out. Not `.grid` or `.stack`, which must shrink to their content in flex rows.
 
 ### Library candidates from the Cadence deck (found in the recipes pass)
 
@@ -87,14 +88,18 @@ The warning and accent contrast failures are resolved by the generated palette: 
 
 ### Other carried items
 
-- A `.split` that is a direct child of another `.split` sizes itself with its own `--split-side-width`, because the parent's pane rules read `--_split-side` on the child. Wrap it in a plain element (the Token Designer does), or have the pane rules read a separate variable, in the layout's next pass.
+- A `.split` that is a direct child of another `.split` sizes itself with its own `--split-side-width`. Documented as a rule in §19c (wrap the inner split in a `<div>`); a CSS fix needs `inherit()` to be Baseline. Revisit then.
 - The docs sidebar links to a `/components/atoms/badge` page, and to `/components/layout/*` pages, that don't exist.
-- `tabbed-content.gap` points at `{spacing.default}`, which compiles to an undefined `--spacing-default`; point it at `{spacing.16}` in the tabs' next pass.
-- A header bar is 65–66px tall; the 4rem `--header-height` fallback (scroll padding, sticky sidebar offset) is 2px short. Decide in the header's next pass whether to raise it.
-- Axe failures left after the palette pass (full sweep, 454 stories, light and dark), none from the palette:
-  - disabled hint contrast (`molecules-field--disabled`, light and dark) and the range output (`atoms-range--states`, light).
 - Icon work (glyphs to draw, the tab icon scale, `Icon.astro`, the blog accent/info clash) is listed in `audit/icon-todo.md`.
 - The docs sidebar's "Composite Recipes" links (`/recipes/*`) point at pages that don't exist. Either build them from the stories or link to Storybook.
 - Tier 2 `color-mix(in srgb, …)` derivations move to `in oklch` when next touched (`audit/phase-0.md`).
 - Text sizes: Tier 2 keeps one fixed size per text atom, `--{atom}-fixed-font-size`. The plain `--body-sm-font-size` and `--body-xs-font-size` (duplicates) are gone, and `--micro-heading-font-size` is `--micro-heading-fixed-font-size`. Figma still names them `body-sm/font-size` and so on (the exporter maps them), so the Figma output is unchanged apart from two descriptions. Blog mirrored.
-- `body-xs-compact` points at `{typography.font-size.minus-3}`, which doesn't exist (the scale stops at minus-2), so micro text in a compact region gets no size. Point it at minus-2, or add a minus-3 step.
+
+### Quick fixes (after the palette pass)
+
+- `tabbed-content.gap` → `{spacing.16}`; `body-xs` descriptions corrected (step -2 is the floor, so compact keeps it).
+- Tokens that pointed at steps that don't exist: `check.box-size` (`spacing.20`, now 1.25rem from `spacing.16`), `block-link.line-height` (now the small heading's), the textarea line heights (now body and body-sm). The CSS fallbacks had been covering for them.
+- `header.height` token (`--header-height`): a target-sized bar, its padding and the border, 65px, so a sticky header's scroll padding and the sticky sidebar offset clear it. Products with a taller header still set it on `:root`.
+- Tab icons size with `--icon-size` instead of `scale`, so `.icon--dir` mirrors them in right to left.
+- Status border fallbacks end at `currentColor`.
+- A disabled field dims its label and control only; hints, errors and outputs keep full contrast. This clears the last two axe failures (disabled hint, range output).

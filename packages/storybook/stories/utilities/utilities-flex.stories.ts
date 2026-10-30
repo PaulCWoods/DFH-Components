@@ -81,7 +81,7 @@ export const AlignSelfAndGrowth: Story = {
   parameters: { docs: { description: { story: 'One item placed on its own, and items that grow or keep their size.' } } },
   render: () => `
     <div class="stack">
-      <div class="flex gap-sm bg-subtle rounded-md p-sm block-size-2xs">
+      <div class="flex flex-wrap gap-sm bg-subtle rounded-md p-sm block-size-2xs">
         ${['start', 'center', 'end', 'stretch'].map((s) => `<span class="chip self-${s}">.self-${s}</span>`).join('')}
       </div>
       <div class="flex gap-sm bg-subtle rounded-md p-sm">

@@ -102,7 +102,9 @@ const index = JSON.parse(readFileSync(join(root, 'index.json'), 'utf8'));
 const ids = Object.values(index.entries).filter((e) => e.type === 'story' && filter.test(e.id)).map((e) => e.id);
 const problems = [];
 
-for (const id of ids) {
+const started = Date.now();
+for (const [n, id] of ids.entries()) {
+  if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write(`\r${n + 1}/${ids.length} ${id}`.padEnd(80));
   await send('Emulation.setDeviceMetricsOverride', { width: widths.at(-1), height: heights.at(-1), deviceScaleFactor: 1, mobile: false });
   await send('Page.navigate', { url: `${base}/iframe.html?id=${id}&viewMode=story` });
   await wait(1200);
@@ -110,7 +112,11 @@ for (const id of ids) {
     for (const h of heights) {
       await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: w < 600 });
       await wait(150);
-      for (const p of (await evaluate(probe)) || []) problems.push(`${id} @ ${w}x${h}: ${p}`);
+      for (const p of (await evaluate(probe)) || []) {
+        const line = `${id} @ ${w}x${h}: ${p}`;
+        problems.push(line);
+        console.log(line);
+      }
     }
   }
 }
@@ -120,9 +126,10 @@ chrome.kill();
 server.close();
 try { rmSync(profile, { recursive: true, force: true }); } catch {}
 
+if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write('\n');
+const took = Math.round((Date.now() - started) / 1000);
 if (problems.length) {
-  console.log(problems.join('\n'));
-  console.log(`\ncheck:layout: ${problems.length} problem(s) in ${ids.length} stories.`);
+  console.log(`\ncheck:layout: ${problems.length} problem(s) in ${ids.length} stories (${took}s).`);
   process.exit(1);
 }
-console.log(`check:layout: ${ids.length} stories at ${widths.length * heights.length} sizes, nothing out of reach.`);
+console.log(`check:layout: ${ids.length} stories at ${widths.length * heights.length} sizes, nothing out of reach (${took}s).`);

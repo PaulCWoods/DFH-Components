@@ -836,6 +836,16 @@
         "$value": 1.2,
         "$type": "number",
         "$description": "Modular scale ratio for desktop viewport (Major Third: 1.25)"
+      },
+      "min-viewport": {
+        "$value": "25rem",
+        "$type": "dimension",
+        "$description": "Fluid type starts growing at this viewport (and container) width"
+      },
+      "max-viewport": {
+        "$value": "80rem",
+        "$type": "dimension",
+        "$description": "Fluid type stops growing at this viewport (and container) width"
       }
     },
     "font-size": {

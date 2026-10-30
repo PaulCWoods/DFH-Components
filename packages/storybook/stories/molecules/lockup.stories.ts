@@ -86,7 +86,7 @@ export const Aligned: Story = {
 export const InATable: Story = {
   name: 'In a table',
   render: () => `
-    <table class="table table--bordered" style="max-inline-size: 40rem;">
+    <div class="table-container" tabindex="0" role="region" aria-label="Plots"><table class="table table--bordered" style="max-inline-size: 40rem;">
       <thead>
         <tr><th scope="col">Plot</th><th scope="col">Gardener</th><th scope="col">Sun and soil</th></tr>
       </thead>
@@ -102,7 +102,7 @@ export const InATable: Story = {
           <td>${lockup('Partial shade', 'Biochar and aged manure')}</td>
         </tr>
       </tbody>
-    </table>`,
+    </table></div>`,
 };
 
 export const Truncated: Story = {

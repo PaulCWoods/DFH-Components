@@ -77,7 +77,7 @@ export const Squares: Story = {
 export const ShrinkingInARow: Story = {
   parameters: { docs: { description: { story: 'A flex item won\'t shrink below its content until it has `.min-w-0`, so the text inside can\'t be cut. With it, `.truncate` on the text works.' } } },
   render: () => `
-    <div class="stack max-inline-size-xs">
+    <div class="stack max-inline-size-xs overflow-x-auto" tabindex="0" role="region" aria-label="Flex rows, without and with .min-w-0">
       ${['', 'min-w-0'].map((c) => `
         <div class="flex gap-sm bg-subtle rounded-md p-sm">
           <span class="chip shrink-0">Bed 4</span>

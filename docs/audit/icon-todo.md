@@ -34,10 +34,10 @@ Calendar and Folder are in use with a stand-in today, so draw those first. The r
 
 | Item | Where | What to do | Status |
 | :--- | :--- | :--- | :--- |
-| Tab icons are scaled with `scale` | `atoms/tab.css` (`--_tab-icon-scale`) | `scale` overrides the icon's right-to-left mirror (`.icon--dir`). Size with `--icon-size` instead, in the tab's next pass | Open |
+| Tab icons are scaled with `scale` | `atoms/tab.css` | Now sized with `--icon-size` (`--_tab-icon-size`, 1.25× in icon-only tabs), so `.icon--dir` mirrors them | Done |
 | Docs site icon component | `packages/docs/src/components/Icon.astro` | Still emits `icon--xs`, `--md`, `--xl`, `--2xl`, removed in the icon pass. Move to `--icon-size` and `.icon--sm` / `--lg`, with the docs-site work | Open |
 | Empty state icon scaled with `scale` | `molecules/empty-state.css` | Done in the empty state pass (the icon sits in an `.icon-box`) | Done |
 
 ## Decisions
 
-- **Blog accent and info are the same hue.** The blog's accent is aqua, and the library's info intent is aqua too, so on the blog the two intents look alike (the palette mirror keeps this: purple maps to aqua). The intents never rely on colour alone, so it isn't an accessibility failure, but it weakens the signal. Options: give the blog's info another hue (blue, now the complementary colour), or keep it and lean on the icons. Needs the user's call.
+- **Blog accent and info are the same hue** (aqua). Decided 30 October 2026: keep it. The blog rarely uses info, and the intents never rely on colour alone.

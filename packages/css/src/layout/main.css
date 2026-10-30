@@ -4,6 +4,9 @@
    The page's main landmark. It keeps a cushion of padding round its content;
    when its content is a .wrapper, the wrapper's gutter does the inline part.
 
+   - It is an inline-size container, so container-prefixed classes
+     (@max-md:card--flat) and container queries inside it respond to its
+     width. .container-type-normal turns that off.
    - --flush: no padding (a full-bleed page, or panes that draw their own).
    - --viewport: as tall as its track and no taller, for panes that scroll
      inside it (in an .app--viewport shell). It never clips: whenever its
@@ -18,6 +21,9 @@
    ========================================================================== */
 
 :where(.main) {
+    /* A size container, so @max-*: classes and container queries inside
+       respond to the main's width. .container-type-normal turns it off. */
+    container-type: inline-size;
     box-sizing: border-box;
     padding: var(--spacing-cushion, 1rem);
 }

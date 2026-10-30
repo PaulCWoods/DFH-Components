@@ -24,6 +24,7 @@ Two panes side by side: a side pane at its preferred width and a main pane that 
 
 ## B. Rules
 - **Hooks**, set on the split itself: `--gap`, `--align-items` (default `flex-start`; `stretch` for equal-height panes), `--split-side-width`, `--split-main-min-width` (default 24rem), `--split-start-width` and `--split-end-width` (for `--three`). They don't reach a nested split.
+- **A split can't be a pane of another split.** A pane is sized from its split's side width, but a pane that is itself a split reads its own instead (CSS can't read a parent's custom property past a redeclaration until `inherit()` is widely supported). Wrap the inner split in a plain `<div>`, which becomes the pane.
 - **Density:** the gap is the cushion step; inside a compact region it steps down to the default.
 - **Source order is reading order.** Put the side pane first only when it is read first (navigation, filters); use `--end` otherwise. Don't reorder with CSS.
 - **Panes that scroll** (a viewport-locked workspace) are the app shell's job: `.app--viewport` with `.main--viewport`, and `--align-items: stretch` on the split.

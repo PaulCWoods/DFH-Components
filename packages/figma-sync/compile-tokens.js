@@ -82,6 +82,22 @@ function lookupGlobalToken(globalTokens, ref) {
  * Resolves fluid(min, max) expressions into responsive clamp() CSS calculations.
  * Supports rem, px, and token references: e.g. fluid({spacing.1}, 1.333rem)
  */
+/**
+ * The fluid range: where fluid type starts and stops growing, in rem.
+ * Read from typography.fluid-scale.min-viewport / max-viewport (written by
+ * the type engine), 25rem (400px) to 80rem (1280px) when they are absent.
+ */
+function fluidViewports(globalTokens) {
+  const scale = globalTokens?.typography?.['fluid-scale'] || {};
+  const toRem = (node, fallback) => {
+    const v = String(node?.$value ?? '').trim();
+    if (v.endsWith('rem')) return parseFloat(v);
+    if (v.endsWith('px')) return parseFloat(v) / 16;
+    return fallback;
+  };
+  return { minVpRem: toRem(scale['min-viewport'], 25), maxVpRem: toRem(scale['max-viewport'], 80) };
+}
+
 function compileFluidValue(val, globalTokens = null) {
   if (typeof val !== 'string') return val;
   const trimmed = val.trim();
@@ -127,9 +143,8 @@ function compileFluidValue(val, globalTokens = null) {
   const minRem = resolveToRem(minStr, 'min');
   const maxRem = resolveToRem(maxStr, 'max');
 
-  const minVpRem = 25; // 400px / 16
-  const maxVpRem = 80; // 1280px / 16
-  const vpDiffRem = 55; // 80 - 25
+  const { minVpRem, maxVpRem } = fluidViewports(globalTokens);
+  const vpDiffRem = maxVpRem - minVpRem;
 
   const slope = (maxRem - minRem) / vpDiffRem;
   const viSlope = +(slope * 100).toFixed(2);
@@ -454,10 +469,9 @@ function discoverFluidStepReferences(tokenObjects) {
  * modern round() + progress() progressive enhancements, and Level 5 @function rules.
  */
 function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scaleParams = null) {
-  const minVp = 400; // 400px
-  const maxVp = 1280; // 1280px
-  const minVpRem = minVp / 16; // 25rem
-  const maxVpRem = maxVp / 16; // 80rem
+  const { minVpRem, maxVpRem } = fluidViewports(globalTokens);
+  const minVp = minVpRem * 16; // px, for progress()
+  const maxVp = maxVpRem * 16;
   const vpDiffRem = maxVpRem - minVpRem; // 55rem
 
   function calculateClamp(minRem, maxRem, unit = 'vi') {

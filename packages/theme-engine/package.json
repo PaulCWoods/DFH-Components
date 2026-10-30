@@ -2,14 +2,15 @@
   "name": "@design-for-humans/theme-engine",
   "version": "0.1.0",
   "private": true,
-  "description": "Builds the Tier 1 colour ramps from a theme file and checks every Tier 2 pairing for contrast. The core of the Token Designer.",
+  "description": "Builds the Tier 1 colour ramps from a theme file and checks every Tier 2 pairing for contrast; builds the type scale and text styles. The core of the Token Designer.",
   "type": "module",
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js"
   },
   "bin": {
-    "build-palette": "bin/build-palette.js"
+    "build-palette": "bin/build-palette.js",
+    "build-type": "bin/build-type.js"
   },
   "scripts": {
     "test": "node --test test/"

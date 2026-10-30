@@ -55,7 +55,7 @@ const swatchRow = (label: string, ramp: Ramp) => `
       ${order(Object.keys(ramp))
         .map((step) => {
           const hex = ramp[step].hex.toLowerCase();
-          return `<li class="stack gap-2xs small-text font-mono">
+          return `<li class="stack gap-2xs small-text font-mono wrap-anywhere">
             <span aria-hidden="true" style="background: ${hex}; block-size: 3rem; border-radius: 0.25rem;"></span>
             <span class="font-bold">${step}</span>
             <span>${hex}</span>

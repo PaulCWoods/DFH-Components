@@ -246,7 +246,8 @@
   font-weight: 600;
   line-height: 1.25;
   color: var(--foreground-muted, currentColor);
-  white-space: nowrap;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   vertical-align: middle;
 }
 

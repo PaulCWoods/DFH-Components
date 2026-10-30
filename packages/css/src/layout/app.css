@@ -8,7 +8,9 @@
      <main>, .main or .app__workspace in the middle, a <footer> or .footer
      at the bottom. The skip link comes first and takes no row.
    - .app__workspace sets side panes (a .sidebar, an <aside>) beside the
-     main; below 48rem they stack, side pane first.
+     main; below 48rem they stack, side pane first. It and .main are
+     inline-size containers, so container-prefixed classes work anywhere
+     in the shell (.container-type-normal opts out).
    - --viewport locks the shell to the screen so panes scroll inside it.
      It unlocks to a scrolling page at small widths or heights, where panes
      would be too short to use. The shell and workspace clip, as their rows
@@ -61,6 +63,9 @@
    2. Workspace: side panes beside the main
    -------------------------------------------------------------------------- */
 :where(.app__workspace) {
+    /* A size container for what's inside; .container-type-normal turns
+       it off */
+    container-type: inline-size;
     align-items: stretch;
     display: flex;
     inline-size: 100%;

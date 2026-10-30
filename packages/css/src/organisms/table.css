@@ -74,6 +74,9 @@
   min-inline-size: 0;
   overflow: auto;
   overscroll-behavior-inline: contain;
+  /* Holds absolutely placed content (.sr-only text in a header cell) inside
+     the scroller, so it can't widen the page */
+  position: relative;
 
   &:focus-visible {
     outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);

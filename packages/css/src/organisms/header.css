@@ -23,8 +23,9 @@
    Sticky: the shadow shows only while the header is stuck (a scroll-state
    query); browsers without one keep the border. While a sticky header is on
    the page, the page's scroll padding keeps focused elements clear of it
-   (WCAG 2.4.11): set --header-height on :root if the header is taller than
-   4rem.
+   (WCAG 2.4.11). --header-height (the header.height token: a target-sized
+   bar, its padding and the border) sets the offset; a product whose header
+   is taller (two bars, a bigger brand) sets it on :root.
 
    Semantics: a <header> that is a direct child of <body> (or .app) is the
    banner landmark: one per page, after the skip link, with no aria-label.

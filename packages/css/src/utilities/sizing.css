@@ -206,6 +206,10 @@
     min-block-size: 0;
 }
 
+:where(.min-block-size-full, .min-h-full) {
+    min-block-size: 100%;
+}
+
 :where(.min-block-size-screen, .min-h-screen) {
     min-block-size: 100dvb;
 }

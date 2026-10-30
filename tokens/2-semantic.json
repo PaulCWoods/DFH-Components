@@ -635,28 +635,28 @@
     "font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text: footnotes, hints and metadata (step -2; compact steps to -3)"
+      "$description": "Small text: footnotes, hints and metadata (step -2, the bottom of the scale; compact keeps it)"
     }
   },
   "body-xs-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -2; compact steps to -3)"
+      "$description": "Small text size (step -2, the bottom of the scale; compact keeps it)"
     }
   },
   "body-xs-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -2; compact steps to -3)"
+      "$description": "Small text size (step -2, the bottom of the scale; compact keeps it)"
     }
   },
   "body-xs-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -2; compact steps to -3)"
+      "$description": "Small text size (step -2, the bottom of the scale; compact keeps it)"
     }
   },
   "body-lg-fixed": {

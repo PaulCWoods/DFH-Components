@@ -18,7 +18,9 @@
    fewer case, usually "(optional)".
 
    Options: --inline (the label beside its control). A form lays out many
-   fields (.form--aligned); a disabled control dims its whole field.
+   fields (.form--aligned). A disabled control dims its label and itself;
+   the hint, error and output keep full contrast, as a hint often says why
+   the control is disabled.
 
    <div class="field">
      <label for="email" class="field__label label">Email address</label>
@@ -52,9 +54,13 @@
   margin: 0;
   min-inline-size: 0;
 
-  /* A disabled control dims its field, unless a disabled fieldset already does */
+  /* A disabled control dims its label and itself, unless a disabled
+     fieldset already does. Hints, errors and outputs stay readable. */
   &:where(:has(:disabled, [aria-disabled="true"]:not([role="option"])):not(:disabled *, [aria-disabled="true"] *)) {
-    opacity: var(--opacity-disabled, 0.5);
+    > :where(:not(.field__hint, .field__error, .field__header, output)),
+    > :where(.field__header) > :where(:not(output, .field__hint)) {
+      opacity: var(--opacity-disabled, 0.5);
+    }
   }
 }
 
@@ -133,7 +139,7 @@
    ========================================================================== */
 @media (forced-colors: active) {
   :where(.field) {
-    &:where(:has(:disabled, [aria-disabled="true"]:not([role="option"]))) {
+    &:where(:has(:disabled, [aria-disabled="true"]:not([role="option"]))) * {
       opacity: 1;
     }
   }

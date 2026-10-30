@@ -544,9 +544,9 @@
       "$description": "Typographic weight for block link"
     },
     "line-height": {
-      "$value": "{typography.line-height.3}",
+      "$value": "{small-heading.line-height}",
       "$type": "number",
-      "$description": "Line height for block link"
+      "$description": "Line height for block link (its title is small-heading type)"
     },
     "radius": {
       "$value": "{radius}",
@@ -1154,9 +1154,9 @@
   },
   "check": {
     "box-size": {
-      "$value": "{spacing.20}",
+      "$value": "calc({spacing.16} * 1.25)",
       "$type": "dimension",
-      "$description": "Checkbox and radio box size"
+      "$description": "Checkbox and radio box size (1.25rem)"
     },
     "lg-box-size": {
       "$value": "{spacing.24}",
@@ -1209,6 +1209,11 @@
       "$value": "{spacing.16}",
       "$type": "dimension",
       "$description": "Space between the parts of a bar"
+    },
+    "height": {
+      "$value": "calc({spacing.target} + {spacing.8} * 2 + {app.border-width})",
+      "$type": "dimension",
+      "$description": "Height of a one-bar header (a target-sized row, its padding and the bottom border). Sticky headers offset scrolling and sticky sidebars by it; a product whose header is taller sets --header-height on :root."
     },
     "max-width": {
       "$value": "{site-width}",
@@ -2267,7 +2272,7 @@
     "$type": "component",
     "$description": "Tabbed content organism: a tab list and its panels",
     "gap": {
-      "$value": "{spacing.default}",
+      "$value": "{spacing.16}",
       "$type": "dimension",
       "$description": "Gap between the tab list and the panels"
     }
@@ -2342,7 +2347,7 @@
       "$type": "dimension"
     },
     "line-height": {
-      "$value": "{typography.line-height.4}",
+      "$value": "{body.line-height}",
       "$type": "number"
     },
     "padding-block": {
@@ -2367,7 +2372,7 @@
         "$type": "dimension"
       },
       "line-height": {
-        "$value": "{typography.line-height.3}",
+        "$value": "{body-sm.line-height}",
         "$type": "number"
       },
       "padding-block": {
@@ -2385,7 +2390,7 @@
         "$type": "dimension"
       },
       "line-height": {
-        "$value": "{typography.line-height.5}",
+        "$value": "{body.line-height}",
         "$type": "number"
       },
       "padding-block": {
