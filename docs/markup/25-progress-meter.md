@@ -19,7 +19,7 @@ related: [skeleton, form-composition, badge-status-chip-kbd]
 ---
 Size: Small=progress--sm, Default*, Large=progress--lg
 Intent: Accent, Info=progress--info "Checking photos", Success=progress--success "Upload on track", Warning=progress--warning "Upload is slow", Danger=progress--danger "Upload failed at 68%"
-Corners: Rounded, Round=progress--round
+Corners: Default, Round=progress--round
 ```
 
 ## Why it exists
