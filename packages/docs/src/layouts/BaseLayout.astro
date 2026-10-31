@@ -17,6 +17,8 @@ import type { Section } from '../lib/nav';
 
 interface Props { title: string; description: string; nav: Section[]; current: string; header?: boolean }
 const { title, description, nav, current, header = true } = Astro.props;
+/* Out of search engines until the public launch sets PUBLIC_INDEXABLE=true */
+const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
 const fullTitle = title === 'Design For Humans Components' ? title : `${title} Â· Design For Humans Components`;
 ---
 <!doctype html>
@@ -26,6 +28,7 @@ const fullTitle = title === 'Design For Humans Components' ? title : `${title} Â
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {!indexable && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <!-- theme fonts -->
     <link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" />

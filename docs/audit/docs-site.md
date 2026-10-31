@@ -136,7 +136,7 @@ The foundations pages read the theme and tokens at build time, so they can't dri
 
 ## Open questions (for later phases)
 
-1. **Hosting** for the subdomain (Netlify, Cloudflare Pages, or the blog's server).
+1. **Hosting:** decided, Laravel Forge. See Soft launch.
 1. **Storybook in public:** decided, at `/storybook/` on the same host.
 3. **The Token Designer in public:** a read-only demo, or local only? Publish writes files, so a public one couldn't save.
 4. **Versioning:** the library is pre-v1. The docs track `main`, with a pre-v1 note, until there's a release.
@@ -173,3 +173,27 @@ Button, Card and Dialog are the pilot. A page explains and helps someone choose;
 9. **Button Group's alignment example** no longer uses an inert `form method="dialog"`.
 10. **Component names take capitals in prose** (Button Group, not button group).
 
+## Soft launch
+
+The site is static: `npm run build:site` writes the docs and Storybook to `packages/docs/dist`. Needs Node 22.22 or later.
+
+**In Forge**
+1. A static HTML site for `components.designforhumans.blog`, with its web directory `/packages/docs/dist`, on the branch to deploy. The repository is private, so Forge needs its GitHub access.
+2. A DNS record for the subdomain, then a certificate.
+3. The deploy script:
+   ```sh
+   cd $FORGE_SITE_PATH
+   git pull origin $FORGE_SITE_BRANCH
+   npm ci
+   npm run build:site
+   ```
+4. In the site's Nginx config, inside `server`:
+   ```nginx
+   add_header X-Robots-Tag "noindex" always;
+   error_page 404 /404.html;
+   ```
+5. Add the domain to the Adobe Fonts web project (kit `lrj6kun`), or the theme's fonts won't load there.
+
+**Staying out of search engines:** every docs and Storybook page has `<meta name="robots" content="noindex">`, and the Nginx header covers the rest. There is deliberately no `robots.txt` block: a crawler that can't fetch a page can't see its noindex.
+
+**At the public launch:** set `PUBLIC_INDEXABLE=true` in the deploy environment, remove the `noindex` line from `.storybook/manager-head.html` and `preview-head.html` if Storybook should be indexed, and remove the Nginx header.

@@ -1,0 +1,19 @@
+---
+/* The page a server sends for an address that doesn't exist */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getNav } from '../lib/nav';
+
+const nav = await getNav();
+---
+<BaseLayout title="Page not found" description="There's no page at this address." nav={nav} current="/404/">
+  <main id="main" class="main">
+    <div class="wrapper stack">
+      <h1 class="title">Page not found</h1>
+      <p class="text">There's no page at this address. It may have moved while the library is before its first release.</p>
+      <div class="cluster">
+        <a href="/docs/components/" class="button button--strong button--accent">See the components</a>
+        <a href="/" class="button">Go to the home page</a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

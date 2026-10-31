@@ -80,21 +80,21 @@ Link lists, then legal text.
 <div class="footer">
   <div class="footer__bar">
     <div class="grid grid--3-col grid--2xs">
-      <nav aria-labelledby="footer-shop">
+      <nav aria-labelledby="footer-shop" class="stack">
         <h3 id="footer-shop" class="micro-heading">Shop</h3>
         <ul class="stack gap-xs small-text" role="list">
           <li><a href="/plants" class="link link--plain">Plants</a></li>
           <li><a href="/borders" class="link link--plain">Borders</a></li>
         </ul>
       </nav>
-      <nav aria-labelledby="footer-help">
+      <nav aria-labelledby="footer-help" class="stack">
         <h3 id="footer-help" class="micro-heading">Help</h3>
         <ul class="stack gap-xs small-text" role="list">
           <li><a href="/delivery" class="link link--plain">Delivery</a></li>
           <li><a href="/returns" class="link link--plain">Returns</a></li>
         </ul>
       </nav>
-      <nav aria-labelledby="footer-about">
+      <nav aria-labelledby="footer-about" class="stack">
         <h3 id="footer-about" class="micro-heading">About</h3>
         <ul class="stack gap-xs small-text" role="list">
           <li><a href="/nursery" class="link link--plain">Nursery</a></li>

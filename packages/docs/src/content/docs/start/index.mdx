@@ -1,0 +1,100 @@
+---
+title: Start
+summary: From the CSS files to a first page. Link the styles, add the icons and build with native HTML.
+---
+
+The library is CSS, one icon sprite and no JavaScript. You write ordinary HTML and add its classes. It takes three steps, and none of them needs a build tool.
+
+The library is before its first release and isn't published as a package yet, so these steps start from a copy of its files.
+
+## 1. Link the styles
+
+Copy `packages/css/src` into your project and link its entry file:
+
+```html
+<link rel="stylesheet" href="/css/index.css" />
+```
+
+That file brings in the reset, the tokens, every component and the utilities, each in its own cascade layer. Your own CSS sits outside those layers, so it wins without any fight over specificity.
+
+The entry file imports each component separately. That's fine while you build. Before you ship, bundle it into one file with the tool you already use.
+
+## 2. Add the icons
+
+Copy `icons/icons.svg` to your site, then point at a symbol by name. The icon takes its size and colour from the text around it.
+
+```html
+<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
+  <use href="/icons.svg#Search"/>
+</svg>
+```
+
+## 3. Build a page
+
+The bones of a page are native landmarks. A [Skip Link](/docs/components/atoms/skip-link/) comes first, then the [Header](/docs/components/organisms/header/), the main content and the [Footer](/docs/components/organisms/footer/). The [App Shell](/docs/components/layout/app-shell/) keeps the Footer at the bottom of a short page.
+
+```html
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Woodland Plants</title>
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body class="app">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+      <div class="header__bar">
+        <a href="/" class="brand"><span class="brand__name">Woodland Plants</span></a>
+      </div>
+    </header>
+    <main id="main" class="main">
+      <div class="wrapper stack">
+        <h1 class="title">Ferns for shade</h1>
+        <p class="text">Everything here grows in part or full shade.</p>
+        <div class="cluster">
+          <a href="/plants/" class="button button--strong button--accent">See the plants</a>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer__bar">
+        <p class="small-text text-muted">Woodland Plants</p>
+      </div>
+    </footer>
+  </body>
+</html>
+```
+
+From there, each part is a class or two on the element you'd use anyway. Here is a [Card](/docs/components/molecules/card/) holding a heading, some text and a [Button](/docs/components/atoms/button/):
+
+```html live width=md
+<article class="card">
+  <header class="card__header">
+    <h2 class="card__title heading">Hart's tongue fern</h2>
+  </header>
+  <div class="card__body">
+    <p class="text">Evergreen, and happy in a damp, shady corner.</p>
+  </div>
+  <footer class="card__footer">
+    <button type="button" class="button">Add to border</button>
+  </footer>
+</article>
+```
+
+## What you get without asking
+
+- **Light and dark.** Colours follow the visitor's setting. To fix one, add `.color-scheme-light` or `.color-scheme-dark` to the page or to a region.
+- **System fonts.** The library loads no fonts and makes no outside requests. To use your own, add `fonts.css` and link the faces in your page head.
+- **Touch-sized targets.** Controls have a 48px target unless your product opts into smaller ones for a fine pointer.
+
+## Browsers
+
+Anything a component needs to work uses features that are [Baseline widely available](https://web.dev/baseline). Newer features are for polish, or come with a working fallback.
+
+## Where next
+
+- [Components](/docs/components/): every part, why it exists and when to use it.
+- [Storybook](/storybook/): every variant and state.
+- [Tools](/docs/tools/): the Token Designer for your own theme, and the export to Figma.

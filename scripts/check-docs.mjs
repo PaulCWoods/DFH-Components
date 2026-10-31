@@ -164,7 +164,7 @@ for (const [page, { links }] of Object.entries(found)) {
     /* Into Storybook: the story has to exist */
     if (url.pathname === '/storybook/') {
       const story = url.searchParams.get('path')?.split('/').pop();
-      if (!stories[story]) report(`${page} link: no story ${story}`);
+      if (story && !stories[story]) report(`${page} link: no story ${story}`);
       continue;
     }
     if (url.pathname.startsWith('/pagefind/') || extname(url.pathname)) {
