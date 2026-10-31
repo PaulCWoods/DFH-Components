@@ -172,6 +172,8 @@
 
   > :where(.card) {
     --card-radius: 0;
+    border-width: 0;
+    border-inline-start-width: var(--_card-border-width);
 
     block-size: 100%;
   }
@@ -190,6 +192,11 @@
   --_dialog-side: -1;
 
   inset-inline: 0 auto;
+
+  > :where(.card) {
+    border-inline-end-width: var(--_card-border-width);
+    border-inline-start-width: 0;
+  }
 }
 
 /* ==========================================================================
