@@ -75,7 +75,7 @@ The icon carries the warning for anyone who can't rely on the colour, and the Di
   <div class="banner__body">
     <p class="text font-bold">Design system v2.4 is available</p>
     <p class="small-text">Updated tokens and native anchor positioning.</p>
-    <div class="cluster">
+    <div class="cluster mt-sm">
       <button type="button" class="button"><span>Later</span></button>
       <button type="button" class="button button--strong button--accent"><span>Update</span></button>
     </div>

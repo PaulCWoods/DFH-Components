@@ -138,8 +138,8 @@ export const Intents: Story = {
     <div class="stack" style="max-inline-size: 40rem;">
       ${banner('', '<p class="text">Neutral: a message with no intent, and no icon needed.</p>', { action: dismiss })}
       ${['accent', 'info', 'success', 'warning', 'danger']
-        .map((i) => banner('', `<p class="text"><strong>${i[0].toUpperCase() + i.slice(1)}:</strong> the icon carries the intent as well as the colour.</p>`, { intent: i, action: dismiss }))
-        .join('')}
+      .map((i) => banner('', `<p class="text"><strong>${i[0].toUpperCase() + i.slice(1)}:</strong> the icon carries the intent as well as the colour.</p>`, { intent: i, action: dismiss }))
+      .join('')}
     </div>
   `,
 };
@@ -151,14 +151,14 @@ export const Prominence: Story = {
     return `
       <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));">
         ${prominences
-          .map((p) => `
+        .map((p) => `
             <div class="stack">
               <h3 class="small-heading">${p === 'default' ? 'Default' : `.banner--${p}`}</h3>
               ${intents
-                .map((i) => banner(p === 'default' ? '' : `banner--${p}`, `<p class="small-text">${i[0].toUpperCase() + i.slice(1)}</p>`, { intent: i }))
-                .join('')}
+            .map((i) => banner(p === 'default' ? '' : `banner--${p}`, `<p class="small-text">${i[0].toUpperCase() + i.slice(1)}</p>`, { intent: i }))
+            .join('')}
             </div>`)
-          .join('')}
+        .join('')}
       </div>
     `;
   },
@@ -184,11 +184,11 @@ export const DensityAndCorners: Story = {
         ${banner('', '<p class="small-text">Compact from a <code>.ui-compact</code> region.</p>', { intent: 'success', action: dismiss })}
       </div>
       ${banner('banner--round', '<p class="text font-bold">Continue?</p>', {
-        action: `<div class="cluster banner__action">
+    action: `<div class="cluster banner__action">
           <button type="button" class="button button--icon">${icon('Close')}<span class="sr-only">Cancel</span></button>
           <button type="button" class="button button--icon button--strong button--accent">${icon('Check')}<span class="sr-only">Continue</span></button>
         </div>`,
-      })}
+  })}
       ${banner('banner--round', '<p class="text">A round banner keeps concentric corners when its message wraps onto a second line, because it never becomes a pill.</p>', { intent: 'warning', action: dismiss })}
     </div>
   `,
@@ -210,7 +210,7 @@ export const SeveralActions: Story = {
       <div class="banner__body">
         <p class="text font-bold">Design system v2.4 is available</p>
         <p class="small-text">Updated tokens and native anchor positioning.</p>
-        <div class="cluster">
+        <div class="cluster mt-sm">
           <button type="button" class="button"><span>Later</span></button>
           <button type="button" class="button button--strong button--accent"><span>Update</span></button>
         </div>

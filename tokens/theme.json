@@ -301,7 +301,8 @@
         "source": "adobe",
         "family": "avory-i-pe",
         "weights": [
-          800
+          800,
+          900
         ],
         "kit": "lrj6kun",
         "fallback": "\"Inter\", system-ui, -apple-system, sans-serif"
