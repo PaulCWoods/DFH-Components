@@ -110,7 +110,7 @@ const libraryFiles = () =>
 
 // Code lines (comments and whitespace ignored) in one file but not the other
 const codeLines = (scss) =>
-  scss.split('\n').map((l) => l.replace(/\s+/g, '')).filter((l) => l && !l.startsWith('//'));
+  scss.replace(/\/\*[\s\S]*?\*\//g, '').split('\n').map((l) => l.replace(/\s+/g, '')).filter((l) => l && !l.startsWith('//'));
 
 const codeDifference = (a, b) => {
   const counts = new Map();

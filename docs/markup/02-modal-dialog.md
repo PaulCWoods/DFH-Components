@@ -14,8 +14,8 @@ related: [card, popover, button, form-composition, sidebar]
 <dialog id="default-dialog" class="dialog" aria-labelledby="default-dialog-title" data-axes>
   <article class="card">
     <header class="card__header">
-      <h2 id="default-dialog-title" class="card__title small-heading">Watering rota</h2>
-      <button type="button" class="button button--plain button--icon" commandfor="default-dialog" command="close">
+      <h2 id="default-dialog-title" class="card__title heading">Watering rota</h2>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="default-dialog" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
@@ -75,7 +75,7 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 <dialog id="delete-dialog" class="dialog" role="alertdialog" aria-labelledby="delete-title" aria-describedby="delete-message" style="--dialog-width: 28rem;">
   <article class="card">
     <header class="card__header">
-      <h3 id="delete-title" class="card__title small-heading">Delete plot A-14?</h3>
+      <h3 id="delete-title" class="card__title heading">Delete plot A-14?</h3>
     </header>
     <div class="card__body">
       <p id="delete-message" class="text">Its sowing records and rota weeks go too. This can't be undone.</p>
@@ -100,8 +100,8 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 <dialog id="rename-dialog" class="dialog" aria-labelledby="rename-title">
   <form method="dialog" class="card">
     <header class="card__header">
-      <h3 id="rename-title" class="card__title small-heading">Rename plot</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="rename-dialog" command="close">
+      <h3 id="rename-title" class="card__title heading">Rename plot</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="rename-dialog" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
@@ -130,8 +130,8 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 <dialog id="settings-drawer" class="dialog dialog--drawer" aria-labelledby="settings-title">
   <article class="card">
     <header class="card__header">
-      <h3 id="settings-title" class="card__title small-heading">Settings</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="settings-drawer" command="close">
+      <h3 id="settings-title" class="card__title heading">Settings</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="settings-drawer" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
@@ -143,7 +143,7 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 </dialog>
 
 <!-- Navigation: inline start, opened by a menu button -->
-<button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="show-modal" aria-haspopup="dialog">
+<button type="button" class="button button--plain button--icon button--sm" commandfor="nav-drawer" command="show-modal" aria-haspopup="dialog">
   <span class="sr-only">Open allotment navigation</span>
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
 </button>
@@ -151,8 +151,8 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-title">
   <article class="card">
     <header class="card__header">
-      <h3 id="nav-title" class="card__title small-heading">Allotment</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="close">
+      <h3 id="nav-title" class="card__title heading">Allotment</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="nav-drawer" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
@@ -206,8 +206,8 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 <dialog id="rules-dialog" class="dialog" aria-labelledby="rules-title">
   <article class="card">
     <header class="card__header">
-      <h3 id="rules-title" class="card__title small-heading">Site rules</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="rules-dialog" command="close">
+      <h3 id="rules-title" class="card__title heading">Site rules</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="rules-dialog" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
@@ -232,8 +232,8 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 <dialog id="terms-dialog" class="dialog dialog--scrollable" aria-labelledby="terms-title">
   <article class="card" tabindex="0" aria-label="Terms">
     <header class="card__header">
-      <h3 id="terms-title" class="card__title small-heading">Terms</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="terms-dialog" command="close">
+      <h3 id="terms-title" class="card__title heading">Terms</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="terms-dialog" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>
@@ -249,8 +249,8 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 <dialog id="rota-dialog" class="dialog" aria-labelledby="rota-title" closedby="any">
   <article class="card">
     <header class="card__header">
-      <h3 id="rota-title" class="card__title small-heading">Rota</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="rota-dialog" command="close">
+      <h3 id="rota-title" class="card__title heading">Rota</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="rota-dialog" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
       </button>

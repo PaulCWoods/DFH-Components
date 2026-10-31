@@ -65,6 +65,14 @@ const toc = headings.filter((h) => h.depth === 2);
 <script>
   import { compose, toLive } from '../lib/playground.mjs';
 
+  /* Examples of a component whose behaviour is the product's run a demo script */
+  const demo = (root: ParentNode) => {
+    if (root.querySelector('.combobox')) {
+      import('../lib/combobox-demo').then(({ enhance }) => enhance(root as HTMLElement));
+    }
+  };
+  demo(document);
+
   /* Playgrounds: a choice rebuilds the example and its code */
   for (const figure of document.querySelectorAll<HTMLElement>('[data-playground]')) {
     const controls = figure.querySelector<HTMLElement>('[data-controls]')!;
@@ -74,7 +82,9 @@ const toc = headings.filter((h) => h.depth === 2);
       const classes = chosen.flatMap((c) => c.dataset.classes!.split(' ').filter(Boolean));
       const text = chosen.findLast((c) => c.dataset.text)?.dataset.text;
       const code = compose(figure.dataset.source!, classes, text);
-      figure.querySelector('[data-preview]')!.innerHTML = toLive(code);
+      const preview = figure.querySelector<HTMLElement>('[data-preview]')!;
+      preview.innerHTML = toLive(code);
+      demo(preview);
       figure.querySelector('.code-block code')!.textContent = code;
     });
   }

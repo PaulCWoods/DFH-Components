@@ -24,6 +24,22 @@ related: [form-controls, form-composition, badge-status-chip-kbd, lockup]
         <span>Epimedium</span>
         <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
       </li>
+      <li id="default-plant-2" class="combobox__option" role="option" aria-selected="false">
+        <span>Brunnera</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="default-plant-3" class="combobox__option" role="option" aria-selected="false">
+        <span>Pulmonaria</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="default-plant-4" class="combobox__option" role="option" aria-selected="false">
+        <span>Hellebore</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="default-plant-5" class="combobox__option" role="option" aria-selected="false">
+        <span>Heuchera</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
     </ul>
     <p class="sr-only" role="status"></p>
   </div>
@@ -46,7 +62,7 @@ Choose the simplest control that works.
 - **Pick one from a short, known list:** [`.select--custom`](07-form-controls.md) (native, no script).
 - **Suggestions while typing, any value allowed:** `<input list>` with a `<datalist>` (native, unstyled list).
 - **Filter a long list, multi-select with Chips, rich options:** `.combobox`, with the product's script.
-- **Not without a script:** the library ships none, so the examples on this page don't open, and the list needs the steps in [the product's script](#the-products-script).
+- **Not without a script:** the library ships none, and the list needs the steps in [the product's script](#the-products-script). The examples on this page run a demo of those steps.
 
 ## Rules
 - Name the field with a `<label>`; name the list with `aria-label`.
@@ -89,6 +105,18 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
         <span>Brunnera</span>
         <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
       </li>
+      <li id="plant-3" class="combobox__option" role="option" aria-selected="false">
+        <span>Pulmonaria</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="plant-4" class="combobox__option" role="option" aria-selected="false">
+        <span>Hellebore</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="plant-5" class="combobox__option" role="option" aria-selected="false">
+        <span>Heuchera</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
     </ul>
     <p class="sr-only" role="status"></p>
   </div>
@@ -119,6 +147,18 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
       </li>
       <li id="plants-multi-2" class="combobox__option" role="option" aria-selected="false">
         <span>Epimedium</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="plants-multi-3" class="combobox__option" role="option" aria-selected="false">
+        <span>Pulmonaria</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="plants-multi-4" class="combobox__option" role="option" aria-selected="false">
+        <span>Hellebore</span>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      </li>
+      <li id="plants-multi-5" class="combobox__option" role="option" aria-selected="false">
+        <span>Heuchera</span>
         <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
       </li>
     </ul>

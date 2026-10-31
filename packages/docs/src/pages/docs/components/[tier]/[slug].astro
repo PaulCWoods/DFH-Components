@@ -22,6 +22,21 @@ const tokens = c.entry.data.tokens ?? [];
 const stories = c.entry.data.storybook ?? [];
 const storybook = import.meta.env.PUBLIC_STORYBOOK_URL ?? '/storybook/';
 const inStorybook = stories.length > 0 || tokens.length > 0;
+
+/* Link text names what it opens, so a list of links reads on its own */
+const names: Record<string, string> = {
+  check: 'Checkbox and Radio',
+  'checkbox-radio': 'Checkbox and Radio',
+  'display-flex': 'Display and Flex',
+  'position-overflow-stacking': 'Position, Overflow and Stacking',
+  'responsive-helpers': 'Responsive',
+};
+const nameOf = (key: string) => names[key] ?? key.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+const storyText = (id: string) => {
+  const [tier, ...rest] = id.split('-');
+  if (tier === 'utilities') return `${nameOf(rest.join('-'))} utilities`;
+  return `${stories.length > 1 ? nameOf(rest.join('-')) : c.title} variants and states`;
+};
 const extra = [
   ...(inStorybook ? [{ depth: 2, slug: 'in-storybook', text: 'In Storybook' }] : []),
   ...(related.length ? [{ depth: 2, slug: 'see-also', text: 'See also' }] : []),
@@ -33,8 +48,8 @@ const extra = [
     <>
       <h2 id="in-storybook">In Storybook</h2>
       <ul>
-        {stories.map((id) => <li><a href={`${storybook}?path=/docs/${id}--docs`}>Every variant and state</a></li>)}
-        {tokens.map((key) => <li><a href={`${storybook}?path=/story/tokens-component-tokens--by-component&args=component:${key}`}>{tokens.length > 1 ? `The ${key} tokens` : 'Its tokens'}</a></li>)}
+        {stories.map((id) => <li><a href={`${storybook}?path=/docs/${id}--docs`}>{storyText(id)}</a></li>)}
+        {tokens.map((key) => <li><a href={`${storybook}?path=/story/tokens-component-tokens--by-component&args=component:${key}`}>{nameOf(key)} tokens</a></li>)}
       </ul>
     </>
   )}
