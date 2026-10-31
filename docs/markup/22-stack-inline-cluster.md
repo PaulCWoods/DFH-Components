@@ -72,10 +72,10 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 </div>
 ```
 
-## Responsive Inline: a Column Until There Is Room
+## A Column Until There Is Room
 ```html live
 <div class="container-inline">
-  <div class="inline-responsive inline-responsive--2xl">
+  <div class="stack @2xl:inline">
     <div class="card"><p class="text">A column at first</p></div>
     <div class="card"><p class="text">A row once the container is 42rem wide</p></div>
   </div>
@@ -100,7 +100,7 @@ One-dimensional flows. Layout primitives (`layout/stack.css`, `layout/inline.css
 | `.stack` | Column | – | Stretch |
 | `.inline` | Row | No | Centre |
 | `.cluster` | Row | Yes | Centre |
-| `.inline-responsive--{size}` | Column, a row once its container reaches the size (`xs` 20rem … `7xl` 80rem, the container scale) | No | Stretch, then centre |
+| `.stack.@{size}:inline` | Column, a row once its container reaches the size (`xs` 20rem … `7xl` 80rem, the container scale) | No | Stretch, then centre |
 
 | Modifier | On | Effect |
 | :--- | :--- | :--- |

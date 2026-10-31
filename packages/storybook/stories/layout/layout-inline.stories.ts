@@ -14,9 +14,6 @@ A row that doesn't wrap, its items centred on the cross axis. Use it for an icon
 \`\`\`html
 <div class="inline">…icon… …text…</div>
 <div class="inline inline--between">…title… …action…</div>
-<div class="container-inline">
-  <div class="inline-responsive inline-responsive--2xl">…</div>
-</div>
 \`\`\`
 
 | Modifier | Effect |
@@ -26,7 +23,7 @@ A row that doesn't wrap, its items centred on the cross axis. Use it for an icon
 | \`--tight\`, \`--cushioned\` | No gap, the cushion step |
 | \`--ruled\` | A rule in each gap |
 
-- **Responsive:** \`.inline-responsive--{xs…7xl}\` is a column that becomes a row once its container reaches the size. It needs a container ancestor (\`.container-inline\`, a card, a header, the split); without one it stays a column.
+- **A column until there is room:** that is a Stack with \`@{size}:inline\`.
 - **Hooks:** \`--gap\`, \`--align-items\`, \`--justify-content\`, set on the row itself; nested layouts keep their own.
 - **Density:** inside a compact region the gap steps down.
         `,
@@ -78,20 +75,6 @@ export const IconAndText: Story = {
       <li class="inline gap-xs">${icon('Light')}<span class="text">Part shade</span></li>
       <li class="inline gap-xs">${icon('Info')}<span class="text">Flowers in April</span></li>
     </ul>`,
-};
-
-export const Responsive: Story = {
-  parameters: { docs: { description: { story: 'Two `.inline-responsive--2xl` rows in containers of different widths: a column in the narrow one, a row in the wide one.' } } },
-  render: () => `
-    <div class="grid grid--2-col grid--2xs">
-      ${['Narrow', 'Wide'].map((label, i) => `
-        <div class="container-inline ${i ? '' : 'max-inline-size-sm'}">
-          <div class="inline-responsive inline-responsive--2xl">
-            <p class="text">${label} container</p>
-            <button type="button" class="button button--strong button--accent">Add to border</button>
-          </div>
-        </div>`).join('')}
-    </div>`,
 };
 
 export const Ruled: Story = {

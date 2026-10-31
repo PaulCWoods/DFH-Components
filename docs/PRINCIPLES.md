@@ -27,7 +27,7 @@ Every component works for everyone, at any size, before it looks good. Accessibi
 - Every component must work from the smallest practical container up to the largest, with no horizontal scroll except in components that scroll by design (tables, carousels).
 - Components respond to their container (container queries), not the viewport. Media queries belong only to the app shell and to user-preference features such as `pointer` and `prefers-*`.
 - Layout is fluid by default (auto-fit grids, intrinsic sizing, `clamp()`); fixed breakpoints are the exception and must be justified.
-- Where a size is named, it is Tailwind's: viewport `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem, `2xl` 96rem; container `@xs` 20rem through `@7xl` 80rem. One scale serves the responsive helpers, the grid's container column counts, `.inline-responsive--{size}` and card's responsive prominence.
+- Where a size is named, it is Tailwind's: viewport `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem, `2xl` 96rem; container `@xs` 20rem through `@7xl` 80rem. One scale serves the responsive helpers, the grid's container column counts, a stack's `@{size}:inline` and card's responsive prominence.
 
 **Content first**
 

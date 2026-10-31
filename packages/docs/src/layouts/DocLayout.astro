@@ -70,6 +70,9 @@ const toc = headings.filter((h) => h.depth === 2);
     if (root.querySelector('.combobox')) {
       import('../lib/combobox-demo').then(({ enhance }) => enhance(root as HTMLElement));
     }
+    if (root.querySelector('[role="tablist"]')) {
+      import('../lib/tabs-demo').then(({ enhance }) => enhance(root));
+    }
   };
   demo(document);
 
@@ -110,6 +113,22 @@ const toc = headings.filter((h) => h.depth === 2);
 
     .accordion--flush {
       --rule-width: 0px;
+    }
+  }
+
+  /* A Skip Link hides until it has focus: an example shows it open, flat */
+  [data-example] {
+    .skip-link {
+      block-size: auto;
+      min-block-size: var(--skip-link-min-size, 3rem);
+    }
+
+    .skip-link--floating {
+      inline-size: fit-content;
+      opacity: 1;
+      pointer-events: auto;
+      position: static;
+      translate: none;
     }
   }
 

@@ -95,4 +95,4 @@ Always hidden is the `hidden` attribute (or `.hidden`). The reset keeps `[hidden
 | `short:` / `tall:` | The viewport is under / at least 36rem tall |
 | `app-locked:` / `app-unlocked:` | `.app--viewport` is locked to the viewport (at least 48rem wide and 36rem tall) / scrolls as a page |
 
-Container sizes (Tailwind's container scale): `xs` 20rem, `sm` 24, `md` 28, `lg` 32, `xl` 36, `2xl` 42, `3xl` 48, `4xl` 56, `5xl` 64, `6xl` 72, `7xl` 80. The Grid's container column counts, `.inline-responsive--{size}` and Card's `@max-*:card--plain` use the same scale.
+Container sizes (Tailwind's container scale): `xs` 20rem, `sm` 24, `md` 28, `lg` 32, `xl` 36, `2xl` 42, `3xl` 48, `4xl` 56, `5xl` 64, `6xl` 72, `7xl` 80. The Grid's container column counts, a Stack's `@{size}:inline` and Card's `@max-*:card--plain` use the same scale.

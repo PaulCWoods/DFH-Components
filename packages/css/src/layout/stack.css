@@ -10,9 +10,15 @@
    Density: under --ui-sizing: compact the gap steps down (the default gap
    to the compact step, --cushioned to the default).
 
+   @{size}:inline makes it a row, with items centred, once its container
+   reaches the size (xs 20rem … 7xl 80rem, Tailwind's container scale). It
+   needs a container ancestor (container-type: inline-size); without one it
+   stays a column.
+
    Usage:
    <div class="stack">…</div>
    <ul class="stack" role="list">…</ul>
+   <div class="stack @2xl:inline">…</div>
    ========================================================================== */
 
 /* Settings stay on the element they are set on */
@@ -70,5 +76,87 @@
 :where(.stack--ruled.stack--tight) {
     @supports (rule: 1px) {
         --_gap: var(--rule-width, 1px);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive: a row once the nearest container reaches the size
+   Container sizes: xs 20rem, sm 24, md 28, lg 32, xl 36, 2xl 42, 3xl 48,
+   4xl 56, 5xl 64, 6xl 72, 7xl 80 (Tailwind's container scale).
+   -------------------------------------------------------------------------- */
+@container (width >= 20rem) {
+    :where(.stack.\@xs\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 24rem) {
+    :where(.stack.\@sm\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 28rem) {
+    :where(.stack.\@md\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 32rem) {
+    :where(.stack.\@lg\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 36rem) {
+    :where(.stack.\@xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 42rem) {
+    :where(.stack.\@2xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 48rem) {
+    :where(.stack.\@3xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 56rem) {
+    :where(.stack.\@4xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 64rem) {
+    :where(.stack.\@5xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 72rem) {
+    :where(.stack.\@6xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
+    }
+}
+
+@container (width >= 80rem) {
+    :where(.stack.\@7xl\:inline) {
+        align-items: var(--align-items, center);
+        flex-direction: row;
     }
 }

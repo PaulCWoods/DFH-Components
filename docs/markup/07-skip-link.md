@@ -9,10 +9,10 @@ related: [link-block-link, header]
 
 # 7. Skip Link Primitive (WCAG 2.4.1 Bypass Blocks)
 ```html live
-<a href="#main" class="skip-link skip-link--floating">Skip to main content</a>
+<a href="#main" class="skip-link">Skip to main content</a>
 ```
 
-It stays hidden until it has keyboard focus. Tab into the example above to see it.
+Shown open here. On a page it stays hidden until it has keyboard focus. Press Tab as this page loads to meet its own.
 
 ## Why it exists
 Someone with a mouse can go straight past a Header. Someone using a keyboard or a switch has to go through it, one stop at a time, on every page. A Skip Link gives them the same shortcut.
@@ -33,7 +33,11 @@ The browser provides all of this. There's nothing to script.
 - **In a `.skip-links` group,** every Link shows while one has focus, so people can see the choices as they Tab through.
 
 ## Where It Goes and What It Points At
-The in-flow bar moves the page down while it's open. The floating one sits over the page and moves nothing.
+The in-flow bar moves the page down while it's open. The floating one sits over the page and moves nothing. This is the floating one, shown open:
+```html live
+<a href="#main" class="skip-link skip-link--floating">Skip to main content</a>
+```
+
 ```html
 <!-- In-flow bar, first in <body> -->
 <a href="#main" class="skip-link">Skip to main content</a>

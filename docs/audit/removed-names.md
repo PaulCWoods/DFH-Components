@@ -55,3 +55,6 @@ What each component pass removed and what replaced it, moved here from the publi
 
 ## Utilities
 - every third name and synonym; `font-size-*`, `line-height-*`, `fs-*`, `fw-*`; numeric weights and z-indexes; `width-dialog`, `-popover`, `-sidebar`, `-prose`, `-shell`, `-wide`, `block-*`, `height-*`, `size-grow`; `bg-effect-*`, `bg-blurred-*`, palette shadow colours; `.backdrop`, `.focus-none`, `.outline-none`; `ui-dense`, `ui-default`, `spacing-mode-*`, `viewport-fit-cover`; the left/right names. `border-muted` and `border-quiet` now set the colour only, `.border` is 1px, and `.text-nowrap` sets `text-wrap`.
+
+## Stack, Inline and Cluster
+- `.inline-responsive`, `--{size}`, `--between`, `--end`, `--tight`, `--cushioned`, `--ruled`: `.stack` with `@{size}:inline`, `.stack--tight`, `--cushioned`, `--ruled`, and the `--justify-content` hook.

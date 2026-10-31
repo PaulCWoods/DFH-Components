@@ -1081,7 +1081,7 @@
   --telemetry-radius: var(--radius-sm);
   --telemetry-padding-block: var(--spacing-8);
   --telemetry-padding-inline: var(--spacing-12);
-  --telemetry-gap: var(--spacing-4);
+  --telemetry-gap: var(--spacing-0);
   --telemetry-icon-gap: var(--spacing-8);
   --telemetry-lead-icon-size: var(--spacing-24);
   --telemetry-lead-icon-gap: var(--spacing-12);

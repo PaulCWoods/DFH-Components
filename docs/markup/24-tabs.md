@@ -55,7 +55,7 @@ Every axis sits on the list, because Tabs in a row should match each other. The 
 ## Keyboard and screen readers
 **Navigation lists of links need none of this.** The browser gives each link its place in the tab order, Enter follows it, and `aria-current` is announced.
 
-For `role="tablist"`, the product supplies the WAI-ARIA Tabs pattern, so the panels on this page don't switch:
+For `role="tablist"`, the product supplies the WAI-ARIA Tabs pattern. The examples on this page run a demo of it:
 - **Tab** enters the list on the selected Tab only (roving `tabindex`), then moves on to its panel. Each panel has `tabindex="0"`.
 - **Left and Right arrows** move between Tabs, or **Up and Down** when vertical.
 - **Home and End** go to the first and last Tab.

@@ -1095,11 +1095,31 @@
   },
   "code-block": {
     "$description": "Code block tokens",
-    "bg": { "$value": "{surface.dark}", "$type": "color", "$description": "Background of a code block (dark in both themes)" },
-    "color": { "$value": "{foreground.on-dark}", "$type": "color", "$description": "Text colour of a code block" },
-    "padding": { "$value": "{spacing.16}", "$type": "dimension", "$description": "Inline padding of the bar and padding around the code" },
-    "compact-padding": { "$value": "{spacing.12}", "$type": "dimension", "$description": "The same in a compact container" },
-    "bar-padding-block": { "$value": "{spacing.4}", "$type": "dimension", "$description": "Block padding of the bar" }
+    "bg": {
+      "$value": "{surface.dark}",
+      "$type": "color",
+      "$description": "Background of a code block (dark in both themes)"
+    },
+    "color": {
+      "$value": "{foreground.on-dark}",
+      "$type": "color",
+      "$description": "Text colour of a code block"
+    },
+    "padding": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Inline padding of the bar and padding around the code"
+    },
+    "compact-padding": {
+      "$value": "{spacing.12}",
+      "$type": "dimension",
+      "$description": "The same in a compact container"
+    },
+    "bar-padding-block": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Block padding of the bar"
+    }
   },
   "empty-state": {
     "$type": "component",
@@ -2416,7 +2436,7 @@
       "$type": "dimension"
     },
     "gap": {
-      "$value": "{spacing.4}",
+      "$value": "{spacing.0}",
       "$type": "dimension",
       "$description": "Space between label and value"
     },

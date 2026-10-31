@@ -95,3 +95,17 @@ export const NestedSettings: Story = {
       </div>
     </div>`,
 };
+
+export const Responsive: Story = {
+  parameters: { docs: { description: { story: 'Two `.stack.@2xl:inline` rows in containers of different widths: a column in the narrow one, a row in the wide one.' } } },
+  render: () => `
+    <div class="grid grid--2-col grid--2xs">
+      ${['Narrow', 'Wide'].map((label, i) => `
+        <div class="container-inline ${i ? '' : 'max-inline-size-sm'}">
+          <div class="stack @2xl:inline">
+            <p class="text">${label} container</p>
+            <button type="button" class="button button--strong button--accent">Add to border</button>
+          </div>
+        </div>`).join('')}
+    </div>`,
+};
