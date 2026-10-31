@@ -72,7 +72,7 @@ A native \`<meter>\`: a measurement within a known range, such as disk use or a 
     round: { control: 'boolean', description: '--round' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${field(args.label, args.value, args.thresholds ? RANGES : '', meterClasses(args.size, args.round))}
     </div>
   `,
@@ -93,7 +93,7 @@ export const Playground: Story = {
  */
 export const Ranges: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Disk use: healthy', 25, RANGES, 'meter', '25 GB of 100 GB')}
       ${field('Disk use: getting full', 72, RANGES, 'meter', '72 GB of 100 GB')}
       ${field('Disk use: critical', 94, RANGES, 'meter', '94 GB of 100 GB')}
@@ -107,7 +107,7 @@ export const Ranges: Story = {
  */
 export const PlainMeasurement: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Seats booked', 30, '', 'meter', '12 of 40')}
       ${field('Course completed', 65)}
     </div>
@@ -119,7 +119,7 @@ export const PlainMeasurement: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${SIZES.map((s) => field(`Size ${s}`, 72, RANGES, meterClasses(s))).join('')}
       ${field('Round', 72, RANGES, meterClasses('lg', true))}
       <div class="ui-compact">${field('Compact container', 72, RANGES)}</div>
@@ -132,7 +132,7 @@ export const Sizes: Story = {
  */
 export const Direction: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div dir="ltr">${field('Disk use', 72, RANGES, meterClasses('lg'))}</div>
       <div dir="rtl">${field('استخدام القرص', 72, RANGES, meterClasses('lg'))}</div>
     </div>

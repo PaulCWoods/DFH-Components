@@ -99,7 +99,7 @@ The foundations pages read the theme and tokens at build time, so they can't dri
 3. **Ethos, Start and Foundations.** Ethos written for people from PRINCIPLES (which stays the rulebook). Start: install to first page. Foundations generated from the theme and tokens.
 4. **The library.** Frontmatter and human sections for every markup doc, tier by tier: atoms, molecules, organisms, layout, utilities. From then on, each component pass updates its page with its markup doc.
 5. **Patterns and guidance.** The five recipes from §32 as patterns, plus forms, navigation, announcements, loading and empty states; the accessibility, composition, theming, writing and migration guides.
-6. **Brochure.** The home page and a few marketing pages, built from library parts and showing the live components.
+6. **Brochure.** The home page and a few marketing pages, built from library parts and showing the live components. It echoes the blog's home page: no header navigation; the brand in its frame, a short hello, then sections of linked cards (`.card` with a thumb and a stretched link) that take people on to the docs, the foundations, the tools and the patterns. The docs keep their header and sidebars.
 7. **Deploy** to `components.designforhumans.blog`.
 
 ## Phase 1: done (30 October 2026)
@@ -116,10 +116,60 @@ The foundations pages read the theme and tokens at build time, so they can't dri
 - **Site:** `site` is `https://components.designforhumans.blog`, with trailing slashes.
 - **Library candidates:** none yet.
 
+## Phase 2: pilot built (30 October 2026), page shape to agree
+
+- **Markup collection:** `docs/markup/*.md` is a content collection. A doc becomes a page at `/docs/components/<tier folder>/<slug>/` once its frontmatter names a `tier`, `title` and `summary`; the slug is the file name without its number (`07b-form-composition.md` → `form-composition`). Pages join the Components section of the nav, grouped by tier, and the Components overview lists them as block links.
+- **Page shape:** eyebrow (the tier), title, summary, a live example of the default, the doc's opening line, **When to use**, **Options**, **Rules** where the doc has them, the lettered examples, **Do and Don't**, then the generated **Tokens** and **See also**. "On this page" lists them all.
+- **Live examples:** ` ```html live ` (or `live cluster` for a row, `live width=md` to cap the width) renders the markup in a `.card.card--ruled` above its code. The stage ends the prose scope (`.prose-end`), so the library styles the example as it would anywhere else. Sprite references point at `/icons.svg` in the rendered copy only. Fences without `live` stay code.
+- **Links:** links between markup docs point at their pages, or become text while the target has no page. `§E` links to this page's "E." example and `§24` to the doc numbered 24 once it's a page (a number two docs share, such as §7, stays text).
+- **Tables** from markdown sit in a named, focusable `.table-container`, so a wide one scrolls instead of widening the page at 320px.
+- **Tokens table:** from `tokens/3-component.json` (name and description) and the compiled `variables.css` (default).
+- **Storybook links** need `PUBLIC_STORYBOOK_URL` at build time; without it, See also names the story id (open question 2).
+- **Pilot pages:** Button, Field, fieldset and form, Card. Each gained When to use and Do and Don't, and examples filled in enough to render (Card's images are `/examples/*.svg`). The form doc has a complete form.
+- **Build:** markdown plugins need `@astrojs/markdown-remark` (Astro 7 defaults to its own processor). The content layer caches rendered markdown by file digest, so a change to a plugin alone wouldn't show; the build runs `astro build --force`.
+- **Gate:** 7 pages pass `check:docs`.
+- **Library candidates:**
+  - A `.card__thumb` in a row card (`--card-dir: row`) has no inline size, so it takes its image's intrinsic width and won't shrink: a 300px image overflows a phone-width card. Card's media-row example is code only until the thumb gets a size (perhaps `--card-thumb-size`, or the thumbnail atom's sizes).
+  - Inline code in prose breaks after a hyphen, so a token name can split as `-` / `-controls-prominence` in a table cell.
+  - Many Tier 3 tokens have no `$description`, so the Tokens table's "What it does" is empty for them. `card.hgroup-gap` and `card.band-gap` reference Tier 1 spacing.
+- **To agree before phase 4:** the page shape above; whether the lettered example headings ("A. Prominence") and `§` references stay as they are on the site or become plain headings and named links.
+
 ## Open questions (for later phases)
 
 1. **Hosting** for the subdomain (Netlify, Cloudflare Pages, or the blog's server).
-2. **Storybook in public:** deploy it alongside (`/storybook/`) so the docs can link to it, or keep it local?
+1. **Storybook in public:** decided, at `/storybook/` on the same host.
 3. **The Token Designer in public:** a read-only demo, or local only? Publish writes files, so a public one couldn't save.
 4. **Versioning:** the library is pre-v1. The docs track `main`, with a pre-v1 note, until there's a release.
 5. **The blog's component overview** (`_component-library.twig`): keep it as the blog's own check, or retire it once the docs exist?
+
+## Phase 4: every component has a page (31 October 2026)
+
+- **46 docs** are pages at the page shape, each opening with a live example of the default. `32-recipes.md` waits for the Patterns section (phase 5).
+- **Live examples:** only `<use href="#Name">` is rewritten to the sprite, so demo links keep their own targets.
+- **Left as code:** whatever holds a real landmark or a whole page (header, sidebar, footer, wrapper and app shell markup), fixed placements (toast stacks, banner docks, fixed batch actions) and script-driven states.
+- **Added from the CSS, previously undocumented:** header `--stretch`, sidebar `--compact`, wrapper `--flush`.
+
+## Phase 5: the page shape (pilot)
+
+Button, Card and Dialog are the pilot. A page explains and helps someone choose; Storybook shows everything. The test for a piece of content: would you be worse off for not reading it before using the component? If you'd only look it up, it goes below `## Reference`, which the site doesn't render, and Storybook must cover it.
+
+- **Top of the page:** a playground where the component has axes, replacing the default example. Without a script it is that example.
+- **Why it exists:** new writing, drafted from `PRINCIPLES.md` and the audits, for the author to correct before the other pages follow.
+- **Code** is closed under each example, in a native `<details>`, with a copy button.
+- **Gate:** `check:docs` runs axe on each playground choice in both schemes, and checks the code follows.
+- **Storybook is public,** at `components.designforhumans.blog/storybook/` (`npm run build:site`). Each page's foot links in, the gate checks each story exists, and tokens moved there from the pages.
+- **Keyboard and screen readers:** a section on components with behaviour, after APG, Carbon and Primer.
+
+## Phase 4: decisions
+
+1. **Story scaffolding:** `demo.css` was 98 class names, 6 in use. It now holds those, one name each (`.sb-demo-*`).
+2. **References:** pages link keywords, not `§`, and the build fails on a `§`. Headings lost their letters. Recipes keep `§` until the Patterns phase makes them a page.
+3. **Audit references:** none on pages; the site is public.
+4. **Rules written for us:** off the pages. Removed names are in `docs/audit/removed-names.md`; Storybook's own rules are in `.storybook/demo.css`.
+5. **`.telemetry--inline`:** for when the space calls for it, such as a site header.
+6. **`.toast`** has its own shadow, in a stack or not.
+7. **A card with a `<header>`** is an `<article>`, in docs, stories and the blog overview.
+8. **Standards decide, not axe:** `<aside>` in `<main>` is valid, so the demo uses it and `landmark-complementary-is-top-level` is off.
+9. **Button Group's alignment example** no longer uses an inert `form method="dialog"`.
+10. **Component names take capitals in prose** (Button Group, not button group).
+

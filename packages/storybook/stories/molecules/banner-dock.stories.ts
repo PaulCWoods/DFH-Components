@@ -109,10 +109,12 @@ export const Placements: Story = {
         <aside class="banner-dock banner-dock--fixed-bottom" aria-label="Cookie preferences">
           <div class="wrapper">
             <div class="banner">
-              <div class="banner__body"><p class="text">We use cookies to keep the site working.</p></div>
-              <div class="cluster banner__action">
-                <button type="button" class="button"><span>Manage</span></button>
-                <button type="button" class="button button--strong button--accent" onclick="this.closest('.banner-dock').hidden = true"><span>Accept</span></button>
+              <div class="banner__body">
+                <p class="text">We use cookies to keep the site working.</p>
+                <div class="cluster">
+                  <button type="button" class="button"><span>Manage</span></button>
+                  <button type="button" class="button button--strong button--accent" onclick="this.closest('.banner-dock').hidden = true"><span>Accept</span></button>
+                </div>
               </div>
             </div>
           </div>

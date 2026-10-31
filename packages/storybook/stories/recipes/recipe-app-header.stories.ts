@@ -36,8 +36,8 @@ const navLinks = [
 ] as const;
 
 const brand = `
-  <a href="#" class="link link--plain inline small-heading">
-    ${icon('BrandDesignForHumans', 'icon icon--lg')}<span>Design For Humans</span>
+  <a href="#" class="brand">
+    ${icon('BrandDesignForHumans', 'brand__mark icon')}<span class="brand__name">Design For Humans</span>
   </a>`;
 
 const tabNav = `
@@ -89,7 +89,7 @@ const menuButton = `
 
 const drawer = `
   <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-drawer-title">
-    <div class="card">
+    <article class="card">
       <header class="card__header">
         <h2 id="nav-drawer-title" class="card__title small-heading">Design For Humans</h2>
         <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
@@ -101,7 +101,7 @@ const drawer = `
           </ul>
         </nav>
       </div>
-    </div>
+    </article>
   </dialog>`;
 
 const page = (title: string) => `

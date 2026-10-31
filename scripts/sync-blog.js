@@ -25,6 +25,8 @@
  * - Files with no blog twin are reported, not created: a new component also
  *   needs a @forward in the tier's _index.scss.
  * - Blog-only files (dfh/, blog/) are never touched.
+ * - utilities/color-palette.css: the blog's _color-palette.scss is built from
+ *   the blog's own tokens by build-blog-palette.js, which this script runs.
  *
  * Blog files written in Sass (@use, @include, $variables, #{} interpolation)
  * are never overwritten; they are reported for a hand port.
@@ -39,6 +41,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const palette = require('./build-blog-palette.js');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const SRC_DIR = path.join(ROOT_DIR, 'packages/css/src');
@@ -128,6 +131,11 @@ const mirror = (cssFile, { check = false, force = false } = {}) => {
   if (!twin) return null;
   if (!fs.existsSync(cssFile)) return 'gone';
   if (!fs.existsSync(twin)) return 'no-twin';
+  // The blog's colour palette is built from its own tokens, not copied
+  if (twin === palette.OUT) {
+    if (check) return fs.readFileSync(twin, 'utf8') === palette.build().scss ? 'same' : 'generated';
+    return palette.write() ? 'written' : 'same';
+  }
   const current = fs.readFileSync(twin, 'utf8');
   if (isSassAuthored(current)) return 'sass';
   const next = toScss(fs.readFileSync(cssFile, 'utf8'), indentUnit(current));
@@ -146,6 +154,7 @@ const report = (cssFile, result) => {
       ? `• ${rel(cssFile)}: ${changes.get(cssFile)} code lines differ. The blog may have its own edits; name the file to overwrite.`
       : `• ${rel(cssFile)}: comments or formatting only`,
     sass: `⏭️  ${rel(twin)} is written in Sass; port ${rel(cssFile)} by hand.`,
+    generated: `• ${rel(twin)} is out of date; npm run build:blog-palette -- --write rebuilds it.`,
     'no-twin': `⚠️  ${rel(cssFile)} has no blog twin. Add ${rel(twin)} and @forward it in its _index.scss.`,
     gone: `⚠️  ${rel(cssFile)} was removed. Remove ${rel(twin)} and its @forward by hand.`,
   };

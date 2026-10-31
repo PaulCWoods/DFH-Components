@@ -54,7 +54,7 @@ The inline link sits in text and takes the size of that text. The block link is 
     prominence: { control: 'inline-radio', options: PROMINENCES },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <p class="text">Read our deep dive on <a href="#" class="${linkClasses(args.prominence)}">${args.label}</a> before you start.</p>
     </div>
   `,
@@ -75,14 +75,14 @@ export const Playground: Story = {
  */
 export const Prominence: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <span class="sb-demo-tag">default</span>
       <p class="text">Read our deep dive on <a href="#" class="link">design token architecture</a> before you start.</p>
       <span class="sb-demo-tag">--subtle: the text colour, still underlined</span>
       <p class="text">Tags: <a href="#" class="link link--subtle">Web standards</a>, <a href="#" class="link link--subtle">CSS variables</a>, <a href="#" class="link link--subtle">Accessibility</a></p>
       <span class="sb-demo-tag">--plain: navigation only, underlined on hover and focus</span>
       <nav aria-label="Footer">
-        <ul class="cluster list-none p-0 m-0">
+        <ul class="cluster p-0 m-0" role="list">
           <li><a href="#" class="link link--plain">Privacy</a></li>
           <li><a href="#" class="link link--plain">Accessibility statement</a></li>
           <li><a href="#" class="link link--plain">Contact</a></li>
@@ -97,7 +97,7 @@ export const Prominence: Story = {
  */
 export const External: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <p class="text">Review the official <a href="https://www.w3.org/TR/WCAG22/" class="link" target="_blank" rel="noopener noreferrer">WCAG 2.2 standard<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a> for the full list.</p>
     </div>
   `,
@@ -108,7 +108,7 @@ export const External: Story = {
  */
 export const OnADarkBand: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="color-scheme-dark p-md" style="background: var(--surface-page, Canvas); color: var(--foreground, CanvasText);">
         <p class="text">Subscribe to the <a href="#" class="link">monthly newsletter</a> or follow the <a href="#" class="link link--subtle">RSS feed</a>.</p>
       </div>
@@ -121,7 +121,7 @@ export const OnADarkBand: Story = {
  */
 export const Stretched: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <article class="p-md" style="position: relative; border: 1px solid var(--border-color-muted, currentColor); border-radius: var(--radius, 0.25rem);">
         <h3 class="small-heading"><a href="#" class="link link--plain link--stretched">Colour contrast beyond 4.5:1</a></h3>
         <p class="small-text">The whole box is the target; only the title is the link's name.</p>
@@ -135,7 +135,7 @@ export const Stretched: Story = {
  */
 export const BlockLinkProminence: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${BLOCK_PROMINENCES.map((p) => blockLink(`${p === 'default' ? 'Outline (default)' : p}: view the component showcase`, [p !== 'default' ? `block-link--${p}` : ''])).join('')}
     </div>
   `,
@@ -146,7 +146,7 @@ export const BlockLinkProminence: Story = {
  */
 export const BlockLinkSizes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${blockLink('Default size')}
       ${blockLink('Small (--sm)', ['block-link--sm'])}
       <div class="ui-compact">${blockLink('Compact container')}</div>
@@ -164,7 +164,7 @@ export const BlockLinkSizes: Story = {
  */
 export const BlockLinkDirection: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div dir="ltr">${blockLink('Read the full article')}</div>
       <div dir="rtl">${blockLink('اقرأ المقال كاملاً')}</div>
     </div>

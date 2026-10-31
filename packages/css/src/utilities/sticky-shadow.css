@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Design For Humans: Sticky Shadow
+   --------------------------------------------------------------------------
+   A part that pins to the edge of its scroller and casts a shadow only while
+   content is behind it: a header once the content has scrolled under it, a
+   footer until the content's end reaches it. One class for both: a part with
+   anything after it pins to the start, the last part to the end.
+
+   The scroller must be a scroll-state container, and you say which element
+   that is: .container-scroll, or .container-inline-scroll on a card, which is
+   a size container too (container.css). The part goes inside it, as a direct
+   child. A header beside a .card__body--scrollable can't work: a query can't
+   see a sibling's scroll position.
+
+   It queries the scroller's scrollable state, not stuck: a scroller stops at
+   a whole pixel, so with fractional heights a footer never quite comes unstuck.
+
+   Progressive enhancement: where scroll-state queries aren't supported, the
+   part still pins, with no shadow. More contrast has no shadow either.
+
+   The part takes its parent's surface, so content doesn't show through; a
+   parent with no surface needs --sticky-shadow-bg. Focus Not Obscured (WCAG
+   2.4.11): set scroll-padding-block on the scroller to the part's height.
+
+   Hooks: --sticky-shadow (any shadow), --sticky-shadow-bg.
+
+   Usage:
+   <article class="card card--scrollable container-inline-scroll" tabindex="0" aria-label="Queue">
+     <header class="card__header sticky-shadow">…</header>
+     <div class="card__body">…</div>
+     <footer class="card__footer sticky-shadow">…</footer>
+   </article>
+   ========================================================================== */
+
+:where(.sticky-shadow) {
+  --_sticky-shadow: var(--sticky-shadow, var(--shadow-md, none));
+
+  background-color: var(--sticky-shadow-bg, inherit);
+  inset-block-start: 0;
+  position: sticky;
+  transition: box-shadow var(--duration-sm, 150ms) ease-out;
+  z-index: 1;
+
+  @container scroll-state(scrollable: block-start) {
+    box-shadow: var(--_sticky-shadow);
+  }
+
+  @media (prefers-contrast: more) {
+    --_sticky-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* The last part pins to the end, and its shadow follows that edge */
+:where(.sticky-shadow:not(:has(~ *))) {
+  inset-block: auto 0;
+
+  @container scroll-state(scrollable: block-start) {
+    box-shadow: none;
+  }
+
+  @container scroll-state(scrollable: block-end) {
+    box-shadow: var(--_sticky-shadow);
+  }
+}

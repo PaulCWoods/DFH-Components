@@ -184,6 +184,46 @@
       "$description": "A placeholder icon"
     }
   },
+  "brand": {
+    "$description": "Brand atom: the product's mark and name, as a link home",
+    "color": {
+      "$value": "{foreground.accent}",
+      "$type": "color"
+    },
+    "gap": {
+      "$value": "{spacing.16}",
+      "$type": "dimension",
+      "$description": "Between the mark and the name"
+    },
+    "mark-size": {
+      "$value": "{spacing.24}",
+      "$type": "dimension"
+    },
+    "font-family": {
+      "$value": "{display-title.font-family}",
+      "$type": "fontFamily"
+    },
+    "font-size": {
+      "$value": "{typography.font-size.fluid-1}",
+      "$type": "dimension"
+    },
+    "compact-font-size": {
+      "$value": "{typography.font-size.1}",
+      "$type": "dimension"
+    },
+    "letter-spacing": {
+      "$value": "{typography.spacing.normal}",
+      "$type": "dimension"
+    },
+    "line-height": {
+      "$value": "{display-title.line-height}",
+      "$type": "number"
+    },
+    "text-transform": {
+      "$value": "{display-title.text-transform}",
+      "$type": "string"
+    }
+  },
   "lockup": {
     "$description": "Lockup tokens",
     "gap": {
@@ -1053,6 +1093,14 @@
       "$description": "--strong line colour, at least 3:1, for a rule that is the only boundary"
     }
   },
+  "code-block": {
+    "$description": "Code block tokens",
+    "bg": { "$value": "{surface.dark}", "$type": "color", "$description": "Background of a code block (dark in both themes)" },
+    "color": { "$value": "{foreground.on-dark}", "$type": "color", "$description": "Text colour of a code block" },
+    "padding": { "$value": "{spacing.16}", "$type": "dimension", "$description": "Inline padding of the bar and padding around the code" },
+    "compact-padding": { "$value": "{spacing.12}", "$type": "dimension", "$description": "The same in a compact container" },
+    "bar-padding-block": { "$value": "{spacing.4}", "$type": "dimension", "$description": "Block padding of the bar" }
+  },
   "empty-state": {
     "$type": "component",
     "$description": "Layout of the block shown where content would be: a search miss, a first use, a cleared queue",
@@ -1249,10 +1297,25 @@
       "$type": "dimension",
       "$description": "Space between the parts of a bar"
     },
-    "height": {
-      "$value": "calc({spacing.target} + {spacing.8} * 2 + {app.border-width})",
+    "bar-min-size": {
+      "$value": "{spacing.target-min}",
       "$type": "dimension",
-      "$description": "Height of a one-bar header (a target-sized row, its padding and the bottom border). Sticky headers offset scrolling and sticky sidebars by it; a product whose header is taller sets --header-height on :root."
+      "$description": "Least height of a bar's content, inside its padding. Raise it for a taller header; --header-height follows."
+    },
+    "compact-bar-min-size": {
+      "$value": "{spacing.target-sm}",
+      "$type": "dimension",
+      "$description": "Least height of a bar's content in a compact header"
+    },
+    "height": {
+      "$value": "calc({header.bar-min-size} + {header.padding-block} * 2 + {header.border-width})",
+      "$type": "dimension",
+      "$description": "Height of a one-bar header (the bar's least content height, its padding and the bottom border). Sticky headers offset scrolling and sticky sidebars by it; a product whose header is taller sets --header-height on :root."
+    },
+    "compact-height": {
+      "$value": "calc({header.compact-bar-min-size} + {header.compact-padding-block} * 2 + {header.border-width})",
+      "$type": "dimension",
+      "$description": "Height of a one-bar compact header. --header-height takes it while a sticky header is compact."
     },
     "max-width": {
       "$value": "{site-width}",
@@ -1285,6 +1348,11 @@
       "$value": "{surface.card}",
       "$type": "color",
       "$description": "Sidebar surface"
+    },
+    "subtle-bg": {
+      "$value": "{surface.muted}",
+      "$type": "color",
+      "$description": "Surface of --subtle"
     },
     "border-width": {
       "$value": "{app.border-width}",
@@ -2610,17 +2678,17 @@
     "$type": "component",
     "$description": "Loading placeholder shapes. The fill mixes the text colour so it shows the same on any surface.",
     "color": {
-      "$value": "color-mix(in oklch, {foreground} 20%, transparent)",
+      "$value": "color-mix(in srgb, {foreground} 20%, transparent)",
       "$type": "color",
       "$description": "Skeleton fill"
     },
     "color-strong": {
-      "$value": "color-mix(in oklch, {foreground} 35%, transparent)",
+      "$value": "color-mix(in srgb, {foreground} 35%, transparent)",
       "$type": "color",
       "$description": "Skeleton fill under increased contrast"
     },
     "shimmer": {
-      "$value": "color-mix(in oklch, {surface} 60%, transparent)",
+      "$value": "color-mix(in srgb, {surface} 60%, transparent)",
       "$type": "color",
       "$description": "Shimmer sweep: the page surface passing over the fill"
     },

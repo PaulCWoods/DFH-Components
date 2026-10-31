@@ -6,8 +6,9 @@
    summary and a button group.
 
    A group, not a toolbar: it has no arrow-key handling. The summary is
-   text in role="status", so a changed count is announced. Hide the bar
-   with [hidden]; it slides away.
+   text. A hidden bar isn't in the accessibility tree, so the announcement
+   lives outside it: a role="status" element, in the page from the start,
+   that the product's script fills. Hide the bar with [hidden]; it slides away.
 
    Placement: floating (default; fixed at the bottom centre of the
    viewport), --docked (sticks to the bottom of its scroll container),
@@ -16,7 +17,7 @@
    between a fixed summary and dismiss button).
 
    <div class="batch-actions" role="group" aria-label="Selected files">
-     <p class="batch-actions__summary small-heading" role="status">3 selected</p>
+     <p class="batch-actions__summary small-heading">3 selected</p>
      <div class="batch-actions__actions button-group">…</div>
      <button type="button" class="button button--plain button--icon batch-actions__dismiss">…</button>
    </div>

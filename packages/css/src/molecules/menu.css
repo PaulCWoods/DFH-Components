@@ -136,7 +136,7 @@
 /* Translucent: a material, combined with any prominence that has a fill */
 @media (prefers-contrast: no-preference) {
   :where(.menu--translucent) {
-    --_menu-bg: color-mix(in oklch, var(--_menu-fill), transparent var(--menu-translucency, 0%));
+    --_menu-bg: color-mix(in srgb, var(--_menu-fill), transparent var(--menu-translucency, 0%));
     backdrop-filter: var(--menu-filter, none);
   }
 }

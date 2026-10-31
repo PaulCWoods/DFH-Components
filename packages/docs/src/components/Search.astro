@@ -8,7 +8,7 @@
 import Icon from './Icon.astro';
 ---
 <dialog id="search" class="dialog" aria-labelledby="search-title" closedby="any">
-  <div class="card">
+  <article class="card">
     <header class="card__header">
       <h2 id="search-title" class="card__title small-heading">Search the docs</h2>
       <button type="button" class="button button--plain button--icon" commandfor="search" command="close">
@@ -23,7 +23,7 @@ import Icon from './Icon.astro';
       <p id="search-status" class="small-text text-muted" role="status"></p>
       <ol class="stack gap-md" role="list" id="search-results"></ol>
     </div>
-  </div>
+  </article>
 </dialog>
 
 <script>

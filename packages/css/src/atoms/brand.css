@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Design For Humans: Brand
+   --------------------------------------------------------------------------
+   The product's mark and name, as a link home: the first thing in a header,
+   a drawer or a footer. A whole link on its own: it needs no .link class.
+
+   | Axis    | Values                                     | Flag                 |
+   | ------- | ------------------------------------------ | -------------------- |
+   | Density | default, a compact container steps it down | --ui-sizing: compact |
+
+   Parts (either can be left out):
+   - .brand__mark is the logo, an icon from the sprite.
+   - .brand__name is the name, in the display type. Beside a mark, on screens
+     20em and under, it is hidden visually only, so the link keeps its name.
+
+   Accessibility:
+   - The name is the link's name, so the mark is aria-hidden. With no
+     .brand__name, name the link with .sr-only text.
+   - On an <a>, it is at least the target size (the small target when
+     compact), with hover and focus states. On any other element it has
+     neither, so it can label a page or an app without looking clickable.
+
+   Usage:
+   <a href="/" class="brand">
+     <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
+     <span class="brand__name">Design For Humans</span>
+   </a>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.brand) {
+  /* Private manifest */
+  --_brand-gap: var(--brand-gap, 1rem);
+  --_brand-mark-size: var(--brand-mark-size, 1.5rem);
+  --_brand-font-size: var(--brand-font-size, 1.25rem);
+  --_brand-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+  --_brand-color: var(--brand-color, var(--foreground-accent, LinkText));
+  --_brand-hover-color: var(--brand-hover-color, var(--foreground-accent-hover, LinkText));
+  --_brand-hover-decoration-line: underline;
+  --_brand-active-color: var(--brand-active-color, var(--foreground-accent-pressed, LinkText));
+  --_brand-underline-thickness: var(--link-hover-underline-thickness, 2px);
+  --_brand-underline-offset: var(--link-underline-offset, var(--underline-offset, 0.25em));
+
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     ------------------------------------------------------------------------ */
+  @container style(--ui-sizing: compact) {
+    --_brand-font-size: var(--brand-compact-font-size, 1.125rem);
+    --_brand-min-size: var(--spacing-target-sm, 2rem);
+  }
+
+  align-items: center;
+  color: var(--_brand-color);
+  display: inline-flex;
+  font-family: var(--brand-font-family, inherit);
+  font-size: var(--_brand-font-size);
+  gap: var(--_brand-gap);
+  letter-spacing: var(--brand-letter-spacing, normal);
+  line-height: var(--brand-line-height, 1);
+  text-decoration-line: none;
+  text-decoration-thickness: var(--_brand-underline-thickness);
+  text-transform: var(--brand-text-transform, none);
+  text-underline-offset: var(--_brand-underline-offset);
+
+  /* Only a link is a target: a brand on any other element has no states */
+  &:where(a) {
+    min-block-size: var(--_brand-min-size);
+  }
+
+  &:where(a):hover,
+  &:where(a):focus-visible {
+    color: var(--_brand-hover-color);
+  }
+
+  &:where(a):active {
+    color: var(--_brand-active-color);
+  }
+
+  &:where(a):focus-visible {
+    border-radius: var(--radius-xs, 2px);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+}
+
+/* ==========================================================================
+   2. Parts
+   ========================================================================== */
+:where(.brand__mark) {
+  --icon-size: var(--_brand-mark-size);
+}
+
+:where(.brand__name) {
+  white-space: nowrap;
+}
+
+/* Beside a mark, the name gives way on the narrowest screens. Visually hidden,
+   not display: none, so the link keeps its name */
+@media (width <=20em) {
+  :where(.brand__mark + .brand__name) {
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+  }
+}

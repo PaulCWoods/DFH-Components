@@ -46,7 +46,7 @@ A rule between groups. Organisms (menu, combobox, batch actions, button group) p
   },
   args: { strong: false, dashed: false },
   render: (args) => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <p class="text" style="margin: 0;">Above the rule.</p>
       <hr class="${cls(args)}">
       <p class="text" style="margin: 0;">Below the rule.</p>
@@ -72,7 +72,7 @@ export const Playground: Story = {};
  */
 export const Prominence: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${[
         ['default', {}],
         ['--strong', { strong: true }],
@@ -98,7 +98,7 @@ export const Prominence: Story = {
  */
 export const Orientation: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <span class="sb-demo-tag">.cluster</span>
       <div class="cluster">
         <span class="chip"><span class="chip__text">Design</span></span>
@@ -134,7 +134,7 @@ export const Orientation: Story = {
  */
 export const InOrganisms: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <menu class="menu" aria-label="Document options" style="max-inline-size: 16rem;">
         <li><button type="button" class="button"><span>Duplicate</span></button></li>
         <li><button type="button" class="button"><span>Export</span></button></li>
@@ -143,7 +143,7 @@ export const InOrganisms: Story = {
       </menu>
 
       <div class="batch-actions batch-actions--inline" role="group" aria-label="Selected documents">
-        <p class="batch-actions__summary small-heading" role="status">3 selected</p>
+        <p class="batch-actions__summary small-heading">3 selected</p>
         <hr class="divider" aria-hidden="true" />
         <div class="batch-actions__actions button-group buttons-subtle">
           <button type="button" class="button"><span>Export</span></button>

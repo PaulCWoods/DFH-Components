@@ -4,12 +4,12 @@
    The band at the top of a page or app that holds the brand, the main
    navigation and global actions. An organism: the header draws the band
    (surface, border, sticky, translucency) and lays out its rows; what is in
-   a row (a lockup, a tab list, buttons, a breadcrumb) styles itself.
+   a row (a brand, a tab list, buttons, a breadcrumb) styles itself.
 
    | Axis        | Values                               | Flag                 |
    | :---------- | :----------------------------------- | :------------------- |
    | Prominence  | default, --plain, --translucent      | none                 |
-   | Density     | default, --compact                   | --ui-sizing: compact |
+   | Density     | default, --compact, max-md:--compact | --ui-sizing: compact |
    | Placement   | in flow, --sticky                    | none                 |
 
    Parts:
@@ -34,7 +34,7 @@
    Usage:
    <header class="header header--sticky">
      <div class="header__bar">
-       <a href="/" class="link link--plain">…brand…</a>
+       <a href="/" class="brand">…</a>
        <nav class="header__nav tab-list tab-list--plain" aria-label="Main">…</nav>
        <button type="button" class="button">Sign in</button>
      </div>
@@ -54,7 +54,10 @@
   --_header-padding-inline: var(--header-padding-inline, 1rem);
   --_header-gap: var(--header-gap, 1rem);
   --_header-max-width: var(--header-max-width, var(--site-width, 75rem));
-  --_header-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+  /* The bar's content height. Never --header-height: that is the header's
+     measured or declared height, read by what must clear it, so sizing the
+     header from it would loop */
+  --_header-min-size: var(--header-bar-min-size, var(--spacing-target-min, var(--spacing-target, 3rem)));
   --_header-shadow: var(--header-shadow, var(--shadow-md, none));
   --_header-translucency: var(--header-translucency, var(--translucency-subtle, 10%));
   --_header-filter: var(--header-filter, var(--surface-layer-filter, none));
@@ -66,7 +69,7 @@
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
     --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
-    --_header-min-size: var(--spacing-target-sm, 2rem);
+    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target, 3rem));
   }
 
   /* Its rows can adapt to its width; the stuck shadow queries its position */
@@ -75,7 +78,8 @@
   display: block;
   box-sizing: border-box;
   inline-size: 100%;
-  padding-inline: var(--safe-area-inset-left, 0px) var(--safe-area-inset-right, 0px);
+  /* The band pads the sides, so a bar's content lines up with a .wrapper's */
+  padding-inline: calc(var(--_header-padding-inline) + var(--safe-area-inset-left, 0px)) calc(var(--_header-padding-inline) + var(--safe-area-inset-right, 0px));
   position: relative;
 
   background-color: var(--_header-bg);
@@ -96,13 +100,13 @@
   align-items: center;
   gap: var(--_header-gap);
   max-inline-size: var(--_header-max-width);
-  min-block-size: var(--_header-min-size);
+  /* At least the target size plus its padding: --header-height tall */
+  min-block-size: calc(var(--_header-min-size) + 2 * var(--_header-padding-block));
   margin-inline: auto;
   padding-block: var(--_header-padding-block);
-  padding-inline: var(--_header-padding-inline);
 
   @supports (width: round(10px, 1px)) {
-    min-block-size: round(down, calc(var(--_header-min-size) - var(--_header-border-width)/2), 1px);
+    min-block-size: round(down, calc(var(--_header-min-size) + 2 * var(--_header-padding-block)), 1px);
   }
 
   /* The last part sits at the end. A visible nav has already taken the
@@ -120,6 +124,12 @@
 :where(.header__nav) {
   flex: 1 1 0;
   min-inline-size: 0;
+  padding-inline-start: var(--_header-gap);
+}
+
+:where(.header__skip-link) {
+  margin-inline: calc(var(--_header-padding-inline) * -1);
+  inline-size: stretch;
 }
 
 /* ==========================================================================
@@ -133,14 +143,24 @@
 }
 
 :where(.header--translucent) {
-  --_header-bg: color-mix(in oklch, var(--header-bg, var(--surface-card, Canvas)), transparent var(--_header-translucency));
+  --_header-bg: color-mix(in srgb, var(--header-bg, var(--surface-card, Canvas)), transparent var(--_header-translucency));
   backdrop-filter: var(--_header-filter);
 }
 
-/* Density: the bar and the atoms in it step down */
+/* Density: the bar and the atoms in it step down, as in a compact
+   container. max-md:header--compact does it below 48rem only (a phone). */
 :where(.header--compact) {
+  --ui-sizing: compact;
   --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
-  --_header-min-size: var(--spacing-target, 3rem);
+  --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm, 2rem));
+}
+
+@media (width < 48rem) {
+  :where(.max-md\:header--compact) {
+    --ui-sizing: compact;
+    --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
+    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm, 2rem));
+  }
 }
 
 :where(.header--stretch) {
@@ -174,6 +194,19 @@
 /* Focus Not Obscured (2.4.11): focused elements scroll clear of the header */
 :where(:root:has(.header--sticky)) {
   scroll-padding-block-start: var(--header-height, 4rem);
+}
+
+/* A compact sticky header is shorter, so what clears it follows. The
+   :has() argument gives these the token's own specificity (0,1,0), so
+   they beat the token and a product's :root override (later) beats them. */
+:where(:root):has(.header--sticky.header--compact) {
+  --header-height: var(--header-compact-height);
+}
+
+@media (width < 48rem) {
+  :where(:root):has(.header--sticky.max-md\:header--compact) {
+    --header-height: var(--header-compact-height);
+  }
 }
 
 /* ==========================================================================

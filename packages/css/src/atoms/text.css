@@ -135,9 +135,8 @@
       text-wrap: balance;
     }
 
-    /* Text blocks. Lists with a class are components and keep their own
-       measure. */
-    :where(p, ul:not([class]), ol:not([class]), dl:not([class]), table:not([class]), pre) {
+    /* Text blocks, whatever their classes (a CMS's); a text atom on one wins */
+    :where(p, ul, ol, dl, table, pre) {
       font-family: var(--body-font-family);
       font-size: var(--body-fixed-font-size);
       font-weight: var(--body-font-weight);
@@ -156,10 +155,10 @@
       }
     }
 
-    :where(p, ul:not([class]), ol:not([class]), dl:not([class])) {
+    :where(p, ul, ol, dl) {
       hyphens: var(--prose-hyphens, manual);
       max-inline-size: var(--body-measure);
-      text-wrap: pretty;
+      text-wrap: var(--body-text-wrap, wrap);
     }
 
     :where(small, figcaption, caption) {
@@ -167,7 +166,7 @@
       font-size: var(--body-sm-fixed-font-size);
       font-weight: var(--body-font-weight);
       line-height: var(--body-sm-line-height);
-      text-wrap: pretty;
+      text-wrap: var(--body-text-wrap, wrap);
 
       @container style(--font-sizing: fluid) {
         font-size: var(--body-sm-fluid-font-size);
@@ -415,7 +414,7 @@
   font-size: var(--body-sm-fixed-font-size);
   font-weight: var(--body-font-weight);
   line-height: var(--body-sm-line-height);
-  text-wrap: pretty;
+  text-wrap: var(--body-text-wrap, wrap);
 
   @container style(--font-sizing: fluid) {
     font-size: var(--body-sm-fluid-font-size);
@@ -438,7 +437,7 @@
   font-size: var(--body-xs-fixed-font-size);
   font-weight: var(--body-font-weight);
   line-height: var(--body-xs-line-height);
-  text-wrap: pretty;
+  text-wrap: var(--body-text-wrap, wrap);
 
   @container style(--font-sizing: fluid) {
     font-size: var(--body-xs-fluid-font-size);

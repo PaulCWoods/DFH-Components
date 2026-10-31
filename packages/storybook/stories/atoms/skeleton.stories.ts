@@ -58,7 +58,7 @@ A placeholder that holds the space of content still loading, so nothing moves wh
   },
   args: { shape: 'text', pulse: false, width: '' },
   render: (args) => `
-    <div class="demo-stage stack" style="max-inline-size: 32rem;">
+    <div class="sb-demo-stage stack" style="max-inline-size: 32rem;">
       <span class="${cls(args)}" aria-hidden="true" style="${args.width ? `--skeleton-width: ${args.width};` : ''}${args.shape === 'none' ? ' --skeleton-height: 4rem;' : ''}"></span>
     </div>
   `,
@@ -77,7 +77,7 @@ export const Playground: Story = {};
  */
 export const Shapes: Story = {
   render: () => `
-    <div class="demo-stage stack" style="max-inline-size: 32rem;">
+    <div class="sb-demo-stage stack" style="max-inline-size: 32rem;">
       ${(['text', 'heading', 'avatar', 'button', 'input', 'badge', 'media'] as const)
         .map(
           (shape) => `
@@ -97,7 +97,7 @@ export const Shapes: Story = {
  */
 export const TextInAtoms: Story = {
   render: () => `
-    <div class="demo-stage grid grid--auto-fit grid--xs">
+    <div class="sb-demo-stage grid grid--auto-fit grid--xs">
       <div class="stack" style="--gap: var(--spacing-8);">
         <span class="sb-demo-tag">Loading</span>
         <div class="heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
@@ -123,7 +123,7 @@ export const TextInAtoms: Story = {
  */
 export const Companions: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${[
         ['.button', '<button type="button" class="button button--strong button--accent{s}"{a}><span>Save changes</span></button>'],
         ['.status', '<span class="status status--success{s}"{a}><span class="status__text">Published</span></span>'],
@@ -152,7 +152,7 @@ export const Companions: Story = {
  */
 export const Motion: Story = {
   render: () => `
-    <div class="demo-stage stack" style="max-inline-size: 32rem;">
+    <div class="sb-demo-stage stack" style="max-inline-size: 32rem;">
       <span class="sb-demo-tag">Shimmer (default)</span>
       <p class="text"><span class="skeleton skeleton--text" aria-hidden="true"></span></p>
       <span class="sb-demo-tag">.skeleton--pulse</span>
@@ -177,7 +177,7 @@ export const Motion: Story = {
  */
 export const LoadingCard: Story = {
   render: () => `
-    <div class="demo-stage" style="max-inline-size: 24rem;">
+    <div class="sb-demo-stage" style="max-inline-size: 24rem;">
       <article class="card" aria-busy="true" aria-labelledby="skeleton-card-title">
         <header class="card__header">
           <span class="skeleton skeleton--avatar" aria-hidden="true"></span>

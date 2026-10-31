@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "astro dev --port 4321",
     "start": "astro dev --port 4321",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build --force && pagefind --site dist",
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.3",
     "@astrojs/mdx": "^8.1.0",
     "@design-for-humans/components-css": "*",
     "astro": "^7.4.0"

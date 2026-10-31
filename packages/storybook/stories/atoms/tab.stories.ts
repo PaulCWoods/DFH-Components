@@ -83,7 +83,7 @@ One tab: a \`<button role="tab">\` in a tablist, or an \`<a>\` in navigation. A 
     disabled: false,
   },
   render: (args) => `
-    <div class="demo-stage">
+    <div class="sb-demo-stage">
       ${list(args.style, args.asLink, tab(args) + sibling(args.asLink, 'Activity', !args.selected && !args.disabled) + sibling(args.asLink, 'Settings'))}
     </div>
   `,
@@ -103,7 +103,7 @@ export const Playground: Story = {};
 export const States: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${(['underline', 'segmented'] as TabStyle[])
         .map(
           (style) => `
@@ -125,7 +125,7 @@ export const States: Story = {
 export const Content: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${(['underline', 'segmented'] as TabStyle[])
         .map(
           (style) => `
@@ -154,7 +154,7 @@ export const Content: Story = {
  */
 export const HiddenLabels: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <nav class="tab-list hide-labels" aria-label="Collapsed navigation">
         <a href="#" class="tab" aria-current="page">${icon('Home')}<span class="tab__text">Feed</span></a>
         <a href="#" class="tab">${icon('Search')}<span class="tab__text">Explore</span></a>

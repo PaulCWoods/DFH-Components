@@ -128,7 +128,7 @@ export const Anatomy: Story = {
           <button type="button" class="button"><span>Action</span></button>
         </div>
       </div>
-      <p class="small-text text-muted">Leading icon (carries the intent), body, then one button or a <code>.cluster</code> of them.</p>
+      <p class="small-text text-muted">Leading icon (carries the intent), body, then one button or a <code>.cluster</code> of them. A <code>.cluster</code> in the body sits under the message instead.</p>
     </div>
   `,
 };
@@ -198,6 +198,23 @@ export const Translucent: Story = {
   render: () => `
     <div style="padding: var(--spacing-breathe); background: linear-gradient(135deg, var(--surface-accent-strong), var(--surface-info-strong)); max-inline-size: 40rem;">
       ${banner('banner--translucent', '<p class="text">Translucent: a material, combined with any prominence that has a fill.</p>', { intent: 'info' })}
+    </div>
+  `,
+};
+
+export const SeveralActions: Story = {
+  name: 'Several actions',
+  render: () => `
+    <div class="banner banner--accent">
+      <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+      <div class="banner__body">
+        <p class="text font-bold">Design system v2.4 is available</p>
+        <p class="small-text">Updated tokens and native anchor positioning.</p>
+        <div class="cluster">
+          <button type="button" class="button"><span>Later</span></button>
+          <button type="button" class="button button--strong button--accent"><span>Update</span></button>
+        </div>
+      </div>
     </div>
   `,
 };

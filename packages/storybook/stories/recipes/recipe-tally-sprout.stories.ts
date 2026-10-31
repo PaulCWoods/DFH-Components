@@ -244,7 +244,7 @@ const plotCard = (p: Plot) => `
 
 const batchActions = (n: number) => `
   <div class="batch-actions batch-actions--docked" role="group" aria-label="Selected plots">
-    <p class="batch-actions__summary small-heading" role="status">${n} plots selected</p>
+    <p class="batch-actions__summary small-heading">${n} plots selected</p>
     <div class="batch-actions__actions button-group buttons-subtle max-sm:hide-labels">
       <button type="button" class="button">${icon('Email')}<span>Email notice</span></button>
       <button type="button" class="button">${icon('Download')}<span>Export</span></button>
@@ -459,7 +459,7 @@ const tool = (name: string, status: string, note: string, action = '') => `
 
 const toolLocker = `
   <dialog id="tool-locker" class="dialog dialog--drawer" aria-labelledby="tool-locker-title">
-    <div class="card">
+    <article class="card">
       <header class="card__header">
         <hgroup class="card__hgroup">
           <h2 id="tool-locker-title" class="card__title small-heading">Tool locker</h2>
@@ -479,7 +479,7 @@ const toolLocker = `
           ${tool('Soil sieve', `<span class="status status--success">${icon('Check')}<span class="status__text">In shed</span></span>`, 'At the east compost bays.')}
         </ul>
       </div>
-    </div>
+    </article>
   </dialog>`;
 
 /* --------------------------------------------------------------------------

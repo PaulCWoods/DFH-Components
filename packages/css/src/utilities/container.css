@@ -4,10 +4,24 @@
    Makes an element a size container, so container queries inside it (@md:hide,
    @md:grid--3-col, @max-sm:card--plain) measure it. An inline-size container
    can't shrink to its content, so don't put it on a flex item that should.
+
+   A scroll-state container lets what's inside query its scrolling
+   (.sticky-shadow). It doesn't collapse, so it is safe on any scroller.
+   .container-inline-scroll is both, for a scroller that is also a size
+   container, such as a card: on a card use this, not .container-scroll, which
+   would replace the card's own size container.
    ========================================================================== */
 
 :where(.container-type-inline-size, .container-inline) {
     container-type: inline-size;
+}
+
+:where(.container-type-scroll-state, .container-scroll) {
+    container-type: scroll-state;
+}
+
+:where(.container-type-inline-size-scroll-state, .container-inline-scroll) {
+    container-type: inline-size scroll-state;
 }
 
 :where(.container-type-size) {

@@ -75,7 +75,7 @@ A token that **represents a value**: a selected option in a combobox, an active 
     removable: { control: 'boolean', description: 'Adds a .chip__remove button' },
   },
   render: (args) =>
-    `<div class="demo-stage">${chip(args.label, chipClasses(args.prominence, args.small, args.round), args.removable)}</div>`,
+    `<div class="sb-demo-stage">${chip(args.label, chipClasses(args.prominence, args.small, args.round), args.removable)}</div>`,
 };
 
 export default meta;
@@ -93,7 +93,7 @@ export const Playground: Story = {
  */
 export const ProminenceAndSize: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${PROMINENCES.map(
         (p) => `
         <div class="cluster">
@@ -113,7 +113,7 @@ export const ProminenceAndSize: Story = {
  */
 export const ActiveFilters: Story = {
   render: () => `
-    <div class="demo-stage cluster">
+    <div class="sb-demo-stage cluster">
       <span class="small-text">Active filters:</span>
       ${TAGS.map((t) => chip(t, 'chip chip--subtle chip--round', true)).join('')}
       <button type="button" class="button button--plain button--sm"><span>Clear all</span></button>
@@ -126,7 +126,7 @@ export const ActiveFilters: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage cluster" style="--chip-prominence: plain; --chip-size: sm;">
+    <div class="sb-demo-stage cluster" style="--chip-prominence: plain; --chip-size: sm;">
       ${TAGS.map((t) => chip(t, 'chip')).join('')}
     </div>
   `,

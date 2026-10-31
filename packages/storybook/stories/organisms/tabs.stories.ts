@@ -70,7 +70,7 @@ Lays out a tab list and its panels. Layout only: the list and its tabs style the
   args: { style: 'underline', prominence: 'default', sm: false, layout: 'default' },
   render: (args) =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${tabbedContent('Account settings', ACCOUNT, { ...args, layout: layoutClass(args.layout) })}
     </div>
   `),
@@ -90,7 +90,7 @@ export const Playground: Story = {};
 export const Layouts: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <span class="sb-demo-tag">default</span>
       ${tabbedContent('Default layout', ACCOUNT)}
       <span class="sb-demo-tag">--vertical</span>
@@ -107,7 +107,7 @@ export const Layouts: Story = {
 export const ViewSwitcher: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${tabbedContent(
         'Report view',
         [
@@ -127,7 +127,7 @@ export const ViewSwitcher: Story = {
 export const VerticalSettings: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${tabbedContent('Settings', ACCOUNT, { prominence: 'plain', layout: ['tabbed-content--vertical'] })}
     </div>
   `),

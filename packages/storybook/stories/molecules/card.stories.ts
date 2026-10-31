@@ -350,6 +350,25 @@ export const Scrolling: Story = {
   `,
 };
 
+export const HeaderSecondLine: Story = {
+  name: 'Header with a second line',
+  render: () => `
+    <article class="card" style="max-inline-size: 48rem;">
+      <header class="card__header">
+        <hgroup class="card__hgroup">
+          <h3 class="card__title heading">Queue and schedule</h3>
+          <p class="card__subtitle small-text">8 items queued</p>
+        </hgroup>
+        <button type="button" class="button button--sm"><span>Auto-balance</span></button>
+        <div class="card__header-line cluster cluster--between">
+          <input type="search" class="input input--sm" placeholder="Search queued items" aria-label="Search items" />
+        </div>
+      </header>
+      <div class="card__body"><p class="text">The queue, below the search.</p></div>
+    </article>
+  `,
+};
+
 export const CardWithBand: Story = {
   name: 'Bands',
   render: () => `

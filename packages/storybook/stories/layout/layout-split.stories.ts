@@ -91,3 +91,24 @@ export const Three: Story = {
       <aside class="card" aria-label="Planting notes"><div class="card__body"><p class="small-text">Plant in early autumn.</p></div></aside>
     </div>`,
 };
+
+export const EqualHeight: Story = {
+  name: 'Equal-height panes, no gap',
+  parameters: { docs: { description: { story: '`--align-items: stretch` makes the panes equal in height; `--tight` removes the gap.' } } },
+  render: () => `<div class="split split--tight split--xs" style="--align-items: stretch;">${sideNav()}${main}</div>`,
+};
+
+export const Nested: Story = {
+  name: 'A split inside a pane',
+  parameters: { docs: { description: { story: 'A split can\'t be a pane of another split, so the inner one is wrapped in a plain `<div>`, which becomes the pane.' } } },
+  render: () => `
+    <div class="split split--xs">
+      ${sideNav()}
+      <div>
+        <div class="split split--end split--2xs">
+          ${main}
+          <aside class="card" aria-label="Planting notes"><div class="card__body"><p class="small-text">Plant in early autumn.</p></div></aside>
+        </div>
+      </div>
+    </div>`,
+};

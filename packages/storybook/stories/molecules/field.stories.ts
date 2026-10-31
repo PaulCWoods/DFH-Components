@@ -101,6 +101,19 @@ export const Errors: Story = {
     </div>`,
 };
 
+export const SeveralErrors: Story = {
+  name: 'Several errors',
+  render: () => `
+    <div class="field" style="max-inline-size: 28rem;">
+      <label for="several-password" class="field__label label">Password</label>
+      <ul id="several-password-error" class="field__error small-text">
+        <li>Use at least 12 characters</li>
+        <li>Use a word that isn't your email address</li>
+      </ul>
+      <input id="several-password" type="password" class="input" aria-describedby="several-password-error" aria-invalid="true" />
+    </div>`,
+};
+
 export const WithHeader: Story = {
   name: 'With a header',
   render: () => `

@@ -65,10 +65,15 @@ const preview: Preview = {
       test: 'error', 
       config: {
         rules: [
-          // Example: fine-tune or customize specific axe rules if needed
           {
             id: 'color-contrast',
             enabled: true,
+          },
+          // Standards decide, not the tool: an <aside> in <main> is valid HTML
+          // and ARIA; only axe's best-practice rule objects
+          {
+            id: 'landmark-complementary-is-top-level',
+            enabled: false,
           },
         ],
       },

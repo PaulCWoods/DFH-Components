@@ -70,7 +70,7 @@ A segmented Off / On toggle: a label wrapping a checkbox with \`role="switch"\`.
     disabled: { control: 'boolean' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${switchEl(
         args.label,
         [args.size !== 'default' ? `switch--${args.size}` : '', args.subtle ? 'switch--subtle' : '', args.danger ? 'switch--danger' : '', args.round ? 'switch--round' : ''],
@@ -96,7 +96,7 @@ export const Playground: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${SIZES.map((s) => switchEl(`Size ${s}`, [s !== 'default' ? `switch--${s}` : ''], 'checked')).join('')}
       <div class="ui-compact">${switchEl('Compact container', [], 'checked')}</div>
     </div>
@@ -108,7 +108,7 @@ export const Sizes: Story = {
  */
 export const Variants: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${switchEl('Outline', [], 'checked')}
       ${switchEl('Subtle', ['switch--subtle'], 'checked')}
       ${switchEl('Danger', ['switch--danger'], 'checked', 'Deletes data after 30 days')}
@@ -122,7 +122,7 @@ export const Variants: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${switchEl('Off')}
       ${switchEl('On', [], 'checked')}
       ${switchEl('Disabled', [], 'disabled')}
@@ -136,7 +136,7 @@ export const States: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack" style="--switch-size: sm; --switch-corners: round;">
+    <div class="sb-demo-stage sb-demo-constrained--md stack" style="--switch-size: sm; --switch-corners: round;">
       <span class="sb-demo-tag">--switch-size: sm; --switch-corners: round</span>
       ${switchEl('Autoplay', [], 'checked')}
       ${switchEl('Captions')}
@@ -149,7 +149,7 @@ export const ContainerFlags: Story = {
  */
 export const Direction: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div dir="ltr">${switchEl('Notifications', [], 'checked')}</div>
       <div dir="rtl">${switchEl('الإشعارات', [], 'checked')}</div>
     </div>

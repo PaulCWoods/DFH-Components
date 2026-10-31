@@ -95,3 +95,8 @@ export const Middle: Story = {
       </main>
     </div>`,
 };
+
+export const Flush: Story = {
+  parameters: { docs: { description: { story: '`--flush` drops the gutter, for a region whose edges are already clear.' } } },
+  render: () => `<div class="wrapper wrapper--flush stack">${prose}</div>`,
+};

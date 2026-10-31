@@ -21,7 +21,7 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 - **Type:** each element takes the type of the text atom it stands for: \`h1\` a title, \`h2\` a heading, \`h3\` a subheading, \`h4\`–\`h6\` a small heading, text blocks body text, \`small\` and captions small text. A text atom on an element wins (\`<p class="small-text">\`).
 - **Sizing:** prose follows the sizing mode around it. Put \`.font-sizing-fluid\` or \`.font-sizing-cq\` on the prose or a region; the rhythm between blocks follows too. Compact (\`.ui-compact\`, \`.font-sizing-compact\`) halves the rhythm.
 - **Links:** a bare link is a \`.link\`. \`--link-prominence: subtle\` on the prose makes links body-coloured.
-- **Lists, tables and rules** are styled only without a class: a classed list, \`.table\` or \`.divider\` is a component and styles itself.
+- **Every element** in scope takes the prose look, whatever its classes (a CMS's, such as WordPress's \`wp-block-list\`). Components (\`ul.cluster\`, \`.table\`, \`.divider\`) go in a \`.prose-end\`.
 - **Code blocks** are a dark band in both themes and wrap long lines. Inline code has a subtle tint.
 - **Measure:** text blocks stop at \`--body-measure\` (66ch). The wrapper sets the column width.
         `,
@@ -192,14 +192,14 @@ export const ProseEnd: Story = {
       <h2>Ending the scope</h2>
       <p>Everything inside <code>.prose-end</code> is outside prose: no margins, no element type.</p>
       <div class="prose-end">
-        <div class="card">
+        <article class="card">
           <header class="card__header">
             <h3 class="card__title small-heading">A card in an article</h3>
           </header>
           <div class="card__body">
             <p class="text">Its heading and text take their atoms, not the prose look. <a class="link" href="#c">Its links</a> need a class.</p>
           </div>
-        </div>
+        </article>
       </div>
       <p>Prose carries on after it.</p>
     </article>`,

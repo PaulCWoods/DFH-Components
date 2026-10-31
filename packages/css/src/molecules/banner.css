@@ -279,7 +279,6 @@
 }
 
 :where(.banner--plain) {
-  --icon-box-size: auto;
   --_banner-bg: transparent;
   --_banner-text: var(--foreground, CanvasText);
   --_banner-icon: var(--_banner-tone);
@@ -297,7 +296,7 @@
 /* Translucent: a material, combined with any prominence that has a fill */
 @media (prefers-contrast: no-preference) {
   :where(.banner--translucent) {
-    background-color: color-mix(in oklch, var(--_banner-bg), transparent var(--banner-translucency, 0%));
+    background-color: color-mix(in srgb, var(--_banner-bg), transparent var(--banner-translucency, 0%));
     backdrop-filter: var(--banner-filter, none);
   }
 }
@@ -323,7 +322,8 @@
   }
 }
 
-/* Action: one button, or a .cluster of them */
+/* Action at the side: one button, or a .cluster of them. A .cluster in the
+   body sits under the message instead, where it can wrap. */
 :where(.banner__action) {
   align-self: var(--_banner-align);
   flex-shrink: 0;

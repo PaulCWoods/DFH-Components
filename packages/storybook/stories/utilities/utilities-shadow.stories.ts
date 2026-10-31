@@ -67,3 +67,26 @@ export const Tinted: Story = {
       </div>
     </div>`,
 };
+
+/* A part pinned to the edge of its scroller, with a shadow only while pinned */
+export const StickyShadow: Story = {
+  render: () => `
+    <article class="card card--scrollable container-inline-scroll card--ruled max-h-xs max-w-md" tabindex="0" aria-label="Sowing notes">
+      <header class="card__header sticky-shadow"><h3 class="card__title heading">Sowing notes</h3></header>
+      <div class="card__body stack">
+        ${Array.from({ length: 6 }, () => `<p class="text">Sow hardy annuals in autumn, in a sheltered spot, and thin them in spring.</p>`).join('')}
+      </div>
+      <footer class="card__footer sticky-shadow"><span class="small-text text-muted">Updated in September</span></footer>
+    </article>`,
+};
+
+/* Any scroller: .container-scroll marks it, and a part with no surface behind it sets its own */
+export const StickyShadowInAnyScroller: Story = {
+  render: () => `
+    <div class="container-scroll overflow-y-auto max-h-xs max-w-md border" tabindex="0" role="region" aria-label="Sowing dates" style="--sticky-shadow-bg: var(--surface-card);">
+      <p class="sticky-shadow small-heading p-md">Sowing dates</p>
+      <div class="stack p-md">
+        ${Array.from({ length: 8 }, (_, i) => `<p class="text">Sow the next row in week ${i + 1}, and water it in.</p>`).join('')}
+      </div>
+    </div>`,
+};

@@ -71,7 +71,7 @@ Also \`--one-line\`: starts at one line and grows.
     disabled: { control: 'boolean' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="textarea-playground" class="field__label label">${args.label}</label>
         ${args.invalid ? '<p id="textarea-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>' : ''}
@@ -101,7 +101,7 @@ export const Playground: Story = {
  */
 export const Prominence: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${PROMINENCES.map((p) => field(p, (id) => `<textarea id="${id}" class="${textareaClasses('default', p)}"></textarea>`)).join('')}
     </div>
   `,
@@ -112,7 +112,7 @@ export const Prominence: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${SIZES.map((s) => field(s, (id) => `<textarea id="${id}" class="${textareaClasses(s)}"></textarea>`)).join('')}
     </div>
   `,
@@ -123,7 +123,7 @@ export const Sizes: Story = {
  */
 export const Lines: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Comment (--one-line)', (id) => `<textarea id="${id}" class="textarea textarea--one-line" placeholder="Add a comment"></textarea>`)}
       ${field('Notes (--textarea-lines-max: 5)', (id) => `<textarea id="${id}" class="textarea" style="--textarea-lines-max: 5;">One\nTwo\nThree\nFour\nFive\nSix\nSeven</textarea>`)}
     </div>
@@ -135,7 +135,7 @@ export const Lines: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div class="field">
         <label for="textarea-invalid" class="field__label label">Invalid</label>
         <p id="textarea-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>

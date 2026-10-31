@@ -12,7 +12,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
 ### Markup
 \`\`\`html
 <div class="batch-actions" role="group" aria-label="Selected files" hidden>
-  <p class="batch-actions__summary small-heading" role="status">3 selected</p>
+  <p class="batch-actions__summary small-heading">3 selected</p>
   <hr class="divider" aria-hidden="true">
   <div class="batch-actions__actions button-group buttons-subtle">
     <button type="button" class="button"><span>Export</span></button>
@@ -27,7 +27,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
 \`\`\`
 
 - **A group, not a toolbar:** \`role="toolbar"\` promises arrow keys, and the library ships no script.
-- **Summary** is text in \`role="status"\`, so a changed count is announced. Keep the bar in the page and toggle \`hidden\`; it fades and slides away.
+- **Summary** is text. Announce the count from an empty \`role="status"\` element outside the bar, which a hidden bar can't do for itself. Toggle \`hidden\`; it fades and slides away.
 - **Placement:** floating (default, fixed at the bottom centre), \`--docked\`, \`--inline\`. **Prominence:** default, \`--strong\` (inverted), \`--plain\`. Also \`--round\`, \`--compact\` and \`--scrollable\` (one row: the actions scroll with a fade between a fixed summary and dismiss button).
 
 The floating stories sit in a stage with a transform, so the fixed bar stays inside it.
@@ -60,7 +60,7 @@ const dismiss = `
 
 const bar = (cls: string, label: string, count = '3 selected', attrs = '', more = false) => `
   <div class="batch-actions${cls ? ` ${cls}` : ''}" role="group" aria-label="${label}"${attrs}>
-    <p class="batch-actions__summary small-heading" role="status">${count}</p>
+    <p class="batch-actions__summary small-heading">${count}</p>
     <hr class="divider" aria-hidden="true">
     ${actions('buttons-subtle', more)}
     <hr class="divider" aria-hidden="true">
@@ -100,7 +100,7 @@ export const Selection: Story = {
           ${files.map((f) => `<label class="choice"><input type="checkbox" class="checkbox-input" onchange="${update}" /><span>${f}</span></label>`).join('')}
         </fieldset>
         <div class="batch-actions batch-actions--round" role="group" aria-label="Selected files" hidden>
-          <p class="batch-actions__summary small-heading" role="status">0 selected</p>
+          <p class="batch-actions__summary small-heading">0 selected</p>
           <hr class="divider" aria-hidden="true">
           ${actions()}
           <hr class="divider" aria-hidden="true">
@@ -163,7 +163,7 @@ export const DockedInACard: Story = {
         </table>
       </div>
       <div class="batch-actions batch-actions--docked" role="group" aria-label="Selected crops">
-        <p class="batch-actions__summary small-heading" role="status">2 selected</p>
+        <p class="batch-actions__summary small-heading">2 selected</p>
         <div class="batch-actions__actions button-group">
           <button type="button" class="button button--strong button--accent"><span>Log harvest</span></button>
           <button type="button" class="button button--danger"><span>Remove</span></button>

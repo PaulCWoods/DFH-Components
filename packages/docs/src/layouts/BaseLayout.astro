@@ -2,7 +2,8 @@
 /* ==========================================================================
    The page: head, fonts, colour scheme, and the library's app shell
    (§19d): skip link, sticky header, the page's own content, footer, and
-   the search dialog. No docs CSS: everything here is the library.
+   the search dialog. The home page has no header, so no search dialog
+   either, as nothing could open it. No docs CSS: everything here is the library.
    The font links between the theme-fonts markers in the head are written
    by build:type and the designer's Publish. Don't quote the markers
    anywhere else in this file: the writer replaces from the first one.
@@ -14,8 +15,8 @@ import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';
 import type { Section } from '../lib/nav';
 
-interface Props { title: string; description: string; nav: Section[]; current: string }
-const { title, description, nav, current } = Astro.props;
+interface Props { title: string; description: string; nav: Section[]; current: string; header?: boolean }
+const { title, description, nav, current, header = true } = Astro.props;
 const fullTitle = title === 'Design For Humans Components' ? title : `${title} · Design For Humans Components`;
 ---
 <!doctype html>
@@ -39,9 +40,9 @@ const fullTitle = title === 'Design For Humans Components' ? title : `${title} �
   </head>
   <body class="app">
     <a href="#main" class="skip-link">Skip to content</a>
-    <Header nav={nav} current={current} />
+    {header && <Header nav={nav} current={current} />}
     <slot />
     <Footer />
-    <Search />
+    {header && <Search />}
   </body>
 </html>

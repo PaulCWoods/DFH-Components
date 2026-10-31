@@ -1,0 +1,22 @@
+---
+/* The component pages of one tier, as block links with their summaries */
+import Icon from './Icon.astro';
+import { getComponents } from '../lib/nav';
+interface Props { tier: string }
+const { tier } = Astro.props;
+const pages = (await getComponents()).filter((c) => c.tier === tier);
+---
+{pages.length > 0 ? (
+  <ul class="stack gap-xs p-0 prose-end" role="list" style="--block-link-prominence: subtle;">
+    {pages.map((p) => (
+      <li>
+        <a href={p.href} class="block-link">
+          <span class="block-link__text"><span class="small-heading">{p.title}</span><br /><span class="small-text text-muted">{p.summary}</span></span>
+          <Icon name="ArrowRight" class="block-link__arrow icon--dir" />
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p class="text-muted">Pages for these are on their way.</p>
+)}

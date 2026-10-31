@@ -38,9 +38,6 @@
   --_toast-inline-end: calc(var(--_toast-offset) + env(safe-area-inset-right, 0px));
   --_toast-align: flex-end;
 
-  /* Flags for the banners inside */
-  --banner-shadow: var(--toast-shadow, var(--shadow-md, none));
-
   /* A popover's UA box (border, padding, background, centring) is reset */
   background: transparent;
   border: 0;
@@ -100,6 +97,9 @@
   --_toast-timefunc: var(--toast-timefunc, ease-in-out);
   --_toast-shift: 0.5rem;
 
+  /* Its own, so a toast floats with or without a stack */
+  --banner-shadow: var(--toast-shadow, var(--shadow-md, none));
+
   max-inline-size: 100%;
   pointer-events: auto;
 
@@ -130,7 +130,7 @@
    4. Accessibility & media queries
    ========================================================================== */
 @media (prefers-contrast: more) {
-  :where(.toast-stack) {
+  :where(.toast) {
     --banner-shadow: none;
   }
 }

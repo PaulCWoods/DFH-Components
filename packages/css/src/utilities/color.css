@@ -85,17 +85,17 @@
 
 @media (prefers-contrast: no-preference) {
     :where(.bg-translucent-subtle) {
-        background-color: color-mix(in oklch, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency-subtle, 10%));
+        background-color: color-mix(in srgb, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency-subtle, 10%));
         backdrop-filter: var(--surface-layer-filter, none);
     }
 
     :where(.bg-translucent) {
-        background-color: color-mix(in oklch, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency, 50%));
+        background-color: color-mix(in srgb, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency, 50%));
         backdrop-filter: var(--surface-layer-filter, none);
     }
 
     :where(.bg-translucent-strong) {
-        background-color: color-mix(in oklch, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency-strong, 70%));
+        background-color: color-mix(in srgb, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency-strong, 70%));
         backdrop-filter: var(--surface-layer-filter, none);
     }
 }

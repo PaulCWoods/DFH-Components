@@ -54,7 +54,7 @@ Native checkboxes and radios, coloured with \`accent-color\`. The browser draws 
     disabled: { control: 'boolean' },
   },
   render: (args) => `
-    <div class="demo-stage">
+    <div class="sb-demo-stage">
       ${choice(
         args.type,
         args.label,
@@ -82,7 +82,7 @@ export const Playground: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <div class="cluster">
         ${choice('checkbox', 'Default', 'checked')}
         ${choice('checkbox', 'Large', 'checked', true)}
@@ -104,7 +104,7 @@ export const Sizes: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <div class="cluster">
         ${choice('checkbox', 'Unchecked')}
         ${choice('checkbox', 'Checked', 'checked')}
@@ -133,7 +133,7 @@ export const States: Story = {
  */
 export const InAFieldset: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <fieldset class="fieldset">
         <legend class="fieldset__legend label">Deliverables</legend>
         <div class="choices">

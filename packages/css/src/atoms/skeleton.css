@@ -51,7 +51,7 @@
    1. Paint (every skeleton, shapes and companions)
    ========================================================================== */
 :where(.skeleton) {
-  --_skeleton-color: var(--skeleton-color, color-mix(in oklch, CanvasText 20%, transparent));
+  --_skeleton-color: var(--skeleton-color, color-mix(in srgb, CanvasText 20%, transparent));
   --_skeleton-shimmer: var(--skeleton-shimmer, transparent);
   --_skeleton-radius: var(--skeleton-radius, 0);
   --_skeleton-radius-round: var(--skeleton-radius-round, 50%);
@@ -207,7 +207,7 @@
 /* Increased contrast: a stronger fill. */
 @media (prefers-contrast: more) {
   :where(.skeleton) {
-    --_skeleton-color: var(--skeleton-color-strong, color-mix(in oklch, CanvasText 35%, transparent));
+    --_skeleton-color: var(--skeleton-color-strong, color-mix(in srgb, CanvasText 35%, transparent));
   }
 }
 

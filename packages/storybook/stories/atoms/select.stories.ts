@@ -83,7 +83,7 @@ A native \`<select>\`. It shares the text control base with input and textarea (
     disabled: { control: 'boolean' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="select-playground" class="field__label label">${args.label}</label>
         ${args.invalid ? '<p id="select-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>' : ''}
@@ -113,7 +113,7 @@ export const Playground: Story = {
  */
 export const Prominence: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${PROMINENCES.map((p) => field(p, (id) => `<select id="${id}" class="${selectClasses('default', p)}">${OPTIONS}</select>`)).join('')}
       ${field('round', (id) => `<select id="${id}" class="select select--round">${OPTIONS}</select>`)}
     </div>
@@ -125,7 +125,7 @@ export const Prominence: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${SIZES.map(
         (s) => `
       <div style="display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: var(--spacing-16);">
@@ -143,7 +143,7 @@ export const Sizes: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div class="field">
         <label for="select-invalid" class="field__label label">Invalid</label>
         <p id="select-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>
@@ -160,7 +160,7 @@ export const States: Story = {
  */
 export const Custom: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="select-custom" class="field__label label">Conformance target</label>
         <select id="select-custom" class="select select--custom">
@@ -179,11 +179,11 @@ export const Custom: Story = {
  */
 export const Direction: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${['ltr', 'rtl']
         .map(
           (dir) => `
-        <div dir="${dir}" class="demo-constrained--md">
+        <div dir="${dir}" class="sb-demo-constrained--md">
           ${field(dir === 'rtl' ? 'الدور' : 'Role', (id) => `<select id="${id}" class="select">${OPTIONS}</select>`)}
         </div>`
         )

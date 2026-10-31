@@ -10,6 +10,7 @@
    | :---------- | :--------------------- | :----------------------------- |
    | Prominence  | default, --plain       | --accordion-prominence: plain  |
    | Density     | default, --compact     | --ui-sizing: compact           |
+   | Padding     | default, --flush       | none                           |
 
    Default is a bordered frame with no surface of its own, the same open or
    closed. --plain has no frame: a rule above and below, no inline padding,
@@ -53,6 +54,8 @@
   --_accordion-padding-block: var(--accordion-padding, var(--spacing, 1rem));
   --_accordion-padding-inline: var(--accordion-padding, var(--spacing, 1rem));
   --_accordion-inset: var(--accordion-inset, var(--_accordion-padding-inline));
+  --_accordion-content-inset: var(--_accordion-inset);
+  --_accordion-content-padding-end: var(--_accordion-padding-block);
   --_accordion-bleed: 0px;
   --_accordion-summary-radius: calc(var(--_accordion-radius) - var(--_accordion-border-width));
   --_accordion-hover-bg: var(--accordion-hover-bg, var(--surface-translucent, transparent));
@@ -100,7 +103,7 @@
   transition: padding-block-end var(--_accordion-transition) var(--_accordion-timefunc);
 
   &[open] {
-    padding-block-end: var(--_accordion-padding-block);
+    padding-block-end: var(--_accordion-content-padding-end);
   }
 
   /* Reduced motion and more contrast */
@@ -185,7 +188,7 @@
 }
 
 :where(.accordion)::details-content {
-  padding-inline: var(--_accordion-inset);
+  padding-inline: var(--_accordion-content-inset);
 }
 
 @supports (interpolate-size: allow-keywords) {
@@ -218,6 +221,14 @@
   --_accordion-inset: var(--accordion-inset, 0px);
   --_accordion-bleed: max(0px, calc(var(--spacing, 1rem) / 2 - var(--_accordion-inset)));
   --_accordion-summary-radius: var(--radius-sm, 0.25rem);
+}
+
+/* The content meets the frame, for what brings its own padding: a code block,
+   a table, an image. Clipped so it keeps the frame's corners. */
+:where(.accordion--flush) {
+  --_accordion-content-inset: 0px;
+  --_accordion-content-padding-end: 0px;
+  overflow: clip;
 }
 
 :where(.accordion--compact) {

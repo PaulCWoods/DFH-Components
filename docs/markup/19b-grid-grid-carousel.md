@@ -1,6 +1,99 @@
-# 19b. Grid
-Columns that fill the width. Items are never narrower than a minimum width, so the grid reflows as space narrows or text is zoomed, without breakpoints. A layout primitive (`layout/grid.css`).
+---
+title: Grid
+tier: layout
+summary: Columns that fill the width and reflow on their own, or a row that scrolls and snaps.
+storybook: layout-grid
+related: [split, stack-inline-cluster, wrapper, card, responsive-visibility]
+---
 
+# 19b. Grid
+```html live
+<ul class="grid grid--xs" role="list">
+  <li class="card"><p class="text">Ferns</p></li>
+  <li class="card"><p class="text">Hostas</p></li>
+  <li class="card"><p class="text">Grasses</p></li>
+</ul>
+```
+
+## Why it exists
+A set of like things should fill the space it's given, whatever that space turns out to be. So a Grid has no breakpoints. It takes a minimum width for an item and fits as many columns as it can.
+
+That also makes it hold up under zoom. Zooming in narrows the space in CSS terms, so the columns drop away by themselves and nothing overflows. A column count is only a maximum, and an item still won't go below its minimum.
+
+The carousel is the same list in one row, scrolled by the browser. It adds no script and no arrows, so trackpads, touch and focus all work as they do on any other scroller.
+
+## When to use
+- **For a set of like items** (Cards, link lists) in as many columns as fit.
+- **For a row that scrolls,** with `--carousel`.
+- **Not for two panes of different widths:** that is a [Split](19c-split.md).
+- **Not for one row or column of things:** that is an Inline, a Cluster or a [Stack](22-stack-inline-cluster.md).
+- **Not for data:** that is a [Table](13-table.md).
+
+## Rules
+- **Lists:** a list grid loses its markers, so give it `role="list"`.
+- **Carousel:** scrolls by trackpad, touch, or the keyboard as focus moves through its items. If the items hold nothing focusable, give the Grid `tabindex="0"` and an `aria-label` so keyboard users can scroll it. Smooth scrolling only without reduced motion.
+- **Container variants** need a container ancestor (`.container-inline`, a Card, the Header, a Split); without one they never apply.
+
+## As Many Columns as Fit
+As many columns as fit, each at least 16rem.
+
+```html live
+<ul class="grid grid--xs" role="list">
+  <li class="card"><p class="text">Astrantia</p></li>
+  <li class="card"><p class="text">Brunnera</p></li>
+</ul>
+```
+
+## At Most a Number of Columns
+At most three columns, each at least 16rem.
+
+```html live
+<div class="grid grid--3-col grid--xs">
+  <div class="card"><p class="text">Spring</p></div>
+  <div class="card"><p class="text">Summer</p></div>
+  <div class="card"><p class="text">Autumn</p></div>
+</div>
+```
+
+One column, three once its container is 48rem wide.
+
+```html live
+<div class="container-inline">
+  <div class="grid @3xl:grid--3-col">
+    <div class="card"><p class="text">Sun</p></div>
+    <div class="card"><p class="text">Part shade</p></div>
+    <div class="card"><p class="text">Full shade</p></div>
+  </div>
+</div>
+```
+
+## One Row That Scrolls
+Each Card holds a Link, so focus scrolls the row.
+
+```html live
+<ul class="grid grid--carousel grid--xs" role="list">
+  <li class="card"><a href="/ferns" class="link link--plain link--stretched">Ferns</a></li>
+  <li class="card"><a href="/hostas" class="link link--plain link--stretched">Hostas</a></li>
+  <li class="card"><a href="/grasses" class="link link--plain link--stretched">Grasses</a></li>
+  <li class="card"><a href="/bulbs" class="link link--plain link--stretched">Bulbs</a></li>
+  <li class="card"><a href="/climbers" class="link link--plain link--stretched">Climbers</a></li>
+  <li class="card"><a href="/shrubs" class="link link--plain link--stretched">Shrubs</a></li>
+</ul>
+```
+
+## Do and Don't
+| Do | Don't |
+| :--- | :--- |
+| Give the Grid a maximum column count and let it reflow. | Set columns at viewport breakpoints. |
+| Give a list grid `role="list"`. | Leave a list without its role once its markers are gone. |
+| Make a carousel of unfocusable items a named tab stop. | Leave a row that keyboard users can't scroll. |
+| Give container variants a container ancestor. | Expect `@3xl:` to apply with no container. |
+| Use `--gap` and `--grid-min` on the Grid itself. | Expect them to reach a nested grid. |
+
+## Reference
+Columns that fill the width. Items are never narrower than a minimum width, so the Grid reflows as space narrows or text is zoomed, without breakpoints. A layout primitive (`layout/grid.css`).
+
+## Options
 | Modifier | Effect |
 | :--- | :--- |
 | default, `--2xs` … `--2xl` | Auto-fill columns with the block step as the minimum width (default: the base block step, 36rem) |
@@ -12,27 +105,6 @@ Columns that fill the width. Items are never narrower than a minimum width, so t
 | `--carousel-bleed` | The carousel runs into the page's cushion, to the screen edge |
 | `--tight`, `--cushioned`, `--ruled` | No gap, the cushion step, a rule in each gap |
 
-## A. Markup
-```html
-<!-- As many columns as fit, each at least 16rem -->
-<ul class="grid grid--xs" role="list">
-  <li class="card">…</li>
-</ul>
-
-<!-- At most three columns, each at least 16rem -->
-<div class="grid grid--3-col grid--xs">…</div>
-
-<!-- One column, three once its container is 48rem wide -->
-<div class="grid @3xl:grid--3-col">…</div>
-
-<!-- A carousel: each card holds a link, so focus scrolls the row -->
-<ul class="grid grid--carousel grid--xs" role="list">…</ul>
-```
-
-## B. Rules
-- **Hooks:** `--gap` and `--grid-min`, set on the grid itself. They don't reach a nested grid.
+### Further rules
+- **Hooks:** `--gap` and `--grid-min`, set on the Grid itself. They don't reach a nested grid.
 - **Density:** inside a compact region (`.ui-compact`, a `--compact` container) the gap steps down: the default to the compact step, `--cushioned` to the default.
-- **Lists:** a list grid loses its markers, so give it `role="list"`.
-- **Carousel:** scrolls by trackpad, touch, or the keyboard as focus moves through its items. If the items hold nothing focusable, give the grid `tabindex="0"` and an `aria-label` so keyboard users can scroll it. Smooth scrolling only without reduced motion.
-- **Container variants** need a container ancestor (`.container-inline`, a card, the header, a split); without one they never apply.
-- **Removed:** viewport-prefixed column classes (`sm:grid--N-col` … `xl:`, `md:grid`, `md:grid--auto-fit`); `.grid-carousel` and `--bleed` aliases; viewport carousels (`max-md:grid--carousel`, `max-sm:`, `md-max:`, `grid--carousel-below-md`); `@max-md:carousel`; `@sm:`, `@md:`, `@lg:` at 40, 48 and 60em (now `@2xl:`, `@3xl:`, `@5xl:`) and `@max-md:grid--carousel` (now `@max-3xl:`), in the utilities pass. Use a column count (it reflows on its own) or a container variant.

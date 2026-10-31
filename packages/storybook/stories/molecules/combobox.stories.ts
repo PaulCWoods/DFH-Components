@@ -348,6 +348,31 @@ export const RichOptions: Story = {
     </div>`),
 };
 
+export const StaticList: Story = {
+  name: 'Static list',
+  parameters: {
+    docs: {
+      description: {
+        story: '`.combobox__listbox--static` is always shown, in flow, with no frame of its own: for a list that is the whole content of a Dialog or panel. Its input keeps `aria-expanded="true"`.',
+      },
+    },
+  },
+  render: story(`
+    <div class="field" style="max-inline-size: 26rem;">
+      <label for="static" class="field__label label">Find a plant</label>
+      <div class="combobox">
+        <div class="combobox__control">
+          ${icon('Search', 'icon combobox__icon-start')}
+          <input id="static" class="combobox__input" role="combobox" aria-expanded="true" aria-controls="static-list" aria-autocomplete="list" autocomplete="off" />
+        </div>
+        <ul id="static-list" class="combobox__listbox combobox__listbox--static" role="listbox" aria-label="Matching plants">
+          ${plants.map((p, i) => option(`static-${i}`, `<span>${p}</span>`)).join('')}
+        </ul>
+        <p class="sr-only" role="status"></p>
+      </div>
+    </div>`),
+};
+
 export const NoResults: Story = {
   name: 'No results',
   parameters: {

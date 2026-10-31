@@ -6,7 +6,7 @@
    (packages/docs/dist) and, for every page:
 
    - links: every internal link and #anchor points at a page and an id that
-     exist;
+     exist (links inside live examples are made up, and skipped);
    - axe: no WCAG violations, in light and in dark;
    - layout: nothing stranded out of reach and no sideways scroll, at the
      same 10 screen sizes as check:layout.
@@ -39,7 +39,7 @@ if (!existsSync(join(root, 'index.html'))) {
 /* Every page: each index.html under dist, as its URL path */
 const walk = (dir) => readdirSync(dir).flatMap((f) => {
   const p = join(dir, f);
-  return statSync(p).isDirectory() ? (f === 'pagefind' ? [] : walk(p)) : f === 'index.html' ? [p] : [];
+  return statSync(p).isDirectory() ? (f === 'pagefind' || f === 'storybook' ? [] : walk(p)) : f === 'index.html' ? [p] : [];
 });
 const pages = walk(root).map((f) => `/${relative(root, f).replace(/index\.html$/, '')}`);
 
@@ -74,9 +74,10 @@ const send = (method, params = {}) => new Promise((r) => { const id = ++seq; pen
 const evaluate = async (expression) => (await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true })).result?.result?.value;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/* In the page: its internal links, and its ids */
+/* In the page: its internal links (not those in live examples, which
+   point at made-up pages), and its ids */
 const linksProbe = `(() => ({
-  links: [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')).filter((h) => !/^[a-z]+:/i.test(h) || h.startsWith(location.origin)),
+  links: [...document.querySelectorAll('a[href]:not([data-example] a, [data-playground] a)')].map((a) => a.getAttribute('href')).filter((h) => !/^[a-z]+:/i.test(h) || h.startsWith(location.origin)),
   ids: [...document.querySelectorAll('[id]')].map((el) => el.id),
 }))()`;
 
@@ -109,7 +110,9 @@ const layoutProbe = `(() => {
   return out;
 })()`;
 
-const axeRun = `axe.run(document, { resultTypes: ['violations'] }).then((r) => r.violations.map((v) => v.id + ' (' + v.nodes.length + '): ' + v.nodes.slice(0, 2).map((n) => n.target.join(' ') + (n.any[0]?.data?.contrastRatio ? ' ' + n.any[0].data.contrastRatio + ':1 ' + n.any[0].data.fgColor + ' on ' + n.any[0].data.bgColor : '')).join(', ')))`;
+/* Standards decide, not the tool. Off: an <aside> in <main> is valid HTML and
+   ARIA (complementary is allowed there); only axe's best-practice rule objects */
+const axeRun = `axe.run(document, { resultTypes: ['violations'], rules: { 'landmark-complementary-is-top-level': { enabled: false } } }).then((r) => r.violations.map((v) => v.id + ' (' + v.nodes.length + '): ' + v.nodes.slice(0, 2).map((n) => n.target.join(' ') + (n.any[0]?.data?.contrastRatio ? ' ' + n.any[0].data.contrastRatio + ':1 ' + n.any[0].data.fgColor + ' on ' + n.any[0].data.bgColor : '')).join(', ')))`;
 
 const problems = [];
 const report = (line) => { problems.push(line); console.log(line); };
@@ -130,6 +133,16 @@ for (const [n, page] of pages.entries()) {
     /* Let colour transitions finish before measuring contrast */
     await wait(600);
     for (const v of (await evaluate(axeRun)) || []) report(`${page} axe ${scheme}: ${v}`);
+    /* Each playground choice once, with the others at their start */
+    const choices = await evaluate(`document.querySelectorAll('[data-controls] input').length`);
+    for (let i = 0; i < choices; i++) {
+      await evaluate(`document.querySelectorAll('[data-controls] input')[${i}].click()`);
+      await wait(250);
+      for (const v of (await evaluate(axeRun)) || []) report(`${page} axe ${scheme}, choice ${i + 1}: ${v}`);
+      /* The code says what the choice did, and nothing of the playground's own */
+      if (!(await evaluate(`(() => { const input = document.querySelectorAll('[data-controls] input')[${i}]; const code = input.closest('[data-playground]').querySelector('.code-block code').textContent; return input.dataset.classes.split(' ').every((c) => code.includes(c)) && !/data-(axes|label)/.test(code); })()`))) report(`${page} choice ${i + 1}: the code doesn't match`);
+      await evaluate(`document.querySelectorAll('[data-controls] input')[${i}].closest('fieldset').querySelector('input[checked]').click()`);
+    }
   }
   await evaluate(`document.documentElement.classList.remove('color-scheme-light', 'color-scheme-dark')`);
 
@@ -143,9 +156,17 @@ for (const [n, page] of pages.entries()) {
 }
 
 /* Links: each internal target is a page, and each #anchor an id on it */
+const storyIndex = new URL('../packages/storybook/storybook-static/index.json', import.meta.url);
+const stories = existsSync(storyIndex) ? JSON.parse(readFileSync(storyIndex, 'utf8')).entries : {};
 for (const [page, { links }] of Object.entries(found)) {
   for (const href of new Set(links)) {
     const url = new URL(href, base + page);
+    /* Into Storybook: the story has to exist */
+    if (url.pathname === '/storybook/') {
+      const story = url.searchParams.get('path')?.split('/').pop();
+      if (!stories[story]) report(`${page} link: no story ${story}`);
+      continue;
+    }
     if (url.pathname.startsWith('/pagefind/') || extname(url.pathname)) {
       if (!existsSync(join(root, url.pathname))) report(`${page} link: ${href} doesn't exist`);
       continue;

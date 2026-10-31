@@ -81,7 +81,7 @@ A native \`<progress>\` showing how far a task has got. Leave out \`value\` for 
     round: { control: 'boolean', description: '--round' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${field(args.label, args.indeterminate ? null : args.value, progressClasses(args.size, args.intent, args.round))}
     </div>
   `,
@@ -102,7 +102,7 @@ export const Playground: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${SIZES.map((s) => field(`Size ${s}`, 45, progressClasses(s))).join('')}
       <div class="ui-compact">${field('Compact container', 45)}</div>
     </div>
@@ -114,7 +114,7 @@ export const Sizes: Story = {
  */
 export const Intents: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Uploading (accent)', 40)}
       ${field('Indexing (info)', 55, progressClasses('default', 'info'))}
       ${field('Backup complete', 100, progressClasses('default', 'success'), 'Done')}
@@ -129,7 +129,7 @@ export const Intents: Story = {
  */
 export const Indeterminate: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack" aria-busy="true">
+    <div class="sb-demo-stage sb-demo-constrained--md stack" aria-busy="true">
       ${SIZES.map((s) => field(`Syncing (${s})`, null, progressClasses(s))).join('')}
     </div>
   `,
@@ -140,7 +140,7 @@ export const Indeterminate: Story = {
  */
 export const Corners: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Default', 60, progressClasses('lg'))}
       ${field('Round', 60, progressClasses('lg', 'accent', true))}
     </div>
@@ -152,7 +152,7 @@ export const Corners: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack" style="--progress-size: lg; --progress-intent: success; --progress-corners: round;">
+    <div class="sb-demo-stage sb-demo-constrained--md stack" style="--progress-size: lg; --progress-intent: success; --progress-corners: round;">
       <span class="sb-demo-tag">--progress-size: lg; --progress-intent: success; --progress-corners: round</span>
       ${field('Step 1', 100, 'progress', 'Done')}
       ${field('Step 2', 100, 'progress', 'Done')}
@@ -165,7 +165,7 @@ export const ContainerFlags: Story = {
  */
 export const Direction: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div dir="ltr">${field('Uploading', 30, progressClasses('lg'))}</div>
       <div dir="rtl">${field('جارٍ الرفع', 30, progressClasses('lg'))}</div>
       <div dir="rtl">${field('جارٍ المزامنة', null, progressClasses('lg'))}</div>

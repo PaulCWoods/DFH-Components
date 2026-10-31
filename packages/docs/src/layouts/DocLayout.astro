@@ -16,8 +16,10 @@ interface Props {
   nav: Section[];
   current: string;
   headings: { depth: number; slug: string; text: string }[];
+  /* A word above the title: a component's tier */
+  eyebrow?: string;
 }
-const { title, summary, nav, current, headings } = Astro.props;
+const { title, summary, nav, current, headings, eyebrow } = Astro.props;
 const pages = flatten(nav);
 const at = pages.findIndex((p) => p.href === current);
 const toc = headings.filter((h) => h.depth === 2);
@@ -32,19 +34,25 @@ const toc = headings.filter((h) => h.depth === 2);
     <main id="main" class="main">
       <div class="wrapper stack gap-cushion">
         <article class="prose" data-pagefind-body>
-          <h1>{title}</h1>
+          {eyebrow ? (
+            <hgroup>
+              <p class="micro-heading text-muted">{eyebrow}</p>
+              <h1>{title}</h1>
+            </hgroup>
+          ) : <h1>{title}</h1>}
           <p class="large-text text-muted">{summary}</p>
+          <hr />
           <slot />
         </article>
         <PageNav prev={pages[at - 1]} next={pages[at + 1]} />
       </div>
     </main>
     {toc.length > 1 && (
-      <div class="sidebar sidebar--end sidebar--sticky max-xl:hide">
+      <div class="sidebar sidebar--end sidebar--plain sidebar--sticky max-xl:hide">
         <div class="sidebar__body">
           <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="toc-heading">
             <ol>
-              <li class="navigation-tree__heading"><h2 id="toc-heading" class="micro-heading">On this page</h2></li>
+              <li class="navigation-tree__heading"><h2 id="toc-heading" class="subheading">On this page</h2></li>
               {toc.map((h) => <li><a href={`#${h.slug}`} class="button"><span>{h.text}</span></a></li>)}
             </ol>
           </nav>
@@ -53,3 +61,55 @@ const toc = headings.filter((h) => h.depth === 2);
     )}
   </div>
 </BaseLayout>
+
+<script>
+  import { compose, toLive } from '../lib/playground.mjs';
+
+  /* Playgrounds: a choice rebuilds the example and its code */
+  for (const figure of document.querySelectorAll<HTMLElement>('[data-playground]')) {
+    const controls = figure.querySelector<HTMLElement>('[data-controls]')!;
+    controls.hidden = false;
+    controls.addEventListener('change', () => {
+      const chosen = [...controls.querySelectorAll<HTMLInputElement>('input:checked')];
+      const classes = chosen.flatMap((c) => c.dataset.classes!.split(' ').filter(Boolean));
+      const text = chosen.findLast((c) => c.dataset.text)?.dataset.text;
+      const code = compose(figure.dataset.source!, classes, text);
+      figure.querySelector('[data-preview]')!.innerHTML = toLive(code);
+      figure.querySelector('.code-block code')!.textContent = code;
+    });
+  }
+
+  /* Copy buttons appear only where the clipboard works */
+  if (navigator.clipboard) {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+      button.hidden = false;
+      button.addEventListener('click', async () => {
+        const block = button.closest('.code-block')!;
+        await navigator.clipboard.writeText(block.querySelector('code')!.textContent!);
+        block.querySelector('[data-copy-status]')!.textContent = 'Copied';
+      });
+    }
+  }
+</script>
+
+
+<style is:global>
+  /* The Code row sits in a ruled card, which draws its rule and corners */
+  [data-example], [data-playground] {
+    overflow: clip;
+
+    .accordion--flush {
+      --rule-width: 0px;
+    }
+  }
+
+  @scope (:where(article.prose)) to (:where(.prose-end)) {
+    table {
+      inline-size: 100%;
+    }
+
+    .table-container {
+      margin-block: var(--_prose-space);
+    }
+  }
+</style>

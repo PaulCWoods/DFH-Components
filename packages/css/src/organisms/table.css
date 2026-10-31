@@ -17,7 +17,7 @@
    --md, --lg, --xl, --actions, --fill.
 
    Type: the table resets to fixed sizing and uses the body text tokens.
-   A caption sets no type: put a text atom on it, or .sr to hide it.
+   A caption sets no type: put a text atom on it, or .sr-only to hide it.
 
    Accessibility:
    - A container that can scroll needs tabindex="0", role="region" and a
@@ -186,7 +186,7 @@
     }
 
     /* Keeps hidden text from widening the scroll area */
-    &:has(:where(.sr, .visually-hidden)) {
+    &:has(:where(.sr-only, .visually-hidden)) {
       position: relative;
     }
 
@@ -246,11 +246,6 @@
   --_table-body-align: top;
 }
 
-:where(.table--subtle) {
-  --_table-head-bg: transparent;
-  --_table-head-border-width: var(--_table-inner-border-width);
-}
-
 :where(.table--compact) {
   --ui-sizing: compact;
   --_table-cell-padding-block: var(--table-compact-cell-padding-block, 0.5em);
@@ -277,7 +272,7 @@
   }
 
   /* Inside a framed container, a visible caption is ruled off from the head */
-  :where(.table-container)>&:where(:has(> caption:not(.sr, .visually-hidden))) {
+  :where(.table-container)>&:where(:has(> caption:not(.sr-only, .visually-hidden))) {
     border-block-start: var(--_table-border-width) solid var(--_table-border-color);
   }
 

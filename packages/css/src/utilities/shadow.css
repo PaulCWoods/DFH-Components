@@ -60,7 +60,7 @@
    -------------------------------------------------------------------------- */
 
 :where(.shadow-accent) {
-    --shadow-color: color-mix(in oklch, var(--foreground-accent, CanvasText), transparent 75%);
+    --shadow-color: color-mix(in srgb, var(--foreground-accent, CanvasText), transparent 75%);
     --shadow-sm:
         var(--_shadow-sm-layer-1) var(--shadow-color),
         var(--_shadow-sm-layer-2) var(--shadow-color),
@@ -80,7 +80,7 @@
 }
 
 :where(.shadow-success) {
-    --shadow-color: color-mix(in oklch, var(--foreground-success, CanvasText), transparent 75%);
+    --shadow-color: color-mix(in srgb, var(--foreground-success, CanvasText), transparent 75%);
     --shadow-sm:
         var(--_shadow-sm-layer-1) var(--shadow-color),
         var(--_shadow-sm-layer-2) var(--shadow-color),
@@ -100,7 +100,7 @@
 }
 
 :where(.shadow-warning) {
-    --shadow-color: color-mix(in oklch, var(--foreground-warning, CanvasText), transparent 75%);
+    --shadow-color: color-mix(in srgb, var(--foreground-warning, CanvasText), transparent 75%);
     --shadow-sm:
         var(--_shadow-sm-layer-1) var(--shadow-color),
         var(--_shadow-sm-layer-2) var(--shadow-color),
@@ -120,7 +120,7 @@
 }
 
 :where(.shadow-danger) {
-    --shadow-color: color-mix(in oklch, var(--foreground-danger, CanvasText), transparent 75%);
+    --shadow-color: color-mix(in srgb, var(--foreground-danger, CanvasText), transparent 75%);
     --shadow-sm:
         var(--_shadow-sm-layer-1) var(--shadow-color),
         var(--_shadow-sm-layer-2) var(--shadow-color),

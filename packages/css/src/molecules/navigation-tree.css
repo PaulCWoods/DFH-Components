@@ -66,6 +66,11 @@
   display: block;
   min-inline-size: 0;
 
+  :where(.card__body:not(.card__body--flush),
+    .sidebar__body:not(.sidebar__body--flush)) & {
+    margin-inline: calc(var(--_navigation-tree-inset) * -1);
+  }
+
   /* Every list in the tree, at any depth */
   :where(ol, ul) {
     display: flex;
@@ -167,6 +172,10 @@
 
   > :where(*) {
     margin: 0;
+  }
+
+  :where(.navigation-tree)> :where(ol, ul)>&:first-child {
+    padding-block-start: 0;
   }
 }
 

@@ -22,6 +22,7 @@
 @import './atoms/list.css' layer(atoms);
 @import './atoms/link.css' layer(atoms);
 @import './atoms/icon.css' layer(atoms);
+@import './atoms/brand.css' layer(atoms);
 @import './atoms/badge.css' layer(atoms);
 @import './atoms/avatar.css' layer(atoms);
 @import './atoms/thumbnail.css' layer(atoms);
@@ -67,6 +68,7 @@
 @import './molecules/navigation-tree.css' layer(molecules);
 @import './molecules/prose.css' layer(molecules);
 @import './molecules/accordion.css' layer(molecules);
+@import './molecules/code-block.css' layer(molecules);
 @import './molecules/combobox.css' layer(molecules);
 @import './molecules/empty-state.css' layer(molecules);
 
@@ -107,6 +109,7 @@
 @import './utilities/focus-helpers.css' layer(utilities);
 @import './utilities/layout-helpers.css' layer(utilities);
 @import './utilities/scroll-fade.css' layer(utilities);
+@import './utilities/sticky-shadow.css' layer(utilities);
 @import './utilities/shadow.css' layer(utilities);
 @import './utilities/sizing.css' layer(utilities);
 @import './utilities/spacing.css' layer(utilities);

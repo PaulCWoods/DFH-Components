@@ -153,3 +153,15 @@ export const ViewportPanes: Story = {
     </div>`,
 };
 
+
+export const FlushMain: Story = {
+  name: 'Flush main',
+  parameters: { docs: { description: { story: '`.main--flush` has no padding, for a full-bleed page or panes that draw their own.' } } },
+  render: () => `
+    <div class="app">
+      <a href="#main" class="skip-link">Skip to content</a>
+      ${header()}
+      <main id="main" class="main main--flush">${article(1)}</main>
+      ${footer}
+    </div>`,
+};

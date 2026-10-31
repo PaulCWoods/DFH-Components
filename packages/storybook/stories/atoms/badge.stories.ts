@@ -84,7 +84,7 @@ Placement: inline by default; \`--top-end\`, \`--top-start\`, \`--bottom-end\`, 
       args.placement === 'inline'
         ? `<button type="button" class="button" aria-label="${name}"><span>Messages</span>${badge}</button>`
         : `<button type="button" class="button button--icon" aria-label="${name}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Email"/></svg>${badge}</button>`;
-    return `<div class="demo-stage">${host}</div>`;
+    return `<div class="sb-demo-stage">${host}</div>`;
   },
 };
 
@@ -103,7 +103,7 @@ export const Playground: Story = {
  */
 export const IntentsAndSizes: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${[false, true]
         .map(
           (small) => `
@@ -136,7 +136,7 @@ export const IntentsAndSizes: Story = {
  */
 export const Placement: Story = {
   render: () => `
-    <div class="demo-stage cluster" style="gap: var(--spacing-32);">
+    <div class="sb-demo-stage cluster" style="gap: var(--spacing-32);">
       ${(['top-end', 'top-start', 'bottom-end', 'bottom-start'] as Placement[])
         .map(
           (p) => `
@@ -159,7 +159,7 @@ export const Placement: Story = {
  */
 export const InContext: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <nav class="tab-list" aria-label="Repository sections">
         <a href="#code" class="tab" aria-current="page"><span class="tab__text">Code</span></a>
         <a href="#issues" class="tab"><span class="tab__text">Issues</span> <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="sr-only">, 14 open</span></a>
@@ -178,7 +178,7 @@ export const InContext: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage cluster" style="--badge-intent: success; --badge-size: sm;">
+    <div class="sb-demo-stage cluster" style="--badge-intent: success; --badge-size: sm;">
       <button type="button" class="button" aria-label="Approved, 4"><span>Approved</span><span class="badge" aria-hidden="true"><span class="badge__text">4</span></span></button>
       <button type="button" class="button" aria-label="Merged, 9"><span>Merged</span><span class="badge" aria-hidden="true"><span class="badge__text">9</span></span></button>
       <button type="button" class="button" aria-label="Failed, 1"><span>Failed</span><span class="badge badge--danger" aria-hidden="true"><span class="badge__text">1</span></span></button>

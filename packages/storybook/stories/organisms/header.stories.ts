@@ -49,7 +49,7 @@ type Story = StoryObj;
 const icon = (name: string) =>
   `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
-const brand = `<a href="#" class="link link--plain small-heading text-nowrap">Woodland Plants</a>`;
+const brand = `<a href="#" class="brand"><span class="brand__name">Woodland Plants</span></a>`;
 
 const nav = (id = 'main', label = 'Main') => `
   <nav class="header__nav tab-list tab-list--plain tab-list--scrollable @max-3xl:hide" aria-label="${label}" id="${id}-nav">
@@ -219,5 +219,19 @@ export const RightToLeft: Story = {
           <button type="button" class="button button--strong button--accent">تسجيل الدخول</button>
         </div>
       </header>
+    </div>`,
+};
+
+export const StretchAndPhoneDensity: Story = {
+  name: 'Stretch, and compact on a phone',
+  parameters: { docs: { description: { story: '`--stretch` drops the width cap on the bars. `max-md:header--compact` steps the Header down below 48rem only. These are `<div class="header">` so the story has no banner landmarks.' } } },
+  render: () => `
+    <div class="stack gap-lg p-md">
+      <div class="header header--stretch">
+        <div class="header__bar">${brand}<button type="button" class="button">Sign in</button></div>
+      </div>
+      <div class="header max-md:header--compact">
+        <div class="header__bar">${brand}<button type="button" class="button">Sign in</button></div>
+      </div>
     </div>`,
 };

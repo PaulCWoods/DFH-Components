@@ -26,7 +26,7 @@ Moves between the pages of one list: a button group of page links. Pagination ma
 \`\`\`
 
 - **Current page:** \`aria-current="page"\` on its link. The button shows it as selected; no class.
-- **No previous or next page:** a link with no \`href\` and \`aria-disabled="true"\`.
+- **No previous or next page:** a link with no \`href\`, \`role="link"\` and \`aria-disabled="true"\`.
 - **Skipped pages:** \`.pagination__gap\`, hidden from screen readers.
 - **Page count** ("Page 2 of 10" and a jump form) is a pattern, not a component: see the last story.
         `,
@@ -43,11 +43,11 @@ const icon = (name: string) =>
 
 const prev = (current: number) => current > 1
   ? `<a class="button button--icon" href="#page-${current - 1}">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`
-  : `<a class="button button--icon" aria-disabled="true">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`;
+  : `<a role="link" class="button button--icon" aria-disabled="true">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`;
 
 const next = (current: number, total: number) => current < total
   ? `<a class="button button--icon" href="#page-${current + 1}">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`
-  : `<a class="button button--icon" aria-disabled="true">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`;
+  : `<a role="link" class="button button--icon" aria-disabled="true">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`;
 
 const page = (n: number, current: number) =>
   `<a class="button" href="#page-${n}"${n === current ? ' aria-current="page"' : ''}><span>${n}</span></a>`;

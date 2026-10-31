@@ -1,14 +1,69 @@
-# 36. Utilities
-A utility sets one property to one value on the element it is on, from a Tier 2 token where one exists (`packages/css/src/utilities/`). It never does a component's job: type size belongs to the text atoms, arrangement to the layout primitives, widths and surfaces to components. Responsive helpers are in §31.
+---
+title: Utilities
+tier: utility
+summary: Classes that set one property to one value on the element they are on.
+storybook: [utilities-spacing, utilities-border, utilities-typography, utilities-colour, utilities-display-flex, utilities-sizing, utilities-position-overflow-stacking, utilities-shadow, utilities-focus, utilities-appearance-modes]
+related: [responsive-visibility, text-heading, stack-inline-cluster, wrapper]
+---
 
-## A. Names
+# 36. Utilities
+```html live
+<div class="border border-dashed border-muted rounded-md p-md">
+  <p class="small-text text-muted text-balance">A dashed, muted border, a rounded corner and medium padding, from four utilities.</p>
+</div>
+```
+
+## Why it exists
+Sometimes one element just needs a bit more margin or a muted colour, and a new modifier would be out of proportion. A utility is that small adjustment: one property, one value, on the element it's written on.
+
+The values come from the same tokens as the components, and the sides are logical (`start` and `end`, never left and right), so a right-to-left page and a change of theme need nothing extra. Their names follow Tailwind's where the meaning is the same, because many people already know them, and there are never more than two names for one thing.
+
+They stop where a component's job begins. There's no utility for a type size, for a row of things or for a component's width, since those are the decisions the library exists to make once.
+
+## When to use
+- **For a one-off adjustment:** a margin, a border, a muted colour.
+- **Not for a type size:** that is a [text atom](20-text-heading.md).
+- **Not for a row or column of things:** that is a layout primitive: a [Stack, Inline or Cluster](22-stack-inline-cluster.md), a [Grid](19b-grid-grid-carousel.md) or a [Split](19c-split.md).
+- **Not for a component's width or surface:** set its token.
+- **Not for hiding by a condition:** those are the [Responsive Helpers](31-responsive-visibility.md).
+
+## Rules
+- **Intent colours** (text, border, shadow, background) never carry meaning alone (WCAG 1.4.1).
+- **Scrolling regions** (`overflow-*-auto`) need something focusable inside, or `tabindex="0"`, a role and a label (WCAG 2.1.1).
+- **Text on dark backgrounds:** pair a dark `bg-*` with `text-inverted` or `text-on-dark`, or put `.color-scheme-dark` on the region.
+
+## One-Off Adjustments
+```html live
+<div class="border border-dashed border-muted rounded-md p-md">A dashed plot boundary</div>
+<p class="small-text text-muted text-balance">Bed 3 is resting this year.</p>
+<div class="card max-inline-size-sm mx-auto"><p class="text">Centred and capped at 24rem.</p></div>
+<button type="button" class="button button--icon"><span class="sr-only">Remove Bed 3</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
+```
+
+## Do and Don't
+| Do | Don't |
+| :--- | :--- |
+| Use the shorthand in markup: `.p-sm`, `.mx-auto`. | Use a left or right name, or a third name. |
+| Use a text atom for a type size. | Look for `font-size-*`. |
+| Use a layout primitive for a row of things. | Build one from `flex` and `gap` utilities. |
+| Set a component's token for its width. | Set its width with a utility. |
+| Pair an intent colour with an icon or text. | Let a colour carry the meaning alone. |
+
+## Reference
+A utility sets one property to one value on the element it is on, from a Tier 2 token where one exists (`packages/css/src/utilities/`). It never does a component's job: type size belongs to the text atoms, arrangement to the layout primitives, widths and surfaces to components. [Responsive helpers](31-responsive-visibility.md) have their own page.
+
+## Options
 - **Two names at most.** The verbose name is the logical property and the value (`.padding-inline-sm`, `.text-align-start`, `.border-block-end`). The shorthand is Tailwind's, where Tailwind has one with the same meaning (`.px-sm`, `.text-start`, `.border-b`). **Examples and markup use the shorthand.**
 - **Spacing is the one exception:** it keeps Tailwind's prefixes with the library's step names (`.p-sm`, not `.p-2`), because Tailwind's numbers map to nothing here.
 - **Logical sides only.** `t`/`b` are block start and end; `s`/`e` inline start and end; `x`/`y` the inline and block axes. There are no left or right names.
 - **Bare words** only where Tailwind uses the word for the same declaration: `flex`, `hidden`, `block`, `contents`, `static`, `relative`, `absolute`, `fixed`, `sticky`, `isolate`, `truncate`, `italic`, `uppercase`, `lowercase`, `capitalize`, `grow`, `shrink`; and the valueless defaults `border`, `rounded`, `shadow`, `rule`.
 - `npm run check:utilities` fails on a third name, a bare word outside that list, a left/right name, or a Tier 1 token.
 
-## B. Scales
+### Further rules
+- **Not a utility:** a type size (use a text atom: `.small-text`, `.text`, `.large-text`, `.small-heading` …); a row or column of things (use `.inline`, `.cluster`, `.stack`, `.grid`, `.split`); a component's width or surface (set its token).
+- **Combining:** `.border` draws the border; the style and colour classes change one part of it. A colour class tints a shadow the element already has.
+
+## Scales
 | Scale | Steps | Tokens |
 | :--- | :--- | :--- |
 | Spacing | `0`, `2xs` 2px, `xs` 4px, `sm` 8px, `md` 16px, `lg` 32px, `xl` 48px, `2xl` 64px, `3xl` 128px, `breathe`, `cushion` (fluid); `auto` for margins | `--spacing-2xs` … `--spacing-3xl`, `--spacing-breathe`, `--spacing-cushion` |
@@ -18,7 +73,7 @@ A utility sets one property to one value on the element it is on, from a Tier 2 
 | z-index | `base`, `sticky`, `overlay`, `dialog`, `popover`, `toast`, `tooltip`, `auto` | `--z-index-*` |
 | Translucency | `bg-translucent-subtle`, `bg-translucent`, `bg-translucent-strong` | `--translucency-subtle`, `--translucency`, `--translucency-strong`, `--surface-layer-filter` |
 
-## C. Families
+## Families
 | File | Shorthands (verbose in brackets) |
 | :--- | :--- |
 | `spacing.css` | `p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `ps-*`, `pe-*` (`padding-*`, `padding-inline-*` …); the same with `m`; `gap-*`, `gap-x-*` (`column-gap-*`), `gap-y-*` (`row-gap-*`) |
@@ -31,10 +86,11 @@ A utility sets one property to one value on the element it is on, from a Tier 2 
 | `layout-helpers.css` | `relative` … (`position-*`); `overflow-*`, `overflow-x-*`, `overflow-y-*`; `overscroll-*` (`overscroll-behavior-*`); `scrollbar-gutter-*`; `isolate` (`isolation-isolate`); `z-*` |
 | `shadow.css` | `shadow-none`, `-sm`, `-md` (`shadow`), `-lg`, `-inner`, the `-light` forms; `shadow-accent`, `-success`, `-warning`, `-danger` |
 | `focus-helpers.css` | `focus-within`, `focus-within--input`, `focus-within--inset`, `focus-within--border`, `focus-ring` |
-| `container.css` | `container-inline` (`container-type-inline-size`), `container-type-size`, `container-type-normal` |
+| `container.css` | `container-inline` (`container-type-inline-size`), `container-scroll` (`container-type-scroll-state`), `container-inline-scroll` (`container-type-inline-size-scroll-state`), `container-type-size`, `container-type-normal` |
 | `scroll-fade.css` | `scroll-fade` |
+| `sticky-shadow.css` | `sticky-shadow`: pins a part to the edge of its scroller, with a shadow only while it is pinned. The scroller takes `container-scroll` (`container-inline-scroll` on a Card), and the part is its direct child; see [Card](10-card.md) |
 
-## D. Modes
+## Modes
 A mode class sets a flag that the components inside read; it styles nothing itself.
 
 | Class | Flag |
@@ -42,22 +98,6 @@ A mode class sets a flag that the components inside read; it styles nothing itse
 | `.ui-compact`, `.fine:ui-compact` | `--ui-sizing: compact` (density), the latter only where the primary pointer is fine |
 | `.font-sizing-fixed`, `-fluid`, `-cq`, `-compact` | `--font-sizing` |
 | `.controls-plain`, `-subtle`, `-sm`, `-lg`, `-round` | `--controls-prominence`, `--controls-size`, `--controls-corners` |
-| `.elements-plain`, `-subtle` | `--elements-prominence`: every element with that prominence (controls, status, chip, kbd, icon box, tab list, telemetry); not containers (card, sidebar, banner, menu, accordion, table, stepper, empty state) or links |
+| `.elements-plain`, `-subtle` | `--elements-prominence`: every element with that prominence (controls, status, Chip, kbd, Icon Box, Tab List, Telemetry); not containers (Card, Sidebar, Banner, Menu, Accordion, Table, Stepper, Empty State) or links |
 | `.color-scheme-light`, `-dark`, `-light-dark` | `color-scheme` |
 | `.color-palette-inverted` (`.colors-inverted`) | The palette roles |
-
-## E. Markup
-```html
-<div class="border border-dashed border-muted rounded-md p-md">…</div>
-<p class="small-text text-muted text-balance">…</p>
-<div class="card max-inline-size-sm mx-auto">…</div>
-<span class="sr-only">Remove Bed 3</span>
-```
-
-## F. Rules
-- **Not a utility:** a type size (use a text atom: `.small-text`, `.text`, `.large-text`, `.small-heading` …); a row or column of things (use `.inline`, `.cluster`, `.stack`, `.grid`, `.split`); a component's width or surface (set its token).
-- **Combining:** `.border` draws the border; the style and colour classes change one part of it. A colour class tints a shadow the element already has.
-- **Text on dark backgrounds:** pair a dark `bg-*` with `text-inverted` or `text-on-dark`, or put `.color-scheme-dark` on the region.
-- **Intent colours** (text, border, shadow, background) never carry meaning alone (WCAG 1.4.1).
-- **Scrolling regions** (`overflow-*-auto`) need something focusable inside, or `tabindex="0"`, a role and a label (WCAG 2.1.1).
-- **Removed in the utilities pass:** every third name and synonym; `font-size-*`, `line-height-*`, `fs-*`, `fw-*`; numeric weights and z-indexes; `width-dialog`, `-popover`, `-sidebar`, `-prose`, `-shell`, `-wide`, `block-*`, `height-*`, `size-grow`; `bg-effect-*`, `bg-blurred-*`, palette shadow colours; `.backdrop`, `.focus-none`, `.outline-none`; `ui-dense`, `ui-default`, `spacing-mode-*`, `viewport-fit-cover`; the left/right names. `border-muted` and `border-quiet` now set the colour only, `.border` is 1px, and `.text-nowrap` sets `text-wrap`.

@@ -7,6 +7,9 @@
 		{
 			"name": "designforhumans-blog",
 			"path": "../designforhumans-blog"
+		},
+		{
+			"path": "../DFH-Course-Theme"
 		}
 	],
 	"settings": {}

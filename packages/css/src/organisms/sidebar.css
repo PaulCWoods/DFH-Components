@@ -8,7 +8,8 @@
 
    | Axis        | Values                                  | Flag |
    | :---------- | :-------------------------------------- | :--- |
-   | Prominence  | default (surface and edge), --floating  | none |
+   | Prominence  | default (surface and edge), --subtle,   | none |
+   |             | --plain, --floating                     |      |
    | Placement   | start (default), --end; in flow, --sticky | none |
    | Width       | default, --rail                         | none |
 
@@ -51,6 +52,7 @@
   @container style(--ui-sizing: compact) {
     --_sidebar-padding: var(--sidebar-compact-padding, var(--spacing));
     --_sidebar-width: var(--sidebar-compact-width, 12rem);
+    --_sidebar-min-width: var(--sidebar-compact-width, 12rem);
   }
 
   background-color: var(--_sidebar-bg);
@@ -127,6 +129,17 @@
    3. Modifiers
    ========================================================================== */
 
+/* Prominence: a tint with no edge, or no surface and no edge */
+:where(.sidebar--subtle) {
+  --_sidebar-bg: var(--sidebar-subtle-bg, var(--surface-muted, Canvas));
+  --_sidebar-border-width: 0px;
+}
+
+:where(.sidebar--plain) {
+  --_sidebar-bg: transparent;
+  --_sidebar-border-width: 0px;
+}
+
 /* A rule between the parts */
 :where(.sidebar--ruled) {
   > :where(.sidebar__header, .sidebar__band) {
@@ -171,8 +184,10 @@
 }
 
 :where(.sidebar--compact) {
+  --ui-sizing: compact;
   --_sidebar-padding: var(--sidebar-compact-padding, var(--spacing));
   --_sidebar-width: var(--sidebar-compact-width, 12rem);
+  --_sidebar-min-width: var(--sidebar-compact-width, 12rem);
 }
 
 /* Pinned beside the scrolling page */
@@ -194,6 +209,11 @@
 @media (prefers-contrast: more) {
   :where(.sidebar) {
     --_sidebar-border-width: var(--border-width-md, 2px);
+  }
+
+  /* A tint keeps a visible edge; plain has none to strengthen */
+  :where(.sidebar--plain) {
+    --_sidebar-border-width: 0px;
   }
 
   :where(.sidebar--floating) {

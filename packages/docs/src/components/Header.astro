@@ -13,10 +13,12 @@ interface Props { nav: Section[]; current: string }
 const { nav, current } = Astro.props;
 const inSection = (s: Section) => s.pages.some((p) => p.href === current);
 ---
-<header class="header header--sticky">
+<header class="header header--sticky header--stretch">
+  <a href="#main" class="skip-link header__skip-link">Skip to main content</a>
   <div class="header__bar">
-    <a href="/" class="link link--plain small-heading inline gap-xs">
-      <Icon name="BrandDesignForHumans" /><span>Design For Humans</span>
+    <a href="/" class="brand">
+      <Icon name="BrandDesignForHumans" class="brand__mark" />
+      <span class="brand__name">Cmpnts</span>
     </a>
     <nav class="header__nav tab-list tab-list--plain tab-list--scrollable @max-3xl:hide" aria-label="Sections">
       <ul>

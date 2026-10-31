@@ -16,9 +16,9 @@
    Exclusive choices are radio inputs inside the buttons; toggles use
    aria-pressed. Rows of actions with headings and shortcuts are a menu.
 
-   <div class="button-group button-group--joined" role="group" aria-label="Range">
-     <label class="button"><input type="radio" name="range" class="visually-hidden" checked><span>Day</span></label>
-     <label class="button"><input type="radio" name="range" class="visually-hidden"><span>Week</span></label>
+   <div class="button-group button-group--joined" role="radiogroup" aria-label="Range">
+     <label class="button"><input type="radio" name="range" class="sr-only" checked><span>Day</span></label>
+     <label class="button"><input type="radio" name="range" class="sr-only"><span>Week</span></label>
    </div>
    ========================================================================== */
 

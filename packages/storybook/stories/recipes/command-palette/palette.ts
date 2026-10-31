@@ -62,13 +62,13 @@ const list = (id: string, query: string) => {
       <ul role="group" aria-labelledby="${id}-${slug(g.label)}"${items.length ? '' : ' hidden'}>
         <li id="${id}-${slug(g.label)}" role="presentation" class="combobox__group-label micro-heading">${g.label}</li>
         ${g.items
-          .map((i) => {
-            const shown = items.includes(i);
-            const html = option(id, i, shown && first);
-            if (shown) first = false;
-            return shown ? html : html.replace('role="option"', 'role="option" hidden');
-          })
-          .join('')}
+            .map((i) => {
+              const shown = items.includes(i);
+              const html = option(id, i, shown && first);
+              if (shown) first = false;
+              return shown ? html : html.replace('role="option"', 'role="option" hidden');
+            })
+            .join('')}
       </ul>`;
       })
       .join('')}
@@ -98,7 +98,7 @@ export const palette = ({ id = 'cmd-palette', state = 'results' as PaletteState,
   const firstId = state === 'results' ? `${id}-${slug(groups[0].items[0].label)}` : '';
   return `
   <dialog id="${id}" class="dialog" aria-label="Command palette" closedby="any">
-    <div class="card card--ruled combobox combobox--plain">
+    <article class="card card--ruled card--compact combobox combobox--flush">
       <header class="card__header">
         <div class="combobox__control">
           ${icon('Search', 'icon combobox__icon-start')}
@@ -109,17 +109,16 @@ export const palette = ({ id = 'cmd-palette', state = 'results' as PaletteState,
         </div>
       </header>
       <div class="card__body card__body--scrollable" tabindex="0" aria-label="Results"${state === 'loading' ? ' aria-busy="true"' : ''}>
-        ${
-          state === 'loading'
-            ? `<div id="${id}-list" class="combobox__listbox combobox__listbox--static" role="listbox" aria-label="Results" hidden></div>${skeletonRows()}`
-            : `${list(id, q)}
+        ${state === 'loading'
+      ? `<div id="${id}-list" class="combobox__listbox combobox__listbox--static" role="listbox" aria-label="Results" hidden></div>${skeletonRows()}`
+      : `${list(id, q)}
         <div class="empty-state empty-state--compact"${state === 'no-results' ? '' : ' hidden'}>
           <div class="empty-state__content">
             <h2 class="empty-state__title small-heading">Nothing matches “<span data-query>${q}</span>”</h2>
             <p class="empty-state__description small-text">Try a component name, such as “button” or “table”.</p>
           </div>
         </div>`
-        }
+    }
         <p class="sr-only" role="status">${state === 'no-results' ? 'No results' : state === 'loading' ? 'Loading' : ''}</p>
       </div>
       <footer class="card__footer cluster small-text text-muted">
@@ -127,7 +126,7 @@ export const palette = ({ id = 'cmd-palette', state = 'results' as PaletteState,
         <span><kbd class="kbd">↵</kbd> to choose</span>
         <span><kbd class="kbd">Esc</kbd> to close</span>
       </footer>
-    </div>
+    </article>
   </dialog>`;
 };
 

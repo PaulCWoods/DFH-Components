@@ -55,3 +55,12 @@ export const Stacking: Story = {
       <div class="card relative z-sticky mt-sm"><div class="card__body"><p class="small-text font-mono">.z-sticky, contained by .isolate</p></div></div>
     </div>`,
 };
+
+export const ScrollFade: Story = {
+  name: 'Scroll fade',
+  parameters: { docs: { description: { story: '`.scroll-fade`: one row that scrolls, its edges fading only where there is more to see. Each item is a link, so focus scrolls the row.' } } },
+  render: () => `
+    <ul class="cluster scroll-fade max-inline-size-xs" role="list">
+      ${LOG.map((l) => `<li class="whitespace-nowrap"><a href="#" class="link small-text">${l}</a></li>`).join('')}
+    </ul>`,
+};

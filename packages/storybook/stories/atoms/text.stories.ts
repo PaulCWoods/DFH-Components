@@ -101,7 +101,7 @@ Dialogs, menus, comboboxes, empty states and steppers set \`cq\` themselves.
   render: (args) => {
     const step = STEPS.find((s) => s.atom === args.atom)!;
     return `
-      <div class="demo-stage ${modeClass(args.mode)}" style="container-type: inline-size;">
+      <div class="sb-demo-stage ${modeClass(args.mode)}" style="container-type: inline-size;">
         ${sample(args.atom, step.tag, args.content, args.muted)}
       </div>
     `;
@@ -121,7 +121,7 @@ export const Playground: Story = {};
  */
 export const Scale: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${STEPS.map(
         (s) => `
         <div class="stack" style="--gap: var(--spacing-4);">
@@ -139,7 +139,7 @@ export const Scale: Story = {
  */
 export const SizingModes: Story = {
   render: () => `
-    <div class="demo-stage grid grid--auto-fit grid--xs">
+    <div class="sb-demo-stage grid grid--auto-fit grid--xs">
       ${MODES.map(
         (m) => `
         <section class="stack ${m.cls}" style="container-type: inline-size; max-inline-size: 24rem;" aria-label="${m.mode} mode">
@@ -160,7 +160,7 @@ export const SizingModes: Story = {
  */
 export const ContainerMode: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${['18rem', '48rem']
         .map(
           (w) => `
@@ -181,7 +181,7 @@ export const ContainerMode: Story = {
  */
 export const Compact: Story = {
   render: () => `
-    <div class="demo-stage grid grid--auto-fit grid--xs">
+    <div class="sb-demo-stage grid grid--auto-fit grid--xs">
       ${['', 'card--compact']
         .map(
           (c) => `
@@ -208,7 +208,7 @@ export const Compact: Story = {
  */
 export const Composition: Story = {
   render: () => `
-    <article class="demo-stage stack" aria-labelledby="text-composition-title">
+    <article class="sb-demo-stage stack" aria-labelledby="text-composition-title">
       <p class="micro-heading text-muted" style="margin: 0;">Release notes</p>
       <h2 id="text-composition-title" class="heading" style="margin: 0;">Text atoms are fixed by default</h2>
       <p class="large-text" style="margin: 0;">Containers decide when type grows with the viewport or the container, or steps down.</p>

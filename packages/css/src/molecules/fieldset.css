@@ -58,9 +58,12 @@
 :where(.fieldset__hint) {
   color: var(--field-hint-color, currentColor);
   margin: 0;
-  margin-block-start: calc((var(--_fieldset-gap) - var(--_fieldset-legend-gap)) * -1);
   min-inline-size: 0;
 
+  /* Safari keeps <legend> outside the fieldset flex formatting context, so no flex gap is added above the hint */
+  @supports not (font: -apple-system-body) {
+    margin-block-start: calc((var(--_fieldset-gap) - var(--_fieldset-legend-gap)) * -1);
+  }
 }
 
 /* ==========================================================================

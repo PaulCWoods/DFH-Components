@@ -34,8 +34,13 @@
 }
 
 /* The outer wrapper already keeps the edge clear */
-:where(.wrapper .wrapper) {
+:where(.wrapper--flush, .wrapper .wrapper) {
     --_wrapper-gutter: 0px;
+}
+
+:where(.wrapper--safe-area) {
+    padding-inline-start: calc(var(--_wrapper-gutter) + env(safe-area-inset-left));
+    padding-inline-end: calc(var(--_wrapper-gutter) + env(safe-area-inset-right));
 }
 
 /* --------------------------------------------------------------------------
@@ -85,8 +90,4 @@
 
 :where(.wrapper--2xl) {
     --_wrapper-max: var(--spacing-block-2xl);
-}
-
-:where(.wrapper--fill) {
-    --_wrapper-max: none;
 }

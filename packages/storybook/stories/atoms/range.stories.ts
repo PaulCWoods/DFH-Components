@@ -73,7 +73,7 @@ An \`<input type="range">\` slider with a token-driven track, fill and thumb.
     disabled: { control: 'boolean' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       ${field(args.label, args.value, rangeClasses(args.size, args.intent), args.disabled ? 'disabled' : '')}
     </div>
   `,
@@ -94,7 +94,7 @@ export const Playground: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${SIZES.map((s) => field(`Size ${s}`, 40, rangeClasses(s))).join('')}
       <div class="ui-compact">${field('Compact container', 40)}</div>
     </div>
@@ -106,7 +106,7 @@ export const Sizes: Story = {
  */
 export const Intents: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${INTENTS.map((i, n) => field(i, 20 + n * 15, rangeClasses('default', i))).join('')}
     </div>
   `,
@@ -117,7 +117,7 @@ export const Intents: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Enabled', 50)}
       ${field('Disabled', 50, 'range', 'disabled')}
     </div>
@@ -129,7 +129,7 @@ export const States: Story = {
  */
 export const Direction: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div dir="ltr">${field('Volume', 30)}</div>
       <div dir="rtl">${field('الصوت', 30)}</div>
     </div>
@@ -141,7 +141,7 @@ export const Direction: Story = {
  */
 export const Steps: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="range-steps" class="field__label label">Text size</label>
         <input id="range-steps" type="range" class="range" min="0" max="100" step="25" value="50" style="--value: 50%;" list="range-steps-list" ${SYNC} />
@@ -159,7 +159,7 @@ export const Steps: Story = {
  */
 export const RangeLockup: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${['', 'range-lockup--sm', 'range-lockup--bordered range-lockup--round range-lockup--fill']
         .map((mods, n) => {
           const id = `lockup-${n}`;

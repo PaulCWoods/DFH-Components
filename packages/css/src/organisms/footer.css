@@ -10,6 +10,10 @@
    width) and centred, so it lines up with .wrapper. The last part sits at
    the end. Two rows are two bars, with a rule between them.
 
+   Modifiers: --stacked sets each bar's parts in a column, in source order,
+   at the start (site links above the legal line). --stretch drops the
+   width cap.
+
    Semantics: a <footer> that is a direct child of <body> (or .app) is the
    contentinfo landmark: one per page, with no aria-label. Link lists in it
    are a <nav aria-label> when they navigate the site.
@@ -45,7 +49,10 @@
   container: footer / inline-size;
   display: block;
   inline-size: 100%;
-  padding-inline: var(--safe-area-inset-left, 0px) var(--safe-area-inset-right, 0px);
+  /* The band pads the sides, so a bar's content lines up with a .wrapper's */
+  padding-inline:
+    calc(var(--_footer-padding-inline) + var(--safe-area-inset-left, 0px))
+    calc(var(--_footer-padding-inline) + var(--safe-area-inset-right, 0px));
 }
 
 /* At the bottom of the page, clear the home indicator */
@@ -65,7 +72,6 @@
   margin-inline: auto;
   max-inline-size: var(--_footer-max-width);
   padding-block: var(--_footer-padding-block);
-  padding-inline: var(--_footer-padding-inline);
 
   /* A single part (a grid of link lists) fills the row */
   > :where(:only-child) {
@@ -86,6 +92,15 @@
 /* ==========================================================================
    3. Modifiers
    ========================================================================== */
+
+:where(.footer--stacked .footer__bar) {
+  align-items: start;
+  flex-direction: column;
+
+  > :where(:last-child:not(:first-child)) {
+    margin-inline-start: 0;
+  }
+}
 
 :where(.footer--stretch) {
   --_footer-max-width: none;

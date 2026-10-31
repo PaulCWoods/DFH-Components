@@ -3,8 +3,10 @@
    --------------------------------------------------------------------------
    Styles bare HTML (CMS and Markdown output) so it reads like the rest of the
    library without classes. .prose-end ends the scope, so a card or widget
-   inside an article keeps its own styles. Elements with a component class
-   (.table, .divider, ul.cluster) style themselves.
+   inside an article keeps its own styles. Every element in scope takes the
+   prose look whatever its classes, because CMSs such as WordPress put
+   classes on every block: a component (.table, ul.cluster) goes in a
+   .prose-end.
 
    This file sets the rhythm and the block elements: spacing, lists, quotes,
    rules, figures, code and tables. Element type lives with the text atoms
@@ -27,7 +29,7 @@
    </article>
    ========================================================================== */
 
-@scope (:where(.prose)) to (:where(.prose-end)) {
+@scope (:where(.prose)) to (:where(.prose-end, .code-block)) {
 
   /* ==========================================================================
      1. Rhythm
@@ -55,7 +57,7 @@
     --_prose-indent: var(--prose-indent, 1.5em);
   }
 
-  :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote, figure, pre, table:not([class]), hr:not([class])) {
+  :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote, figure, pre, table, hr, hgroup) {
     margin-block: 0 var(--_prose-space);
 
     &:last-child {
@@ -63,7 +65,7 @@
     }
   }
 
-  :where(figure, pre, table:not([class]), hr:not([class])) {
+  :where(figure, pre, table, hr) {
     margin-block-start: var(--_prose-space);
 
     &:first-child {
@@ -79,7 +81,15 @@
     margin-block-start: 1.5em;
 
     &:first-child,
-    :where(h1, h2, h3, h4, h5, h6) + & {
+    :where(h1, h2, h3, h4, h5, h6)+& {
+      margin-block-start: 0;
+    }
+  }
+
+  :where(hgroup):first-child {
+    margin-block-start: 0;
+
+    :where(h1, h2, h3, h4, h5, h6) {
       margin-block-start: 0;
     }
   }
@@ -91,9 +101,10 @@
   /* ==========================================================================
      3. Lists
      --------------------------------------------------------------------------
-     Bare lists only: a list with a class is a component.
+     Every list, whatever classes it has (a CMS's, such as WordPress's
+     .wp-block-list). A component built on a list goes in a .prose-end.
      ========================================================================== */
-  :where(ul:not([class]), ol:not([class])) {
+  :where(ul, ol) {
     padding-inline-start: var(--_prose-indent);
 
     > :where(li) {
@@ -109,15 +120,15 @@
     }
   }
 
-  :where(ol:not([class]) ol:not([class])) {
+  :where(ol ol) {
     list-style-type: lower-latin;
   }
 
-  :where(ol:not([class]) ol:not([class]) ol:not([class])) {
+  :where(ol ol ol) {
     list-style-type: lower-roman;
   }
 
-  :where(dl:not([class])) {
+  :where(dl) {
     > :where(dd) {
       margin-block-end: calc(var(--_prose-space) / 2);
       margin-inline-start: var(--_prose-indent);
@@ -131,7 +142,7 @@
   /* ==========================================================================
      4. Rules & Quotes
      ========================================================================== */
-  :where(hr:not([class])) {
+  :where(hr) {
     border: 0;
     border-block-start: var(--divider-width, 1px) var(--divider-style, solid) var(--divider-color, currentColor);
   }
@@ -191,7 +202,7 @@
      A light ruled look for a bare table. A wide table needs a .table in a
      scroll wrapper (§13).
      ========================================================================== */
-  :where(table:not([class])) {
+  :where(table) {
     > :where(caption) {
       caption-side: top;
       color: var(--prose-figcaption-color, inherit);

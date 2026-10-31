@@ -74,3 +74,8 @@ export const Compact: Story = {
   parameters: { docs: { description: { story: 'In a `.ui-compact` region the gap and the chips step down.' } } },
   render: () => `<div class="ui-compact">${tagList()}</div>`,
 };
+
+export const Ruled: Story = {
+  parameters: { docs: { description: { story: '`--ruled` draws a rule in each gap, where `rule` is supported. The gap alone still separates the items.' } } },
+  render: () => tagList('cluster--ruled'),
+};

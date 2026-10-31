@@ -72,3 +72,43 @@ export const Elements: Story = {
     </div>
   `,
 };
+
+export const Density: Story = {
+  parameters: { docs: { description: { story: '`.ui-compact` sets `--ui-sizing: compact`, so what\'s inside steps down. `.fine:ui-compact` does so only where the primary pointer is fine.' } } },
+  render: () => `
+    <div class="grid grid--2-col" style="--grid-min: 18rem;">
+      ${sample('', 'Regular')}
+      ${sample('ui-compact', 'Compact')}
+    </div>
+  `,
+};
+
+export const TypeSizing: Story = {
+  name: 'Type sizing',
+  parameters: { docs: { description: { story: '`.font-sizing-*` sets `--font-sizing` for the text atoms inside. `-cq` needs an inline-size container.' } } },
+  render: () => `
+    <div class="stack">
+      ${['fixed', 'fluid', 'compact'].map((mode) => `
+        <div class="font-sizing-${mode}">
+          <p class="heading">Heading, ${mode}</p>
+          <p class="text">Body text, ${mode}.</p>
+        </div>`).join('')}
+      <div class="container-inline font-sizing-cq">
+        <p class="heading">Heading, cq</p>
+        <p class="text">Body text, cq.</p>
+      </div>
+    </div>
+  `,
+};
+
+export const SchemeAndPalette: Story = {
+  name: 'Scheme and palette',
+  parameters: { docs: { description: { story: '`.color-scheme-dark` and `.color-scheme-light` fix a region\'s scheme; `.color-palette-inverted` swaps the colour roles.' } } },
+  render: () => `
+    <div class="grid grid--3-col" style="--grid-min: 18rem;">
+      ${sample('color-scheme-light', 'Light')}
+      ${sample('color-scheme-dark', 'Dark')}
+      ${sample('color-palette-inverted', 'Inverted')}
+    </div>
+  `,
+};

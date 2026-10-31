@@ -16,7 +16,7 @@ A native \`<dialog class="dialog">\` opened as a modal: top-layer placement, siz
 </button>
 
 <dialog id="rename-dialog" class="dialog" aria-labelledby="rename-title">
-  <div class="card">
+  <article class="card">
     <header class="card__header">
       <h2 id="rename-title" class="card__title small-heading">Rename plot</h2>
       <button type="button" class="button button--plain button--icon" commandfor="rename-dialog" command="close">
@@ -31,7 +31,7 @@ A native \`<dialog class="dialog">\` opened as a modal: top-layer placement, siz
         <button type="submit" value="save" class="button button--strong button--accent"><span>Save</span></button>
       </form>
     </footer>
-  </div>
+  </article>
 </dialog>
 \`\`\`
 
@@ -122,14 +122,14 @@ export const Playground: Story = {
     return `
       ${opener('playground-dialog', 'Open dialog')}
       <dialog id="playground-dialog" class="${cls}" aria-labelledby="playground-title"${args.lightDismiss ? ' closedby="any"' : ''}>
-        <div class="card">
+        <article class="card">
           <header class="card__header">
             <h2 id="playground-title" class="card__title small-heading">Locker rules</h2>
             ${closeButton('playground-dialog')}
           </header>
           <div class="card__body stack${bodyScroll}">${paragraphs(args.paragraphs)}</div>
           ${actions('Cancel', 'Agree', 'agree')}
-        </div>
+        </article>
       </dialog>`;
   },
   play: openOnLoad,
@@ -147,7 +147,7 @@ export const Confirmation: Story = {
   render: () => `
     ${opener('delete-dialog', 'Delete plot', 'button button--danger')}
     <dialog id="delete-dialog" class="dialog" role="alertdialog" aria-labelledby="delete-title" aria-describedby="delete-message" style="--dialog-width: 28rem;">
-      <div class="card">
+      <article class="card">
         <header class="card__header">
           <h2 id="delete-title" class="card__title small-heading">Delete plot A-14?</h2>
         </header>
@@ -160,7 +160,7 @@ export const Confirmation: Story = {
             <button type="submit" value="delete" class="button button--strong button--danger">${icon('Delete')}<span>Delete plot</span></button>
           </form>
         </footer>
-      </div>
+      </article>
     </dialog>`,
   play: openOnLoad,
 };
@@ -216,14 +216,14 @@ export const ScrollingBody: Story = {
   render: () => `
     ${opener('rules-dialog', 'Read the rules')}
     <dialog id="rules-dialog" class="dialog" aria-labelledby="rules-title">
-      <div class="card">
+      <article class="card">
         <header class="card__header">
           <h2 id="rules-title" class="card__title small-heading">Site rules</h2>
           ${closeButton('rules-dialog')}
         </header>
         <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Site rules">${paragraphs(14)}</div>
         ${actions('Cancel', 'Agree', 'agree')}
-      </div>
+      </article>
     </dialog>`,
   play: openOnLoad,
 };
@@ -239,14 +239,14 @@ export const WholeCardScrolls: Story = {
   render: () => `
     ${opener('terms-dialog', 'Read the terms')}
     <dialog id="terms-dialog" class="dialog dialog--scrollable" aria-labelledby="terms-title">
-      <div class="card" tabindex="0" aria-label="Terms">
+      <article class="card" tabindex="0" aria-label="Terms">
         <header class="card__header">
           <h2 id="terms-title" class="card__title small-heading">Tenancy terms</h2>
           ${closeButton('terms-dialog')}
         </header>
         <div class="card__body stack">${paragraphs(14)}</div>
         ${actions('Decline', 'Accept', 'accept')}
-      </div>
+      </article>
     </dialog>`,
   play: openOnLoad,
 };
@@ -254,7 +254,7 @@ export const WholeCardScrolls: Story = {
 const settingsDrawer = (id: string, cls: string) => `
   ${opener(id, 'Settings')}
   <dialog id="${id}" class="dialog dialog--drawer${cls}" aria-labelledby="${id}-title">
-    <div class="card">
+    <article class="card">
       <header class="card__header">
         <h2 id="${id}-title" class="card__title small-heading">Settings</h2>
         ${closeButton(id)}
@@ -271,7 +271,7 @@ const settingsDrawer = (id: string, cls: string) => `
         ${paragraphs(3)}
       </div>
       ${actions()}
-    </div>
+    </article>
   </dialog>`;
 
 export const DrawerEnd: Story = {
@@ -301,13 +301,13 @@ export const DrawerStart: Story = {
       <span class="sr-only">Menu</span>${icon('Navigation')}
     </button>
     <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-drawer-title">
-      <div class="card">
+      <article class="card">
         <header class="card__header">
           <h2 id="nav-drawer-title" class="card__title small-heading">Allotment</h2>
           ${closeButton('nav-drawer', 'Close menu')}
         </header>
         <div class="card__body card__body--scrollable">${tree('nav-drawer-title')}</div>
-      </div>
+      </article>
     </dialog>`,
   play: openOnLoad,
 };
@@ -327,7 +327,7 @@ export const RightToLeft: Story = {
         <span class="sr-only">القائمة</span>${icon('Navigation')}
       </button>
       <dialog id="rtl-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="rtl-drawer-title">
-        <div class="card">
+        <article class="card">
           <header class="card__header">
             <h2 id="rtl-drawer-title" class="card__title small-heading">الحديقة</h2>
             ${closeButton('rtl-drawer', 'إغلاق')}
@@ -341,7 +341,7 @@ export const RightToLeft: Story = {
               </ul>
             </nav>
           </div>
-        </div>
+        </article>
       </dialog>
     </div>`,
   play: openOnLoad,
@@ -359,7 +359,7 @@ export const LightDismiss: Story = {
   render: () => `
     ${opener('rota-dialog', 'This week\'s rota')}
     <dialog id="rota-dialog" class="dialog" aria-labelledby="rota-title" closedby="any">
-      <div class="card">
+      <article class="card">
         <header class="card__header">
           <h2 id="rota-title" class="card__title small-heading">This week's rota</h2>
           ${closeButton('rota-dialog')}
@@ -367,7 +367,7 @@ export const LightDismiss: Story = {
         <div class="card__body">
           <p class="text">Compost: plots A-12 to A-16. Water butts: plot B-3. Gate board: plot C-7.</p>
         </div>
-      </div>
+      </article>
     </dialog>`,
   play: openOnLoad,
 };

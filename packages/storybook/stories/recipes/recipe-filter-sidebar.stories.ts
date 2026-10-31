@@ -126,7 +126,7 @@ const plantCard = ([name, desc, inStock]: (typeof plants)[number]) => `
 
 const skeletonCard = (w: string) => `
   <li>
-    <div class="card">
+    <article class="card">
       <header class="card__header"><div class="small-heading"><span class="skeleton skeleton--heading ${w}" aria-hidden="true"></span></div></header>
       <div class="card__body">
         <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true"></span><span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span></p>
@@ -135,7 +135,7 @@ const skeletonCard = (w: string) => `
         <span class="skeleton skeleton--badge" aria-hidden="true"></span>
         <span class="skeleton skeleton--badge" aria-hidden="true"></span>
       </footer>
-    </div>
+    </article>
   </li>`;
 
 const toolbar = (active: string[], count: string) => `

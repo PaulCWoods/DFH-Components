@@ -21,7 +21,7 @@
    - 1.4.1 Use of Color: the text carries the state. A status with no text
      (dot only) is valid only next to text that says the same thing; give it
      aria-hidden="true".
-   - Presence (online, away, busy) belongs to avatar's data-status, not here.
+   - Presence (online, away, busy) is a dot badge on an avatar, not a status.
 
    Usage:
    <span class="status status--success"><span class="status__text">Passed</span></span>
@@ -44,7 +44,7 @@
      Prominence: Default (Outline Pill)
      -------------------------------------------------------------------------- */
   --_status-translucency: var(--status-translucency, 33%);
-  --_status-bg: color-mix(in oklch, var(--_status-tint), transparent var(--_status-translucency));
+  --_status-bg: color-mix(in srgb, var(--_status-tint), transparent var(--_status-translucency));
   --_status-text: var(--_status-tone);
   --_status-border-color: var(--_status-tone-border);
   --_status-dot: none;
@@ -231,7 +231,7 @@
    Each resets everything the others set, so the last class wins cleanly.
    ========================================================================== */
 :where(.status--subtle) {
-  --_status-bg: color-mix(in oklch, var(--_status-tint), transparent var(--_status-translucency));
+  --_status-bg: color-mix(in srgb, var(--_status-tint), transparent var(--_status-translucency));
   --_status-text: var(--_status-tone);
   --_status-border-color: transparent;
   --_status-dot: none;

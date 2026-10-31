@@ -65,7 +65,7 @@ Layout: \`--vertical\`, \`--end\` (vertical, on the inline end), \`--scrollable\
   args: { style: 'underline', prominence: 'default', sm: false, round: false, orientation: 'horizontal' },
   render: (args) =>
     withTabBehaviour(`
-    <div class="demo-stage">
+    <div class="sb-demo-stage">
       ${navList('Playground', ITEMS, { ...args, extra: [orientationClass(args.orientation)] })}
     </div>
   `),
@@ -86,7 +86,7 @@ export const Playground: Story = {};
 export const StyleAndProminence: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <span class="sb-demo-tag">underline (default)</span>
       ${navList('Underline', ITEMS)}
       <span class="sb-demo-tag">underline --plain</span>
@@ -107,7 +107,7 @@ export const StyleAndProminence: Story = {
 export const Round: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${(['default', 'subtle', 'plain'] as TabProminence[])
         .map((prominence) => navList(`Round ${prominence}`, ITEMS.slice(0, 3), { style: 'segmented', prominence, round: true }))
         .join('')}
@@ -121,7 +121,7 @@ export const Round: Story = {
 export const Sizes: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <span class="sb-demo-tag">default (48px)</span>
       ${navList('Default size', ITEMS)}
       ${navList('Default size segmented', ITEMS, { style: 'segmented' })}
@@ -144,7 +144,7 @@ export const Sizes: Story = {
 export const Vertical: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage grid grid--auto-fit grid--2xs">
+    <div class="sb-demo-stage grid grid--auto-fit grid--2xs">
       ${navList('Vertical', ITEMS, { extra: ['tab-list--vertical'] })}
       ${navList('Vertical end', ITEMS, { extra: ['tab-list--end'] })}
       ${navList('Vertical plain', ITEMS, { prominence: 'plain', extra: ['tab-list--vertical'] })}
@@ -160,7 +160,7 @@ export const Vertical: Story = {
 export const ContainerFlags: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack" style="--tab-list-style: segmented; --tab-list-prominence: subtle; --tab-list-corners: round;">
+    <div class="sb-demo-stage stack" style="--tab-list-style: segmented; --tab-list-prominence: subtle; --tab-list-corners: round;">
       <span class="sb-demo-tag">--tab-list-style: segmented; --tab-list-prominence: subtle; --tab-list-corners: round</span>
       ${navList('Flagged', ITEMS.slice(0, 3))}
       <span class="sb-demo-tag">.tab-list--plain beats the flag</span>
@@ -175,7 +175,7 @@ export const ContainerFlags: Story = {
  */
 export const NestedNavigation: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--sm">
+    <div class="sb-demo-stage sb-demo-constrained--sm">
       <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical tab-list--sm" aria-label="Documentation">
         <ul>
           <li>
@@ -213,7 +213,7 @@ export const NestedNavigation: Story = {
 export const Scrollable: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--sm stack">
+    <div class="sb-demo-stage sb-demo-constrained--sm stack">
       <span class="sb-demo-tag">--scrollable</span>
       ${navList('Scrollable', ['Overview', 'Milestones', 'Roadmap', 'Analytics', 'Team members', 'Integrations', 'Audit log', 'Settings'], { extra: ['tab-list--scrollable'] })}
       <span class="sb-demo-tag">default: wraps</span>
@@ -228,7 +228,7 @@ export const Scrollable: Story = {
 export const FillAndTight: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       <span class="sb-demo-tag">--fill</span>
       ${navList('Fill', ['Day', 'Week', 'Month'], { extra: ['tab-list--fill'] })}
       <span class="sb-demo-tag">--segmented --subtle --fill --tight</span>
@@ -244,7 +244,7 @@ export const FillAndTight: Story = {
 export const Floating: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${navList('Floating', ['Overview', 'Analytics', 'Reports'], { extra: ['tab-list--floating'] })}
       <nav class="${listClasses({ style: 'segmented', round: true, extra: ['tab-list--floating'] })}" aria-label="App">
         <a href="#" class="tab tab--icon" aria-current="page">${icon('Home')}<span class="tab__text">Home</span></a>
@@ -257,13 +257,29 @@ export const Floating: Story = {
 };
 
 /**
+ * --docked fixes a floating bar to the bottom of the viewport, for an app's
+ * main sections on a small screen.
+ */
+export const Docked: Story = {
+  render: () =>
+    withTabBehaviour(`
+    <div class="sb-demo-stage">
+      <nav class="${listClasses({ style: 'segmented', round: true, extra: ['tab-list--floating', 'tab-list--docked'] })}" aria-label="App">
+        <a href="#" class="tab tab--icon" aria-current="page">${icon('Home')}<span class="tab__text">Home</span></a>
+        <a href="#" class="tab tab--icon">${icon('Search')}<span class="tab__text">Search</span></a>
+      </nav>
+    </div>
+  `),
+};
+
+/**
  * In a flush card body or flush sidebar, --flush runs the tabs edge to edge
  * and lines their labels up with the surrounding content (--tab-list-inset).
  */
 export const Flush: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="demo-stage demo-constrained--sm">
+    <div class="sb-demo-stage sb-demo-constrained--sm">
       <article class="card">
         <header class="card__header"><h3 class="card__title small-heading">Workspace</h3></header>
         <div class="card__body card__body--flush">

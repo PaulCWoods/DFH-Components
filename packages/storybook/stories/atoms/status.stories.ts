@@ -93,7 +93,7 @@ The **state of a thing**: text with an optional dot or icon, in tables, lists, c
     icon: { control: 'boolean', description: 'Leading icon (replaces the plain dot)' },
   },
   render: (args) => `
-    <div class="demo-stage">
+    <div class="sb-demo-stage">
       <span class="${statusClasses(args.prominence, args.intent, args.small, args.round)}">
         ${args.icon ? iconFor(args.intent) : ''}<span class="status__text">${args.label}</span>
       </span>
@@ -116,7 +116,7 @@ export const Playground: Story = {
  */
 export const ProminenceAndIntent: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${PROMINENCES.map(
     (p) => `
         <div class="cluster">
@@ -133,7 +133,7 @@ export const ProminenceAndIntent: Story = {
  */
 export const WithIcons: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${(['plain', 'default', 'strong'] as Prominence[])
       .map(
         (p) => `
@@ -151,7 +151,7 @@ export const WithIcons: Story = {
  */
 export const SizesAndCorners: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${[false, true]
       .map(
         (round) => `
@@ -170,7 +170,7 @@ export const SizesAndCorners: Story = {
  */
 export const InATable: Story = {
   render: () => `
-    <div class="demo-stage">
+    <div class="sb-demo-stage">
       <div class="table-container" tabindex="0" role="region" aria-label="Deployments">
         <table class="table">
           <caption class="small-heading">Deployments</caption>
@@ -192,7 +192,7 @@ export const InATable: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <div class="cluster" style="--status-prominence: plain;">
         <span class="status status--success"><span class="status__text">Online</span></span>
         <span class="status status--warning"><span class="status__text">Away</span></span>

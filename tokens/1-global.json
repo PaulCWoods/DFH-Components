@@ -815,7 +815,19 @@
         "$value": "\"PT Serif\", Cambria, \"Times New Roman\", Times, serif"
       },
       "pt-mono": {
-        "$value": "\"PT Mono\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        "$value": "\"adapter-mono-pe-variable\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+      },
+      "adapter-sans": {
+        "$value": "\"adapter-pe-variable\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+      },
+      "mencken": {
+        "$value": "\"mencken-std-text\", Cambria, \"Times New Roman\", Times, serif"
+      },
+      "adapter-mono": {
+        "$value": "\"adapter-mono-pe-variable\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+      },
+      "avory": {
+        "$value": "\"avory-i-pe\", \"Inter\", system-ui, -apple-system, sans-serif"
       }
     },
     "font-size-base": {
@@ -840,12 +852,12 @@
         "$description": "Modular scale ratio for mobile viewport (Minor Third: 1.2)"
       },
       "desktop-base": {
-        "$value": "1.2rem",
+        "$value": "1.5rem",
         "$type": "dimension",
         "$description": "Base font size for desktop viewport (1.5rem / 24px)"
       },
       "desktop-ratio": {
-        "$value": 1.2,
+        "$value": 1.25,
         "$type": "number",
         "$description": "Modular scale ratio for desktop viewport (Major Third: 1.25)"
       },
@@ -1088,49 +1100,49 @@
     "typography": {
       "font-size": {
         "0": {
-          "$value": "fluid(1rem, 1.2rem)",
-          "$description": "Fluid font size step 0 (1rem / 16px Mobile to 1.2rem / 19px Desktop)"
+          "$value": "fluid(1rem, 1.5rem)",
+          "$description": "Fluid font size step 0 (1rem / 16px Mobile to 1.5rem / 24px Desktop)"
         },
         "1": {
-          "$value": "fluid(1.2rem, 1.44rem)",
-          "$description": "Fluid font size step 1 (1.2rem / 19px Mobile to 1.44rem / 23px Desktop)"
+          "$value": "fluid(1.2rem, 1.875rem)",
+          "$description": "Fluid font size step 1 (1.2rem / 19px Mobile to 1.875rem / 30px Desktop)"
         },
         "2": {
-          "$value": "fluid(1.44rem, 1.728rem)",
-          "$description": "Fluid font size step 2 (1.44rem / 23px Mobile to 1.728rem / 28px Desktop)"
+          "$value": "fluid(1.44rem, 2.3438rem)",
+          "$description": "Fluid font size step 2 (1.44rem / 23px Mobile to 2.3438rem / 38px Desktop)"
         },
         "3": {
-          "$value": "fluid(1.728rem, 2.0736rem)",
-          "$description": "Fluid font size step 3 (1.728rem / 28px Mobile to 2.0736rem / 33px Desktop)"
+          "$value": "fluid(1.728rem, 2.9297rem)",
+          "$description": "Fluid font size step 3 (1.728rem / 28px Mobile to 2.9297rem / 47px Desktop)"
         },
         "4": {
-          "$value": "fluid(2.0736rem, 2.4883rem)",
-          "$description": "Fluid font size step 4 (2.0736rem / 33px Mobile to 2.4883rem / 40px Desktop)"
+          "$value": "fluid(2.0736rem, 3.6621rem)",
+          "$description": "Fluid font size step 4 (2.0736rem / 33px Mobile to 3.6621rem / 59px Desktop)"
         },
         "5": {
-          "$value": "fluid(2.4883rem, 2.986rem)",
-          "$description": "Fluid font size step 5 (2.4883rem / 40px Mobile to 2.986rem / 48px Desktop)"
+          "$value": "fluid(2.4883rem, 4.5776rem)",
+          "$description": "Fluid font size step 5 (2.4883rem / 40px Mobile to 4.5776rem / 73px Desktop)"
         },
         "6": {
-          "$value": "fluid(2.986rem, 3.5832rem)",
-          "$description": "Fluid font size step 6 (2.986rem / 48px Mobile to 3.5832rem / 57px Desktop)"
+          "$value": "fluid(2.986rem, 5.722rem)",
+          "$description": "Fluid font size step 6 (2.986rem / 48px Mobile to 5.722rem / 92px Desktop)"
         },
         "7": {
-          "$value": "fluid(3.5832rem, 4.2998rem)",
-          "$description": "Fluid font size step 7 (3.5832rem / 57px Mobile to 4.2998rem / 69px Desktop)"
+          "$value": "fluid(3.5832rem, 7.1526rem)",
+          "$description": "Fluid font size step 7 (3.5832rem / 57px Mobile to 7.1526rem / 114px Desktop)"
         },
         "8": {
-          "$value": "fluid(4.2998rem, 5.1598rem)",
-          "$description": "Fluid font size step 8 (4.2998rem / 69px Mobile to 5.1598rem / 83px Desktop)"
+          "$value": "fluid(4.2998rem, 8.9407rem)",
+          "$description": "Fluid font size step 8 (4.2998rem / 69px Mobile to 8.9407rem / 143px Desktop)"
         },
         "$type": "dimension",
         "minus-2": {
-          "$value": "fluid(0.6944rem, 0.8333rem)",
-          "$description": "Fluid font size step -2 (0.6944rem / 11px Mobile to 0.8333rem / 13px Desktop)"
+          "$value": "fluid(0.6944rem, 0.96rem)",
+          "$description": "Fluid font size step -2 (0.6944rem / 11px Mobile to 0.96rem / 15px Desktop)"
         },
         "minus-1": {
-          "$value": "fluid(0.8333rem, 1rem)",
-          "$description": "Fluid font size step -1 (0.8333rem / 13px Mobile to 1rem / 16px Desktop)"
+          "$value": "fluid(0.8333rem, 1.2rem)",
+          "$description": "Fluid font size step -1 (0.8333rem / 13px Mobile to 1.2rem / 19px Desktop)"
         }
       }
     }

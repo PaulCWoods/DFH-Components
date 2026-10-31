@@ -166,7 +166,8 @@ Colour is created and manipulated in OKLCH and consumed only through semantic ro
 
 - Ramps are created in OKLCH tooling with consistent lightness steps across hues, and chroma capped per hue so colours stay inside the sRGB gamut.
 - Ramps are stored as hex in Tier 1 tokens, because Figma Variables do not yet support OKLCH. Hex is the storage and exchange format, not the design space: a ramp is changed by regenerating it from OKLCH, never by editing hex values by hand.
-- Colours derived in CSS (hover, active, disabled, tints, translucency) are manipulated in OKLCH, for example `color-mix(in oklch, …)` or `oklch(from var(--role) …)`, so lightness changes stay perceptually even.
+- Colours derived in CSS (hover, active, disabled, tints) are manipulated in OKLCH, for example `color-mix(in oklch, …)` between two colours or `oklch(from var(--role) …)`, so lightness changes stay perceptually even.
+- Translucency (a colour mixed with `transparent`) is `color-mix(in srgb, var(--role), transparent N%)`: only the alpha should change, and mixing with `transparent` in OKLCH can shift the colour in some browsers. When `alpha()` is Baseline Widely Available, translucency moves to it (`alpha(from var(--role) / …)`), which keeps the colour's own space.
 - OKLCH lightness is perceptual, not a contrast guarantee. Every text and UI pairing must be verified against WCAG contrast (and checked with APCA as a second opinion) in the build, not by eye.
 - Components use semantic roles only: surface, text, muted text, border, and the intent roles (accent, info, success, warning, danger). Raw colour values never appear in a component.
 - Every semantic role must define light and dark values. `light-dark()` and relative colour syntax keep the definitions short.

@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Design For Humans: Code Block
+   --------------------------------------------------------------------------
+   Code to read and copy: a bar naming the language, with room for controls,
+   above the code. A molecule: the block draws the band and lays out its
+   parts; the label is a text atom and the controls are ordinary buttons. A
+   dark band in both themes, so it sets its own colour scheme and what's in it
+   follows. The library ships no script, so copying is the product's.
+
+   | Axis     | Values          | Flag                 |
+   | :------- | :-------------- | :------------------- |
+   | Lines    | scroll, --wrap  | none                 |
+   | Corners  | rounded, --flush| none                 |
+   | Density  | default, --compact | --ui-sizing: compact |
+
+   Long lines scroll: the code stays as written and <pre> takes tabindex="0",
+   a role and a name, so a keyboard can reach it. --wrap breaks them instead
+   (WCAG 1.4.10 holds either way), and needs no tabindex.
+
+   In prose, a code block ends the prose's scope, so it needs no .prose-end.
+
+   Usage:
+   <div class="code-block">
+     <div class="code-block__bar">
+       <span class="small-text">HTML</span>
+       <button type="button" class="button"><span>Copy code</span></button>
+     </div>
+     <pre class="code-block__code" tabindex="0" role="group" aria-label="HTML code"><code>…</code></pre>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.code-block) {
+  /* Private manifest */
+  --_code-block-bg: var(--code-block-bg, var(--surface-dark, Canvas));
+  --_code-block-color: var(--code-block-color, var(--foreground-on-dark, CanvasText));
+  --_code-block-bar-bg: var(--code-block-bar-bg, var(--surface-translucent, transparent));
+  --_code-block-radius: var(--code-block-radius, var(--radius, 0.25rem));
+  --_code-block-padding: var(--code-block-padding, var(--spacing, 1rem));
+  --_code-block-bar-padding-block: var(--code-block-bar-padding-block, 0.25rem);
+  --_code-block-white-space: pre;
+  --_code-block-overflow: auto;
+
+  /* ------------------------------------------------------------------------
+     Container Flags (@container style(...))
+     ------------------------------------------------------------------------ */
+  @container style(--ui-sizing: compact) {
+    --_code-block-padding: var(--code-block-compact-padding, 0.75rem);
+  }
+
+  /* Fixed type and dark colours, whatever the page's */
+  --font-sizing: fixed;
+  color-scheme: dark;
+
+  display: block;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  overflow: clip;
+  color: var(--_code-block-color);
+  background-color: var(--_code-block-bg);
+  border-radius: var(--_code-block-radius);
+
+  @media (prefers-contrast: more) {
+    border: var(--border-width, 1px) solid currentColor;
+  }
+
+  @media print {
+    color-scheme: light;
+    color: inherit;
+    background-color: transparent;
+    border: var(--border-width, 1px) solid currentColor;
+  }
+}
+
+/* ==========================================================================
+   2. Parts
+   ========================================================================== */
+:where(.code-block__bar) {
+  /* The controls are quiet and small, unless they say otherwise */
+  --button-prominence: plain;
+  --button-size: sm;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs, 0.5rem);
+  padding-block: var(--_code-block-bar-padding-block);
+  padding-inline: var(--_code-block-padding);
+  background-color: var(--_code-block-bar-bg);
+
+  /* The last part sits at the end */
+  > :where(:last-child:not(:first-child)) {
+    margin-inline-start: auto;
+  }
+
+  @media print {
+    background-color: transparent;
+  }
+}
+
+:where(.code-block__code) {
+  /* Code reads left to right in any language */
+  direction: ltr;
+  margin: 0;
+  overflow-x: var(--_code-block-overflow);
+  padding: var(--_code-block-padding);
+  font-family: var(--code-font-family, monospace);
+  font-weight: var(--code-font-weight, inherit);
+  text-align: left;
+  white-space: var(--_code-block-white-space);
+
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: calc(var(--focus-ring-width, 2px) * -1);
+  }
+
+  > :where(code) {
+    font: inherit;
+    color: inherit;
+    background: none;
+    padding: 0;
+  }
+}
+
+/* ==========================================================================
+   3. Modifiers (pure token maps)
+   ========================================================================== */
+:where(.code-block--wrap) {
+  --_code-block-white-space: pre-wrap;
+  --_code-block-overflow: visible;
+
+  > :where(.code-block__code) {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* For a block that fills its container, which draws the corners */
+:where(.code-block--flush) {
+  --_code-block-radius: 0px;
+}
+
+:where(.code-block--compact) {
+  --ui-sizing: compact;
+  --_code-block-padding: var(--code-block-compact-padding, 0.75rem);
+}

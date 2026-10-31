@@ -263,57 +263,62 @@
   },
   "type": {
     "fonts": {
-      "inter": {
-        "source": "google",
-        "family": "Inter",
+      "adapter-sans": {
+        "source": "adobe",
+        "family": "adapter-pe-variable",
         "axes": {
           "wght": [
             100,
             900
           ]
         },
-        "italic": true,
+        "kit": "lrj6kun",
         "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
       },
-      "pt-serif": {
-        "source": "google",
-        "family": "PT Serif",
+      "mencken": {
+        "source": "adobe",
+        "family": "mencken-std-text",
         "weights": [
           400,
           700
         ],
-        "italic": true,
+        "kit": "lrj6kun",
         "fallback": "Cambria, \"Times New Roman\", Times, serif"
       },
       "pt-mono": {
-        "source": "google",
-        "family": "PT Mono",
-        "weights": [
-          400
-        ],
+        "source": "adobe",
+        "family": "adapter-mono-pe-variable",
+        "axes": {
+          "wght": [
+            100,
+            900
+          ]
+        },
+        "kit": "lrj6kun",
         "fallback": "Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
       },
-      "plus-jakarta-sans": {
-        "source": "google",
-        "family": "Plus Jakarta Sans",
+      "avory": {
+        "source": "adobe",
+        "family": "avory-i-pe",
         "weights": [
           800
         ],
+        "kit": "lrj6kun",
         "fallback": "\"Inter\", system-ui, -apple-system, sans-serif"
       }
     },
     "families": {
       "sans": {
-        "font": "inter"
+        "font": "adapter-sans"
       },
       "serif": {
-        "font": "pt-serif"
+        "font": "mencken"
       },
       "mono": {
         "font": "pt-mono"
       },
       "display": {
-        "font": "plus-jakarta-sans"
+        "font": "avory"
       }
     },
     "scale": {
@@ -338,29 +343,30 @@
         "80rem"
       ],
       "max": {
-        "base": "1.2rem",
-        "ratio": 1.2
+        "base": "1.5rem",
+        "ratio": 1.25
       }
     },
     "styles": {
       "display-title": {
         "family": "display",
         "weight": "heavy",
-        "letterSpacing": "compact",
-        "case": "none",
-        "size": 5,
-        "compact": 4,
-        "growTo": 8,
-        "leading": -4
+        "letterSpacing": "tight",
+        "case": "uppercase",
+        "size": 8,
+        "compact": 7,
+        "leading": -4,
+        "cq": {
+          "from": 6
+        }
       },
       "title": {
         "family": "display",
-        "weight": "bold",
+        "weight": "heavy",
         "letterSpacing": "normal",
         "case": "none",
-        "size": 3,
-        "compact": 2,
-        "growTo": 5,
+        "size": 6,
+        "compact": 4,
         "leading": -4
       },
       "heading": {
@@ -370,7 +376,6 @@
         "case": "none",
         "size": 2,
         "compact": 1,
-        "growTo": 3,
         "leading": -3
       },
       "subheading": {

@@ -98,13 +98,13 @@ const menuSidebar = `
 
 const menuDrawer = `
   <dialog id="menu-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="menu-drawer-title">
-    <div class="card fine:ui-compact">
+    <article class="card fine:ui-compact">
       <header class="card__header align-items-center">
         <h2 id="menu-drawer-title" class="card__title heading">Broadcast</h2>
         <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
       </header>
       <div class="card__body card__body--scrollable">${menuTree('menu-drawer-title')}</div>
-    </div>
+    </article>
   </dialog>`;
 
 const mobileBar = `
@@ -160,7 +160,7 @@ const stationHeader = (buffering: boolean) => `
 const trackInfo = (id: string) => `
   <button type="button" class="button button--plain button--icon button--sm" popovertarget="${id}-info">${icon('Info')}<span class="sr-only">Track details</span></button>
   <div id="${id}-info" popover class="popover popover--end-aligned">
-    <div class="card card--compact">
+    <article class="card card--compact">
       <header class="card__header"><h3 class="card__title small-heading">Celestial Horizon</h3></header>
       <div class="card__body card__body--flush">
         <div class="table-container">
@@ -175,7 +175,7 @@ const trackInfo = (id: string) => `
           </table>
         </div>
       </div>
-    </div>
+    </article>
   </div>`;
 
 const transport = (label: string, size = ' button--lg') => `
@@ -381,7 +381,7 @@ const dock = (buffering: boolean) => `
 
 const settingsDialog = `
   <dialog id="settings" class="dialog" aria-labelledby="settings-title">
-    <div class="card card--ruled">
+    <article class="card card--ruled">
       <header class="card__header">
         <h2 id="settings-title" class="card__title small-heading">Stream settings</h2>
         <button type="button" class="button button--plain button--icon" commandfor="settings" command="close"><span class="sr-only">Close</span>${icon('Close')}</button>
@@ -411,7 +411,7 @@ const settingsDialog = `
           <button type="submit" value="save" class="button button--strong button--accent">Save</button>
         </form>
       </footer>
-    </div>
+    </article>
   </dialog>`;
 
 const outage = `

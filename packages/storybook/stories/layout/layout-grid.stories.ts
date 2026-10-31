@@ -30,7 +30,7 @@ Columns that fill the width. Items are never narrower than a minimum width, so t
 | default, \`--2xs\` … \`--2xl\` | Auto-fill columns at the block step as a minimum width (default: the base block step) |
 | \`--auto-fit\` | Too few items to fill a row share it |
 | \`--1-col\` … \`--6-col\` | At most N columns, never narrower than the minimum (the \`2xs\` step unless a size is set) |
-| \`@sm:\`, \`@md:\`, \`@lg:\` + \`grid--N-col\` | The column count once the nearest container is wider than 40, 48 or 60em |
+| \`@xs:\` … \`@7xl:\` + \`grid--N-col\` | The column count once the nearest container reaches the size (Tailwind's container scale) |
 | \`--carousel\` | One scrolling row with snap points; \`@max-3xl:grid--carousel\` only in a container narrower than 48rem |
 | \`--tight\`, \`--cushioned\`, \`--ruled\` | Gap and rules |
 
@@ -102,4 +102,27 @@ export const Carousel: Story = {
 export const Compact: Story = {
   parameters: { docs: { description: { story: 'In a `.ui-compact` region the gap steps down.' } } },
   render: () => `<div class="ui-compact">${list('grid--xs')}</div>`,
+};
+
+export const AutoFit: Story = {
+  name: 'Auto-fit',
+  parameters: { docs: { description: { story: '`--auto-fit`: too few items to fill a row share it.' } } },
+  render: () => list('grid--xs grid--auto-fit', 2),
+};
+
+export const GapsAndRules: Story = {
+  name: 'Gaps and rules',
+  parameters: { docs: { description: { story: '`--tight` has no gap, `--cushioned` takes the cushion step and `--ruled` draws a rule in each gap, where `rule` is supported.' } } },
+  render: () => `
+    <div class="stack gap-lg">
+      ${list('grid--xs grid--tight', 3)}
+      ${list('grid--xs grid--cushioned', 3)}
+      ${list('grid--xs grid--ruled', 3)}
+    </div>`,
+};
+
+export const CarouselBleed: Story = {
+  name: 'Carousel to the screen edge',
+  parameters: { docs: { description: { story: '`--carousel-bleed` runs the row into the page cushion, so items scroll to the screen edge.' } } },
+  render: () => `<div class="main">${list('grid--carousel grid--carousel-bleed grid--xs', 8)}</div>`,
 };

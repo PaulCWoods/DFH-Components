@@ -17,7 +17,7 @@ const options = [
 ---
 <div class:list={['button-group button-group--joined', cls]} role="group" aria-label="Colour scheme" data-scheme-toggle>
   {options.map((o) => (
-    <button type="button" class="button button--plain button--icon button--sm" data-scheme={o.value} aria-pressed={o.value === 'system' ? 'true' : 'false'}>
+    <button type="button" class="button button--subtle button--icon button--sm" data-scheme={o.value} aria-pressed={o.value === 'system' ? 'true' : 'false'} title={o.label}>
       <Icon name={o.icon} /><span class="sr-only">{o.label}</span>
     </button>
   ))}

@@ -97,7 +97,7 @@
     --_card-border-width: var(--card-border-width, 1px);
     --_card-border-color: var(--border-color-accent, currentColor);
     --_card-ring: var(--card-intent-ring-width, 1px);
-    --_card-tint: color-mix(in oklch, var(--border-color-accent, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+    --_card-tint: color-mix(in srgb, var(--border-color-accent, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
@@ -106,7 +106,7 @@
     --_card-border-width: var(--card-border-width, 1px);
     --_card-border-color: var(--border-color-danger, currentColor);
     --_card-ring: var(--card-intent-ring-width, 1px);
-    --_card-tint: color-mix(in oklch, var(--border-color-danger, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+    --_card-tint: color-mix(in srgb, var(--border-color-danger, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
@@ -115,7 +115,7 @@
     --_card-border-width: var(--card-border-width, 1px);
     --_card-border-color: var(--border-color-warning, currentColor);
     --_card-ring: var(--card-intent-ring-width, 1px);
-    --_card-tint: color-mix(in oklch, var(--border-color-warning, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+    --_card-tint: color-mix(in srgb, var(--border-color-warning, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
@@ -124,7 +124,7 @@
     --_card-border-width: var(--card-border-width, 1px);
     --_card-border-color: var(--border-color-success, currentColor);
     --_card-ring: var(--card-intent-ring-width, 1px);
-    --_card-tint: color-mix(in oklch, var(--border-color-success, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+    --_card-tint: color-mix(in srgb, var(--border-color-success, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
@@ -133,7 +133,7 @@
     --_card-border-width: var(--card-border-width, 1px);
     --_card-border-color: var(--border-color-info, currentColor);
     --_card-ring: var(--card-intent-ring-width, 1px);
-    --_card-tint: color-mix(in oklch, var(--border-color-info, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+    --_card-tint: color-mix(in srgb, var(--border-color-info, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
@@ -206,6 +206,11 @@
   --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
 }
 
+:where(.card--dense) {
+  --_card-padding: var(--card-compact-padding, var(--spacing));
+  --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
+}
+
 /* Chrome: --flat drops the edge (border, corners and shadow) and keeps the
    fill; --bordered draws the border at any prominence */
 :where(.card--flat) {
@@ -227,7 +232,7 @@
   --_card-border-width: var(--card-border-width, 1px);
   --_card-border-color: var(--border-color-accent, currentColor);
   --_card-ring: var(--card-intent-ring-width, 1px);
-  --_card-tint: color-mix(in oklch, var(--border-color-accent, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+  --_card-tint: color-mix(in srgb, var(--border-color-accent, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
@@ -236,7 +241,7 @@
   --_card-border-width: var(--card-border-width, 1px);
   --_card-border-color: var(--border-color-danger, currentColor);
   --_card-ring: var(--card-intent-ring-width, 1px);
-  --_card-tint: color-mix(in oklch, var(--border-color-danger, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+  --_card-tint: color-mix(in srgb, var(--border-color-danger, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
@@ -245,7 +250,7 @@
   --_card-border-width: var(--card-border-width, 1px);
   --_card-border-color: var(--border-color-warning, currentColor);
   --_card-ring: var(--card-intent-ring-width, 1px);
-  --_card-tint: color-mix(in oklch, var(--border-color-warning, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+  --_card-tint: color-mix(in srgb, var(--border-color-warning, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
@@ -254,7 +259,7 @@
   --_card-border-width: var(--card-border-width, 1px);
   --_card-border-color: var(--border-color-success, currentColor);
   --_card-ring: var(--card-intent-ring-width, 1px);
-  --_card-tint: color-mix(in oklch, var(--border-color-success, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+  --_card-tint: color-mix(in srgb, var(--border-color-success, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
@@ -263,7 +268,7 @@
   --_card-border-width: var(--card-border-width, 1px);
   --_card-border-color: var(--border-color-info, currentColor);
   --_card-ring: var(--card-intent-ring-width, 1px);
-  --_card-tint: color-mix(in oklch, var(--border-color-info, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
+  --_card-tint: color-mix(in srgb, var(--border-color-info, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
@@ -290,7 +295,7 @@
 /* Translucent: a material, combined with any prominence that has a fill */
 @media (prefers-contrast: no-preference) {
   :where(.card--translucent) {
-    --_card-bg: color-mix(in oklch, var(--_card-fill), transparent var(--card-translucency, 0%));
+    --_card-bg: color-mix(in srgb, var(--_card-fill), transparent var(--card-translucency, 0%));
     backdrop-filter: var(--card-filter, none);
   }
 }
@@ -554,7 +559,7 @@
    its target. The focus ring is drawn on the card's perimeter, and other
    controls are lifted above the link's overlay.
    ========================================================================== */
-:where(.card:has(.link--stretched)) {
+:where(.card:not(:has(.card)):has(.link--stretched)) {
   transition: box-shadow var(--_card-transition) ease;
 
   @media (hover: hover) {

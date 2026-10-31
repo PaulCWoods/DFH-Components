@@ -47,7 +47,7 @@ A combination nests one \`<kbd>\` per key inside an outer \`.kbd\`, which then a
     keys: { control: 'text', description: 'Keys, joined with + for a combination' },
     small: { control: 'boolean', description: 'Size: --sm' },
   },
-  render: (args) => `<div class="demo-stage">${kbd(args.keys, args.small)}</div>`,
+  render: (args) => `<div class="sb-demo-stage">${kbd(args.keys, args.small)}</div>`,
 };
 
 export default meta;
@@ -65,7 +65,7 @@ export const Playground: Story = {
  */
 export const KeysAndCombinations: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${[false, true]
         .map(
           (small) => `
@@ -83,7 +83,7 @@ export const KeysAndCombinations: Story = {
  */
 export const OnControls: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <button type="button" class="button" aria-keyshortcuts="Meta+K">
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
         <span>Search</span>

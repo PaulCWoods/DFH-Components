@@ -86,7 +86,7 @@ A single-line text field. Input, select and textarea share one base (\`atoms/inp
     readonly: { control: 'boolean' },
   },
   render: (args) => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="input-playground" class="field__label label">${args.label}</label>
         ${args.invalid ? '<p id="input-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter an email address in the form name@example.com.</p>' : ''}
@@ -129,7 +129,7 @@ export const Playground: Story = {
  */
 export const Prominence: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${PROMINENCES.map((p) => field(p, (id) => `<input id="${id}" type="text" class="${inputClasses('default', p)}" placeholder="Search projects" />`)).join('')}
       ${field('round', (id) => `<input id="${id}" type="search" class="input input--round" placeholder="Search projects" />`)}
     </div>
@@ -141,7 +141,7 @@ export const Prominence: Story = {
  */
 export const Sizes: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${SIZES.map(
         (s) => `
       <div style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: var(--spacing-16);">
@@ -166,7 +166,7 @@ export const Sizes: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Resting', (id) => `<input id="${id}" type="text" class="input" placeholder="Placeholder text" />`)}
       ${field('Filled', (id) => `<input id="${id}" type="text" class="input" value="Ada Lovelace" />`)}
       <div class="field">
@@ -185,7 +185,7 @@ export const States: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <div class="cluster items-end" style="--controls-prominence: subtle; --controls-corners: round;">
         <span class="sb-demo-tag">--controls-prominence: subtle; --controls-corners: round</span>
         ${field('Name', (id) => `<input id="${id}" type="text" class="input" />`)}
@@ -210,7 +210,7 @@ export const ContainerFlags: Story = {
  */
 export const Flush: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md">
+    <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="card">
         <div class="card__header inline gap-sm focus-within">
           <svg class="icon text-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
@@ -226,7 +226,7 @@ export const Flush: Story = {
  */
 export const Types: Story = {
   render: () => `
-    <div class="demo-stage demo-constrained--md stack">
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
       ${field('Date', (id) => `<input id="${id}" type="date" class="input" />`)}
       ${field('Time', (id) => `<input id="${id}" type="time" class="input" />`)}
       ${field('Quantity', (id) => `<input id="${id}" type="number" class="input" value="2" min="1" />`)}
@@ -240,7 +240,7 @@ export const Types: Story = {
  */
 export const ColorAndFile: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       <div class="cluster items-end">
         ${['color-input--sm', '', 'color-input--lg']
           .map((m, i) => field(['sm', 'default', 'lg'][i], (id) => `<input id="${id}" type="color" class="${['color-input', m].filter(Boolean).join(' ')}" value="#00a39a" />`))

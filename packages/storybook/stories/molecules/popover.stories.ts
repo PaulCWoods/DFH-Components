@@ -43,13 +43,13 @@ const trigger = (id: string, label: string, extra = '') =>
   `<button type="button" class="button" popovertarget="${id}"${extra}><span>${label}</span>${icon('ChevronDown')}</button>`;
 
 const noteCard = (title: string, text: string) => `
-  <div class="card">
+  <article class="card">
     <header class="card__header"><h3 class="card__title heading">${title}</h3></header>
     <div class="card__body"><p class="small-text">${text}</p></div>
-  </div>`;
+  </article>`;
 
 const actionsCard = (id: string) => `
-  <div class="card card--compact card--ruled">
+  <article class="card card--compact card--ruled">
     <header class="card__header"><h3 class="card__title heading">Document</h3></header>
     <div class="card__body stack" style="--button-prominence: subtle;">
       <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
@@ -59,7 +59,7 @@ const actionsCard = (id: string) => `
     <footer class="card__footer">
       <button type="button" class="button button--subtle button--sm" popovertarget="${id}" popovertargetaction="hide"><span>Close</span></button>
     </footer>
-  </div>`;
+  </article>`;
 
 /* Room around the trigger so every placement has space */
 const stage = (inner: string) => `
@@ -109,7 +109,7 @@ export const Content: Story = {
 
     <button type="button" class="button" popovertarget="ct-settings" aria-haspopup="dialog">${icon('Settings')}<span>Settings</span></button>
     <div id="ct-settings" popover class="popover" role="dialog" aria-labelledby="ct-settings-title">
-      <div class="card card--compact card--ruled">
+      <article class="card card--compact card--ruled">
         <header class="card__header"><h3 class="card__title heading" id="ct-settings-title">Preferences</h3></header>
         <div class="card__body stack">
           <label class="switch">
@@ -125,7 +125,7 @@ export const Content: Story = {
         <footer class="card__footer">
           <button type="button" class="button button--strong button--accent button--sm" popovertarget="ct-settings" popovertargetaction="hide"><span>Done</span></button>
         </footer>
-      </div>
+      </article>
     </div>
   `),
 };
@@ -167,11 +167,24 @@ export const Width: Story = {
   `),
 };
 
+export const PlacementFlag: Story = {
+  name: 'Placement flag',
+  render: () => stage(`
+    <div class="cluster" style="--popover-placement: end-aligned;">
+      ${trigger('pf-region', 'From the region')}
+      <div id="pf-region" popover class="popover">${noteCard('Flag', 'Placed by --popover-placement on the region.')}</div>
+
+      ${trigger('pf-modifier', 'Modifier wins')}
+      <div id="pf-modifier" popover class="popover popover--top">${noteCard('Modifier', 'A modifier on the popover beats the flag.')}</div>
+    </div>
+  `),
+};
+
 export const Scrolling: Story = {
   render: () => stage(`
     ${trigger('sc-long', 'Release notes')}
     <div id="sc-long" popover class="popover">
-      <div class="card card--ruled">
+      <article class="card card--ruled">
         <header class="card__header"><h3 class="card__title heading">Release notes</h3></header>
         <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Release notes">
           ${Array.from({ length: 14 }, (_, i) => `<p class="small-text">Change ${i + 1}: tokens, anchoring and transitions updated.</p>`).join('')}
@@ -179,7 +192,7 @@ export const Scrolling: Story = {
         <footer class="card__footer">
           <button type="button" class="button button--sm" popovertarget="sc-long" popovertargetaction="hide"><span>Close</span></button>
         </footer>
-      </div>
+      </article>
     </div>
   `),
 };

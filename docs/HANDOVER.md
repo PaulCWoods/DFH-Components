@@ -47,7 +47,8 @@
 | Typography (theme engine for the type scale, line-height scale and text styles; font sources, variable fonts, system stacks by default with a generated `fonts.css`; gate; Typography section in the Token Designer; Figma text styles) | Done, blog mirrored | [audit](audit/typography.md) |
 | Fluid spacing (`space` theme section, engine, `build:space`, roles breathe-sm to cushion-lg, Spacing section in the Token Designer, Figma per-mode fix) | Done, blog mirrored | [audit](audit/fluid-spacing.md) |
 | Thumbnail atom (`.thumbnail`, §6c; Cadence's record moved onto it) | Done, blog mirrored | [audit](audit/thumbnail.md) |
-| Docs site (rebuilt from scratch: markup docs feed the pages, library-only shell, `components.designforhumans.blog`) | Planned | [plan](audit/docs-site.md) |
+| Brand atom (`.brand`, §6d; replaces `.header__brand*`) | Done, blog mirrored | [markup](markup/06d-brand.md) |
+| Docs site (rebuilt from scratch: markup docs feed the pages, library-only shell, `components.designforhumans.blog`) | Phase 4 done: every component has a page; questions open | [plan](audit/docs-site.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
 
@@ -95,7 +96,7 @@ The warning and accent contrast failures are resolved by the generated palette: 
 - The docs sidebar links to a `/components/atoms/badge` page, and to `/components/layout/*` pages, that don't exist.
 - Icon work (glyphs to draw, the tab icon scale, `Icon.astro`, the blog accent/info clash) is listed in `audit/icon-todo.md`.
 - The docs sidebar's "Composite Recipes" links (`/recipes/*`) point at pages that don't exist. Either build them from the stories or link to Storybook.
-- Colour mixes are `in oklch` (done 30 October 2026, blog mirrored). Every one mixes a colour with `transparent`, so only the alpha changes and nothing looks different; the Figma exporter evaluates both spaces. The shadow colours now use translucency tokens (a `translucency.25` step was added) in place of literal percentages.
+- Colour mixes with `transparent` are `in srgb` again (31 October 2026, blog mirrored). The OKLCH versions (30 October) gave a visible shift on translucent surfaces. Every mix in the library is a translucency mix, so none are in OKLCH now; mixes between two colours would be. Move translucency to `alpha(from …)` once it is Baseline Widely Available (PRINCIPLES §5). The shadow colours use translucency tokens (a `translucency.25` step was added) in place of literal percentages.
 - Text sizes: Tier 2 keeps one fixed size per text atom, `--{atom}-fixed-font-size`. The plain `--body-sm-font-size` and `--body-xs-font-size` (duplicates) are gone, and `--micro-heading-font-size` is `--micro-heading-fixed-font-size`. Figma still names them `body-sm/font-size` and so on (the exporter maps them), so the Figma output is unchanged apart from two descriptions. Blog mirrored.
 
 ### Quick fixes (after the palette pass)

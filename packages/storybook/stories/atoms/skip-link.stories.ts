@@ -11,7 +11,7 @@ const focusFirst: Story['play'] = async ({ canvasElement }) => {
 };
 
 const page = (skip: string, id: string) => `
-  <div class="demo-stage demo-constrained--md" style="position: relative;">
+  <div class="sb-demo-stage sb-demo-constrained--md" style="position: relative;">
     ${skip}
     <header class="p-md"><span class="small-text text-muted">Site header and navigation</span></header>
     <main id="${id}" tabindex="-1" class="p-md"><p class="text">Main content. Press Tab inside the frame to show the skip link.</p></main>

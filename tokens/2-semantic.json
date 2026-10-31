@@ -41,7 +41,7 @@
   "color": {
     "$type": "color",
     "muted": {
-      "$value": "color-mix(in oklch, currentColor, transparent {translucency.50})",
+      "$value": "color-mix(in srgb, currentColor, transparent {translucency.50})",
       "$description": "Semi-transparent muted tint based on current text color"
     },
     "focus": {
@@ -49,15 +49,15 @@
       "$description": "High-contrast focus ring stroke color (WCAG 2.4.7 & 2.4.13 >= 3:1)"
     },
     "quiet": {
-      "$value": "color-mix(in oklch, currentColor, transparent {translucency.70})",
+      "$value": "color-mix(in srgb, currentColor, transparent {translucency.70})",
       "$description": "Low-contrast subtle tint for dividers and hair-lines"
     },
     "backdrop": {
-      "$value": "color-mix(in oklch, {color.neutral.900}, transparent {translucency.50})",
+      "$value": "color-mix(in srgb, {color.neutral.900}, transparent {translucency.50})",
       "$description": "Overlay scrim background for modal dialogs"
     },
     "overlay": {
-      "$value": "light-dark(color-mix(in oklch, {color.neutral.000}, transparent {translucency.33}), color-mix(in oklch, {color.neutral.900}, transparent {translucency.33}))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.000}, transparent {translucency.33}), color-mix(in srgb, {color.neutral.900}, transparent {translucency.33}))",
       "$description": "Translucent surface layer for sticky navigation and floating panels"
     }
   },
@@ -109,7 +109,7 @@
       "$description": "Maximum depth background for deep containers"
     },
     "layer": {
-      "$value": "light-dark(color-mix(in oklch, {color.white}, transparent {surface-layer.translucency}), color-mix(in oklch, {color.black}, transparent {surface-layer.translucency}))",
+      "$value": "light-dark(color-mix(in srgb, {color.white}, transparent {surface-layer.translucency}), color-mix(in srgb, {color.black}, transparent {surface-layer.translucency}))",
       "$description": "Layer surface background for floating or sticky elements"
     },
     "accent": {
@@ -137,15 +137,15 @@
       "$description": "High-contrast complementary surface for primary interactive elements"
     },
     "translucent": {
-      "$value": "color-mix(in oklch, {surface.inverted}, transparent {translucency.95})",
+      "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.95})",
       "$description": "Gentle hover tint on interactive surfaces"
     },
     "translucent-strong": {
-      "$value": "color-mix(in oklch, {surface.inverted}, transparent {translucency.90})",
+      "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.90})",
       "$description": "Stronger hover tint on interactive surfaces"
     },
     "shade": {
-      "$value": "light-dark(color-mix(in oklch, {color.neutral.1000}, transparent {translucency.95}), color-mix(in oklch, {color.black}, transparent {translucency.70}))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.1000}, transparent {translucency.95}), color-mix(in srgb, {color.black}, transparent {translucency.70}))",
       "$description": "Darker shade for gentle emphasis"
     },
     "danger": {
@@ -302,7 +302,7 @@
         "$description": "Quiet border stroke color"
       },
       "control": {
-        "$value": "color-mix(in oklch, currentColor, transparent {translucency.33})",
+        "$value": "color-mix(in srgb, currentColor, transparent {translucency.33})",
         "$description": "Form control boundary: 67% of the text colour, at least 3:1 against the page in both schemes (WCAG 1.4.11)"
       },
       "accent": {
@@ -770,14 +770,14 @@
   },
   "heading-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.2-3}",
+      "$value": "{typography.font-size.cq.2}",
       "$type": "dimension",
       "$description": "Container-fluid heading typography size using cqi units (Step 3)"
     }
   },
   "heading-fluid": {
     "font-size": {
-      "$value": "{fluid.typography.font-size.2-3}",
+      "$value": "{fluid.typography.font-size.2}",
       "$type": "dimension",
       "$description": "Section title and major heading typography size (fluid step 2: 23px Mobile to 38px Desktop)"
     }
@@ -919,7 +919,7 @@
       "$type": "fontFamilies"
     },
     "font-weight": {
-      "$value": "{font-weight.bold}",
+      "$value": "{font-weight.heavy}",
       "$type": "fontWeight"
     },
     "line-height": {
@@ -937,28 +937,28 @@
   },
   "title-fixed": {
     "font-size": {
-      "$value": "{typography.font-size.3}",
+      "$value": "{typography.font-size.6}",
       "$type": "dimension",
       "$description": "Title typography size (Step 5)"
     }
   },
   "title-compact": {
     "font-size": {
-      "$value": "{typography.font-size.2}",
+      "$value": "{typography.font-size.4}",
       "$type": "dimension",
       "$description": "Title typography size (Step 4)"
     }
   },
   "title-fluid": {
     "font-size": {
-      "$value": "{fluid.typography.font-size.3-5}",
+      "$value": "{fluid.typography.font-size.6}",
       "$type": "dimension",
       "$description": "Title typography size (fluid step 4 to 7: 33px Mobile to 114px Desktop)"
     }
   },
   "title-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.3-5}",
+      "$value": "{typography.font-size.cq.6}",
       "$type": "dimension",
       "$description": "Container-fluid display title typography size using cqi units (Step 4 to 7)"
     }
@@ -973,42 +973,42 @@
       "$type": "fontWeight"
     },
     "line-height": {
-      "$value": "{title.line-height}",
+      "$value": "{typography.line-height.minus-4}",
       "$type": "number"
     },
     "letter-spacing": {
-      "$value": "{typography.spacing.compact}",
+      "$value": "{typography.spacing.tight}",
       "$type": "dimension"
     },
     "text-transform": {
-      "$value": "none",
+      "$value": "uppercase",
       "$type": "other"
     }
   },
   "display-title-fixed": {
     "font-size": {
-      "$value": "{typography.font-size.5}",
+      "$value": "{typography.font-size.8}",
       "$type": "dimension",
       "$description": "Title typography size (Step 5)"
     }
   },
   "display-title-compact": {
     "font-size": {
-      "$value": "{typography.font-size.4}",
+      "$value": "{typography.font-size.7}",
       "$type": "dimension",
       "$description": "Title typography size (Step 4)"
     }
   },
   "display-title-fluid": {
     "font-size": {
-      "$value": "{fluid.typography.font-size.5-8}",
+      "$value": "{fluid.typography.font-size.8}",
       "$type": "dimension",
       "$description": "Hero display title typography size (fluid step 7: 57px Mobile to 114px Desktop)"
     }
   },
   "display-title-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.5-8}",
+      "$value": "{typography.font-size.cq.6}",
       "$type": "dimension",
       "$description": "Container-fluid display title size using cqi units (steps 5 to 8)"
     }
@@ -1239,12 +1239,12 @@
   "shadow": {
     "$type": "shadow",
     "color": {
-      "$value": "light-dark(color-mix(in oklch, {color.neutral.900}, transparent {translucency.90}), color-mix(in oklch, {color.black}, transparent {translucency.25}))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent {translucency.90}), color-mix(in srgb, {color.black}, transparent {translucency.25}))",
       "$type": "color",
       "$description": "Elevation shadow color tint"
     },
     "color-light": {
-      "$value": "light-dark(color-mix(in oklch, {color.neutral.800}, transparent {translucency.95}), color-mix(in oklch, {color.black}, transparent {translucency.50}))",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.800}, transparent {translucency.95}), color-mix(in srgb, {color.black}, transparent {translucency.50}))",
       "$type": "color",
       "$description": "Subtle elevation shadow color tint"
     },

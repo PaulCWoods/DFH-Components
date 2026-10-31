@@ -1,0 +1,33 @@
+---
+title: Components
+summary: The library's parts, from single elements to whole page regions, each built from the ones below it.
+---
+import ComponentIndex from '../../../components/ComponentIndex.astro';
+
+Every component is a class (or a few) on native HTML. They are grouped by size, and each tier is built from the ones below it: a card holds headings, text and buttons; a dialog holds a card. The bigger parts arrange the smaller ones and leave their styling to them, so a button looks the same in a card, a dialog or a toolbar.
+
+Components share the same options wherever they make sense: size (`--sm`, `--lg`), prominence (`--strong`, `--subtle`, `--plain`), intent (`--accent`, `--danger` and the rest) and density (`--compact`). Each option changes one thing, so they combine freely.
+
+## Atoms
+
+Single elements: a button, a field's input, a heading, an icon. They carry the type, colour and target sizes.
+
+<ComponentIndex tier="atom" />
+
+## Molecules
+
+A few atoms with a job together: a card, a field with its label and hint, a banner.
+
+<ComponentIndex tier="molecule" />
+
+## Organisms
+
+Larger regions: a dialog, a table, the page header.
+
+<ComponentIndex tier="organism" />
+
+## Layout
+
+Rows, columns, grids and the page shell. They place things and set the space between them, and nothing else.
+
+<ComponentIndex tier="layout" />

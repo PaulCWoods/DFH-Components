@@ -26,7 +26,7 @@ A row that doesn't wrap, its items centred on the cross axis. Use it for an icon
 | \`--tight\`, \`--cushioned\` | No gap, the cushion step |
 | \`--ruled\` | A rule in each gap |
 
-- **Responsive:** \`.inline-responsive--{2xs…2xl}\` is a column that becomes a row once its container is wider than the size. It needs a container ancestor (\`.container-inline\`, a card, a header, the split); without one it stays a column.
+- **Responsive:** \`.inline-responsive--{xs…7xl}\` is a column that becomes a row once its container reaches the size. It needs a container ancestor (\`.container-inline\`, a card, a header, the split); without one it stays a column.
 - **Hooks:** \`--gap\`, \`--align-items\`, \`--justify-content\`, set on the row itself; nested layouts keep their own.
 - **Density:** inside a compact region the gap steps down.
         `,
@@ -92,4 +92,14 @@ export const Responsive: Story = {
           </div>
         </div>`).join('')}
     </div>`,
+};
+
+export const Ruled: Story = {
+  parameters: { docs: { description: { story: '`--ruled` draws a rule in each gap, where `rule` is supported. The gap alone still separates the items.' } } },
+  render: () => `
+    <ul class="inline inline--ruled small-text" role="list">
+      <li>Part shade</li>
+      <li>Moist soil</li>
+      <li>Flowers in spring</li>
+    </ul>`,
 };

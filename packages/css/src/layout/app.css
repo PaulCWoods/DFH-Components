@@ -92,6 +92,12 @@
     block-size: 100dvb;
     overflow: hidden;
 
+    /* A main with no workspace around it scrolls too: nothing is clipped */
+    > :where(.main, main) {
+        min-block-size: 0;
+        overflow-y: auto;
+    }
+
     > :where(.app__workspace) {
         block-size: 100%;
         overflow: hidden;
@@ -104,6 +110,10 @@
     @media (width < 48rem) or (height < 36rem) {
         block-size: auto;
         overflow: visible;
+
+        > :where(.main, main) {
+            overflow-y: visible;
+        }
 
         > :where(.app__workspace) {
             block-size: auto;

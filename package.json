@@ -19,11 +19,13 @@
     "check:layout": "node scripts/check-layout.mjs",
     "check:docs": "node scripts/check-docs.mjs",
     "sync:blog": "node scripts/sync-blog.js",
+    "build:blog-palette": "node scripts/build-blog-palette.js",
     "watch:blog": "node scripts/sync-blog.js --watch",
     "storybook": "npm run storybook --workspace=@design-for-humans/storybook",
     "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook",
     "docs": "npm run dev --workspace=@design-for-humans/docs",
     "build:docs": "npm run build --workspace=@design-for-humans/docs",
+    "build:site": "npm run build:docs && npm run build:storybook && rm -rf packages/docs/dist/storybook && cp -R packages/storybook/storybook-static packages/docs/dist/storybook",
     "designer": "npm run dev --workspace=@design-for-humans/token-designer"
   },
   "devDependencies": {

@@ -65,7 +65,7 @@
   --_combobox-option-hover-bg: var(--combobox-option-hover-bg, var(--surface-translucent, transparent));
   --_combobox-option-selected-color: var(--combobox-option-selected-color, var(--foreground-accent, currentColor));
   --_combobox-font-size: var(--body-fixed-font-size, 1rem);
-  --_combobox-gap: calc(var(--spacing, 1rem) / 2);
+  --_combobox-gap: var(--spacing, 1rem);
 
   /* ------------------------------------------------------------------------
      Container Flags: the options step down with the field
@@ -74,6 +74,7 @@
     --_combobox-font-size: var(--body-compact-font-size, 0.875rem);
     --_combobox-option-padding-block: calc(var(--spacing, 1rem) / 4);
     --_combobox-option-padding-inline: calc(var(--spacing, 1rem) / 2);
+    --_combobox-gap: calc(var(--spacing, 1rem)/2);
   }
 
   /* The list anchors to this combobox's own control */
@@ -109,6 +110,10 @@
 
 :where(.combobox--round) {
   --combobox-corners: round;
+}
+
+:where(.combobox--flush) {
+  --combobox-chrome: flush;
 }
 
 /* ==========================================================================

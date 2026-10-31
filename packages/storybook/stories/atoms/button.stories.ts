@@ -113,7 +113,7 @@ Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as b
       ? `<a href="#" class="${classes}" role="button" ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</a>`
       : `<button type="button" class="${classes}" ${args.disabled ? 'disabled' : ''} ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</button>`;
 
-    return `<div class="demo-stage demo-constrained--md">${control}</div>`;
+    return `<div class="sb-demo-stage sb-demo-constrained--md">${control}</div>`;
   },
 };
 
@@ -142,10 +142,10 @@ export const Playground: Story = {
  */
 export const ProminenceAndIntent: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${INTENTS.map(
         (intent) => `
-        <div class="demo-label">Intent: ${intent}${intent === 'neutral' ? ' (default)' : ` (.button--${intent})`}</div>
+        <div class="sb-demo-label">Intent: ${intent}${intent === 'neutral' ? ' (default)' : ` (.button--${intent})`}</div>
         <div class="cluster">
           ${PROMINENCES.map(
             (prominence) => `
@@ -157,7 +157,7 @@ export const ProminenceAndIntent: Story = {
         </div>`,
       ).join('<hr class="divider" />')}
       <hr class="divider" />
-      <div class="demo-label">Placeholder (dashed, for "add" affordances)</div>
+      <div class="sb-demo-label">Placeholder (dashed, for "add" affordances)</div>
       <div class="cluster">
         <button type="button" class="button button--placeholder"><span>+ Add Item</span></button>
       </div>
@@ -171,11 +171,11 @@ export const ProminenceAndIntent: Story = {
  */
 export const States: Story = {
   render: () => `
-    <div class="demo-stage stack">
+    <div class="sb-demo-stage stack">
       ${(['default', 'strong', 'subtle'] as Prominence[])
         .map(
           (prominence) => `
-        <div class="demo-label">${prominence === 'default' ? 'Outline' : prominence}</div>
+        <div class="sb-demo-label">${prominence === 'default' ? 'Outline' : prominence}</div>
         <div class="cluster">
           <button type="button" class="${buttonClasses(prominence, 'accent')}"><span>Resting</span></button>
           <button type="button" class="${buttonClasses(prominence, 'accent')} is-active" aria-pressed="true"><span>Selected</span></button>
@@ -184,7 +184,7 @@ export const States: Story = {
         </div>`,
         )
         .join('')}
-      <div class="demo-label">Link styled as a button</div>
+      <div class="sb-demo-label">Link styled as a button</div>
       <div class="cluster">
         <a href="#" class="button" role="button"><span>Link Button</span></a>
         <a href="#" class="button" role="button" aria-disabled="true"><span>Link Aria Disabled</span></a>
@@ -198,8 +198,8 @@ export const States: Story = {
  */
 export const SizesAndTargets: Story = {
   render: () => `
-    <div class="demo-stage stack">
-      <div class="demo-label">.button--sm (32px) · default (48px) · .button--lg (64px)</div>
+    <div class="sb-demo-stage stack">
+      <div class="sb-demo-label">.button--sm (32px) · default (48px) · .button--lg (64px)</div>
       <div class="cluster">
         <button type="button" class="button button--strong button--accent button--sm"><span>Small</span></button>
         <button type="button" class="button button--strong button--accent"><span>Default</span></button>
@@ -208,7 +208,7 @@ export const SizesAndTargets: Story = {
 
       <hr class="divider" />
 
-      <div class="demo-label">Small icon buttons keep a 48px hit area (dashed outline shows it)</div>
+      <div class="sb-demo-label">Small icon buttons keep a 48px hit area (dashed outline shows it)</div>
       <div class="cluster">
         ${['Search', 'Edit', 'Delete']
           .map(
@@ -225,7 +225,7 @@ export const SizesAndTargets: Story = {
 
       <hr class="divider" />
 
-      <div class="demo-label">Fine-pointer opt-in (style="--spacing-target-min: var(--spacing-target-sm)"): hit area matches the 32px visual</div>
+      <div class="sb-demo-label">Fine-pointer opt-in (style="--spacing-target-min: var(--spacing-target-sm)"): hit area matches the 32px visual</div>
       <div class="cluster" style="--spacing-target-min: var(--spacing-target-sm);">
         <button type="button" class="button button--sm"><span>Small</span></button>
         <button type="button" class="button button--subtle button--icon button--sm">
@@ -243,28 +243,28 @@ export const SizesAndTargets: Story = {
  */
 export const ContainerFlags: Story = {
   render: () => `
-    <div class="demo-stage stack">
-      <div class="demo-label">Parent: style="--button-prominence: subtle; --button-corners: round;"</div>
+    <div class="sb-demo-stage stack">
+      <div class="sb-demo-label">Parent: style="--button-prominence: subtle; --button-corners: round;"</div>
       <nav class="cluster" style="--button-prominence: subtle; --button-corners: round;" aria-label="Demo navigation">
         <a href="#" class="button" aria-current="page"><span>Overview</span></a>
         <a href="#" class="button"><span>Analytics</span></a>
         <a href="#" class="button"><span>Reports</span></a>
       </nav>
 
-      <div class="demo-label">Parent: style="--button-intent: danger;" (one child overrides with .button--strong)</div>
+      <div class="sb-demo-label">Parent: style="--button-intent: danger;" (one child overrides with .button--strong)</div>
       <div class="cluster" style="--button-intent: danger;">
         <button type="button" class="button"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Remove</span></button>
         <button type="button" class="button button--strong"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete All</span></button>
       </div>
 
-      <div class="demo-label">Parent: style="--ui-sizing: compact;" (density steps controls to --sm; --lg steps to default)</div>
+      <div class="sb-demo-label">Parent: style="--ui-sizing: compact;" (density steps controls to --sm; --lg steps to default)</div>
       <div class="cluster" style="--ui-sizing: compact;">
         <button type="button" class="button"><span>Cancel</span></button>
         <button type="button" class="button button--strong button--accent"><span>Save</span></button>
         <button type="button" class="button button--lg"><span>Large</span></button>
       </div>
 
-      <div class="demo-label">Group classes: .buttons-subtle .buttons-sm</div>
+      <div class="sb-demo-label">Group classes: .buttons-subtle .buttons-sm</div>
       <div class="cluster buttons-subtle buttons-sm">
         <button type="button" class="button"><span>Copy</span></button>
         <button type="button" class="button"><span>Paste</span></button>
@@ -279,7 +279,7 @@ export const ContainerFlags: Story = {
  */
 export const IconOnlyAndShapes: Story = {
   render: () => `
-    <div class="demo-stage cluster">
+    <div class="sb-demo-stage cluster">
       <button type="button" class="button button--icon">
         <span class="sr-only">Search records</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
@@ -303,7 +303,7 @@ export const IconOnlyAndShapes: Story = {
  */
 export const Toggles: Story = {
   render: () => `
-    <div class="demo-stage cluster">
+    <div class="sb-demo-stage cluster">
       <label class="button">
         <input type="checkbox" class="sr-only" />
         <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
@@ -333,7 +333,7 @@ export const Toggles: Story = {
  */
 export const ContainerAdaptive: Story = {
   render: () => `
-    <div class="demo-stage">
+    <div class="sb-demo-stage">
       <div class="container-inline" style="resize: horizontal; overflow: auto; inline-size: 34rem; min-inline-size: 10rem; max-inline-size: 100%; padding: var(--spacing-default); outline: 1px dashed var(--border-color-muted);">
         <div class="cluster @max-3xl:hide-labels">
           <button type="button" class="button">
@@ -366,16 +366,16 @@ export const Surfaces: Story = {
     ).join('');
     return `
       <div class="stack">
-        <div class="demo-stage stack" style="color-scheme: light; background: var(--surface); color: var(--foreground);">
-          <div class="demo-label">Light</div>
+        <div class="sb-demo-stage stack" style="color-scheme: light; background: var(--surface); color: var(--foreground);">
+          <div class="sb-demo-label">Light</div>
           <div class="cluster">${row}</div>
         </div>
-        <div class="demo-stage stack" style="color-scheme: dark; background: var(--surface); color: var(--foreground);">
-          <div class="demo-label">Dark</div>
+        <div class="sb-demo-stage stack" style="color-scheme: dark; background: var(--surface); color: var(--foreground);">
+          <div class="sb-demo-label">Dark</div>
           <div class="cluster">${row}</div>
         </div>
-        <div class="demo-stage stack color-palette-inverted" style="background: var(--surface); color: var(--foreground);">
-          <div class="demo-label">Reversed (.color-palette-inverted)</div>
+        <div class="sb-demo-stage stack color-palette-inverted" style="background: var(--surface); color: var(--foreground);">
+          <div class="sb-demo-label">Reversed (.color-palette-inverted)</div>
           <div class="cluster">${row}</div>
         </div>
       </div>

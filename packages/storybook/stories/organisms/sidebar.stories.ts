@@ -26,7 +26,7 @@ A side panel beside the main content: section navigation, filters, tools. The si
 
 | Axis | Values |
 | :--- | :--- |
-| Prominence | default (surface and edge), \`--floating\` (inset, rounded, raised) |
+| Prominence | default (surface and edge), \`--subtle\` (a tint, no edge), \`--plain\` (no surface, no edge), \`--floating\` (inset, rounded, raised) |
 | Placement | start (default), \`--end\`; in flow, \`--sticky\` |
 | Width | default (\`--sidebar-width\`, 18rem), \`--rail\` (4.5rem, icon buttons) |
 
@@ -72,12 +72,23 @@ const main = (n = 2) => `
   </main>`;
 
 export const Playground: Story = {
-  args: { end: false, floating: false, ruled: true },
+  args: { prominence: 'default', end: false, ruled: true },
+  argTypes: {
+    prominence: { control: 'inline-radio', options: ['default', 'subtle', 'plain', 'floating'] },
+  },
   render: (args) => {
-    const cls = [args.end && 'sidebar--end', args.floating && 'sidebar--floating'].filter(Boolean).join(' ');
+    const cls = [args.end && 'sidebar--end', args.prominence !== 'default' && `sidebar--${args.prominence}`].filter(Boolean).join(' ');
     const side = panel(cls).replace('sidebar--ruled', args.ruled ? 'sidebar--ruled' : '');
     return `<div class="app__workspace">${args.end ? main() + side : side + main()}</div>`;
   },
+};
+
+export const Subtle: Story = {
+  render: () => `<div class="app__workspace">${panel('sidebar--subtle')}${main()}</div>`,
+};
+
+export const Plain: Story = {
+  render: () => `<div class="app__workspace">${panel('sidebar--plain')}${main()}</div>`,
 };
 
 export const Sticky: Story = {
@@ -163,4 +174,28 @@ export const SmallScreens: Story = {
         </article>
       </dialog>
     </div>`,
+};
+
+export const Parts: Story = {
+  parameters: { docs: { description: { story: 'A header, a band for a filter or a segmented tab list, a body and a footer. `--ruled` draws a rule between them.' } } },
+  render: () => `
+    <div class="app__workspace">
+      <div class="sidebar sidebar--subtle sidebar--ruled">
+        <div class="sidebar__header"><h2 id="parts-types" class="micro-heading">Plant types</h2></div>
+        <div class="sidebar__band">
+          <div class="field">
+            <label for="parts-filter" class="field__label label">Filter</label>
+            <input id="parts-filter" type="search" class="input" />
+          </div>
+        </div>
+        <div class="sidebar__body">${tree('parts-types')}</div>
+        <div class="sidebar__footer"><a href="#" class="link small-text">Suggest a plant</a></div>
+      </div>
+      ${main()}
+    </div>`,
+};
+
+export const Compact: Story = {
+  parameters: { docs: { description: { story: '`--compact` takes less padding.' } } },
+  render: () => `<div class="app__workspace">${panel('sidebar--compact')}${main()}</div>`,
 };

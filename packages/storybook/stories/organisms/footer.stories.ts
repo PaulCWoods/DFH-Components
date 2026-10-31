@@ -24,6 +24,7 @@ The band at the bottom of a page or app: site links, legal text, contact details
 
 - **\`.footer\`** is the band: surface, top border, safe-area padding. Always full width.
 - **\`.footer__bar\`** is a row, capped at \`--footer-max-width\` (the site width) and centred, so it lines up with \`.wrapper\`. The last part sits at the end. Two rows are two bars, with a rule between them.
+- **\`--stacked\`** sets each bar's parts in a column, in source order, at the start: the site links above the legal line.
 - **Landmark:** a \`<footer>\` directly in \`<body>\` (or \`.app\`) is the contentinfo: one per page, no \`aria-label\`. Link lists that navigate the site are a \`<nav aria-label>\`.
 - **Tokens:** \`--footer-bg\`, \`--footer-border-*\`, \`--footer-padding-block\`, \`--footer-padding-inline\`, \`--footer-gap\`, \`--footer-max-width\`.
         `,
@@ -77,6 +78,41 @@ export const TwoRows: Story = {
       <div class="footer__bar">
         <p class="small-text text-muted">© 2026 Woodland Plants</p>
         <a href="#" class="link small-text">Back to top</a>
+      </div>
+    </footer>`,
+};
+
+export const Stacked: Story = {
+  name: 'Stacked',
+  parameters: { docs: { description: { story: '`.footer--stacked`: the parts in a column, in source order, at the start. Site links above the legal line.' } } },
+  render: () => `
+    <main id="main" class="main"><div class="wrapper"><p class="text">Page content.</p></div></main>
+    <footer class="footer footer--stacked">
+      <div class="footer__bar">
+        <nav aria-label="Footer">
+          <ul class="cluster small-text" role="list">
+            <li><a href="#" class="link">Contact</a></li>
+            <li><a href="#" class="link">About</a></li>
+          </ul>
+        </nav>
+        <p class="small-text text-muted">© 2026 Woodland Plants</p>
+      </div>
+    </footer>`,
+};
+
+export const Stretch: Story = {
+  parameters: { docs: { description: { story: '`--stretch` drops the width cap on the bars.' } } },
+  render: () => `
+    <main id="main" class="main"><div class="wrapper"><p class="text">Page content.</p></div></main>
+    <footer class="footer footer--stretch">
+      <div class="footer__bar">
+        <p class="small-text text-muted">© 2026 Woodland Plants</p>
+        <nav aria-label="Footer">
+          <ul class="cluster small-text" role="list">
+            <li><a href="#" class="link">Contact</a></li>
+            <li><a href="#" class="link">About</a></li>
+          </ul>
+        </nav>
       </div>
     </footer>`,
 };

@@ -96,6 +96,26 @@ export const SummaryContent: Story = {
     </div>`,
 };
 
+export const FlushContent: Story = {
+  name: 'Flush content',
+  render: () => `
+    <div class="stack" style="max-inline-size: 36rem;">
+      <details class="accordion accordion--flush" open>
+        <summary>Default frame</summary>
+        <div class="code-block code-block--flush">
+          <pre class="code-block__code" tabindex="0" role="group" aria-label="HTML code, default frame"><code>&lt;p class="text"&gt;Ferns like shade.&lt;/p&gt;</code></pre>
+        </div>
+      </details>
+      <details class="accordion accordion--plain accordion--flush" open>
+        <summary>Plain</summary>
+        <div class="code-block code-block--flush">
+          <pre class="code-block__code" tabindex="0" role="group" aria-label="HTML code, plain"><code>&lt;p class="text"&gt;Ferns like shade.&lt;/p&gt;</code></pre>
+        </div>
+      </details>
+    </div>
+  `,
+};
+
 export const Groups: Story = {
   parameters: {
     docs: {
