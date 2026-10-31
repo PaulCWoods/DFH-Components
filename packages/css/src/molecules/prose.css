@@ -159,6 +159,10 @@
     break-before: avoid;
     color: var(--prose-figcaption-color, inherit);
     margin-block-start: calc(var(--_prose-space) / 2);
+
+    p {
+      font: inherit;
+    }
   }
 
   /* ==========================================================================
