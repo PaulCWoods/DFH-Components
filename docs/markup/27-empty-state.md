@@ -12,7 +12,7 @@ related: [card, banner, icon-icon-box, button]
 <div class="empty-state" data-axes>
   <div class="empty-state__visual">
     <span class="icon-box" aria-hidden="true">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bookmark"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
     </span>
   </div>
   <div class="empty-state__content">
