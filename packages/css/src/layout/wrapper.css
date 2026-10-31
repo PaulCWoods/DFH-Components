@@ -39,8 +39,8 @@
 }
 
 :where(.wrapper--safe-area) {
-    padding-inline-start: calc(var(--_wrapper-gutter) + env(safe-area-inset-left));
-    padding-inline-end: calc(var(--_wrapper-gutter) + env(safe-area-inset-right));
+    padding-inline-start: calc(var(--_wrapper-gutter) + var(--safe-area-inset-left, 0px));
+    padding-inline-end: calc(var(--_wrapper-gutter) + var(--safe-area-inset-right, 0px));
 }
 
 /* --------------------------------------------------------------------------
