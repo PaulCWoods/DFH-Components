@@ -180,17 +180,27 @@ The site is static: `npm run build:site` writes the docs and Storybook to `packa
 **In Forge**
 1. A static HTML site for `components.designforhumans.blog`, with its web directory `/packages/docs/dist`, on the branch to deploy. The repository is private, so Forge needs its GitHub access.
 2. A DNS record for the subdomain, then a certificate.
-3. The deploy script:
+3. With zero downtime deployments on, keep the release lines Forge generates and build the docs between them:
    ```sh
-   cd $FORGE_SITE_PATH
-   git pull origin $FORGE_SITE_BRANCH
+   $CREATE_RELEASE()
+   cd $FORGE_RELEASE_DIRECTORY
    npm ci
-   npm run build:site
+   npm run build:docs
+   $ACTIVATE_RELEASE()
+   ```
+   Storybook isn't built on the server: its build peaks at about 1GB, and on a small server shared with live sites it gets killed for lack of memory. Build it elsewhere and upload it to a folder outside the releases:
+   ```sh
+   npm run build:storybook
+   rsync -az --delete packages/storybook/storybook-static/ forge@159.65.214.210:/home/forge/components.designforhumans.blog/storybook/
    ```
 4. In the site's Nginx config, inside `server`:
    ```nginx
    add_header X-Robots-Tag "noindex" always;
    error_page 404 /404.html;
+
+   location /storybook/ {
+       alias /home/forge/components.designforhumans.blog/storybook/;
+   }
    ```
 5. Add the domain to the Adobe Fonts web project (kit `lrj6kun`), or the theme's fonts won't load there.
 
