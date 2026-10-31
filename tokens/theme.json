@@ -352,7 +352,7 @@
       "display-title": {
         "family": "display",
         "weight": "heavy",
-        "letterSpacing": "tight",
+        "letterSpacing": "xtight",
         "case": "uppercase",
         "size": 8,
         "compact": 7,

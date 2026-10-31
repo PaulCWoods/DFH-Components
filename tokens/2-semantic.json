@@ -977,7 +977,7 @@
       "$type": "number"
     },
     "letter-spacing": {
-      "$value": "{typography.spacing.tight}",
+      "$value": "{typography.spacing.xtight}",
       "$type": "dimension"
     },
     "text-transform": {

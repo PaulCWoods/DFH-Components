@@ -485,7 +485,7 @@
   --display-title-font-family: var(--title-font-family);
   --display-title-font-weight: var(--font-weight-heavy);
   --display-title-line-height: var(--typography-line-height--4);
-  --display-title-letter-spacing: var(--typography-spacing-tight);
+  --display-title-letter-spacing: var(--typography-spacing-xtight);
   --display-title-text-transform: uppercase;
   --display-title-fixed-font-size: var(--typography-font-size-8);
   --display-title-compact-font-size: var(--typography-font-size-7);
