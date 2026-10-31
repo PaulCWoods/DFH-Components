@@ -174,7 +174,7 @@ DFH-Components/
 | `npm run sync:icons` | Root | Propagates `icons/icons.svg` to CSS package, Storybook, Astro docs, and Craft CMS blog. |
 | `npm run watch:blog` | Root | Watches `packages/css/src/{atoms,molecules,organisms,layout,utilities}` and mirrors each saved file to its blog SCSS twin, then recompiles the blog CSS. Twins with blog-only code differences are reported, not written. |
 | `npm run check:layout` | Root | Loads the built Storybook's layout and recipe stories (or `-- '<id pattern>'`) in headless Chrome at 10 screen sizes and fails on content a clipping element strands out of reach, or a page wider than the screen. Run `build:storybook` first. |
-| `npm run sync:blog` | Root | One-off mirror. `-- --check` lists differences; `-- card.css` overwrites the named twins. Never touches tokens, `_tier3.scss`, Sass-authored files or the overview twig. |
+| `npm run sync:blog` | Root | One-off mirror. `-- --check` lists differences; `-- card.css` overwrites the named twins. Never touches tokens, `_tier3.scss`, or Sass-authored files. |
 | `npm run build:blog-palette` | Root | Builds the blog's `library/utilities/_color-palette.scss` from the blog's own tokens: each colour role in its Tier 2 swapped to the other mode, the Tier 3 tokens (library and `dfh/` theme) that read only those roles, then the library's `utilities/color-palette.css`. Says whether the file is current; `-- --write` writes it and recompiles the blog CSS. `sync:blog` and `watch:blog` run it for `color-palette.css`. Run it after changing a colour role or Tier 3 colour token in the blog. |
 
 ### 3. Linting & Testing Status
@@ -193,7 +193,7 @@ The component library operates in tandem with the live site repository:
 
 ### Synchronization Conventions:
 1. **Utility & Atom Parity:** Component and utility CSS is mirrored into `designforhumans-blog/web/styles/scss/library/<tier>/_<name>.scss` by `npm run sync:blog` (or `watch:blog`). Files the script reports as Sass-authored (`utilities/_accessibility`, `utilities/_responsive-helpers`) and new components (which need a `@forward`) are ported by hand.
-1b. **Component Overview Page:** Each component pass also updates `designforhumans-blog/templates/_component-library.twig`, the one-page overview, to the new markup. Blog Tier 3 tokens live in `web/styles/scss/library/theme/_tier3.scss` and are kept in step by hand.
+1b. **Blog Tier 3:** Blog Tier 3 tokens live in `web/styles/scss/library/theme/_tier3.scss` and are kept in step by hand.
 2. **Sass Recompilation:** After updating SCSS in `designforhumans-blog`, recompile shared stylesheets using:
    ```bash
    /opt/homebrew/bin/sass web/styles/scss/dfh-shared.scss web/styles/css/dfh-shared.css && /opt/homebrew/bin/sass web/styles/scss/dfh-blog.scss web/styles/css/dfh-blog.css

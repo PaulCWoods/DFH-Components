@@ -73,7 +73,13 @@
   }
 
   /* Its rows can adapt to its width; the stuck shadow queries its position */
-  container: header / inline-size scroll-state;
+  /* A browser without scroll-state would drop the whole declaration, and
+     the responsive helpers inside would have no container */
+  container: header / inline-size;
+
+  @supports (container-type: scroll-state) {
+    container: header / inline-size scroll-state;
+  }
 
   display: block;
   box-sizing: border-box;

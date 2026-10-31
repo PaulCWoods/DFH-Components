@@ -7,7 +7,7 @@
 1. Usage inventory and audit (`docs/audit/<component>.md`), with questions for a decision.
 2. Implement: tokens, CSS, migration of every usage, stories, its `docs/markup/` file (plus AGENTS.md if a project-wide rule changes).
 3. Verify: Storybook build, axe in light and dark, screenshots.
-4. Mirror to the blog: SCSS port, Tier 3 tokens, `templates/_component-library.twig`.
+4. Mirror to the blog: SCSS port, Tier 3 tokens.
 
 ## Passes
 
@@ -51,8 +51,6 @@
 | Docs site (rebuilt from scratch: markup docs feed the pages, library-only shell, `components.designforhumans.blog`) | Phase 4 done: every component has a page; questions open | [plan](audit/docs-site.md) |
 
 Molecules are audited in groups that share a job, so overlapping components are judged against each other. Card runs first because banner, popover, tooltip, toast and dialog compose it.
-
-The blog's component library page (`_component-library.twig`) gets a proper rework once the atoms are finished.
 
 ## Backlog
 

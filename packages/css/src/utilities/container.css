@@ -21,7 +21,11 @@
 }
 
 :where(.container-type-inline-size-scroll-state, .container-inline-scroll) {
-    container-type: inline-size scroll-state;
+    container-type: inline-size;
+
+    @supports (container-type: scroll-state) {
+        container-type: inline-size scroll-state;
+    }
 }
 
 :where(.container-type-size) {

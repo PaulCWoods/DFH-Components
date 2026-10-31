@@ -140,7 +140,7 @@ The foundations pages read the theme and tokens at build time, so they can't dri
 1. **Storybook in public:** decided, at `/storybook/` on the same host.
 3. **The Token Designer in public:** a read-only demo, or local only? Publish writes files, so a public one couldn't save.
 4. **Versioning:** the library is pre-v1. The docs track `main`, with a pre-v1 note, until there's a release.
-5. **The blog's component overview** (`_component-library.twig`): keep it as the blog's own check, or retire it once the docs exist?
+5. **The blog's component overview:** decided, retired now the docs site is live.
 
 ## Phase 4: every component has a page (31 October 2026)
 
