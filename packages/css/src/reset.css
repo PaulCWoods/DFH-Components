@@ -178,6 +178,11 @@ body {
   font-variant-numeric: slashed-zero;
 }
 
+:where(mark) {
+  background-color: Mark;
+  color: MarkText;
+}
+
 
 /* --------------------------------------------------------------------------
    11. Focus Management (WCAG 2.4.7 / 2.4.13)
