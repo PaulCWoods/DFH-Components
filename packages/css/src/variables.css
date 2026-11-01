@@ -808,7 +808,7 @@
   --dialog-width: var(--spacing-block);
   --dialog-drawer-width: var(--spacing-block-sm);
   --dialog-cushion: var(--spacing-cushion);
-  --dialog-max-height: calc(100dvb - var(--spacing-cushion) * 2);
+  --dialog-max-height: calc(100svb - var(--spacing-cushion) * 2);
   --dialog-radius: var(--radius-lg);
   --dialog-shadow: var(--shadow-lg);
   --dialog-backdrop-color: var(--color-backdrop);

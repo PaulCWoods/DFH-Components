@@ -16,13 +16,13 @@ import Icon from './Icon.astro';
       </button>
     </header>
     <div class="card__band stack">
-      <div class="field w-full">
+      <div class="field">
         <label for="search-input" class="field__label label">Search for</label>
         <input id="search-input" type="search" class="input" autocomplete="off" autofocus aria-describedby="search-status" />
       </div>
+      <p id="search-status" class="small-text text-muted" role="status"></p>
     </div>
     <div class="card__body card__body--scrollable stack">
-      <p id="search-status" class="small-text text-muted" role="status"></p>
       <ol class="stack gap-md" role="list" id="search-results"></ol>
     </div>
   </article>
@@ -63,9 +63,9 @@ import Icon from './Icon.astro';
     list.replaceChildren(
       ...results.map((r) => {
         const li = document.createElement('li');
-        li.className = 'stack gap-2xs';
+        li.className = 'stack gap-2xs position-relative';
         const a = document.createElement('a');
-        a.className = 'link small-heading';
+        a.className = 'link link--stretched small-heading';
         a.href = r.url;
         a.textContent = r.meta.title;
         const p = document.createElement('p');
