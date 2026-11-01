@@ -251,6 +251,34 @@ export const WholeCardScrolls: Story = {
   play: openOnLoad,
 };
 
+export const Top: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`.dialog--top`: pinned to the top, so a field stays above an on-screen keyboard and the dialog doesn't move as its content grows.",
+      },
+    },
+  },
+  render: () => `
+    ${opener('find-dialog', 'Find a plant')}
+    <dialog id="find-dialog" class="dialog dialog--top" aria-labelledby="find-title">
+      <article class="card">
+        <header class="card__header">
+          <h2 id="find-title" class="card__title small-heading">Find a plant</h2>
+          ${closeButton('find-dialog')}
+        </header>
+        <div class="card__body">
+          <div class="field">
+            <label for="find-input" class="field__label label">Plant name</label>
+            <input id="find-input" type="search" class="input" autofocus />
+          </div>
+        </div>
+      </article>
+    </dialog>`,
+  play: openOnLoad,
+};
+
 const settingsDrawer = (id: string, cls: string) => `
   ${opener(id, 'Settings')}
   <dialog id="${id}" class="dialog dialog--drawer${cls}" aria-labelledby="${id}-title">

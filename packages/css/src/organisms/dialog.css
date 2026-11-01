@@ -11,8 +11,8 @@
 
    | Axis      | Values                                                     |
    | :-------- | :--------------------------------------------------------- |
-   | Placement | centred (default); .dialog--drawer (inline end),           |
-   |           | .dialog--drawer.dialog--start (inline start)               |
+   | Placement | centred (default); .dialog--top; .dialog--drawer (inline   |
+   |           | end), .dialog--drawer.dialog--start (inline start)         |
    | Scroll    | .card__body--scrollable (body only); .dialog--scrollable   |
    |           | (the whole card)                                           |
 
@@ -154,6 +154,12 @@
 /* The whole card scrolls as one */
 :where(.dialog--scrollable) {
   --card-scroll: all;
+}
+
+/* Pinned to the top: a field stays above an on-screen keyboard, and the dialog
+   doesn't move as its content grows */
+:where(.dialog--top) {
+  margin-block-start: var(--_dialog-cushion);
 }
 
 /* Drawer: a full-height panel on the inline end. On a narrow screen it leaves

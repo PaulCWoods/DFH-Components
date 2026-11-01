@@ -26,7 +26,7 @@ related: [card, popover, button, form-composition, sidebar]
   </article>
 </dialog>
 ---
-Placement: Centred, Drawer at the end=dialog--drawer, Drawer at the start=dialog--drawer dialog--start
+Placement: Centred, Top=dialog--top, Drawer at the end=dialog--drawer, Drawer at the start=dialog--drawer dialog--start
 ```
 
 ## Why it exists
@@ -169,6 +169,40 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 </dialog>
 ```
 
+## Typing on a Phone
+iOS doesn't resize the page for its on-screen keyboard, and `dvb` ignores it, so a centred Dialog can end up behind the keyboard, and the page pans to find the field. `.dialog--top` keeps a field near the top of the screen, and the Dialog stays still as its content grows.
+
+```html live cluster
+<button type="button" class="button" commandfor="find-dialog" command="show-modal"><span>Find a plant</span></button>
+
+<dialog id="find-dialog" class="dialog dialog--top" aria-labelledby="find-title">
+  <article class="card">
+    <header class="card__header">
+      <h3 id="find-title" class="card__title heading">Find a plant</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="find-dialog" command="close">
+        <span class="sr-only">Close</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      </button>
+    </header>
+    <div class="card__body">
+      <div class="field">
+        <label for="find-input" class="field__label label">Plant name</label>
+        <input id="find-input" type="search" class="input" autofocus />
+      </div>
+    </div>
+  </article>
+</dialog>
+```
+
+If the Dialog can grow taller than the space above the keyboard, as search results do, the product also fits it to what is visible. Multiplying by the scale keeps pinch zoom from squashing it.
+
+```js
+const viewport = window.visualViewport;
+viewport?.addEventListener('resize', () => {
+  dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion) * 2)`);
+});
+```
+
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |
@@ -185,10 +219,10 @@ A modal shell: top-layer placement, size, backdrop, motion and the page's scroll
 ## Options
 | Axis | Values |
 | :--- | :--- |
-| Placement | centred (default); `.dialog--drawer` (inline end); `.dialog--drawer.dialog--start` (inline start) |
+| Placement | centred (default); `.dialog--top`; `.dialog--drawer` (inline end); `.dialog--drawer.dialog--start` (inline start) |
 | Scroll | `.card__body--scrollable` (the body scrolls between a pinned header and footer); `.dialog--scrollable` (the whole Card scrolls, with a plain `.card__body`) |
 
-Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one Dialog or a region. There are no size modifiers.
+Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one Dialog or a region; `--dialog-cushion` (the space kept from the screen edge) and `--dialog-max-height`. There are no size modifiers.
 
 ### Further rules
 - **Classes only.** A bare `<dialog>` keeps its browser rendering; put `.dialog` on it.

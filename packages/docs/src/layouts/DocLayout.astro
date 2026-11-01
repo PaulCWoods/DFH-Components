@@ -140,5 +140,26 @@ const toc = headings.filter((h) => h.depth === 2);
     .table-container {
       margin-block: var(--_prose-space);
     }
+
+    /* Equal columns, wide enough to read: a narrower screen scrolls the table */
+    .do-dont {
+      table-layout: fixed;
+    }
+
+    .do-dont__point {
+      align-items: start;
+      display: flex;
+      gap: var(--spacing-xs);
+
+      > .icon {
+        block-size: 1lh;
+        flex: none;
+      }
+
+      > div {
+        min-inline-size: 0;
+        overflow-wrap: anywhere;
+      }
+    }
   }
 </style>

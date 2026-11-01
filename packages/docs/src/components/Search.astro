@@ -7,7 +7,7 @@
    ========================================================================== */
 import Icon from './Icon.astro';
 ---
-<dialog id="search" class="dialog" aria-labelledby="search-title" closedby="any">
+<dialog id="search" class="dialog dialog--top" aria-labelledby="search-title" closedby="any">
   <article class="card">
     <header class="card__header">
       <h2 id="search-title" class="heading">Search the docs</h2>
@@ -27,14 +27,6 @@ import Icon from './Icon.astro';
     </div>
   </article>
 </dialog>
-
-<style>
-  /* Pinned to the top: the input stays above an on-screen keyboard, and the
-     dialog doesn't move as results arrive */
-  dialog {
-    margin-block-start: var(--dialog-cushion);
-  }
-</style>
 
 <script>
   type Result = { url: string; meta: { title: string }; excerpt: string };
