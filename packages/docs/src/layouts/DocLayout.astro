@@ -26,7 +26,7 @@ const toc = headings.filter((h) => h.depth === 2);
 ---
 <BaseLayout title={title} description={summary} nav={nav} current={current}>
   <div class="app__workspace">
-    <div class="sidebar sidebar--sticky max-md:hide">
+    <div class="sidebar sidebar--sticky max-lg:hide">
       <div class="sidebar__body">
         <NavTree nav={nav} current={current} mode="section" idPrefix="section-nav" />
       </div>

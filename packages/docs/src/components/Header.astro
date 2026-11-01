@@ -20,7 +20,7 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
       <Icon name="BrandDesignForHumans" class="brand__mark" />
       <span class="brand__name">Cmpnts</span>
     </a>
-    <nav class="header__nav tab-list tab-list--plain tab-list--scrollable @max-3xl:hide" aria-label="Sections">
+    <nav class="header__nav tab-list tab-list--plain tab-list--scrollable max-lg:hide" aria-label="Sections">
       <ul>
         {nav.map((s) => (
           <li><a href={s.href} class="tab" aria-current={inSection(s) ? 'page' : undefined}><span class="tab__text">{s.label}</span></a></li>
@@ -31,8 +31,8 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
       <button type="button" class="button button--plain button--icon" commandfor="search" command="show-modal">
         <Icon name="Search" /><span class="sr-only">Search</span>
       </button>
-      <SchemeToggle class="@max-3xl:hide" />
-      <button type="button" class="button button--plain button--icon @3xl:hide" commandfor="site-nav" command="show-modal">
+      <SchemeToggle class="lg:hide" />
+      <button type="button" class="button button--plain button--icon lg:hide" commandfor="site-nav" command="show-modal">
         <Icon name="Navigation" /><span class="sr-only">Menu</span>
       </button>
     </div>
