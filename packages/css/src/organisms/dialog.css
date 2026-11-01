@@ -49,7 +49,7 @@
   --_dialog-width: var(--dialog-width, var(--spacing-block, 36rem));
   --_dialog-drawer-width: var(--dialog-drawer-width, var(--spacing-block-sm, 24rem));
   --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion));
-  --_dialog-max-height: var(--dialog-max-height, calc(100svb - var(--_dialog-cushion) * 2));
+  --_dialog-max-height: var(--dialog-max-height, calc(100dvb - var(--_dialog-cushion) * 2));
   --_dialog-radius: var(--dialog-radius, var(--card-radius, 0));
   --_dialog-shadow: var(--dialog-shadow, none);
   --_dialog-backdrop-color: var(--dialog-backdrop-color, transparent);

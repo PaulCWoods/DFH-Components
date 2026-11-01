@@ -28,8 +28,23 @@ import Icon from './Icon.astro';
   </article>
 </dialog>
 
+<style>
+  /* Pinned to the top: the input stays above an on-screen keyboard, and the
+     dialog doesn't move as results arrive */
+  dialog {
+    margin-block-start: var(--dialog-cushion);
+  }
+</style>
+
 <script>
   type Result = { url: string; meta: { title: string }; excerpt: string };
+  const dialog = document.getElementById('search')!;
+  /* iOS doesn't resize the page for its keyboard, so dvb ignores it: fit the
+     dialog to what is visible. Scale keeps pinch zoom from squashing it. */
+  const viewport = window.visualViewport;
+  viewport?.addEventListener('resize', () => {
+    dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion) * 2)`);
+  });
   const input = document.getElementById('search-input') as HTMLInputElement;
   const status = document.getElementById('search-status')!;
   const list = document.getElementById('search-results')!;

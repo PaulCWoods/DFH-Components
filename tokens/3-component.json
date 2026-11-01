@@ -1040,7 +1040,7 @@
       "$description": "Space kept between a centred dialog and the screen edge"
     },
     "max-height": {
-      "$value": "calc(100svb - {spacing.cushion} * 2)",
+      "$value": "calc(100dvb - {spacing.cushion} * 2)",
       "$type": "dimension",
       "$description": "Tallest a centred dialog grows before its body scrolls"
     },
