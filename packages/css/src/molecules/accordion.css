@@ -72,8 +72,8 @@
      e.g. .faq { --accordion-prominence: plain; --ui-sizing: compact; }
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
-    --_accordion-padding-block: var(--accordion-compact-padding-block, 0.5rem);
-    --_accordion-padding-inline: var(--accordion-compact-padding-inline, 0.75rem);
+    --_accordion-padding-block: var(--accordion-compact-padding-block, var(--spacing-sm));
+    --_accordion-padding-inline: var(--accordion-compact-padding-inline, var(--spacing-12));
     --_accordion-font-size: var(--body-compact-font-size, inherit);
   }
 
@@ -233,8 +233,8 @@
 
 :where(.accordion--compact) {
   --ui-sizing: compact;
-  --_accordion-padding-block: var(--accordion-compact-padding-block, 0.5rem);
-  --_accordion-padding-inline: var(--accordion-compact-padding-inline, 0.75rem);
+  --_accordion-padding-block: var(--accordion-compact-padding-block, var(--spacing-sm));
+  --_accordion-padding-inline: var(--accordion-compact-padding-inline, var(--spacing-12));
   --_accordion-font-size: var(--body-compact-font-size, inherit);
 }
 
@@ -253,7 +253,7 @@
    5. Group
    ========================================================================== */
 :where(.accordion-group) {
-  --_accordion-group-gap: var(--accordion-group-gap, 0.5rem);
+  --_accordion-group-gap: var(--accordion-group-gap, var(--spacing-sm));
 
   display: flex;
   flex-direction: column;

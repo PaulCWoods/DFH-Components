@@ -34,7 +34,7 @@
    1. Tabbed Content (:where(.tabbed-content))
    ========================================================================== */
 :where(.tabbed-content) {
-  --_tabbed-content-gap: var(--tabbed-content-gap, 1rem);
+  --_tabbed-content-gap: var(--tabbed-content-gap, var(--spacing-md));
 
   display: flex;
   flex-direction: column;

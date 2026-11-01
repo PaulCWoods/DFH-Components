@@ -41,27 +41,27 @@
    ========================================================================== */
 :where(.stepper) {
   /* Private manifest */
-  --_stepper-gap: var(--stepper-gap, 0.5rem);
+  --_stepper-gap: var(--stepper-gap, var(--spacing-sm));
   --_stepper-list-gap: calc(var(--_stepper-gap) * 3);
-  --_stepper-indicator-size: var(--stepper-indicator-size, 2rem);
-  --_stepper-indicator-border-width: var(--stepper-indicator-border-width, 2px);
-  --_stepper-indicator-bg: var(--stepper-indicator-bg, Canvas);
-  --_stepper-indicator-color: var(--stepper-indicator-color, currentColor);
-  --_stepper-indicator-border-color: var(--stepper-indicator-border-color, currentColor);
-  --_stepper-current-color: var(--stepper-current-color, currentColor);
-  --_stepper-complete-color: var(--stepper-complete-color, currentColor);
-  --_stepper-complete-on-color: var(--stepper-complete-on-color, Canvas);
+  --_stepper-indicator-size: var(--stepper-indicator-size, var(--spacing-lg));
+  --_stepper-indicator-border-width: var(--stepper-indicator-border-width, var(--border-width-medium, 2px));
+  --_stepper-indicator-bg: var(--stepper-indicator-bg, var(--surface-layer, Canvas));
+  --_stepper-indicator-color: var(--stepper-indicator-color, var(--foreground-muted, currentColor));
+  --_stepper-indicator-border-color: var(--stepper-indicator-border-color, var(--border-color-quiet, currentColor));
+  --_stepper-current-color: var(--stepper-current-color, var(--foreground-accent, currentColor));
+  --_stepper-complete-color: var(--stepper-complete-color, var(--foreground-success, currentColor));
+  --_stepper-complete-on-color: var(--stepper-complete-on-color, var(--foreground-inverted-strong, Canvas));
   --_stepper-complete-fill: var(--_stepper-complete-color);
   --_stepper-complete-ink: var(--_stepper-complete-on-color);
-  --_stepper-invalid-color: var(--stepper-invalid-color, currentColor);
-  --_stepper-track-width: var(--stepper-track-width, 2px);
-  --_stepper-track-color: var(--stepper-track-color, currentColor);
-  --_stepper-description-color: var(--stepper-description-color, currentColor);
+  --_stepper-invalid-color: var(--stepper-invalid-color, var(--foreground-danger, currentColor));
+  --_stepper-track-width: var(--stepper-track-width, var(--border-width-medium));
+  --_stepper-track-color: var(--stepper-track-color, var(--border-color-quiet, currentColor));
+  --_stepper-description-color: var(--stepper-description-color, var(--foreground-muted, currentColor));
   --_stepper-transition: var(--duration-sm, 150ms);
 
   /* Density */
   @container style(--ui-sizing: compact) {
-    --_stepper-indicator-size: var(--stepper-compact-indicator-size, 1.5rem);
+    --_stepper-indicator-size: var(--stepper-compact-indicator-size, var(--spacing-24));
   }
 
   /* Prominence flag (the --plain class beats it) */
@@ -258,7 +258,7 @@
 
 :where(.stepper--compact) {
   --ui-sizing: compact;
-  --_stepper-indicator-size: var(--stepper-compact-indicator-size, 1.5rem);
+  --_stepper-indicator-size: var(--stepper-compact-indicator-size, var(--spacing-24));
 }
 
 /* A narrow row keeps the titles; the state is in them, so nothing is lost */

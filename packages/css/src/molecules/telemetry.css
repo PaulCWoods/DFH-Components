@@ -37,15 +37,15 @@
    ========================================================================== */
 :where(.telemetry) {
   /* Private manifest */
-  --_telemetry-bg: var(--telemetry-bg, Canvas);
-  --_telemetry-border-width: var(--telemetry-border-width, 1px);
-  --_telemetry-border-color: var(--telemetry-border-color, currentColor);
-  --_telemetry-radius: var(--telemetry-radius, 0.125rem);
-  --_telemetry-padding-block: var(--telemetry-padding-block, 0.5rem);
-  --_telemetry-padding-inline: var(--telemetry-padding-inline, 0.75rem);
-  --_telemetry-gap: var(--telemetry-gap, 0px);
-  --_telemetry-icon-gap: var(--telemetry-icon-gap, 0.5rem);
-  --_telemetry-lead-icon-size: var(--telemetry-lead-icon-size, 1.5rem);
+  --_telemetry-bg: var(--telemetry-bg, var(--surface-layer, Canvas));
+  --_telemetry-border-width: var(--telemetry-border-width, var(--border-width-thin, 1px));
+  --_telemetry-border-color: var(--telemetry-border-color, var(--panel-border-color, currentColor));
+  --_telemetry-radius: var(--telemetry-radius, var(--radius-sm));
+  --_telemetry-padding-block: var(--telemetry-padding-block, var(--spacing-sm));
+  --_telemetry-padding-inline: var(--telemetry-padding-inline, var(--spacing-12));
+  --_telemetry-gap: var(--telemetry-gap, var(--spacing-0));
+  --_telemetry-icon-gap: var(--telemetry-icon-gap, var(--spacing-sm));
+  --_telemetry-lead-icon-size: var(--telemetry-lead-icon-size, var(--spacing-24));
   --_telemetry-min-size: var(--telemetry-min-size, 3rem);
   /* The icon gutter: none until --icon-start and an icon are both present */
   --_telemetry-gutter: 0px;
@@ -54,12 +54,12 @@
      Container flags, declared before the modifier classes
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
-    --_telemetry-padding-block: var(--telemetry-compact-padding-block, 0.25rem);
-    --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, 0.5rem);
+    --_telemetry-padding-block: var(--telemetry-compact-padding-block, var(--spacing-xs));
+    --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, var(--spacing-sm));
   }
 
   @container style(--telemetry-prominence: subtle) or style(--elements-prominence: subtle) {
-    --_telemetry-bg: var(--telemetry-subtle-bg, var(--surface-muted, Canvas));
+    --_telemetry-bg: var(--telemetry-subtle-bg, var(--surface-translucent, Canvas));
     --_telemetry-border-width: 0px;
   }
 
@@ -76,7 +76,7 @@
 
   @container style(--telemetry-icon-placement: start) {
     &:has(> dt > .icon) {
-      --_telemetry-gutter: calc(var(--_telemetry-lead-icon-size) + var(--telemetry-lead-icon-gap, 0.75rem));
+      --_telemetry-gutter: calc(var(--_telemetry-lead-icon-size) + var(--telemetry-lead-icon-gap, var(--spacing-12)));
     }
   }
 
@@ -165,22 +165,22 @@
 
 :where(.telemetry--round) {
   --_telemetry-radius: var(--radius-round, 9999px);
-  --_telemetry-padding-inline: calc(var(--telemetry-padding-inline, 0.75rem) * 1.5);
+  --_telemetry-padding-inline: calc(var(--telemetry-padding-inline, var(--spacing-12)) * 1.5);
 }
 
 :where(.telemetry--icon-start) {
   --telemetry-icon-placement: start;
 
   &:where(:has(> dt > .icon)) {
-    --_telemetry-gutter: calc(var(--_telemetry-lead-icon-size) + var(--telemetry-lead-icon-gap, 0.75rem));
+    --_telemetry-gutter: calc(var(--_telemetry-lead-icon-size) + var(--telemetry-lead-icon-gap, var(--spacing-12)));
   }
 }
 
 :where(.telemetry--compact) {
   --ui-sizing: compact;
   --_telemetry-min-size: var(--telemetry-compact-min-size, 2rem);
-  --_telemetry-padding-block: var(--telemetry-compact-padding-block, 0.25rem);
-  --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, 0.5rem);
+  --_telemetry-padding-block: var(--telemetry-compact-padding-block, var(--spacing-xs));
+  --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, var(--spacing-sm));
 }
 
 /* ==========================================================================
@@ -190,16 +190,16 @@
   align-items: stretch;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--telemetry-group-gap, 0.5rem);
+  gap: var(--telemetry-group-gap, var(--spacing-sm));
   margin: 0;
   padding: 0;
 }
 
 /* Ruled: one bordered strip, a divider between items */
 :where(.telemetry-group--ruled) {
-  background-color: var(--telemetry-bg, Canvas);
-  border: var(--telemetry-border-width, 1px) solid var(--telemetry-border-color, currentColor);
-  border-radius: var(--telemetry-radius, 0.125rem);
+  background-color: var(--telemetry-bg, var(--surface-layer, Canvas));
+  border: var(--telemetry-border-width, var(--border-width-thin, 1px)) solid var(--telemetry-border-color, var(--panel-border-color, currentColor));
+  border-radius: var(--telemetry-radius, var(--radius-sm));
   gap: 0;
   inline-size: fit-content;
   max-inline-size: 100%;
@@ -209,7 +209,7 @@
     --_telemetry-border-width: 0px;
 
     &:where(:not(:last-child)) {
-      border-inline-end: var(--telemetry-border-width, 1px) solid var(--telemetry-border-color, currentColor);
+      border-inline-end: var(--telemetry-border-width, var(--border-width-thin, 1px)) solid var(--telemetry-border-color, var(--panel-border-color, currentColor));
     }
   }
 }
@@ -225,12 +225,12 @@
 
   /* A subtle telemetry's fill may not show, so it gains the border */
   :where(.telemetry--subtle) {
-    --_telemetry-border-width: var(--telemetry-border-width, 1px);
+    --_telemetry-border-width: var(--telemetry-border-width, var(--border-width-thin, 1px));
   }
 
   :where(.telemetry) {
     @container style(--telemetry-prominence: subtle) or style(--elements-prominence: subtle) {
-      --_telemetry-border-width: var(--telemetry-border-width, 1px);
+      --_telemetry-border-width: var(--telemetry-border-width, var(--border-width-thin, 1px));
     }
   }
 }

@@ -93,8 +93,8 @@
     /* Picker surface */
     &::picker(select) {
       box-sizing: border-box;
-      margin-block: var(--select-picker-padding, 0.25rem);
-      padding: var(--select-picker-padding, 0.25rem);
+      margin-block: var(--select-picker-padding, var(--spacing-xs));
+      padding: var(--select-picker-padding, var(--spacing-xs));
       color: var(--foreground, CanvasText);
       background-color: var(--surface-card, Canvas);
       border: var(--_control-border-width) solid var(--border-color-muted, currentColor);
@@ -105,9 +105,9 @@
     :where(option) {
       display: flex;
       align-items: center;
-      gap: var(--select-option-gap, 0.5rem);
+      gap: var(--select-option-gap, var(--spacing-sm));
       min-block-size: max(var(--_control-sm-min-size), var(--spacing-target-min, 3rem));
-      padding-inline: calc(var(--_control-padding-inline) - var(--select-picker-padding, 0.25rem));
+      padding-inline: calc(var(--_control-padding-inline) - var(--select-picker-padding, var(--spacing-xs)));
       border-radius: calc(var(--_control-radius) / 2);
       cursor: pointer;
 
@@ -129,7 +129,7 @@
       display: flex;
       align-items: center;
       flex-grow: 1;
-      gap: var(--select-option-gap, 0.5rem);
+      gap: var(--select-option-gap, var(--spacing-sm));
 
       small {
         display: none;

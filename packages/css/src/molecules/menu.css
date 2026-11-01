@@ -37,15 +37,15 @@
   /* Private manifest */
   --_menu-fill: var(--menu-bg, var(--surface-card, Canvas));
   --_menu-bg: var(--_menu-fill);
-  --_menu-border-width: var(--menu-border-width, 1px);
-  --_menu-border-style: var(--menu-border-style, solid);
-  --_menu-border-color: var(--menu-border-color, currentColor);
-  --_menu-radius: var(--menu-radius, 0);
+  --_menu-border-width: var(--menu-border-width, var(--panel-border-width, 1px));
+  --_menu-border-style: var(--menu-border-style, var(--panel-border-style, solid));
+  --_menu-border-color: var(--menu-border-color, var(--panel-border-color, currentColor));
+  --_menu-radius: var(--menu-radius, var(--panel-radius));
   --_menu-shadow: none;
-  --_menu-padding: var(--menu-padding, 0.25rem);
-  --_menu-heading-color: var(--menu-heading-color, currentColor);
-  --_menu-heading-padding-inline: var(--button-padding-inline, 1rem);
-  --_menu-rule: var(--menu-rule-width, 1px) var(--menu-rule-style, solid) var(--menu-rule-color, currentColor);
+  --_menu-padding: var(--menu-padding, var(--spacing-xs));
+  --_menu-heading-color: var(--menu-heading-color, var(--foreground-muted, currentColor));
+  --_menu-heading-padding-inline: var(--button-padding-inline, var(--spacing-md));
+  --_menu-rule: var(--menu-rule-width, var(--rule-width, 1px)) var(--menu-rule-style, var(--rule-style, solid)) var(--menu-rule-color, var(--rule-color, currentColor));
 
   /* Items are plain buttons */
   --button-prominence: plain;
@@ -56,11 +56,11 @@
 
   /* Prominence flag (a modifier class on the menu beats it) */
   @container style(--menu-prominence: strong) {
-    --_menu-shadow: var(--menu-strong-shadow, none);
+    --_menu-shadow: var(--menu-strong-shadow, var(--shadow-raised, none));
   }
 
   @container style(--menu-prominence: subtle) {
-    --_menu-fill: var(--menu-subtle-bg, Canvas);
+    --_menu-fill: var(--menu-subtle-bg, var(--surface-muted, Canvas));
     --_menu-border-width: 0px;
   }
 
@@ -73,7 +73,7 @@
 
   /* Density: headings line up with the compact items */
   @container style(--ui-sizing: compact) {
-    --_menu-heading-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+    --_menu-heading-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
   }
 
   box-sizing: border-box;
@@ -100,11 +100,11 @@
    ========================================================================== */
 :where(.menu--strong) {
   --_menu-fill: var(--menu-bg, var(--surface-card, Canvas));
-  --_menu-shadow: var(--menu-strong-shadow, none);
+  --_menu-shadow: var(--menu-strong-shadow, var(--shadow-raised, none));
 }
 
 :where(.menu--subtle) {
-  --_menu-fill: var(--menu-subtle-bg, Canvas);
+  --_menu-fill: var(--menu-subtle-bg, var(--surface-muted, Canvas));
   --_menu-border-width: 0px;
 }
 
@@ -118,13 +118,13 @@
 
 :where(.menu--compact) {
   --ui-sizing: compact;
-  --_menu-heading-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+  --_menu-heading-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
 }
 
 /* Increased contrast: a thicker edge instead of a shadow */
 @media (prefers-contrast: more) {
   :where(.menu:not(.menu--plain)) {
-    --_menu-border-width: var(--border-width-md, 2px);
+    --_menu-border-width: var(--border-width-medium, 2px);
     --_menu-shadow: none;
 
     @container style(--menu-prominence: plain) {
@@ -136,8 +136,8 @@
 /* Translucent: a material, combined with any prominence that has a fill */
 @media (prefers-contrast: no-preference) {
   :where(.menu--translucent) {
-    --_menu-bg: color-mix(in srgb, var(--_menu-fill), transparent var(--menu-translucency, 0%));
-    backdrop-filter: var(--menu-filter, none);
+    --_menu-bg: color-mix(in srgb, var(--_menu-fill), transparent var(--menu-translucency, var(--translucency-subtle)));
+    backdrop-filter: var(--menu-filter, var(--surface-layer-filter, none));
   }
 }
 

@@ -35,13 +35,13 @@
    ========================================================================== */
 :where(.avatar) {
   /* Private manifest */
-  --_avatar-size: var(--avatar-size, 3rem);
-  --_avatar-font-size: var(--avatar-font-size, 1rem);
-  --_avatar-radius: var(--avatar-radius, 50%);
-  --_avatar-bg: var(--avatar-bg, Canvas);
-  --_avatar-text: var(--avatar-text, CanvasText);
-  --_avatar-border-width: var(--avatar-border-width, 1px);
-  --_avatar-border-color: var(--avatar-border-color, currentColor);
+  --_avatar-size: var(--avatar-size, var(--spacing-xl));
+  --_avatar-font-size: var(--avatar-font-size, var(--typography-font-size-0));
+  --_avatar-radius: var(--avatar-radius, var(--radius-round));
+  --_avatar-bg: var(--avatar-bg, var(--surface-muted, Canvas));
+  --_avatar-text: var(--avatar-text, var(--foreground, CanvasText));
+  --_avatar-border-width: var(--avatar-border-width, var(--border-width-thin, 1px));
+  --_avatar-border-color: var(--avatar-border-color, var(--border-color-quiet, currentColor));
   --_avatar-border-style: solid;
   /* How far a corner badge moves in to sit on a round edge (1 - 1/√2) / 2 */
   --_avatar-badge-inset: calc(var(--_avatar-size) * 0.146);
@@ -50,17 +50,17 @@
      Container flags, declared before the modifier classes
      ------------------------------------------------------------------------ */
   @container style(--avatar-size-step: sm) or style(--ui-sizing: compact) {
-    --_avatar-size: var(--avatar-sm-size, 2rem);
-    --_avatar-font-size: var(--avatar-sm-font-size, 0.875rem);
+    --_avatar-size: var(--avatar-sm-size, var(--spacing-lg));
+    --_avatar-font-size: var(--avatar-sm-font-size, var(--typography-font-size--1));
   }
 
   @container style(--avatar-size-step: lg) {
-    --_avatar-size: var(--avatar-lg-size, 4rem);
-    --_avatar-font-size: var(--avatar-lg-font-size, 1.25rem);
+    --_avatar-size: var(--avatar-lg-size, var(--spacing-2xl));
+    --_avatar-font-size: var(--avatar-lg-font-size, var(--typography-font-size-1));
   }
 
   @container style(--avatar-corners: square) {
-    --_avatar-radius: var(--avatar-square-radius, 0.25rem);
+    --_avatar-radius: var(--avatar-square-radius, var(--radius));
     --_avatar-badge-inset: 0px;
   }
 
@@ -74,7 +74,7 @@
   display: inline-flex;
   flex-shrink: 0;
   font-size: var(--_avatar-font-size);
-  font-weight: var(--avatar-font-weight, bold);
+  font-weight: var(--avatar-font-weight, var(--font-weight-bold, bold));
   inline-size: var(--_avatar-size);
   justify-content: center;
   line-height: 1;
@@ -103,7 +103,7 @@
 
   /* A corner badge sits on the round edge, ringed in the surface colour */
   > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
-    box-shadow: 0 0 0 var(--avatar-group-ring-width, 2px) var(--avatar-group-ring-color, Canvas);
+    box-shadow: 0 0 0 var(--avatar-group-ring-width, var(--border-width, 2px)) var(--avatar-group-ring-color, var(--surface, Canvas));
     margin: var(--_avatar-badge-inset);
   }
 }
@@ -119,22 +119,22 @@
    2. Size and corners
    ========================================================================== */
 :where(.avatar--sm) {
-  --_avatar-size: var(--avatar-sm-size, 2rem);
-  --_avatar-font-size: var(--avatar-sm-font-size, 0.875rem);
+  --_avatar-size: var(--avatar-sm-size, var(--spacing-lg));
+  --_avatar-font-size: var(--avatar-sm-font-size, var(--typography-font-size--1));
 }
 
 :where(.avatar--lg) {
-  --_avatar-size: var(--avatar-lg-size, 4rem);
-  --_avatar-font-size: var(--avatar-lg-font-size, 1.25rem);
+  --_avatar-size: var(--avatar-lg-size, var(--spacing-2xl));
+  --_avatar-font-size: var(--avatar-lg-font-size, var(--typography-font-size-1));
 
   @container style(--ui-sizing: compact) {
-    --_avatar-size: var(--avatar-size, 3rem);
-    --_avatar-font-size: var(--avatar-font-size, 1rem);
+    --_avatar-size: var(--avatar-size, var(--spacing-xl));
+    --_avatar-font-size: var(--avatar-font-size, var(--typography-font-size-0));
   }
 }
 
 :where(.avatar--square) {
-  --_avatar-radius: var(--avatar-square-radius, 0.25rem);
+  --_avatar-radius: var(--avatar-square-radius, var(--radius));
   --_avatar-badge-inset: 0px;
 }
 
@@ -142,21 +142,21 @@
    3. Looks
    ========================================================================== */
 :where(.avatar--accent) {
-  --_avatar-bg: var(--avatar-accent-bg, Highlight);
-  --_avatar-border-color: var(--avatar-accent-bg, Highlight);
-  --_avatar-text: var(--avatar-accent-text, HighlightText);
+  --_avatar-bg: var(--avatar-accent-bg, var(--surface-accent-strong, Highlight));
+  --_avatar-border-color: var(--avatar-accent-bg, var(--surface-accent-strong, Highlight));
+  --_avatar-text: var(--avatar-accent-text, var(--foreground-inverted, HighlightText));
 }
 
 /* An empty slot: "add a member" */
 :where(.avatar--placeholder) {
   --_avatar-bg: transparent;
-  --_avatar-border-color: var(--avatar-placeholder-border-color, currentColor);
+  --_avatar-border-color: var(--avatar-placeholder-border-color, var(--border-color-quiet, currentColor));
   --_avatar-border-style: dashed;
 }
 
 /* "+3": the people a group doesn't show */
 :where(.avatar--count) {
-  --_avatar-text: var(--avatar-count-text, currentColor);
+  --_avatar-text: var(--avatar-count-text, var(--foreground-muted, currentColor));
   font-variant-numeric: tabular-nums;
 }
 

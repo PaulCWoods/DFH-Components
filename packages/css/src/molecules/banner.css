@@ -50,17 +50,17 @@
   /* Prominence: default draws the tint and the intent border */
   --_banner-bg: var(--_banner-tint);
   --_banner-text: var(--foreground, CanvasText);
-  --_banner-border-width: var(--banner-border-width, 1px);
+  --_banner-border-width: var(--banner-border-width, var(--border-width-thin, 1px));
 
   /* Geometry */
-  --_banner-radius: var(--banner-radius, 0);
+  --_banner-radius: var(--banner-radius, var(--radius));
   --_banner-shadow: var(--banner-shadow, none);
-  --_banner-padding: var(--banner-padding, var(--spacing, 1rem));
-  --_banner-body-padding: var(--banner-body-padding, var(--spacing, 1rem));
-  --_banner-gap: var(--banner-gap, 0px);
+  --_banner-padding: var(--banner-padding, var(--spacing-sm));
+  --_banner-body-padding: var(--banner-body-padding, var(--spacing-sm));
+  --_banner-gap: var(--banner-gap, var(--spacing-0));
   --_banner-body-gap: var(--banner-body-gap, var(--spacing-4, 0.25rem));
   --_banner-align: var(--banner-align, flex-start);
-  --_banner-transition: var(--banner-transition, 0s);
+  --_banner-transition: var(--banner-transition, var(--duration-sm));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -296,8 +296,8 @@
 /* Translucent: a material, combined with any prominence that has a fill */
 @media (prefers-contrast: no-preference) {
   :where(.banner--translucent) {
-    background-color: color-mix(in srgb, var(--_banner-bg), transparent var(--banner-translucency, 0%));
-    backdrop-filter: var(--banner-filter, none);
+    background-color: color-mix(in srgb, var(--_banner-bg), transparent var(--banner-translucency, var(--translucency-subtle)));
+    backdrop-filter: var(--banner-filter, var(--surface-layer-filter, none));
   }
 }
 
@@ -336,7 +336,7 @@
 /* Increased contrast: a thicker edge on every banner that has a surface */
 @media (prefers-contrast: more) {
   :where(.banner:not(.banner--plain)) {
-    --_banner-border-width: var(--border-width-md, 2px);
+    --_banner-border-width: var(--border-width-medium, 2px);
     --_banner-tone-border: currentColor;
 
     @container style(--banner-prominence: plain) {

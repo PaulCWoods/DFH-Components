@@ -104,7 +104,7 @@ body {
   cursor: pointer;
 
   &:hover {
-    text-decoration-thickness: var(--link-hover-underline-thickness, 2px);
+    text-decoration-thickness: var(--link-hover-underline-thickness, var(--border-width-medium, 2px));
   }
 }
 

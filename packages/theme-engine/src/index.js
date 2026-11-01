@@ -7,3 +7,4 @@ export * from './roles.js';
 export * from './type.js';
 export * from './type-gate.js';
 export * from './space.js';
+export * from './shape.js';

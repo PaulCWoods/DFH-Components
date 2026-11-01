@@ -136,8 +136,8 @@
    icon (and the text beside it) must still say what the intent means.
    ========================================================================== */
 :where(.icon-box) {
-  --_icon-box-size: var(--icon-box-min-size, 3rem);
-  --_icon-box-radius: var(--icon-box-radius, 0.25rem);
+  --_icon-box-size: var(--icon-box-min-size, var(--spacing-target));
+  --_icon-box-radius: var(--icon-box-radius, var(--radius-md));
   --_icon-box-bg: transparent;
   --_icon-box-tint: var(--surface-translucent, transparent);
   --_icon-box-color: inherit;
@@ -153,11 +153,11 @@
   }
 
   @container style(--icon-box-size: sm) or style(--ui-sizing: compact) {
-    --_icon-box-size: var(--icon-box-sm-min-size, 2rem);
+    --_icon-box-size: var(--icon-box-sm-min-size, var(--spacing-target-sm));
   }
 
   @container style(--icon-box-size: lg) {
-    --_icon-box-size: var(--icon-box-lg-min-size, 4rem);
+    --_icon-box-size: var(--icon-box-lg-min-size, var(--spacing-target-lg));
   }
 
   @container style(--icon-box-prominence: subtle) or style(--elements-prominence: subtle) {
@@ -218,11 +218,11 @@
    Icon Box Modifiers
    -------------------------------------------------------------------------- */
 :where(.icon-box--sm) {
-  --_icon-box-size: var(--icon-box-sm-min-size, 2rem);
+  --_icon-box-size: var(--icon-box-sm-min-size, var(--spacing-target-sm));
 }
 
 :where(.icon-box--lg) {
-  --_icon-box-size: var(--icon-box-lg-min-size, 4rem);
+  --_icon-box-size: var(--icon-box-lg-min-size, var(--spacing-target-lg));
 }
 
 :where(.icon-box--subtle) {

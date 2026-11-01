@@ -38,14 +38,14 @@
    ========================================================================== */
 :where(.field) {
   /* Private manifest */
-  --_field-gap: var(--field-gap, 0.5rem);
-  --_field-inline-gap: var(--field-inline-gap, 0.75rem);
+  --_field-gap: var(--field-gap, var(--spacing-sm));
+  --_field-inline-gap: var(--field-inline-gap, var(--spacing-12));
   --_field-label-gap: var(--field-label-gap, 0.25rem);
-  --_field-label-width: var(--field-label-width, 12rem);
+  --_field-label-width: var(--field-label-width, var(--spacing-192));
 
   /* Density */
   @container style(--ui-sizing: compact) {
-    --_field-gap: var(--field-compact-gap, 0.25rem);
+    --_field-gap: var(--field-compact-gap, var(--spacing-xs));
   }
 
   display: flex;
@@ -83,7 +83,7 @@
 }
 
 :where(.field__hint) {
-  color: var(--field-hint-color, currentColor);
+  color: var(--field-hint-color, var(--foreground-muted, currentColor));
   margin: 0;
   margin-block-start: calc((var(--_field-gap) - var(--_field-label-gap)) * -1);
   min-inline-size: 0;
@@ -92,7 +92,7 @@
 /* One message, a <p> with a Warning icon; or a <ul> of them. It may also
    sit in a fieldset, for an error about the whole group. */
 :where(.field__error) {
-  color: var(--field-error-color, currentColor);
+  color: var(--field-error-color, var(--foreground-danger, currentColor));
   margin: 0;
   margin-block-start: calc((var(--_field-gap) - var(--_field-label-gap)) * -1);
   min-inline-size: 0;

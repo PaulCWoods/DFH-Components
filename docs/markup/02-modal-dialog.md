@@ -199,7 +199,7 @@ If the Dialog can grow taller than the space above the keyboard, as search resul
 ```js
 const viewport = window.visualViewport;
 viewport?.addEventListener('resize', () => {
-  dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion) * 2)`);
+  dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion, var(--spacing-cushion)) * 2)`);
 });
 ```
 

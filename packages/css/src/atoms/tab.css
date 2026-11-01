@@ -66,13 +66,13 @@
   --_tab-font-size: var(--tab-font-size, var(--control-font-size, 1rem));
   --_tab-font-weight: var(--tab-font-weight, var(--body-font-weight, 400));
   --_tab-selected-font-weight: var(--tab-selected-font-weight, var(--font-weight-bold, 700));
-  --_tab-inner-gap: var(--tab-inner-gap, 0.5rem);
+  --_tab-inner-gap: var(--tab-inner-gap, var(--spacing-sm));
   --_tab-line-height: var(--tab-line-height, var(--control-line-height, 1.25));
-  --_tab-line-width: var(--tab-list-indicator-width, 2px);
+  --_tab-line-width: var(--tab-list-indicator-width, var(--border-width-thick));
   --_tab-min-size: var(--tab-min-size, var(--spacing-target, 3rem));
-  --_tab-padding-block: var(--tab-padding-block, 0.25rem);
+  --_tab-padding-block: var(--tab-padding-block, var(--button-padding-block, var(--spacing-xs)));
   --_tab-underline-padding-inline: 0px;
-  --_tab-segmented-padding-inline: var(--tab-padding-inline, 1rem);
+  --_tab-segmented-padding-inline: var(--tab-padding-inline, var(--button-padding-inline, var(--spacing-md)));
   --_tab-padding-inline: var(--_tab-underline-padding-inline);
   --_tab-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
   --_tab-radius: 0px;
@@ -98,8 +98,8 @@
     --_tab-font-size: var(--tab-sm-font-size, var(--control-sm-font-size, 0.875rem));
     --_tab-min-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
     --_tab-line-width: var(--tab-sm-list-indicator-width, 2px);
-    --_tab-padding-block: var(--tab-sm-padding-block, 0.125rem);
-    --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, 0.5rem);
+    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs)))));
+    --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md)))));
   }
 
   /* Type only: steps the label down without changing geometry */
@@ -121,7 +121,7 @@
 
   /* Segmented: outlined tabs; the selected tab is filled */
   @container style(--tab-list-style: segmented) {
-    --_tab-border-width: var(--tab-border-width, 1px);
+    --_tab-border-width: var(--tab-border-width, var(--border-width, 1px));
     --_tab-border-color: var(--border-color-muted, currentColor);
     --_tab-hover-bg: var(--surface-translucent, transparent);
     --_tab-hover-line: transparent;
@@ -441,6 +441,6 @@
 
 @media (prefers-contrast: more) {
   :where(.tab) {
-    --_tab-line-width: calc(var(--tab-list-indicator-width, 2px) * 2);
+    --_tab-line-width: calc(var(--tab-list-indicator-width, var(--border-width-thick)) * 2);
   }
 }

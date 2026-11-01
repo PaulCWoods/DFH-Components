@@ -40,7 +40,7 @@
      Each axis writes its own variable, so a flag from a container and a
      modifier on the list combine without ordering rules.
      -------------------------------------------------------------------------- */
-  --_tab-list-underline-gap: var(--tab-list-gap, 1rem);
+  --_tab-list-underline-gap: var(--tab-list-gap, var(--spacing-breathe));
   --_tab-list-style-gap: var(--_tab-list-underline-gap);
   --_tab-list-gap: var(--_tab-list-style-gap);
   --_tab-list-rule-style: 1;
@@ -58,13 +58,13 @@
 
   /* Geometry & Colour */
   --_tab-list-rule-color: var(--tab-list-rule-color, var(--border-color-quiet, currentColor));
-  --_tab-list-rule-width: var(--tab-list-rule-width, 1px);
+  --_tab-list-rule-width: var(--tab-list-rule-width, var(--border-width-thin, 1px));
   --_tab-list-rule: calc(var(--_tab-list-rule-width) * var(--_tab-list-rule-style) * var(--_tab-list-rule-prominence));
   --_tab-list-indicator: var(--tab-list-indicator-color, var(--foreground, CanvasText));
-  --_tab-list-indicator-width: var(--tab-list-indicator-width, 2px);
+  --_tab-list-indicator-width: var(--tab-list-indicator-width, var(--border-width-thick));
   --_tab-list-transition: var(--tab-list-transition, var(--duration-sm, 150ms));
-  --_tab-list-floating-padding: var(--tab-list-floating-padding, 0.5rem);
-  --_tab-list-floating-border-width: var(--tab-list-floating-border-width, 1px);
+  --_tab-list-floating-padding: var(--tab-list-floating-padding, var(--spacing-sm));
+  --_tab-list-floating-border-width: var(--tab-list-floating-border-width, var(--panel-border-width, 1px));
   --_tab-list-floating-border-color: var(--tab-list-floating-border-color, var(--border-color-quiet, currentColor));
 
   /* ------------------------------------------------------------------------
@@ -73,7 +73,7 @@
      beats a flag inherited from a container.
      ------------------------------------------------------------------------ */
   @container style(--tab-list-style: segmented) {
-    --_tab-list-style-gap: var(--tab-list-segmented-gap, 0.5rem);
+    --_tab-list-style-gap: var(--tab-list-segmented-gap, var(--spacing-sm));
     --_tab-list-rule-style: 0;
     --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
     --_tab-list-floating-padding-inline: var(--_tab-list-floating-padding);
@@ -197,7 +197,7 @@
    ========================================================================== */
 :where(.tab-list--segmented) {
   --tab-list-style: segmented;
-  --_tab-list-style-gap: var(--tab-list-segmented-gap, 0.5rem);
+  --_tab-list-style-gap: var(--tab-list-segmented-gap, var(--spacing-sm));
   --_tab-list-rule-style: 0;
   --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
   --_tab-list-floating-padding-inline: var(--_tab-list-floating-padding);
@@ -283,7 +283,7 @@
 :where(.tab-list__content) {
   display: block;
   flex: 1;
-  padding-block: var(--tab-list-content-padding-block, 0.5rem);
+  padding-block: var(--tab-list-content-padding-block, var(--spacing-sm));
 }
 
 /* --------------------------------------------------------------------------
@@ -297,7 +297,7 @@
    3.3 Tight (.tab-list--tight): tabs nearly touch
    -------------------------------------------------------------------------- */
 :where(.tab-list--tight) {
-  --_tab-list-gap: var(--tab-list-tight-gap, 2px);
+  --_tab-list-gap: var(--tab-list-tight-gap, var(--spacing-2xs));
 }
 
 /* --------------------------------------------------------------------------
@@ -308,7 +308,7 @@
    -------------------------------------------------------------------------- */
 :where(.tab-list--flush) {
   --_tab-list-segmented-radius: 0px;
-  --_tab-list-inset: var(--tab-list-inset, var(--tab-padding-inline, 1rem));
+  --_tab-list-inset: var(--tab-list-inset, var(--tab-padding-inline, var(--button-padding-inline, var(--spacing-md))));
 
   :where(.tab) {
     --_tab-segmented-padding-inline: var(--_tab-list-inset);
@@ -405,11 +405,11 @@
 
 :where(.tab-list--docked) {
   position: fixed;
-  inset-block-end: calc(var(--tab-list-docked-offset, 1.5rem) + env(safe-area-inset-bottom, 0px));
+  inset-block-end: calc(var(--tab-list-docked-offset, var(--spacing-24)) + env(safe-area-inset-bottom, 0px));
   inset-inline: 0;
   z-index: var(--z-index-sticky, 100);
   inline-size: fit-content;
-  max-inline-size: calc(100% - var(--tab-list-docked-offset, 1.5rem) * 2);
+  max-inline-size: calc(100% - var(--tab-list-docked-offset, var(--spacing-24)) * 2);
   margin-inline: auto;
 }
 
@@ -439,7 +439,7 @@
 
 @media (prefers-contrast: more) {
   :where(.tab-list) {
-    --_tab-list-indicator-width: calc(var(--tab-list-indicator-width, 2px) * 2);
+    --_tab-list-indicator-width: calc(var(--tab-list-indicator-width, var(--border-width-thick)) * 2);
   }
 
   :where(.tab-list--floating) {

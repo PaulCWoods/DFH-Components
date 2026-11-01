@@ -36,10 +36,10 @@
   --menu-prominence: strong;
 
   /* Private manifest */
-  --_popover-max-width: var(--popover-max-width, 24rem);
-  --_popover-offset: var(--popover-offset, 0.5rem);
-  --_popover-transition: var(--popover-transition, 0s);
-  --_popover-timefunc: var(--popover-timefunc, ease-in-out);
+  --_popover-max-width: var(--popover-max-width, var(--spacing-block-sm));
+  --_popover-offset: var(--popover-offset, var(--spacing-sm));
+  --_popover-transition: var(--popover-transition, var(--duration-sm));
+  --_popover-timefunc: var(--popover-timefunc, var(--timefunc-ease-in-out, ease-in-out));
 
   /* The content draws the surface */
   background: transparent;

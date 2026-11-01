@@ -48,11 +48,11 @@
   /* Private manifest */
   --_header-bg: var(--header-bg, var(--surface-card, Canvas));
   --_header-border-color: var(--header-border-color, var(--border-color-quiet, currentColor));
-  --_header-border-style: var(--header-border-style, solid);
+  --_header-border-style: var(--header-border-style, var(--app-border-style, solid));
   --_header-border-width: var(--header-border-width, var(--border-width, 1px));
-  --_header-padding-block: var(--header-padding-block, 0.5rem);
-  --_header-padding-inline: var(--header-padding-inline, 1rem);
-  --_header-gap: var(--header-gap, 1rem);
+  --_header-padding-block: var(--header-padding-block, var(--spacing-sm));
+  --_header-padding-inline: var(--header-padding-inline, var(--spacing-cushion));
+  --_header-gap: var(--header-gap, var(--spacing-md));
   --_header-max-width: var(--header-max-width, var(--site-width, 75rem));
   /* The bar's content height. Never --header-height: that is the header's
      measured or declared height, read by what must clear it, so sizing the
@@ -68,8 +68,8 @@
      Declared before the modifiers, so a modifier beats a flag.
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
-    --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
-    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target, 3rem));
+    --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
+    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm));
   }
 
   /* Its rows can adapt to its width; the stuck shadow queries its position */
@@ -158,14 +158,14 @@
    container. max-md:header--compact does it below 48rem only (a phone). */
 :where(.header--compact) {
   --ui-sizing: compact;
-  --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
+  --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
   --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm, 2rem));
 }
 
 @media (width < 48rem) {
   :where(.max-md\:header--compact) {
     --ui-sizing: compact;
-    --_header-padding-block: var(--header-compact-padding-block, 0.25rem);
+    --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
     --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm, 2rem));
   }
 }
@@ -200,19 +200,19 @@
 
 /* Focus Not Obscured (2.4.11): focused elements scroll clear of the header */
 :where(:root:has(.header--sticky)) {
-  scroll-padding-block-start: var(--header-height, 4rem);
+  scroll-padding-block-start: var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target-min)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width))));
 }
 
 /* A compact sticky header is shorter, so what clears it follows. The
    :has() argument gives these the token's own specificity (0,1,0), so
    they beat the token and a product's :root override (later) beats them. */
 :where(:root):has(.header--sticky.header--compact) {
-  --header-height: var(--header-compact-height);
+  --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-sm)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
 }
 
 @media (width < 48rem) {
   :where(:root):has(.header--sticky.max-md\:header--compact) {
-    --header-height: var(--header-compact-height);
+    --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-sm)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
   }
 }
 
@@ -221,7 +221,7 @@
    ========================================================================== */
 @media (prefers-contrast: more) {
   :where(.header) {
-    --_header-border-width: var(--border-width-md, 2px);
+    --_header-border-width: var(--border-width-medium, 2px);
     --_header-shadow: none;
   }
 

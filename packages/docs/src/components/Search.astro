@@ -10,16 +10,16 @@ import Icon from './Icon.astro';
 <dialog id="search" class="dialog dialog--top" aria-labelledby="search-title" closedby="any">
   <article class="card">
     <header class="card__header">
-      <h2 id="search-title" class="heading">Search the docs</h2>
-      <button type="button" class="button button--plain button--icon button--sm" commandfor="search" command="close">
+      <h2 id="search-title" class="sr-only">Search the docs</h2>
+      <div class="field flex-grow-1">
+        <label for="search-input" class="sr-only">Search for</label>
+        <input id="search-input" type="search" placeholder="Type to search" class="input" autocomplete="off" autofocus aria-describedby="search-status" />
+      </div>
+      <button type="button" class="button button--plain button--icon" commandfor="search" command="close">
         <span class="sr-only">Close</span><Icon name="Close" />
       </button>
     </header>
     <div class="card__band stack">
-      <div class="field">
-        <label for="search-input" class="field__label label">Search for</label>
-        <input id="search-input" type="search" class="input" autocomplete="off" autofocus aria-describedby="search-status" />
-      </div>
       <p id="search-status" class="small-text text-muted" role="status"></p>
     </div>
     <div class="card__body card__body--scrollable stack">
@@ -35,7 +35,7 @@ import Icon from './Icon.astro';
      dialog to what is visible. Scale keeps pinch zoom from squashing it. */
   const viewport = window.visualViewport;
   viewport?.addEventListener('resize', () => {
-    dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion) * 2)`);
+    dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion, var(--spacing-cushion)) * 2)`);
   });
   const input = document.getElementById('search-input') as HTMLInputElement;
   const status = document.getElementById('search-status')!;

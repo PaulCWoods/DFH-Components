@@ -51,11 +51,11 @@
    1. Paint (every skeleton, shapes and companions)
    ========================================================================== */
 :where(.skeleton) {
-  --_skeleton-color: var(--skeleton-color, color-mix(in srgb, CanvasText 20%, transparent));
-  --_skeleton-shimmer: var(--skeleton-shimmer, transparent);
-  --_skeleton-radius: var(--skeleton-radius, 0);
-  --_skeleton-radius-round: var(--skeleton-radius-round, 50%);
-  --_skeleton-duration: var(--skeleton-duration);
+  --_skeleton-color: var(--skeleton-color, color-mix(in srgb, var(--foreground) 20%, transparent));
+  --_skeleton-shimmer: var(--skeleton-shimmer, color-mix(in srgb, var(--surface) 60%, transparent));
+  --_skeleton-radius: var(--skeleton-radius, var(--radius-sm));
+  --_skeleton-radius-round: var(--skeleton-radius-round, var(--radius-round));
+  --_skeleton-duration: var(--skeleton-duration, 1.6s);
 
   background-color: var(--_skeleton-color);
   background-image: linear-gradient(90deg, transparent, var(--_skeleton-shimmer), transparent);
@@ -129,27 +129,27 @@
      Shapes of other atoms
      ------------------------------------------------------------------------ */
   &:where(.skeleton--avatar) {
-    inline-size: var(--skeleton-width, var(--avatar-size));
+    inline-size: var(--skeleton-width, var(--avatar-size, var(--spacing-xl)));
     aspect-ratio: 1;
     border-radius: var(--_skeleton-radius-round);
   }
 
   &:where(.skeleton--button) {
     inline-size: var(--skeleton-width, 10ch);
-    block-size: var(--skeleton-height, var(--button-min-size));
-    border-radius: var(--button-radius, var(--_skeleton-radius));
+    block-size: var(--skeleton-height, var(--button-min-size, var(--spacing-target)));
+    border-radius: var(--button-radius, var(--radius));
   }
 
   &:where(.skeleton--input) {
-    block-size: var(--skeleton-height, var(--input-min-size));
-    border-radius: var(--input-radius, var(--_skeleton-radius));
+    block-size: var(--skeleton-height, var(--input-min-size, var(--spacing-target)));
+    border-radius: var(--input-radius, var(--radius));
   }
 
   /* The size of a status pill: its text's cap height plus its padding. */
   &:where(.skeleton--badge) {
-    font-size: var(--status-font-size);
+    font-size: var(--status-font-size, var(--body-sm-fixed-font-size));
     inline-size: var(--skeleton-width, 8ch);
-    block-size: var(--skeleton-height, calc(1cap + 2 * var(--status-padding-block)));
+    block-size: var(--skeleton-height, calc(1cap + 2 * var(--status-padding-block, var(--spacing-6))));
     border-radius: var(--_skeleton-radius-round);
   }
 
@@ -207,7 +207,7 @@
 /* Increased contrast: a stronger fill. */
 @media (prefers-contrast: more) {
   :where(.skeleton) {
-    --_skeleton-color: var(--skeleton-color-strong, color-mix(in srgb, CanvasText 35%, transparent));
+    --_skeleton-color: var(--skeleton-color-strong, color-mix(in srgb, var(--foreground) 35%, transparent));
   }
 }
 

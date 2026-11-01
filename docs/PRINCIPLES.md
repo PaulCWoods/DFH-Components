@@ -99,10 +99,10 @@ Structural components (layout, bands, headers) and content components (prose, me
 
 **Token tiers**
 
-- Tier 1 (global) tokens hold raw values (colour ramps, the spacing scale). Components must never reference them directly, including `--spacing-*` steps and raw `--color-*` ramps.
+- Tier 1 (global) tokens hold raw values (colour ramps, the spacing scale). Components never use them directly (`padding: var(--spacing-16)`). The one exception is a Tier 1 scale step as the default of a Tier 3 hook; raw `--color-*` ramps are never allowed.
 - Tier 2 (semantic) tokens hold meaning (surface, foreground, border, accent, danger). Components reference only these.
-- Semantic tokens are added when a component needs one, not in advance. When a refactor replaces a Tier 1 reference (such as `--spacing-8`), it adds the semantic token that names the role (such as a spacing step for the gap between related items), and later components reuse it.
-- Tier 3 (component) tokens are optional and exist only to expose a documented customisation point. A Tier 3 token may alias a Tier 1 scale step in the token JSON (`button.padding-inline` → `{spacing.12}`): choosing a step is the component's decision to make. The Tier 1 ban applies to component CSS, which reads the Tier 3 token, never the step itself.
+- Semantic tokens are added when a component needs one, not in advance. A default uses a Tier 2 token wherever one means that step (`--spacing-sm`, not `--spacing-8`). A step with no role (`--spacing-12`) stays a step: a name for every padding value would say nothing.
+- Tier 3 (component) tokens are optional and exist only to expose a documented customisation point. Each is a hook with its default in the component CSS: `var(--button-padding-inline, var(--spacing-md))`. Choosing a step is the component's decision to make. Tier 3 isn't compiled into `variables.css`, so a default also follows the colours and modes around it. `tokens/3-component.json` records the same defaults for Figma, and `npm run check:tokens` fails if the two disagree. A product sets a hook only to differ from the default.
 - Every tier must export cleanly to Tokens Studio and Figma Variables; a token that cannot be represented in Figma needs a documented reason.
 
 **Component contract**
@@ -248,7 +248,8 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | How is the current page, location or step marked? | With `aria-current` alone, never a class. A button with `aria-current` renders as selected, like `.is-active`; a menu or navigation tree shows it as a tint (the tree adds a rail). Steps use `aria-current="step"`, and the title carries the state in hidden text, since colour and the indicator are not enough. |
 | What do button group, menu and batch actions each own? | A button group lays related buttons out (a row, a column, or joined into one control) and never aligns itself on the page. A menu lays plain buttons out in rows with headings and dividers. Batch actions is a placement and frame around a selection summary and a button group. None restyles its buttons. |
 | Does the Google Fonts import stay? | No. System stacks by default; fonts load in Storybook and docs heads only. |
-| May Tier 3 tokens reference Tier 1? | Yes, in token JSON, to choose a scale step. Component CSS still never references Tier 1. |
+| May Tier 3 tokens reference Tier 1? | Yes, to choose a scale step: in the token JSON, and as the fallback where the CSS reads the hook. Use a Tier 2 token where one means that step. Never a colour ramp, and never a step without a hook. |
+| Where does a Tier 3 default live? | In the component CSS, as the hook's fallback, with the same value in the token JSON for Figma. `check:tokens` keeps them equal. Tier 3 isn't compiled into `variables.css`. |
 | Should tight groups of small controls avoid overlapping hit areas? | No. WCAG 2.5.8 allows overlap; the later control wins. Dense toolbars that need exact targets opt into fine-pointer targets. |
 | Does each prominence need an explicit modifier, such as `--outline`? | Not yet. Add one only when a real case needs to override a container's prominence back to the default. |
 | Is a card's edge part of prominence? | No. Prominence sets the fill; the card's chrome axis (`--flat`, `--bordered`) sets the edge, and `--flush` the padding, so each modifier keeps to one axis. `--plain` keeps its edgeless look; `.card--plain.card--bordered` is the outline the row above anticipated. Chrome is card-only until a second surface needs it. |

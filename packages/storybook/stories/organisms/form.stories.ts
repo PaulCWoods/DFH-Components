@@ -21,7 +21,7 @@ Fields and fieldsets in order, then the actions. The form owns the space between
 \`\`\`
 
 - **Actions** are a button group; align them with a \`justify-*\` utility.
-- **Options:** \`--compact\` (one switch for the whole form), \`--aligned\` (labels in one column beside their controls once the form is wider than 32rem, each hint beneath its label and each error beneath its control; below that, labels stack. Source order doesn't change, so screen readers still meet the error before the control).
+- **Options:** \`--compact\` (one switch for the whole form), \`--aligned\` (labels in one column beside their controls once the form is wider than 32rem, each hint beneath its label and each error beneath its control, except a fieldset's, which stays above its controls; below that, labels stack. Source order doesn't change, so screen readers still meet the error before the control).
 - **Layouts** come from the layout primitives: fields side by side are a \`.grid\`; a row of fields and a button is a \`.cluster\`.
         `,
       },

@@ -21,11 +21,11 @@
 
 :where(.breadcrumb) {
   /* Private manifest */
-  --_breadcrumb-gap: var(--breadcrumb-gap, 0.5rem);
-  --_breadcrumb-row-gap: var(--breadcrumb-row-gap, 0.25rem);
+  --_breadcrumb-gap: var(--breadcrumb-gap, var(--spacing-sm));
+  --_breadcrumb-row-gap: var(--breadcrumb-row-gap, var(--spacing-xs));
   --_breadcrumb-separator: var(--breadcrumb-separator, "/");
-  --_breadcrumb-separator-color: var(--breadcrumb-separator-color, currentColor);
-  --_breadcrumb-current-color: var(--breadcrumb-current-color, currentColor);
+  --_breadcrumb-separator-color: var(--breadcrumb-separator-color, var(--foreground-muted, currentColor));
+  --_breadcrumb-current-color: var(--breadcrumb-current-color, var(--foreground, currentColor));
 
   /* Links in a trail are navigation, so they drop the underline until hover */
   --link-prominence: plain;

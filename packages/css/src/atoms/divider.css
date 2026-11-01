@@ -28,9 +28,9 @@
 }
 
 :where(.divider) {
-  --_divider-width: var(--divider-width);
-  --_divider-style: var(--divider-style, solid);
-  --_divider-color: var(--divider-color, currentColor);
+  --_divider-width: var(--divider-width, var(--rule-width));
+  --_divider-style: var(--divider-style, var(--rule-style, solid));
+  --_divider-color: var(--divider-color, var(--rule-color, currentColor));
   --_divider-line: var(--_divider-width, 1px) var(--_divider-style) var(--_divider-color);
 
   box-sizing: border-box;
@@ -60,7 +60,7 @@
   }
 
   &:where(.divider--strong) {
-    --_divider-color: var(--divider-strong-color, currentColor);
+    --_divider-color: var(--divider-strong-color, var(--border-color-control, currentColor));
   }
 
   &:where(.divider--dashed) {
@@ -71,6 +71,6 @@
 /* Increased contrast: every divider takes the strong colour. */
 @media (prefers-contrast: more) {
   :where(.divider) {
-    --_divider-color: var(--divider-strong-color, currentColor);
+    --_divider-color: var(--divider-strong-color, var(--border-color-control, currentColor));
   }
 }

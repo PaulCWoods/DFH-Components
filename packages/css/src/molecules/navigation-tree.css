@@ -39,18 +39,18 @@
    ========================================================================== */
 :where(.navigation-tree) {
   /* Private manifest */
-  --_navigation-tree-gap: var(--navigation-tree-gap, 0.125rem);
+  --_navigation-tree-gap: var(--navigation-tree-gap, var(--spacing-2xs));
 
   /* Where an item's label starts inside its row: the button's border and
      padding. Nested lists, guide lines and headings all line up on it. */
-  --_navigation-tree-inset: calc(var(--button-border-width, 1px) + var(--button-padding-inline, 1rem));
-  --_navigation-tree-rule-width: var(--navigation-tree-rule-width, 1px);
-  --_navigation-tree-rule: var(--_navigation-tree-rule-width) var(--navigation-tree-rule-style, solid) var(--navigation-tree-rule-color, currentColor);
-  --_navigation-tree-current-bg: var(--navigation-tree-current-bg, transparent);
+  --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-padding-inline, var(--spacing-md)));
+  --_navigation-tree-rule-width: var(--navigation-tree-rule-width, var(--rule-width, 1px));
+  --_navigation-tree-rule: var(--_navigation-tree-rule-width) var(--navigation-tree-rule-style, var(--rule-style, solid)) var(--navigation-tree-rule-color, var(--rule-color, currentColor));
+  --_navigation-tree-current-bg: var(--navigation-tree-current-bg, var(--surface-translucent, transparent));
   --_navigation-tree-current-color: var(--navigation-tree-current-color, var(--foreground, CanvasText));
-  --_navigation-tree-rail-width: var(--navigation-tree-rail-width, 2px);
-  --_navigation-tree-rail-color: var(--navigation-tree-rail-color, currentColor);
-  --_navigation-tree-heading-color: var(--navigation-tree-heading-color, currentColor);
+  --_navigation-tree-rail-width: var(--navigation-tree-rail-width, var(--spacing-xs));
+  --_navigation-tree-rail-color: var(--navigation-tree-rail-color, var(--foreground-accent, currentColor));
+  --_navigation-tree-heading-color: var(--navigation-tree-heading-color, var(--foreground-muted, currentColor));
 
   /* Items are plain buttons in regular weight and a quieter colour; the
      current item stands out in weight and colour */
@@ -60,7 +60,7 @@
 
   /* Density: compact items have less padding, so the inset follows */
   @container style(--ui-sizing: compact) {
-    --_navigation-tree-inset: calc(var(--button-border-width, 1px) + var(--button-sm-padding-inline, 0.5rem));
+    --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md)))));
   }
 
   display: block;
@@ -97,7 +97,7 @@
 
 :where(.navigation-tree--compact) {
   --ui-sizing: compact;
-  --_navigation-tree-inset: calc(var(--button-border-width, 1px) + var(--button-sm-padding-inline, 0.5rem));
+  --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md)))));
 }
 
 /* ==========================================================================
@@ -110,7 +110,7 @@
 
   /* A quieter colour that darkens on hover; an intent class keeps its own */
   &:where(:not(.button--accent, .button--danger)) {
-    --_button-tone: var(--navigation-tree-color, currentColor);
+    --_button-tone: var(--navigation-tree-color, var(--foreground-muted, currentColor));
     --_button-tone-hover: var(--_navigation-tree-current-color);
     --_button-tone-pressed: var(--_navigation-tree-current-color);
   }

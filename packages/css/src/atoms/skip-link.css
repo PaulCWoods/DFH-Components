@@ -28,9 +28,9 @@
 :where(.skip-link) {
   --_skip-link-bg: var(--skip-link-background-color, var(--surface-accent-strong, Highlight));
   --_skip-link-color: var(--skip-link-text, var(--foreground-inverted, HighlightText));
-  --_skip-link-min-size: var(--skip-link-min-size, 3rem);
-  --_skip-link-padding-inline: var(--skip-link-padding-inline, 1rem);
-  --_skip-link-transition: var(--skip-link-transition, 150ms);
+  --_skip-link-min-size: var(--skip-link-min-size, var(--spacing-target));
+  --_skip-link-padding-inline: var(--skip-link-padding-inline, var(--spacing-md));
+  --_skip-link-transition: var(--skip-link-transition, var(--duration-sm));
 
   /* Collapsed until focused */
   display: flex;
@@ -47,13 +47,13 @@
   white-space: nowrap;
 
   font-family: var(--skip-link-font-family, var(--body-font-family, inherit));
-  font-size: var(--skip-link-font-size, 1rem);
-  font-weight: var(--skip-link-font-weight, 700);
+  font-size: var(--skip-link-font-size, var(--control-font-size));
+  font-weight: var(--skip-link-font-weight, var(--body-strong-font-weight));
   line-height: 1;
   text-decoration: none;
-  text-decoration-color: var(--skip-link-underline-color, currentColor);
-  text-decoration-thickness: var(--skip-link-underline-thickness, 1px);
-  text-underline-offset: var(--skip-link-underline-offset, 0.25em);
+  text-decoration-color: var(--skip-link-underline-color, var(--foreground-inverted, currentColor));
+  text-decoration-thickness: var(--skip-link-underline-thickness, var(--underline-thickness));
+  text-underline-offset: var(--skip-link-underline-offset, var(--underline-offset));
 
   color: var(--_skip-link-color);
   background-color: var(--_skip-link-bg);
@@ -104,15 +104,15 @@
    Pinned to the top-start corner; slides in on focus without moving layout.
    ========================================================================== */
 :where(.skip-link--floating) {
-  --_skip-link-inset: var(--skip-link-floating-inset, 1rem);
+  --_skip-link-inset: var(--skip-link-floating-inset, var(--spacing-md));
 
   position: fixed;
   inset-block-start: var(--_skip-link-inset);
   inset-inline-start: var(--_skip-link-inset);
   z-index: var(--z-index-tooltip, 1000);
   inline-size: auto;
-  padding-block: var(--skip-link-floating-padding-block, 0.5rem);
-  padding-inline: var(--skip-link-floating-padding-inline, 1rem);
+  padding-block: var(--skip-link-floating-padding-block, var(--spacing-sm));
+  padding-inline: var(--skip-link-floating-padding-inline, var(--spacing-md));
   border-radius: var(--skip-link-radius, var(--radius, 0.25rem));
   box-shadow: var(--shadow-lg, none);
   opacity: 0;

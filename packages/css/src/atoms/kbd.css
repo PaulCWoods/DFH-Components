@@ -23,19 +23,19 @@
    1. Base Key (:where(.kbd, .kbd > kbd))
    ========================================================================== */
 :where(.kbd) {
-  --_kbd-font-family: var(--kbd-font-family, ui-monospace, monospace);
-  --_kbd-font-size: var(--kbd-font-size, 0.875rem);
-  --_kbd-padding-block: var(--kbd-padding-block, 0.125rem);
-  --_kbd-padding-inline: var(--kbd-padding-inline, 0.25rem);
-  --_kbd-radius: var(--kbd-radius, 0.125rem);
+  --_kbd-font-family: var(--kbd-font-family, var(--code-font-family, ui-monospace, monospace));
+  --_kbd-font-size: var(--kbd-font-size, var(--body-sm-fixed-font-size));
+  --_kbd-padding-block: var(--kbd-padding-block, var(--spacing-2xs));
+  --_kbd-padding-inline: var(--kbd-padding-inline, var(--spacing-xs));
+  --_kbd-radius: var(--kbd-radius, var(--radius-sm));
   --_kbd-bg: var(--kbd-bg, transparent);
-  --_kbd-border-width: var(--kbd-border-width, 1px);
-  --_kbd-border-block-end-width: var(--kbd-border-block-end-width, 2px);
+  --_kbd-border-width: var(--kbd-border-width, var(--border-width-thin, 1px));
+  --_kbd-border-block-end-width: var(--kbd-border-block-end-width, var(--border-width-medium, 2px));
   --_kbd-border-color: var(--kbd-color-border, var(--border-color-muted, currentColor));
   --_kbd-text: var(--kbd-color, currentColor);
 
   @container style(--kbd-size: sm) or style(--ui-sizing: compact) {
-    --_kbd-font-size: var(--kbd-sm-font-size, 0.75rem);
+    --_kbd-font-size: var(--kbd-sm-font-size, var(--typography-font-size--2));
   }
 
   @container style(--kbd-prominence: subtle) or style(--elements-prominence: subtle) {
@@ -90,5 +90,5 @@
    3. Size Modifier
    ========================================================================== */
 :where(.kbd--sm) {
-  --_kbd-font-size: var(--kbd-sm-font-size, 0.75rem);
+  --_kbd-font-size: var(--kbd-sm-font-size, var(--typography-font-size--2));
 }

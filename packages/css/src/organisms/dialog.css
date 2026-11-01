@@ -50,12 +50,12 @@
   --_dialog-drawer-width: var(--dialog-drawer-width, var(--spacing-block-sm, 24rem));
   --_dialog-cushion: var(--dialog-cushion, var(--spacing-cushion));
   --_dialog-max-height: var(--dialog-max-height, calc(100dvb - var(--_dialog-cushion) * 2));
-  --_dialog-radius: var(--dialog-radius, var(--card-radius, 0));
-  --_dialog-shadow: var(--dialog-shadow, none);
-  --_dialog-backdrop-color: var(--dialog-backdrop-color, transparent);
-  --_dialog-backdrop-filter: var(--dialog-backdrop-filter, none);
-  --_dialog-transition: var(--dialog-transition, 0s);
-  --_dialog-timefunc: var(--dialog-timefunc, ease-in-out);
+  --_dialog-radius: var(--dialog-radius, var(--radius-lg));
+  --_dialog-shadow: var(--dialog-shadow, var(--shadow-lg, none));
+  --_dialog-backdrop-color: var(--dialog-backdrop-color, var(--color-backdrop, transparent));
+  --_dialog-backdrop-filter: var(--dialog-backdrop-filter, var(--surface-layer-filter, none));
+  --_dialog-transition: var(--dialog-transition, var(--duration-sm));
+  --_dialog-timefunc: var(--dialog-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   --_dialog-closed: scale(0.96) translateY(0.5rem);
 
   /* The card inside is a floating surface */
@@ -100,10 +100,10 @@
   /* Without a card (an image, a video), the dialog draws a card's surface */
   &:not(:has(> .card)) {
     background-color: var(--card-bg, var(--surface-card, Canvas));
-    border: var(--card-border-width, 1px) var(--card-border-style, solid) var(--card-border-color, currentColor);
+    border: var(--card-border-width, var(--panel-border-width, 1px)) var(--card-border-style, var(--panel-border-style, solid)) var(--card-border-color, var(--panel-border-color, currentColor));
     border-radius: var(--_dialog-radius);
     box-shadow: var(--_dialog-shadow);
-    padding: var(--card-padding, var(--spacing-breathe));
+    padding: var(--card-padding, var(--spacing-cushion));
     overflow-y: auto;
   }
 }

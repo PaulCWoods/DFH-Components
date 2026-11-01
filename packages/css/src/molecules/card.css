@@ -35,13 +35,13 @@
   /* Private manifest */
   --_card-fill: var(--card-bg, var(--surface-card, Canvas));
   --_card-bg: var(--_card-fill);
-  --_card-border-width: var(--card-border-width, 1px);
-  --_card-border-style: var(--card-border-style, solid);
-  --_card-border-color: var(--card-border-color, currentColor);
-  --_card-radius: var(--card-radius, 0);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
+  --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+  --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
+  --_card-radius: var(--card-radius, var(--radius));
   --_card-shadow: none;
-  --_card-raised-shadow: var(--card-strong-shadow, none);
-  --_card-shadow-hover: var(--card-hover-shadow, none);
+  --_card-raised-shadow: var(--card-strong-shadow, var(--shadow-raised, none));
+  --_card-shadow-hover: var(--card-hover-shadow, var(--shadow-raised, none));
   --_card-ring: 0px;
   /* An intent card's shadows: the raised stack in the intent colour. Unused
      (and so harmless) until an intent sets --_card-tint. */
@@ -49,12 +49,12 @@
     var(--_shadow-md-layer-1) var(--_card-tint),
     var(--_shadow-md-layer-2) var(--_card-tint),
     var(--_shadow-md-layer-3) var(--_card-tint);
-  --_card-padding: var(--card-padding, var(--spacing-breathe));
+  --_card-padding: var(--card-padding, var(--spacing-cushion));
   --_card-inner-padding: var(--card-inner-padding, var(--spacing-breathe));
   --_card-part-padding: calc(var(--_card-inner-padding) / 2);
-  --_card-hgroup-gap: var(--card-hgroup-gap, 0);
-  --_card-rule: var(--card-inner-border-width, 1px) var(--card-inner-border-style, solid) var(--card-inner-border-color, currentColor);
-  --_card-transition: var(--card-transition, 0s);
+  --_card-hgroup-gap: var(--card-hgroup-gap, var(--spacing-xs));
+  --_card-rule: var(--card-inner-border-width, var(--rule-width, 1px)) var(--card-inner-border-style, var(--rule-style, solid)) var(--card-inner-border-color, var(--rule-color, currentColor));
+  --_card-transition: var(--card-transition, var(--duration-sm));
 
   /* Flags apply to this card; cards nested inside start from the default */
   --card-prominence: initial;
@@ -87,52 +87,52 @@
   }
 
   @container style(--card-chrome: bordered) {
-    --_card-border-width: var(--card-border-width, 1px);
-    --_card-border-style: var(--card-border-style, solid);
-    --_card-border-color: var(--card-border-color, currentColor);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
+    --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+    --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
   }
 
   /* Intent flag: the border and ring in the intent colour */
   @container style(--card-intent: accent) {
-    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
     --_card-border-color: var(--border-color-accent, currentColor);
-    --_card-ring: var(--card-intent-ring-width, 1px);
+    --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
     --_card-tint: color-mix(in srgb, var(--border-color-accent, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
 
   @container style(--card-intent: danger) {
-    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
     --_card-border-color: var(--border-color-danger, currentColor);
-    --_card-ring: var(--card-intent-ring-width, 1px);
+    --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
     --_card-tint: color-mix(in srgb, var(--border-color-danger, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
 
   @container style(--card-intent: warning) {
-    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
     --_card-border-color: var(--border-color-warning, currentColor);
-    --_card-ring: var(--card-intent-ring-width, 1px);
+    --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
     --_card-tint: color-mix(in srgb, var(--border-color-warning, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
 
   @container style(--card-intent: success) {
-    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
     --_card-border-color: var(--border-color-success, currentColor);
-    --_card-ring: var(--card-intent-ring-width, 1px);
+    --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
     --_card-tint: color-mix(in srgb, var(--border-color-success, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
   }
 
   @container style(--card-intent: info) {
-    --_card-border-width: var(--card-border-width, 1px);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
     --_card-border-color: var(--border-color-info, currentColor);
-    --_card-ring: var(--card-intent-ring-width, 1px);
+    --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
     --_card-tint: color-mix(in srgb, var(--border-color-info, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
     --_card-raised-shadow: var(--_card-tinted-shadow);
     --_card-shadow-hover: var(--_card-tinted-shadow);
@@ -220,54 +220,54 @@
 }
 
 :where(.card--bordered) {
-  --_card-border-width: var(--card-border-width, 1px);
-  --_card-border-style: var(--card-border-style, solid);
-  --_card-border-color: var(--card-border-color, currentColor);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
+  --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+  --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
 }
 
 /* Intent: after chrome, so a flat card with an intent keeps its square
    corners and still shows the edge. The tinted shadow replaces the raised
    and hover shadows only, so flat and plain cards stay shadowless. */
 :where(.card--accent) {
-  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
   --_card-border-color: var(--border-color-accent, currentColor);
-  --_card-ring: var(--card-intent-ring-width, 1px);
+  --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
   --_card-tint: color-mix(in srgb, var(--border-color-accent, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
 
 :where(.card--danger) {
-  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
   --_card-border-color: var(--border-color-danger, currentColor);
-  --_card-ring: var(--card-intent-ring-width, 1px);
+  --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
   --_card-tint: color-mix(in srgb, var(--border-color-danger, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
 
 :where(.card--warning) {
-  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
   --_card-border-color: var(--border-color-warning, currentColor);
-  --_card-ring: var(--card-intent-ring-width, 1px);
+  --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
   --_card-tint: color-mix(in srgb, var(--border-color-warning, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
 
 :where(.card--success) {
-  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
   --_card-border-color: var(--border-color-success, currentColor);
-  --_card-ring: var(--card-intent-ring-width, 1px);
+  --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
   --_card-tint: color-mix(in srgb, var(--border-color-success, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
 }
 
 :where(.card--info) {
-  --_card-border-width: var(--card-border-width, 1px);
+  --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
   --_card-border-color: var(--border-color-info, currentColor);
-  --_card-ring: var(--card-intent-ring-width, 1px);
+  --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
   --_card-tint: color-mix(in srgb, var(--border-color-info, currentColor), transparent var(--card-intent-shadow-transparency, 75%));
   --_card-raised-shadow: var(--_card-tinted-shadow);
   --_card-shadow-hover: var(--_card-tinted-shadow);
@@ -283,7 +283,7 @@
    card gains one, and a bordered one thickens */
 @media (prefers-contrast: more) {
   :where(.card:not(.card--plain), .card--bordered) {
-    --_card-border-width: var(--border-width-md, 2px);
+    --_card-border-width: var(--border-width-medium, 2px);
     --_card-shadow: none;
 
     @container style(--card-prominence: plain) {
@@ -295,8 +295,8 @@
 /* Translucent: a material, combined with any prominence that has a fill */
 @media (prefers-contrast: no-preference) {
   :where(.card--translucent) {
-    --_card-bg: color-mix(in srgb, var(--_card-fill), transparent var(--card-translucency, 0%));
-    backdrop-filter: var(--card-filter, none);
+    --_card-bg: color-mix(in srgb, var(--_card-fill), transparent var(--card-translucency, var(--translucency-subtle)));
+    backdrop-filter: var(--card-filter, var(--surface-layer-filter, none));
   }
 }
 
@@ -322,9 +322,9 @@
   }
 
   :where(.\@max-2xl\:card--bordered) {
-    --_card-border-width: var(--card-border-width, 1px);
-    --_card-border-style: var(--card-border-style, solid);
-    --_card-border-color: var(--card-border-color, currentColor);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
+    --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+    --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
   }
 
   :where(.\@max-2xl\:card--flush) {
@@ -347,9 +347,9 @@
   }
 
   :where(.\@max-md\:card--bordered) {
-    --_card-border-width: var(--card-border-width, 1px);
-    --_card-border-style: var(--card-border-style, solid);
-    --_card-border-color: var(--card-border-color, currentColor);
+    --_card-border-width: var(--card-border-width, var(--panel-border-width, 1px));
+    --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+    --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
   }
 
   :where(.\@max-md\:card--flush) {
@@ -473,7 +473,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--card-band-gap, var(--spacing));
+  gap: var(--card-band-gap, var(--spacing-sm));
   justify-content: space-between;
 }
 

@@ -36,21 +36,21 @@
    1. Base Switch (:where(.switch))
    ========================================================================== */
 :where(.switch) {
-  --_switch-height: var(--switch-height, 3rem);
-  --_switch-font-size: var(--switch-font-size, 1rem);
-  --_switch-padding-inline: var(--switch-padding-inline, 1rem);
-  --_switch-option-min-inline-size: var(--switch-option-min-size, 3rem);
+  --_switch-height: var(--switch-height, var(--button-min-size, var(--spacing-target)));
+  --_switch-font-size: var(--switch-font-size, var(--control-font-size));
+  --_switch-padding-inline: var(--switch-padding-inline, var(--spacing-md));
+  --_switch-option-min-inline-size: var(--switch-option-min-size, var(--spacing-target));
   --_switch-radius: var(--switch-radius, var(--radius, 0.25rem));
-  --_switch-border-width: var(--switch-border-width, 1px);
-  --_switch-border-color: var(--switch-border-color, currentColor);
+  --_switch-border-width: var(--switch-border-width, var(--border-width, 1px));
+  --_switch-border-color: var(--switch-border-color, var(--border-color-control, currentColor));
   --_switch-bg: transparent;
   --_switch-off-bg: var(--switch-off-bg, var(--surface-muted, transparent));
   --_switch-off-color: var(--switch-off-color, var(--foreground, CanvasText));
   --_switch-on-bg: var(--switch-on-bg, var(--foreground-accent, AccentColor));
   --_switch-on-color: var(--switch-on-color, var(--foreground-inverted-strong, Canvas));
   --_switch-hover-color: var(--foreground-accent-hover, currentColor);
-  --_switch-transition: var(--switch-transition, 150ms);
-  --_switch-timefunc: var(--switch-timefunc, ease-in-out);
+  --_switch-transition: var(--switch-transition, var(--duration-sm));
+  --_switch-timefunc: var(--switch-timefunc, var(--ease-bounce, ease-in-out));
   --_switch-direction: 1;
   --_switch-indicator-bg: var(--_switch-off-bg);
 
@@ -60,16 +60,16 @@
      a flag inherited from a container.
      ------------------------------------------------------------------------ */
   @container style(--switch-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
-    --_switch-height: var(--switch-sm-height, 2rem);
-    --_switch-font-size: var(--switch-sm-font-size, 0.875rem);
-    --_switch-padding-inline: var(--switch-sm-padding-inline, 0.5rem);
-    --_switch-option-min-inline-size: var(--switch-sm-option-min-size, 2rem);
+    --_switch-height: var(--switch-sm-height, var(--spacing-lg));
+    --_switch-font-size: var(--switch-sm-font-size, var(--control-sm-font-size));
+    --_switch-padding-inline: var(--switch-sm-padding-inline, var(--spacing-sm));
+    --_switch-option-min-inline-size: var(--switch-sm-option-min-size, var(--spacing-target-sm));
   }
 
   @container style(--switch-size: lg) or style(--controls-size: lg) {
-    --_switch-height: var(--switch-lg-height, 4rem);
-    --_switch-font-size: var(--switch-lg-font-size, 1.125rem);
-    --_switch-padding-inline: var(--switch-lg-padding-inline, 1.5rem);
+    --_switch-height: var(--switch-lg-height, var(--spacing-2xl));
+    --_switch-font-size: var(--switch-lg-font-size, var(--control-lg-font-size));
+    --_switch-padding-inline: var(--switch-lg-padding-inline, var(--spacing-24));
   }
 
   @container style(--switch-prominence: subtle) or style(--controls-prominence: subtle) or style(--elements-prominence: subtle) {
@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--switch-gap, 1rem);
+  gap: var(--switch-gap, var(--spacing-md));
   inline-size: stretch;
   min-block-size: var(--spacing-target-min, 3rem);
   cursor: pointer;
@@ -117,7 +117,7 @@
   :where(.switch__label) {
     display: flex;
     flex-direction: column;
-    gap: var(--switch-label-gap, 0.25rem);
+    gap: var(--switch-label-gap, var(--spacing-xs));
   }
 
   /* ------------------------------------------------------------------------
@@ -220,21 +220,21 @@
    4. Modifiers
    ========================================================================== */
 :where(.switch--sm) {
-  --_switch-height: var(--switch-sm-height, 2rem);
-  --_switch-font-size: var(--switch-sm-font-size, 0.875rem);
-  --_switch-padding-inline: var(--switch-sm-padding-inline, 0.5rem);
-  --_switch-option-min-inline-size: var(--switch-sm-option-min-size, 2rem);
+  --_switch-height: var(--switch-sm-height, var(--spacing-lg));
+  --_switch-font-size: var(--switch-sm-font-size, var(--control-sm-font-size));
+  --_switch-padding-inline: var(--switch-sm-padding-inline, var(--spacing-sm));
+  --_switch-option-min-inline-size: var(--switch-sm-option-min-size, var(--spacing-target-sm));
 }
 
 :where(.switch--lg) {
-  --_switch-height: var(--switch-lg-height, 4rem);
-  --_switch-font-size: var(--switch-lg-font-size, 1.125rem);
-  --_switch-padding-inline: var(--switch-lg-padding-inline, 1.5rem);
+  --_switch-height: var(--switch-lg-height, var(--spacing-2xl));
+  --_switch-font-size: var(--switch-lg-font-size, var(--control-lg-font-size));
+  --_switch-padding-inline: var(--switch-lg-padding-inline, var(--spacing-24));
 
   @container style(--ui-sizing: compact) {
-    --_switch-height: var(--switch-height, 3rem);
-    --_switch-font-size: var(--switch-font-size, 1rem);
-    --_switch-padding-inline: var(--switch-padding-inline, 1rem);
+    --_switch-height: var(--switch-height, var(--button-min-size, var(--spacing-target)));
+    --_switch-font-size: var(--switch-font-size, var(--control-font-size));
+    --_switch-padding-inline: var(--switch-padding-inline, var(--spacing-md));
   }
 }
 

@@ -24,10 +24,10 @@
 
 :where(.pagination) {
   /* Private manifest */
-  --_pagination-gap-color: var(--pagination-gap-color, currentColor);
+  --_pagination-gap-color: var(--pagination-gap-color, var(--foreground-muted, currentColor));
 
   /* A tighter gap than other button groups */
-  --button-group-gap: var(--pagination-gap, 0.25rem);
+  --button-group-gap: var(--pagination-gap, var(--spacing-xs));
 
   /* Number buttons are square: the inline padding matches the block padding */
   > :where(.button:not(:has(.icon))) {

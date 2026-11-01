@@ -41,11 +41,11 @@
     --_prose-space: var(--prose-space, var(--spacing, 1rem));
 
     @container style(--font-sizing: fluid) {
-      --_prose-space: var(--prose-space-fluid, var(--spacing, 1rem));
+      --_prose-space: var(--prose-space-fluid, var(--spacing-breathe));
     }
 
     @container style(--font-sizing: cq) {
-      --_prose-space: var(--prose-space-cq, var(--spacing, 1rem));
+      --_prose-space: var(--prose-space-cq, var(--spacing-cq-breathe));
     }
 
     @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
@@ -54,7 +54,7 @@
   }
 
   :where(:scope) {
-    --_prose-indent: var(--prose-indent, 1.5em);
+    --_prose-indent: var(--prose-indent, calc(var(--spacing) * 1.5));
   }
 
   :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote, figure, pre, table, hr, hgroup) {
@@ -95,7 +95,7 @@
   }
 
   :where([id]) {
-    scroll-margin-block-start: var(--prose-scroll-margin, 1em);
+    scroll-margin-block-start: var(--prose-scroll-margin, var(--spacing-scroll-margin));
   }
 
   /* ==========================================================================
@@ -144,12 +144,12 @@
      ========================================================================== */
   :where(hr) {
     border: 0;
-    border-block-start: var(--divider-width, 1px) var(--divider-style, solid) var(--divider-color, currentColor);
+    border-block-start: var(--divider-width, var(--rule-width)) var(--divider-style, var(--rule-style, solid)) var(--divider-color, var(--rule-color, currentColor));
   }
 
   :where(blockquote) {
-    border-inline-start: var(--prose-blockquote-border-width, 1px) solid var(--border-color, currentColor);
-    padding-inline-start: calc(var(--_prose-indent) - var(--prose-blockquote-border-width, 1px));
+    border-inline-start: var(--prose-blockquote-border-width, var(--border-width-thick, 1px)) solid var(--border-color, currentColor);
+    padding-inline-start: calc(var(--_prose-indent) - var(--prose-blockquote-border-width, var(--border-width-thick, 1px)));
   }
 
   /* ==========================================================================
@@ -157,7 +157,7 @@
      ========================================================================== */
   :where(figcaption) {
     break-before: avoid;
-    color: var(--prose-figcaption-color, inherit);
+    color: var(--prose-figcaption-color, var(--foreground-muted, inherit));
     margin-block-start: calc(var(--_prose-space) / 2);
     text-wrap: balance;
 
@@ -174,16 +174,16 @@
      direction.
      ========================================================================== */
   :where(:not(pre) > code) {
-    background-color: var(--prose-code-bg, transparent);
+    background-color: var(--prose-code-bg, var(--surface-translucent, transparent));
     border-radius: var(--radius-sm, 0);
     box-decoration-break: clone;
     padding-inline: 0.25em;
   }
 
   :where(pre) {
-    background-color: var(--prose-code-block-bg, transparent);
+    background-color: var(--prose-code-block-bg, var(--surface-dark, transparent));
     break-inside: avoid;
-    color: var(--prose-code-block-text, currentColor);
+    color: var(--prose-code-block-text, var(--foreground-on-dark, currentColor));
     direction: ltr;
     overflow-wrap: anywhere;
     padding: var(--_prose-space);
@@ -210,15 +210,15 @@
   :where(table) {
     > :where(caption) {
       caption-side: top;
-      color: var(--prose-figcaption-color, inherit);
+      color: var(--prose-figcaption-color, var(--foreground-muted, inherit));
       padding-block-end: calc(var(--_prose-space) / 2);
       text-align: start;
     }
 
     :where(th, td) {
       border-block-end: var(--table-inner-border-width, var(--rule-width, 1px)) solid var(--table-inner-border-color, var(--rule-color, currentColor));
-      padding-block: var(--table-cell-padding-block, 0.5em);
-      padding-inline: var(--table-cell-padding-inline, 1em);
+      padding-block: var(--table-cell-padding-block, var(--spacing-12));
+      padding-inline: var(--table-cell-padding-inline, var(--spacing-md));
       text-align: start;
       vertical-align: top;
 
@@ -232,7 +232,7 @@
     }
 
     > :where(thead) :where(th) {
-      border-block-end-color: var(--table-border-color, var(--border-color, currentColor));
+      border-block-end-color: var(--table-border-color, var(--panel-border-color, currentColor));
       vertical-align: bottom;
     }
   }

@@ -104,16 +104,16 @@
   --_table-inner-border-color: var(--table-inner-border-color, var(--rule-color, currentColor));
   --_table-inner-border-width: var(--table-inner-border-width, var(--rule-width, 1px));
   --_table-inner-shadow: var(--table-inner-shadow, var(--shadow-md, none));
-  --_table-head-bg: var(--table-head-bg, transparent);
+  --_table-head-bg: var(--table-head-bg, var(--surface-translucent, transparent));
   --_table-head-border-width: var(--table-head-border-width, var(--border-width, 1px));
   --_table-head-color: var(--table-head-color, var(--foreground-strong, currentColor));
-  --_table-row-hover-bg: var(--table-row-hover-bg, transparent);
-  --_table-row-stripe-bg: var(--table-row-stripe-bg, transparent);
+  --_table-row-hover-bg: var(--table-row-hover-bg, var(--surface-translucent-strong, transparent));
+  --_table-row-stripe-bg: var(--table-row-stripe-bg, var(--surface-translucent, transparent));
   --_table-sticky-bg: var(--table-cell-sticky-bg, var(--surface-card, Canvas));
-  --_table-sticky-filter: var(--table-cell-sticky-filter, none);
-  --_table-cell-padding-block: var(--table-cell-padding-block, 0.75em);
-  --_table-cell-padding-inline: var(--table-cell-padding-inline, 1em);
-  --_table-inset: var(--table-inset, var(--_table-cell-padding-inline));
+  --_table-sticky-filter: var(--table-cell-sticky-filter, var(--surface-layer-filter, none));
+  --_table-cell-padding-block: var(--table-cell-padding-block, var(--spacing-12));
+  --_table-cell-padding-inline: var(--table-cell-padding-inline, var(--spacing-md));
+  --_table-inset: var(--table-inset, var(--spacing-md));
   --_table-body-align: middle;
   --_table-font-size: var(--body-fixed-font-size, inherit);
   --_table-transition: var(--duration-sm, 150ms);
@@ -137,13 +137,13 @@
 
   /* Container flags, before the modifiers so a class beats a flag */
   @container style(--ui-sizing: compact) {
-    --_table-cell-padding-block: var(--table-compact-cell-padding-block, 0.5em);
-    --_table-cell-padding-inline: var(--table-compact-cell-padding-inline, 0.75em);
+    --_table-cell-padding-block: var(--table-compact-cell-padding-block, var(--spacing-sm));
+    --_table-cell-padding-inline: var(--table-compact-cell-padding-inline, var(--spacing-12));
     --_table-font-size: var(--body-compact-font-size, inherit);
   }
 
   @container style(--table-prominence: plain) {
-    --_table-inset: var(--table-inset, 0px);
+    --_table-inset: 0px;
     --_table-head-bg: transparent;
     --_table-head-border-width: 0px;
     --_table-inner-border-width: 0px;
@@ -239,7 +239,7 @@
    3. Modifiers (pure token maps)
    ========================================================================== */
 :where(.table--plain) {
-  --_table-inset: var(--table-inset, 0px);
+  --_table-inset: 0px;
   --_table-head-bg: transparent;
   --_table-head-border-width: 0px;
   --_table-inner-border-width: 0px;
@@ -248,8 +248,8 @@
 
 :where(.table--compact) {
   --ui-sizing: compact;
-  --_table-cell-padding-block: var(--table-compact-cell-padding-block, 0.5em);
-  --_table-cell-padding-inline: var(--table-compact-cell-padding-inline, 0.75em);
+  --_table-cell-padding-block: var(--table-compact-cell-padding-block, var(--spacing-sm));
+  --_table-cell-padding-inline: var(--table-compact-cell-padding-inline, var(--spacing-12));
   --_table-font-size: var(--body-compact-font-size, inherit);
 }
 
@@ -320,40 +320,40 @@
 }
 
 :where(.table__cell--truncate) {
-  max-inline-size: var(--table-col-xl-width, 16rem);
+  max-inline-size: var(--table-col-xl-width, var(--spacing-block-xs));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 :where(.table__col--index) {
-  inline-size: var(--table-col-index-width, 2.5rem);
+  inline-size: var(--table-col-index-width, calc(var(--spacing-md) * 2.5));
   text-align: center;
   white-space: nowrap;
 }
 
 :where(.table__col--xs) {
-  inline-size: var(--table-col-xs-width, 4rem);
+  inline-size: var(--table-col-xs-width, var(--spacing-2xl));
 }
 
 :where(.table__col--sm) {
-  inline-size: var(--table-col-sm-width, 6rem);
+  inline-size: var(--table-col-sm-width, calc(var(--spacing-md) * 6));
 }
 
 :where(.table__col--md) {
-  inline-size: var(--table-col-md-width, 8rem);
+  inline-size: var(--table-col-md-width, var(--spacing-block-2xs));
 }
 
 :where(.table__col--lg) {
-  inline-size: var(--table-col-lg-width, 12rem);
+  inline-size: var(--table-col-lg-width, var(--spacing-192));
 }
 
 :where(.table__col--xl) {
-  inline-size: var(--table-col-xl-width, 16rem);
+  inline-size: var(--table-col-xl-width, var(--spacing-block-xs));
 }
 
 :where(.table__col--actions) {
-  inline-size: var(--table-col-actions-width, 6.5rem);
+  inline-size: var(--table-col-actions-width, calc(var(--spacing-md) * 6.5));
   text-align: end;
   white-space: nowrap;
 }
@@ -473,7 +473,7 @@
   padding-block: var(--_table-cell-padding-block);
   padding-inline: var(--_table-cell-padding-inline);
   text-align: inherit;
-  text-decoration-thickness: var(--link-hover-underline-thickness, 2px);
+  text-decoration-thickness: var(--link-hover-underline-thickness, var(--border-width-medium));
   text-underline-offset: var(--underline-offset, 0.25em);
 
   &:hover,

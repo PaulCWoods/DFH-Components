@@ -25,17 +25,17 @@
    ========================================================================== */
 
 :where(.range) {
-  --_range-track-height: var(--range-track-height, 0.5rem);
+  --_range-track-height: var(--range-track-height, var(--spacing-sm));
   --_range-track-bg: var(--range-track-bg, var(--surface-muted, transparent));
   --_range-track-radius: var(--range-track-radius, var(--radius, 0.25rem));
-  --_range-thumb-size: var(--range-thumb-size, 1.5rem);
+  --_range-thumb-size: var(--range-thumb-size, var(--spacing-24));
   --_range-thumb-radius: var(--range-thumb-radius, var(--radius-round, 9999px));
-  --_range-thumb-border-width: var(--range-thumb-border-width, 1px);
+  --_range-thumb-border-width: var(--range-thumb-border-width, var(--border-width, 1px));
   --_range-thumb-border-color: var(--range-thumb-border-color, var(--surface-card, Canvas));
-  --_range-thumb-shadow: var(--range-thumb-shadow, none);
+  --_range-thumb-shadow: var(--range-thumb-shadow, var(--shadow-sm, none));
   --_range-tone: var(--foreground-accent, AccentColor);
   --_range-tone-pressed: var(--foreground-accent-pressed, var(--_range-tone));
-  --_range-transition: var(--range-transition, 150ms);
+  --_range-transition: var(--range-transition, var(--duration-sm));
   --_range-fill-direction: to right;
 
   /* ------------------------------------------------------------------------
@@ -44,13 +44,13 @@
      a flag inherited from a container.
      ------------------------------------------------------------------------ */
   @container style(--range-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
-    --_range-track-height: var(--range-track-sm-height, 0.25rem);
-    --_range-thumb-size: var(--range-thumb-sm-size, 1rem);
+    --_range-track-height: var(--range-track-sm-height, var(--spacing-xs));
+    --_range-thumb-size: var(--range-thumb-sm-size, var(--spacing-md));
   }
 
   @container style(--range-size: lg) or style(--controls-size: lg) {
-    --_range-track-height: var(--range-track-lg-height, 0.75rem);
-    --_range-thumb-size: var(--range-thumb-lg-size, 2rem);
+    --_range-track-height: var(--range-track-lg-height, var(--spacing-12));
+    --_range-thumb-size: var(--range-thumb-lg-size, var(--spacing-lg));
   }
 
   @container style(--range-intent: info) {
@@ -224,17 +224,17 @@
    Modifiers
    ========================================================================== */
 :where(.range--sm) {
-  --_range-track-height: var(--range-track-sm-height, 0.25rem);
-  --_range-thumb-size: var(--range-thumb-sm-size, 1rem);
+  --_range-track-height: var(--range-track-sm-height, var(--spacing-xs));
+  --_range-thumb-size: var(--range-thumb-sm-size, var(--spacing-md));
 }
 
 :where(.range--lg) {
-  --_range-track-height: var(--range-track-lg-height, 0.75rem);
-  --_range-thumb-size: var(--range-thumb-lg-size, 2rem);
+  --_range-track-height: var(--range-track-lg-height, var(--spacing-12));
+  --_range-thumb-size: var(--range-thumb-lg-size, var(--spacing-lg));
 
   @container style(--ui-sizing: compact) {
-    --_range-track-height: var(--range-track-height, 0.5rem);
-    --_range-thumb-size: var(--range-thumb-size, 1.5rem);
+    --_range-track-height: var(--range-track-height, var(--spacing-sm));
+    --_range-thumb-size: var(--range-thumb-size, var(--spacing-24));
   }
 }
 

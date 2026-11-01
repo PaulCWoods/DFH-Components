@@ -27,18 +27,18 @@
    ========================================================================== */
 
 :where(.checkbox-input, .radio-input) {
-  --_check-size: var(--check-box-size, 1.25rem);
+  --_check-size: var(--check-box-size, calc(var(--spacing-md) * 1.25));
   --_check-accent: var(--foreground-accent, AccentColor);
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
      ------------------------------------------------------------------------ */
   @container style(--check-size: sm) {
-    --_check-size: var(--check-sm-box-size, 1rem);
+    --_check-size: var(--check-sm-box-size, var(--spacing-md));
   }
 
   @container style(--check-size: lg) {
-    --_check-size: var(--check-lg-box-size, 1.5rem);
+    --_check-size: var(--check-lg-box-size, var(--spacing-24));
   }
 
   /* Layout & Sizing */
@@ -69,9 +69,9 @@
 }
 
 :where(.checkbox-input--lg, .radio-input--lg) {
-  --_check-size: var(--check-lg-box-size, 1.5rem);
+  --_check-size: var(--check-lg-box-size, var(--spacing-24));
 
   @container style(--ui-sizing: compact) {
-    --_check-size: var(--check-box-size, 1.25rem);
+    --_check-size: var(--check-box-size, calc(var(--spacing-md) * 1.25));
   }
 }

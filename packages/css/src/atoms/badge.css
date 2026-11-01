@@ -44,12 +44,12 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
-  --_badge-font-size: var(--badge-font-size, 0.875rem);
-  --_badge-font-weight: var(--badge-font-weight, 700);
+  --_badge-font-size: var(--badge-font-size, var(--body-sm-fixed-font-size));
+  --_badge-font-weight: var(--badge-font-weight, var(--font-weight-bold));
   --_badge-size: var(--badge-size, 1.25rem);
-  --_badge-padding-inline: var(--badge-padding-inline, 0.25rem);
+  --_badge-padding-inline: var(--badge-padding-inline, var(--spacing-xs));
   --_badge-text-padding-inline: var(--badge-text-padding-inline, 0.1em);
-  --_badge-dot-size: var(--badge-dot-size, 0.75rem);
+  --_badge-dot-size: var(--badge-dot-size, var(--spacing-12));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -77,7 +77,7 @@
   }
 
   @container style(--badge-size: sm) or style(--ui-sizing: compact) {
-    --_badge-font-size: var(--badge-sm-font-size, 0.75rem);
+    --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2));
     --_badge-size: var(--badge-sm-size, 1rem);
     --_badge-text-padding-inline: 0px;
   }
@@ -143,7 +143,7 @@
    3. Size & Presentation Modifiers
    ========================================================================== */
 :where(.badge--sm) {
-  --_badge-font-size: var(--badge-sm-font-size, 0.75rem);
+  --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2));
   --_badge-size: var(--badge-sm-size, 1rem);
 }
 

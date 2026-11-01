@@ -65,10 +65,10 @@
    2. Progress (:where(.progress))
    ========================================================================== */
 :where(.progress) {
-  --_bar-height: var(--progress-height, 0.5rem);
+  --_bar-height: var(--progress-height, var(--spacing-sm));
   --_bar-radius: var(--progress-radius, var(--radius, 0.25rem));
   --_bar-track-bg: var(--progress-track-bg, var(--surface-muted, transparent));
-  --_bar-transition: var(--progress-transition, 200ms);
+  --_bar-transition: var(--progress-transition, var(--duration-sm));
   --_progress-tone: var(--foreground-accent, AccentColor);
   --_progress-sweep-from: -100%;
   --_progress-sweep-to: 200%;
@@ -79,11 +79,11 @@
      a flag inherited from a container.
      ------------------------------------------------------------------------ */
   @container style(--progress-size: sm) or style(--ui-sizing: compact) {
-    --_bar-height: var(--progress-sm-height, 0.25rem);
+    --_bar-height: var(--progress-sm-height, var(--spacing-xs));
   }
 
   @container style(--progress-size: lg) {
-    --_bar-height: var(--progress-lg-height, 1rem);
+    --_bar-height: var(--progress-lg-height, var(--spacing-md));
   }
 
   @container style(--progress-intent: info) {
@@ -168,20 +168,20 @@
    3. Meter (:where(.meter))
    ========================================================================== */
 :where(.meter) {
-  --_bar-height: var(--meter-height, 0.5rem);
+  --_bar-height: var(--meter-height, var(--spacing-sm));
   --_bar-radius: var(--meter-radius, var(--radius, 0.25rem));
   --_bar-track-bg: var(--meter-track-bg, var(--surface-muted, transparent));
-  --_bar-transition: var(--meter-transition, 200ms);
+  --_bar-transition: var(--meter-transition, var(--duration-sm));
   --_meter-optimum: var(--meter-optimum-bg, var(--foreground-success, AccentColor));
   --_meter-suboptimum: var(--meter-suboptimum-bg, var(--foreground-warning, AccentColor));
   --_meter-critical: var(--meter-critical-bg, var(--foreground-danger, AccentColor));
 
   @container style(--meter-size: sm) or style(--ui-sizing: compact) {
-    --_bar-height: var(--meter-sm-height, 0.25rem);
+    --_bar-height: var(--meter-sm-height, var(--spacing-xs));
   }
 
   @container style(--meter-size: lg) {
-    --_bar-height: var(--meter-lg-height, 1rem);
+    --_bar-height: var(--meter-lg-height, var(--spacing-md));
   }
 
   @container style(--meter-corners: round) {
@@ -249,27 +249,27 @@
    4. Modifiers
    ========================================================================== */
 :where(.progress--sm) {
-  --_bar-height: var(--progress-sm-height, 0.25rem);
+  --_bar-height: var(--progress-sm-height, var(--spacing-xs));
 }
 
 :where(.meter--sm) {
-  --_bar-height: var(--meter-sm-height, 0.25rem);
+  --_bar-height: var(--meter-sm-height, var(--spacing-xs));
 }
 
 /* A compact container steps large bars back to default */
 :where(.progress--lg) {
-  --_bar-height: var(--progress-lg-height, 1rem);
+  --_bar-height: var(--progress-lg-height, var(--spacing-md));
 
   @container style(--ui-sizing: compact) {
-    --_bar-height: var(--progress-height, 0.5rem);
+    --_bar-height: var(--progress-height, var(--spacing-sm));
   }
 }
 
 :where(.meter--lg) {
-  --_bar-height: var(--meter-lg-height, 1rem);
+  --_bar-height: var(--meter-lg-height, var(--spacing-md));
 
   @container style(--ui-sizing: compact) {
-    --_bar-height: var(--meter-height, 0.5rem);
+    --_bar-height: var(--meter-height, var(--spacing-sm));
   }
 }
 

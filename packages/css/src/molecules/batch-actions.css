@@ -28,21 +28,21 @@
    ========================================================================== */
 :where(.batch-actions) {
   /* Private manifest */
-  --_batch-actions-fill: var(--batch-actions-bg, Canvas);
+  --_batch-actions-fill: var(--batch-actions-bg, var(--surface-layer, Canvas));
   --_batch-actions-bg: var(--_batch-actions-fill);
   --_batch-actions-color: var(--foreground, CanvasText);
-  --_batch-actions-border-width: var(--batch-actions-border-width, 1px);
+  --_batch-actions-border-width: var(--batch-actions-border-width, var(--panel-border-width, 1px));
   --_batch-actions-border-style: var(--batch-actions-border-style, solid);
-  --_batch-actions-border-color: var(--batch-actions-border-color, currentColor);
-  --_batch-actions-filter: var(--batch-actions-filter, none);
-  --_batch-actions-shadow: var(--batch-actions-shadow, none);
-  --_batch-actions-padding: var(--batch-actions-padding, 0.5rem);
-  --_batch-actions-gap: var(--batch-actions-gap, 1rem);
-  --_batch-actions-offset: var(--batch-actions-offset, 1.5rem);
+  --_batch-actions-border-color: var(--batch-actions-border-color, var(--panel-border-color, currentColor));
+  --_batch-actions-filter: var(--batch-actions-filter, var(--surface-layer-filter, none));
+  --_batch-actions-shadow: var(--batch-actions-shadow, var(--shadow-lg, none));
+  --_batch-actions-padding: var(--batch-actions-padding, var(--spacing-sm));
+  --_batch-actions-gap: var(--batch-actions-gap, var(--spacing-md));
+  --_batch-actions-offset: var(--batch-actions-offset, var(--spacing-24));
   --_batch-actions-max-width: var(--batch-actions-max-width, 46rem);
-  --_batch-actions-radius: var(--batch-actions-radius, calc(var(--button-radius, 0.25rem) + var(--_batch-actions-padding) + var(--_batch-actions-border-width)));
-  --_batch-actions-z-index: var(--batch-actions-z-index, 100);
-  --_batch-actions-transition: var(--batch-actions-transition, 0s);
+  --_batch-actions-radius: var(--batch-actions-radius, calc(var(--button-radius, var(--radius)) + var(--_batch-actions-padding) + var(--_batch-actions-border-width)));
+  --_batch-actions-z-index: var(--batch-actions-z-index, var(--z-index-sticky));
+  --_batch-actions-transition: var(--batch-actions-transition, var(--duration-sm));
   --_batch-actions-exit: 100%;
 
   /* A divider between groups stands upright */
@@ -115,7 +115,7 @@
    3. Placements
    ========================================================================== */
 :where(.batch-actions--docked, .batch-actions--inline) {
-  --_batch-actions-fill: var(--batch-actions-docked-bg, Canvas);
+  --_batch-actions-fill: var(--batch-actions-docked-bg, var(--surface-card, Canvas));
   --_batch-actions-filter: none;
   --_batch-actions-shadow: none;
 
@@ -193,8 +193,8 @@
    ========================================================================== */
 :where(.batch-actions--strong) {
   --color-palette: inverted;
-  --_batch-actions-fill: var(--batch-actions-strong-bg, CanvasText);
-  --_batch-actions-color: var(--batch-actions-strong-color, Canvas);
+  --_batch-actions-fill: var(--batch-actions-strong-bg, var(--surface-inverted, CanvasText));
+  --_batch-actions-color: var(--batch-actions-strong-color, var(--foreground-inverted, Canvas));
   --_batch-actions-filter: none;
 }
 
@@ -210,19 +210,19 @@
 /* Rounded to the height of one row of buttons, so a wrapped bar keeps its shape */
 :where(.batch-actions--round) {
   --button-corners: round;
-  --_batch-actions-radius: calc(var(--button-min-size, 3rem) / 2 + var(--_batch-actions-padding) + var(--_batch-actions-border-width));
+  --_batch-actions-radius: calc(var(--button-min-size, var(--spacing-target)) / 2 + var(--_batch-actions-padding) + var(--_batch-actions-border-width));
 }
 
 :where(.batch-actions--compact) {
   --ui-sizing: compact;
-  --_batch-actions-gap: var(--batch-actions-compact-gap, 0.5rem);
-  --_batch-actions-padding: var(--batch-actions-compact-padding, 0.25rem);
+  --_batch-actions-gap: var(--batch-actions-compact-gap, var(--spacing-sm));
+  --_batch-actions-padding: var(--batch-actions-compact-padding, var(--spacing-xs));
 }
 
 /* Increased contrast: a thicker edge instead of a shadow */
 @media (prefers-contrast: more) {
   :where(.batch-actions:not(.batch-actions--plain)) {
-    --_batch-actions-border-width: var(--border-width-md, 2px);
+    --_batch-actions-border-width: var(--border-width-medium, 2px);
     --_batch-actions-shadow: none;
   }
 }

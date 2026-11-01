@@ -39,7 +39,7 @@
   --_code-block-bar-bg: var(--code-block-bar-bg, var(--surface-translucent, transparent));
   --_code-block-radius: var(--code-block-radius, var(--radius, 0.25rem));
   --_code-block-padding: var(--code-block-padding, var(--spacing, 1rem));
-  --_code-block-bar-padding-block: var(--code-block-bar-padding-block, 0.25rem);
+  --_code-block-bar-padding-block: var(--code-block-bar-padding-block, var(--spacing-xs));
   --_code-block-white-space: pre;
   --_code-block-overflow: auto;
 
@@ -47,7 +47,7 @@
      Container Flags (@container style(...))
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
-    --_code-block-padding: var(--code-block-compact-padding, 0.75rem);
+    --_code-block-padding: var(--code-block-compact-padding, var(--spacing-12));
   }
 
   /* Fixed type and dark colours, whatever the page's */
@@ -143,5 +143,5 @@
 
 :where(.code-block--compact) {
   --ui-sizing: compact;
-  --_code-block-padding: var(--code-block-compact-padding, 0.75rem);
+  --_code-block-padding: var(--code-block-compact-padding, var(--spacing-12));
 }

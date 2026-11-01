@@ -156,7 +156,7 @@
     }
 
     :where(p, ul, ol, dl) {
-      hyphens: var(--prose-hyphens, manual);
+      hyphens: var(--prose-hyphens, none);
       max-inline-size: var(--body-measure);
       text-wrap: var(--body-text-wrap, wrap);
     }

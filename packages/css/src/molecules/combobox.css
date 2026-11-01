@@ -56,11 +56,11 @@
   --_combobox-listbox-radius: var(--combobox-listbox-radius, var(--panel-radius, 0.25rem));
   --_combobox-listbox-shadow: var(--combobox-listbox-shadow, var(--shadow-md, none));
   --_combobox-listbox-max-size: var(--combobox-listbox-max-height, 18rem);
-  --_combobox-listbox-padding: var(--combobox-listbox-padding, 0.25rem);
+  --_combobox-listbox-padding: var(--combobox-listbox-padding, var(--spacing-xs));
   --_combobox-listbox-offset: var(--combobox-listbox-offset, 0.25rem);
   --_combobox-option-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
-  --_combobox-option-padding-block: var(--combobox-option-padding-block, 0.5rem);
-  --_combobox-option-padding-inline: var(--combobox-option-padding-inline, 0.75rem);
+  --_combobox-option-padding-block: var(--combobox-option-padding-block, var(--spacing-sm));
+  --_combobox-option-padding-inline: var(--combobox-option-padding-inline, var(--spacing-12));
   --_combobox-option-radius: var(--combobox-option-radius, var(--radius-sm, 0.25rem));
   --_combobox-option-hover-bg: var(--combobox-option-hover-bg, var(--surface-translucent, transparent));
   --_combobox-option-selected-color: var(--combobox-option-selected-color, var(--foreground-accent, currentColor));
@@ -133,6 +133,10 @@
   --button-min-size: var(--_combobox-button-size);
   --button-sm-min-size: var(--_combobox-button-size);
   --button-lg-min-size: var(--_combobox-button-size);
+
+  /* A small button's padding keeps its usual ratio, not this size's */
+  --button-sm-padding-block: calc(var(--spacing-target-sm) / var(--spacing-target) * var(--button-padding-block, var(--spacing-xs)));
+  --button-sm-padding-inline: calc(var(--spacing-target-sm) / var(--spacing-target) * var(--button-padding-inline, var(--spacing-md)));
 
   > :where(.button) {
     flex: none;

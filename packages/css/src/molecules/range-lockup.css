@@ -21,7 +21,7 @@
    ========================================================================== */
 
 :where(.range-lockup) {
-  --_range-lockup-gap: var(--range-lockup-gap, 0.5rem);
+  --_range-lockup-gap: var(--range-lockup-gap, var(--spacing-sm));
   --_range-lockup-output-font-size: var(--body-sm-fixed-font-size, 0.875rem);
   --_range-lockup-bg: transparent;
   --_range-lockup-border-color: transparent;
@@ -29,12 +29,12 @@
   --_range-lockup-radius: var(--radius, 0.25rem);
 
   @container style(--range-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
-    --_range-lockup-gap: var(--range-lockup-sm-gap, 0.25rem);
+    --_range-lockup-gap: var(--range-lockup-sm-gap, var(--spacing-xs));
     --_range-lockup-output-font-size: var(--body-sm-compact-font-size, 0.75rem);
   }
 
   @container style(--range-size: lg) or style(--controls-size: lg) {
-    --_range-lockup-gap: var(--range-lockup-lg-gap, 0.75rem);
+    --_range-lockup-gap: var(--range-lockup-lg-gap, var(--spacing-12));
     --_range-lockup-output-font-size: var(--body-fixed-font-size, 1rem);
   }
 
@@ -75,13 +75,13 @@
    -------------------------------------------------------------------------- */
 :where(.range-lockup--sm) {
   --range-size: sm;
-  --_range-lockup-gap: var(--range-lockup-sm-gap, 0.25rem);
+  --_range-lockup-gap: var(--range-lockup-sm-gap, var(--spacing-xs));
   --_range-lockup-output-font-size: var(--body-sm-compact-font-size, 0.75rem);
 }
 
 :where(.range-lockup--lg) {
   --range-size: lg;
-  --_range-lockup-gap: var(--range-lockup-lg-gap, 0.75rem);
+  --_range-lockup-gap: var(--range-lockup-lg-gap, var(--spacing-12));
   --_range-lockup-output-font-size: var(--body-fixed-font-size, 1rem);
 }
 
@@ -94,7 +94,7 @@
 :where(.range-lockup--bordered) {
   --_range-lockup-bg: var(--surface-card, Canvas);
   --_range-lockup-border-color: var(--border-color-control, currentColor);
-  --_range-lockup-padding-inline: var(--range-lockup-padding-inline, 0.5rem);
+  --_range-lockup-padding-inline: var(--range-lockup-padding-inline, var(--spacing-sm));
 
   &:focus-within {
     --_range-lockup-border-color: var(--border-color-accent, currentColor);

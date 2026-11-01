@@ -30,7 +30,7 @@
   /* Private manifest */
   --_toast-gap: var(--toast-gap, calc(var(--spacing, 1rem) * 0.75));
   --_toast-offset: var(--toast-offset, var(--spacing, 1rem));
-  --_toast-max-width: var(--toast-max-width, 28rem);
+  --_toast-max-width: var(--toast-max-width, var(--spacing-448));
   --_toast-z-index: var(--z-index-toast, 1000);
   --_toast-block-start: auto;
   --_toast-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
@@ -93,8 +93,8 @@
    3. Toast (on a banner)
    ========================================================================== */
 :where(.toast) {
-  --_toast-transition: var(--toast-transition, 0s);
-  --_toast-timefunc: var(--toast-timefunc, ease-in-out);
+  --_toast-transition: var(--toast-transition, var(--duration-sm));
+  --_toast-timefunc: var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   --_toast-shift: 0.5rem;
 
   /* Its own, so a toast floats with or without a stack */

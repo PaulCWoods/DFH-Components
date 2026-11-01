@@ -45,15 +45,15 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
-  --_chip-font-size: var(--chip-font-size, 0.875rem);
-  --_chip-font-weight: var(--chip-font-weight, 700);
+  --_chip-font-size: var(--chip-font-size, var(--body-sm-fixed-font-size));
+  --_chip-font-weight: var(--chip-font-weight, var(--font-weight-bold));
   --_chip-text-transform: var(--chip-text-transform, none);
-  --_chip-min-size: var(--chip-min-size, 2rem);
-  --_chip-padding-block: var(--chip-padding-block, 0.375rem);
-  --_chip-padding-inline: var(--chip-padding-inline, 0.5rem);
-  --_chip-gap: var(--chip-gap, 0.25rem);
-  --_chip-radius: var(--chip-radius, 0.125rem);
-  --_chip-border-width: var(--chip-border-width, 1px);
+  --_chip-min-size: var(--chip-min-size, var(--spacing-target-sm));
+  --_chip-padding-block: var(--chip-padding-block, var(--spacing-6));
+  --_chip-padding-inline: var(--chip-padding-inline, var(--spacing-sm));
+  --_chip-gap: var(--chip-gap, var(--spacing-xs));
+  --_chip-radius: var(--chip-radius, var(--radius-sm));
+  --_chip-border-width: var(--chip-border-width, var(--border-width-thin, 1px));
   --_chip-remove-target: var(--chip-remove-target, 1.5rem);
 
   /* ------------------------------------------------------------------------
@@ -72,10 +72,10 @@
   }
 
   @container style(--chip-size: sm) or style(--ui-sizing: compact) {
-    --_chip-font-size: var(--chip-sm-font-size, 0.75rem);
+    --_chip-font-size: var(--chip-sm-font-size, var(--typography-font-size--2));
     --_chip-min-size: 0px;
-    --_chip-padding-block: var(--chip-sm-padding-block, 0.25rem);
-    --_chip-padding-inline: var(--chip-sm-padding-inline, 0.375rem);
+    --_chip-padding-block: var(--chip-sm-padding-block, var(--spacing-xs));
+    --_chip-padding-inline: var(--chip-sm-padding-inline, var(--spacing-6));
   }
 
   @container style(--chip-corners: round) {
@@ -189,10 +189,10 @@
    4. Size & Corner Modifiers
    ========================================================================== */
 :where(.chip--sm) {
-  --_chip-font-size: var(--chip-sm-font-size, 0.75rem);
+  --_chip-font-size: var(--chip-sm-font-size, var(--typography-font-size--2));
   --_chip-min-size: 0px;
-  --_chip-padding-block: var(--chip-sm-padding-block, 0.125rem);
-  --_chip-padding-inline: var(--chip-sm-padding-inline, 0.25rem);
+  --_chip-padding-block: var(--chip-sm-padding-block, var(--spacing-xs));
+  --_chip-padding-inline: var(--chip-sm-padding-inline, var(--spacing-6));
 }
 
 :where(.chip--plain.chip--sm) {

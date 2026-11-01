@@ -157,10 +157,8 @@ function compileFluidValue(val, globalTokens = null) {
  * The inverted palette (.color-palette-inverted): every Tier 2 surface,
  * foreground and border colour written as light-dark(a, b) swaps to
  * light-dark(b, a), so an inverted region takes the other mode's colours.
- * Filled from 2-semantic.json by buildInvertedRoles(); Tier 3 tokens that
- * reference these roles are inverted through the same map.
+ * Filled from 2-semantic.json by buildInvertedRoles().
  */
-const TIER2_INVERTED_MAPPINGS = {};
 const invertedTier2Vars = [];
 
 /* Splits light-dark(a, b) at its top-level comma; null for any other value */
@@ -190,8 +188,6 @@ function buildInvertedRoles(semanticJson) {
       if (!parts) continue;
       const css = resolveReferences(`light-dark(${parts[1]}, ${parts[0]})`);
       const name = next.join('-').replace(/-default$/, '');
-      TIER2_INVERTED_MAPPINGS[`{${next.join('.')}}`] = css;
-      if (key === 'default') TIER2_INVERTED_MAPPINGS[`{${path.join('.')}}`] = css;
       invertedTier2Vars.push(`  --${name}: ${css};`);
     }
   };
@@ -203,7 +199,7 @@ function buildInvertedRoles(semanticJson) {
  * Recursively flattens nested token objects into CSS variable paths.
  * E.g., { color: { surface: { value: '#ffffff' } } } -> --color-surface: #ffffff;
  */
-function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false, invertedVars = null) {
+function flattenTokens(obj, prefix = '', globalTokens = null) {
   let cssVariables = [];
 
   for (const [key, value] of Object.entries(obj)) {
@@ -220,21 +216,6 @@ function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false, i
       const baseName = (name.includes('-default-') || name.endsWith('-default'))
         ? name.replace(/-default-/, '-').replace(/-default$/, '')
         : name;
-
-      // When compiling Tier 3 component tokens, capture any references to Tier 2 tokens for the inverted palette block
-      if (isTier3 && invertedVars && typeof rawVal === 'string') {
-        const trimmed = rawVal.trim();
-        if (TIER2_INVERTED_MAPPINGS[trimmed]) {
-          invertedVars.push(`  --${baseName}: ${TIER2_INVERTED_MAPPINGS[trimmed]};`);
-        } else if (trimmed.includes('{')) {
-          // A composite value (such as color-mix()) is inverted when every
-          // reference inside it has an inverted counterpart.
-          const swapped = trimmed.replace(/\{[^}]+\}/g, (ref) => TIER2_INVERTED_MAPPINGS[ref] ?? ref);
-          if (swapped !== trimmed && !swapped.includes('{')) {
-            invertedVars.push(`  --${baseName}: ${swapped};`);
-          }
-        }
-      }
 
       let tokenVal = rawVal;
       if (typeof rawVal === 'string' && rawVal.trim().startsWith('fluid(') && rawVal.trim().endsWith(')')) {
@@ -283,7 +264,7 @@ function flattenTokens(obj, prefix = '', globalTokens = null, isTier3 = false, i
       cssVariables.push(`  --${baseName}: ${tokenVal};`);
     } else if (value && typeof value === 'object') {
       // Recurse deeper into nested categories
-      cssVariables = cssVariables.concat(flattenTokens(value, name, globalTokens, isTier3, invertedVars));
+      cssVariables = cssVariables.concat(flattenTokens(value, name, globalTokens));
     }
   }
 
@@ -695,11 +676,12 @@ function compileTokens() {
   try {
     console.log('🔄 Compiling design tokens...');
 
-    // Read token files in sequence (Global -> Semantic -> Component)
-    const tokenFiles = ['1-global.json', '2-semantic.json', '3-component.json'];
+    // Read token files in sequence (Global -> Semantic). Tier 3 stays out of the
+    // CSS: each default is the fallback where the component reads its hook, and
+    // check:tokens keeps those fallbacks equal to 3-component.json, which Figma reads.
+    const tokenFiles = ['1-global.json', '2-semantic.json'];
     let allCssLines = [];
     let allConditionals = [];
-    let invertedTier3Vars = [];
     const globalPath = path.join(TOKENS_DIR, '1-global.json');
     let globalJson = fs.existsSync(globalPath) ? JSON.parse(fs.readFileSync(globalPath, 'utf8').trim()) : null;
 
@@ -729,8 +711,7 @@ function compileTokens() {
         const rawData = fs.readFileSync(filePath, 'utf8').trim();
         const json = rawData ? JSON.parse(rawData) : {};
 
-        const isTier3 = file === '3-component.json';
-        const flattened = flattenTokens(json, '', globalJson, isTier3, isTier3 ? invertedTier3Vars : null);
+        const flattened = flattenTokens(json, '', globalJson);
         const conditionals = extractConditionals(json);
 
         allCssLines.push(`  /* Source: ${file} */`);
@@ -810,13 +791,13 @@ ${allSupportsMappings.join('\n')}
 }`;
     }
 
-    // Build the inverted palette blocks: Tier 2 roles, then the Tier 3 tokens that read them
-    const invertedVars = [...invertedTier2Vars, ...invertedTier3Vars];
+    // Build the inverted palette blocks. Tier 3 defaults read these roles where they're used, so they follow
+    const invertedVars = invertedTier2Vars;
     let invertedBlock = '';
     if (invertedVars.length > 0) {
       invertedBlock = `
 /* ==========================================================================
-   Inverted Palette Blocks (Tier 2 roles and the Tier 3 tokens that read them)
+   Inverted Palette Blocks (Tier 2 roles)
    ========================================================================== */
 :where(.color-palette-inverted, .colors-inverted) {
 ${invertedVars.join('\n')}

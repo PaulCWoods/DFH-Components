@@ -48,7 +48,6 @@
 @import './molecules/lockup.css' layer(molecules);
 @import './molecules/avatar-group.css' layer(molecules);
 @import './molecules/field.css' layer(molecules);
-@import './molecules/fieldset.css' layer(molecules);
 @import './molecules/choices.css' layer(molecules);
 @import './molecules/range-lockup.css' layer(molecules);
 @import './molecules/card.css' layer(molecules);
@@ -71,6 +70,8 @@
 @import './molecules/code-block.css' layer(molecules);
 @import './molecules/combobox.css' layer(molecules);
 @import './molecules/empty-state.css' layer(molecules);
+/* After anything a fieldset can hold: its gap is a margin on their zero-specificity roots */
+@import './molecules/fieldset.css' layer(molecules);
 
 /* --------------------------------------------------------------------------
    3. Organisms (Complex, high-level assemblies & interactive flows)

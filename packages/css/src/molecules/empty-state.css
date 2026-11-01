@@ -51,7 +51,7 @@
    ========================================================================== */
 :where(.empty-state) {
   /* Private manifest */
-  --_empty-state-gap: var(--empty-state-gap, 1rem);
+  --_empty-state-gap: var(--empty-state-gap, var(--spacing-md));
   --_empty-state-content-max-width: var(--empty-state-content-max-width, 28rem);
   --_empty-state-align: center;
   --_empty-state-text-align: center;
@@ -61,7 +61,7 @@
      Declared before the modifiers, so a modifier beats a flag.
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
-    --_empty-state-gap: var(--empty-state-compact-gap, 0.5rem);
+    --_empty-state-gap: var(--empty-state-compact-gap, var(--spacing-sm));
   }
 
   display: flex;
@@ -142,13 +142,13 @@
   background-color: var(--empty-state-subtle-bg, var(--surface-translucent, transparent));
   border: var(--border-width-1, 1px) dashed var(--empty-state-subtle-border-color, var(--border-color-quiet, currentColor));
   border-radius: var(--panel-radius, var(--radius-md, 0.5rem));
-  padding: var(--empty-state-subtle-padding, 2rem);
+  padding: var(--empty-state-subtle-padding, var(--spacing-lg));
 }
 
 /* Density: steps the atoms inside down too */
 :where(.empty-state--compact) {
   --ui-sizing: compact;
-  --_empty-state-gap: var(--empty-state-compact-gap, 0.5rem);
+  --_empty-state-gap: var(--empty-state-compact-gap, var(--spacing-sm));
 }
 
 /* Alignment */

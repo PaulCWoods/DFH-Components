@@ -41,26 +41,26 @@
      Size sources. Each control may redefine these at its own root; the
      effective values below pick one set by size.
      ------------------------------------------------------------------------ */
-  --_control-default-min-size: var(--input-min-size, 3rem);
-  --_control-default-padding-block: var(--input-padding-block, 0.25rem);
-  --_control-default-padding-inline: var(--input-padding-inline, 1rem);
-  --_control-default-inner-gap: var(--input-inner-gap, 1rem);
-  --_control-default-font-size: var(--input-font-size, 1rem);
-  --_control-default-line-height: var(--input-line-height, 1.25);
+  --_control-default-min-size: var(--input-min-size, var(--spacing-target));
+  --_control-default-padding-block: var(--input-padding-block, var(--spacing-xs));
+  --_control-default-padding-inline: var(--input-padding-inline, var(--spacing-md));
+  --_control-default-inner-gap: var(--input-inner-gap, var(--spacing-12));
+  --_control-default-font-size: var(--input-font-size, var(--control-font-size));
+  --_control-default-line-height: var(--input-line-height, var(--control-line-height));
 
-  --_control-sm-min-size: var(--input-sm-min-size, 2rem);
-  --_control-sm-padding-block: var(--input-sm-padding-block, 0.125rem);
-  --_control-sm-padding-inline: var(--input-sm-padding-inline, 0.75rem);
+  --_control-sm-min-size: var(--input-sm-min-size, var(--spacing-target-sm));
+  --_control-sm-padding-block: var(--input-sm-padding-block, var(--spacing-2xs));
+  --_control-sm-padding-inline: var(--input-sm-padding-inline, var(--spacing-12));
   --_control-sm-inner-gap: var(--input-sm-inner-gap, 0.75rem);
-  --_control-sm-font-size: var(--input-sm-font-size, 0.875rem);
-  --_control-sm-line-height: var(--input-sm-line-height, 1.25);
+  --_control-sm-font-size: var(--input-sm-font-size, var(--control-sm-font-size));
+  --_control-sm-line-height: var(--input-sm-line-height, var(--control-sm-line-height));
 
-  --_control-lg-min-size: var(--input-lg-min-size, 4rem);
-  --_control-lg-padding-block: var(--input-lg-padding-block, 0.5rem);
-  --_control-lg-padding-inline: var(--input-lg-padding-inline, 1.5rem);
+  --_control-lg-min-size: var(--input-lg-min-size, var(--spacing-target-lg));
+  --_control-lg-padding-block: var(--input-lg-padding-block, var(--spacing-sm));
+  --_control-lg-padding-inline: var(--input-lg-padding-inline, var(--spacing-24));
   --_control-lg-inner-gap: var(--input-lg-inner-gap, 1.5rem);
-  --_control-lg-font-size: var(--input-lg-font-size, 1.125rem);
-  --_control-lg-line-height: var(--input-lg-line-height, 1.25);
+  --_control-lg-font-size: var(--input-lg-font-size, var(--control-lg-font-size));
+  --_control-lg-line-height: var(--input-lg-line-height, var(--control-lg-line-height));
 
   /* Effective size */
   --_control-min-size: var(--_control-default-min-size);
@@ -74,9 +74,9 @@
   --_control-bg: var(--input-background-color, var(--surface-card, Canvas));
   --_control-color: var(--foreground, CanvasText);
   --_control-placeholder-color: var(--foreground-muted, GrayText);
-  --_control-border-width: var(--input-border-width, 1px);
+  --_control-border-width: var(--input-border-width, var(--control-border-width, 1px));
   --_control-radius: var(--input-radius, var(--radius, 0.25rem));
-  --_control-edge-color: var(--input-border-color, currentColor);
+  --_control-edge-color: var(--input-border-color, var(--control-border-color, currentColor));
   --_control-sides-transparency: 0%;
 
   /* State contract */
@@ -84,7 +84,7 @@
   --_control-hover-edge-color: var(--border-color-accent, currentColor);
   --_control-focus-edge-color: var(--border-color-accent, currentColor);
   --_control-invalid-edge-color: var(--input-border-color-invalid, var(--border-color-danger, currentColor));
-  --_control-transition: var(--input-transition, 150ms);
+  --_control-transition: var(--input-transition, var(--duration-sm));
   --_control-timefunc: var(--timefunc-ease-in-out, ease-in-out);
 
   /* ------------------------------------------------------------------------
@@ -483,7 +483,7 @@
    hit-area rule.
    ========================================================================== */
 :where(.color-input) {
-  --_color-input-size: var(--input-min-size, 3rem);
+  --_color-input-size: var(--input-min-size, var(--spacing-target));
 
   box-sizing: border-box;
   inline-size: var(--_color-input-size);
@@ -491,7 +491,7 @@
   padding: 0;
   cursor: pointer;
   background-color: transparent;
-  border: var(--input-border-width, 1px) solid var(--input-border-color, currentColor);
+  border: var(--input-border-width, var(--control-border-width, 1px)) solid var(--input-border-color, var(--control-border-color, currentColor));
   border-radius: var(--input-radius, var(--radius, 0.25rem));
 
   &::-webkit-color-swatch-wrapper {
@@ -514,11 +514,11 @@
 }
 
 :where(.color-input--sm) {
-  --_color-input-size: var(--input-sm-min-size, 2rem);
+  --_color-input-size: var(--input-sm-min-size, var(--spacing-target-sm));
 }
 
 :where(.color-input--lg) {
-  --_color-input-size: var(--input-lg-min-size, 4rem);
+  --_color-input-size: var(--input-lg-min-size, var(--spacing-target-lg));
 }
 
 :where(.color-input--stretch) {
@@ -543,7 +543,7 @@
 
   &::file-selector-button {
     min-block-size: var(--spacing-target-min, 3rem);
-    margin-inline-end: var(--input-inner-gap, 0.75rem);
+    margin-inline-end: var(--input-inner-gap, var(--spacing-12));
     font: inherit;
     cursor: pointer;
   }

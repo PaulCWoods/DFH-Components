@@ -301,7 +301,7 @@
       "$type": "dimension"
     },
     "border-width": {
-      "$value": "{border-width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension"
     },
     "translucency": {
@@ -362,11 +362,11 @@
       "$type": "dimension"
     },
     "border-width": {
-      "$value": "{border-width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension"
     },
     "border-block-end-width": {
-      "$value": "{border-width.2}",
+      "$value": "{border.width.medium}",
       "$type": "dimension",
       "$description": "Heavier lower edge that reads as a physical key"
     },
@@ -429,7 +429,7 @@
       "$description": "Neutral banner border colour"
     },
     "border-width": {
-      "$value": "{border.width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension",
       "$description": "Banner border width"
     },
@@ -788,10 +788,6 @@
         "$value": "{control-sm.font-size}",
         "$type": "dimension"
       },
-      "line-height": {
-        "$value": "{control-sm.line-height}",
-        "$type": "number"
-      },
       "min-size": {
         "$value": "{spacing.target-sm}",
         "$type": "dimension"
@@ -809,10 +805,6 @@
       "font-size": {
         "$value": "{control-lg.font-size}",
         "$type": "dimension"
-      },
-      "line-height": {
-        "$value": "{control-lg.line-height}",
-        "$type": "number"
       },
       "min-size": {
         "$value": "{spacing.target-lg}",
@@ -1002,7 +994,7 @@
       "$type": "dimension"
     },
     "border-width": {
-      "$value": "{border-width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension"
     },
     "remove-target": {
@@ -1573,7 +1565,7 @@
       "$description": "Transition duration for link color states"
     },
     "hover-underline-thickness": {
-      "$value": "{border.width.2}",
+      "$value": "{border.width.medium}",
       "$type": "dimension",
       "$description": "Underline thickness on hover: the hover cue, with no second colour"
     }
@@ -1611,7 +1603,7 @@
       "$description": "Indicator diameter in a compact stepper"
     },
     "indicator-border-width": {
-      "$value": "{border-width.2}",
+      "$value": "{border.width.medium}",
       "$type": "dimension",
       "$description": "Ring width of the indicator"
     },
@@ -1651,7 +1643,7 @@
       "$description": "Ring, icon and title colour of an invalid step"
     },
     "track-width": {
-      "$value": "{border-width.2}",
+      "$value": "{border.width.medium}",
       "$type": "dimension",
       "$description": "Thickness of the line between steps"
     },
@@ -1716,7 +1708,7 @@
       "$description": "Hyphenation for prose paragraphs and lists (none or auto)"
     },
     "blockquote-border-width": {
-      "$value": "{border.width.4}",
+      "$value": "{border.width.thick}",
       "$type": "dimension",
       "$description": "Inline-start rule on a blockquote"
     },
@@ -1876,11 +1868,6 @@
       "$value": "{radius.round}",
       "$type": "dimension",
       "$description": "Corner radius for slider thumb"
-    },
-    "thumb-bg": {
-      "$value": "{foreground.accent}",
-      "$type": "color",
-      "$description": "Slider thumb fill color"
     },
     "thumb-border-width": {
       "$value": "{border.width}",
@@ -2167,11 +2154,6 @@
       "$type": "dimension",
       "$description": "Font size for switch option labels"
     },
-    "font-weight": {
-      "$value": "{font-weight.bold}",
-      "$type": "fontWeight",
-      "$description": "Font weight for active switch option labels"
-    },
     "off-bg": {
       "$value": "{surface.muted}",
       "$type": "color",
@@ -2343,7 +2325,7 @@
       "$description": "Gap in a tight tab list"
     },
     "rule-width": {
-      "$value": "{border.width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension",
       "$description": "Rule under (or beside) an underline tab list"
     },
@@ -2353,7 +2335,7 @@
       "$description": "Rule colour; decorative, the indicator carries the state"
     },
     "indicator-width": {
-      "$value": "{border.width.4}",
+      "$value": "{border.width.thick}",
       "$type": "dimension",
       "$description": "Selection line width on underline tabs"
     },

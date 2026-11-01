@@ -32,36 +32,36 @@
    ========================================================================== */
 :where(.brand) {
   /* Private manifest */
-  --_brand-gap: var(--brand-gap, 1rem);
-  --_brand-mark-size: var(--brand-mark-size, 1.5rem);
-  --_brand-font-size: var(--brand-font-size, 1.25rem);
+  --_brand-gap: var(--brand-gap, var(--spacing-md));
+  --_brand-mark-size: var(--brand-mark-size, var(--spacing-24));
+  --_brand-font-size: var(--brand-font-size, var(--typography-font-size-fluid-1));
   --_brand-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_brand-color: var(--brand-color, var(--foreground-accent, LinkText));
   --_brand-hover-color: var(--brand-hover-color, var(--foreground-accent-hover, LinkText));
   --_brand-hover-decoration-line: underline;
   --_brand-active-color: var(--brand-active-color, var(--foreground-accent-pressed, LinkText));
-  --_brand-underline-thickness: var(--link-hover-underline-thickness, 2px);
+  --_brand-underline-thickness: var(--link-hover-underline-thickness, var(--border-width-medium));
   --_brand-underline-offset: var(--link-underline-offset, var(--underline-offset, 0.25em));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
-    --_brand-font-size: var(--brand-compact-font-size, 1.125rem);
+    --_brand-font-size: var(--brand-compact-font-size, var(--typography-font-size-1));
     --_brand-min-size: var(--spacing-target-sm, 2rem);
   }
 
   align-items: center;
   color: var(--_brand-color);
   display: inline-flex;
-  font-family: var(--brand-font-family, inherit);
+  font-family: var(--brand-font-family, var(--display-title-font-family, inherit));
   font-size: var(--_brand-font-size);
   gap: var(--_brand-gap);
-  letter-spacing: var(--brand-letter-spacing, normal);
-  line-height: var(--brand-line-height, 1);
+  letter-spacing: var(--brand-letter-spacing, var(--typography-spacing-normal, normal));
+  line-height: var(--brand-line-height, var(--display-title-line-height));
   text-decoration-line: none;
   text-decoration-thickness: var(--_brand-underline-thickness);
-  text-transform: var(--brand-text-transform, none);
+  text-transform: var(--brand-text-transform, var(--display-title-text-transform, none));
   text-underline-offset: var(--_brand-underline-offset);
 
   /* Only a link is a target: a brand on any other element has no states */
@@ -79,7 +79,7 @@
   }
 
   &:where(a):focus-visible {
-    border-radius: var(--radius-xs, 2px);
+    border-radius: var(--radius-sm, 2px);
     outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
     outline-offset: var(--focus-ring-offset, 2px);
   }

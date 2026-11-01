@@ -30,11 +30,11 @@
    1. Base List (:where(.list))
    ========================================================================== */
 :where(.list) {
-  --_list-indent: var(--list-indent, 1.5rem);
-  --_list-gap: var(--list-gap, 0.5rem);
+  --_list-indent: var(--list-indent, calc(var(--spacing) * 1.5));
+  --_list-gap: var(--list-gap, calc(var(--spacing) / 2));
 
   @container style(--ui-sizing: compact) or style(--font-sizing: compact) {
-    --_list-gap: calc(var(--list-gap, 0.5rem) / 2);
+    --_list-gap: calc(var(--list-gap, calc(var(--spacing) / 2)) / 2);
   }
 
   margin: 0;

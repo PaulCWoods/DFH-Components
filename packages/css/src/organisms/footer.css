@@ -36,10 +36,10 @@
   /* Private manifest */
   --_footer-bg: var(--footer-bg, var(--surface-card, Canvas));
   --_footer-border-color: var(--footer-border-color, var(--border-color-quiet, currentColor));
-  --_footer-border-style: var(--footer-border-style, solid);
+  --_footer-border-style: var(--footer-border-style, var(--app-border-style, solid));
   --_footer-border-width: var(--footer-border-width, var(--border-width, 1px));
-  --_footer-padding-block: var(--footer-padding-block, 1rem);
-  --_footer-padding-inline: var(--footer-padding-inline, 1rem);
+  --_footer-padding-block: var(--footer-padding-block, var(--spacing-md));
+  --_footer-padding-inline: var(--footer-padding-inline, var(--spacing-cushion));
   --_footer-gap: var(--footer-gap, var(--spacing, 1rem));
   --_footer-max-width: var(--footer-max-width, var(--site-width, 75rem));
 
@@ -111,6 +111,6 @@
    ========================================================================== */
 @media (prefers-contrast: more) {
   :where(.footer) {
-    --_footer-border-width: var(--border-width-md, 2px);
+    --_footer-border-width: var(--border-width-medium, 2px);
   }
 }

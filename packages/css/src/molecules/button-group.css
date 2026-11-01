@@ -27,15 +27,15 @@
    ========================================================================== */
 :where(.button-group) {
   /* Private manifest */
-  --_button-group-gap: var(--button-group-gap, 0.5rem);
-  --_button-group-rule: var(--button-group-rule-width, 1px) var(--button-group-rule-style, solid) var(--button-group-rule-color, currentColor);
+  --_button-group-gap: var(--button-group-gap, var(--spacing-sm));
+  --_button-group-rule: var(--button-group-rule-width, var(--rule-width, 1px)) var(--button-group-rule-style, var(--rule-style, solid)) var(--button-group-rule-color, var(--rule-color, currentColor));
 
   /* A divider between buttons stands upright */
   --direction: row;
 
   /* Density: a compact container closes the gaps */
   @container style(--ui-sizing: compact) {
-    --_button-group-gap: var(--button-group-compact-gap, 0.25rem);
+    --_button-group-gap: var(--button-group-compact-gap, var(--spacing-xs));
   }
 
   align-items: center;
@@ -81,7 +81,7 @@
 
 :where(.button-group--compact) {
   --ui-sizing: compact;
-  --_button-group-gap: var(--button-group-compact-gap, 0.25rem);
+  --_button-group-gap: var(--button-group-compact-gap, var(--spacing-xs));
 }
 
 /* Rules between the buttons; browsers without gap decorations show the gaps */

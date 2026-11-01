@@ -52,7 +52,7 @@
   --_link-hover-decoration-line: underline;
   --_link-underline-color: var(--link-underline-color, currentColor);
   --_link-underline-thickness: var(--link-underline-thickness, var(--underline-thickness, 1px));
-  --_link-hover-underline-thickness: var(--link-hover-underline-thickness, 2px);
+  --_link-hover-underline-thickness: var(--link-hover-underline-thickness, var(--border-width-medium));
   --_link-underline-offset: var(--link-underline-offset, var(--underline-offset, 0.25em));
 
   /* ------------------------------------------------------------------------
@@ -73,7 +73,7 @@
   text-underline-offset: var(--_link-underline-offset);
   text-decoration-skip-ink: auto;
   cursor: pointer;
-  transition: text-decoration-thickness var(--link-transition, 150ms) var(--timefunc-ease-out, ease-out);
+  transition: text-decoration-thickness var(--link-transition, var(--duration-sm)) var(--timefunc-ease-out, ease-out);
 
   &:hover,
   &:focus-visible {
@@ -84,7 +84,7 @@
   &:focus-visible {
     outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
     outline-offset: var(--focus-ring-offset, 2px);
-    border-radius: var(--radius-xs, 2px);
+    border-radius: var(--radius-sm, 2px);
   }
 
   /* An icon after the text keeps its distance without an underlined space */
@@ -108,7 +108,7 @@
   }
 
   @media (prefers-contrast: more) {
-    --_link-underline-thickness: var(--link-hover-underline-thickness, 2px);
+    --_link-underline-thickness: var(--link-hover-underline-thickness, var(--border-width-medium));
   }
 }
 
@@ -131,10 +131,10 @@
   --_block-link-fill-pressed: var(--surface-inverted, CanvasText);
   /* Accent text on a translucent fill: the rest tone falls under 4.5:1 */
   --_block-link-tone-on-tint: var(--foreground-accent-pressed, var(--_block-link-tone));
-  --_block-link-min-size: var(--block-link-min-size, 3rem);
+  --_block-link-min-size: var(--block-link-min-size, var(--spacing-target));
   --_block-link-target-size: var(--spacing-target-min, 3rem);
-  --_block-link-padding-inline: var(--block-link-padding-inline, 1rem);
-  --_block-link-padding-block: var(--block-link-padding-block, 1rem);
+  --_block-link-padding-inline: var(--block-link-padding-inline, var(--spacing));
+  --_block-link-padding-block: var(--block-link-padding-block, var(--spacing));
   --_block-link-font-size: inherit;
   --_block-link-arrow-shift: 25%;
 
@@ -183,10 +183,10 @@
   }
 
   @container style(--block-link-size: sm) or style(--ui-sizing: compact) {
-    --_block-link-min-size: var(--block-link-sm-min-size, 2rem);
-    --_block-link-padding-inline: var(--block-link-sm-padding-inline, 0.75rem);
-    --_block-link-padding-block: var(--block-link-sm-padding-block, 0.5rem);
-    --_block-link-font-size: var(--block-link-sm-font-size, 0.875rem);
+    --_block-link-min-size: var(--block-link-sm-min-size, var(--spacing-target-sm));
+    --_block-link-padding-inline: var(--block-link-sm-padding-inline, var(--spacing-12));
+    --_block-link-padding-block: var(--block-link-sm-padding-block, var(--spacing-sm));
+    --_block-link-font-size: var(--block-link-sm-font-size, var(--control-sm-font-size));
   }
 
   /* Layout */
@@ -194,7 +194,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--block-link-gap, 1rem);
+  gap: var(--block-link-gap, var(--spacing));
   box-sizing: border-box;
   inline-size: 100%;
   min-block-size: var(--_block-link-min-size);
@@ -204,8 +204,8 @@
   /* Typography */
   font-family: var(--body-font-family, inherit);
   font-size: var(--_block-link-font-size);
-  font-weight: var(--block-link-font-weight, 700);
-  line-height: var(--block-link-line-height, 1.3);
+  font-weight: var(--block-link-font-weight, var(--body-strong-font-weight));
+  line-height: var(--block-link-line-height, var(--small-heading-line-height));
   text-decoration: none;
   text-wrap: balance;
 
@@ -218,7 +218,7 @@
   cursor: pointer;
   touch-action: manipulation;
   transition-property: background-color, color, border-color;
-  transition-duration: var(--block-link-transition, 150ms);
+  transition-duration: var(--block-link-transition, var(--duration-sm));
   transition-timing-function: var(--timefunc-ease-out, ease-out);
 
   /* Hit area: at least --spacing-target-min, whatever the visual size */
@@ -297,10 +297,10 @@
 }
 
 :where(.block-link--sm) {
-  --_block-link-min-size: var(--block-link-sm-min-size, 2rem);
-  --_block-link-padding-inline: var(--block-link-sm-padding-inline, 0.75rem);
-  --_block-link-padding-block: var(--block-link-sm-padding-block, 0.5rem);
-  --_block-link-font-size: var(--block-link-sm-font-size, 0.875rem);
+  --_block-link-min-size: var(--block-link-sm-min-size, var(--spacing-target-sm));
+  --_block-link-padding-inline: var(--block-link-sm-padding-inline, var(--spacing-12));
+  --_block-link-padding-block: var(--block-link-sm-padding-block, var(--spacing-sm));
+  --_block-link-font-size: var(--block-link-sm-font-size, var(--control-sm-font-size));
 }
 
 /* ==========================================================================
@@ -315,7 +315,7 @@
   }
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    transition: translate var(--block-link-transition, 150ms) var(--timefunc-ease-out, ease-out);
+    transition: translate var(--block-link-transition, var(--duration-sm)) var(--timefunc-ease-out, ease-out);
 
     :where(.block-link):hover & {
       translate: calc(var(--_block-link-arrow-shift) * var(--_block-link-arrow-direction)) 0;

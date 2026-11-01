@@ -41,7 +41,7 @@
   /* Private manifest */
   --_sidebar-bg: var(--sidebar-bg, var(--surface-card, Canvas));
   --_sidebar-border-color: var(--sidebar-border-color, var(--border-color-quiet, currentColor));
-  --_sidebar-border-style: var(--sidebar-border-style, solid);
+  --_sidebar-border-style: var(--sidebar-border-style, var(--app-border-style, solid));
   --_sidebar-border-width: var(--sidebar-border-width, var(--border-width, 1px));
   --_sidebar-padding: var(--sidebar-padding, var(--spacing-cushion));
   --_sidebar-width: var(--sidebar-width, 18rem);
@@ -159,7 +159,7 @@
 
 /* A floating panel: inset, rounded, raised */
 :where(.sidebar--floating) {
-  background-color: var(--sidebar-bg, var(--surface-layer, Canvas));
+  background-color: var(--sidebar-bg, var(--surface-card, Canvas));
   border: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
   border-radius: var(--radius-md, 0.5rem);
   box-shadow: var(--shadow-md, none);
@@ -200,7 +200,7 @@
 
 /* Below a sticky header */
 :where(:root:has(.header--sticky) .sidebar--sticky) {
-  --_sidebar-offset: var(--header-height, 4rem);
+  --_sidebar-offset: var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target-min)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width))));
 }
 
 /* ==========================================================================
@@ -208,7 +208,7 @@
    ========================================================================== */
 @media (prefers-contrast: more) {
   :where(.sidebar) {
-    --_sidebar-border-width: var(--border-width-md, 2px);
+    --_sidebar-border-width: var(--border-width-medium, 2px);
   }
 
   /* A tint keeps a visible edge; plain has none to strengthen */

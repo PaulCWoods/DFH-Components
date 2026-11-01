@@ -40,11 +40,11 @@
    ========================================================================== */
 :where(.thumbnail) {
   /* Private manifest */
-  --_thumbnail-size: var(--thumbnail-size, 3rem);
+  --_thumbnail-size: var(--thumbnail-size, var(--spacing-xl));
   --_thumbnail-aspect: var(--thumbnail-aspect, 1);
-  --_thumbnail-radius: var(--thumbnail-radius, 0.25rem);
-  --_thumbnail-bg: var(--thumbnail-bg, Canvas);
-  --_thumbnail-text: var(--thumbnail-text, currentColor);
+  --_thumbnail-radius: var(--thumbnail-radius, var(--radius));
+  --_thumbnail-bg: var(--thumbnail-bg, var(--surface-muted, Canvas));
+  --_thumbnail-text: var(--thumbnail-text, var(--foreground-muted, currentColor));
   /* How far a corner badge moves in: none on a rounded square */
   --_thumbnail-badge-inset: 0px;
 
@@ -52,15 +52,15 @@
      Container flags, declared before the modifier classes
      ------------------------------------------------------------------------ */
   @container style(--thumbnail-size-step: sm) or style(--ui-sizing: compact) {
-    --_thumbnail-size: var(--thumbnail-sm-size, 2rem);
+    --_thumbnail-size: var(--thumbnail-sm-size, var(--spacing-lg));
   }
 
   @container style(--thumbnail-size-step: lg) {
-    --_thumbnail-size: var(--thumbnail-lg-size, 4rem);
+    --_thumbnail-size: var(--thumbnail-lg-size, var(--spacing-2xl));
   }
 
   @container style(--thumbnail-corners: round) {
-    --_thumbnail-radius: var(--thumbnail-round-radius, 9999px);
+    --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-round));
     --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
   }
 
@@ -99,7 +99,7 @@
 
   /* A corner badge sits on the corner, ringed in the surface colour */
   > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
-    box-shadow: 0 0 0 var(--avatar-group-ring-width, 2px) var(--avatar-group-ring-color, Canvas);
+    box-shadow: 0 0 0 var(--avatar-group-ring-width, var(--border-width, 2px)) var(--avatar-group-ring-color, var(--surface, Canvas));
     margin: var(--_thumbnail-badge-inset);
   }
 }
@@ -108,19 +108,19 @@
    2. Size and corners
    ========================================================================== */
 :where(.thumbnail--sm) {
-  --_thumbnail-size: var(--thumbnail-sm-size, 2rem);
+  --_thumbnail-size: var(--thumbnail-sm-size, var(--spacing-lg));
 }
 
 :where(.thumbnail--lg) {
-  --_thumbnail-size: var(--thumbnail-lg-size, 4rem);
+  --_thumbnail-size: var(--thumbnail-lg-size, var(--spacing-2xl));
 
   @container style(--ui-sizing: compact) {
-    --_thumbnail-size: var(--thumbnail-size, 3rem);
+    --_thumbnail-size: var(--thumbnail-size, var(--spacing-xl));
   }
 }
 
 :where(.thumbnail--round) {
-  --_thumbnail-radius: var(--thumbnail-round-radius, 9999px);
+  --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-round));
   /* On a circle, (1 - 1/√2) / 2 of the size, as on an avatar */
   --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
 }

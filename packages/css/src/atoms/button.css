@@ -35,7 +35,7 @@
    1. Base Button (:where(.button))
    ========================================================================== */
 :where(.button) {
-  --lockup-gap: var(--button-lockup-gap, 0.125rem);
+  --lockup-gap: var(--button-lockup-gap, var(--spacing-2xs));
   --color-palette: var(--_button-color-palette);
 
   /* --------------------------------------------------------------------------
@@ -71,15 +71,15 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
-  --_button-border-width: var(--button-border-width, 1px);
+  --_button-border-width: var(--button-border-width, var(--border-width, 1px));
   --_button-font-family: var(--button-font-family, var(--body-font-family, inherit));
   --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   --_button-font-weight: var(--button-font-weight, var(--font-weight-bold, 700));
-  --_button-inner-gap: var(--button-inner-gap, 0.75rem);
+  --_button-inner-gap: var(--button-inner-gap, var(--spacing-12));
   --_button-line-height: var(--button-line-height, var(--control-line-height, 1.25));
   --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
-  --_button-padding-block: var(--button-padding-block, 0.25rem);
-  --_button-padding-inline: var(--button-padding-inline, 1rem);
+  --_button-padding-block: var(--button-padding-block, var(--spacing-xs));
+  --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
   --_button-radius: var(--button-radius, var(--radius, 0.25rem));
   --_button-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_button-timefunc: var(--button-timefunc, var(--timefunc-ease-in-out, ease-in-out));
@@ -152,15 +152,15 @@
 
   /* Size, and density from a compact container */
   @container style(--button-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
-    --_button-padding-block: var(--button-sm-padding-block, 0.125rem);
-    --_button-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+    --_button-padding-block: var(--button-sm-padding-block, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
+    --_button-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
     --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
     --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
   }
 
   @container style(--button-size: lg) or style(--controls-size: lg) {
-    --_button-padding-block: var(--button-lg-padding-block, 0.5rem);
-    --_button-padding-inline: var(--button-lg-padding-inline, 1.5rem);
+    --_button-padding-block: var(--button-lg-padding-block, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
+    --_button-padding-inline: var(--button-lg-padding-inline, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
     --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
     --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
   }
@@ -398,22 +398,22 @@
 
 /* Small: 32px visual, 48px hit area unless fine-pointer targets are opted in */
 :where(.button--sm) {
-  --_button-padding-block: var(--button-sm-padding-block, 0.125rem);
-  --_button-padding-inline: var(--button-sm-padding-inline, 0.5rem);
+  --_button-padding-block: var(--button-sm-padding-block, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
+  --_button-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
   --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
 }
 
 /* Large: 64px; steps down to the default size inside a compact container */
 :where(.button--lg) {
-  --_button-padding-block: var(--button-lg-padding-block, 0.5rem);
-  --_button-padding-inline: var(--button-lg-padding-inline, 1.5rem);
+  --_button-padding-block: var(--button-lg-padding-block, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
+  --_button-padding-inline: var(--button-lg-padding-inline, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
   --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
   --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
 
   @container style(--ui-sizing: compact) {
-    --_button-padding-block: var(--button-padding-block, 0.25rem);
-    --_button-padding-inline: var(--button-padding-inline, 1rem);
+    --_button-padding-block: var(--button-padding-block, var(--spacing-xs));
+    --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
     --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
     --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   }

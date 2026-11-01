@@ -206,7 +206,7 @@ What goes around the [form controls](07-form-controls.md).
 - `.field__error` can be a `<ul>` when one Field has several messages. It may also sit in a Fieldset, for an error about the whole group.
 
 ### Fieldset
-- The legend floats, so it joins the column instead of sitting in the border.
+- The Fieldset stays `display: block`. The legend floats, so it sits inside any padding instead of in the border; Safari drops that float in a flex or grid Fieldset, so never make one either.
 - A disabled Fieldset dims everything in it.
 
 ## Choices: inline, as a list, size and density
@@ -235,7 +235,7 @@ What goes around the [form controls](07-form-controls.md).
 </form>
 
 <!-- Aligned: labels in one column beside their controls once the form is wider than 32rem.
-     Each hint sits beneath its label; each error beneath its control. -->
+     Each hint sits beneath its label; each error beneath its control, except a Fieldset's, which stays above its controls. -->
 <form class="form form--aligned">…</form>
 
 <!-- Fields side by side: a grid -->

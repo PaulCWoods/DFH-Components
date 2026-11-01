@@ -5,9 +5,10 @@
    a legend. The fieldset spaces its children; type comes from text atoms
    on the legend and hint.
 
-   The legend floats, which takes it out of the browser's border notch and
-   makes it an ordinary item in the column. Link the hint to the group with
-   aria-describedby on the fieldset.
+   The fieldset stays display: block. Safari drops the float of a legend in
+   a flex or grid fieldset, which puts it back in the border, above any
+   padding. Floated in a block, the legend sits inside the padding in every
+   browser. Link the hint to the group with aria-describedby on the fieldset.
 
    Options: --compact. A disabled fieldset dims everything in it. For a
    boxed group, put the fieldset in a .card.
@@ -24,21 +25,24 @@
    ========================================================================== */
 :where(.fieldset) {
   /* Private manifest */
-  --_fieldset-gap: var(--fieldset-gap, 1rem);
+  --_fieldset-gap: var(--fieldset-gap, var(--spacing-md));
   --_fieldset-legend-gap: var(--fieldset-legend-gap, 0.25rem);
 
   /* Density */
   @container style(--ui-sizing: compact) {
-    --_fieldset-gap: var(--fieldset-compact-gap, 0.5rem);
+    --_fieldset-gap: var(--fieldset-compact-gap, var(--spacing-sm));
   }
 
   border: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--_fieldset-gap);
+  display: block;
   margin: 0;
   min-inline-size: 0;
   padding: 0;
+
+  /* The legend's margin spaces the first child; clearing absorbs any of its own */
+  > :where(:not(legend) ~ *) {
+    margin-block-start: var(--_fieldset-gap);
+  }
 
   &:where(:disabled, [aria-disabled="true"]) {
     opacity: var(--opacity-disabled, 0.5);
@@ -51,19 +55,22 @@
 :where(.fieldset__legend) {
   float: inline-start;
   inline-size: 100%;
-  margin: 0;
+  margin: 0 0 var(--_fieldset-gap);
   padding: 0;
+
+  &:where(:has(+ .fieldset__hint)) {
+    margin-block-end: var(--_fieldset-legend-gap);
+  }
+
+  & + * {
+    clear: both;
+  }
 }
 
 :where(.fieldset__hint) {
-  color: var(--field-hint-color, currentColor);
+  color: var(--field-hint-color, var(--foreground-muted, currentColor));
   margin: 0;
   min-inline-size: 0;
-
-  /* Safari keeps <legend> outside the fieldset flex formatting context, so no flex gap is added above the hint */
-  @supports not (font: -apple-system-body) {
-    margin-block-start: calc((var(--_fieldset-gap) - var(--_fieldset-legend-gap)) * -1);
-  }
 }
 
 /* ==========================================================================
@@ -71,7 +78,7 @@
    ========================================================================== */
 :where(.fieldset--compact) {
   --ui-sizing: compact;
-  --_fieldset-gap: var(--fieldset-compact-gap, 0.5rem);
+  --_fieldset-gap: var(--fieldset-compact-gap, var(--spacing-sm));
 }
 
 /* ==========================================================================

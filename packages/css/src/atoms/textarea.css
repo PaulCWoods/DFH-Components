@@ -15,21 +15,21 @@
 
 :where(.textarea) {
   /* Size sources (the base picks one set by size) */
-  --_control-default-padding-block: var(--textarea-padding-block, 0.5rem);
-  --_control-default-padding-inline: var(--textarea-padding-inline, 1rem);
-  --_control-default-font-size: var(--textarea-font-size, 1rem);
-  --_control-default-line-height: var(--textarea-line-height, 1.5);
-  --_control-sm-padding-block: var(--textarea-sm-padding-block, 0.25rem);
-  --_control-sm-padding-inline: var(--textarea-sm-padding-inline, 0.75rem);
-  --_control-sm-font-size: var(--textarea-sm-font-size, 0.875rem);
-  --_control-sm-line-height: var(--textarea-sm-line-height, 1.4);
-  --_control-lg-padding-block: var(--textarea-lg-padding-block, 0.75rem);
-  --_control-lg-padding-inline: var(--textarea-lg-padding-inline, 1.5rem);
-  --_control-lg-font-size: var(--textarea-lg-font-size, 1.125rem);
-  --_control-lg-line-height: var(--textarea-lg-line-height, 1.6);
+  --_control-default-padding-block: var(--textarea-padding-block, var(--spacing-sm));
+  --_control-default-padding-inline: var(--textarea-padding-inline, var(--spacing-md));
+  --_control-default-font-size: var(--textarea-font-size, var(--control-font-size));
+  --_control-default-line-height: var(--textarea-line-height, var(--body-line-height));
+  --_control-sm-padding-block: var(--textarea-sm-padding-block, var(--spacing-xs));
+  --_control-sm-padding-inline: var(--textarea-sm-padding-inline, var(--spacing-12));
+  --_control-sm-font-size: var(--textarea-sm-font-size, var(--control-sm-font-size));
+  --_control-sm-line-height: var(--textarea-sm-line-height, var(--body-sm-line-height));
+  --_control-lg-padding-block: var(--textarea-lg-padding-block, var(--spacing-12));
+  --_control-lg-padding-inline: var(--textarea-lg-padding-inline, var(--spacing-24));
+  --_control-lg-font-size: var(--textarea-lg-font-size, var(--control-lg-font-size));
+  --_control-lg-line-height: var(--textarea-lg-line-height, var(--body-line-height));
 
-  --_textarea-lines-min: var(--textarea-lines-min, 3);
-  --_textarea-lines-max: var(--textarea-lines-max, 16);
+  --_textarea-lines-min: var(--textarea-lines-min, 4);
+  --_textarea-lines-max: var(--textarea-lines-max, 6);
 
   /* Grows with its content, without script */
   field-sizing: content;

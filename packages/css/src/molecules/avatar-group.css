@@ -21,7 +21,7 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--avatar-group-gap, 0.5rem);
+  gap: var(--avatar-group-gap, var(--spacing-sm));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -37,7 +37,7 @@
   isolation: isolate;
 
   :where(.avatar) {
-    box-shadow: 0 0 0 var(--avatar-group-ring-width, 2px) var(--avatar-group-ring-color, Canvas);
+    box-shadow: 0 0 0 var(--avatar-group-ring-width, var(--border-width, 2px)) var(--avatar-group-ring-color, var(--surface, Canvas));
   }
 
   /* Each avatar after the first tucks under the one before */

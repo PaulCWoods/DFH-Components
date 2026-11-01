@@ -39,11 +39,11 @@
    ========================================================================== */
 :where(.choices) {
   /* Private manifest */
-  --_choices-column-gap: var(--choices-column-gap, 1.5rem);
+  --_choices-column-gap: var(--choices-column-gap, var(--spacing-24));
 
   /* Density */
   @container style(--ui-sizing: compact) {
-    --_choices-column-gap: var(--choices-compact-column-gap, 1rem);
+    --_choices-column-gap: var(--choices-compact-column-gap, var(--spacing-md));
   }
 
   /* Layout flag (the --inline class does the same) */
@@ -76,16 +76,16 @@
    ========================================================================== */
 :where(.choice) {
   /* Private manifest */
-  --_choice-gap: var(--choice-gap, 0.75rem);
+  --_choice-gap: var(--choice-gap, var(--spacing-12));
   --_choice-target: var(--spacing-target-min, 3rem);
-  --_choice-font-size: var(--choice-font-size, 1rem);
+  --_choice-font-size: var(--choice-font-size, var(--control-font-size));
 
   /* Density: smaller rows, text and box, to sit with compact fields. The
      row stays the target, so the box can drop to 16px. */
   @container style(--ui-sizing: compact) {
-    --_choice-gap: var(--choice-compact-gap, 0.5rem);
-    --_choice-target: min(var(--spacing-target-min, 3rem), var(--choice-compact-target, 2rem));
-    --_choice-font-size: var(--choice-compact-font-size, 0.875rem);
+    --_choice-gap: var(--choice-compact-gap, var(--spacing-sm));
+    --_choice-target: min(var(--spacing-target-min, 3rem), var(--choice-compact-target, var(--spacing-target-sm)));
+    --_choice-font-size: var(--choice-compact-font-size, var(--control-sm-font-size));
   }
 
   @container style(--ui-sizing: compact) and (not style(--check-size: lg)) {
@@ -93,14 +93,14 @@
   }
 
   @container style(--check-size: lg) {
-    --_choice-gap: var(--choice-lg-gap, 1rem);
+    --_choice-gap: var(--choice-lg-gap, var(--spacing-md));
   }
 
   &:where(:has(> .checkbox-input--lg, > .radio-input--lg)) {
-    --_choice-gap: var(--choice-lg-gap, 1rem);
+    --_choice-gap: var(--choice-lg-gap, var(--spacing-md));
 
     @container style(--ui-sizing: compact) {
-      --_choice-gap: var(--choice-compact-gap, 0.5rem);
+      --_choice-gap: var(--choice-compact-gap, var(--spacing-sm));
     }
   }
 
