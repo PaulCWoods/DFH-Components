@@ -514,8 +514,8 @@
   --radius-md: var(--radius-4);
   --radius-lg: var(--radius-8);
   --radius-xl: var(--radius-12);
-  --radius-round: var(--radius-9999);
-  --radius-full: var(--radius-50pc);
+  --radius-50pc: var(--radius-9999);
+  --radius-full: var(--radius-9999);
   --underline-offset: var(--border-width-4);
   --underline-thickness: var(--border-width-1);
   --underline-color: var(--color-muted);

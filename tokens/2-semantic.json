@@ -1129,14 +1129,15 @@
       "$value": "{radius.12}",
       "$type": "dimension"
     },
-    "round": {
+    "50pc": {
+      "$value": "{radius.9999}",
+      "$type": "dimension",
+      "$description": "For elliptical shapes"
+    },
+    "full": {
       "$value": "{radius.9999}",
       "$type": "dimension",
       "$description": "For pill-shaped components"
-    },
-    "full": {
-      "$value": "{radius.50pc}",
-      "$type": "dimension"
     }
   },
   "underline": {

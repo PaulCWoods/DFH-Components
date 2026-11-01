@@ -367,6 +367,11 @@
     animation-timeline: scroll(self inline);
     mask-image: linear-gradient(var(--_scroll-fade-to), transparent, black calc(var(--scroll-fade-start) * var(--_scroll-fade-size)), black calc(100% - var(--scroll-fade-end) * var(--_scroll-fade-size)), transparent);
   }
+
+  :where(.tab)::after {
+    inset-block: min(0px, 100%);
+    inset-inline: min(0px, 100%);
+  }
 }
 
 :where(.tab-list--scrollable):where(.tab-list--vertical, .tab-list--end) {

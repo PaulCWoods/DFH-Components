@@ -14,6 +14,7 @@
 
 @import './reset.css' layer(reset);
 @import './variables.css' layer(tokens);
+@import './component-theme.css' layer(tokens);
 
 /* --------------------------------------------------------------------------
    1. Atoms (Foundational, indivisible elements)

@@ -2,6 +2,7 @@
 title: Text and Heading
 tier: atom
 summary: The type styles, from a display title to small text, and the List.
+tokens: list
 storybook: atoms-text
 related: [prose, form-composition, card]
 ---
