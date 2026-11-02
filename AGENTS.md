@@ -66,7 +66,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 
 ### v1 Scope
 - **In core:** `telemetry` (a description list on status, text and icon atoms), `batch-actions`.
-- **Out of core:** `deck` is the Cadence recipe's own CSS (`packages/storybook/stories/recipes/cadence/deck.css`), with no tokens, no package export and no blog twin. Do not use it in library work or treat it as a pattern to copy.
+- **Out of core:** `deck` is the Cadence recipe's own CSS (`packages/storybook/stories/recipes/cadence/deck.css`), with no tokens and no package export, and isn't published. Do not use it in library work or treat it as a pattern to copy.
 
 ---
 
@@ -78,7 +78,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 - **Documentation Site:** Astro 7 with MDX (`packages/docs`).
 - **Iconography:** Canonical SVG sprite sheet (`icons/icons.svg`) synchronized across web, Storybook, and Craft CMS targets.
 - **Figma Synchronization:** Node.js token compiler and exporter supporting Tokens Studio ($0 free tier) and Native Figma Variables.
-- **Consumer Site:** Craft CMS blog (`/Users/paulwoods/Sites/designforhumans-blog`) consuming tokens & utilities via Sass.
+- **Consumer Sites:** the Craft CMS blog (`/Users/paulwoods/Sites/designforhumans-blog`) and the WordPress course (`/Users/paulwoods/Sites/DFH-Course-Theme`), which link the published library from `components.designforhumans.blog/css/<version>/`.
 
 ---
 
@@ -183,11 +183,8 @@ DFH-Components/
 | `npm run export:figma` | Root | Exports every theme to Figma (run `build:themes` first): the default into `packages/figma-sync/dist/` (Tokens Studio, and Native Variables as one unified collection or three modular ones), each other theme and sub-brand the same way into `dist/themes/<name>/` (flat, any plan), and each theme with sub-brands into `dist/themes/<name>-modes/`: the modular collections with a mode per brand in each of their modes, merged by variable name. Figma's modes per collection: Starter 1, Professional 10, Organization 20, Enterprise 40; the modes README says which plan a family needs. |
 | `npm run build:css` | Root | Publishes the library for sites that link it (the blog, the course) under `packages/docs/public/css/<version>/`, served at `components.designforhumans.blog/css/<version>/`: `dfh-components.css` (`index.css` and its imports in one minified file, with the layer order), `themes/<name>.css` for each theme and sub-brand, and `fonts.css` when the default theme stores fonts. The version is `packages/css/package.json`'s. A published version never changes: when the files would differ, the build fails and asks for a new version. Commit the folder; `build:site` publishes it. Run `build:themes` first. |
 | `npm run sync:icons` | Root | Propagates `icons/icons.svg` to CSS package, Storybook, Astro docs, and Craft CMS blog. |
-| `npm run watch:blog` | Root | Watches `packages/css/src/{atoms,molecules,organisms,layout,utilities}` and mirrors each saved file to its blog SCSS twin, then recompiles the blog CSS. Twins with blog-only code differences are reported, not written. |
 | `npm run check:tokens` | Root | Fails when a Tier 3 token's value in `tokens/3-component.json` differs from a fallback the CSS gives it, the CSS reads it with no fallback, or nothing reads it. Tier 3 counts as unset, as it is in `variables.css`. |
 | `npm run check:layout` | Root | Loads the built Storybook's layout and recipe stories (or `-- '<id pattern>'`) in headless Chrome at 10 screen sizes and fails on content a clipping element strands out of reach, or a page wider than the screen. Run `build:storybook` first. |
-| `npm run sync:blog` | Root | One-off mirror. `-- --check` lists differences; `-- card.css` overwrites the named twins. Never touches tokens, `_tier3.scss`, or Sass-authored files. |
-| `npm run build:blog-palette` | Root | Builds the blog's `library/utilities/_color-palette.scss` from the blog's own tokens: each colour role in its Tier 2 swapped to the other mode, the Tier 3 tokens (library and `dfh/` theme) that read only those roles, then the library's `utilities/color-palette.css`. Says whether the file is current; `-- --write` writes it and recompiles the blog CSS. `sync:blog` and `watch:blog` run it for `color-palette.css`. Run it after changing a colour role or Tier 3 colour token in the blog. |
 
 ### 3. Linting & Testing Status
 - **Formatting:** Prettier (`^3.0.0`) configured via package.json.
@@ -198,19 +195,16 @@ DFH-Components/
 
 ---
 
-## Dual-Repository Architecture & Synchronization
-The component library operates in tandem with the live site repository:
+## Sites That Use the Library
+The blog and the course link the library; they hold no copy of it.
 - **Library Repo:** `DFH-Components` (`/Users/paulwoods/Sites/DFH-Components`)
-- **Blog Repo:** `designforhumans-blog` (`/Users/paulwoods/Sites/designforhumans-blog`)
+- **Blog Repo:** `designforhumans-blog` (`/Users/paulwoods/Sites/designforhumans-blog`), live at `designforhumans.blog`
+- **Course Repo:** `DFH-Course-Theme` (`/Users/paulwoods/Sites/DFH-Course-Theme`), live at `courses.designforhumans.blog`
 
-### Synchronization Conventions:
-1. **Utility & Atom Parity:** Component and utility CSS is mirrored into `designforhumans-blog/web/styles/scss/library/<tier>/_<name>.scss` by `npm run sync:blog` (or `watch:blog`). Files the script reports as Sass-authored (`utilities/_accessibility`, `utilities/_responsive-helpers`) and new components (which need a `@forward`) are ported by hand.
-1b. **Blog Tier 3:** Blog Tier 3 tokens live in `web/styles/scss/library/theme/_tier3.scss` and are kept in step by hand.
-2. **Sass Recompilation:** After updating SCSS in `designforhumans-blog`, recompile shared stylesheets using:
-   ```bash
-   /opt/homebrew/bin/sass web/styles/scss/dfh-shared.scss web/styles/css/dfh-shared.css && /opt/homebrew/bin/sass web/styles/scss/dfh-blog.scss web/styles/css/dfh-blog.css
-   ```
-3. **Icon Propagation:** `DFH-Components/icons/icons.svg` is the single source of truth. Running `npm run sync:icons` automatically writes updated sprites to `designforhumans-blog/templates/_icons.twig` and `designforhumans-blog/web/web/symbol-defs.svg`.
+1. **Linking:** each site's head links, from `components.designforhumans.blog/css/<version>/`, `dfh-components.css`, `themes/dfh.css` and its sub-brand (`themes/blog.css` with `theme-blog` on `<html>`; the course's four `themes/course*.css` with `theme-course` on `<html>` and a lesson's class beside its `data-lesson` or `data-syllabus`), then its own CSS. The blog pins the version in `templates/_layout.twig` (`DFH_COMPONENTS_CSS` in its `.env` points at a local build); the course in `dfh_library_css()` in `functions.php` (`DFH_COMPONENTS_CSS` in `wp-config.php`).
+2. **Releasing:** a change the sites should get is a new version: raise `packages/css/package.json`'s version, run `build:themes` and `build:css`, commit and push (the docs deploy publishes it), then raise the version each site pins and check it there.
+3. **The sites' own CSS:** the blog compiles `web/styles/scss/dfh-site.scss` (the DFH site's components and component choices, which the course links from the blog too) and `dfh-blog.scss` (its own pages) with `/opt/homebrew/bin/sass --style=compressed`; the course compiles `scss/dfh-course.scss` the same way. Each appends to the library's layers: tokens to `tokens`, components to `layout`.
+4. **Icon Propagation:** `DFH-Components/icons/icons.svg` is the single source of truth. Running `npm run sync:icons` automatically writes updated sprites to `designforhumans-blog/templates/_icons.twig` and `designforhumans-blog/web/web/symbol-defs.svg`.
 
 ---
 

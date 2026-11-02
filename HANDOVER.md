@@ -93,12 +93,8 @@
    - Shadows are decomposed into 3 layers with custom tokens (`--_shadow-*-layer-[1..3]`).
    - Token compiler emits Level 5 `@function` rules (`@function --shadow-md(--color: black) { result: ... }`).
    - **Firefox Compatibility Fallback:** Firefox drops stylesheets/rules with unrecognized functions. Every `@function` invocation must be wrapped in `@supports at-rule(@function)` or backed by a CSS custom property fallback (`var(--shadow-md, none)`).
-5. **Dual-Repository Parity Convention:**
-   - The author maintains both `DFH-Components` and `designforhumans-blog`.
-   - Modifying tokens, atoms, or utilities in `DFH-Components` requires mirroring the changes into `designforhumans-blog/web/styles/scss/` and running the Sass build command:
-     ```bash
-     /opt/homebrew/bin/sass web/styles/scss/dfh-shared.scss web/styles/dfh-shared.css && /opt/homebrew/bin/sass web/styles/scss/dfh-blog.scss web/styles/dfh-blog.css
-     ```
+5. **Sites That Use the Library:**
+   - The blog and the course link the published library from `components.designforhumans.blog/css/<version>/` (`npm run build:css`) with their sub-brands, and hold no copy of it. A change they should get is a new version, then a raise of the version each site pins. See AGENTS.md, "Sites That Use the Library".
 
 ---
 

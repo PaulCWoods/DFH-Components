@@ -2,7 +2,7 @@
    Cadence recipe: Deck
    --------------------------------------------------------------------------
    The Cadence recipe's own CSS. It is not a library component, ships in no
-   package and has no blog twin (PRINCIPLES v1 scope). Everything else in the
+   package and isn't published (PRINCIPLES v1 scope). Everything else in the
    deck is a library part: card, status, lockup, range, range lockup, button
    group, meter and popover.
 
