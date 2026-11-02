@@ -344,7 +344,7 @@ const errorSummary = `
     <span class="icon-box" aria-hidden="true">${icon('Error')}</span>
     <div class="banner__body">
       <p id="lease-errors-title" class="text font-bold">Two answers need fixing</p>
-      <ul class="small-text">
+      <ul class="small-text list">
         <li><a href="#lease-plot" class="link">Choose a plot</a></li>
         <li><a href="#lease-email" class="link">Enter an email address, like name@example.org</a></li>
       </ul>
@@ -487,9 +487,8 @@ const toolLocker = `
    -------------------------------------------------------------------------- */
 const toasts = (show: boolean) => `
   <div id="toasts" class="toast-stack toast-stack--bottom-end" popover="manual" role="status" aria-label="Notifications">
-    ${
-      show
-        ? `<div class="banner banner--success banner--round toast">
+    ${show
+    ? `<div class="banner banner--success banner--round toast">
       <span class="icon-box" aria-hidden="true">${icon('Check')}</span>
       <div class="banner__body">
         <p class="text font-bold">Notice sent</p>
@@ -497,8 +496,8 @@ const toasts = (show: boolean) => `
       </div>
       <button type="button" class="button button--icon banner__action">${icon('Close')}<span class="sr-only">Dismiss</span></button>
     </div>`
-        : ''
-    }
+    : ''
+  }
   </div>`;
 
 /* --------------------------------------------------------------------------

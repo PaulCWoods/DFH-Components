@@ -22,7 +22,7 @@ const groupId = (label: string) => `${idPrefix}-${label.toLowerCase()}`;
 {mode === 'section' && section && (
   <nav class="navigation-tree navigation-tree--compact" aria-labelledby={headingId}>
     <ol>
-      <li class="navigation-tree__heading"><h2 id={headingId} class="heading">{section.label}</h2></li>
+      <li class="sr-only"><h2 id={headingId} class="heading">{section.label}</h2></li>
       {items(section.pages).map((item) =>
         'heading' in item ? (
           <li class="navigation-tree__heading"><h3 id={groupId(item.heading)} class="subheading text-muted">{item.heading}</h3></li>
