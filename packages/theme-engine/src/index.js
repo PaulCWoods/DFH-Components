@@ -8,4 +8,6 @@ export * from './type.js';
 export * from './type-gate.js';
 export * from './space.js';
 export * from './shape.js';
+export * from './mix.js';
+export * from './motion.js';
 export * from './components.js';

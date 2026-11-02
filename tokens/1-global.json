@@ -861,6 +861,9 @@
     "$type": "dimension"
   },
   "radius": {
+    "0": {
+      "$value": "0px"
+    },
     "2": {
       "$value": "2px"
     },
@@ -876,10 +879,7 @@
     "9999": {
       "$value": "9999px"
     },
-    "$type": "dimension",
-    "none": {
-      "$value": "0px"
-    }
+    "$type": "dimension"
   },
   "duration": {
     "0": {

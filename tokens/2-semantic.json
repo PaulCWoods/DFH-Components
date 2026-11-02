@@ -68,7 +68,7 @@
       "$description": "Backdrop blur filter for glassmorphic layers"
     },
     "translucency": {
-      "$value": "{translucency.subtle}",
+      "$value": "{translucency.10}",
       "$type": "other",
       "$description": "Translucency for surface layer"
     }
@@ -109,7 +109,7 @@
       "$description": "Maximum depth background for deep containers"
     },
     "layer": {
-      "$value": "light-dark(color-mix(in srgb, {color.white}, transparent {surface-layer.translucency}), color-mix(in srgb, {color.black}, transparent {surface-layer.translucency}))",
+      "$value": "light-dark(color-mix(in srgb, {color.white}, transparent {translucency.10}), color-mix(in srgb, {color.black}, transparent {translucency.10}))",
       "$description": "Layer surface background for floating or sticky elements"
     },
     "accent": {
@@ -333,6 +333,10 @@
     "width": {
       "$type": "dimension",
       "$description": "Border stroke thicknesses",
+      "none": {
+        "$value": "{border.width.0}",
+        "$description": "No border. Stays 0 whatever the theme."
+      },
       "medium": {
         "$value": "{border.width.2}",
         "$type": "dimension",
@@ -1076,7 +1080,7 @@
   },
   "panel": {
     "border-width": {
-      "$value": "{border.width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension"
     },
     "border-color": {
@@ -1095,7 +1099,7 @@
   },
   "rule": {
     "width": {
-      "$value": "{border.width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension"
     },
     "color": {
@@ -1108,6 +1112,10 @@
     }
   },
   "radius": {
+    "none": {
+      "$value": "{radius.0}",
+      "$description": "Square corners. Stays 0 whatever the theme."
+    },
     "default": {
       "$value": "{radius.md}",
       "$type": "dimension",
@@ -1137,11 +1145,11 @@
   },
   "underline": {
     "offset": {
-      "$value": "{border.width.4}",
+      "$value": "{border.width.thick}",
       "$type": "dimension"
     },
     "thickness": {
-      "$value": "{border.width.1}",
+      "$value": "{border.width.thin}",
       "$type": "dimension"
     },
     "color": {
@@ -1167,7 +1175,7 @@
   },
   "focus-ring": {
     "width": {
-      "$value": "{border.width.2}",
+      "$value": "{border.width.medium}",
       "$type": "dimension"
     },
     "color": {
@@ -1176,7 +1184,7 @@
       "$description": "Mandatory high-contrast focus ring outline (WCAG 2.4.7 & 2.4.13)"
     },
     "offset": {
-      "$value": "{border.width.2}",
+      "$value": "{border.width.medium}",
       "$type": "dimension"
     },
     "clearance": {

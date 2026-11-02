@@ -97,6 +97,7 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 | Token JSON Path | CSS Custom Property | Intended Use |
 | :--- | :--- | :--- |
 | `border.width.default` | `--border-width`, `--border-width-default` | Standard 2px border width |
+| `border.width.none` | `--border-width-none` | No border; 0 whatever the theme |
 | `border.width.thin` | `--border-width-thin` | Hairline 1px stroke (rules, subtle cards) |
 | `border.width.thick` | `--border-width-thick` | Prominent 4px stroke |
 | `border.base` | `--border` | Default prominent border |

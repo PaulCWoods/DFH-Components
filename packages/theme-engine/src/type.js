@@ -332,6 +332,11 @@ export const applyTypeStyles = (semantic, type, { global = {} } = {}) => {
       put(out, group, key, value, tokenType);
     }
   }
+  /* The type inside buttons and fields: a step and a line height for each size */
+  for (const [name, { size, leading }] of Object.entries(type.controls ?? {})) {
+    out[name]['font-size'].$value = `{typography.font-size.${stepKey(size)}}`;
+    out[name]['line-height'].$value = `{typography.line-height.${stepKey(leading)}}`;
+  }
   return out;
 };
 
@@ -489,6 +494,10 @@ export const typeCssVars = (type) => {
     if (family.use) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.use})`;
     else if (family.system) vars[`--typography-font-family-${role}`] = SYSTEM_STACKS[family.system] ?? '';
     else if (family.font) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.font})`;
+  }
+  for (const [name, { size, leading }] of Object.entries(type.controls ?? {})) {
+    vars[`--${name}-font-size`] = `${scaleSteps(type)[size]}rem`;
+    vars[`--${name}-line-height`] = String(leadingSteps(type)[leading]);
   }
   const viewports = type.fluid.viewports ?? ['25rem', '80rem'];
   const fluid = fluidSteps(type);

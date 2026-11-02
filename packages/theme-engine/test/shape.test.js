@@ -31,6 +31,44 @@ test('a shadow level writes its light twin in the lighter colour', () => {
   assert.equal(out.shadow['md-light'].$value[0].color, '{shadow.color-light}');
 });
 
+test('lines write their roles, and none stays 0', () => {
+  const shape = structuredClone(theme.shape);
+  shape.lines.rule.width = 'none';
+  shape.lines.rule.color = 'border.color.default';
+  shape.lines.panel.radius = 'default';
+  shape.border.thin = 3;
+  const out = applyShape(semantic, shape);
+  assert.equal(out.rule.width.$value, '{border.width.none}');
+  assert.equal(out.rule.color.$value, '{border.color}');
+  assert.equal(out.panel.radius.$value, '{radius}');
+  assert.equal(out.border.width.none.$value, '{border.width.0}');
+  assert.equal(shapeCssVars(shape, () => '#000')['--rule-color'], 'var(--border-color)');
+});
+
+test('the default radius can be none, and none stays 0', () => {
+  const shape = structuredClone(theme.shape);
+  shape.radius.default = 'none';
+  shape.radius.sm = 3;
+  assert.deepEqual(shapeGate(shape).failures, []);
+  const out = applyShape(semantic, shape);
+  assert.equal(out.radius.default.$value, '{radius.none}');
+  assert.equal(out.radius.none.$value, '{radius.0}');
+  assert.equal(shapeCssVars(shape, () => '#000')['--radius'], 'var(--radius-none)');
+});
+
+test("what has to show can't be none, and a focus ring is at least 2px", () => {
+  const styles = (change) => {
+    const shape = structuredClone(theme.shape);
+    change(shape);
+    return shapeGate(shape).failures.map((f) => f.style);
+  };
+  assert.deepEqual(styles((s) => (s.lines.rule.width = 'none')), []);
+  assert.deepEqual(styles((s) => (s.lines.control.width = 'none')), ['control width']);
+  assert.deepEqual(styles((s) => (s.lines.underline.width = 'none')), ['underline width']);
+  assert.deepEqual(styles((s) => (s.lines['focus-ring'].width = 'thin')), ['focus-ring width']);
+  assert.deepEqual(styles((s) => (s.lines.rule.color = 'surface.card')), ['rule color']);
+});
+
 test("today's shape passes", () => {
   assert.deepEqual(shapeGate(theme.shape, { translucency: global.translucency }).failures, []);
 });

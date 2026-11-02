@@ -439,6 +439,20 @@
       "body-strong": {
         "weight": "bold"
       }
+    },
+    "controls": {
+      "control": {
+        "size": 0,
+        "leading": -2
+      },
+      "control-sm": {
+        "size": -1,
+        "leading": -2
+      },
+      "control-lg": {
+        "size": 2,
+        "leading": -2
+      }
     }
   },
   "space": {
@@ -574,7 +588,185 @@
           ]
         }
       }
+    },
+    "lines": {
+      "rule": {
+        "width": "thin",
+        "color": "border.color.quiet",
+        "style": "solid"
+      },
+      "panel": {
+        "width": "thin",
+        "color": "border.color.quiet",
+        "style": "solid",
+        "radius": "md"
+      },
+      "app": {
+        "width": "default",
+        "color": "border.color.quiet",
+        "style": "solid"
+      },
+      "control": {
+        "width": "default",
+        "color": "border.color.control"
+      },
+      "underline": {
+        "width": "thin",
+        "color": "color.muted",
+        "offset": "thick"
+      },
+      "focus-ring": {
+        "width": "medium",
+        "color": "color.focus",
+        "offset": "medium"
+      }
     }
   },
-  "components": {}
+  "components": {},
+  "mixes": {
+    "color.muted": {
+      "light": {
+        "color": "currentColor",
+        "transparent": 50
+      },
+      "dark": {
+        "color": "currentColor",
+        "transparent": 50
+      }
+    },
+    "color.quiet": {
+      "light": {
+        "color": "currentColor",
+        "transparent": 70
+      },
+      "dark": {
+        "color": "currentColor",
+        "transparent": 70
+      }
+    },
+    "color.focus": {
+      "light": {
+        "color": "currentColor",
+        "transparent": 0
+      },
+      "dark": {
+        "color": "currentColor",
+        "transparent": 0
+      }
+    },
+    "color.backdrop": {
+      "light": {
+        "color": "neutral.900",
+        "transparent": 50
+      },
+      "dark": {
+        "color": "neutral.900",
+        "transparent": 50
+      }
+    },
+    "color.overlay": {
+      "light": {
+        "color": "neutral.000",
+        "transparent": 33
+      },
+      "dark": {
+        "color": "neutral.900",
+        "transparent": 33
+      }
+    },
+    "surface.layer": {
+      "light": {
+        "color": "white",
+        "transparent": 10
+      },
+      "dark": {
+        "color": "black",
+        "transparent": 10
+      }
+    },
+    "surface.translucent": {
+      "light": {
+        "color": "surface.inverted",
+        "transparent": 95
+      },
+      "dark": {
+        "color": "surface.inverted",
+        "transparent": 95
+      }
+    },
+    "surface.translucent-strong": {
+      "light": {
+        "color": "surface.inverted",
+        "transparent": 90
+      },
+      "dark": {
+        "color": "surface.inverted",
+        "transparent": 90
+      }
+    },
+    "surface.shade": {
+      "light": {
+        "color": "neutral.1000",
+        "transparent": 95
+      },
+      "dark": {
+        "color": "black",
+        "transparent": 70
+      }
+    },
+    "border.color.default": {
+      "light": {
+        "color": "currentColor",
+        "transparent": 0
+      },
+      "dark": {
+        "color": "currentColor",
+        "transparent": 0
+      }
+    },
+    "border.color.muted": {
+      "light": {
+        "color": "color.muted",
+        "transparent": 0
+      },
+      "dark": {
+        "color": "color.muted",
+        "transparent": 0
+      }
+    },
+    "border.color.quiet": {
+      "light": {
+        "color": "color.quiet",
+        "transparent": 0
+      },
+      "dark": {
+        "color": "color.quiet",
+        "transparent": 0
+      }
+    },
+    "border.color.control": {
+      "light": {
+        "color": "currentColor",
+        "transparent": 33
+      },
+      "dark": {
+        "color": "currentColor",
+        "transparent": 33
+      }
+    }
+  },
+  "motion": {
+    "duration": {
+      "sm": 0.2,
+      "md": 0.5,
+      "lg": 1,
+      "xl": 2
+    },
+    "ease": {
+      "in-out": "cubic-bezier(0.4, 0.0, 0.2, 1)",
+      "in": "cubic-bezier(0.4, 0.0, 1.0, 1.0)",
+      "out": "cubic-bezier(0.0, 0.0, 0.2, 1)",
+      "bounce": "cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+    }
+  }
 }

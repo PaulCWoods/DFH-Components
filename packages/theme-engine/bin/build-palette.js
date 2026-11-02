@@ -11,7 +11,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildPalette, check, colorBlock, applyRoles, withFixed } from '../src/index.js';
+import { buildPalette, check, colorBlock, applyRoles, applyMixes, mixGate, withFixed } from '../src/index.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
@@ -22,7 +22,9 @@ const global = withFixed(read('tokens/1-global.json'), theme);
 const semantic = read('tokens/2-semantic.json');
 
 const palette = buildPalette(theme);
-const { rows, failures } = check({ semantic, global, palette, roles: theme.roles });
+const { rows, failures: pairingFailures } = check({ semantic, global, palette, roles: theme.roles });
+const mixFailures = mixGate(theme.mixes, { semantic, global, palette, roles: theme.roles }).failures;
+const failures = [...pairingFailures, ...mixFailures];
 
 /* Ramps */
 const hues = Object.keys(palette);
@@ -53,7 +55,8 @@ if (reported.length) {
 }
 if (failures.length) {
   console.log(`\nFailing (${failures.length}):`);
-  failures.forEach((r) => console.log(line(r)));
+  pairingFailures.forEach((r) => console.log(line(r)));
+  mixFailures.forEach((r) => console.log(`  ${r.style.padEnd(30)} ${r.message}`));
 } else {
   console.log('\nEvery gated pairing passes.');
 }
@@ -65,7 +68,7 @@ if (args.has('--write')) {
   }
   global.color = colorBlock(palette, global.color);
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
-  writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyRoles(semantic, theme.roles, { palette, global }), null, 2));
+  writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyMixes(applyRoles(semantic, theme.roles, { palette, global }), theme.mixes), null, 2));
   console.log('\nWrote the color block of tokens/1-global.json and the roles in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
 }
 

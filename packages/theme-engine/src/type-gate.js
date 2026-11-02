@@ -50,6 +50,18 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
   const [lo, hi] = type.scale.steps ?? [-2, 8];
   const inScale = (n) => Number.isInteger(n) && n >= lo && n <= hi;
 
+  /* Controls: on the scales, and growing with their size */
+  const controls = type.controls ?? {};
+  const controlOrder = ['control-sm', 'control', 'control-lg'].filter((n) => controls[n]);
+  controlOrder.forEach((name, i) => {
+    const { size, leading } = controls[name];
+    if (!inScale(size)) fail('reference', name, `${name}: step ${size} isn't on the scale`);
+    else if (i && size < controls[controlOrder[i - 1]].size) fail('hierarchy', name, `${name} is smaller than ${controlOrder[i - 1]}`);
+    if (leadingSteps(type)[leading] === undefined) fail('reference', name, `${name}: line height step ${leading} isn't on the scale`);
+  });
+  const controlSize = scaleSteps(type)[controls.control?.size];
+  if (controlSize < 1) report('size', 'control', 'under 16px: phones zoom the page when a field this size takes focus');
+
   /* References. A style with a step off the scale has no sizes to check. */
   const offScale = new Set();
   const fonts = names(type.fonts);
