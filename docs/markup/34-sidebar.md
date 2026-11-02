@@ -28,7 +28,7 @@ Placement: Start, End=sidebar--end
 Rules: None, Between parts=sidebar--ruled
 ```
 
-## Why it exists
+## Purpose
 Some things should stay in reach while someone works through a section: its pages, a set of filters, a tool. A Sidebar holds them beside the content, and scrolls them separately when it has a height of its own.
 
 It only draws the panel and lays out its parts. What goes inside styles itself, so section navigation is a [Navigation Tree](16b-navigation-tree.md) and a filter is an ordinary [Field](07b-form-composition.md).
@@ -137,6 +137,7 @@ A side panel beside the main content: section navigation, filters, tools. An org
 | Width | default (`--sidebar-width`, 18rem, at least `--sidebar-min-width`), `--rail` (`--sidebar-rail-width`, 4.5rem) | none |
 
 ### Further rules
+- **Safe areas:** under `.viewport-fit-cover` the edge a Sidebar touches gets the device's inset, and it widens by the same amount so its content keeps its room. A sticky Sidebar, or one in a viewport shell, also clears the bottom inset, and it sits below the top inset. A `--floating` one moves its margin instead.
 - **Prominence:** `--subtle` sets a panel apart without an edge. `--plain` is for secondary content that needs no panel, such as an "On this page" list. More contrast gives `--subtle` an edge.
 - **Tokens:** `sidebar.bg`, `subtle-bg`, `border-width`, `border-color`, `border-style`, `padding`, `width`, `min-width`, `rail-width`.
 

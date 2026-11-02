@@ -14,7 +14,7 @@ related: [button, breadcrumb, skip-link]
 Prominence: Default, Subtle=link--subtle, Plain=link--plain
 ```
 
-## Why it exists
+## Purpose
 A Link makes one promise: this goes somewhere. It's a real `<a href>`, so the browser gives it everything people expect from one: opening in a new tab, copying the address and the back button.
 
 The underline is what marks it. Link colour is close to body text, and colour alone doesn't reach everyone, so the underline stays, drawn at the full link colour. It thickens on hover. There's no separate hover colour that could fall below 4.5:1.

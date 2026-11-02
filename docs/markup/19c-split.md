@@ -14,7 +14,7 @@ related: [grid-grid-carousel, app-shell, sidebar, stack-inline-cluster]
 </div>
 ```
 
-## Why it exists
+## Purpose
 Filters beside results, or notes beside an article: one pane has a width it wants, and the other should get everything else. When there isn't room for both, they should simply stack.
 
 A Split decides that from the space it actually has, so it needs no breakpoint and gives the right answer at any zoom, in any container. A breakpoint only knows about the screen.

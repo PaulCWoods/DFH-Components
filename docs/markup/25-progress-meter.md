@@ -22,7 +22,7 @@ Intent: Accent, Info=progress--info "Checking photos", Success=progress--success
 Corners: Default, Round=progress--round
 ```
 
-## Why it exists
+## Purpose
 A bar can answer two different questions: how far along is this, and how much of it is there? They look alike and mean different things, so there are two native elements. `<progress>` is for a task that will finish. `<meter>` is for a measurement that just is, like disk use.
 
 The browser gives each its role and value, and it works out a Meter's region from `low`, `high` and `optimum`. So a Meter's colour follows its value with no script, and it has no intent classes that could disagree with the number.

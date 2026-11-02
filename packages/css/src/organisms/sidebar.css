@@ -47,6 +47,9 @@
   --_sidebar-width: var(--sidebar-width, 18rem);
   --_sidebar-min-width: var(--sidebar-min-width, 14rem);
   --_sidebar-offset: 0px;
+  --_sidebar-safe-start: var(--safe-area-inset-inline-start, 0px);
+  --_sidebar-safe-end: 0px;
+  --_sidebar-safe-bottom: 0px;
   --_sidebar-rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
 
   @container style(--ui-sizing: compact) {
@@ -63,8 +66,9 @@
   flex-direction: column;
   flex-shrink: 0;
   inline-size: 100%;
-  max-inline-size: var(--_sidebar-width);
-  min-inline-size: var(--_sidebar-min-width);
+  /* An inset widens the panel, so a rail's content keeps its room */
+  max-inline-size: calc(var(--_sidebar-width) + var(--_sidebar-safe-start) + var(--_sidebar-safe-end));
+  min-inline-size: calc(var(--_sidebar-min-width) + var(--_sidebar-safe-start) + var(--_sidebar-safe-end));
   overflow: hidden;
 }
 
@@ -80,12 +84,14 @@
   justify-content: space-between;
   min-block-size: var(--spacing-target, 3rem);
   padding: var(--_sidebar-padding);
+  padding-inline: calc(var(--_sidebar-padding) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding) + var(--_sidebar-safe-end));
 }
 
 :where(.sidebar__band) {
   box-sizing: border-box;
   flex-shrink: 0;
-  padding: calc(var(--_sidebar-padding) / 2) var(--_sidebar-padding);
+  padding-block: calc(var(--_sidebar-padding) / 2);
+  padding-inline: calc(var(--_sidebar-padding) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding) + var(--_sidebar-safe-end));
 }
 
 /* Scrolls when the sidebar has a height (sticky, or in a viewport shell) */
@@ -96,6 +102,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: var(--_sidebar-padding);
+  padding-inline: calc(var(--_sidebar-padding) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding) + var(--_sidebar-safe-end));
   scrollbar-gutter: stable;
   scrollbar-width: thin;
 }
@@ -113,6 +120,11 @@
   padding-block-end: calc(var(--_sidebar-padding) / 2);
 }
 
+/* The last part clears the home indicator */
+:where(.sidebar__body:last-child, .sidebar__footer) {
+  padding-block-end: calc(var(--_sidebar-padding) + var(--_sidebar-safe-bottom));
+}
+
 /* The footer sits at the bottom */
 :where(.sidebar__footer) {
   margin-block-start: auto;
@@ -122,7 +134,7 @@
 :where(.sidebar__body--flush) {
   --tab-list-inset: var(--_sidebar-padding);
 
-  padding-inline: 0;
+  padding-inline: var(--_sidebar-safe-start) var(--_sidebar-safe-end);
 }
 
 /* ==========================================================================
@@ -153,6 +165,9 @@
 
 /* At the end of the row: the edge is on the other side */
 :where(.sidebar--end) {
+  --_sidebar-safe-start: 0px;
+  --_sidebar-safe-end: var(--safe-area-inset-inline-end, 0px);
+
   border-inline-end: 0;
   border-inline-start: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
 }
@@ -164,6 +179,17 @@
   border-radius: var(--radius-md, 0.5rem);
   box-shadow: var(--shadow-md, none);
   margin: var(--spacing-compact, 0.5rem);
+  margin-inline-start: calc(var(--spacing-compact, 0.5rem) + var(--_sidebar-margin-start, var(--safe-area-inset-inline-start, 0px)));
+  margin-inline-end: calc(var(--spacing-compact, 0.5rem) + var(--_sidebar-margin-end, 0px));
+  --_sidebar-safe-start: 0px;
+  --_sidebar-safe-end: 0px;
+}
+
+:where(.sidebar--floating.sidebar--end) {
+  --_sidebar-margin-start: 0px;
+  --_sidebar-margin-end: var(--safe-area-inset-inline-end, 0px);
+  --_sidebar-safe-start: 0px;
+  --_sidebar-safe-end: 0px;
 }
 
 /* A narrow rail of icon buttons */
@@ -191,6 +217,10 @@
 }
 
 /* Pinned beside the scrolling page */
+:where(.sidebar--sticky, .app--viewport .sidebar) {
+  --_sidebar-safe-bottom: var(--safe-area-inset-bottom, 0px);
+}
+
 :where(.sidebar--sticky) {
   align-self: flex-start;
   block-size: calc(100dvb - var(--_sidebar-offset));
@@ -200,7 +230,7 @@
 
 /* Below a sticky header */
 :where(:root:has(.header--sticky) .sidebar--sticky) {
-  --_sidebar-offset: var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target-min)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width))));
+  --_sidebar-offset: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target-min)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
 }
 
 /* ==========================================================================

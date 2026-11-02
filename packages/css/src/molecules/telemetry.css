@@ -71,7 +71,7 @@
   }
 
   @container style(--telemetry-corners: round) {
-    --_telemetry-radius: var(--radius-round, 9999px);
+    --_telemetry-radius: var(--radius-full, 9999px);
   }
 
   @container style(--telemetry-icon-placement: start) {
@@ -164,7 +164,7 @@
 }
 
 :where(.telemetry--round) {
-  --_telemetry-radius: var(--radius-round, 9999px);
+  --_telemetry-radius: var(--radius-full, 9999px);
   --_telemetry-padding-inline: calc(var(--telemetry-padding-inline, var(--spacing-12)) * 1.5);
 }
 

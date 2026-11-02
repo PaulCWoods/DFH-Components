@@ -25,7 +25,7 @@ Corners: Rounded, Flush=code-block--flush
 Density: Default, Compact=code-block--compact
 ```
 
-## Why it exists
+## Purpose
 Code is copied more often than it's read, so what matters is that it stays exactly as written, and that taking it is one action. That's why long lines scroll by default: a wrapped line can look like two, and copying what you can't see correctly is how errors start.
 
 It is a dark band in both themes, which marks it off from the page without another border. It sets its own colour scheme, so a Button inside it needs nothing special.

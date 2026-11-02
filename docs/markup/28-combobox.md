@@ -50,7 +50,7 @@ Prominence: Default, Subtle=combobox--subtle, Plain=combobox--plain
 Corners: Rounded, Round=combobox--round
 ```
 
-## Why it exists
+## Purpose
 A Combobox is the last thing to reach for. A native `<select>` or `<datalist>` comes with keyboard use, screen reader support and a phone's own picker, and a Combobox has to script all of that. So this page starts by asking whether you need one. You do when a list is too long to scroll, or when people pick several values.
 
 The library draws it and leaves the behaviour to you. The field shares its base with the other text controls, so it matches an Input beside it. The list is a manual popover, so a Card or Dialog can't clip it. What happens on each key depends on your data and where it comes from, so the script is the product's, and the steps it must take are set out below.

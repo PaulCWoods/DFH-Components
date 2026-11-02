@@ -26,10 +26,10 @@ related: [card, popover, button, form-composition, sidebar]
   </article>
 </dialog>
 ---
-Placement: Centred, Top=dialog--top, Drawer at the end=dialog--drawer, Drawer at the start=dialog--drawer dialog--start
+Placement: Centred, Top=dialog--top, Bottom=dialog--bottom, Drawer at the end=dialog--drawer, Drawer at the start=dialog--drawer dialog--start, Bottom sheet=dialog--drawer dialog--bottom
 ```
 
-## Why it exists
+## Purpose
 A Dialog stops someone mid-task, which is a big ask, so it should be saved for what can't wait or can't happen on the page.
 
 It is the native `<dialog>`, opened as a modal. The browser then moves focus in, returns it on close, handles Escape, puts the Dialog above everything and makes the rest of the page inert. Hand-built modals have to recreate all of that, and that's where they tend to fail people. So the library adds no script and no focus trap.
@@ -40,6 +40,7 @@ The Dialog is only the shell: placement, backdrop and motion. The surface is a C
 - **To interrupt for a decision** the page can't go on without, such as a confirmation.
 - **For a short, focused task** that keeps the page behind it, such as renaming something.
 - **As a drawer** for settings, details or [navigation on a small screen](34-sidebar.md).
+- **As a bottom sheet** for a short choice on a phone, such as a sort order or a picker, within reach of a thumb.
 - **Not for a non-modal floating panel:** that is a [Popover](03-popover.md).
 - **Not for a passing message:** that is a [Toast](18-toast.md) or a [Banner](11-banner.md).
 
@@ -119,6 +120,26 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
       </div>
     </footer>
   </form>
+</dialog>
+```
+
+## Bottom Sheets
+```html live cluster
+<button type="button" class="button" commandfor="sort-sheet" command="show-modal"><span>Sort plants</span></button>
+
+<dialog id="sort-sheet" class="dialog dialog--drawer dialog--bottom" aria-labelledby="sort-title" closedby="any">
+  <article class="card">
+    <header class="card__header">
+      <h3 id="sort-title" class="card__title heading">Sort plants</h3>
+      <button type="button" class="button button--plain button--icon button--sm" commandfor="sort-sheet" command="close">
+        <span class="sr-only">Close</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      </button>
+    </header>
+    <div class="card__body card__body--scrollable" tabindex="0" aria-label="Sort order">
+      <p class="text">Choose how the list is ordered: by name, by sowing date or by bed.</p>
+    </div>
+  </article>
 </dialog>
 ```
 
@@ -219,15 +240,18 @@ A modal shell: top-layer placement, size, backdrop, motion and the page's scroll
 ## Options
 | Axis | Values |
 | :--- | :--- |
-| Placement | centred (default); `.dialog--top`; `.dialog--drawer` (inline end); `.dialog--drawer.dialog--start` (inline start) |
+| Placement | centred (default); `.dialog--top`; `.dialog--bottom`; `.dialog--drawer` (inline end); `.dialog--drawer.dialog--start` (inline start); `.dialog--drawer.dialog--bottom` (a bottom sheet) |
 | Scroll | `.card__body--scrollable` (the body scrolls between a pinned header and footer); `.dialog--scrollable` (the whole Card scrolls, with a plain `.card__body`) |
 
 Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one Dialog or a region; `--dialog-cushion` (the space kept from the screen edge) and `--dialog-max-height`. There are no size modifiers.
 
 ### Further rules
+- **Safe areas:** under `.viewport-fit-cover` a drawer's Card keeps its content clear of the insets on the edges it touches, while its surface still runs to the edge.
 - **Classes only.** A bare `<dialog>` keeps its browser rendering; put `.dialog` on it.
 - **Scroll lock.** While a modal is open the page neither scrolls nor shifts sideways (`:root:has(.dialog:modal)`).
 - **Drawers** are full height and follow the text direction. Use the end side for settings and details and the start side for navigation. On a narrow screen a drawer leaves a 3rem strip of the page beside it.
+- **`.dialog--bottom`** pins a floating Dialog near the bottom, within reach of a thumb, keeping the cushion below it. An on-screen keyboard can cover it, so use `.dialog--top` for anything with a field.
+- **Bottom sheets** (`.dialog--drawer.dialog--bottom`) are full width and flush with the bottom edge, as tall as their content, up to the screen less a 3rem strip, and the body scrolls beyond that. There's no drag to dismiss, since that needs a script: give it a close button, and `closedby="any"` if tapping outside should close it.
 - **Motion.** It fades and moves in over `--duration-sm`, and exit mirrors entry. Reduced motion keeps the fade only; more contrast drops the backdrop blur.
 - **Without a Card** (an image, a video), the Dialog draws a Card's surface itself.
 

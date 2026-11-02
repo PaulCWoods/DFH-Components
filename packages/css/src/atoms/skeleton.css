@@ -54,7 +54,7 @@
   --_skeleton-color: var(--skeleton-color, color-mix(in srgb, var(--foreground) 20%, transparent));
   --_skeleton-shimmer: var(--skeleton-shimmer, color-mix(in srgb, var(--surface) 60%, transparent));
   --_skeleton-radius: var(--skeleton-radius, var(--radius-sm));
-  --_skeleton-radius-round: var(--skeleton-radius-round, var(--radius-round));
+  --_skeleton-radius-round: var(--skeleton-radius-round, var(--radius-full));
   --_skeleton-duration: var(--skeleton-duration, 1.6s);
 
   background-color: var(--_skeleton-color);

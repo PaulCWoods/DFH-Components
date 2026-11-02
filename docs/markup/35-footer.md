@@ -24,7 +24,7 @@ related: [header, app-shell, grid-grid-carousel, stack-inline-cluster]
 Arrangement: One row, Stacked=footer--stacked
 ```
 
-## Why it exists
+## Purpose
 People who reach the bottom of a page are often looking for something specific: contact details, an accessibility statement, the small print. A Footer puts those where they expect them, in a real `<footer>` that a screen reader can jump to as the contentinfo landmark.
 
 It works as the [Header](33-header.md) does. The band and its rows are all it draws, and its bars share the site width, so the top and bottom of a page line up. It has no columns of its own: a set of link lists is a [Grid](19b-grid-grid-carousel.md), which already reflows.

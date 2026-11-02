@@ -20,7 +20,7 @@ Layout: Stacked, Inline=telemetry--inline
 Density: Default, Compact=telemetry--compact
 ```
 
-## Why it exists
+## Purpose
 A number means little without its label. HTML already has a structure for that pairing, the description list, so a screen reader keeps each value with its name. Telemetry uses it and adds a surface and a layout, and the type comes from text atoms.
 
 These values often change while someone is looking at them, which is why Telemetry refuses to be a live region. A figure that ticks over every second would talk over everything else. The product announces only the changes that matter.

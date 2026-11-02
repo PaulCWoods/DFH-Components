@@ -15,7 +15,7 @@ related: [avatar, thumbnail, text-heading]
 </span>
 ```
 
-## Why it exists
+## Purpose
 Interfaces are full of things with two lines: a name and an email, a plot and its soil. Without a shared part, each one gets its own small layout, and they drift apart.
 
 A Lockup has no options, on purpose. It stacks its lines and lets them shrink, which is the only part that's hard to get right in a tight row. Everything else is decided elsewhere: type by the text atom on each line, alignment by a text utility, and what sits beside it by a layout primitive.

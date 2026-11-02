@@ -102,6 +102,6 @@
 }
 
 :where(.range-lockup--round) {
-  --_range-lockup-radius: var(--radius-round, 9999px);
+  --_range-lockup-radius: var(--radius-full, 9999px);
   --button-corners: round;
 }

@@ -21,7 +21,7 @@ Intent: Neutral, Accent=card--accent "Selected: ferns, hostas and hellebores.", 
 Density: Default, Compact=card--compact
 ```
 
-## Why it exists
+## Purpose
 A Card says that what's inside is one thing, which stands alone and can be compared with others. That is the only reason to draw a box. Content comes first, so most sections of a page need space and a heading, not a Card.
 
 The Card draws a frame and lays out its parts, and nothing else. Type comes from the text atoms, so a Card's title is the same heading as any other, and whatever goes in the body is ordinary content.

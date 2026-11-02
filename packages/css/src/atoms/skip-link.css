@@ -41,8 +41,8 @@
   block-size: 0;
   overflow: hidden;
   padding-inline:
-    calc(var(--_skip-link-padding-inline) + env(safe-area-inset-left, 0px))
-    calc(var(--_skip-link-padding-inline) + env(safe-area-inset-right, 0px));
+    calc(var(--_skip-link-padding-inline) + var(--safe-area-inset-inline-start, 0px))
+    calc(var(--_skip-link-padding-inline) + var(--safe-area-inset-inline-end, 0px));
   text-align: center;
   white-space: nowrap;
 

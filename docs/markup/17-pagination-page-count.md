@@ -29,7 +29,7 @@ Corners: Rounded, Round=buttons-round
 Edges: Separate, Joined=button-group--joined
 ```
 
-## Why it exists
+## Purpose
 Splitting a long list gives each part an address. People can come back to page 5, share it, or leave and return to the same place, and whatever follows the list stays within reach.
 
 Pagination is real links in a `<nav>`, so it works with no script and a page can open in a new tab. It is a [Button Group](14-button-group.md) of those links and adds only what the group lacks: square number Buttons and a marker for skipped pages.

@@ -23,7 +23,7 @@ related: [banner, banner-dock, popover, modal-dialog]
 </div>
 ```
 
-## Why it exists
+## Purpose
 A Toast says that something just happened, without stopping what someone is doing. Its risks are that a screen reader never hears it and that it goes before it can be read, so most of what follows is about those two.
 
 A live region only announces changes made after it exists. So the live region is the stack, which is on the page from the start, and each Toast is added to it. A Toast created along with its own live region may never be heard.

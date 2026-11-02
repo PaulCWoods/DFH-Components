@@ -124,7 +124,7 @@
   }
 
   @container style(--controls-corners: round) {
-    --_control-radius: var(--radius-round, 9999px);
+    --_control-radius: var(--radius-full, 9999px);
   }
 
   /* Per-control flags */
@@ -158,7 +158,7 @@
     }
 
     @container style(--input-corners: round) {
-      --_control-radius: var(--radius-round, 9999px);
+      --_control-radius: var(--radius-full, 9999px);
     }
   }
 
@@ -194,7 +194,7 @@
     }
 
     @container style(--select-corners: round) {
-      --_control-radius: var(--radius-round, 9999px);
+      --_control-radius: var(--radius-full, 9999px);
     }
   }
 
@@ -226,7 +226,7 @@
     }
 
     @container style(--textarea-corners: round) {
-      --_control-radius: var(--radius-round, 9999px);
+      --_control-radius: var(--radius-full, 9999px);
     }
   }
 
@@ -269,7 +269,7 @@
     }
 
     @container style(--combobox-corners: round) {
-      --_control-radius: var(--radius-round, 9999px);
+      --_control-radius: var(--radius-full, 9999px);
     }
   }
 
@@ -422,7 +422,7 @@
    4. Corners
    ========================================================================== */
 :where(.input--round, .select--round, .textarea--round) {
-  --_control-radius: var(--radius-round, 9999px);
+  --_control-radius: var(--radius-full, 9999px);
 }
 
 /* ==========================================================================

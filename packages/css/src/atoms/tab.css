@@ -109,7 +109,7 @@
 
   /* Corners */
   @container style(--tab-list-corners: round) {
-    --_tab-segmented-radius: var(--radius-round, 9999px);
+    --_tab-segmented-radius: var(--radius-full, 9999px);
   }
 
   /* Vertical: full-width tabs, start-aligned, with the line on the list's edge */

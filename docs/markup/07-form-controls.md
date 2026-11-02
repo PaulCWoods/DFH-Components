@@ -19,7 +19,7 @@ Prominence: Default, Subtle=input--subtle, Plain=input--plain
 Corners: Rounded, Round=input--round
 ```
 
-## Why it exists
+## Purpose
 A form is where a page asks the most of someone. The browser already knows a lot about that job: the right on-screen keyboard, autofill, keyboard use, how to tell a screen reader what a control is. Every control here is the native element with a class, so all of that keeps working.
 
 Text inputs, Selects and Textareas share one base, so they line up and change together, and every prominence keeps an edge of at least 3:1, because a field people can't find can't be filled in. The browser still draws the Checkbox and radio, so they stay legible in forced colours.

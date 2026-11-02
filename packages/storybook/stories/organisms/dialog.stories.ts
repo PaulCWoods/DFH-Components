@@ -37,7 +37,7 @@ A native \`<dialog class="dialog">\` opened as a modal: top-layer placement, siz
 
 | Axis | Values |
 | :--- | :--- |
-| Placement | centred (default); \`.dialog--drawer\` (inline end); \`.dialog--drawer.dialog--start\` (inline start) |
+| Placement | centred (default); \`.dialog--top\`; \`.dialog--drawer\` (inline end); \`.dialog--drawer.dialog--start\` (inline start); \`.dialog--bottom\`; \`.dialog--drawer.dialog--bottom\` (a bottom sheet) |
 | Scroll | \`.card__body--scrollable\` (the body, between a pinned header and footer); \`.dialog--scrollable\` (the whole card) |
 
 - **Opening and closing.** \`command="show-modal"\` (or \`showModal()\`) opens it; \`command="close"\` on the header's close button and a \`form method="dialog"\` around the footer actions close it, and the submit button's \`value\` becomes the dialog's \`returnValue\`. Escape closes it. \`closedby="any"\` adds light dismiss where supported; leave it off a dialog holding unsaved input.
@@ -104,7 +104,7 @@ export const Playground: Story = {
     paragraphs: 6,
   },
   argTypes: {
-    placement: { control: 'inline-radio', options: ['centred', 'drawer end', 'drawer start'] },
+    placement: { control: 'inline-radio', options: ['centred', 'top', 'bottom', 'drawer end', 'drawer start', 'bottom sheet'] },
     scroll: { control: 'inline-radio', options: ['body', 'whole card'] },
     lightDismiss: { control: 'boolean', description: '`closedby="any"`' },
     paragraphs: { control: { type: 'range', min: 1, max: 20 } },
@@ -112,8 +112,10 @@ export const Playground: Story = {
   render: (args) => {
     const cls = [
       'dialog',
-      args.placement !== 'centred' && 'dialog--drawer',
+      args.placement === 'top' && 'dialog--top',
+      ['drawer end', 'drawer start', 'bottom sheet'].includes(args.placement) && 'dialog--drawer',
       args.placement === 'drawer start' && 'dialog--start',
+      ['bottom', 'bottom sheet'].includes(args.placement) && 'dialog--bottom',
       args.scroll === 'whole card' && 'dialog--scrollable',
     ]
       .filter(Boolean)
@@ -302,6 +304,29 @@ const settingsDrawer = (id: string, cls: string) => `
     </article>
   </dialog>`;
 
+export const Bottom: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: '`.dialog--bottom`: a floating dialog pinned near the bottom, within reach of a thumb. An on-screen keyboard can cover it, so use `.dialog--top` for anything with a field.',
+      },
+    },
+  },
+  render: () => `
+    ${opener('leave-dialog', 'Leave the rota')}
+    <dialog id="leave-dialog" class="dialog dialog--bottom" aria-labelledby="leave-title">
+      <article class="card">
+        <header class="card__header">
+          <h2 id="leave-title" class="card__title small-heading">Leave the rota?</h2>
+          ${closeButton('leave-dialog')}
+        </header>
+        <div class="card__body"><p class="text">Your weeks go back into the shared pool.</p></div>
+        ${actions('Stay', 'Leave', 'leave')}
+      </article>
+    </dialog>`,
+  play: openOnLoad,
+};
+
 export const DrawerEnd: Story = {
   parameters: {
     docs: {
@@ -312,6 +337,19 @@ export const DrawerEnd: Story = {
     },
   },
   render: () => settingsDrawer('settings-drawer', ''),
+  play: openOnLoad,
+};
+
+export const BottomSheet: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`.dialog--drawer.dialog--bottom`: a drawer on the bottom edge, full width and flush with the bottom edge, as tall as its content, for a short choice on a phone. There is no drag to dismiss.',
+      },
+    },
+  },
+  render: () => settingsDrawer('settings-sheet', ' dialog--bottom'),
   play: openOnLoad,
 };
 

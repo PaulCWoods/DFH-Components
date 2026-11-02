@@ -14,7 +14,7 @@ related: [utilities, header, button, grid-grid-carousel]
 </div>
 ```
 
-## Why it exists
+## Purpose
 Most layouts should reflow on their own, and hiding is what's left for when they can't. Removing something at a width takes it away from everyone at that width, including people who zoomed in and so got the narrow layout on a large screen. That's why these helpers are for duplicates and labels, and never for the only way to do something.
 
 Hidden isn't one thing. `hide` removes an element for everyone, `sr-only` keeps the words for screen readers, voice control and translation, and `hide-labels` shortens a Button to its icon while the text stays as its name. Choosing the right one decides who still gets the content.

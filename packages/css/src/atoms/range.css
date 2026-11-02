@@ -29,7 +29,7 @@
   --_range-track-bg: var(--range-track-bg, var(--surface-muted, transparent));
   --_range-track-radius: var(--range-track-radius, var(--radius, 0.25rem));
   --_range-thumb-size: var(--range-thumb-size, var(--spacing-24));
-  --_range-thumb-radius: var(--range-thumb-radius, var(--radius-round, 9999px));
+  --_range-thumb-radius: var(--range-thumb-radius, var(--radius-full, 9999px));
   --_range-thumb-border-width: var(--range-thumb-border-width, var(--border-width, 1px));
   --_range-thumb-border-color: var(--range-thumb-border-color, var(--surface-card, Canvas));
   --_range-thumb-shadow: var(--range-thumb-shadow, var(--shadow-sm, none));

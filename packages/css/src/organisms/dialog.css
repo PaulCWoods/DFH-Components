@@ -11,8 +11,10 @@
 
    | Axis      | Values                                                     |
    | :-------- | :--------------------------------------------------------- |
-   | Placement | centred (default); .dialog--top; .dialog--drawer (inline   |
-   |           | end), .dialog--drawer.dialog--start (inline start)         |
+   | Placement | centred (default); .dialog--top; .dialog--bottom;          |
+   |           | .dialog--drawer (inline end),                              |
+   |           | .dialog--drawer.dialog--start (inline start),              |
+   |           | .dialog--drawer.dialog--bottom (a bottom sheet)            |
    | Scroll    | .card__body--scrollable (body only); .dialog--scrollable   |
    |           | (the whole card)                                           |
 
@@ -152,14 +154,21 @@
    ========================================================================== */
 
 /* The whole card scrolls as one */
-:where(.dialog--scrollable) {
-  --card-scroll: all;
+:where(.dialog--scrollable) > :where(.card) {
+  max-block-size: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 /* Pinned to the top: a field stays above an on-screen keyboard, and the dialog
    doesn't move as its content grows */
 :where(.dialog--top) {
   margin-block-start: var(--_dialog-cushion);
+}
+
+/* Pinned to the bottom, within reach of a thumb */
+:where(.dialog--bottom) {
+  margin-block-end: calc(var(--_dialog-cushion) + var(--safe-area-inset-bottom, 0px));
 }
 
 /* Drawer: a full-height panel on the inline end. On a narrow screen it leaves
@@ -182,6 +191,9 @@
     border-inline-start-width: var(--_card-border-width);
 
     block-size: 100%;
+    /* It runs to three screen edges: its content stays clear of a notch */
+    padding-block: var(--safe-area-inset-top, 0px) var(--safe-area-inset-bottom, 0px);
+    padding-inline-end: var(--safe-area-inset-inline-end, 0px);
   }
 
   &:not(:has(> .card)) {
@@ -202,6 +214,27 @@
   > :where(.card) {
     border-inline-end-width: var(--_card-border-width);
     border-inline-start-width: 0;
+    padding-inline: var(--safe-area-inset-inline-start, 0px) 0;
+  }
+}
+
+/* Bottom sheet: a drawer flush with the bottom edge, full width and as tall
+   as its content. It leaves a strip the target size tall. */
+:where(.dialog--drawer.dialog--bottom) {
+  --_dialog-closed: translateY(100%);
+
+  block-size: auto;
+  inline-size: 100dvi;
+  inset-block: auto 0;
+  inset-inline: 0;
+  max-block-size: calc(100dvb - var(--spacing-target, 3rem));
+
+  > :where(.card) {
+    block-size: auto;
+    border-width: 0;
+    border-block-start-width: var(--_card-border-width);
+    padding-block: 0 var(--safe-area-inset-bottom, 0px);
+    padding-inline: var(--safe-area-inset-inline-start, 0px) var(--safe-area-inset-inline-end, 0px);
   }
 }
 

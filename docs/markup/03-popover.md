@@ -25,7 +25,7 @@ related: [menu, card, tooltip, modal-dialog]
 Placement: Below, Above=popover--top, End aligned=popover--end-aligned, Start=popover--start, End=popover--end
 ```
 
-## Why it exists
+## Purpose
 Some things belong to one control and only matter for a moment: the actions behind a Button, a short form, a preview of a person. A Popover holds them next to that control and leaves the rest of the page usable, which is what separates it from a [Dialog](02-modal-dialog.md).
 
 It uses the native `popover` attribute. The browser puts it in the top layer, closes it on Escape or a click outside, and tells assistive technology whether it is open. The control that opens it is its anchor, so the markup doesn't wire them together, and it flips to the other side when it doesn't fit. None of that needs a script.

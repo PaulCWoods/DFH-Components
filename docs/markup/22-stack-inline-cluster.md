@@ -22,7 +22,7 @@ related: [grid-grid-carousel, split, wrapper, button-group, utilities]
 </div>
 ```
 
-## Why it exists
+## Purpose
 Space between things belongs to the group, not to the things. A child with its own margin brings that margin everywhere it goes, and whoever uses it next has to cancel it. With a flow, the parent sets one gap and any child can go in it.
 
 There are three because rows fail in two different ways. A row that never wraps has to have something that shrinks, or it overflows at large text. A row that wraps must be free to break anywhere. Choosing between Inline and Cluster is choosing which of those you have, and that choice is what keeps a layout working at 200% zoom.

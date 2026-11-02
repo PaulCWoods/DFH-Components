@@ -18,7 +18,7 @@ Shape: Text=skeleton--text, Heading=skeleton--heading, Avatar=skeleton--avatar, 
 Motion: Shimmer, Pulse=skeleton--pulse
 ```
 
-## Why it exists
+## Purpose
 A blank space while content loads looks broken, and a page that jumps when content arrives can move what someone was about to press. A Skeleton holds the space with the shape of what's coming, so the page already looks like itself and nothing moves.
 
 A text line takes its height from the text atom it sits in, so the bar matches the text that replaces it. The fill mixes the text colour, so it shows the same on any surface, and it stops moving for anyone who has asked for reduced motion.

@@ -29,7 +29,6 @@
    2. Modern Browser Root Settings
    -------------------------------------------------------------------------- */
 :root {
-  --viewport-fit: auto;
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
@@ -37,6 +36,18 @@
 
   interpolate-size: allow-keywords;
   font-feature-settings: "case" off, "sinf" off;
+}
+
+/* The device's insets are physical, the layout is logical: start and end
+   follow the direction. .viewport-fit-cover switches the insets on. */
+:where(:root, [dir="ltr"]) {
+  --safe-area-inset-inline-start: var(--safe-area-inset-left);
+  --safe-area-inset-inline-end: var(--safe-area-inset-right);
+}
+
+:where([dir="rtl"]) {
+  --safe-area-inset-inline-start: var(--safe-area-inset-right);
+  --safe-area-inset-inline-end: var(--safe-area-inset-left);
 }
 
 /* --------------------------------------------------------------------------

@@ -26,7 +26,7 @@ Density: Default, Compact=banner--compact
 Corners: Default, Round=banner--round
 ```
 
-## Why it exists
+## Purpose
 A page sometimes has to say something about itself: a problem, a change, something about to happen. A Banner says one such thing, in the flow of the page, where it can be read in context.
 
 One message is the limit, and it keeps the Banner honest. Once something needs media, or a title, body and footer of controls, it is a [Card](10-card.md).

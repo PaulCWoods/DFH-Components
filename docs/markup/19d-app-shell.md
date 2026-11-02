@@ -26,7 +26,7 @@ related: [header, sidebar, footer, wrapper, split, modal-dialog]
 </div>
 ```
 
-## Why it exists
+## Purpose
 Every page has the same outline: a Header, the main content, a Footer. The shell places those three in rows and gives the free height to the main, so the Footer stays at the bottom of a short page. It also keeps the landmarks in the one place a page needs them.
 
 An app often wants its panes to scroll inside the screen, and that's the risky part, because a locked region clips whatever doesn't fit. So anything holding content scrolls, and the lock releases on small or short screens, where panes would be too short to use.

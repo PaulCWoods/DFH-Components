@@ -103,7 +103,7 @@
   }
 
   @container style(--progress-corners: round) {
-    --_bar-radius: var(--radius-round, 9999px);
+    --_bar-radius: var(--radius-full, 9999px);
   }
 
   accent-color: var(--_progress-tone);
@@ -185,7 +185,7 @@
   }
 
   @container style(--meter-corners: round) {
-    --_bar-radius: var(--radius-round, 9999px);
+    --_bar-radius: var(--radius-full, 9999px);
   }
 
   /* No thresholds: a plain measurement, not good or bad news */
@@ -274,7 +274,7 @@
 }
 
 :where(.progress--round, .meter--round) {
-  --_bar-radius: var(--radius-round, 9999px);
+  --_bar-radius: var(--radius-full, 9999px);
 }
 
 :where(.progress--info) {

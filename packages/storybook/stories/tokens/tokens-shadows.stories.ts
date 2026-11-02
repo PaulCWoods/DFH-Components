@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html';
 
 interface ShadowArgs {
   elevation: 'none' | 'sm' | 'md' | 'lg' | 'inner';
-  variant: 'default' | 'light' | 'custom-teal' | 'custom-purple' | 'custom-rose';
+  variant: 'default' | 'light' | 'custom-purple' | 'custom-rose';
   surface: 'card' | 'base' | 'muted';
 }
 
@@ -89,7 +89,7 @@ To protect against invisible shadows in Firefox, either:
     },
     variant: {
       control: 'select',
-      options: ['default', 'light', 'custom-teal', 'custom-purple', 'custom-rose'],
+      options: ['default', 'light', 'custom-purple', 'custom-rose'],
       description: 'Shadow color tint variant or @function parameter',
     },
     surface: {
@@ -189,12 +189,6 @@ export const LightElevations: Story = {
 export const FunctionRecoloredShadows: Story = {
   render: () => `
     <div class="grid" style="--grid-min-col: 15rem; gap: var(--spacing-24);">
-      <!-- Aqua Glow using --shadow-md() -->
-      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-aqua-500), transparent 70%); box-shadow: var(--shadow-md); box-shadow: --shadow-md(color-mix(in srgb, var(--color-aqua-500), transparent 70%)); border-color: var(--color-aqua-500);">
-        <h4 class="card__title small-heading">Aqua Glow</h4>
-        <p class="small-text text-muted"><code>--shadow-md(color-mix(...))</code></p>
-        <p class="small-text">Active selections, live telemetry indicators, and focused cards.</p>
-      </article>
 
       <!-- Purple Brand using --shadow-md() -->
       <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-purple-500), transparent 70%); box-shadow: var(--shadow-md); box-shadow: --shadow-md(color-mix(in srgb, var(--color-purple-500), transparent 70%)); border-color: var(--color-purple-500);">
@@ -233,11 +227,6 @@ export const ContextualColorOverride: Story = {
         <p class="small-text">Inherits locally scoped <code>--shadow-color</code> through all 3 layers seamlessly.</p>
       </article>
 
-      <article class="card p-md" style="--shadow-color: color-mix(in srgb, var(--color-aqua-700), transparent 75%); box-shadow: var(--shadow-md); border-color: var(--color-aqua-500);">
-        <h4 class="card__title small-heading">Contextual Aqua</h4>
-        <p class="small-text text-muted"><code>--shadow-color: ...; box-shadow: var(--shadow-md);</code></p>
-        <p class="small-text">Guarantees 100% feature parity across both modern and legacy browsers.</p>
-      </article>
     </div>
   `,
 };
@@ -251,8 +240,6 @@ export const Playground: Story = {
 
     if (args.variant === 'light') {
       shadowStyle = `box-shadow: var(--shadow-${args.elevation}-light);`;
-    } else if (args.variant === 'custom-teal') {
-      shadowStyle = `--shadow-color: color-mix(in srgb, var(--color-aqua-500), transparent 70%); box-shadow: var(--shadow-${args.elevation}); box-shadow: --shadow-${args.elevation}(color-mix(in srgb, var(--color-aqua-500), transparent 70%)); border-color: var(--color-aqua-500);`;
     } else if (args.variant === 'custom-purple') {
       shadowStyle = `--shadow-color: color-mix(in srgb, var(--color-purple-500), transparent 70%); box-shadow: var(--shadow-${args.elevation}); box-shadow: --shadow-${args.elevation}(color-mix(in srgb, var(--color-purple-500), transparent 70%)); border-color: var(--color-purple-500);`;
     } else if (args.variant === 'custom-rose') {

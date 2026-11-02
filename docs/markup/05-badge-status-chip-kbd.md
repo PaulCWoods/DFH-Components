@@ -15,7 +15,7 @@ related: [button, avatar, icon-icon-box, form-controls]
 <kbd class="kbd">Esc</kbd>
 ```
 
-## Why it exists
+## Purpose
 A small rounded label can mean almost anything: a count, a result, a tag, a key. When one pill does all of those jobs, the reader has to guess which one it's doing, and the markup can't help a screen reader tell them apart.
 
 So there are four atoms, and you choose by job, not by look. If it's attached to something, it's a Badge. If it says what state something is in, it's a Status. If it's a value someone chose or could remove, it's a Chip. If it's a key, it's a Kbd.

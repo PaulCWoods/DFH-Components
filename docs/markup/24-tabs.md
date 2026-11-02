@@ -32,7 +32,7 @@ Size: Small=tab-list--sm, Default*
 Corners: Rounded, Round=tab-list--round
 ```
 
-## Why it exists
+## Purpose
 Tabs show one thing at a time and keep the others a click away. They cover two jobs that look alike and behave differently. Moving between pages is a list of links in a `<nav>`, which the browser already handles. Switching panels on one page is `role="tablist"`, which promises arrow keys, and the library ships no script for them. Pick by which job you have, since the look won't tell you.
 
 Selection lives in `aria-selected` or `aria-current`, with no class. What a screen reader announces and what the eye sees come from the same attribute, so they can't disagree.

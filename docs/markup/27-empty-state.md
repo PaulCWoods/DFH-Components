@@ -30,7 +30,7 @@ Density: Default, Compact=empty-state--compact
 Alignment: Centred, Start=empty-state--start
 ```
 
-## Why it exists
+## Purpose
 A blank space leaves people guessing whether something broke, is still loading or really has nothing to show. An Empty State settles it: it says what is missing, why, and what to do next.
 
 Most of its value is in the words, so the component stays out of their way. It lays out a visual, some text and actions, and each part styles itself. It has no padding of its own because it normally sits in something that does, such as a Card or a Table cell.

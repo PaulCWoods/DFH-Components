@@ -79,7 +79,7 @@
   }
 
   @container style(--chip-corners: round) {
-    --_chip-radius: var(--radius-round, 9999px);
+    --_chip-radius: var(--radius-full, 9999px);
   }
 
   /* Layout & Display */
@@ -200,5 +200,5 @@
 }
 
 :where(.chip--round) {
-  --_chip-radius: var(--radius-round, 9999px);
+  --_chip-radius: var(--radius-full, 9999px);
 }

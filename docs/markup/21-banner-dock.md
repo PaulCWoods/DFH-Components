@@ -19,7 +19,7 @@ related: [banner, toast, wrapper]
 </aside>
 ```
 
-## Why it exists
+## Purpose
 Some messages are about the whole site: a maintenance window, a consent question, a closure. They need a place that isn't tied to one part of the page, and that place is the page's edge.
 
 The Dock only decides where a [Banner](11-banner.md) sits. The Banner stays the one component for a message, and it knows nothing about the Dock, so there's no second message style to keep in step.

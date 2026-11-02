@@ -15,7 +15,7 @@ Size: Small=thumbnail--sm, Default*, Large=thumbnail--lg
 Corners: Rounded, Round=thumbnail--round
 ```
 
-## Why it exists
+## Purpose
 In a track list, a basket or a file list, people often look for the picture before they read the words. A Thumbnail gives a picture a place in those rows without needing a Card around it, and without borrowing an Avatar, which says "person".
 
 Its size is set on the block side, and the width follows from the aspect. Pictures of different shapes still line up in a row, and the row doesn't jump when an image arrives.

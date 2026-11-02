@@ -40,7 +40,7 @@ Rows: Default, Striped=table--striped
 Density: Default, Compact=table--compact
 ```
 
-## Why it exists
+## Purpose
 A Table is for comparing, across a row or down a column. Only a real `<table>` tells a screen reader which headers belong to a cell, so someone moving through it hears the column and the row as they go. That is why it uses `<th>` with `scope`, and why nothing here changes the `display` of its elements.
 
 A wide Table scrolls in its container, and the library won't reflow rows into Cards. Stacked Cards keep each value but lose the columns, and the columns are the reason to use a Table at all.

@@ -19,7 +19,7 @@ Placement: Above, Below=tooltip--bottom, Start=tooltip--start, End=tooltip--end
 Arrow: Shown, None=tooltip--no-arrow
 ```
 
-## Why it exists
+## Purpose
 An icon Button saves space but asks people to guess. A Tooltip gives its name to anyone who hovers or tabs to it, for the moment they need it.
 
 It is the browser's own: `interestfor` opens it and `popover="hint"` places it above the page, so showing it on hover and focus and closing it on Escape need no script. For now only Chromium browsers show it, which sets the rule for everything else here. A Tooltip is an extra and never holds the only copy of anything, and a control's name stays in the control.

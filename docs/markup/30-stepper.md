@@ -35,7 +35,7 @@ Prominence: Default, Plain=stepper--plain
 Density: Default, Compact=stepper--compact
 ```
 
-## Why it exists
+## Purpose
 A long task is easier to finish when you can see where you are and how much is left. A Stepper shows that and nothing more. It doesn't run the task, keep track of it or decide what's allowed next.
 
 It is an ordered list, because the order is what it means. Its look says which steps are done, but the indicator is hidden from assistive technology, so each title starts with its state in words. The check and warning icons do the same job on screen, so state is never colour alone.

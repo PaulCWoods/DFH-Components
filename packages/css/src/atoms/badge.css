@@ -101,7 +101,7 @@
   line-height: 1;
 
   /* Surface */
-  border-radius: var(--radius-round, 9999px);
+  border-radius: var(--radius-full, 9999px);
   background-color: var(--_badge-tone);
   color: var(--_badge-on-tone);
 

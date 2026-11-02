@@ -51,8 +51,8 @@
   inline-size: 100%;
   /* The band pads the sides, so a bar's content lines up with a .wrapper's */
   padding-inline:
-    calc(var(--_footer-padding-inline) + var(--safe-area-inset-left, 0px))
-    calc(var(--_footer-padding-inline) + var(--safe-area-inset-right, 0px));
+    calc(var(--_footer-padding-inline) + var(--safe-area-inset-inline-start, 0px))
+    calc(var(--_footer-padding-inline) + var(--safe-area-inset-inline-end, 0px));
 }
 
 /* At the bottom of the page, clear the home indicator */

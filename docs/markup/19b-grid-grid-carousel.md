@@ -15,7 +15,7 @@ related: [split, stack-inline-cluster, wrapper, card, responsive-visibility]
 </ul>
 ```
 
-## Why it exists
+## Purpose
 A set of like things should fill the space it's given, whatever that space turns out to be. So a Grid has no breakpoints. It takes a minimum width for an item and fits as many columns as it can.
 
 That also makes it hold up under zoom. Zooming in narrows the space in CSS terms, so the columns drop away by themselves and nothing overflows. A column count is only a maximum, and an item still won't go below its minimum.

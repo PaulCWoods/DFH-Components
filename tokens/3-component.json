@@ -70,7 +70,7 @@
       "$type": "dimension"
     },
     "radius": {
-      "$value": "{radius.round}",
+      "$value": "{radius.full}",
       "$type": "dimension"
     },
     "square-radius": {
@@ -170,7 +170,7 @@
       "$type": "dimension"
     },
     "round-radius": {
-      "$value": "{radius.round}",
+      "$value": "{radius.full}",
       "$type": "dimension"
     },
     "bg": {
@@ -1865,7 +1865,7 @@
       "$description": "Large slider thumb diameter"
     },
     "thumb-radius": {
-      "$value": "{radius.round}",
+      "$value": "{radius.full}",
       "$type": "dimension",
       "$description": "Corner radius for slider thumb"
     },
@@ -2700,7 +2700,7 @@
       "$description": "Default corner radius"
     },
     "radius-round": {
-      "$value": "{radius.round}",
+      "$value": "{radius.full}",
       "$type": "dimension",
       "$description": "Radius for avatar and badge shapes"
     },

@@ -172,7 +172,7 @@
 
   /* Corners */
   @container style(--button-corners: round) or style(--controls-corners: round) {
-    --_button-radius: var(--radius-round, 9999px);
+    --_button-radius: var(--radius-full, 9999px);
   }
 
   /* Layout & Display */
@@ -423,7 +423,7 @@
    5. Shape Modifiers (.button--round)
    ========================================================================== */
 :where(.button--round) {
-  --_button-radius: var(--radius-round, 9999px);
+  --_button-radius: var(--radius-full, 9999px);
 }
 
 /* ==========================================================================

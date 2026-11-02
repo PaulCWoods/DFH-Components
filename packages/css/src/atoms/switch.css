@@ -83,7 +83,7 @@
   }
 
   @container style(--switch-corners: round) or style(--controls-corners: round) {
-    --_switch-radius: var(--radius-round, 9999px);
+    --_switch-radius: var(--radius-full, 9999px);
   }
 
   /* Layout: the label row is the hit area */
@@ -249,5 +249,5 @@
 }
 
 :where(.switch--round) {
-  --_switch-radius: var(--radius-round, 9999px);
+  --_switch-radius: var(--radius-full, 9999px);
 }

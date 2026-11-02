@@ -25,17 +25,11 @@
         "light": 0.945
       }
     },
-    "aqua": {
-      "seed": "#30aa94"
-    },
     "blue": {
       "seed": "#379fd7"
     },
     "purple": {
       "seed": "#ad77e1"
-    },
-    "olive": {
-      "seed": "#919d43"
     },
     "amber": {
       "seed": "#ffa300"
@@ -93,16 +87,16 @@
       "dark": "purple.300"
     },
     "surface.complementary": {
-      "light": "olive.200",
-      "dark": "olive.800"
+      "light": "blue.200",
+      "dark": "blue.800"
     },
     "surface.complementary-dark": {
-      "light": "olive.800",
-      "dark": "olive.800"
+      "light": "blue.800",
+      "dark": "blue.800"
     },
     "surface.complementary-strong": {
-      "light": "olive.700",
-      "dark": "olive.300"
+      "light": "blue.700",
+      "dark": "blue.300"
     },
     "surface.danger": {
       "light": "red.100",
@@ -117,16 +111,16 @@
       "dark": "amber.900"
     },
     "surface.info": {
-      "light": "aqua.100",
-      "dark": "aqua.900"
+      "light": "blue.100",
+      "dark": "blue.900"
     },
     "surface.warning-strong": {
       "light": "amber.700",
       "dark": "amber.300"
     },
     "surface.info-strong": {
-      "light": "aqua.700",
-      "dark": "aqua.300"
+      "light": "blue.700",
+      "dark": "blue.300"
     },
     "surface.success": {
       "light": "green.100",
@@ -177,16 +171,16 @@
       "dark": "purple.100"
     },
     "foreground.complementary": {
-      "light": "olive.700",
-      "dark": "olive.300"
+      "light": "blue.700",
+      "dark": "blue.300"
     },
     "foreground.complementary-hover": {
-      "light": "olive.600",
-      "dark": "olive.200"
+      "light": "blue.600",
+      "dark": "blue.200"
     },
     "foreground.complementary-pressed": {
-      "light": "olive.800",
-      "dark": "olive.100"
+      "light": "blue.800",
+      "dark": "blue.100"
     },
     "foreground.danger": {
       "light": "red.600",
@@ -217,32 +211,32 @@
       "dark": "amber.300"
     },
     "foreground.info": {
-      "light": "aqua.600",
-      "dark": "aqua.300"
+      "light": "blue.600",
+      "dark": "blue.300"
     },
     "foreground.warning-hover": {
       "light": "amber.700",
       "dark": "amber.200"
     },
     "foreground.info-hover": {
-      "light": "aqua.700",
-      "dark": "aqua.200"
+      "light": "blue.700",
+      "dark": "blue.200"
     },
     "foreground.warning-pressed": {
       "light": "amber.800",
       "dark": "amber.100"
     },
     "foreground.info-pressed": {
-      "light": "aqua.800",
-      "dark": "aqua.100"
+      "light": "blue.800",
+      "dark": "blue.100"
     },
     "border.color.accent": {
       "light": "purple.500",
       "dark": "purple.500"
     },
     "border.color.complementary": {
-      "light": "olive.600",
-      "dark": "olive.500"
+      "light": "blue.600",
+      "dark": "blue.500"
     },
     "border.color.danger": {
       "light": "red.500",
@@ -253,8 +247,8 @@
       "dark": "amber.500"
     },
     "border.color.info": {
-      "light": "aqua.500",
-      "dark": "aqua.500"
+      "light": "blue.500",
+      "dark": "blue.500"
     },
     "border.color.success": {
       "light": "green.500",

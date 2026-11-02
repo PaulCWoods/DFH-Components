@@ -18,7 +18,7 @@ Size: Small=icon--sm, Default*, Large=icon--lg
 Intent: Neutral, Accent=icon--accent "New rota reminder", Danger=icon--danger "Rota reminder failed to send", Warning=icon--warning "Rota reminder is late", Success=icon--success "Rota reminder sent", Info=icon--info "Rota reminder scheduled"
 ```
 
-## Why it exists
+## Purpose
 An icon helps someone spot what they already know: a warning beside an error, an arrow on a Link. Few icons mean the same thing to everyone, so an icon sits beside the word and doesn't replace it.
 
 Every icon comes from one sprite, drawn as one family. It's sized in `em` and coloured with `currentColor`, so it follows its text without being told, in any theme and in forced colours. Inside a control or beside text it adds nothing for a screen reader, so it stays hidden there.

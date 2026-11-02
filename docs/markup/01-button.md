@@ -17,7 +17,7 @@ Size: Small=button--sm, Default*, Large=button--lg
 Corners: Rounded, Round=button--round
 ```
 
-## Why it exists
+## Purpose
 Most of what a person does on a page, they do through a Button. It is a real `<button>` because the browser already gives it focus, keyboard use and a role that assistive technology understands, and nothing here replaces those.
 
 Its look comes from two separate choices: prominence says how much attention an action deserves, and intent says what kind of action it is. Keeping them apart means a quiet destructive action and a loud one are the same two ideas, not two more variants to learn.

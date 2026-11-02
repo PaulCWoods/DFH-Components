@@ -125,15 +125,15 @@
       "$description": "High-contrast accent surface for primary interactive elements"
     },
     "complementary": {
-      "$value": "light-dark({color.olive.200}, {color.olive.800})",
+      "$value": "light-dark({color.blue.200}, {color.blue.800})",
       "$description": "Light tint complementary surface for badges and highlighted areas"
     },
     "complementary-dark": {
-      "$value": "{color.olive.800}",
+      "$value": "{color.blue.800}",
       "$description": "Deep complementary surface"
     },
     "complementary-strong": {
-      "$value": "light-dark({color.olive.700}, {color.olive.300})",
+      "$value": "light-dark({color.blue.700}, {color.blue.300})",
       "$description": "High-contrast complementary surface for primary interactive elements"
     },
     "translucent": {
@@ -173,11 +173,11 @@
       "$description": "High-contrast success surface for strong alert banners and callouts"
     },
     "info": {
-      "$value": "light-dark({color.aqua.100}, {color.aqua.900})",
+      "$value": "light-dark({color.blue.100}, {color.blue.900})",
       "$description": "Cautionary or pending review alert banner background"
     },
     "info-strong": {
-      "$value": "light-dark({color.aqua.700}, {color.aqua.300})",
+      "$value": "light-dark({color.blue.700}, {color.blue.300})",
       "$description": "High-contrast info surface for strong alert banners and callouts"
     }
   },
@@ -225,15 +225,15 @@
       "$description": "Active / pressed state for links and accent buttons"
     },
     "complementary": {
-      "$value": "light-dark({color.olive.700}, {color.olive.300})",
+      "$value": "light-dark({color.blue.700}, {color.blue.300})",
       "$description": "Complementary links, active navigation items, focus states"
     },
     "complementary-hover": {
-      "$value": "light-dark({color.olive.600}, {color.olive.200})",
+      "$value": "light-dark({color.blue.600}, {color.blue.200})",
       "$description": "Complementary state for links and accent buttons"
     },
     "complementary-pressed": {
-      "$value": "light-dark({color.olive.800}, {color.olive.100})",
+      "$value": "light-dark({color.blue.800}, {color.blue.100})",
       "$description": "Active / pressed state for complementary buttons"
     },
     "danger": {
@@ -273,15 +273,15 @@
       "$description": "Warning pressed state"
     },
     "info": {
-      "$value": "light-dark({color.aqua.600}, {color.aqua.300})",
+      "$value": "light-dark({color.blue.600}, {color.blue.300})",
       "$description": "info callout text and pending status icons"
     },
     "info-hover": {
-      "$value": "light-dark({color.aqua.700}, {color.aqua.200})",
+      "$value": "light-dark({color.blue.700}, {color.blue.200})",
       "$description": "info hover state"
     },
     "info-pressed": {
-      "$value": "light-dark({color.aqua.800}, {color.aqua.100})",
+      "$value": "light-dark({color.blue.800}, {color.blue.100})",
       "$description": "info pressed state"
     }
   },
@@ -310,7 +310,7 @@
         "$description": "Active interactive border color"
       },
       "complementary": {
-        "$value": "light-dark({color.olive.600}, {color.olive.500})",
+        "$value": "light-dark({color.blue.600}, {color.blue.500})",
         "$description": "Complementary interactive border color"
       },
       "danger": {
@@ -326,7 +326,7 @@
         "$description": "Valid input field border"
       },
       "info": {
-        "$value": "{color.aqua.500}",
+        "$value": "{color.blue.500}",
         "$description": "info field border"
       }
     },
@@ -1128,11 +1128,6 @@
     "xl": {
       "$value": "{radius.12}",
       "$type": "dimension"
-    },
-    "50pc": {
-      "$value": "{radius.9999}",
-      "$type": "dimension",
-      "$description": "For elliptical shapes"
     },
     "full": {
       "$value": "{radius.9999}",

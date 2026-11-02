@@ -60,7 +60,7 @@
   }
 
   @container style(--thumbnail-corners: round) {
-    --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-round));
+    --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-full));
     --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
   }
 
@@ -120,7 +120,7 @@
 }
 
 :where(.thumbnail--round) {
-  --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-round));
+  --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-full));
   /* On a circle, (1 - 1/√2) / 2 of the size, as on an avatar */
   --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
 }

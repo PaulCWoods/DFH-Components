@@ -16,7 +16,7 @@ related: [app-shell, header, footer, stack-inline-cluster, utilities]
 </div>
 ```
 
-## Why it exists
+## Purpose
 A page needs its content kept off the screen edge and lined up from top to bottom. That's one job, so it's one element, and pages don't each invent a width.
 
 The cap applies to the content, not to the box with its gutters. That is why a wrapped page lines up with the [Header](33-header.md) and [Footer](35-footer.md) bars at any width, and why a Wrapper inside a Wrapper doesn't pad twice.

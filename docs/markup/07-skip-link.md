@@ -14,7 +14,7 @@ related: [link-block-link, header]
 
 Shown open here. On a page it stays hidden until it has keyboard focus. Press Tab as this page loads to meet its own.
 
-## Why it exists
+## Purpose
 Someone with a mouse can go straight past a Header. Someone using a keyboard or a switch has to go through it, one stop at a time, on every page. A Skip Link gives them the same shortcut.
 
 It's an ordinary Link to an id, so it needs no script and works even if script fails. It stays out of sight until it has focus, so it costs nobody else anything. It appears on focus because the sighted keyboard user who lands on it needs to see where they are.

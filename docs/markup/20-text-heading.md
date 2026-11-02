@@ -17,7 +17,7 @@ related: [prose, form-composition, card]
 Sizing: Fixed, Fluid=font-sizing-fluid, Container=font-sizing-cq container-inline, Compact=font-sizing-compact
 ```
 
-## Why it exists
+## Purpose
 Most of what people come to a page for is text, so type should be consistent and hard to get wrong. Each atom sets size, family, weight and line height together, because those only work as a set. Ten of them cover the whole range, so a page doesn't drift into near-identical sizes.
 
 The class sets the look, and the element sets the meaning. A screen reader user moves through a page by its heading levels, so the outline shouldn't bend to get a size, and the size shouldn't bend to fit the outline. An `h2` can look like a `.small-heading`.

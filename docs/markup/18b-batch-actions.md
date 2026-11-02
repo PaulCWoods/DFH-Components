@@ -35,7 +35,7 @@ Corners: Rounded, Round=batch-actions--round
 Density: Default, Compact=batch-actions--compact
 ```
 
-## Why it exists
+## Purpose
 Selecting many things is only worth the effort if the actions are close by and it's clear how many they will touch. This bar exists for as long as a selection does, and it floats so it stays in reach however far the list has scrolled.
 
 The count is announced as well as shown, because someone who can't see the bar still needs to know how many items Delete will affect. A Badge would only repeat it.

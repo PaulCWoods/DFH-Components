@@ -17,7 +17,7 @@ Prominence: Default, Strong=divider--strong
 Style: Solid, Dashed=divider--dashed
 ```
 
-## Why it exists
+## Purpose
 Most groups can be told apart with space alone, and a line is one more thing on the page to look past. A Divider is for the places space can't do it, such as between sections of a Menu or actions in a row.
 
 It's a real `<hr>`, or a `role="separator"` in a list, so the separation reaches a screen reader too. Components place it and never restyle it, so there's one rule across the library. It's quiet by default, because it's usually decorative. When the rule is the only boundary between two things, `--strong` takes it to at least 3:1.

@@ -37,7 +37,7 @@
   /* Private manifest */
   --_avatar-size: var(--avatar-size, var(--spacing-xl));
   --_avatar-font-size: var(--avatar-font-size, var(--typography-font-size-0));
-  --_avatar-radius: var(--avatar-radius, var(--radius-round));
+  --_avatar-radius: var(--avatar-radius, var(--radius-full));
   --_avatar-bg: var(--avatar-bg, var(--surface-muted, Canvas));
   --_avatar-text: var(--avatar-text, var(--foreground, CanvasText));
   --_avatar-border-width: var(--avatar-border-width, var(--border-width-thin, 1px));

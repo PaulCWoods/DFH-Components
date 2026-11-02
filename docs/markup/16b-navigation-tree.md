@@ -27,7 +27,7 @@ Guide lines: None, Ruled=navigation-tree--ruled
 Density: Default, Compact=navigation-tree--compact
 ```
 
-## Why it exists
+## Purpose
 A long site or a long page needs a map that stays put. A Navigation Tree shows the sections, how they nest, and where you are now.
 
 It is links in real nested lists, so the hierarchy is in the markup and a screen reader can follow it. Its items are [Buttons](01-button.md), so they bring their 48px targets and focus ring. The current location has three signs, bold text, a tint and a rail, so it never rests on colour.

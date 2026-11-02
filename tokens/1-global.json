@@ -102,80 +102,6 @@
         }
       }
     },
-    "aqua": {
-      "100": {
-        "$value": "#cefcf0",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(95.5% 0.049 177.9)"
-          }
-        }
-      },
-      "200": {
-        "$value": "#b9f0e2",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(91.3% 0.059 177.9)"
-          }
-        }
-      },
-      "300": {
-        "$value": "#8dd9c7",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(83.1% 0.080 177.9)"
-          }
-        }
-      },
-      "400": {
-        "$value": "#56bba7",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(72.7% 0.100 177.9)"
-          }
-        }
-      },
-      "500": {
-        "$value": "#119984",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(61.2% 0.110 177.9)"
-          }
-        }
-      },
-      "600": {
-        "$value": "#007362",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(49.8% 0.092 177.9)"
-          }
-        }
-      },
-      "700": {
-        "$value": "#005246",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(39.4% 0.073 177.9)"
-          }
-        }
-      },
-      "800": {
-        "$value": "#003a31",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(31.2% 0.057 177.9)"
-          }
-        }
-      },
-      "900": {
-        "$value": "#002e26",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(27.0% 0.050 177.9)"
-          }
-        }
-      }
-    },
     "blue": {
       "100": {
         "$value": "#e1f3ff",
@@ -320,80 +246,6 @@
         "$extensions": {
           "com.designforhumans.theme-engine": {
             "oklch": "oklch(27.0% 0.104 306.0)"
-          }
-        }
-      }
-    },
-    "olive": {
-      "100": {
-        "$value": "#eef5ce",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(95.5% 0.052 116.0)"
-          }
-        }
-      },
-      "200": {
-        "$value": "#e0e8b9",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(91.3% 0.062 116.0)"
-          }
-        }
-      },
-      "300": {
-        "$value": "#c5cf90",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(83.1% 0.084 116.0)"
-          }
-        }
-      },
-      "400": {
-        "$value": "#a3af5f",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(72.7% 0.106 116.0)"
-          }
-        }
-      },
-      "500": {
-        "$value": "#818c31",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(61.2% 0.116 116.0)"
-          }
-        }
-      },
-      "600": {
-        "$value": "#606a0b",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(49.8% 0.109 116.0)"
-          }
-        }
-      },
-      "700": {
-        "$value": "#444b00",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(39.4% 0.090 116.0)"
-          }
-        }
-      },
-      "800": {
-        "$value": "#2f3500",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(31.2% 0.071 116.0)"
-          }
-        }
-      },
-      "900": {
-        "$value": "#252a00",
-        "$extensions": {
-          "com.designforhumans.theme-engine": {
-            "oklch": "oklch(27.0% 0.062 116.0)"
           }
         }
       }
@@ -1027,9 +879,6 @@
     "$type": "dimension",
     "none": {
       "$value": "0px"
-    },
-    "50pc": {
-      "$value": "50%"
     }
   },
   "duration": {

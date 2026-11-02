@@ -18,7 +18,7 @@ Prominence: Default, Plain=accordion--plain
 Density: Default, Compact=accordion--compact
 ```
 
-## Why it exists
+## Purpose
 An Accordion lets people skip what they don't need, on pages where not everyone needs everything. That has a cost, because closed content is easy to miss. So it suits optional sections, and never the only copy of something people have to read.
 
 It is a native `<details>`. The browser gives it keyboard use, an open or closed state for screen readers and, where supported, find-in-page that opens the section holding the match. A scripted disclosure has to rebuild each of those, so there is no script and no ARIA.

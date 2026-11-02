@@ -19,7 +19,7 @@ related: [text-heading, wrapper, link-block-link, table]
 </div>
 ```
 
-## Why it exists
+## Purpose
 Long text usually comes from somewhere that can't add classes, such as a CMS or a Markdown file. Prose makes that output read like the rest of the library by styling the bare elements.
 
 Each element takes the type of the text atom it stands for, so a heading in an article matches a heading in an interface. Prose has no options of its own. It follows the sizing mode around it, and so does the space between its blocks, so one article sits properly in a page, a Dialog or a compact region.

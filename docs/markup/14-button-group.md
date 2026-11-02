@@ -20,7 +20,7 @@ Width: Content, Fill=button-group--fill
 Buttons: Default, Subtle=buttons-subtle, Plain=buttons-plain
 ```
 
-## Why it exists
+## Purpose
 [Buttons](01-button.md) that belong together should look as if they do. A Button Group keeps them at the right distance and lets them wrap when the space runs out. It lays them out and leaves them alone, so a Button looks and behaves the same in a group as anywhere else.
 
 It has no alignment options, because where a group sits is the page's decision. A `justify-*` utility or the layout around it makes that decision, and looks and sizes come from the Buttons, set for the whole group with `.buttons-*`.

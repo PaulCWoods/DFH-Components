@@ -13,7 +13,7 @@ related: [responsive-visibility, text-heading, stack-inline-cluster, wrapper]
 </div>
 ```
 
-## Why it exists
+## Purpose
 Sometimes one element just needs a bit more margin or a muted colour, and a new modifier would be out of proportion. A utility is that small adjustment: one property, one value, on the element it's written on.
 
 The values come from the same tokens as the components, and the sides are logical (`start` and `end`, never left and right), so a right-to-left page and a change of theme need nothing extra. Their names follow Tailwind's where the meaning is the same, because many people already know them, and there are never more than two names for one thing.
@@ -101,3 +101,4 @@ A mode class sets a flag that the components inside read; it styles nothing itse
 | `.elements-plain`, `-subtle` | `--elements-prominence`: every element with that prominence (controls, status, Chip, kbd, Icon Box, Tab List, Telemetry); not containers (Card, Sidebar, Banner, Menu, Accordion, Table, Stepper, Empty State) or links |
 | `.color-scheme-light`, `-dark`, `-light-dark` | `color-scheme` |
 | `.color-palette-inverted` (`.colors-inverted`) | The palette roles |
+| `.viewport-fit-cover` | `--safe-area-inset-top`, `-bottom`, `-left`, `-right` from the device, and `-inline-start`, `-inline-end` by direction. Goes on `<html>`, with `viewport-fit=cover` in the viewport meta (without it the device reports 0). Header, Footer, Sidebar, a drawer Dialog, `.wrapper--safe-area`, Toast, Batch Actions, a docked Tab List and Skip Link read them |

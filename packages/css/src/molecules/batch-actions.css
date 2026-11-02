@@ -57,7 +57,7 @@
 
   /* Floating at the bottom centre of the viewport */
   inline-size: max-content;
-  inset-block-end: calc(var(--_batch-actions-offset) + env(safe-area-inset-bottom, 0px));
+  inset-block-end: calc(var(--_batch-actions-offset) + var(--safe-area-inset-bottom, 0px));
   inset-inline: 0;
   margin-inline: auto;
   max-inline-size: min(var(--_batch-actions-max-width), calc(100% - var(--_batch-actions-offset) * 2));

@@ -176,7 +176,7 @@
 
 @container style(--tab-list-style: segmented) and style(--tab-list-corners: round) {
   :where(.tab-list)::before {
-    border-radius: var(--radius-round, 9999px);
+    border-radius: var(--radius-full, 9999px);
   }
 }
 
@@ -410,7 +410,7 @@
 
 :where(.tab-list--docked) {
   position: fixed;
-  inset-block-end: calc(var(--tab-list-docked-offset, var(--spacing-24)) + env(safe-area-inset-bottom, 0px));
+  inset-block-end: calc(var(--tab-list-docked-offset, var(--spacing-24)) + var(--safe-area-inset-bottom, 0px));
   inset-inline: 0;
   z-index: var(--z-index-sticky, 100);
   inline-size: fit-content;

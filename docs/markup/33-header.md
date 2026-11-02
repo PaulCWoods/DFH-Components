@@ -38,7 +38,7 @@ Prominence: Default, Plain=header--plain, Translucent=header--translucent
 Density: Default, Compact=header--compact
 ```
 
-## Why it exists
+## Purpose
 The top of the page is where people expect to find out where they are and how to get elsewhere. A Header gives that one consistent place, as a real `<header>`, so screen reader users can jump to it as the banner landmark.
 
 It draws the band and lays out its rows, and everything in a row styles itself. So a Brand, a Tab List or a Button looks the same here as anywhere, and the Header's only opinions are about the band. Its bars share the site width with [Wrapper](19-wrapper.md), so the Header lines up with the page.

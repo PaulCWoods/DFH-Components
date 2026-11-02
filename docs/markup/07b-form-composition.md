@@ -35,7 +35,7 @@ Labels: Above, Beside=form--aligned
 Density: Default, Compact=form--compact
 ```
 
-## Why it exists
+## Purpose
 A form is where a misunderstanding costs someone their time, so the words around a control matter as much as the control: what's being asked, why, and how to put it right. These parts give those words a fixed place, in the same order every time.
 
 That order is label, hint, error, control, and it is the order a screen-reader user hears them in. An error comes before its control, so it is heard before the Field is reached, and someone using a magnifier sees it beside the label.

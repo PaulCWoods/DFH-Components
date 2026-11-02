@@ -18,7 +18,7 @@ related: [link-block-link, navigation-tree, pagination-page-count, stepper]
 </nav>
 ```
 
-## Why it exists
+## Purpose
 People land deep in a site from a search or a shared link, with no idea where they are. A Breadcrumb answers that at a glance: it shows where the page sits and gives a way up each level.
 
 It is an ordered list of links in a `<nav>`, because that is what a trail is, and a screen reader can find the landmark and follow the order. The separators are generated with empty alternative text, so nobody has to hear "slash" between links.

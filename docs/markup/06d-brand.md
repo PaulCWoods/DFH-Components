@@ -15,7 +15,7 @@ related: [header, footer, link-block-link, icon-icon-box]
 </a>
 ```
 
-## Why it exists
+## Purpose
 The Brand answers two questions at once: whose site is this, and how do I get back to the start? People look for both in the same place, so it's one thing rather than a logo beside a link.
 
 It's a whole Link on its own, setting its own colour, hover and focus ring. Adding `.link` or `.button` would pull it towards looking like every other link on the page, and it's meant to look like the product.

@@ -16,7 +16,7 @@ Corners: Round, Square=avatar--square
 Look: Default, Accent=avatar--accent
 ```
 
-## Why it exists
+## Purpose
 A face or a pair of initials lets someone spot a person in a thread or a member list without reading every name. That's the whole job, so an Avatar is only a shape that holds a photo, initials or an icon.
 
 It is never a control. A picture of someone doesn't say what pressing it will do, so a Button or a Link wraps it and carries the name.

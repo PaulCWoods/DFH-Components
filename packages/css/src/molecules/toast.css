@@ -33,9 +33,9 @@
   --_toast-max-width: var(--toast-max-width, var(--spacing-448));
   --_toast-z-index: var(--z-index-toast, 1000);
   --_toast-block-start: auto;
-  --_toast-block-end: calc(var(--_toast-offset) + env(safe-area-inset-bottom, 0px));
+  --_toast-block-end: calc(var(--_toast-offset) + var(--safe-area-inset-bottom, 0px));
   --_toast-inline-start: auto;
-  --_toast-inline-end: calc(var(--_toast-offset) + env(safe-area-inset-right, 0px));
+  --_toast-inline-end: calc(var(--_toast-offset) + var(--safe-area-inset-inline-end, 0px));
   --_toast-align: flex-end;
 
   /* A popover's UA box (border, padding, background, centring) is reset */
@@ -71,12 +71,12 @@
    2. Placements (pure token maps; bottom end is the default)
    ========================================================================== */
 :where(.toast-stack--top-start, .toast-stack--top-center, .toast-stack--top-end) {
-  --_toast-block-start: calc(var(--_toast-offset) + env(safe-area-inset-top, 0px));
+  --_toast-block-start: calc(var(--_toast-offset) + var(--safe-area-inset-top, 0px));
   --_toast-block-end: auto;
 }
 
 :where(.toast-stack--top-start, .toast-stack--bottom-start) {
-  --_toast-inline-start: calc(var(--_toast-offset) + env(safe-area-inset-left, 0px));
+  --_toast-inline-start: calc(var(--_toast-offset) + var(--safe-area-inset-inline-start, 0px));
   --_toast-inline-end: auto;
   --_toast-align: flex-start;
 }

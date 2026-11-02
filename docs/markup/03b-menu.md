@@ -19,7 +19,7 @@ Prominence: Default, Strong=menu--strong, Subtle=menu--subtle, Plain=menu--plain
 Density: Default, Compact=menu--compact
 ```
 
-## Why it exists
+## Purpose
 Applications have actions that don't deserve a place on the page until someone asks for them: rename, move, delete. A Menu lists them in rows, with room for a heading or a shortcut.
 
 Its items are ordinary [Buttons](01-button.md). The Menu makes them plain and full width and otherwise leaves them alone, so they keep their 48px targets, intent and focus ring, and there's nothing new to learn.
