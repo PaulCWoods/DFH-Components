@@ -1,0 +1,23 @@
+{
+  "$description": "A sub-brand of dfh: class=\"theme-docs\".",
+  "extends": "dfh",
+  "type": {
+    "styles": {
+      "title": {
+        "letterSpacing": "normal",
+        "case": "none"
+      }
+    }
+  },
+  "shape": {
+    "radius": {
+      "sm": 2,
+      "default": "md"
+    },
+    "lines": {
+      "panel": {
+        "width": "thin"
+      }
+    }
+  }
+}

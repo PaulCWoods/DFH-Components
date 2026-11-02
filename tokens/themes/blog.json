@@ -1,0 +1,63 @@
+{
+  "$description": "The Design For Humans blog: the site theme with its aqua accent. A sub-brand of dfh: class=\"theme-blog\".",
+  "extends": "dfh",
+  "hues": {
+    "aqua": {
+      "seed": "#119984"
+    }
+  },
+  "roles": {
+    "surface.accent": {
+      "light": "aqua.200",
+      "dark": "aqua.800"
+    },
+    "surface.accent-dark": {
+      "light": "aqua.800",
+      "dark": "aqua.800"
+    },
+    "surface.accent-strong": {
+      "light": "aqua.700",
+      "dark": "aqua.300"
+    },
+    "foreground.accent": {
+      "light": "aqua.600",
+      "dark": "aqua.300"
+    },
+    "foreground.accent-hover": {
+      "light": "aqua.700",
+      "dark": "aqua.200"
+    },
+    "foreground.accent-pressed": {
+      "light": "aqua.800",
+      "dark": "aqua.100"
+    },
+    "border.color.accent": {
+      "light": "aqua.500",
+      "dark": "aqua.500"
+    },
+    "surface.info": {
+      "light": "aqua.100",
+      "dark": "aqua.900"
+    },
+    "surface.info-strong": {
+      "light": "aqua.700",
+      "dark": "aqua.300"
+    },
+    "foreground.info": {
+      "light": "aqua.600",
+      "dark": "aqua.300"
+    },
+    "foreground.info-hover": {
+      "light": "aqua.700",
+      "dark": "aqua.200"
+    },
+    "foreground.info-pressed": {
+      "light": "aqua.800",
+      "dark": "aqua.100"
+    },
+    "border.color.info": {
+      "light": "aqua.500",
+      "dark": "aqua.500"
+    }
+  }
+}

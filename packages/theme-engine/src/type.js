@@ -10,6 +10,8 @@
    ratio at the largest viewport.
    A style's fluid size runs from its step on the small scale to the same
    step on the large one, or to another step (growTo) for a bigger change.
+   It can start from a step other than the fixed size (fluidFrom), for a
+   style that's bigger as soon as it grows.
    ========================================================================== */
 
 /* Step names as the tokens spell them: 2, minus-1 (Tier 1), -1 (cq) */
@@ -299,7 +301,7 @@ export const styleTokens = (name, style) => {
   }
   if (style.compact !== undefined) out.push([`${name}-compact`, 'font-size', `{typography.font-size.${stepKey(style.compact)}}`, 'dimension']);
   if (style.fluid !== false && style.size !== undefined) {
-    const from = style.size;
+    const from = style.fluidFrom ?? style.size;
     const to = style.growTo;
     out.push([`${name}-fluid`, 'font-size', `{fluid.typography.font-size.${rangeKey(from, to, stepKey)}}`, 'dimension']);
     const cq = style.cq ?? { from, to };
@@ -436,11 +438,12 @@ export const migrateType = (global, semantic) => {
     if (style.size !== undefined && !fluidRef && !cqRef) style.fluid = false;
     if (fluidRef) {
       const f = stepOf(fluidRef);
+      if (style.size !== undefined && f.from !== style.size) style.fluidFrom = f.from;
       if (f.to !== undefined && f.to !== f.from) style.growTo = f.to;
     }
     if (cqRef) {
       const c = stepOf(cqRef);
-      const expected = { from: style.size, to: style.growTo };
+      const expected = { from: style.fluidFrom ?? style.size, to: style.growTo };
       if (c.from !== expected.from || (c.to ?? c.from) !== (expected.to ?? expected.from)) style.cq = c.to === undefined ? { from: c.from } : c;
     }
     if (Object.keys(style).length) styles[name] = style;

@@ -60,6 +60,49 @@
     --color-red-800: #620001;
     --color-red-900: #500001;
     --typography-font-family-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --typography-fluid-scale-max-viewport: 75rem;
+    --fluid-spacing-breathe-sm: clamp(0.75rem, 0.63rem + 0.5vi, 1rem);
+    --fluid-spacing-breathe: clamp(1rem, 0.83rem + 0.67vi, 1.3333rem);
+    --fluid-spacing-cushion: clamp(1rem, 0.61rem + 1.56vi, 1.7778rem);
+    --fluid-spacing-cushion-lg: clamp(1rem, 0.31rem + 2.74vi, 2.3704rem);
+    --fluid-typography-font-size-0: clamp(1rem, 0.75rem + 1vi, 1.5rem);
+    --fluid-typography-font-size-1: clamp(1.2rem, 0.86rem + 1.35vi, 1.875rem);
+    --fluid-typography-font-size-2: clamp(1.44rem, 0.99rem + 1.81vi, 2.3438rem);
+    --fluid-typography-font-size-3: clamp(1.728rem, 1.13rem + 2.4vi, 2.9297rem);
+    --fluid-typography-font-size-4: clamp(2.0736rem, 1.28rem + 3.18vi, 3.6621rem);
+    --fluid-typography-font-size-5: clamp(2.4883rem, 1.44rem + 4.18vi, 4.5776rem);
+    --fluid-typography-font-size-6: clamp(2.986rem, 1.62rem + 5.47vi, 5.722rem);
+    --fluid-typography-font-size-7: clamp(3.5832rem, 1.8rem + 7.14vi, 7.1526rem);
+    --fluid-typography-font-size-8: clamp(4.2998rem, 1.98rem + 9.28vi, 8.9407rem);
+    --fluid-typography-font-size--2: clamp(0.6944rem, 0.56rem + 0.53vi, 0.96rem);
+    --fluid-typography-font-size--1: clamp(0.8333rem, 0.65rem + 0.73vi, 1.2rem);
+    --fluid-spacing-cq-breathe-sm: clamp(0.75rem, 0.63rem + 0.5cqi, 1rem);
+    --fluid-spacing-cq-breathe: clamp(1rem, 0.83rem + 0.67cqi, 1.3333rem);
+    --fluid-spacing-cq-cushion: clamp(1rem, 0.61rem + 1.56cqi, 1.7778rem);
+    --fluid-spacing-cq-cushion-lg: clamp(1rem, 0.31rem + 2.74cqi, 2.3704rem);
+    --typography-font-size-fluid--2: clamp(0.6944rem, 0.56rem + 0.53vi, 0.96rem);
+    --typography-font-size-fluid--1: clamp(0.8333rem, 0.65rem + 0.73vi, 1.2rem);
+    --typography-font-size-fluid-0: clamp(1rem, 0.75rem + 1vi, 1.5rem);
+    --typography-font-size-fluid-1: clamp(1.2rem, 0.86rem + 1.35vi, 1.875rem);
+    --typography-font-size-fluid-2: clamp(1.44rem, 0.99rem + 1.81vi, 2.3438rem);
+    --typography-font-size-fluid-3: clamp(1.728rem, 1.13rem + 2.4vi, 2.9297rem);
+    --typography-font-size-fluid-4: clamp(2.0736rem, 1.28rem + 3.18vi, 3.6621rem);
+    --typography-font-size-fluid-5: clamp(2.4883rem, 1.44rem + 4.18vi, 4.5776rem);
+    --typography-font-size-fluid-6: clamp(2.986rem, 1.62rem + 5.47vi, 5.722rem);
+    --typography-font-size-fluid-7: clamp(3.5832rem, 1.8rem + 7.14vi, 7.1526rem);
+    --typography-font-size-fluid-8: clamp(4.2998rem, 1.98rem + 9.28vi, 8.9407rem);
+    --typography-font-size-cq--2: clamp(0.6944rem, 0.56rem + 0.53cqi, 0.96rem);
+    --typography-font-size-cq--1: clamp(0.8333rem, 0.65rem + 0.73cqi, 1.2rem);
+    --typography-font-size-cq-0: clamp(1rem, 0.75rem + 1cqi, 1.5rem);
+    --typography-font-size-cq-1: clamp(1.2rem, 0.86rem + 1.35cqi, 1.875rem);
+    --typography-font-size-cq-2: clamp(1.44rem, 0.99rem + 1.81cqi, 2.3438rem);
+    --typography-font-size-cq-3: clamp(1.728rem, 1.13rem + 2.4cqi, 2.9297rem);
+    --typography-font-size-cq-4: clamp(2.0736rem, 1.28rem + 3.18cqi, 3.6621rem);
+    --typography-font-size-cq-5: clamp(2.4883rem, 1.44rem + 4.18cqi, 4.5776rem);
+    --typography-font-size-cq-6: clamp(2.986rem, 1.62rem + 5.47cqi, 5.722rem);
+    --typography-font-size-cq-7: clamp(3.5832rem, 1.8rem + 7.14cqi, 7.1526rem);
+    --typography-font-size-cq-8: clamp(4.2998rem, 1.98rem + 9.28cqi, 8.9407rem);
+    --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-33));
     --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
     --surface-accent-dark: var(--color-purple-800);
     --surface-accent-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
@@ -69,13 +112,26 @@
     --foreground-accent: light-dark(var(--color-purple-600), var(--color-purple-300));
     --foreground-accent-hover: light-dark(var(--color-purple-700), var(--color-purple-200));
     --foreground-accent-pressed: light-dark(var(--color-purple-800), var(--color-purple-100));
-    --foreground-complementary: light-dark(var(--color-blue-700), var(--color-blue-300));
-    --foreground-complementary-hover: light-dark(var(--color-blue-600), var(--color-blue-200));
+    --foreground-complementary: light-dark(var(--color-blue-600), var(--color-blue-300));
+    --foreground-complementary-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
     --foreground-complementary-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
     --border-color-accent: var(--color-purple-500);
     --border-color-complementary: light-dark(var(--color-blue-600), var(--color-blue-500));
+    --body-font-weight: var(--font-weight-medium);
+    --heading-cq-font-size: var(--typography-font-size-cq-3);
+    --heading-fluid-font-size: var(--typography-font-size-fluid-3);
+    --subheading-line-height: var(--typography-line-height--3);
+    --small-heading-line-height: var(--typography-line-height--3);
+    --title-letter-spacing: var(--typography-spacing-tight);
+    --title-text-transform: uppercase;
     --display-title-letter-spacing: var(--typography-spacing-xtight);
     --display-title-text-transform: uppercase;
+    --display-title-compact-font-size: var(--typography-font-size-6);
+    --panel-border-width: var(--border-width-none);
+    --panel-radius: var(--radius);
+    --radius: var(--radius-none);
+    --radius-sm: var(--radius-0);
+    --shadow-color: light-dark(color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-90)), color-mix(in srgb, var(--color-black), transparent var(--translucency-33)));
   }
   @media (prefers-contrast: more) {
     :root {
@@ -88,11 +144,17 @@
       --foreground-accent: light-dark(var(--color-purple-700), var(--color-purple-200));
       --foreground-accent-hover: light-dark(var(--color-purple-800), var(--color-purple-100));
       --foreground-accent-pressed: light-dark(var(--color-purple-900), var(--color-purple-100));
-      --foreground-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
-      --foreground-complementary-hover: light-dark(var(--color-blue-700), var(--color-blue-100));
+      --foreground-complementary: light-dark(var(--color-blue-700), var(--color-blue-200));
+      --foreground-complementary-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
       --foreground-complementary-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
       --border-color-accent: light-dark(var(--color-purple-600), var(--color-purple-400));
       --border-color-complementary: light-dark(var(--color-blue-700), var(--color-blue-400));
+      --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-25));
+    }
+  }
+  @supports (opacity: progress(1px, 0px, 1px)) {
+    :root {
+      --_max-viewport: 1200px;
     }
   }
   :where(.color-palette-inverted, .colors-inverted) {
@@ -103,8 +165,8 @@
     --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
     --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
     --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
-    --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-700));
-    --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-600));
+    --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-600));
+    --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
     --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
     --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
   }
@@ -117,8 +179,8 @@
       --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
       --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
       --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
-      --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-700));
-      --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-600));
+      --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-600));
+      --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
       --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
       --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
     }
@@ -132,8 +194,8 @@
       --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
       --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
       --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
-      --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
-      --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-700));
+      --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-700));
+      --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
       --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
       --border-color-accent: light-dark(var(--color-purple-400), var(--color-purple-600));
       --border-color-complementary: light-dark(var(--color-blue-400), var(--color-blue-700));
@@ -147,8 +209,8 @@
         --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
         --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
         --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
-        --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
-        --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-700));
+        --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-700));
+        --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
         --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
         --border-color-accent: light-dark(var(--color-purple-400), var(--color-purple-600));
         --border-color-complementary: light-dark(var(--color-blue-400), var(--color-blue-700));

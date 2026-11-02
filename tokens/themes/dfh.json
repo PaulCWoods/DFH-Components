@@ -171,11 +171,11 @@
       "dark": "purple.100"
     },
     "foreground.complementary": {
-      "light": "blue.700",
+      "light": "blue.600",
       "dark": "blue.300"
     },
     "foreground.complementary-hover": {
-      "light": "blue.600",
+      "light": "blue.700",
       "dark": "blue.200"
     },
     "foreground.complementary-pressed": {
@@ -335,7 +335,7 @@
     "fluid": {
       "viewports": [
         "25rem",
-        "80rem"
+        "75rem"
       ],
       "max": {
         "base": "1.5rem",
@@ -349,7 +349,7 @@
         "letterSpacing": "xtight",
         "case": "uppercase",
         "size": 8,
-        "compact": 7,
+        "compact": 6,
         "leading": -4,
         "cq": {
           "from": 6
@@ -358,8 +358,8 @@
       "title": {
         "family": "display",
         "weight": "heavy",
-        "letterSpacing": "normal",
-        "case": "none",
+        "letterSpacing": "tight",
+        "case": "uppercase",
         "size": 6,
         "compact": 4,
         "leading": -4
@@ -371,7 +371,8 @@
         "case": "none",
         "size": 2,
         "compact": 1,
-        "leading": -3
+        "leading": -3,
+        "fluidFrom": 3
       },
       "subheading": {
         "family": "sans",
@@ -379,7 +380,7 @@
         "letterSpacing": "normal",
         "size": 1,
         "compact": 0,
-        "leading": -2
+        "leading": -3
       },
       "small-heading": {
         "family": "sans",
@@ -388,7 +389,7 @@
         "case": "none",
         "size": 0,
         "compact": -1,
-        "leading": -1
+        "leading": -3
       },
       "micro-heading": {
         "family": "sans",
@@ -405,7 +406,7 @@
       },
       "body": {
         "family": "sans",
-        "weight": "regular",
+        "weight": "medium",
         "size": 0,
         "compact": -1,
         "leading": 0
@@ -431,7 +432,7 @@
       },
       "code": {
         "family": "mono",
-        "weight": "regular"
+        "weight": "medium"
       },
       "body-alt": {
         "family": "serif"
@@ -476,11 +477,11 @@
   },
   "shape": {
     "radius": {
-      "sm": 2,
+      "sm": 0,
       "md": 4,
       "lg": 8,
       "xl": 12,
-      "default": "md"
+      "default": "none"
     },
     "border": {
       "thin": 1,
@@ -496,7 +497,7 @@
         },
         "dark": {
           "color": "black",
-          "transparent": 25
+          "transparent": 33
         }
       },
       "color-light": {
@@ -596,10 +597,10 @@
         "style": "solid"
       },
       "panel": {
-        "width": "thin",
+        "width": "none",
         "color": "border.color.quiet",
         "style": "solid",
-        "radius": "md"
+        "radius": "default"
       },
       "app": {
         "width": "default",
@@ -627,11 +628,11 @@
     "color.muted": {
       "light": {
         "color": "currentColor",
-        "transparent": 50
+        "transparent": 33
       },
       "dark": {
         "color": "currentColor",
-        "transparent": 50
+        "transparent": 33
       }
     },
     "color.quiet": {

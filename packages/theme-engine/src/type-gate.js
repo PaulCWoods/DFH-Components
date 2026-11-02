@@ -9,8 +9,8 @@
            the fixed one; a fluid or cq size whose largest value is more
            than 2.5 times its smallest (zoom to 200% couldn't double it,
            WCAG 1.4.4).
-   Report: a size below 12px; body text line height below 1.5 (WCAG
-           1.4.8); a heading line height above body's; a cq size that
+   Report: a size below 12px; a body or body-lg line height below 1.5
+           (WCAG 1.4.8; small text is captions and labels, not paragraphs); a heading line height above body's; a cq size that
            differs from the fluid one; two styles of the same kind that
            differ only in weight or case at the same size; a style whose
            weight its font doesn't load (the browser fakes it or falls back).
@@ -21,6 +21,9 @@ import { SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, leadingSteps, resol
 export const HIERARCHY = ['display-title', 'title', 'heading', 'subheading', 'small-heading'];
 export const HEADINGS = [...HIERARCHY, 'micro-heading'];
 export const BODY = ['body-lg', 'body', 'body-sm', 'body-xs'];
+/* The styles paragraphs are set in; small and extra-small text is captions,
+   labels and metadata, so the 1.5 line height (WCAG 1.4.8) isn't asked of it */
+const READING = ['body-lg', 'body'];
 export const FLUID_LIMIT = 2.5;
 export const FLOOR_PX = 12;
 
@@ -35,8 +38,8 @@ export const styleSizes = (type, style) => {
   const range = (from, to = from) => (fluid[from] && fluid[to] ? [fluid[from][0], fluid[to][1]] : null);
   const out = { fixed: fixed[style.size], compact: fixed[style.compact ?? style.size] };
   if (style.fluid !== false) {
-    out.fluid = range(style.size, style.growTo);
-    const cq = style.cq ?? { from: style.size, to: style.growTo };
+    out.fluid = range(style.fluidFrom ?? style.size, style.growTo);
+    const cq = style.cq ?? { from: style.fluidFrom ?? style.size, to: style.growTo };
     out.cq = range(cq.from, cq.to);
   }
   return out;
@@ -86,7 +89,7 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
     if (s.family && !families.includes(s.family)) fail('reference', name, `family "${s.family}" isn't one of ${families.join(', ')}`);
     if (s.weight && weights.length && !weights.includes(s.weight)) fail('reference', name, `weight "${s.weight}" isn't one of ${weights.join(', ')}`);
     if (s.letterSpacing && spacings.length && !spacings.includes(s.letterSpacing)) fail('reference', name, `letter spacing "${s.letterSpacing}" isn't one of ${spacings.join(', ')}`);
-    for (const [field, n] of [['size', s.size], ['compact', s.compact], ['growTo', s.growTo], ['cq from', s.cq?.from], ['cq to', s.cq?.to]]) {
+    for (const [field, n] of [['size', s.size], ['compact', s.compact], ['growTo', s.growTo], ['fluidFrom', s.fluidFrom], ['cq from', s.cq?.from], ['cq to', s.cq?.to]]) {
       if (n !== undefined && !inScale(n)) {
         fail('reference', name, `${field} step ${n} is outside the scale (${lo} to ${hi})`);
         offScale.add(name);
@@ -141,11 +144,11 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
     }
   }
 
-  /* Line heights: body text at least 1.5; headings no looser than body */
+  /* Line heights: reading text at least 1.5; headings no looser than body */
   const own = (name) => styleLeading(type, styles[name]);
   const lineHeight = (name) => own(name) ?? (BODY.includes(name) ? own('body') : undefined);
   const bodyLh = lineHeight('body');
-  for (const name of BODY.filter((n) => styles[n])) {
+  for (const name of READING.filter((n) => styles[n])) {
     const lh = lineHeight(name);
     if (lh !== undefined && lh < 1.5) report('line-height', name, `line height ${lh} is below 1.5 for body text`);
   }

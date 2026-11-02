@@ -30,11 +30,13 @@
     "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook",
     "docs": "npm run dev --workspace=@design-for-humans/docs",
     "build:docs": "npm run build --workspace=@design-for-humans/docs",
+    "build:css": "node scripts/build-css.mjs",
     "build:site": "npm run build:docs && npm run build:storybook && rm -rf packages/docs/dist/storybook && cp -R packages/storybook/storybook-static packages/docs/dist/storybook",
     "designer": "npm run dev --workspace=@design-for-humans/token-designer"
   },
   "devDependencies": {
-    "prettier": "^3.0.0",
-    "@storybook/html-vite": "^8.0.0"
+    "@storybook/html-vite": "^8.0.0",
+    "lightningcss": "^1.33.0",
+    "prettier": "^3.0.0"
   }
 }

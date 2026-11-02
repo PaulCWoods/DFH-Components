@@ -23,7 +23,7 @@ const preview: Preview = {
     brand: {
       name: 'Theme',
       description: 'The theme: the library default, a theme from tokens/themes, or a sub-brand (its class goes on <html>)',
-      defaultValue: themeConfig.site,
+      defaultValue: themeConfig.storybook ?? themeConfig.site,
       toolbar: {
         icon: 'paintbrush',
         items: [themeConfig.default, ...Object.keys(THEMES)].map((name) => ({

@@ -14,7 +14,7 @@ related: [button-group, link-block-link, menu, icon-icon-box]
 Prominence: Default, Strong=button--strong, Subtle=button--subtle, Plain=button--plain
 Intent: Neutral, Accent=button--accent, Danger=button--danger "Delete project"
 Size: Small=button--sm, Default*, Large=button--lg
-Corners: Rounded, Round=button--round
+Corners: Default, Round=button--round
 ```
 
 ## Purpose
