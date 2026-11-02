@@ -18,7 +18,7 @@ A native \`<dialog class="dialog">\` opened as a modal: top-layer placement, siz
 <dialog id="rename-dialog" class="dialog" aria-labelledby="rename-title">
   <article class="card">
     <header class="card__header">
-      <h2 id="rename-title" class="card__title small-heading">Rename plot</h2>
+      <h2 id="rename-title" class="card__title heading">Rename plot</h2>
       <button type="button" class="button button--plain button--icon" commandfor="rename-dialog" command="close">
         <span class="sr-only">Close</span>
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
@@ -126,7 +126,7 @@ export const Playground: Story = {
       <dialog id="playground-dialog" class="${cls}" aria-labelledby="playground-title"${args.lightDismiss ? ' closedby="any"' : ''}>
         <article class="card">
           <header class="card__header">
-            <h2 id="playground-title" class="card__title small-heading">Locker rules</h2>
+            <h2 id="playground-title" class="card__title heading">Locker rules</h2>
             ${closeButton('playground-dialog')}
           </header>
           <div class="card__body stack${bodyScroll}">${paragraphs(args.paragraphs)}</div>
@@ -151,7 +151,7 @@ export const Confirmation: Story = {
     <dialog id="delete-dialog" class="dialog" role="alertdialog" aria-labelledby="delete-title" aria-describedby="delete-message" style="--dialog-width: 28rem;">
       <article class="card">
         <header class="card__header">
-          <h2 id="delete-title" class="card__title small-heading">Delete plot A-14?</h2>
+          <h2 id="delete-title" class="card__title heading">Delete plot A-14?</h2>
         </header>
         <div class="card__body">
           <p id="delete-message" class="text">Its sowing records and rota weeks go too. This can't be undone.</p>
@@ -185,7 +185,7 @@ export const FormDialog: Story = {
       onclose="document.getElementById('rename-result').textContent = 'returnValue: ' + (this.returnValue || '(none)'); this.returnValue = ''">
       <form method="dialog" class="card">
         <header class="card__header">
-          <h2 id="rename-title" class="card__title small-heading">Rename plot</h2>
+          <h2 id="rename-title" class="card__title heading">Rename plot</h2>
           ${closeButton('rename-dialog')}
         </header>
         <div class="card__body">
@@ -220,7 +220,7 @@ export const ScrollingBody: Story = {
     <dialog id="rules-dialog" class="dialog" aria-labelledby="rules-title">
       <article class="card">
         <header class="card__header">
-          <h2 id="rules-title" class="card__title small-heading">Site rules</h2>
+          <h2 id="rules-title" class="card__title heading">Site rules</h2>
           ${closeButton('rules-dialog')}
         </header>
         <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Site rules">${paragraphs(14)}</div>
@@ -243,7 +243,7 @@ export const WholeCardScrolls: Story = {
     <dialog id="terms-dialog" class="dialog dialog--scrollable" aria-labelledby="terms-title">
       <article class="card" tabindex="0" aria-label="Terms">
         <header class="card__header">
-          <h2 id="terms-title" class="card__title small-heading">Tenancy terms</h2>
+          <h2 id="terms-title" class="card__title heading">Tenancy terms</h2>
           ${closeButton('terms-dialog')}
         </header>
         <div class="card__body stack">${paragraphs(14)}</div>
@@ -267,7 +267,7 @@ export const Top: Story = {
     <dialog id="find-dialog" class="dialog dialog--top" aria-labelledby="find-title">
       <article class="card">
         <header class="card__header">
-          <h2 id="find-title" class="card__title small-heading">Find a plant</h2>
+          <h2 id="find-title" class="card__title heading">Find a plant</h2>
           ${closeButton('find-dialog')}
         </header>
         <div class="card__body">
@@ -286,7 +286,7 @@ const settingsDrawer = (id: string, cls: string) => `
   <dialog id="${id}" class="dialog dialog--drawer${cls}" aria-labelledby="${id}-title">
     <article class="card">
       <header class="card__header">
-        <h2 id="${id}-title" class="card__title small-heading">Settings</h2>
+        <h2 id="${id}-title" class="card__title heading">Settings</h2>
         ${closeButton(id)}
       </header>
       <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Settings">
@@ -317,7 +317,7 @@ export const Bottom: Story = {
     <dialog id="leave-dialog" class="dialog dialog--bottom" aria-labelledby="leave-title">
       <article class="card">
         <header class="card__header">
-          <h2 id="leave-title" class="card__title small-heading">Leave the rota?</h2>
+          <h2 id="leave-title" class="card__title heading">Leave the rota?</h2>
           ${closeButton('leave-dialog')}
         </header>
         <div class="card__body"><p class="text">Your weeks go back into the shared pool.</p></div>
@@ -369,7 +369,7 @@ export const DrawerStart: Story = {
     <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-drawer-title">
       <article class="card">
         <header class="card__header">
-          <h2 id="nav-drawer-title" class="card__title small-heading">Allotment</h2>
+          <h2 id="nav-drawer-title" class="card__title heading">Allotment</h2>
           ${closeButton('nav-drawer', 'Close menu')}
         </header>
         <div class="card__body card__body--scrollable">${tree('nav-drawer-title')}</div>
@@ -395,7 +395,7 @@ export const RightToLeft: Story = {
       <dialog id="rtl-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="rtl-drawer-title">
         <article class="card">
           <header class="card__header">
-            <h2 id="rtl-drawer-title" class="card__title small-heading">الحديقة</h2>
+            <h2 id="rtl-drawer-title" class="card__title heading">الحديقة</h2>
             ${closeButton('rtl-drawer', 'إغلاق')}
           </header>
           <div class="card__body card__body--scrollable">
@@ -427,7 +427,7 @@ export const LightDismiss: Story = {
     <dialog id="rota-dialog" class="dialog" aria-labelledby="rota-title" closedby="any">
       <article class="card">
         <header class="card__header">
-          <h2 id="rota-title" class="card__title small-heading">This week's rota</h2>
+          <h2 id="rota-title" class="card__title heading">This week's rota</h2>
           ${closeButton('rota-dialog')}
         </header>
         <div class="card__body">
@@ -458,13 +458,13 @@ export const WithoutACard: Story = {
         <svg viewBox="0 0 320 180" role="img" aria-label="Three rows of plots, A to C, with the tool locker by the gate">
           <rect x="1" y="1" width="318" height="178" fill="none" stroke="currentColor" />
           ${['A', 'B', 'C']
-            .map(
-              (row, r) =>
-                [0, 1, 2, 3]
-                  .map((c) => `<rect x="${20 + c * 60}" y="${20 + r * 50}" width="50" height="40" fill="none" stroke="currentColor" />`)
-                  .join('') + `<text x="270" y="${45 + r * 50}" fill="currentColor" font-size="14">${row}</text>`,
-            )
-            .join('')}
+      .map(
+        (row, r) =>
+          [0, 1, 2, 3]
+            .map((c) => `<rect x="${20 + c * 60}" y="${20 + r * 50}" width="50" height="40" fill="none" stroke="currentColor" />`)
+            .join('') + `<text x="270" y="${45 + r * 50}" fill="currentColor" font-size="14">${row}</text>`,
+      )
+      .join('')}
         </svg>
       </figure>
     </dialog>`,
