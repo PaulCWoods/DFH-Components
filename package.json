@@ -15,6 +15,7 @@
     "build:space": "node packages/theme-engine/bin/build-space.js",
     "build:shape": "node packages/theme-engine/bin/build-shape.js",
     "build:motion": "node packages/theme-engine/bin/build-motion.js",
+    "build:themes": "node packages/theme-engine/bin/build-themes.js",
     "build:components": "node packages/theme-engine/bin/build-components.js",
     "test:theme": "npm test --workspace=@design-for-humans/theme-engine",
     "sync:icons": "node scripts/sync-icons.js",

@@ -4,12 +4,13 @@
    (§19d): skip link, sticky header, the page's own content, footer, and
    the search dialog. The home page has no header, so no search dialog
    either, as nothing could open it. No docs CSS: everything here is the library.
-   The font links between the theme-fonts markers in the head are written
-   by build:type and the designer's Publish. Don't quote the markers
+   The site wears the DFH theme (the site theme in tokens/themes.json),
+   linked after the library. The font links between the theme-fonts markers
+   in the head are written by build:themes and the designer's Publish. Don't quote the markers
    anywhere else in this file: the writer replaces from the first one.
    ========================================================================== */
 import '@design-for-humans/components-css/src/index.css';
-import '@design-for-humans/components-css/src/fonts.css';
+import '@design-for-humans/components-css/src/themes/dfh.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';

@@ -1,9 +1,2 @@
-/* Generated from tokens/theme.json by npm run build:type (or Publish). Not imported by index.css:
+/* Generated from the default theme by npm run build:themes (or Publish). Not imported by index.css:
    a page that loads the theme's fonts links this too. Without it, the font tokens use system stacks. */
-
-:root {
-  --typography-font-family-sans: "adapter-pe-variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --typography-font-family-serif: "mencken-std-text", Cambria, "Times New Roman", Times, serif;
-  --typography-font-family-mono: "adapter-mono-pe-variable", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --typography-font-family-display: "avory-i-pe", "Inter", system-ui, -apple-system, sans-serif;
-}

@@ -17,6 +17,15 @@ Copy `packages/css/src` into your project and link its entry file:
 
 That file brings in the reset, the tokens, every component and the utilities, each in its own cascade layer. Your own CSS sits outside those layers, so it wins without any fight over specificity.
 
+Out of the box the library wears its starter theme: system fonts and a blue accent. To wear another theme, link its stylesheet after the entry file. Each one holds only what that theme changes, and its header comment lists any font links it needs in your page head:
+
+```html
+<link rel="stylesheet" href="/css/index.css" />
+<link rel="stylesheet" href="/css/themes/dfh.css" />
+```
+
+You make your own theme, or a sub-brand for one part of a site, in the [Token Designer](/docs/tools/). [Themes and sub-brands](/docs/start/themes/) has the details.
+
 The entry file imports each component separately. That's fine while you build. Before you ship, bundle it into one file with the tool you already use.
 
 ## 2. Add the icons
@@ -86,7 +95,7 @@ From there, each part is a class or two on the element you'd use anyway. Here is
 ## What you get without asking
 
 - **Light and dark.** Colours follow the visitor's setting. To fix one, add `.color-scheme-light` or `.color-scheme-dark` to the page or to a region.
-- **System fonts.** The library loads no fonts and makes no outside requests. To use your own, add `fonts.css` and link the faces in your page head.
+- **System fonts.** The library loads no fonts and makes no outside requests. To use your own, give your theme its fonts in the [Token Designer](/docs/tools/), and link the faces in your page head.
 - **Touch-sized targets.** Controls have a 48px target unless your product opts into smaller ones for a fine pointer.
 
 ## Browsers
@@ -97,4 +106,5 @@ Anything a component needs to work uses features that are [Baseline widely avail
 
 - [Components](/docs/components/): every part, why it exists and when to use it.
 - [Storybook](/storybook/): every variant and state.
+- [Your own styles](/docs/start/customise/): change a component, or add your own.
 - [Tools](/docs/tools/): the Token Designer for your own theme, and the export to Figma.

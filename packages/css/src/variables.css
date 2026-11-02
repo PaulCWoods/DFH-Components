@@ -122,7 +122,7 @@
   --typography-font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --typography-font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
   --typography-font-family-mono: ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;
-  --typography-font-family-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --typography-font-family-display: var(--typography-font-family-sans);
   --typography-font-family-pt-sans: "PT Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --typography-font-family-pt-serif: "PT Serif", Cambria, "Times New Roman", Times, serif;
   --typography-font-family-pt-mono: "adapter-mono-pe-variable", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -292,12 +292,12 @@
   --surface-dark: light-dark(var(--color-neutral-1000), var(--color-black));
   --surface-darker: var(--color-black);
   --surface-layer: light-dark(color-mix(in srgb, var(--color-white), transparent var(--translucency-10)), color-mix(in srgb, var(--color-black), transparent var(--translucency-10)));
-  --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
-  --surface-accent-dark: var(--color-purple-800);
-  --surface-accent-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
-  --surface-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
-  --surface-complementary-dark: var(--color-blue-800);
-  --surface-complementary-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
+  --surface-accent: light-dark(var(--color-blue-200), var(--color-blue-800));
+  --surface-accent-dark: var(--color-blue-800);
+  --surface-accent-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
+  --surface-complementary: light-dark(var(--color-purple-200), var(--color-purple-800));
+  --surface-complementary-dark: var(--color-purple-800);
+  --surface-complementary-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
   --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-95));
   --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-90));
   --surface-shade: light-dark(color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-95)), color-mix(in srgb, var(--color-black), transparent var(--translucency-70)));
@@ -316,12 +316,12 @@
   --foreground-on-dark: var(--color-neutral-000);
   --foreground-white: var(--color-white);
   --foreground-muted: light-dark(var(--color-neutral-700), var(--color-neutral-300));
-  --foreground-accent: light-dark(var(--color-purple-600), var(--color-purple-300));
-  --foreground-accent-hover: light-dark(var(--color-purple-700), var(--color-purple-200));
-  --foreground-accent-pressed: light-dark(var(--color-purple-800), var(--color-purple-100));
-  --foreground-complementary: light-dark(var(--color-blue-700), var(--color-blue-300));
-  --foreground-complementary-hover: light-dark(var(--color-blue-600), var(--color-blue-200));
-  --foreground-complementary-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
+  --foreground-accent: light-dark(var(--color-blue-600), var(--color-blue-300));
+  --foreground-accent-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
+  --foreground-accent-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
+  --foreground-complementary: light-dark(var(--color-purple-700), var(--color-purple-300));
+  --foreground-complementary-hover: light-dark(var(--color-purple-600), var(--color-purple-200));
+  --foreground-complementary-pressed: light-dark(var(--color-purple-800), var(--color-purple-100));
   --foreground-danger: light-dark(var(--color-red-600), var(--color-red-300));
   --foreground-danger-hover: light-dark(var(--color-red-700), var(--color-red-200));
   --foreground-danger-pressed: light-dark(var(--color-red-800), var(--color-red-100));
@@ -338,8 +338,8 @@
   --border-color-muted: var(--color-muted);
   --border-color-quiet: var(--color-quiet);
   --border-color-control: color-mix(in srgb, currentColor, transparent var(--translucency-33));
-  --border-color-accent: var(--color-purple-500);
-  --border-color-complementary: light-dark(var(--color-blue-600), var(--color-blue-500));
+  --border-color-accent: var(--color-blue-500);
+  --border-color-complementary: light-dark(var(--color-purple-600), var(--color-purple-500));
   --border-color-danger: var(--color-red-500);
   --border-color-warning: var(--color-amber-500);
   --border-color-success: var(--color-green-500);
@@ -663,19 +663,58 @@
 
 @media (prefers-contrast: more) {
   :root {
-  --surface-dark: light-dark(var(--color-black), var(--color-black));
   --surface: light-dark(var(--color-white), var(--color-black));
+  --surface-subtle: light-dark(var(--color-white), var(--color-black));
+  --surface-muted: light-dark(var(--color-neutral-000), var(--color-neutral-1000));
   --surface-inverted: light-dark(var(--color-black), var(--color-white));
+  --surface-dark: var(--color-black);
+  --surface-accent: light-dark(var(--color-blue-100), var(--color-blue-900));
+  --surface-accent-dark: var(--color-blue-900);
+  --surface-accent-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
+  --surface-complementary: light-dark(var(--color-purple-100), var(--color-purple-900));
+  --surface-complementary-dark: var(--color-purple-900);
+  --surface-complementary-strong: light-dark(var(--color-purple-800), var(--color-purple-200));
+  --surface-danger-strong: light-dark(var(--color-red-800), var(--color-red-200));
+  --surface-warning-strong: light-dark(var(--color-amber-800), var(--color-amber-200));
+  --surface-info-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
+  --surface-success-strong: light-dark(var(--color-green-800), var(--color-green-200));
   --surface-layer: light-dark(var(--color-white), var(--color-black));
+  --surface-translucent: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-90));
+  --surface-translucent-strong: color-mix(in srgb, var(--surface-inverted), transparent var(--translucency-70));
+  --surface-shade: light-dark(color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-90)), color-mix(in srgb, var(--color-black), transparent var(--translucency-50)));
   --foreground: light-dark(var(--color-neutral-900), var(--color-white));
   --foreground-inverted: light-dark(var(--color-white), var(--color-neutral-900));
   --foreground-on-dark: var(--color-white);
-  --foreground-muted: light-dark(var(--color-neutral-800), var(--color-neutral-100));
-  --foreground-accent-hover: light-dark(var(--color-purple-700), var(--color-purple-300));
-  --border-color-accent: var(--color-purple-500);
-  --border-color-accent-strong: var(--color-purple-500);
-  --border-color-muted: currentColor;
-  --border-color-quiet: var(--color-muted);
+  --foreground-muted: light-dark(var(--color-neutral-800), var(--color-neutral-200));
+  --foreground-accent: light-dark(var(--color-blue-700), var(--color-blue-200));
+  --foreground-accent-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
+  --foreground-accent-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
+  --foreground-complementary: light-dark(var(--color-purple-800), var(--color-purple-200));
+  --foreground-complementary-hover: light-dark(var(--color-purple-700), var(--color-purple-100));
+  --foreground-complementary-pressed: light-dark(var(--color-purple-900), var(--color-purple-100));
+  --foreground-danger: light-dark(var(--color-red-700), var(--color-red-200));
+  --foreground-danger-hover: light-dark(var(--color-red-800), var(--color-red-100));
+  --foreground-danger-pressed: light-dark(var(--color-red-900), var(--color-red-100));
+  --foreground-success: light-dark(var(--color-green-700), var(--color-green-200));
+  --foreground-success-hover: light-dark(var(--color-green-800), var(--color-green-100));
+  --foreground-success-pressed: light-dark(var(--color-green-900), var(--color-green-100));
+  --foreground-warning: light-dark(var(--color-amber-700), var(--color-amber-200));
+  --foreground-info: light-dark(var(--color-blue-700), var(--color-blue-200));
+  --foreground-warning-hover: light-dark(var(--color-amber-800), var(--color-amber-100));
+  --foreground-info-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
+  --foreground-warning-pressed: light-dark(var(--color-amber-900), var(--color-amber-100));
+  --foreground-info-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
+  --border-color-accent: light-dark(var(--color-blue-600), var(--color-blue-400));
+  --border-color-complementary: light-dark(var(--color-purple-700), var(--color-purple-400));
+  --border-color-danger: light-dark(var(--color-red-600), var(--color-red-400));
+  --border-color-warning: light-dark(var(--color-amber-600), var(--color-amber-400));
+  --border-color-info: light-dark(var(--color-blue-600), var(--color-blue-400));
+  --border-color-success: light-dark(var(--color-green-600), var(--color-green-400));
+  --border-color-control: color-mix(in srgb, currentColor, transparent var(--translucency-25));
+  --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-33));
+  --color-quiet: color-mix(in srgb, currentColor, transparent var(--translucency-50));
+  --color-backdrop: color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-33));
+  --color-overlay: light-dark(color-mix(in srgb, var(--color-neutral-000), transparent var(--translucency-25)), color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-25)));
   --opacity-muted: var(--opacity-90);
   }
 }
@@ -752,10 +791,10 @@
   --surface-card-inverted: light-dark(var(--color-white), var(--color-black));
   --surface-dark: light-dark(var(--color-black), var(--color-neutral-1000));
   --surface-layer: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-10)), color-mix(in srgb, var(--color-white), transparent var(--translucency-10)));
-  --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
-  --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
-  --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
-  --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+  --surface-accent: light-dark(var(--color-blue-800), var(--color-blue-200));
+  --surface-accent-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+  --surface-complementary: light-dark(var(--color-purple-800), var(--color-purple-200));
+  --surface-complementary-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
   --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-70)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-95)));
   --surface-danger: light-dark(var(--color-red-900), var(--color-red-100));
   --surface-danger-strong: light-dark(var(--color-red-300), var(--color-red-700));
@@ -770,12 +809,12 @@
   --foreground-inverted: light-dark(var(--color-neutral-800), var(--color-neutral-000));
   --foreground-inverted-strong: light-dark(var(--color-black), var(--color-white));
   --foreground-muted: light-dark(var(--color-neutral-300), var(--color-neutral-700));
-  --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
-  --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
-  --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
-  --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-700));
-  --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-600));
-  --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-accent: light-dark(var(--color-blue-300), var(--color-blue-600));
+  --foreground-accent-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
+  --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-complementary: light-dark(var(--color-purple-300), var(--color-purple-700));
+  --foreground-complementary-hover: light-dark(var(--color-purple-200), var(--color-purple-600));
+  --foreground-complementary-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
   --foreground-danger: light-dark(var(--color-red-300), var(--color-red-600));
   --foreground-danger-hover: light-dark(var(--color-red-200), var(--color-red-700));
   --foreground-danger-pressed: light-dark(var(--color-red-100), var(--color-red-800));
@@ -788,7 +827,7 @@
   --foreground-info: light-dark(var(--color-blue-300), var(--color-blue-600));
   --foreground-info-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
   --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
-  --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
+  --border-color-complementary: light-dark(var(--color-purple-500), var(--color-purple-600));
 }
 
 * {
@@ -801,10 +840,10 @@
   --surface-card-inverted: light-dark(var(--color-white), var(--color-black));
   --surface-dark: light-dark(var(--color-black), var(--color-neutral-1000));
   --surface-layer: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-10)), color-mix(in srgb, var(--color-white), transparent var(--translucency-10)));
-  --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
-  --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
-  --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
-  --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+  --surface-accent: light-dark(var(--color-blue-800), var(--color-blue-200));
+  --surface-accent-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+  --surface-complementary: light-dark(var(--color-purple-800), var(--color-purple-200));
+  --surface-complementary-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
   --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-70)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-95)));
   --surface-danger: light-dark(var(--color-red-900), var(--color-red-100));
   --surface-danger-strong: light-dark(var(--color-red-300), var(--color-red-700));
@@ -819,12 +858,12 @@
   --foreground-inverted: light-dark(var(--color-neutral-800), var(--color-neutral-000));
   --foreground-inverted-strong: light-dark(var(--color-black), var(--color-white));
   --foreground-muted: light-dark(var(--color-neutral-300), var(--color-neutral-700));
-  --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
-  --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
-  --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
-  --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-700));
-  --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-600));
-  --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-accent: light-dark(var(--color-blue-300), var(--color-blue-600));
+  --foreground-accent-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
+  --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-complementary: light-dark(var(--color-purple-300), var(--color-purple-700));
+  --foreground-complementary-hover: light-dark(var(--color-purple-200), var(--color-purple-600));
+  --foreground-complementary-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
   --foreground-danger: light-dark(var(--color-red-300), var(--color-red-600));
   --foreground-danger-hover: light-dark(var(--color-red-200), var(--color-red-700));
   --foreground-danger-pressed: light-dark(var(--color-red-100), var(--color-red-800));
@@ -837,6 +876,98 @@
   --foreground-info: light-dark(var(--color-blue-300), var(--color-blue-600));
   --foreground-info-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
   --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
-  --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
+  --border-color-complementary: light-dark(var(--color-purple-500), var(--color-purple-600));
+  }
+}
+
+@media (prefers-contrast: more) {
+  :where(.color-palette-inverted, .colors-inverted) {
+  --surface: light-dark(var(--color-black), var(--color-white));
+  --surface-subtle: light-dark(var(--color-black), var(--color-white));
+  --surface-muted: light-dark(var(--color-neutral-1000), var(--color-neutral-000));
+  --surface-inverted: light-dark(var(--color-white), var(--color-black));
+  --surface-accent: light-dark(var(--color-blue-900), var(--color-blue-100));
+  --surface-accent-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+  --surface-complementary: light-dark(var(--color-purple-900), var(--color-purple-100));
+  --surface-complementary-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
+  --surface-danger-strong: light-dark(var(--color-red-200), var(--color-red-800));
+  --surface-warning-strong: light-dark(var(--color-amber-200), var(--color-amber-800));
+  --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+  --surface-success-strong: light-dark(var(--color-green-200), var(--color-green-800));
+  --surface-layer: light-dark(var(--color-black), var(--color-white));
+  --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-50)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-90)));
+  --foreground: light-dark(var(--color-white), var(--color-neutral-900));
+  --foreground-inverted: light-dark(var(--color-neutral-900), var(--color-white));
+  --foreground-muted: light-dark(var(--color-neutral-200), var(--color-neutral-800));
+  --foreground-accent: light-dark(var(--color-blue-200), var(--color-blue-700));
+  --foreground-accent-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+  --foreground-complementary: light-dark(var(--color-purple-200), var(--color-purple-800));
+  --foreground-complementary-hover: light-dark(var(--color-purple-100), var(--color-purple-700));
+  --foreground-complementary-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
+  --foreground-danger: light-dark(var(--color-red-200), var(--color-red-700));
+  --foreground-danger-hover: light-dark(var(--color-red-100), var(--color-red-800));
+  --foreground-danger-pressed: light-dark(var(--color-red-100), var(--color-red-900));
+  --foreground-success: light-dark(var(--color-green-200), var(--color-green-700));
+  --foreground-success-hover: light-dark(var(--color-green-100), var(--color-green-800));
+  --foreground-success-pressed: light-dark(var(--color-green-100), var(--color-green-900));
+  --foreground-warning: light-dark(var(--color-amber-200), var(--color-amber-700));
+  --foreground-info: light-dark(var(--color-blue-200), var(--color-blue-700));
+  --foreground-warning-hover: light-dark(var(--color-amber-100), var(--color-amber-800));
+  --foreground-info-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-warning-pressed: light-dark(var(--color-amber-100), var(--color-amber-900));
+  --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+  --border-color-accent: light-dark(var(--color-blue-400), var(--color-blue-600));
+  --border-color-complementary: light-dark(var(--color-purple-400), var(--color-purple-700));
+  --border-color-danger: light-dark(var(--color-red-400), var(--color-red-600));
+  --border-color-warning: light-dark(var(--color-amber-400), var(--color-amber-600));
+  --border-color-info: light-dark(var(--color-blue-400), var(--color-blue-600));
+  --border-color-success: light-dark(var(--color-green-400), var(--color-green-600));
+  }
+
+  * {
+    @container style(--color-palette: inverted) {
+  --surface: light-dark(var(--color-black), var(--color-white));
+  --surface-subtle: light-dark(var(--color-black), var(--color-white));
+  --surface-muted: light-dark(var(--color-neutral-1000), var(--color-neutral-000));
+  --surface-inverted: light-dark(var(--color-white), var(--color-black));
+  --surface-accent: light-dark(var(--color-blue-900), var(--color-blue-100));
+  --surface-accent-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+  --surface-complementary: light-dark(var(--color-purple-900), var(--color-purple-100));
+  --surface-complementary-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
+  --surface-danger-strong: light-dark(var(--color-red-200), var(--color-red-800));
+  --surface-warning-strong: light-dark(var(--color-amber-200), var(--color-amber-800));
+  --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+  --surface-success-strong: light-dark(var(--color-green-200), var(--color-green-800));
+  --surface-layer: light-dark(var(--color-black), var(--color-white));
+  --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-50)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-90)));
+  --foreground: light-dark(var(--color-white), var(--color-neutral-900));
+  --foreground-inverted: light-dark(var(--color-neutral-900), var(--color-white));
+  --foreground-muted: light-dark(var(--color-neutral-200), var(--color-neutral-800));
+  --foreground-accent: light-dark(var(--color-blue-200), var(--color-blue-700));
+  --foreground-accent-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+  --foreground-complementary: light-dark(var(--color-purple-200), var(--color-purple-800));
+  --foreground-complementary-hover: light-dark(var(--color-purple-100), var(--color-purple-700));
+  --foreground-complementary-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
+  --foreground-danger: light-dark(var(--color-red-200), var(--color-red-700));
+  --foreground-danger-hover: light-dark(var(--color-red-100), var(--color-red-800));
+  --foreground-danger-pressed: light-dark(var(--color-red-100), var(--color-red-900));
+  --foreground-success: light-dark(var(--color-green-200), var(--color-green-700));
+  --foreground-success-hover: light-dark(var(--color-green-100), var(--color-green-800));
+  --foreground-success-pressed: light-dark(var(--color-green-100), var(--color-green-900));
+  --foreground-warning: light-dark(var(--color-amber-200), var(--color-amber-700));
+  --foreground-info: light-dark(var(--color-blue-200), var(--color-blue-700));
+  --foreground-warning-hover: light-dark(var(--color-amber-100), var(--color-amber-800));
+  --foreground-info-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+  --foreground-warning-pressed: light-dark(var(--color-amber-100), var(--color-amber-900));
+  --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+  --border-color-accent: light-dark(var(--color-blue-400), var(--color-blue-600));
+  --border-color-complementary: light-dark(var(--color-purple-400), var(--color-purple-700));
+  --border-color-danger: light-dark(var(--color-red-400), var(--color-red-600));
+  --border-color-warning: light-dark(var(--color-amber-400), var(--color-amber-600));
+  --border-color-info: light-dark(var(--color-blue-400), var(--color-blue-600));
+  --border-color-success: light-dark(var(--color-green-400), var(--color-green-600));
+    }
   }
 }

@@ -2,7 +2,7 @@
 /* ==========================================================================
    npm run build:space [-- --write]
    Builds the fluid spacing roles from the `space` section of
-   tokens/theme.json, prints each role at both ends of the fluid range and
+   the default theme (tokens/themes.json), prints each role at both ends of the fluid range and
    runs the space gate. --write (only when nothing fails) replaces
    fluid.spacing in tokens/1-global.json and points the spacing roles of
    tokens/2-semantic.json at it.
@@ -12,16 +12,17 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applySpaceRoles, spaceFluidBlock, spaceGate, spaceSteps } from '../src/index.js';
+import { themePath } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
-const theme = read('tokens/theme.json');
+const theme = JSON.parse(readFileSync(themePath(root), 'utf8'));
 const global = read('tokens/1-global.json');
 const semantic = read('tokens/2-semantic.json');
 
 const space = theme.space;
 if (!space) {
-  console.error('tokens/theme.json has no space section.');
+  console.error('the default theme (tokens/themes.json) has no space section.');
   process.exit(1);
 }
 

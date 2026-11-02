@@ -118,7 +118,7 @@ export const componentCss = (overrides = {}, component = {}) => {
   const tokens = new Map(componentTokens(component).map((t) => [t.path, t]));
   const entries = Object.entries(overrides).sort(([a], [b]) => a.localeCompare(b));
   const decl = (list, pad) => list.map(([path, value]) => `${pad}${tokenVar(path)}: ${componentValue(value)};`).join('\n');
-  const head = '/* Generated from the components section of tokens/theme.json by npm run build:components (or Publish). Do not edit. */\n';
+  const head = '/* Generated from the components section of the default theme by npm run build:themes (or Publish). Do not edit. */\n';
   if (!entries.length) return head;
   const colors = entries.filter(([p, v]) => readsColor(tokens.get(p), v));
   const sizes = entries.filter(([, v]) => readsSpace(v));

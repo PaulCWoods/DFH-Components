@@ -1,5 +1,5 @@
 /* A fixed set of fonts and families for the tests about font handling, so
-   they test the engine rather than whichever fonts tokens/theme.json names
+   they test the engine rather than whichever fonts the theme files name
    today: a variable Google sans with italics, a static serif and mono, and a
    display face that loads one weight (800). */
 export const useFixtureFonts = (type) => {

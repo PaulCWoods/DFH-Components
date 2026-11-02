@@ -158,7 +158,7 @@ export const fontsCss = (type, { base = '' } = {}) => {
   const overrides = Object.entries(roleOverrides(type));
   const faces = fontFaces(type, { base });
   return [
-    "/* Generated from tokens/theme.json by npm run build:type (or Publish). Not imported by index.css:\n   a page that loads the theme's fonts links this too. Without it, the font tokens use system stacks. */",
+    "/* Generated from the default theme by npm run build:themes (or Publish). Not imported by index.css:\n   a page that loads the theme's fonts links this too. Without it, the font tokens use system stacks. */",
     faces,
     overrides.length ? `:root {\n${overrides.map(([role, stack]) => `  --typography-font-family-${role}: ${stack};`).join('\n')}\n}` : '',
   ]

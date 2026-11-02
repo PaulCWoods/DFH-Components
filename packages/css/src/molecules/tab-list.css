@@ -444,7 +444,7 @@
 
 @media (prefers-contrast: more) {
   :where(.tab-list) {
-    --_tab-list-indicator-width: calc(var(--tab-list-indicator-width, var(--border-width-thick)) * 2);
+    --_tab-list-indicator-width: max(var(--tab-list-indicator-width, var(--border-width-thick)), var(--border-width-thick));
   }
 
   :where(.tab-list--floating) {

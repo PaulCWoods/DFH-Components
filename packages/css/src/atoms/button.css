@@ -41,8 +41,9 @@
   /* --------------------------------------------------------------------------
      Tone (Neutral Intent)
      Public hooks: --button-color, --button-color-hover, --button-color-pressed,
-     --button-color-border, --button-on-color. Undefined by default; set them on
-     a button or a container to recolour every prominence consistently.
+     --button-color-border, --button-on-color. They colour the neutral Button
+     at every prominence, on a Button, a container or the theme; an intent
+     keeps its own colours. --button-on-color is the text on every fill.
      -------------------------------------------------------------------------- */
   --_button-tone: var(--button-color, var(--foreground, CanvasText));
   --_button-tone-hover: var(--button-color-hover, var(--foreground-strong, var(--_button-tone)));
@@ -94,17 +95,17 @@
 
   /* Intent */
   @container style(--button-intent: accent) {
-    --_button-tone: var(--button-color, var(--foreground-accent, CanvasText));
-    --_button-tone-hover: var(--button-color-hover, var(--foreground-accent-hover, var(--_button-tone)));
-    --_button-tone-pressed: var(--button-color-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
-    --_button-tone-border: var(--button-color-border, var(--_button-tone));
+    --_button-tone: var(--foreground-accent, CanvasText);
+    --_button-tone-hover: var(--foreground-accent-hover, var(--_button-tone));
+    --_button-tone-pressed: var(--foreground-accent-pressed, var(--_button-tone));
+    --_button-tone-border: var(--_button-tone);
   }
 
   @container style(--button-intent: danger) {
-    --_button-tone: var(--button-color, var(--foreground-danger, CanvasText));
-    --_button-tone-hover: var(--button-color-hover, var(--foreground-danger-hover, var(--_button-tone)));
-    --_button-tone-pressed: var(--button-color-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
-    --_button-tone-border: var(--button-color-border, var(--_button-tone));
+    --_button-tone: var(--foreground-danger, CanvasText);
+    --_button-tone-hover: var(--foreground-danger-hover, var(--_button-tone));
+    --_button-tone-pressed: var(--foreground-danger-pressed, var(--_button-tone));
+    --_button-tone-border: var(--_button-tone);
   }
 
   /* Prominence */
@@ -306,17 +307,17 @@
    Set the tone only; prominence decides where it is applied.
    ========================================================================== */
 :where(.button--accent) {
-  --_button-tone: var(--button-color, var(--foreground-accent, CanvasText));
-  --_button-tone-hover: var(--button-color-hover, var(--foreground-accent-hover, var(--_button-tone)));
-  --_button-tone-pressed: var(--button-color-pressed, var(--foreground-accent-pressed, var(--_button-tone)));
-  --_button-tone-border: var(--button-color-border, var(--_button-tone));
+  --_button-tone: var(--foreground-accent, CanvasText);
+  --_button-tone-hover: var(--foreground-accent-hover, var(--_button-tone));
+  --_button-tone-pressed: var(--foreground-accent-pressed, var(--_button-tone));
+  --_button-tone-border: var(--_button-tone);
 }
 
 :where(.button--danger) {
-  --_button-tone: var(--button-color, var(--foreground-danger, CanvasText));
-  --_button-tone-hover: var(--button-color-hover, var(--foreground-danger-hover, var(--_button-tone)));
-  --_button-tone-pressed: var(--button-color-pressed, var(--foreground-danger-pressed, var(--_button-tone)));
-  --_button-tone-border: var(--button-color-border, var(--_button-tone));
+  --_button-tone: var(--foreground-danger, CanvasText);
+  --_button-tone-hover: var(--foreground-danger-hover, var(--_button-tone));
+  --_button-tone-pressed: var(--foreground-danger-pressed, var(--_button-tone));
+  --_button-tone-border: var(--_button-tone);
 }
 
 /* ==========================================================================
@@ -512,7 +513,7 @@
 :where(.button--icon) {
   --_button-padding-inline: var(--_button-padding-block);
 
-  > :where(span:not(.button__icon, .badge, .avatar), .button__text) {
+  > :where(span:not(.button__icon, .avatar, .badge, .brand), .button__text) {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;

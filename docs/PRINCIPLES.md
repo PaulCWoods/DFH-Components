@@ -157,8 +157,8 @@ Structure comes first from type, space and alignment, and only then from borders
 
 - The library must not load fonts. No remote `@import` (such as Google Fonts) appears in library CSS; it blocks rendering, makes third-party requests consumers have not agreed to, and fails offline.
 - Font tokens in `1-global.json` default to system font stacks, so the library is complete without any web font.
-- The theme's fonts (`tokens/theme.json`) reach a page through `packages/css/src/fonts.css`, generated with the tokens and never imported by `index.css`: its `@font-face` rules for stored fonts, and a `:root` block that puts each role's font first. A product that wants the theme's fonts links them and `fonts.css`; without them it gets the system stacks.
-- Storybook (`.storybook/preview-head.html`) and the documentation site load the theme's fonts in the page head, between `<!-- theme fonts -->` markers that `npm run build:type` and the designer's Publish rewrite, and import `fonts.css`. Figma takes the theme's fonts for the family roles.
+- A theme's fonts (`tokens/themes/<name>.json`) reach a page through its stylesheet, never through `index.css`: `packages/css/src/themes/<name>.css` for a theme other than the default, or `packages/css/src/fonts.css` for the default. Each holds the `@font-face` rules for stored fonts and a `:root` block that puts each role's font first. A product that wants a theme's fonts links them and that stylesheet; without them it gets the system stacks. The default theme (starter) uses system fonts.
+- Storybook (`.storybook/preview-head.html`) and the documentation site wear the site theme (DFH, named in `tokens/themes.json`) and load its fonts in the page head, between `<!-- theme fonts -->` markers that `npm run build:themes` and the designer's Publish rewrite. Figma takes the theme's fonts for the family roles.
 
 ## 5. Colour: OKLCH, semantic roles and surfaces
 

@@ -82,7 +82,7 @@ Every size keeps a 48px hit area. \`--sm\` (32px) and buttons stepped down by a 
 \`\`\`
 
 #### Customisation hooks
-Undefined by default. Set on a button or a container to recolour every prominence consistently: \`--button-color\`, \`--button-color-hover\`, \`--button-color-pressed\`, \`--button-color-border\`, \`--button-on-color\`. Geometry uses the Tier 3 tokens \`--button-padding-*\`, \`--button-min-size\`, \`--button-radius\`, \`--button-inner-gap\`, \`--button-font-*\`, and their \`-sm-\` / \`-lg-\` variants.
+They colour the neutral Button at every prominence, set on a Button, a container or the theme; intents keep their own colours: \`--button-color\`, \`--button-color-hover\`, \`--button-color-pressed\`, \`--button-color-border\`, \`--button-on-color\`. Geometry uses the Tier 3 tokens \`--button-padding-*\`, \`--button-min-size\`, \`--button-radius\`, \`--button-inner-gap\`, \`--button-font-*\`, and their \`-sm-\` / \`-lg-\` variants.
 
 #### Keyboard
 Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as buttons activate with Enter only. \`aria-disabled="true"\` keeps the button focusable for screen readers but blocks activation.

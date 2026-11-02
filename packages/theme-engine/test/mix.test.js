@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { applyMixes, buildPalette, MIX_TOKENS, mixCssVars, mixGate, mixValue } from '../src/index.js';
 
 const read = (file) => JSON.parse(readFileSync(new URL(`../../../tokens/${file}`, import.meta.url)));
-const theme = read('theme.json');
+const theme = read('themes/starter.json');
 const global = read('1-global.json');
 const semantic = read('2-semantic.json');
 const ctx = { semantic, global, palette: buildPalette(theme), roles: theme.roles };

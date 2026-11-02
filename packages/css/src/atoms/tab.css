@@ -441,6 +441,6 @@
 
 @media (prefers-contrast: more) {
   :where(.tab) {
-    --_tab-line-width: calc(var(--tab-list-indicator-width, var(--border-width-thick)) * 2);
+    --_tab-list-indicator-width: max(var(--tab-list-indicator-width, var(--border-width-thick)), var(--border-width-thick));
   }
 }

@@ -70,7 +70,7 @@ Atoms are fixed by default, because a Card's title has no reason to change with 
 
 ```html live
 <ul class="list small-text">
-  <li><code class="font-mono">tokens/theme.json</code></li>
+  <li><code class="font-mono">tokens/themes/starter.json</code></li>
   <li><code class="font-mono">tokens/1-global.json</code>, the ramps</li>
 </ul>
 

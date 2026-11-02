@@ -53,6 +53,11 @@
     "timefunc": {
       "$value": "{timefunc.ease-in-out}",
       "$type": "other"
+    },
+    "bg": {
+      "$value": "transparent",
+      "$type": "color",
+      "$description": "Background"
     }
   },
   "avatar": {
@@ -203,6 +208,10 @@
       "$value": "{display-title.font-family}",
       "$type": "fontFamily"
     },
+    "font-weight": {
+      "$value": "{font-weight.regular}",
+      "$type": "fontWeight"
+    },
     "font-size": {
       "$value": "{typography.font-size.fluid-1}",
       "$type": "dimension"
@@ -222,6 +231,16 @@
     "text-transform": {
       "$value": "{display-title.text-transform}",
       "$type": "string"
+    },
+    "hover-color": {
+      "$value": "{foreground.accent-hover}",
+      "$type": "color",
+      "$description": "Colour on hover"
+    },
+    "active-color": {
+      "$value": "{foreground.accent-pressed}",
+      "$type": "color",
+      "$description": "Colour while pressed"
     }
   },
   "lockup": {
@@ -263,6 +282,21 @@
     "sm-size": {
       "$value": "1rem",
       "$type": "dimension"
+    },
+    "color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "The neutral Badge's fill. Intents keep their own."
+    },
+    "on-color": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color",
+      "$description": "Text on a Badge, at every intent"
+    },
+    "radius": {
+      "$value": "{radius.full}",
+      "$type": "dimension",
+      "$description": "Corner radius"
     }
   },
   "status": {
@@ -324,6 +358,26 @@
     "sm-padding-inline": {
       "$value": "{spacing.6}",
       "$type": "dimension"
+    },
+    "color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "The neutral Status's colour. Intents keep their own."
+    },
+    "tint": {
+      "$value": "{surface.translucent-strong}",
+      "$type": "color",
+      "$description": "The neutral subtle Status's background"
+    },
+    "color-border": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "The neutral Status's border"
+    },
+    "on-color": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color",
+      "$description": "Text on a strong Status, at every intent"
     }
   },
   "list": {
@@ -373,6 +427,21 @@
     "sm-font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension"
+    },
+    "bg": {
+      "$value": "transparent",
+      "$type": "color",
+      "$description": "Background"
+    },
+    "color": {
+      "$value": "currentColor",
+      "$type": "color",
+      "$description": "Text colour"
+    },
+    "color-border": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "Border colour"
     }
   },
   "icon": {
@@ -484,6 +553,11 @@
         "$type": "dimension",
         "$description": "Compact banner body padding"
       }
+    },
+    "shadow": {
+      "$value": "none",
+      "$type": "shadow",
+      "$description": "Shadow"
     }
   },
   "banner-dock": {
@@ -818,6 +892,36 @@
         "$value": "calc({button.lg.min-size} / {button.min-size} * {button.padding-inline})",
         "$type": "dimension"
       }
+    },
+    "color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "The neutral Button's colour: its text and outline, and its fill when strong or hovered. Intents keep their own."
+    },
+    "color-hover": {
+      "$value": "{foreground.strong}",
+      "$type": "color",
+      "$description": "The neutral colour on hover"
+    },
+    "color-pressed": {
+      "$value": "{foreground.strong}",
+      "$type": "color",
+      "$description": "The neutral colour while pressed"
+    },
+    "color-border": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "The neutral Button's resting border"
+    },
+    "on-color": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color",
+      "$description": "Text on a filled Button, at every intent"
+    },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Font family"
     }
   },
   "button-group": {
@@ -956,6 +1060,11 @@
         "$value": "{spacing}",
         "$type": "dimension"
       }
+    },
+    "thumb-bg": {
+      "$value": "{surface.muted}",
+      "$type": "color",
+      "$description": "Background behind a thumbnail"
     }
   },
   "chip": {
@@ -1013,6 +1122,16 @@
     "sm-padding-inline": {
       "$value": "{spacing.6}",
       "$type": "dimension"
+    },
+    "color": {
+      "$value": "{foreground}",
+      "$type": "color",
+      "$description": "Text colour"
+    },
+    "color-border": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "Border colour"
     }
   },
   "dialog": {
@@ -1111,6 +1230,16 @@
       "$value": "{spacing.4}",
       "$type": "dimension",
       "$description": "Block padding of the bar"
+    },
+    "radius": {
+      "$value": "{radius}",
+      "$type": "dimension",
+      "$description": "Corner radius"
+    },
+    "bar-bg": {
+      "$value": "{surface.translucent}",
+      "$type": "color",
+      "$description": "The top bar's background"
     }
   },
   "empty-state": {
@@ -1179,6 +1308,11 @@
     "error-color": {
       "$value": "{foreground.danger}",
       "$type": "color"
+    },
+    "label-gap": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "$description": "Gap between the label and its hint"
     }
   },
   "fieldset": {
@@ -1190,6 +1324,11 @@
     "compact-gap": {
       "$value": "{spacing.8}",
       "$type": "dimension"
+    },
+    "legend-gap": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "$description": "Gap between the legend and its hint"
     }
   },
   "choices": {
@@ -1400,6 +1539,16 @@
       "$value": "4.5rem",
       "$type": "dimension",
       "$description": "Width of --rail"
+    },
+    "compact-padding": {
+      "$value": "{spacing}",
+      "$type": "dimension",
+      "$description": "Padding when compact"
+    },
+    "compact-width": {
+      "$value": "12rem",
+      "$type": "dimension",
+      "$description": "Width when compact"
     }
   },
   "footer": {
@@ -1989,6 +2138,11 @@
     "floating-padding-inline": {
       "$value": "{spacing.16}",
       "$type": "dimension"
+    },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Font family"
     }
   },
   "table": {
@@ -2120,6 +2274,11 @@
       "$value": "calc({spacing.16} * 6.5)",
       "$type": "dimension",
       "$description": "Width of an actions column"
+    },
+    "column-shadow-size": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "Size of the shadow beside a sticky first column"
     }
   },
   "switch": {
@@ -2375,6 +2534,11 @@
       "$value": "{spacing.24}",
       "$type": "dimension",
       "$description": "Distance of a docked tab list from the viewport's bottom edge"
+    },
+    "nested-indent": {
+      "$value": "0px",
+      "$type": "dimension",
+      "$description": "Indent of a nested list in a vertical Tab List"
     }
   },
   "tabbed-content": {
@@ -2448,6 +2612,16 @@
     "group-gap": {
       "$value": "{spacing.8}",
       "$type": "dimension"
+    },
+    "min-size": {
+      "$value": "3rem",
+      "$type": "dimension",
+      "$description": "Minimum height of a reading"
+    },
+    "compact-min-size": {
+      "$value": "2rem",
+      "$type": "dimension",
+      "$description": "Minimum height when compact"
     }
   },
   "textarea": {
@@ -2608,6 +2782,16 @@
       "$value": "{timefunc.ease-in-out}",
       "$type": "other",
       "$description": "Entry and exit timing function"
+    },
+    "border-color": {
+      "$value": "transparent",
+      "$type": "color",
+      "$description": "Border colour"
+    },
+    "border-width": {
+      "$value": "1px",
+      "$type": "dimension",
+      "$description": "Border width"
     }
   },
   "menu": {
@@ -2761,6 +2945,11 @@
       "$value": "{foreground.accent}",
       "$type": "color",
       "$description": "Selected options also show a check icon"
+    },
+    "listbox-offset": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "$description": "Gap between the field and its list"
     }
   },
   "wrapper": {

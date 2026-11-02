@@ -113,27 +113,27 @@
       "$description": "Layer surface background for floating or sticky elements"
     },
     "accent": {
-      "$value": "light-dark({color.purple.200}, {color.purple.800})",
+      "$value": "light-dark({color.blue.200}, {color.blue.800})",
       "$description": "Light tint accent surface for badges and highlighted areas"
     },
     "accent-dark": {
-      "$value": "{color.purple.800}",
+      "$value": "{color.blue.800}",
       "$description": "Deep accent surface"
     },
     "accent-strong": {
-      "$value": "light-dark({color.purple.700}, {color.purple.300})",
+      "$value": "light-dark({color.blue.700}, {color.blue.300})",
       "$description": "High-contrast accent surface for primary interactive elements"
     },
     "complementary": {
-      "$value": "light-dark({color.blue.200}, {color.blue.800})",
+      "$value": "light-dark({color.purple.200}, {color.purple.800})",
       "$description": "Light tint complementary surface for badges and highlighted areas"
     },
     "complementary-dark": {
-      "$value": "{color.blue.800}",
+      "$value": "{color.purple.800}",
       "$description": "Deep complementary surface"
     },
     "complementary-strong": {
-      "$value": "light-dark({color.blue.700}, {color.blue.300})",
+      "$value": "light-dark({color.purple.700}, {color.purple.300})",
       "$description": "High-contrast complementary surface for primary interactive elements"
     },
     "translucent": {
@@ -213,27 +213,27 @@
       "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
     },
     "accent": {
-      "$value": "light-dark({color.purple.600}, {color.purple.300})",
+      "$value": "light-dark({color.blue.600}, {color.blue.300})",
       "$description": "Brand links, active navigation items, focus states"
     },
     "accent-hover": {
-      "$value": "light-dark({color.purple.700}, {color.purple.200})",
+      "$value": "light-dark({color.blue.700}, {color.blue.200})",
       "$description": "Hover state for links and accent buttons"
     },
     "accent-pressed": {
-      "$value": "light-dark({color.purple.800}, {color.purple.100})",
+      "$value": "light-dark({color.blue.800}, {color.blue.100})",
       "$description": "Active / pressed state for links and accent buttons"
     },
     "complementary": {
-      "$value": "light-dark({color.blue.700}, {color.blue.300})",
+      "$value": "light-dark({color.purple.700}, {color.purple.300})",
       "$description": "Complementary links, active navigation items, focus states"
     },
     "complementary-hover": {
-      "$value": "light-dark({color.blue.600}, {color.blue.200})",
+      "$value": "light-dark({color.purple.600}, {color.purple.200})",
       "$description": "Complementary state for links and accent buttons"
     },
     "complementary-pressed": {
-      "$value": "light-dark({color.blue.800}, {color.blue.100})",
+      "$value": "light-dark({color.purple.800}, {color.purple.100})",
       "$description": "Active / pressed state for complementary buttons"
     },
     "danger": {
@@ -306,11 +306,11 @@
         "$description": "Form control boundary: 67% of the text colour, at least 3:1 against the page in both schemes (WCAG 1.4.11)"
       },
       "accent": {
-        "$value": "{color.purple.500}",
+        "$value": "{color.blue.500}",
         "$description": "Active interactive border color"
       },
       "complementary": {
-        "$value": "light-dark({color.blue.600}, {color.blue.500})",
+        "$value": "light-dark({color.purple.600}, {color.purple.500})",
         "$description": "Complementary interactive border color"
       },
       "danger": {
@@ -1525,17 +1525,62 @@
   "$media": {
     "(prefers-contrast: more)": {
       "surface": {
-        "dark": {
-          "$value": "light-dark({color.black}, {color.black})"
-        },
         "default": {
           "$value": "light-dark({color.white}, {color.black})"
+        },
+        "subtle": {
+          "$value": "light-dark({color.white}, {color.black})"
+        },
+        "muted": {
+          "$value": "light-dark({color.neutral.000}, {color.neutral.1000})"
         },
         "inverted": {
           "$value": "light-dark({color.black}, {color.white})"
         },
+        "dark": {
+          "$value": "{color.black}"
+        },
+        "accent": {
+          "$value": "light-dark({color.blue.100}, {color.blue.900})"
+        },
+        "accent-dark": {
+          "$value": "{color.blue.900}"
+        },
+        "accent-strong": {
+          "$value": "light-dark({color.blue.800}, {color.blue.200})"
+        },
+        "complementary": {
+          "$value": "light-dark({color.purple.100}, {color.purple.900})"
+        },
+        "complementary-dark": {
+          "$value": "{color.purple.900}"
+        },
+        "complementary-strong": {
+          "$value": "light-dark({color.purple.800}, {color.purple.200})"
+        },
+        "danger-strong": {
+          "$value": "light-dark({color.red.800}, {color.red.200})"
+        },
+        "warning-strong": {
+          "$value": "light-dark({color.amber.800}, {color.amber.200})"
+        },
+        "info-strong": {
+          "$value": "light-dark({color.blue.800}, {color.blue.200})"
+        },
+        "success-strong": {
+          "$value": "light-dark({color.green.800}, {color.green.200})"
+        },
         "layer": {
           "$value": "light-dark({color.white}, {color.black})"
+        },
+        "translucent": {
+          "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.90})"
+        },
+        "translucent-strong": {
+          "$value": "color-mix(in srgb, {surface.inverted}, transparent {translucency.70})"
+        },
+        "shade": {
+          "$value": "light-dark(color-mix(in srgb, {color.neutral.1000}, transparent {translucency.90}), color-mix(in srgb, {color.black}, transparent {translucency.50}))"
         }
       },
       "foreground": {
@@ -1549,26 +1594,100 @@
           "$value": "{color.white}"
         },
         "muted": {
-          "$value": "light-dark({color.neutral.800}, {color.neutral.100})"
+          "$value": "light-dark({color.neutral.800}, {color.neutral.200})"
+        },
+        "accent": {
+          "$value": "light-dark({color.blue.700}, {color.blue.200})"
         },
         "accent-hover": {
-          "$value": "light-dark({color.purple.700}, {color.purple.300})"
+          "$value": "light-dark({color.blue.800}, {color.blue.100})"
+        },
+        "accent-pressed": {
+          "$value": "light-dark({color.blue.900}, {color.blue.100})"
+        },
+        "complementary": {
+          "$value": "light-dark({color.purple.800}, {color.purple.200})"
+        },
+        "complementary-hover": {
+          "$value": "light-dark({color.purple.700}, {color.purple.100})"
+        },
+        "complementary-pressed": {
+          "$value": "light-dark({color.purple.900}, {color.purple.100})"
+        },
+        "danger": {
+          "$value": "light-dark({color.red.700}, {color.red.200})"
+        },
+        "danger-hover": {
+          "$value": "light-dark({color.red.800}, {color.red.100})"
+        },
+        "danger-pressed": {
+          "$value": "light-dark({color.red.900}, {color.red.100})"
+        },
+        "success": {
+          "$value": "light-dark({color.green.700}, {color.green.200})"
+        },
+        "success-hover": {
+          "$value": "light-dark({color.green.800}, {color.green.100})"
+        },
+        "success-pressed": {
+          "$value": "light-dark({color.green.900}, {color.green.100})"
+        },
+        "warning": {
+          "$value": "light-dark({color.amber.700}, {color.amber.200})"
+        },
+        "info": {
+          "$value": "light-dark({color.blue.700}, {color.blue.200})"
+        },
+        "warning-hover": {
+          "$value": "light-dark({color.amber.800}, {color.amber.100})"
+        },
+        "info-hover": {
+          "$value": "light-dark({color.blue.800}, {color.blue.100})"
+        },
+        "warning-pressed": {
+          "$value": "light-dark({color.amber.900}, {color.amber.100})"
+        },
+        "info-pressed": {
+          "$value": "light-dark({color.blue.900}, {color.blue.100})"
         }
       },
       "border": {
         "color": {
           "accent": {
-            "$value": "{color.purple.500}"
+            "$value": "light-dark({color.blue.600}, {color.blue.400})"
           },
-          "accent-strong": {
-            "$value": "{color.purple.500}"
+          "complementary": {
+            "$value": "light-dark({color.purple.700}, {color.purple.400})"
           },
-          "muted": {
-            "$value": "currentColor"
+          "danger": {
+            "$value": "light-dark({color.red.600}, {color.red.400})"
           },
-          "quiet": {
-            "$value": "{color.muted}"
+          "warning": {
+            "$value": "light-dark({color.amber.600}, {color.amber.400})"
+          },
+          "info": {
+            "$value": "light-dark({color.blue.600}, {color.blue.400})"
+          },
+          "success": {
+            "$value": "light-dark({color.green.600}, {color.green.400})"
+          },
+          "control": {
+            "$value": "color-mix(in srgb, currentColor, transparent {translucency.25})"
           }
+        }
+      },
+      "color": {
+        "muted": {
+          "$value": "color-mix(in srgb, currentColor, transparent {translucency.33})"
+        },
+        "quiet": {
+          "$value": "color-mix(in srgb, currentColor, transparent {translucency.50})"
+        },
+        "backdrop": {
+          "$value": "color-mix(in srgb, {color.neutral.900}, transparent {translucency.33})"
+        },
+        "overlay": {
+          "$value": "light-dark(color-mix(in srgb, {color.neutral.000}, transparent {translucency.25}), color-mix(in srgb, {color.neutral.900}, transparent {translucency.25}))"
         }
       },
       "opacity": {

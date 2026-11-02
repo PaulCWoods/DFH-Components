@@ -16,9 +16,15 @@ const HEADS = ['packages/storybook/.storybook/preview-head.html', 'packages/docs
    taken for it */
 const MARKS = /^([ \t]*)<!-- theme fonts -->[ \t]*$[\s\S]*?^[ \t]*<!-- \/theme fonts -->[ \t]*$/m;
 
-export const writeFontFiles = (root, type) => {
+export const writeFontFiles = (root, type, headType = type) => {
   const written = ['packages/css/src/fonts.css'];
   writeFileSync(resolve(root, written[0]), fontsCss(type));
+  return [...written, ...writeHeadLinks(root, headType)];
+};
+
+/* The heads load the site theme's fonts (tokens/themes.json) */
+export const writeHeadLinks = (root, type) => {
+  const written = [];
   for (const head of HEADS) {
     const path = resolve(root, head);
     if (!existsSync(path)) continue;

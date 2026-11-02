@@ -231,7 +231,7 @@ export const Lists: Story = {
         <div class="card__body stack gap-sm">
           <p class="text">This rewrites the color tokens:</p>
           <ul class="list small-text">
-            <li><code class="font-mono">tokens/theme.json</code></li>
+            <li><code class="font-mono">tokens/themes/starter.json</code></li>
             <li><code class="font-mono">tokens/1-global.json</code>, the ramps
               <ul>
                 <li>Nested items indent again</li>

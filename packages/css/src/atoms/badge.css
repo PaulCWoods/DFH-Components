@@ -40,6 +40,7 @@
      -------------------------------------------------------------------------- */
   --_badge-tone: var(--badge-color, var(--foreground, CanvasText));
   --_badge-on-tone: var(--badge-on-color, var(--foreground-inverted-strong, Canvas));
+  --_badge-radius: var(--badge-radius, var(--radius-full, 9999px));
 
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
@@ -57,23 +58,23 @@
      flag inherited from a container.
      ------------------------------------------------------------------------ */
   @container style(--badge-intent: accent) {
-    --_badge-tone: var(--badge-color, var(--foreground-accent, CanvasText));
+    --_badge-tone: var(--foreground-accent, CanvasText);
   }
 
   @container style(--badge-intent: info) {
-    --_badge-tone: var(--badge-color, var(--foreground-info, CanvasText));
+    --_badge-tone: var(--foreground-info, CanvasText);
   }
 
   @container style(--badge-intent: danger) {
-    --_badge-tone: var(--badge-color, var(--foreground-danger, CanvasText));
+    --_badge-tone: var(--foreground-danger, CanvasText);
   }
 
   @container style(--badge-intent: warning) {
-    --_badge-tone: var(--badge-color, var(--foreground-warning, CanvasText));
+    --_badge-tone: var(--foreground-warning, CanvasText);
   }
 
   @container style(--badge-intent: success) {
-    --_badge-tone: var(--badge-color, var(--foreground-success, CanvasText));
+    --_badge-tone: var(--foreground-success, CanvasText);
   }
 
   @container style(--badge-size: sm) or style(--ui-sizing: compact) {
@@ -101,7 +102,7 @@
   line-height: 1;
 
   /* Surface */
-  border-radius: var(--radius-full, 9999px);
+  border-radius: var(--_badge-radius);
   background-color: var(--_badge-tone);
   color: var(--_badge-on-tone);
 
@@ -120,23 +121,23 @@
    2. Intent Modifiers
    ========================================================================== */
 :where(.badge--accent) {
-  --_badge-tone: var(--badge-color, var(--foreground-accent, CanvasText));
+  --_badge-tone: var(--foreground-accent, CanvasText);
 }
 
 :where(.badge--info) {
-  --_badge-tone: var(--badge-color, var(--foreground-info, CanvasText));
+  --_badge-tone: var(--foreground-info, CanvasText);
 }
 
 :where(.badge--danger) {
-  --_badge-tone: var(--badge-color, var(--foreground-danger, CanvasText));
+  --_badge-tone: var(--foreground-danger, CanvasText);
 }
 
 :where(.badge--warning) {
-  --_badge-tone: var(--badge-color, var(--foreground-warning, CanvasText));
+  --_badge-tone: var(--foreground-warning, CanvasText);
 }
 
 :where(.badge--success) {
-  --_badge-tone: var(--badge-color, var(--foreground-success, CanvasText));
+  --_badge-tone: var(--foreground-success, CanvasText);
 }
 
 /* ==========================================================================

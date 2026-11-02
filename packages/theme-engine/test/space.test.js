@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { applySpaceRoles, spaceCssVars, spaceFluidBlock, spaceGate, spaceSteps } from '../src/index.js';
 
-const theme = JSON.parse(readFileSync(new URL('../../../tokens/theme.json', import.meta.url)));
+const theme = JSON.parse(readFileSync(new URL('../../../tokens/themes/starter.json', import.meta.url)));
 const semantic = JSON.parse(readFileSync(new URL('../../../tokens/2-semantic.json', import.meta.url)));
 
 test('each role grows from its start to base × ratio^step', () => {

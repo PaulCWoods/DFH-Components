@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-// Paths configuration
-const TOKENS_DIR = path.join(__dirname, '../../tokens');
-const OUTPUT_FILE = path.join(__dirname, '../css/src/variables.css');
+// Paths configuration: the library's tokens and variables.css, or another
+// theme's with --tokens <dir> --out <file> (build:themes)
+const arg = (name) => { const i = process.argv.indexOf(name); return i > 0 ? path.resolve(process.argv[i + 1]) : null; };
+const TOKENS_DIR = arg('--tokens') ?? path.join(__dirname, '../../tokens');
+const OUTPUT_FILE = arg('--out') ?? path.join(__dirname, '../css/src/variables.css');
 
 /**
  * Resolves token references inside any string expression.
@@ -160,6 +162,8 @@ function compileFluidValue(val, globalTokens = null) {
  * Filled from 2-semantic.json by buildInvertedRoles().
  */
 const invertedTier2Vars = [];
+/* The same swap for the high-contrast roles, so an inverted region keeps them */
+const invertedContrastVars = [];
 
 /* Splits light-dark(a, b) at its top-level comma; null for any other value */
 function splitLightDark(val) {
@@ -175,7 +179,7 @@ function splitLightDark(val) {
   return null;
 }
 
-function buildInvertedRoles(semanticJson) {
+function buildInvertedRoles(semanticJson, into = invertedTier2Vars) {
   const walk = (obj, path) => {
     for (const [key, value] of Object.entries(obj)) {
       if (key.startsWith('$') || !value || typeof value !== 'object') continue;
@@ -188,7 +192,7 @@ function buildInvertedRoles(semanticJson) {
       if (!parts) continue;
       const css = resolveReferences(`light-dark(${parts[1]}, ${parts[0]})`);
       const name = next.join('-').replace(/-default$/, '');
-      invertedTier2Vars.push(`  --${name}: ${css};`);
+      into.push(`  --${name}: ${css};`);
     }
   };
   for (const group of ['surface', 'foreground']) if (semanticJson?.[group]) walk(semanticJson[group], [group]);
@@ -702,6 +706,8 @@ function compileTokens() {
 
     // 3. Generate fluid system with dynamic compound steps
     buildInvertedRoles(semanticJson);
+    const contrastJson = semanticJson?.$media?.['(prefers-contrast: more)'];
+    if (contrastJson) buildInvertedRoles(contrastJson, invertedContrastVars);
     const fluidSystem = generateFluidSystem(globalJson, discoveredFluidSteps, scaleParams);
     const shadowSystem = generateShadowSystem(semanticJson);
 
@@ -806,6 +812,21 @@ ${invertedVars.join('\n')}
 * {
   @container style(--color-palette: inverted) {
 ${invertedVars.join('\n')}
+  }
+}`;
+    }
+    if (invertedContrastVars.length > 0) {
+      invertedBlock += `
+
+@media (prefers-contrast: more) {
+  :where(.color-palette-inverted, .colors-inverted) {
+${invertedContrastVars.join('\n')}
+  }
+
+  * {
+    @container style(--color-palette: inverted) {
+${invertedContrastVars.join('\n')}
+    }
   }
 }`;
     }

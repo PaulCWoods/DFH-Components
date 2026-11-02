@@ -192,7 +192,7 @@ Design For Humans supports fluid spacing and responsive typography across both W
 - **Fixed Non-Fluid Typography:** Reference static global scale tokens directly without `fluid()`, e.g. `"$value": "{typography.font-size.minus-1}"` for `micro-heading`.
 
 #### Semantic Text Styles
-The text styles are written by the type engine from the `type` section of `tokens/theme.json` (`npm run build:type`, or the Token Designer's Typography section). Edit the theme, not the style tokens. Each style has a fixed step, a compact step, and grows in fluid and cq regions with the system (its step on the small scale to the same step on the large) or to another step:
+The text styles are written by the type engine from the `type` section of the default theme in `tokens/themes/` (`npm run build:themes`, or the Token Designer's Typography section). Edit the theme, not the style tokens. Each style has a fixed step, a compact step, and grows in fluid and cq regions with the system (its step on the small scale to the same step on the large) or to another step:
 
 | Style | Fixed | Compact | Fluid / cq |
 | :--- | :--- | :--- | :--- |

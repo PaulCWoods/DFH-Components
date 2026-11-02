@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* ==========================================================================
    npm run build:palette [-- --write] [-- --all]
-   Builds the ramps from tokens/theme.json, checks every Tier 2 pairing in
+   Builds the ramps from the default theme (tokens/themes.json), checks every Tier 2 pairing in
    light and dark, and prints the result. --write replaces the `color` block
    of tokens/1-global.json and the colour roles in tokens/2-semantic.json,
    and only when no gated pairing fails. --all lists
@@ -11,20 +11,22 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildPalette, check, colorBlock, applyRoles, applyMixes, mixGate, withFixed } from '../src/index.js';
+import { buildPalette, check, colorBlock, applyRoles, applyMixes, applyContrast, contrastGate, contrastRoles, mixGate, withFixed } from '../src/index.js';
+import { themePath } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
 const args = new Set(process.argv.slice(2));
 
-const theme = read('tokens/theme.json');
+const theme = JSON.parse(readFileSync(themePath(root), 'utf8'));
 const global = withFixed(read('tokens/1-global.json'), theme);
 const semantic = read('tokens/2-semantic.json');
 
 const palette = buildPalette(theme);
 const { rows, failures: pairingFailures } = check({ semantic, global, palette, roles: theme.roles });
 const mixFailures = mixGate(theme.mixes, { semantic, global, palette, roles: theme.roles }).failures;
-const failures = [...pairingFailures, ...mixFailures];
+const high = contrastGate(theme, { semantic, global, palette });
+const failures = [...pairingFailures, ...mixFailures, ...high.failures];
 
 /* Ramps */
 const hues = Object.keys(palette);
@@ -56,10 +58,13 @@ if (reported.length) {
 if (failures.length) {
   console.log(`\nFailing (${failures.length}):`);
   pairingFailures.forEach((r) => console.log(line(r)));
-  mixFailures.forEach((r) => console.log(`  ${r.style.padEnd(30)} ${r.message}`));
+  [...mixFailures, ...high.failures].forEach((r) => console.log(`  ${r.style.padEnd(30)} ${r.message}`));
 } else {
   console.log('\nEvery gated pairing passes.');
 }
+
+console.log(`\nHigh contrast (${theme.contrast?.steps ?? 1} step): ${Object.keys(contrastRoles(theme, { palette, global })).length} roles move, no pairing drops${high.failures.length ? ' except the failures above' : ''}; ${high.reports.length} text pairings under 7:1.`);
+high.reports.forEach((r) => console.log(`  ${r.style.padEnd(58)} ${r.message}`));
 
 if (args.has('--write')) {
   if (failures.length) {
@@ -68,7 +73,7 @@ if (args.has('--write')) {
   }
   global.color = colorBlock(palette, global.color);
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
-  writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyMixes(applyRoles(semantic, theme.roles, { palette, global }), theme.mixes), null, 2));
+  writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyContrast(applyMixes(applyRoles(semantic, theme.roles, { palette, global }), theme.mixes), theme, { palette, global }), null, 2));
   console.log('\nWrote the color block of tokens/1-global.json and the roles in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
 }
 

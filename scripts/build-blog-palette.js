@@ -180,7 +180,7 @@ ${utilities}`;
 
 function compile() {
   const sassBin = ['/opt/homebrew/bin/sass', '/usr/local/bin/sass'].find((p) => fs.existsSync(p)) || 'sass';
-  for (const [from, to] of SASS_BUILDS) execFileSync(sassBin, [from, to], { cwd: BLOG_DIR, stdio: ['ignore', 'ignore', 'inherit'] });
+  for (const [from, to] of SASS_BUILDS) execFileSync(sassBin, ['--style=compressed', from, to], { cwd: BLOG_DIR, stdio: ['ignore', 'ignore', 'inherit'] });
 }
 
 /* Writes the file when it has changed; true when it did */

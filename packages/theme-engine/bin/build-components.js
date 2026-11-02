@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* ==========================================================================
    npm run build:components [-- --write]
-   Prints the Tier 3 tokens the `components` section of tokens/theme.json
+   Prints the Tier 3 tokens the `components` section of the default theme (tokens/themes.json)
    customises and runs the component gate. --write (only when nothing fails)
    writes packages/css/src/component-theme.css.
    ========================================================================== */
@@ -10,10 +10,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildPalette, componentCss, componentGate } from '../src/index.js';
+import { themePath } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
-const theme = read('tokens/theme.json');
+const theme = JSON.parse(readFileSync(themePath(root), 'utf8'));
 const component = read('tokens/3-component.json');
 const overrides = theme.components ?? {};
 

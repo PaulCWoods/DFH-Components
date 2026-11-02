@@ -1,0 +1,39 @@
+{
+  "$description": "A course lesson in olive. A sub-brand of the course: class=\"theme-course-olive\".",
+  "extends": "course",
+  "hues": {
+    "olive": {
+      "seed": "#818c31"
+    }
+  },
+  "roles": {
+    "surface.accent": {
+      "light": "olive.200",
+      "dark": "olive.800"
+    },
+    "surface.accent-dark": {
+      "light": "olive.800",
+      "dark": "olive.800"
+    },
+    "surface.accent-strong": {
+      "light": "olive.700",
+      "dark": "olive.300"
+    },
+    "foreground.accent": {
+      "light": "olive.600",
+      "dark": "olive.300"
+    },
+    "foreground.accent-hover": {
+      "light": "olive.700",
+      "dark": "olive.200"
+    },
+    "foreground.accent-pressed": {
+      "light": "olive.800",
+      "dark": "olive.100"
+    },
+    "border.color.accent": {
+      "light": "olive.500",
+      "dark": "olive.500"
+    }
+  }
+}

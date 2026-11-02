@@ -7,7 +7,7 @@ import { useFixtureFonts } from './fonts-fixture.js';
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
 const global = read('1-global.json');
-const theme = read('theme.json');
+const theme = read('themes/starter.json');
 
 test('the scale is base × ratio to the power of the step', () => {
   const steps = scaleSteps({ scale: { base: '1rem', ratio: 1.25, steps: [-1, 2] } });

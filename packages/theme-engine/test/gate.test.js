@@ -6,7 +6,7 @@ import { buildPalette, check, resolver } from '../src/index.js';
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
 const global = read('1-global.json');
-const theme = read('theme.json');
+const theme = read('themes/starter.json');
 
 test('roles resolve per mode through light-dark()', () => {
   const resolve = resolver({ semantic, global, palette: buildPalette(theme) });

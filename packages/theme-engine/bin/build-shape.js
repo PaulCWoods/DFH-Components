@@ -2,7 +2,7 @@
 /* ==========================================================================
    npm run build:shape [-- --write]
    Builds the radius and border roles and the shadows from the `shape` section
-   of tokens/theme.json, prints them and runs the shape gate. --write (only
+   of the default theme (tokens/themes.json), prints them and runs the shape gate. --write (only
    when nothing fails) adds any new Tier 1 steps to tokens/1-global.json and
    replaces those roles and shadows in tokens/2-semantic.json.
    ========================================================================== */
@@ -11,16 +11,17 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyShape, BORDER_ROLES, buildPalette, RADIUS_ROLES, spacingSteps, shadowReach, shapeGate, shapeGlobal } from '../src/index.js';
+import { themePath } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
-const theme = read('tokens/theme.json');
+const theme = JSON.parse(readFileSync(themePath(root), 'utf8'));
 const global = read('tokens/1-global.json');
 const semantic = read('tokens/2-semantic.json');
 
 const shape = theme.shape;
 if (!shape) {
-  console.error('tokens/theme.json has no shape section.');
+  console.error('the default theme (tokens/themes.json) has no shape section.');
   process.exit(1);
 }
 

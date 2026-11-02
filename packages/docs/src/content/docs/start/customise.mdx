@@ -1,0 +1,93 @@
+---
+title: Your own styles
+summary: Change how a component looks, or add your own, without fighting the library. Set a token first, add to a class next, and build your own component last.
+order: 10
+---
+
+The library gets you off the ground with a solid set of components. When a product needs something more bespoke, there are three routes. Take the first one that does the job: each one after it gives you more freedom, and more to look after.
+
+## Why your CSS always wins
+
+Every library rule is wrapped in `:where()`, so it has no specificity, and each part of the library sits in a cascade layer, in this order:
+
+```css
+@layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
+```
+
+A later layer beats an earlier one whatever the selector, and CSS written outside any layer beats every layer. So a plain `.button { }` in your own stylesheet wins over the library without `!important` or a longer selector.
+
+If you'd rather keep your styles in the layers too, put them in `@layer overrides { }`. That layer comes last, so it beats the rest of the library, and unlayered CSS can still beat it.
+
+## 1. Set a token
+
+Most of what you'd want to change is already a token: a component's colour, radius, padding or font. Set it and every state follows, because hover, pressed, focus and the compact size are built from the same tokens.
+
+For the whole product, set it in the [Token Designer](/docs/tools/). It writes the theme, checks contrast and exports the change to Figma. For one part of a page, set it on the region or the element:
+
+```html live cluster
+<button type="button" class="button">Standard</button>
+<button type="button" class="button" style="--button-color: var(--foreground-complementary)">Recoloured</button>
+<button type="button" class="button button--strong" style="--button-color: var(--foreground-complementary)">Recoloured, strong</button>
+```
+
+The same token in your stylesheet does the same for every match:
+
+```css
+.plant-shop {
+  --button-color: var(--foreground-complementary);
+  --card-radius: var(--radius-lg);
+}
+```
+
+Point a token at a semantic token (`--foreground-complementary`, `--radius-lg`), not at a raw value, and it keeps working in dark mode, in high contrast and in an inverted region. A Button's colour tokens change the neutral Button only, so a danger Button stays a danger Button. Each component's tokens are listed in Storybook, and every page links to them.
+
+## 2. Add to a class
+
+When no token covers it, add to the library's own class:
+
+```css
+.button {
+  letter-spacing: 0.02em;
+}
+
+.card--strong {
+  --card-bg: var(--surface-muted);
+  border-inline-start: var(--border-width-thick) solid var(--border-color-accent);
+}
+```
+
+Inside a component's class, set its tokens where you can and properties where you must. A token you set changes every state with it. A property such as `background` changes only the state you wrote it for, so hover and pressed would still show the library's colours.
+
+## 3. Build your own component
+
+For something the library doesn't have, write your own class and build it from the semantic tokens, so it matches the rest and follows the theme:
+
+```css
+.plant-tag {
+  background: var(--surface-muted);
+  border-radius: var(--radius-full);
+  color: var(--foreground);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+}
+```
+
+Build the inside from library parts where you can. Put text atoms (`.small-text`, `.heading`) on its text and layout primitives (`.cluster`, `.stack`) on its rows. Then it follows the type scale, the sizing modes and compact regions without extra work.
+
+You can also make a variant of a library component by setting its tokens under a name of your own:
+
+```css
+.button--leaf {
+  --button-color: var(--foreground-success);
+  --button-radius: var(--radius-full);
+}
+```
+
+## Keep it accessible
+
+The library's checks can't see your CSS, so a few things are yours to keep:
+
+- **Contrast.** Text needs 4.5:1 on its background, and borders and icons that carry meaning need 3:1. Semantic tokens are already checked in pairs, so prefer them.
+- **Focus.** Don't remove the focus outline. If you restyle it, keep it at least 2px and 3:1 against what's around it.
+- **Target size.** Keep controls at least 24px, and 48px for touch, which is the library's default.
+- **Colour alone.** If a colour carries a meaning, add an icon or a word as well.
+- **Preferences.** Animate with the duration tokens. They drop to 0 when someone asks for reduced motion.

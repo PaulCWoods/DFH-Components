@@ -170,7 +170,7 @@ const compile = () => {
   const started = Date.now();
   try {
     for (const [from, to] of SASS_BUILDS) {
-      execFileSync(sassBin, [from, to], { cwd: BLOG_DIR, stdio: ['ignore', 'ignore', 'pipe'] });
+      execFileSync(sassBin, ['--style=compressed', from, to], { cwd: BLOG_DIR, stdio: ['ignore', 'ignore', 'pipe'] });
     }
     console.log(`🎨 Blog CSS compiled (${Date.now() - started}ms)`);
     return true;

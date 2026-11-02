@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/html';
 // @ts-expect-error: plain ES module without types
 import { buildPalette, check, hexToOklch, lightnesses, STEPS } from '../../../theme-engine/src/index.js';
-import theme from '../../../../tokens/theme.json';
+import themeConfig from '../../../../tokens/themes.json';
 import global from '../../../../tokens/1-global.json';
 import semantic from '../../../../tokens/2-semantic.json';
+
+/* The default theme: the one tokens/1-global.json is built from */
+const theme = import.meta.glob('../../../../tokens/themes/*.json', { eager: true, import: 'default' })[`../../../../tokens/themes/${themeConfig.default}.json`] as any;
 
 const meta: Meta<{ curve: string }> = {
   title: 'Tokens/Colour',
@@ -13,11 +16,11 @@ const meta: Meta<{ curve: string }> = {
     docs: {
       description: {
         component: `
-The Tier 1 colour ramps, built by the theme engine (\`packages/theme-engine\`) from \`tokens/theme.json\`.
+The Tier 1 colour ramps, built by the theme engine (\`packages/theme-engine\`) from the default theme (\`tokens/themes.json\` names it, in \`tokens/themes/\`).
 
 Each hue starts from a picked colour; its hue and chroma make the 500 step. One lightness curve, shared by every hue, runs from the light end (100) to the dark end (900), so the same step has the same lightness, and nearly the same contrast, in every hue. The contrast gate checks every Tier 2 pairing in light and dark.
 
-**Current** is \`tokens/1-global.json\` as it stands; **generated** is what \`npm run build:palette -- --write\` would write. Once written, the two match.
+**Current** is \`tokens/1-global.json\` as it stands; **generated** is what \`npm run build:themes\` would write. Once written, the two match.
         `,
       },
     },
@@ -34,7 +37,7 @@ type Ramp = Record<string, Swatch>;
 const CURVES = [theme.curve, 'soft-s', 'cubic-bezier(0.3, 0.05, 0.7, 0.85)', 's', 'linear'].filter((c, i, a) => a.indexOf(c) === i);
 const build = (curve: string): Record<string, Ramp> => buildPalette({ ...theme, curve });
 
-/* Try another curve before editing tokens/theme.json */
+/* Try another curve before editing the theme */
 const curveArg = {
   args: { curve: theme.curve },
   argTypes: { curve: { control: 'select', options: CURVES, description: 'The shared lightness curve' } },

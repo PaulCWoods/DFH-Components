@@ -58,7 +58,7 @@ ${html}
 
 export const liveExample = (code, layout = 'stack', width) => `<figure class="card card--ruled" data-example>
 <div class="card__body prose-end">${frame(layout, width, toLive(code))}</div>
-<div class="card__body card__body--flush">${exampleCode(code)}</div>
+<div class="card__body card__body--flush bg-muted">${exampleCode(code)}</div>
 </figure>`;
 
 /* "Danger=button--danger "Delete project"": a label, * if it starts chosen,
@@ -95,8 +95,8 @@ ${axis.choices.map((c) => `<label class="button button--subtle"><input type="rad
 </fieldset>`).join('\n');
   return `<figure class="card card--ruled" data-playground data-source="${attr(source.trim())}">
 <div class="card__body prose-end">${frame(layout, width, `<div class="contents" data-preview>${toLive(code)}</div>`)}</div>
-<div class="card__body card__body--flush prose-end" hidden data-controls><div class="cluster gap-thin rule">${controls}</div></div>
-<div class="card__body card__body--flush">${exampleCode(code)}</div>
+<div class="card__body card__body--flush bg-muted prose-end" hidden data-controls><div class="cluster gap-thin rule">${controls}</div></div>
+<div class="card__body card__body--flush bg-muted">${exampleCode(code)}</div>
 </figure>`;
 };
 

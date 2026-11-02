@@ -1,0 +1,109 @@
+/* dfh: generated from tokens/themes/dfh.json by npm run build:themes. Do not edit.
+   Link it after the library's CSS. It holds only what the theme changes.
+   Its fonts also need, in the page head:
+   <link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" /> */
+@layer tokens {
+  :root {
+    --typography-font-family-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
+    --surface-accent-dark: var(--color-purple-800);
+    --surface-accent-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
+    --surface-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
+    --surface-complementary-dark: var(--color-blue-800);
+    --surface-complementary-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
+    --foreground-accent: light-dark(var(--color-purple-600), var(--color-purple-300));
+    --foreground-accent-hover: light-dark(var(--color-purple-700), var(--color-purple-200));
+    --foreground-accent-pressed: light-dark(var(--color-purple-800), var(--color-purple-100));
+    --foreground-complementary: light-dark(var(--color-blue-700), var(--color-blue-300));
+    --foreground-complementary-hover: light-dark(var(--color-blue-600), var(--color-blue-200));
+    --foreground-complementary-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
+    --border-color-accent: var(--color-purple-500);
+    --border-color-complementary: light-dark(var(--color-blue-600), var(--color-blue-500));
+  }
+  @media (prefers-contrast: more) {
+    :root {
+      --surface-accent: light-dark(var(--color-purple-100), var(--color-purple-900));
+      --surface-accent-dark: var(--color-purple-900);
+      --surface-accent-strong: light-dark(var(--color-purple-800), var(--color-purple-200));
+      --surface-complementary: light-dark(var(--color-blue-100), var(--color-blue-900));
+      --surface-complementary-dark: var(--color-blue-900);
+      --surface-complementary-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --foreground-accent: light-dark(var(--color-purple-700), var(--color-purple-200));
+      --foreground-accent-hover: light-dark(var(--color-purple-800), var(--color-purple-100));
+      --foreground-accent-pressed: light-dark(var(--color-purple-900), var(--color-purple-100));
+      --foreground-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --foreground-complementary-hover: light-dark(var(--color-blue-700), var(--color-blue-100));
+      --foreground-complementary-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
+      --border-color-accent: light-dark(var(--color-purple-600), var(--color-purple-400));
+      --border-color-complementary: light-dark(var(--color-blue-700), var(--color-blue-400));
+    }
+  }
+  :where(.color-palette-inverted, .colors-inverted) {
+    --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
+    --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
+    --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
+    --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+    --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
+    --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
+    --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
+    --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-700));
+    --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-600));
+    --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+    --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
+  }
+  * {
+    @container style(--color-palette: inverted) {
+      --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
+      --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
+      --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+      --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
+      --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
+      --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
+      --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-700));
+      --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-600));
+      --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+      --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
+    }
+  }
+  @media (prefers-contrast: more) {
+    :where(.color-palette-inverted, .colors-inverted) {
+      --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
+      --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
+      --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
+      --surface-complementary-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+      --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
+      --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
+      --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
+      --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
+      --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-700));
+      --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+      --border-color-accent: light-dark(var(--color-purple-400), var(--color-purple-600));
+      --border-color-complementary: light-dark(var(--color-blue-400), var(--color-blue-700));
+    }
+    * {
+      @container style(--color-palette: inverted) {
+        --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
+        --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
+        --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
+        --surface-complementary-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+        --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
+        --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
+        --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
+        --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
+        --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-700));
+        --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+        --border-color-accent: light-dark(var(--color-purple-400), var(--color-purple-600));
+        --border-color-complementary: light-dark(var(--color-blue-400), var(--color-blue-700));
+      }
+    }
+  }
+
+  :root {
+    --typography-font-family-sans: "adapter-pe-variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --typography-font-family-serif: "mencken-std-text", Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-mono: "adapter-mono-pe-variable", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --typography-font-family-display: "avory-i-pe", "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+}

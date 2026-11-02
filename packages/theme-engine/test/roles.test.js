@@ -6,7 +6,7 @@ import { applyRoles, buildPalette, check, groupRoles, resolver, roleValue, token
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
 const semantic = read('2-semantic.json');
 const global = read('1-global.json');
-const theme = read('theme.json');
+const theme = read('themes/starter.json');
 const palette = buildPalette(theme);
 
 test('a role is one reference when both modes match, light-dark() otherwise', () => {

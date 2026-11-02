@@ -1,0 +1,63 @@
+---
+title: Themes and sub-brands
+summary: Give the library your brand with a theme, and give one part of a site its own look with a sub-brand. Both are built and checked for you, for CSS and Figma.
+order: 5
+---
+
+A theme sets everything the library's look depends on: the colour ramps and what each role takes from them, the type, spacing, shape, motion and any component tokens. You make one in the [Token Designer](/docs/tools/), and every change runs the same contrast and consistency checks as the build.
+
+## The starter theme
+
+Out of the box the library wears its starter theme: system fonts, a blue accent and no outside requests. It's built into the library's own tokens, so linking the entry file is enough:
+
+```html
+<link rel="stylesheet" href="/css/index.css" />
+```
+
+## Your own theme
+
+Every other theme builds a stylesheet holding only what it changes from the starter theme. Link it after the library:
+
+```html
+<link rel="stylesheet" href="/css/index.css" />
+<link rel="stylesheet" href="/css/themes/dfh.css" />
+```
+
+The stylesheet's opening comment lists the font links it needs in your page head. Light and dark, high contrast and inverted regions all come with it.
+
+## Sub-brands
+
+A sub-brand is a theme that starts from another and changes only a little: a product line, a campaign, a course inside a larger site. It applies to a region of the page with its class, `theme-` and its name, so brands can sit side by side:
+
+```html
+<link rel="stylesheet" href="/css/index.css" />
+<link rel="stylesheet" href="/css/themes/dfh.css" />
+<link rel="stylesheet" href="/css/themes/course.css" />
+
+<main class="theme-course">
+  <!-- The course's blue accent here; everything else as the site -->
+</main>
+```
+
+Put the class on `<html>` to give a whole page the sub-brand. Link each sub-brand after the theme it starts from.
+
+Sub-brands can nest: a lesson can start from the course. Put the inner class inside the outer one, and link the inner stylesheet last.
+
+Everything built from what a sub-brand changes comes with it. If it changes the accent, then focus rings, inverted regions and high contrast inside the region follow the new accent too.
+
+A sub-brand can't change the type scale or the shadows, which are shared by the whole page. Change those in the theme it starts from.
+
+### Making one
+
+In the Token Designer, open the menu under the logo and choose **New sub-brand**. Give it a name and the theme it starts from; the name becomes lower case with hyphens, so "Spring Sale" is `spring-sale` and its class `theme-spring-sale`. Then edit it like any theme. **Changes and how to use it**, in the menu, lists every value it changes beside its parent's, to revert one at a time or all at once, and shows the stylesheets and class it needs. Save writes only the changes.
+
+The menu's two lists choose what you edit: a theme, then one of its sub-brands.
+
+## In Figma
+
+Publishing exports every theme to Figma, in two ways:
+
+- **One set per theme.** Each theme and sub-brand gets its own complete set of variables, with Light and Dark. This works on every Figma plan, including the free one.
+- **One set per family, with modes.** A theme and its sub-brands become one set of variables, with a mode for each brand in light and dark, so a frame switches brand the way it switches light and dark. This needs a paid plan, because Figma limits the number of modes in a collection: Starter allows 1, Professional 10, Organization 20 and Enterprise 40. The export says which plan a family needs.
+
+Choose the set per theme if your plan has too few modes for your brands. Every brand is still there, as its own set.

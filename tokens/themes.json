@@ -1,0 +1,5 @@
+{
+  "$description": "Which theme builds the library defaults (variables.css), and which one the docs and Storybook load. Every other file in tokens/themes builds packages/css/src/themes/<name>.css.",
+  "default": "starter",
+  "site": "dfh"
+}

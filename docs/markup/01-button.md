@@ -162,4 +162,4 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 ```
 - `.buttons-strong`, `-subtle`, `-plain`, `-sm`, `-lg` and `-round` set the flags (`--button-prominence`, `--button-size`, `--button-corners`) on a container. A modifier on the Button beats the flag.
 - The shared `--controls-prominence`, `--controls-size` and `--controls-corners` flags (and `.controls-*` classes) reach Buttons and [form controls](07-form-controls.md) together.
-- **Recolour hooks** (undefined by default): `--button-color`, `--button-color-hover`, `--button-color-pressed`, `--button-color-border`, `--button-on-color`. Set them on a Button or a container to recolour every prominence.
+- **Colour tokens:** `--button-color`, `--button-color-hover`, `--button-color-pressed` and `--button-color-border` colour the neutral Button at every prominence, set on a Button, a container or the theme. Intents keep their own colours. `--button-on-color` is the text on every fill.

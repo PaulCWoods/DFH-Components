@@ -1,0 +1,34 @@
+{
+  "$description": "The Design for Humans course: DFH with a blue accent. A sub-brand: class=\"theme-course\".",
+  "extends": "dfh",
+  "roles": {
+    "surface.accent": {
+      "light": "blue.200",
+      "dark": "blue.800"
+    },
+    "surface.accent-dark": {
+      "light": "blue.800",
+      "dark": "blue.800"
+    },
+    "surface.accent-strong": {
+      "light": "blue.700",
+      "dark": "blue.300"
+    },
+    "foreground.accent": {
+      "light": "blue.600",
+      "dark": "blue.300"
+    },
+    "foreground.accent-hover": {
+      "light": "blue.700",
+      "dark": "blue.200"
+    },
+    "foreground.accent-pressed": {
+      "light": "blue.800",
+      "dark": "blue.100"
+    },
+    "border.color.accent": {
+      "light": "blue.500",
+      "dark": "blue.500"
+    }
+  }
+}

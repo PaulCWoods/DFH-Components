@@ -17,9 +17,11 @@ npm run storybook        # http://localhost:6006
 
 ## Token Designer
 
-The theme editor. It edits `tokens/theme.json` visually: colour ramps and roles with their contrast, the type scale and text styles, and the spacing roles. A preview shows the result, and each change runs the same checks as the build.
+The theme editor. It edits a theme visually: colour ramps and roles with their contrast, high contrast, the type scale and text styles, spacing, shape, motion and each component's tokens. A preview shows the result, and each change runs the same checks as the build.
 
-**Publish** writes the colour, type and spacing tokens, rebuilds the CSS and exports to Figma. It is blocked while any check fails.
+Themes live in `tokens/themes`, one file each. The default, the starter theme, builds the library's own tokens. Every other theme builds a stylesheet in `packages/css/src/themes` holding only what it changes. Pick the one to edit from the menu under the logo, then one of its [sub-brands](/docs/start/themes/#sub-brands), or start a new one.
+
+**Publish** writes the theme, rebuilds every theme's CSS and exports to Figma. It is blocked while any check fails. `npm run build:themes` does the same from the command line.
 
 ```sh
 npm run designer         # http://localhost:5180
