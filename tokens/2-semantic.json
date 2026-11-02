@@ -981,11 +981,11 @@
       "$type": "number"
     },
     "letter-spacing": {
-      "$value": "{typography.spacing.xtight}",
+      "$value": "{typography.spacing.tight}",
       "$type": "dimension"
     },
     "text-transform": {
-      "$value": "uppercase",
+      "$value": "none",
       "$type": "other"
     }
   },

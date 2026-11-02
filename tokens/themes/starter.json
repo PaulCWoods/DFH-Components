@@ -11,11 +11,11 @@
   },
   "fixed": {
     "white": "#ffffff",
-    "black": "#181716"
+    "black": "#121212"
   },
   "hues": {
     "neutral": {
-      "seed": "#8a8984",
+      "seed": "#666666",
       "outside": {
         "1000": 0.04,
         "000": 0.02
@@ -26,19 +26,19 @@
       }
     },
     "blue": {
-      "seed": "#379fd7"
+      "seed": "#0000ff"
     },
     "purple": {
-      "seed": "#ad77e1"
+      "seed": "#9900ff"
     },
     "amber": {
-      "seed": "#ffa300"
+      "seed": "#ff9900"
     },
     "green": {
-      "seed": "#56a900"
+      "seed": "#00ff00"
     },
     "red": {
-      "seed": "#ff2e25"
+      "seed": "#ff0000"
     }
   },
   "roles": {
@@ -301,8 +301,8 @@
       "display-title": {
         "family": "display",
         "weight": "heavy",
-        "letterSpacing": "xtight",
-        "case": "uppercase",
+        "letterSpacing": "tight",
+        "case": "none",
         "size": 8,
         "compact": 7,
         "leading": -4,
@@ -577,7 +577,9 @@
       }
     }
   },
-  "components": {},
+  "components": {
+    "brand.font-weight": "{font-weight.bold}"
+  },
   "mixes": {
     "color.muted": {
       "light": {

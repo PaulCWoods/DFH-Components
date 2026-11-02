@@ -4,6 +4,61 @@
    <link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" /> */
 @layer tokens {
   :root {
+    --color-black: #181716;
+    --color-neutral-100: #ededea;
+    --color-neutral-200: #e0dfdc;
+    --color-neutral-300: #c6c5c1;
+    --color-neutral-400: #a6a5a0;
+    --color-neutral-500: #83827e;
+    --color-neutral-600: #63625d;
+    --color-neutral-700: #464642;
+    --color-neutral-800: #31312e;
+    --color-neutral-900: #272624;
+    --color-neutral-1000: #1d1d1a;
+    --color-neutral-000: #f4f3f1;
+    --color-blue-100: #e1f3ff;
+    --color-blue-200: #c5e8ff;
+    --color-blue-300: #8ed1fb;
+    --color-blue-400: #58b1e5;
+    --color-blue-500: #1f8ec5;
+    --color-blue-600: #006a98;
+    --color-blue-700: #004c6e;
+    --color-blue-800: #00354f;
+    --color-blue-900: #002a3f;
+    --color-purple-100: #f4ecff;
+    --color-purple-200: #ebdaff;
+    --color-purple-300: #d9b6ff;
+    --color-purple-400: #be8def;
+    --color-purple-500: #9c66cf;
+    --color-purple-600: #7846a5;
+    --color-purple-700: #582d7d;
+    --color-purple-800: #3f1c5d;
+    --color-purple-900: #33134d;
+    --color-amber-100: #ffedd9;
+    --color-amber-200: #ffdbb4;
+    --color-amber-300: #fcb969;
+    --color-amber-400: #e49207;
+    --color-amber-500: #b67300;
+    --color-amber-600: #895600;
+    --color-amber-700: #633c00;
+    --color-amber-800: #462900;
+    --color-amber-900: #382000;
+    --color-green-100: #d7fec4;
+    --color-green-200: #c4f2ad;
+    --color-green-300: #9fdc7e;
+    --color-green-400: #72be41;
+    --color-green-500: #4e9a00;
+    --color-green-600: #397400;
+    --color-green-700: #275300;
+    --color-green-800: #193a00;
+    --color-green-900: #132e00;
+    --color-red-300: #ffb1a5;
+    --color-red-400: #ff7767;
+    --color-red-500: #f31a16;
+    --color-red-600: #bb0004;
+    --color-red-700: #880002;
+    --color-red-800: #620001;
+    --color-red-900: #500001;
     --typography-font-family-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
     --surface-accent-dark: var(--color-purple-800);
@@ -19,6 +74,8 @@
     --foreground-complementary-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
     --border-color-accent: var(--color-purple-500);
     --border-color-complementary: light-dark(var(--color-blue-600), var(--color-blue-500));
+    --display-title-letter-spacing: var(--typography-spacing-xtight);
+    --display-title-text-transform: uppercase;
   }
   @media (prefers-contrast: more) {
     :root {
@@ -104,6 +161,11 @@
     --typography-font-family-serif: "mencken-std-text", Cambria, "Times New Roman", Times, serif;
     --typography-font-family-mono: "adapter-mono-pe-variable", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --typography-font-family-display: "avory-i-pe", "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+
+  :root {
+    --brand-font-weight: var(--font-weight-regular);
   }
 
 }
