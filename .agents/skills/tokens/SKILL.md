@@ -101,9 +101,6 @@ Semantic tokens express intent and context. Light/dark switching uses native `li
 | `border.width.thin` | `--border-width-thin` | Hairline 1px stroke (rules, subtle cards) |
 | `border.width.thick` | `--border-width-thick` | Prominent 4px stroke |
 | `border.base` | `--border` | Default prominent border |
-| `border.muted` | `--border-muted` | Subtle container border (currentColor with alpha) |
-| `border.quiet` | `--border-quiet` | Light 20% border for dividers and cards |
-| `border.subtle` | `--border-subtle` | 1px dashed or ultra-light border |
 | `border.accent` | `--border-accent` | Active, focused, or highlighted border |
 | `border.accent-hover` | `--border-accent-hover` | Accent interactive border hover |
 | `border.danger` | `--border-danger` | Form error or destructive border |

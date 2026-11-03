@@ -362,21 +362,6 @@
       "$value": "{border.width} solid {border.color}",
       "$type": "border",
       "$description": "Standard border"
-    },
-    "muted": {
-      "$value": "{border.width} solid {border.color.muted}",
-      "$type": "border",
-      "$description": "Muted border"
-    },
-    "quiet": {
-      "$value": "{border.width} solid {border.color.quiet}",
-      "$type": "border",
-      "$description": "Quiet border"
-    },
-    "subtle": {
-      "$value": "{border.width.1} dashed {border.color.quiet}",
-      "$type": "border",
-      "$description": "Dashed disclosure border"
     }
   },
   "opacity": {

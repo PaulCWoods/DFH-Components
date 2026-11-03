@@ -350,9 +350,6 @@
   --border-width-thick: var(--border-width-4);
   --border-width: var(--border-width-medium);
   --border: var(--border-width) solid var(--border-color);
-  --border-muted: var(--border-width) solid var(--border-color-muted);
-  --border-quiet: var(--border-width) solid var(--border-color-quiet);
-  --border-subtle: var(--border-width-1) dashed var(--border-color-quiet);
   --opacity-muted: var(--opacity-80);
   --opacity-disabled: var(--opacity-50);
   --spacing: var(--spacing-16);
