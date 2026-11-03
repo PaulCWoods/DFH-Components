@@ -9,6 +9,8 @@
    - The first child is the side pane, the last the main pane; --end puts the
      side pane last.
    - --nowrap keeps the panes side by side (the side pane at its width).
+   - Side pane width: --2xs … --2xl, or a container variant (@xs: …
+     @7xl:) that applies once the nearest container reaches the size.
    - --three: start, centre and end panes. They wrap the same way: when the
      centre would be narrower than its minimum, a side pane moves to its own
      row and takes the full width. With --nowrap they stay in one row.
@@ -207,5 +209,332 @@
         > :where(:last-child) {
             flex: 0 0 var(--_split-end);
         }
+    }
+}
+
+/* --------------------------------------------------------------------------
+   8. Container Side Pane Widths
+   Apply once the nearest container reaches the size (Tailwind's container
+   scale: xs 20rem, sm 24, md 28, lg 32, xl 36, 2xl 42, 3xl 48, 4xl 56, 5xl 64,
+   6xl 72, 7xl 80): split--xs @5xl:split--sm widens the side pane in a wide
+   container. Larger sizes come later, so the widest that applies wins.
+   -------------------------------------------------------------------------- */
+@container (width >= 20rem) {
+    :where(.\@xs\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@xs\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@xs\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@xs\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@xs\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@xs\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@xs\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 24rem) {
+    :where(.\@sm\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@sm\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@sm\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@sm\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@sm\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@sm\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@sm\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 28rem) {
+    :where(.\@md\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@md\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@md\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@md\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@md\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@md\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@md\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 32rem) {
+    :where(.\@lg\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@lg\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@lg\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@lg\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@lg\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@lg\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@lg\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 36rem) {
+    :where(.\@xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 42rem) {
+    :where(.\@2xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@2xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@2xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@2xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@2xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@2xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@2xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 48rem) {
+    :where(.\@3xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@3xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@3xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@3xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@3xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@3xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@3xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 56rem) {
+    :where(.\@4xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@4xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@4xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@4xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@4xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@4xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@4xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 64rem) {
+    :where(.\@5xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@5xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@5xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@5xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@5xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@5xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@5xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 72rem) {
+    :where(.\@6xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@6xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@6xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@6xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@6xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@6xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@6xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
+    }
+}
+@container (width >= 80rem) {
+    :where(.\@7xl\:split--2xs) {
+        --_split-side: var(--spacing-block-2xs);
+    }
+
+    :where(.\@7xl\:split--xs) {
+        --_split-side: var(--spacing-block-xs);
+    }
+
+    :where(.\@7xl\:split--sm) {
+        --_split-side: var(--spacing-block-sm);
+    }
+
+    :where(.\@7xl\:split--md) {
+        --_split-side: var(--spacing-block);
+    }
+
+    :where(.\@7xl\:split--lg) {
+        --_split-side: var(--spacing-block-lg);
+    }
+
+    :where(.\@7xl\:split--xl) {
+        --_split-side: var(--spacing-block-xl);
+    }
+
+    :where(.\@7xl\:split--2xl) {
+        --_split-side: var(--spacing-block-2xl);
     }
 }

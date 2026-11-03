@@ -29,7 +29,7 @@ Who someone is: a photo, initials or an icon in a shape. An avatar is never inte
 - **Looks:** \`--accent\`, \`--placeholder\` (an empty slot), \`--count\` ("+3").
 - **Colour:** set \`--avatar-bg\` and \`--avatar-text\` together. Where \`contrast-color()\` is supported, a background alone picks its own text colour.
 - **Presence** is a dot badge hidden from screen readers, with the state in the name or in visible text, so it is never colour alone.
-- **As a control:** \`<button class="button button--plain button--icon button--round" aria-label="Account, Sam Rivera">\` holding an \`aria-hidden\` avatar.
+- **As a control:** \`<button class="avatar">\` or \`<a class="avatar">\`, named in \`.sr-only\` text ("Account, Sam Rivera") with the initials \`aria-hidden\`. It takes a focus ring and a 48px hit area, and no hover look. With the name shown beside it, a button holds both.
         `,
       },
     },
@@ -123,16 +123,15 @@ export const Presence: Story = {
     </div>`,
 };
 
-export const InAButton: Story = {
-  name: 'In a button',
+export const AsAControl: Story = {
+  name: 'As a control',
+  parameters: { docs: { description: { story: 'A `<button>` or `<a>` can be the avatar. It takes a focus ring and a 48px hit area (the small ones too), and no hover look. With the name beside it, a button holds both.' } } },
   render: () => `
     <div class="cluster">
-      <button type="button" class="button button--icon button--round" aria-label="Account, Sam Rivera, online">
-        <span class="avatar" aria-hidden="true"><img src="${sam}" alt="" />${dot('success')}</span>
-      </button>
-      <button type="button" class="button button--icon button--round" aria-label="Add a member">
-        <span class="avatar avatar--placeholder" aria-hidden="true">${user}</span>
-      </button>
+      <button type="button" class="avatar"><img src="${sam}" alt="" />${dot('success')}<span class="sr-only">Account, Sam Rivera, online</span></button>
+      <a class="avatar avatar--sm avatar--accent" href="#"><span aria-hidden="true">AO</span><span class="sr-only">Ade Okafor's profile</span></a>
+      <button type="button" class="avatar avatar--placeholder">${user}<span class="sr-only">Add a member</span></button>
+      <button type="button" class="button button--plain button--round"><span class="avatar avatar--sm" aria-hidden="true">SR</span>Sam Rivera</button>
     </div>`,
 };
 

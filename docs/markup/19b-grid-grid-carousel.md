@@ -106,5 +106,5 @@ Columns that fill the width. Items are never narrower than a minimum width, so t
 | `--tight`, `--cushioned`, `--ruled` | No gap, the cushion step, a rule in each gap |
 
 ### Further rules
-- **Hooks:** `--gap` and `--grid-min`, set on the Grid itself. They don't reach a nested grid.
+- **Hooks:** `--gap` and `--grid-min`, set on the Grid itself. They don't reach a nested grid. A `gap-*` utility sets `--gap`, so the column count allows for it; `gap-x-*` doesn't, so on a `grid--N-col` it can push the last column to the next row.
 - **Density:** inside a compact region (`.ui-compact`, a `--compact` container) the gap steps down: the default to the compact step, `--cushioned` to the default.

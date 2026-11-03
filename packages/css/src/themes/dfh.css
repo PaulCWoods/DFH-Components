@@ -74,13 +74,13 @@
     --fluid-typography-font-size-6: clamp(2.986rem, 1.62rem + 5.47vi, 5.722rem);
     --fluid-typography-font-size-7: clamp(3.5832rem, 1.8rem + 7.14vi, 7.1526rem);
     --fluid-typography-font-size-8: clamp(4.2998rem, 1.98rem + 9.28vi, 8.9407rem);
-    --fluid-typography-font-size--2: clamp(0.6944rem, 0.56rem + 0.53vi, 0.96rem);
+    --fluid-typography-font-size--2: clamp(0.75rem, 0.65rem + 0.42vi, 0.96rem);
     --fluid-typography-font-size--1: clamp(0.8333rem, 0.65rem + 0.73vi, 1.2rem);
     --fluid-spacing-cq-breathe-sm: clamp(0.75rem, 0.63rem + 0.5cqi, 1rem);
     --fluid-spacing-cq-breathe: clamp(1rem, 0.83rem + 0.67cqi, 1.3333rem);
     --fluid-spacing-cq-cushion: clamp(1rem, 0.61rem + 1.56cqi, 1.7778rem);
     --fluid-spacing-cq-cushion-lg: clamp(1rem, 0.31rem + 2.74cqi, 2.3704rem);
-    --typography-font-size-fluid--2: clamp(0.6944rem, 0.56rem + 0.53vi, 0.96rem);
+    --typography-font-size-fluid--2: clamp(0.75rem, 0.65rem + 0.42vi, 0.96rem);
     --typography-font-size-fluid--1: clamp(0.8333rem, 0.65rem + 0.73vi, 1.2rem);
     --typography-font-size-fluid-0: clamp(1rem, 0.75rem + 1vi, 1.5rem);
     --typography-font-size-fluid-1: clamp(1.2rem, 0.86rem + 1.35vi, 1.875rem);
@@ -91,7 +91,7 @@
     --typography-font-size-fluid-6: clamp(2.986rem, 1.62rem + 5.47vi, 5.722rem);
     --typography-font-size-fluid-7: clamp(3.5832rem, 1.8rem + 7.14vi, 7.1526rem);
     --typography-font-size-fluid-8: clamp(4.2998rem, 1.98rem + 9.28vi, 8.9407rem);
-    --typography-font-size-cq--2: clamp(0.6944rem, 0.56rem + 0.53cqi, 0.96rem);
+    --typography-font-size-cq--2: clamp(0.75rem, 0.65rem + 0.42cqi, 0.96rem);
     --typography-font-size-cq--1: clamp(0.8333rem, 0.65rem + 0.73cqi, 1.2rem);
     --typography-font-size-cq-0: clamp(1rem, 0.75rem + 1cqi, 1.5rem);
     --typography-font-size-cq-1: clamp(1.2rem, 0.86rem + 1.35cqi, 1.875rem);

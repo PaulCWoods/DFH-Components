@@ -32,6 +32,15 @@
     --font-sizing: fluid;
 }
 
+/* Back to the default size inside a compact region: undoes everything
+   .ui-compact sets. The spacing roles come back in variables.css, as they
+   read Tier 1. */
+:where(.sizing-default) {
+    --ui-sizing: default;
+    --font-sizing: fixed;
+    font-size: var(--body-fixed-font-size);
+}
+
 :where(.ui-compact) {
     --ui-sizing: compact;
     --spacing-breathe-sm: var(--spacing-sm);

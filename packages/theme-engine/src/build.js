@@ -32,7 +32,7 @@ export const themeFailures = (theme, { global: baseGlobal, semantic, component }
     mixes: theme.mixes ? mixGate(theme.mixes, ctx).failures : [],
     'high contrast': contrastGate(theme, ctx).failures,
     type: theme.type ? typeGate(theme.type, { semantic, global }).failures : [],
-    spacing: theme.space ? spaceGate(theme.space).failures : [],
+    spacing: theme.space ? spaceGate(theme.space, { steps: spacingSteps(global) }).failures : [],
     shape: theme.shape ? shapeGate(theme.shape, { translucency: global.translucency, steps: spacingSteps(global), colors }).failures : [],
     motion: theme.motion ? motionGate(theme.motion).failures : [],
     components: componentGate(theme.components ?? {}, { component, semantic, global, palette }).failures,

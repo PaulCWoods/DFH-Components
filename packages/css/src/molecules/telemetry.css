@@ -28,8 +28,6 @@
    --icon-start moves the label's icon into a gutter on the inline-start
    side of the box, larger and centred on the label and value. The icon
    stays in the <dt>, since a <dl> item holds only terms and descriptions.
-
-   Group option: --ruled (one bordered strip with dividers).
    ========================================================================== */
 
 /* ==========================================================================
@@ -44,6 +42,7 @@
   --_telemetry-padding-block: var(--telemetry-padding-block, var(--spacing-sm));
   --_telemetry-padding-inline: var(--telemetry-padding-inline, var(--spacing-12));
   --_telemetry-gap: var(--telemetry-gap, var(--spacing-0));
+  --_telemetry-trend-gap: var(--telemetry-trend-gap, var(--spacing-sm));
   --_telemetry-icon-gap: var(--telemetry-icon-gap, var(--spacing-sm));
   --_telemetry-lead-icon-size: var(--telemetry-lead-icon-size, var(--spacing-24));
   --_telemetry-min-size: var(--telemetry-min-size, 3rem);
@@ -129,8 +128,10 @@
     margin: 0;
     min-inline-size: 0;
 
+    /* A trend after the figure; a unit stays against it */
     > :where(.status) {
       align-self: center;
+      margin-inline-start: var(--_telemetry-trend-gap);
     }
   }
 }
@@ -195,30 +196,15 @@
   padding: 0;
 }
 
-/* Ruled: one bordered strip, a divider between items */
-:where(.telemetry-group--ruled) {
-  background-color: var(--telemetry-bg, var(--surface-layer, Canvas));
-  border: var(--telemetry-border-width, var(--border-width-thin, 1px)) solid var(--telemetry-border-color, var(--panel-border-color, currentColor));
-  border-radius: var(--telemetry-radius, var(--radius-sm));
-  gap: 0;
-  inline-size: fit-content;
-  max-inline-size: 100%;
-
-  > :where(.telemetry) {
-    --_telemetry-bg: transparent;
-    --_telemetry-border-width: 0px;
-
-    &:where(:not(:last-child)) {
-      border-inline-end: var(--telemetry-border-width, var(--border-width-thin, 1px)) solid var(--telemetry-border-color, var(--panel-border-color, currentColor));
-    }
-  }
+:where(.telemetry-group--fill) :where(.telemetry) {
+  flex: 1 0 auto;
 }
 
 /* ==========================================================================
    4. Preferences
    ========================================================================== */
 @media (prefers-contrast: more) {
-  :where(.telemetry, .telemetry-group--ruled) {
+  :where(.telemetry) {
     --telemetry-border-color: CanvasText;
     --_telemetry-border-color: CanvasText;
   }

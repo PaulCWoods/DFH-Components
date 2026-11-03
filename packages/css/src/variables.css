@@ -86,7 +86,6 @@
   --translucency-90: 90%;
   --translucency-95: 95%;
   --sizing-ratio: 1.618;
-  --layout-site-width: 75rem;
   --spacing-0: 0;
   --spacing-1: 0.0625rem;
   --spacing-2: 0.125rem;
@@ -147,7 +146,7 @@
   --typography-font-size-6: 2.986rem;
   --typography-font-size-7: 3.5832rem;
   --typography-font-size-8: 4.2998rem;
-  --typography-font-size--2: 0.6944rem;
+  --typography-font-size--2: 0.75rem;
   --typography-font-size--1: 0.8333rem;
   --typography-font-weight-100: 100;
   --typography-font-weight-200: 200;
@@ -171,6 +170,7 @@
   --typography-spacing-normal: 0em;
   --typography-spacing-loose: 0.05em;
   --typography-spacing-wide: 0.125em;
+  --typography-font-size-min: 0.75rem;
   --border-width-0: 0px;
   --border-width-1: 1px;
   --border-width-2: 2px;
@@ -207,7 +207,7 @@
   --fluid-typography-font-size-6: clamp(2.986rem, 1.74rem + 4.97vi, 5.722rem);
   --fluid-typography-font-size-7: clamp(3.5832rem, 1.96rem + 6.49vi, 7.1526rem);
   --fluid-typography-font-size-8: clamp(4.2998rem, 2.19rem + 8.44vi, 8.9407rem);
-  --fluid-typography-font-size--2: clamp(0.6944rem, 0.57rem + 0.48vi, 0.96rem);
+  --fluid-typography-font-size--2: clamp(0.75rem, 0.65rem + 0.38vi, 0.96rem);
   --fluid-typography-font-size--1: clamp(0.8333rem, 0.67rem + 0.67vi, 1.2rem);
 
   /* Modular Typography Scale Parameters */
@@ -225,7 +225,7 @@
   --fluid-spacing-cq-cushion-lg: clamp(1rem, 0.38rem + 2.49cqi, 2.3704rem);
 
   /* Fluid Typography (Viewport: vi units) */
-  --typography-font-size-fluid--2: clamp(0.6944rem, 0.57rem + 0.48vi, 0.96rem);
+  --typography-font-size-fluid--2: clamp(0.75rem, 0.65rem + 0.38vi, 0.96rem);
   --typography-font-size-fluid--1: clamp(0.8333rem, 0.67rem + 0.67vi, 1.2rem);
   --typography-font-size-fluid-0: clamp(1rem, 0.77rem + 0.91vi, 1.5rem);
   --typography-font-size-fluid-1: clamp(1.2rem, 0.89rem + 1.23vi, 1.875rem);
@@ -238,7 +238,7 @@
   --typography-font-size-fluid-8: clamp(4.2998rem, 2.19rem + 8.44vi, 8.9407rem);
 
   /* Container Fluid Typography (Container Query: cqi units) */
-  --typography-font-size-cq--2: clamp(0.6944rem, 0.57rem + 0.48cqi, 0.96rem);
+  --typography-font-size-cq--2: clamp(0.75rem, 0.65rem + 0.38cqi, 0.96rem);
   --typography-font-size-cq--1: clamp(0.8333rem, 0.67rem + 0.67cqi, 1.2rem);
   --typography-font-size-cq-0: clamp(1rem, 0.77rem + 0.91cqi, 1.5rem);
   --typography-font-size-cq-1: clamp(1.2rem, 0.89rem + 1.23cqi, 1.875rem);
@@ -315,7 +315,7 @@
   --foreground-inverted-strong: light-dark(var(--color-white), var(--color-black));
   --foreground-on-dark: var(--color-neutral-000);
   --foreground-white: var(--color-white);
-  --foreground-muted: light-dark(var(--color-neutral-700), var(--color-neutral-300));
+  --foreground-muted: light-dark(var(--color-neutral-600), var(--color-neutral-400));
   --foreground-accent: light-dark(var(--color-blue-600), var(--color-blue-300));
   --foreground-accent-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
   --foreground-accent-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
@@ -355,7 +355,6 @@
   --border-subtle: var(--border-width-1) dashed var(--border-color-quiet);
   --opacity-muted: var(--opacity-80);
   --opacity-disabled: var(--opacity-50);
-  --site-width: var(--layout-site-width);
   --spacing: var(--spacing-16);
   --spacing-compact: var(--spacing-8);
   --spacing-2xs: var(--spacing-2);
@@ -377,6 +376,7 @@
   --spacing-block-lg: var(--spacing-768);
   --spacing-block-xl: var(--spacing-1024);
   --spacing-block-2xl: var(--spacing-1280);
+  --spacing-site-width: 75rem;
   --spacing-breathe: var(--fluid-spacing-breathe);
   --spacing-cushion: var(--fluid-spacing-cushion);
   --spacing-scroll-margin: 1em;
@@ -604,18 +604,18 @@
 }
 
 @function --type-size(--n) {
-  result: round(calc(var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
+  result: round(max(var(--typography-font-size-min, 0rem), var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
 }
 
 @function --type-size-fluid(--n, --n2: false) {
-  --_mn: calc(var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
-  --_mx: calc(var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  --_mn: max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
+  --_mx: max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
   result: round(var(--_mn) + var(--_progress) * (var(--_mx) - var(--_mn)), var(--_interval));
 }
 
 @function --type-size-cq(--n, --n2: false) {
-  --_mn: calc(var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
-  --_mx: calc(var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  --_mn: max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
+  --_mx: max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
   result: round(var(--_mn) + var(--_progress-cq) * (var(--_mx) - var(--_mn)), var(--_interval));
 }
 
@@ -685,7 +685,7 @@
   --foreground: light-dark(var(--color-neutral-900), var(--color-white));
   --foreground-inverted: light-dark(var(--color-white), var(--color-neutral-900));
   --foreground-on-dark: var(--color-white);
-  --foreground-muted: light-dark(var(--color-neutral-800), var(--color-neutral-200));
+  --foreground-muted: light-dark(var(--color-neutral-700), var(--color-neutral-300));
   --foreground-accent: light-dark(var(--color-blue-700), var(--color-blue-200));
   --foreground-accent-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
   --foreground-accent-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
@@ -751,7 +751,7 @@
     --fluid-spacing-cq-cushion-lg: round(1rem + var(--_progress-cq) * (2.3704rem - 1rem), var(--_interval));
 
     /* Fluid Typography using progress() and round() (Option A precomputed) */
-    --typography-font-size-fluid--2: round(0.6944rem + var(--_progress) * (0.96rem - 0.6944rem), var(--_interval));
+    --typography-font-size-fluid--2: round(0.75rem + var(--_progress) * (0.96rem - 0.75rem), var(--_interval));
     --typography-font-size-fluid--1: round(0.8333rem + var(--_progress) * (1.2rem - 0.8333rem), var(--_interval));
     --typography-font-size-fluid-0: round(1rem + var(--_progress) * (1.5rem - 1rem), var(--_interval));
     --typography-font-size-fluid-1: round(1.2rem + var(--_progress) * (1.875rem - 1.2rem), var(--_interval));
@@ -764,7 +764,7 @@
     --typography-font-size-fluid-8: round(4.2998rem + var(--_progress) * (8.9407rem - 4.2998rem), var(--_interval));
 
     /* Container Fluid Typography using progress() and round() */
-    --typography-font-size-cq--2: round(0.6944rem + var(--_progress-cq) * (0.96rem - 0.6944rem), var(--_interval));
+    --typography-font-size-cq--2: round(0.75rem + var(--_progress-cq) * (0.96rem - 0.75rem), var(--_interval));
     --typography-font-size-cq--1: round(0.8333rem + var(--_progress-cq) * (1.2rem - 0.8333rem), var(--_interval));
     --typography-font-size-cq-0: round(1rem + var(--_progress-cq) * (1.5rem - 1rem), var(--_interval));
     --typography-font-size-cq-1: round(1.2rem + var(--_progress-cq) * (1.875rem - 1.2rem), var(--_interval));
@@ -808,7 +808,7 @@
   --foreground-strong: light-dark(var(--color-white), var(--color-black));
   --foreground-inverted: light-dark(var(--color-neutral-800), var(--color-neutral-000));
   --foreground-inverted-strong: light-dark(var(--color-black), var(--color-white));
-  --foreground-muted: light-dark(var(--color-neutral-300), var(--color-neutral-700));
+  --foreground-muted: light-dark(var(--color-neutral-400), var(--color-neutral-600));
   --foreground-accent: light-dark(var(--color-blue-300), var(--color-blue-600));
   --foreground-accent-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
   --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
@@ -857,7 +857,7 @@
   --foreground-strong: light-dark(var(--color-white), var(--color-black));
   --foreground-inverted: light-dark(var(--color-neutral-800), var(--color-neutral-000));
   --foreground-inverted-strong: light-dark(var(--color-black), var(--color-white));
-  --foreground-muted: light-dark(var(--color-neutral-300), var(--color-neutral-700));
+  --foreground-muted: light-dark(var(--color-neutral-400), var(--color-neutral-600));
   --foreground-accent: light-dark(var(--color-blue-300), var(--color-blue-600));
   --foreground-accent-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
   --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
@@ -898,7 +898,7 @@
   --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-50)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-90)));
   --foreground: light-dark(var(--color-white), var(--color-neutral-900));
   --foreground-inverted: light-dark(var(--color-neutral-900), var(--color-white));
-  --foreground-muted: light-dark(var(--color-neutral-200), var(--color-neutral-800));
+  --foreground-muted: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --foreground-accent: light-dark(var(--color-blue-200), var(--color-blue-700));
   --foreground-accent-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
   --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
@@ -943,7 +943,7 @@
   --surface-shade: light-dark(color-mix(in srgb, var(--color-black), transparent var(--translucency-50)), color-mix(in srgb, var(--color-neutral-1000), transparent var(--translucency-90)));
   --foreground: light-dark(var(--color-white), var(--color-neutral-900));
   --foreground-inverted: light-dark(var(--color-neutral-900), var(--color-white));
-  --foreground-muted: light-dark(var(--color-neutral-200), var(--color-neutral-800));
+  --foreground-muted: light-dark(var(--color-neutral-300), var(--color-neutral-700));
   --foreground-accent: light-dark(var(--color-blue-200), var(--color-blue-700));
   --foreground-accent-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
   --foreground-accent-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
@@ -970,4 +970,18 @@
   --border-color-success: light-dark(var(--color-green-400), var(--color-green-600));
     }
   }
+}
+
+/* ==========================================================================
+   Default Sizing (.sizing-default): the spacing roles, back from compact
+   ========================================================================== */
+:where(.sizing-default) {
+  --spacing-breathe: var(--fluid-spacing-breathe);
+  --spacing-cushion: var(--fluid-spacing-cushion);
+  --spacing-cq-breathe: var(--fluid-spacing-cq-breathe);
+  --spacing-cq-cushion: var(--fluid-spacing-cq-cushion);
+  --spacing-breathe-sm: var(--fluid-spacing-breathe-sm);
+  --spacing-cq-breathe-sm: var(--fluid-spacing-cq-breathe-sm);
+  --spacing-cushion-lg: var(--fluid-spacing-cushion-lg);
+  --spacing-cq-cushion-lg: var(--fluid-spacing-cq-cushion-lg);
 }

@@ -77,7 +77,7 @@ The browser keeps the stack in the top layer and announces what's added to it. T
   <div class="banner banner--strong banner--danger banner--round toast">
     <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Error"/></svg></span>
     <div class="banner__body"><p class="text">Connection lost. Changes are not being saved.</p></div>
-    <button type="button" class="button banner__action"><span>Retry</span></button>
+    <button type="button" class="button banner__action"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg><span>Retry</span></button>
   </div>
 </div>
 ```

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-const STEPS = ['0', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'breathe', 'cushion'];
+const STEPS = ['0', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'breathe-sm', 'breathe', 'cushion', 'cushion-lg'];
 const SIDES = [
   ['', '', 'all sides'],
   ['-block', 'y', 'block'],

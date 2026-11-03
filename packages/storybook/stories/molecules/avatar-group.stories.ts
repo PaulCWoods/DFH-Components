@@ -76,8 +76,9 @@ export const WithAMoreButton: Story = {
     <ul class="avatar-group avatar-group--stacked" aria-label="Project members">
       ${people.map((p) => `<li>${p}</li>`).join('')}
       <li>
-        <button type="button" class="button button--plain button--icon button--round" aria-label="Show all 7 members">
-          <span class="avatar avatar--count" aria-hidden="true">+3</span>
+        <button type="button" class="avatar avatar--count">
+          <span aria-hidden="true">+3</span>
+          <span class="sr-only">Show all 7 members</span>
         </button>
       </li>
     </ul>`,

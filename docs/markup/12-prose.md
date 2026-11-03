@@ -104,7 +104,7 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 ## Options
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.prose` | none: it follows the sizing mode around it | `--font-sizing`, `--ui-sizing: compact`, `--link-prominence: subtle` |
+| `.prose` | `--body-serif`; it follows the sizing mode around it | `--font-sizing`, `--ui-sizing: compact`, `--link-prominence: subtle` |
 | `.prose-end` | | |
 
 ### Further rules
@@ -113,6 +113,7 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 - **Measure:** text blocks stop at `--body-measure` (66ch). Paragraphs wrap with `text-wrap: pretty`, headings with `balance`. Hyphenation is `--prose-hyphens` (`none`). The column width belongs to the Wrapper the prose sits in.
 - **Numerals:** oldstyle figures and hanging punctuation in paragraphs, lining figures elsewhere, tabular figures in Tables, a slashed zero in code.
 - **Links:** a bare link (no class) is a `.link`. `--link-prominence: subtle` on the prose or a region makes links body-coloured; the underline still marks them.
+- **Body serif:** `--body-serif` sets paragraphs, lists and description lists in the alternate body family (`--body-alt-font-family`, as `.font-serif` does); headings, captions, tables and code keep theirs.
 - **Lists:** lists are indented by `--prose-indent`. Nested ordered lists step decimal, lower-latin, lower-roman. In a `<dl>`, `dt` is strong and `dd` is indented.
 - **Rules and quotes:** an `hr` uses the Divider tokens. A `blockquote` has an inline-start rule (`--prose-blockquote-border-width`).
 - **Figures:** the caption is small text in `--prose-figcaption-color`, half a rhythm below the media.

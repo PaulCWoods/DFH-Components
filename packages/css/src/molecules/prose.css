@@ -17,6 +17,9 @@
    uses --prose-space, fluid --prose-space-fluid, cq --prose-space-cq, and
    compact (or --ui-sizing: compact) half the fixed space.
 
+   --body-serif sets paragraphs and lists in the alternate body family
+   (--body-alt-font-family, a serif in both themes); headings keep theirs.
+
    WCAG: 1.4.8 (text blocks held to --body-measure; no justified text),
    1.4.12 (spacing in em and tokens; no fixed heights), 1.4.10 (code blocks
    wrap rather than scroll).
@@ -270,6 +273,18 @@
     inset-block-start: -0.5em;
   }
 }
+
+/* Body serif: paragraphs and lists in the alternate body family */
+@scope (:where(.prose--body-serif)) to (:where(.prose-end, .code-block)) {
+
+  :where(p,
+    ul,
+    ol,
+    dl) {
+    font-family: var(--body-alt-font-family, serif);
+  }
+}
+
 
 /* A .prose-end block sits outside the scope, so it takes the rhythm here */
 :where(.prose > .prose-end) {

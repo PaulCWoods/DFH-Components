@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html';
+import photo from '../../../docs/public/examples/poster-800.jpg';
 
 const STEPS: [string, string][] = [
   ['2xs', '8rem'],
@@ -72,6 +73,18 @@ export const Squares: Story = {
       ${['size-unit', 'size-target', 'size-2xs', 'size-xs'].map((c) => `<div class="${c} bg-accent rounded-md border border-accent"></div>`).join('')}
     </div>
     <p class="small-text font-mono mt-sm">.size-unit · .size-target · .size-2xs · .size-xs</p>`,
+};
+
+export const AspectRatio: Story = {
+  parameters: { docs: { description: { story: '`.aspect-*` gives an image or media slot a shape; an image given one also takes `.object-cover`, or it stretches. `.object-contain` fits the whole image in instead.' } } },
+  render: () => `
+    <div class="grid grid--4-col gap-md">
+      ${['aspect-square object-cover', 'aspect-video object-cover', 'aspect-4/3 object-cover', 'aspect-3/2 object-cover', 'aspect-3/4 object-cover', 'aspect-video object-contain bg-subtle'].map((c) => `
+        <figure class="stack gap-xs">
+          <img class="w-full rounded-md ${c}" src="${photo}" alt="" />
+          <figcaption class="small-text font-mono">.${c.split(' ').slice(0, 2).join(' .')}</figcaption>
+        </figure>`).join('')}
+    </div>`,
 };
 
 export const ShrinkingInARow: Story = {

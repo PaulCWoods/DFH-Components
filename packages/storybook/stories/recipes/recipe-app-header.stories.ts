@@ -66,8 +66,9 @@ const notifications = `
   </div>`;
 
 const account = `
-  <button type="button" class="button button--plain button--icon button--round" popovertarget="account">
-    <span class="avatar" aria-hidden="true">AB<span class="badge badge--dot badge--success badge--bottom-end"></span></span>
+  <button type="button" class="avatar" popovertarget="account">
+    <span aria-hidden="true">AB</span>
+    <span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span>
     <span class="sr-only">Account: Alex Bennett, online</span>
   </button>
   <div id="account" popover class="popover popover--end-aligned">

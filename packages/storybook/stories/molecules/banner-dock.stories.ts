@@ -122,7 +122,7 @@ export const Placements: Story = {
       ${frame(`${page}
         <aside class="banner-dock banner-dock--fixed-bottom banner-dock--floating" aria-label="Update available">
           <div class="banner banner--accent banner--round">${iconBox('Info')}<div class="banner__body"><p class="text">A new version is available.</p></div>
-            <button type="button" class="button button--strong button--accent banner__action"><span>Reload</span></button>
+            <button type="button" class="button button--strong button--accent banner__action">${icon('Refresh')}<span>Reload</span></button>
           </div>
         </aside>`, '.banner-dock--fixed-bottom.banner-dock--floating')}
     </div>

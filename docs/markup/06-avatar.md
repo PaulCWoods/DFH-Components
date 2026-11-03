@@ -19,7 +19,7 @@ Look: Default, Accent=avatar--accent
 ## Purpose
 A face or a pair of initials lets someone spot a person in a thread or a member list without reading every name. That's the whole job, so an Avatar is only a shape that holds a photo, initials or an icon.
 
-It is never a control. A picture of someone doesn't say what pressing it will do, so a Button or a Link wraps it and carries the name.
+It can be a control: a `<button>` that opens the account Menu, or a link to a profile. A picture of someone doesn't say what pressing it will do, so the control's name does.
 
 How it's named depends on where it sits. Beside a visible name it's hidden, because hearing the same name twice helps nobody. On its own it has to carry the name itself. That's the one thing to get right each time.
 
@@ -29,7 +29,7 @@ How it's named depends on where it sits. Beside a visible name it's hidden, beca
 - **Not for an icon on a tint:** that is an [Icon Box](09-icon-icon-box.md).
 
 ## Rules
-- **An Avatar is never interactive.** A Button or link that opens a profile contains one, and the control carries the name.
+- **An Avatar can be the control.** `<button class="avatar">` or `<a class="avatar">`: its name, in `.sr-only` text, says what it does ("Account, Sam Rivera"), and initials or an image inside are hidden. When the name shows beside it, a Button holds both and the Avatar inside is hidden.
 - **Naming follows context.** Beside a visible name, as in a [Lockup](06b-lockup.md): `aria-hidden="true"`, and an image inside takes `alt=""`. On its own with a photo: the `alt` names it. On its own with initials or an icon: `role="img"` and `aria-label`.
 - **Presence is never colour alone.** A dot Badge in the bottom corner, hidden from screen readers, with the state in the name ("Sam Rivera, online") or in visible text.
 
@@ -53,16 +53,28 @@ How it's named depends on where it sits. Beside a visible name it's hidden, beca
 </span>
 ```
 
-## In a Control
+## As a Control
 ```html live cluster
-<button type="button" class="button button--plain button--icon button--round" aria-label="Account, Sam Rivera, online">
-  <span class="avatar avatar--sm" aria-hidden="true">
-    <img src="/examples/thumb.svg" alt="" />
-    <span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span>
-  </span>
+<!-- The Avatar is the button -->
+<button type="button" class="avatar">
+  <img src="/examples/thumb.svg" alt="" />
+  <span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span>
+  <span class="sr-only">Account, Sam Rivera, online</span>
+</button>
+
+<!-- A small one keeps a 48px hit area -->
+<a class="avatar avatar--sm" href="#">
+  <span aria-hidden="true">AO</span>
+  <span class="sr-only">Ade Okafor's profile</span>
+</a>
+
+<!-- With the name beside it, a Button holds both -->
+<button type="button" class="button button--plain button--round">
+  <span class="avatar avatar--sm" aria-hidden="true">SR</span>
+  Sam Rivera
 </button>
 ```
-The Button keeps its 48px target; the Avatar inside is decorative.
+An Avatar that is the control takes a focus ring and, when it's smaller than 48px, a hit area that reaches 48px. It has no hover look: the face is the affordance. Inside a Button, an Avatar follows the Button's corners, so a round Button keeps it round.
 
 ## Avatar Group
 ```html live
@@ -80,7 +92,7 @@ The Button keeps its 48px target; the Avatar inside is decorative.
 | Do | Don't |
 | :--- | :--- |
 | Hide the Avatar when the name is beside it. | Make a screen reader hear the name twice. |
-| Put a Button or link around an Avatar that opens a profile. | Make the Avatar itself clickable. |
+| Make the Avatar a `<button>` or `<a>` named for what it does. | Put a click handler on a `<span class="avatar">`. |
 | Say presence in the name: "Sam Rivera, online". | Rely on the colour of the dot. |
 | Set `--avatar-bg` and `--avatar-text` together. | Set a background and hope the text still reads. |
 

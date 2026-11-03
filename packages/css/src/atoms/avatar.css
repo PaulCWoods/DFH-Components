@@ -1,8 +1,10 @@
 /* ==========================================================================
    Design For Humans: Avatar
    --------------------------------------------------------------------------
-   Who someone is: a photo, initials or an icon in a shape. An avatar is
-   never interactive; a button or link that opens a profile contains one.
+   Who someone is: a photo, initials or an icon in a shape. A <button> or
+   <a> can be the avatar (an account menu, a profile link): it takes a
+   focus ring and a 48px hit area, and no hover look. A button with the
+   name beside the avatar contains one instead.
 
    | Axis    | Modifiers                         | Container flag                 |
    | ------- | --------------------------------- | ------------------------------ |
@@ -19,6 +21,8 @@
      an image inside takes alt="".
    - On its own with a photo: the <img alt="Sam Rivera"> names it.
    - On its own with initials or an icon: role="img" aria-label="Sam Rivera".
+   - As a button or link: .sr-only text says what it does ("Account, Sam
+     Rivera"); initials inside are aria-hidden, an image takes alt="".
 
    Presence: a dot badge in the bottom corner, hidden from screen readers,
    with the status in the name ("Sam Rivera, online") or visible text.
@@ -81,6 +85,30 @@
   position: relative;
   user-select: none;
   vertical-align: middle;
+
+  /* A <button> or <a> can be the avatar: it opens the account or the
+     profile, and names itself. No hover look; a focus ring, and the hit
+     area reaches the target size when the avatar is smaller. */
+  &:where(button, a) {
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    text-decoration: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-block: min(0px, calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2));
+      inset-inline: min(0px, calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2));
+    }
+
+    &:focus-visible {
+      outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, Highlight);
+      outline-offset: var(--focus-ring-offset, 2px);
+    }
+  }
 
   /* An <img class="avatar"> is the photo itself */
   &:where(img) {

@@ -60,6 +60,16 @@
     background-color: var(--bg-color);
 }
 
+:where(.bg-color-complementary-strong, .bg-complementary-strong) {
+    --bg-color: var(--surface-complementary-strong, Highlight);
+    background-color: var(--bg-color);
+}
+
+:where(.bg-color-complementary, .bg-complementary) {
+    --bg-color: var(--surface-complementary, Highlight);
+    background-color: var(--bg-color);
+}
+
 :where(.bg-color-success, .bg-success) {
     --bg-color: var(--surface-success, Canvas);
     background-color: var(--bg-color);
@@ -98,6 +108,18 @@
         background-color: color-mix(in srgb, var(--bg-color, var(--surface-card, Canvas)), transparent var(--translucency-strong, 70%));
         backdrop-filter: var(--surface-layer-filter, none);
     }
+}
+
+:where(.bg-no-filter) {
+    backdrop-filter: none;
+}
+
+:where(.bg-blur) {
+    backdrop-filter: blur(8px);
+}
+
+:where(.bg-blur-strong) {
+    backdrop-filter: blur(24px);
 }
 
 /* --------------------------------------------------------------------------
@@ -142,6 +164,10 @@
 
 :where(.text-color-accent, .text-accent) {
     color: var(--foreground-accent, LinkText);
+}
+
+:where(.text-color-complementary, .text-complementary) {
+    color: var(--foreground-complementary, LinkText);
 }
 
 :where(.text-color-success, .text-success) {

@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Design For Humans: Poster
+   --------------------------------------------------------------------------
+   A picture with content laid over it: a hero, a feature, a promotion. The
+   picture is a real <img> (or a <picture> with sources, or a <video>), so it
+   takes srcset, sizes and fetchpriority; it is cropped to fill the poster
+   with object-fit: cover, and --poster-focus keeps its subject in view.
+
+   Structure: .poster holds a .poster__media and one .poster__content. The
+   content is a box with padding, a width cap and its surface; a layout
+   primitive inside it (a stack) arranges what it holds. It is in normal
+   flow, so it sets the poster's height; --poster-min-size is the least it
+   is. The poster's inline padding clears the safe area (under
+   .viewport-fit-cover) and grows to line the content up with the site
+   width (as a wrapper's does), unless --stretch drops that (as the header's
+   and footer's --stretch do).
+
+   Axes: prominence (default: a translucent panel; --strong: a solid panel;
+   --subtle: a scrim over the whole picture and no panel; --plain: neither),
+   placement (inline: start by default, --inline-center, --inline-end; block:
+   centre by default, --block-start, --block-end), padding (--flush: the
+   content fills the whole poster and takes its padding, for anything a
+   product lays out itself), width (--stretch: no site-width alignment),
+   density (--compact).
+   Flag: --poster-font-sizing (cq by default: the content's type grows with
+   its width, up to --poster-content-max-width). Colour follows the
+   poster's scheme, so .color-scheme-dark or .color-palette-inverted on the
+   poster turns its panel or scrim dark.
+
+   Contrast: the text never sits on the picture alone. The panel and scrim
+   are never more than 25% see-through, whatever a product sets, so muted
+   text keeps 4.5:1 with pure black or white behind it. They are solid
+   when the user asks for more contrast or less transparency, and a subtle
+   poster then takes a solid panel instead of its scrim, so the picture
+   stays in view. Forced colours draw the panel in system colours. A plain
+   poster has no surface: what sits on it brings its own (a button, a card).
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.poster) {
+  /* Private manifest */
+  --_poster-fill: var(--poster-bg, var(--surface-card, Canvas));
+  /* The contrast floor: at most 25% see-through, whatever is set */
+  --_poster-translucency: min(var(--poster-translucency, var(--translucency-subtle, 10%)), 25%);
+  --_poster-scrim-translucency: min(var(--poster-scrim-translucency, var(--translucency-25, 25%)), 25%);
+  --_poster-filter: var(--poster-filter, var(--surface-layer-filter, none));
+  --_poster-padding: var(--poster-padding, var(--spacing-cushion));
+  /* Inline, the padding clears the safe area and lines the content up
+     with the site width */
+  --_poster-padding-start: max(var(--_poster-padding) + var(--safe-area-inset-inline-start, 0px), (100% - var(--spacing-site-width, 75rem)) / 2);
+  --_poster-padding-end: max(var(--_poster-padding) + var(--safe-area-inset-inline-end, 0px), (100% - var(--spacing-site-width, 75rem)) / 2);
+  --_poster-outer-block: var(--_poster-padding);
+  --_poster-outer-start: var(--_poster-padding-start);
+  --_poster-outer-end: var(--_poster-padding-end);
+  /* Set by --flush only; a poster nested in one starts unset */
+  --_poster-flush-block: initial;
+  --_poster-flush-start: initial;
+  --_poster-flush-end: initial;
+  --_poster-content-max: var(--poster-content-max-width, var(--spacing-block, 36rem));
+  --_poster-content-radius: var(--poster-content-radius, var(--radius));
+  --_poster-panel-bg: var(--_poster-fill);
+  --_poster-panel-filter: none;
+  --_poster-solid-padding: var(--poster-content-padding, var(--spacing-breathe));
+  --_poster-panel-padding: var(--_poster-solid-padding);
+  --_poster-panel-border: 0px solid transparent;
+  --_poster-scrim: transparent;
+  --_poster-justify: start;
+  --_poster-align: center;
+  --font-sizing: var(--poster-font-sizing, cq);
+
+  /* Density: a compact container steps the poster down */
+  @container style(--ui-sizing: compact) {
+    --_poster-padding: var(--poster-compact-padding, var(--spacing-breathe));
+    --_poster-solid-padding: var(--poster-compact-content-padding, var(--spacing));
+  }
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-block-size: var(--poster-min-size, var(--spacing-block-sm, 24rem));
+  padding-block: var(--_poster-outer-block);
+  padding-inline: var(--_poster-outer-start) var(--_poster-outer-end);
+  overflow: clip;
+  border-radius: var(--poster-radius, 0px);
+  /* Shows while the picture loads, and wherever it doesn't reach */
+  background-color: var(--poster-media-bg, var(--surface-muted, Canvas));
+  color: var(--foreground, CanvasText);
+
+  /* The scrim: over the picture, under the content */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--_poster-scrim);
+    pointer-events: none;
+  }
+}
+
+/* A <picture> holds the image; the image itself is the media */
+:where(.poster)> :where(picture) {
+  display: contents;
+}
+
+/* ==========================================================================
+   2. Elements
+   ========================================================================== */
+:where(.poster__media) {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: var(--poster-focus, 50% 50%);
+}
+
+:where(.poster__content) {
+  justify-self: var(--_poster-justify);
+  align-self: var(--_poster-align);
+  /* Its full width, up to the cap: a card or other size container in it
+     has no width of its own to shrink to */
+  inline-size: 100%;
+  max-inline-size: var(--_poster-content-max);
+  /* cq type grows with the content's width, not the whole poster's */
+  container-type: inline-size;
+  padding-block: var(--_poster-flush-block, var(--_poster-panel-padding));
+  padding-inline: var(--_poster-flush-start, var(--_poster-panel-padding)) var(--_poster-flush-end, var(--_poster-panel-padding));
+  border: var(--_poster-panel-border);
+  border-radius: var(--_poster-content-radius);
+  background-color: var(--_poster-panel-bg);
+  backdrop-filter: var(--_poster-panel-filter);
+}
+
+/* ==========================================================================
+   3. Modifiers
+   ========================================================================== */
+
+/* Prominence. Default and subtle are solid here; the translucent panel and
+   the scrim are below, for users who haven't asked for more contrast. */
+:where(.poster--plain) {
+  --_poster-panel-bg: transparent;
+  --_poster-panel-padding: 0px;
+}
+
+/* Placement: inline (start by default) and block (centre by default) */
+:where(.poster--inline-center) {
+  --_poster-justify: center;
+}
+
+:where(.poster--inline-end) {
+  --_poster-justify: end;
+}
+
+:where(.poster--block-start) {
+  --_poster-align: start;
+}
+
+:where(.poster--block-end) {
+  --_poster-align: end;
+}
+
+/* Flush: the content fills the poster, and the poster's padding moves
+   onto it, so what a product puts there still lines up with the page */
+:where(.poster--flush) {
+  --_poster-outer-block: 0px;
+  --_poster-outer-start: 0px;
+  --_poster-outer-end: 0px;
+  --_poster-flush-block: var(--_poster-padding);
+  --_poster-flush-start: var(--_poster-padding-start);
+  --_poster-flush-end: var(--_poster-padding-end);
+  --_poster-justify: stretch;
+  --_poster-align: stretch;
+  --_poster-content-max: none;
+  --_poster-content-radius: 0px;
+}
+
+:where(.poster--stretch) {
+  --_poster-padding-start: calc(var(--_poster-padding) + var(--safe-area-inset-inline-start, 0px));
+  --_poster-padding-end: calc(var(--_poster-padding) + var(--safe-area-inset-inline-end, 0px));
+}
+
+/* Density */
+:where(.poster--compact, .poster.ui-compact) {
+  --ui-sizing: compact;
+  --_poster-padding: var(--poster-compact-padding, var(--spacing-breathe));
+  --_poster-solid-padding: var(--poster-compact-content-padding, var(--spacing));
+}
+
+/* ==========================================================================
+   4. Translucency, and when it gives way
+   ========================================================================== */
+@media (prefers-contrast: no-preference) {
+  :where(.poster:not(.poster--strong, .poster--subtle, .poster--plain)) {
+    --_poster-panel-bg: color-mix(in srgb, var(--_poster-fill), transparent var(--_poster-translucency));
+    --_poster-panel-filter: var(--_poster-filter);
+  }
+
+  :where(.poster--subtle) {
+    --_poster-panel-bg: transparent;
+    --_poster-panel-padding: 0px;
+    --_poster-scrim: color-mix(in srgb, var(--_poster-fill), transparent var(--_poster-scrim-translucency));
+  }
+}
+
+/* Less transparency: every surface solid (a subtle poster takes a panel).
+   Written as an override so a browser without the feature keeps the above. */
+@media (prefers-reduced-transparency: reduce) {
+  :where(.poster:not(.poster--plain)) {
+    --_poster-panel-bg: var(--_poster-fill);
+    --_poster-panel-filter: none;
+    --_poster-panel-padding: var(--_poster-solid-padding);
+    --_poster-scrim: transparent;
+  }
+}
+
+/* Forced colours: the panel in system colours, with an edge */
+@media (forced-colors: active) {
+  :where(.poster:not(.poster--plain)) {
+    --_poster-panel-bg: Canvas;
+    --_poster-panel-filter: none;
+    --_poster-panel-padding: var(--_poster-solid-padding);
+    --_poster-panel-border: 1px solid CanvasText;
+    --_poster-scrim: transparent;
+  }
+}

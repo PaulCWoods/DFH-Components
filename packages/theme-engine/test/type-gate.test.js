@@ -126,3 +126,15 @@ test('a shared family takes its font\'s weights; a missing or looping one fails'
   });
   assert.deepEqual(rules(failures).sort(), ['reference:display', 'reference:mono', 'reference:serif']);
 });
+
+test('steps at the minimum may be equal; a bad or too large minimum fails', () => {
+  const flat = edit((t) => {
+    t.scale.ratio = 1.1;
+    t.scale.min = '0.92rem';
+  });
+  assert.deepEqual(flat.failures.filter((r) => r.rule === 'scale'), []);
+  assert.ok(flat.reports.some((r) => r.rule === 'floor' && r.style === 'scale'));
+  assert.ok(!flat.reports.some((r) => r.rule === 'floor' && r.style !== 'scale'));
+  assert.ok(edit((t) => (t.scale.min = '12')).failures.some((r) => r.rule === 'scale'));
+  assert.ok(edit((t) => (t.scale.min = '1.5rem')).failures.some((r) => r.rule === 'scale'));
+});

@@ -12,6 +12,8 @@
    step on the large one, or to another step (growTo) for a bigger change.
    It can start from a step other than the fixed size (fluidFrom), for a
    style that's bigger as soon as it grows.
+   An optional minimum (scale.min) raises every step below it, at both ends
+   of the fluid range, so the smallest text stays readable.
    ========================================================================== */
 
 /* Step names as the tokens spell them: 2, minus-1 (Tier 1), -1 (cq) */
@@ -22,12 +24,21 @@ const rangeKey = (from, to, key) => (to === undefined || to === from ? key(from)
 const rem = (v) => parseFloat(v);
 const round = (n, places = 4) => +n.toFixed(places);
 
-/* The fixed scale, -2 to 8 by default: base × ratio^n */
+/* The smallest size the scale may reach (scale.min: 0.75rem or 12px), in
+   rem; 0 when the theme sets none. Steps below it are raised to it. */
+export const MIN_LENGTH = /^(\d*\.?\d+)(rem|px)$/;
+export const minSize = (type) => {
+  const m = String(type.scale.min ?? '').trim().match(MIN_LENGTH);
+  return m ? +m[1] / (m[2] === 'px' ? 16 : 1) : 0;
+};
+
+/* The fixed scale, -2 to 8 by default: base × ratio^n, never under the minimum */
 export const scaleSteps = (type) => {
   const [lo, hi] = type.scale.steps ?? [-2, 8];
   const base = rem(type.scale.base);
+  const min = minSize(type);
   const out = {};
-  for (let n = lo; n <= hi; n++) out[n] = round(base * type.scale.ratio ** n);
+  for (let n = lo; n <= hi; n++) out[n] = round(Math.max(min, base * type.scale.ratio ** n));
   return out;
 };
 
@@ -51,8 +62,9 @@ export const fluidSteps = (type) => {
   /* The small scale is the fixed one: the base size and the scale's ratio */
   const minRatio = type.scale.ratio;
   const maxBase = rem(type.fluid.max.base);
+  const min = minSize(type);
   const out = {};
-  for (let n = lo; n <= hi; n++) out[n] = [round(base * minRatio ** n), round(maxBase * type.fluid.max.ratio ** n)];
+  for (let n = lo; n <= hi; n++) out[n] = [round(Math.max(min, base * minRatio ** n)), round(Math.max(min, maxBase * type.fluid.max.ratio ** n))];
   return out;
 };
 
@@ -237,6 +249,7 @@ export const typeGlobal = (type, typography = {}) => {
 
   /* The scale, and the fluid settings the compiler reads */
   out['font-size-base'] = setValue(out['font-size-base'], type.scale.base, { $type: 'dimension' });
+  out['font-size-min'] = setValue(out['font-size-min'], `${minSize(type)}rem`, { $type: 'dimension', $description: 'The smallest a step of the scale may be: smaller steps are raised to it, fixed and fluid. 0 sets no minimum' });
   out.ratio = setValue(out.ratio, type.scale.ratio, { $type: 'number' });
   const fluid = (out['fluid-scale'] = out['fluid-scale'] ?? {});
   fluid['mobile-base'] = setValue(fluid['mobile-base'], type.scale.base);
@@ -452,7 +465,7 @@ export const migrateType = (global, semantic) => {
   return {
     fonts,
     families,
-    scale: { base: typo['font-size-base'].$value, ratio: Number(typo.ratio.$value), steps: [-2, 8] },
+    scale: { base: typo['font-size-base'].$value, ...(parseFloat(typo['font-size-min']?.$value) ? { min: typo['font-size-min'].$value } : {}), ratio: Number(typo.ratio.$value), steps: [-2, 8] },
     leading: (() => {
       const lh = typo['line-height'];
       const keys = Object.keys(lh).filter((k) => !k.startsWith('$')).map((k) => (k.startsWith('minus-') ? -Number(k.slice(6)) : Number(k)));
@@ -504,6 +517,7 @@ export const typeCssVars = (type) => {
   }
   const viewports = type.fluid.viewports ?? ['25rem', '80rem'];
   const fluid = fluidSteps(type);
+  vars['--typography-font-size-min'] = `${minSize(type)}rem`;
   for (const [n, size] of Object.entries(scaleSteps(type))) vars[`--typography-font-size-${n}`] = `${size}rem`;
   if (type.leading) for (const n of Object.keys(leadingSteps(type))) vars[`--typography-line-height-${n}`] = leadingCalc(type.leading, +n);
   for (const [n, [min, max]] of Object.entries(fluid)) {

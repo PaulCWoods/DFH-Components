@@ -155,8 +155,8 @@
       "dark": "white"
     },
     "foreground.muted": {
-      "light": "neutral.700",
-      "dark": "neutral.300"
+      "light": "neutral.600",
+      "dark": "neutral.400"
     },
     "foreground.accent": {
       "light": "blue.600",
@@ -273,6 +273,7 @@
     },
     "scale": {
       "base": "1rem",
+      "min": "0.75rem",
       "ratio": 1.2,
       "steps": [
         -2,
@@ -427,6 +428,12 @@
       "cushion-lg": {
         "step": 3
       }
+    },
+    "site-width": "75rem",
+    "targets": {
+      "sm": 32,
+      "default": 48,
+      "lg": 64
     }
   },
   "shape": {

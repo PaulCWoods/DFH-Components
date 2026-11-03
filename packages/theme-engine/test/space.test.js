@@ -36,3 +36,35 @@ test('today\'s spacing passes; a shrinking or out-of-order role fails', () => {
   const rules = spaceGate(space).failures.map((f) => f.style).sort();
   assert.deepEqual(rules, ['breathe', 'cushion']);
 });
+
+test('the site width and targets write their tokens and preview values', () => {
+  const space = { ...structuredClone(theme.space), 'site-width': '80rem', targets: { sm: 32, default: 48, lg: 64 } };
+  const out = applySpaceRoles(semantic, space);
+  assert.equal(out.spacing['site-width'].$value, '80rem');
+  assert.equal(out.spacing.target.$value, '{spacing.48}');
+  assert.equal(out.spacing['target-sm'].$value, '{spacing.32}');
+  assert.equal(out.spacing.target.$description, semantic.spacing.target.$description);
+  const vars = spaceCssVars(space);
+  assert.equal(vars['--spacing-site-width'], '80rem');
+  assert.equal(vars['--spacing-target-lg'], '4rem');
+});
+
+test('a theme without them leaves the tokens as they are', () => {
+  const space = structuredClone(theme.space);
+  delete space['site-width'];
+  delete space.targets;
+  const out = applySpaceRoles(semantic, space);
+  assert.deepEqual(out.spacing.target, semantic.spacing.target);
+  assert.deepEqual(out.spacing['site-width'], semantic.spacing['site-width']);
+});
+
+test('a site width that isn\'t a length, and targets off the scale, too small or out of order, fail', () => {
+  const steps = [0, 1, 2, 4, 8, 16, 24, 32, 48, 64, 128];
+  const rules = (patch) => spaceGate({ ...structuredClone(theme.space), ...patch }, { steps }).failures.map((f) => f.style).sort();
+  assert.deepEqual(rules({ 'site-width': 'wide' }), ['site-width']);
+  assert.deepEqual(rules({ 'site-width': '72rem' }), []);
+  assert.deepEqual(rules({ targets: { sm: 40, default: 48, lg: 64 } }), ['target sm']);
+  assert.deepEqual(rules({ targets: { sm: 16, default: 48, lg: 64 } }), ['target sm']);
+  assert.deepEqual(rules({ targets: { sm: 24, default: 32, lg: 64 } }), ['target default']);
+  assert.deepEqual(rules({ targets: { sm: 32, default: 64, lg: 48 } }), ['target lg']);
+});

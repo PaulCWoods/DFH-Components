@@ -23,7 +23,7 @@
    1. Base
    -------------------------------------------------------------------------- */
 :where(.wrapper) {
-    --_wrapper-max: var(--wrapper-max-width, var(--site-width, 75rem));
+    --_wrapper-max: var(--wrapper-max-width, var(--spacing-site-width, 75rem));
     --_wrapper-gutter: var(--wrapper-gutter, var(--spacing-cushion));
 
     box-sizing: border-box;

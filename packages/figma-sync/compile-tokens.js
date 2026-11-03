@@ -348,6 +348,8 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
   const mobileRatio = parseFloat(fluidScale['mobile-ratio']?.$value !== undefined ? fluidScale['mobile-ratio'].$value : 1.2) || 1.2;
   const desktopBase = parseFloat(fluidScale['desktop-base']?.$value || fluidScale['desktop-base']?.value || '1.5rem') || 1.5;
   const desktopRatio = parseFloat(fluidScale['desktop-ratio']?.$value !== undefined ? fluidScale['desktop-ratio'].$value : 1.25) || 1.25;
+  // The smallest a step may be: smaller steps are raised to it (0: no minimum)
+  const minRem = parseFloat(typo['font-size-min']?.$value || '0') || 0;
 
   let changed = false;
 
@@ -357,7 +359,7 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
 
   steps.forEach(step => {
     const key = step < 0 ? `minus-${Math.abs(step)}` : `${step}`;
-    const calculatedRem = +(baseRem * Math.pow(ratio, step)).toFixed(4);
+    const calculatedRem = +Math.max(minRem, baseRem * Math.pow(ratio, step)).toFixed(4);
     const expectedVal = `${calculatedRem}rem`;
 
     if (!typo['font-size'][key]) {
@@ -380,10 +382,10 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
 
   steps.forEach(step => {
     const key = step < 0 ? `minus-${Math.abs(step)}` : `${step}`;
-    const minRem = +(mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
-    const maxRem = +(desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
-    const expectedVal = `fluid(${minRem}rem, ${maxRem}rem)`;
-    const expectedDesc = `Fluid font size step ${step} (${minRem}rem / ${Math.round(minRem * 16)}px Mobile to ${maxRem}rem / ${Math.round(maxRem * 16)}px Desktop)`;
+    const lowRem = +Math.max(minRem, mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
+    const highRem = +Math.max(minRem, desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
+    const expectedVal = `fluid(${lowRem}rem, ${highRem}rem)`;
+    const expectedDesc = `Fluid font size step ${step} (${lowRem}rem / ${Math.round(lowRem * 16)}px Mobile to ${highRem}rem / ${Math.round(highRem * 16)}px Desktop)`;
 
     const existing = globalJson.fluid.typography['font-size'][key];
     if (!existing) {
@@ -414,7 +416,8 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
     mobileBase,
     mobileRatio,
     desktopBase,
-    desktopRatio
+    desktopRatio,
+    minRem
   };
 }
 
@@ -487,6 +490,7 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
   const mobileRatio = scaleParams?.mobileRatio || 1.2;
   const desktopBase = scaleParams?.desktopBase || 1.5;
   const desktopRatio = scaleParams?.desktopRatio || 1.25;
+  const floorRem = scaleParams?.minRem || 0;
 
   const baseSteps = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8];
   const allStepDefs = new Map();
@@ -494,8 +498,8 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
   // 1. Add standard single-integer scale steps
   baseSteps.forEach(step => {
     const key = String(step);
-    const minRem = +(mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
-    const maxRem = +(desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
+    const minRem = +Math.max(floorRem, mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
+    const maxRem = +Math.max(floorRem, desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
     allStepDefs.set(key, {
       key,
       isCompound: false,
@@ -516,8 +520,8 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
     if (!parsed) return;
     const key = parsed.isCompound ? `${parsed.minStep}-${parsed.maxStep}` : String(parsed.minStep);
     if (!allStepDefs.has(key)) {
-      const minRem = +(mobileBase * Math.pow(mobileRatio, parsed.minStep)).toFixed(4);
-      const maxRem = +(desktopBase * Math.pow(desktopRatio, parsed.maxStep)).toFixed(4);
+      const minRem = +Math.max(floorRem, mobileBase * Math.pow(mobileRatio, parsed.minStep)).toFixed(4);
+      const maxRem = +Math.max(floorRem, desktopBase * Math.pow(desktopRatio, parsed.maxStep)).toFixed(4);
       allStepDefs.set(key, {
         key,
         isCompound: parsed.isCompound,
@@ -586,16 +590,16 @@ ${progressiveVars.join('\n')}
   // CSS Level 5 @function definitions for spacing and typography
   const functionDefs = [
     `@function --type-size(--n) {
-  result: round(calc(var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
+  result: round(max(var(--typography-font-size-min, 0rem), var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
 }`,
     `@function --type-size-fluid(--n, --n2: false) {
-  --_mn: calc(var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
-  --_mx: calc(var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  --_mn: max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
+  --_mx: max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
   result: round(var(--_mn) + var(--_progress) * (var(--_mx) - var(--_mn)), var(--_interval));
 }`,
     `@function --type-size-cq(--n, --n2: false) {
-  --_mn: calc(var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
-  --_mx: calc(var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  --_mn: max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
+  --_mx: max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
   result: round(var(--_mn) + var(--_progress-cq) * (var(--_mx) - var(--_mn)), var(--_interval));
 }`,
     `@function --line-height(--n) {
@@ -828,6 +832,20 @@ ${invertedContrastVars.join('\n')}
 ${invertedContrastVars.join('\n')}
     }
   }
+}`;
+    }
+
+    // The fluid spacing roles as :root sets them, for .sizing-default: a region inside a compact one
+    // (.ui-compact) takes them back. Here rather than in the utility, as they read Tier 1.
+    const spacingRoles = allCssLines.filter((line) => /^\s*--spacing-(cq-)?(breathe|cushion)(-sm|-lg)?:/.test(line));
+    if (spacingRoles.length > 0) {
+      invertedBlock += `
+
+/* ==========================================================================
+   Default Sizing (.sizing-default): the spacing roles, back from compact
+   ========================================================================== */
+:where(.sizing-default) {
+${spacingRoles.join('\n')}
 }`;
     }
 

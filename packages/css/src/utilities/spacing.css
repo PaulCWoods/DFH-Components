@@ -2,7 +2,8 @@
    Design For Humans: Spacing Utilities (Margin, Padding, Gap)
    --------------------------------------------------------------------------
    One property per class, on logical properties, from the Tier 2 spacing
-   steps (--spacing-2xs … --spacing-3xl, --spacing-breathe, --spacing-cushion).
+   steps (--spacing-2xs … --spacing-3xl) and the fluid roles (--spacing-breathe-sm,
+   --spacing-breathe, --spacing-cushion, --spacing-cushion-lg).
    Verbose name: the property and the step (.padding-inline-sm).
    Shorthand: Tailwind's prefix with the library's step (.px-sm). Tailwind's
    numbers map to nothing here, so the steps are named (PRINCIPLES §3).
@@ -49,12 +50,20 @@
     margin: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-breathe-sm, .m-breathe-sm) {
+    margin: var(--spacing-breathe-sm);
+}
+
 :where(.margin-breathe, .m-breathe) {
     margin: var(--spacing-breathe);
 }
 
 :where(.margin-cushion, .m-cushion) {
     margin: var(--spacing-cushion);
+}
+
+:where(.margin-cushion-lg, .m-cushion-lg) {
+    margin: var(--spacing-cushion-lg);
 }
 
 :where(.margin-auto, .m-auto) {
@@ -102,12 +111,20 @@
     margin-block: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-block-breathe-sm, .my-breathe-sm) {
+    margin-block: var(--spacing-breathe-sm);
+}
+
 :where(.margin-block-breathe, .my-breathe) {
     margin-block: var(--spacing-breathe);
 }
 
 :where(.margin-block-cushion, .my-cushion) {
     margin-block: var(--spacing-cushion);
+}
+
+:where(.margin-block-cushion-lg, .my-cushion-lg) {
+    margin-block: var(--spacing-cushion-lg);
 }
 
 :where(.margin-block-auto, .my-auto) {
@@ -155,12 +172,20 @@
     margin-inline: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-inline-breathe-sm, .mx-breathe-sm) {
+    margin-inline: var(--spacing-breathe-sm);
+}
+
 :where(.margin-inline-breathe, .mx-breathe) {
     margin-inline: var(--spacing-breathe);
 }
 
 :where(.margin-inline-cushion, .mx-cushion) {
     margin-inline: var(--spacing-cushion);
+}
+
+:where(.margin-inline-cushion-lg, .mx-cushion-lg) {
+    margin-inline: var(--spacing-cushion-lg);
 }
 
 :where(.margin-inline-auto, .mx-auto) {
@@ -208,12 +233,20 @@
     margin-block-start: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-block-start-breathe-sm, .mt-breathe-sm) {
+    margin-block-start: var(--spacing-breathe-sm);
+}
+
 :where(.margin-block-start-breathe, .mt-breathe) {
     margin-block-start: var(--spacing-breathe);
 }
 
 :where(.margin-block-start-cushion, .mt-cushion) {
     margin-block-start: var(--spacing-cushion);
+}
+
+:where(.margin-block-start-cushion-lg, .mt-cushion-lg) {
+    margin-block-start: var(--spacing-cushion-lg);
 }
 
 :where(.margin-block-start-auto, .mt-auto) {
@@ -261,12 +294,20 @@
     margin-block-end: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-block-end-breathe-sm, .mb-breathe-sm) {
+    margin-block-end: var(--spacing-breathe-sm);
+}
+
 :where(.margin-block-end-breathe, .mb-breathe) {
     margin-block-end: var(--spacing-breathe);
 }
 
 :where(.margin-block-end-cushion, .mb-cushion) {
     margin-block-end: var(--spacing-cushion);
+}
+
+:where(.margin-block-end-cushion-lg, .mb-cushion-lg) {
+    margin-block-end: var(--spacing-cushion-lg);
 }
 
 :where(.margin-block-end-auto, .mb-auto) {
@@ -314,12 +355,20 @@
     margin-inline-start: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-inline-start-breathe-sm, .ms-breathe-sm) {
+    margin-inline-start: var(--spacing-breathe-sm);
+}
+
 :where(.margin-inline-start-breathe, .ms-breathe) {
     margin-inline-start: var(--spacing-breathe);
 }
 
 :where(.margin-inline-start-cushion, .ms-cushion) {
     margin-inline-start: var(--spacing-cushion);
+}
+
+:where(.margin-inline-start-cushion-lg, .ms-cushion-lg) {
+    margin-inline-start: var(--spacing-cushion-lg);
 }
 
 :where(.margin-inline-start-auto, .ms-auto) {
@@ -367,12 +416,20 @@
     margin-inline-end: var(--spacing-3xl, 8rem);
 }
 
+:where(.margin-inline-end-breathe-sm, .me-breathe-sm) {
+    margin-inline-end: var(--spacing-breathe-sm);
+}
+
 :where(.margin-inline-end-breathe, .me-breathe) {
     margin-inline-end: var(--spacing-breathe);
 }
 
 :where(.margin-inline-end-cushion, .me-cushion) {
     margin-inline-end: var(--spacing-cushion);
+}
+
+:where(.margin-inline-end-cushion-lg, .me-cushion-lg) {
+    margin-inline-end: var(--spacing-cushion-lg);
 }
 
 :where(.margin-inline-end-auto, .me-auto) {
@@ -420,12 +477,20 @@
     padding: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-breathe-sm, .p-breathe-sm) {
+    padding: var(--spacing-breathe-sm);
+}
+
 :where(.padding-breathe, .p-breathe) {
     padding: var(--spacing-breathe);
 }
 
 :where(.padding-cushion, .p-cushion) {
     padding: var(--spacing-cushion);
+}
+
+:where(.padding-cushion-lg, .p-cushion-lg) {
+    padding: var(--spacing-cushion-lg);
 }
 
 
@@ -469,12 +534,20 @@
     padding-block: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-block-breathe-sm, .py-breathe-sm) {
+    padding-block: var(--spacing-breathe-sm);
+}
+
 :where(.padding-block-breathe, .py-breathe) {
     padding-block: var(--spacing-breathe);
 }
 
 :where(.padding-block-cushion, .py-cushion) {
     padding-block: var(--spacing-cushion);
+}
+
+:where(.padding-block-cushion-lg, .py-cushion-lg) {
+    padding-block: var(--spacing-cushion-lg);
 }
 
 
@@ -518,12 +591,20 @@
     padding-inline: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-inline-breathe-sm, .px-breathe-sm) {
+    padding-inline: var(--spacing-breathe-sm);
+}
+
 :where(.padding-inline-breathe, .px-breathe) {
     padding-inline: var(--spacing-breathe);
 }
 
 :where(.padding-inline-cushion, .px-cushion) {
     padding-inline: var(--spacing-cushion);
+}
+
+:where(.padding-inline-cushion-lg, .px-cushion-lg) {
+    padding-inline: var(--spacing-cushion-lg);
 }
 
 
@@ -567,12 +648,20 @@
     padding-block-start: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-block-start-breathe-sm, .pt-breathe-sm) {
+    padding-block-start: var(--spacing-breathe-sm);
+}
+
 :where(.padding-block-start-breathe, .pt-breathe) {
     padding-block-start: var(--spacing-breathe);
 }
 
 :where(.padding-block-start-cushion, .pt-cushion) {
     padding-block-start: var(--spacing-cushion);
+}
+
+:where(.padding-block-start-cushion-lg, .pt-cushion-lg) {
+    padding-block-start: var(--spacing-cushion-lg);
 }
 
 
@@ -616,12 +705,20 @@
     padding-block-end: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-block-end-breathe-sm, .pb-breathe-sm) {
+    padding-block-end: var(--spacing-breathe-sm);
+}
+
 :where(.padding-block-end-breathe, .pb-breathe) {
     padding-block-end: var(--spacing-breathe);
 }
 
 :where(.padding-block-end-cushion, .pb-cushion) {
     padding-block-end: var(--spacing-cushion);
+}
+
+:where(.padding-block-end-cushion-lg, .pb-cushion-lg) {
+    padding-block-end: var(--spacing-cushion-lg);
 }
 
 
@@ -665,12 +762,20 @@
     padding-inline-start: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-inline-start-breathe-sm, .ps-breathe-sm) {
+    padding-inline-start: var(--spacing-breathe-sm);
+}
+
 :where(.padding-inline-start-breathe, .ps-breathe) {
     padding-inline-start: var(--spacing-breathe);
 }
 
 :where(.padding-inline-start-cushion, .ps-cushion) {
     padding-inline-start: var(--spacing-cushion);
+}
+
+:where(.padding-inline-start-cushion-lg, .ps-cushion-lg) {
+    padding-inline-start: var(--spacing-cushion-lg);
 }
 
 
@@ -714,6 +819,10 @@
     padding-inline-end: var(--spacing-3xl, 8rem);
 }
 
+:where(.padding-inline-end-breathe-sm, .pe-breathe-sm) {
+    padding-inline-end: var(--spacing-breathe-sm);
+}
+
 :where(.padding-inline-end-breathe, .pe-breathe) {
     padding-inline-end: var(--spacing-breathe);
 }
@@ -722,58 +831,88 @@
     padding-inline-end: var(--spacing-cushion);
 }
 
+:where(.padding-inline-end-cushion-lg, .pe-cushion-lg) {
+    padding-inline-end: var(--spacing-cushion-lg);
+}
+
 
 /* --------------------------------------------------------------------------
    15. Gap
-   Sets gap on a flex or grid container. The layout primitives take --gap.
+   Sets gap on a flex or grid container. Each also sets --gap, the layout
+   primitives' hook, so a primitive that works from its gap (a Grid's
+   column count) sees the same value. --gap doesn't inherit, so it stays on
+   the element. The row and column gaps set only their property: a Grid has
+   one --gap, so a column-count Grid takes --gap for its column gap.
    -------------------------------------------------------------------------- */
 
 :where(.gap-0) {
+    --gap: 0px;
     gap: 0;
 }
 
 :where(.gap-thin) {
+    --gap: var(--rule-width, 1px);
     gap: var(--rule-width, 1px);
 }
 
 :where(.gap-2xs) {
+    --gap: var(--spacing-2xs, 0.125rem);
     gap: var(--spacing-2xs, 0.125rem);
 }
 
 :where(.gap-xs) {
+    --gap: var(--spacing-xs, 0.25rem);
     gap: var(--spacing-xs, 0.25rem);
 }
 
 :where(.gap-sm) {
+    --gap: var(--spacing-sm, 0.5rem);
     gap: var(--spacing-sm, 0.5rem);
 }
 
 :where(.gap-md) {
+    --gap: var(--spacing-md, 1rem);
     gap: var(--spacing-md, 1rem);
 }
 
 :where(.gap-lg) {
+    --gap: var(--spacing-lg, 2rem);
     gap: var(--spacing-lg, 2rem);
 }
 
 :where(.gap-xl) {
+    --gap: var(--spacing-xl, 3rem);
     gap: var(--spacing-xl, 3rem);
 }
 
 :where(.gap-2xl) {
+    --gap: var(--spacing-2xl, 4rem);
     gap: var(--spacing-2xl, 4rem);
 }
 
 :where(.gap-3xl) {
+    --gap: var(--spacing-3xl, 8rem);
     gap: var(--spacing-3xl, 8rem);
 }
 
+:where(.gap-breathe-sm) {
+    --gap: var(--spacing-breathe-sm);
+    gap: var(--spacing-breathe-sm);
+}
+
 :where(.gap-breathe) {
+    --gap: var(--spacing-breathe);
     gap: var(--spacing-breathe);
 }
 
 :where(.gap-cushion) {
+    --gap: var(--spacing-cushion);
     gap: var(--spacing-cushion);
+}
+
+:where(.gap-cushion-lg) {
+    --gap: var(--spacing-cushion-lg);
+    gap: var(--spacing-cushion-lg);
 }
 
 :where(.row-gap-0, .gap-y-0) {
@@ -812,12 +951,20 @@
     row-gap: var(--spacing-3xl, 8rem);
 }
 
+:where(.row-gap-breathe-sm, .gap-y-breathe-sm) {
+    row-gap: var(--spacing-breathe-sm);
+}
+
 :where(.row-gap-breathe, .gap-y-breathe) {
     row-gap: var(--spacing-breathe);
 }
 
 :where(.row-gap-cushion, .gap-y-cushion) {
     row-gap: var(--spacing-cushion);
+}
+
+:where(.row-gap-cushion-lg, .gap-y-cushion-lg) {
+    row-gap: var(--spacing-cushion-lg);
 }
 
 :where(.column-gap-0, .gap-x-0) {
@@ -856,10 +1003,18 @@
     column-gap: var(--spacing-3xl, 8rem);
 }
 
+:where(.column-gap-breathe-sm, .gap-x-breathe-sm) {
+    column-gap: var(--spacing-breathe-sm);
+}
+
 :where(.column-gap-breathe, .gap-x-breathe) {
     column-gap: var(--spacing-breathe);
 }
 
 :where(.column-gap-cushion, .gap-x-cushion) {
     column-gap: var(--spacing-cushion);
+}
+
+:where(.column-gap-cushion-lg, .gap-x-cushion-lg) {
+    column-gap: var(--spacing-cushion-lg);
 }

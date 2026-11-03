@@ -209,7 +209,7 @@
       "$description": "Light text on dark hero sections"
     },
     "muted": {
-      "$value": "light-dark({color.neutral.700}, {color.neutral.300})",
+      "$value": "light-dark({color.neutral.600}, {color.neutral.400})",
       "$description": "Secondary subtext, timestamps, and captions (WCAG AA >= 4.5:1)"
     },
     "accent": {
@@ -388,11 +388,6 @@
       "$value": "{opacity.50}"
     }
   },
-  "site-width": {
-    "$value": "{layout.site-width}",
-    "$type": "dimension",
-    "$description": "Standard site-width page constraint baseline"
-  },
   "spacing": {
     "$type": "dimension",
     "default": {
@@ -446,15 +441,15 @@
     },
     "target": {
       "$value": "{spacing.48}",
-      "$description": "Accessible interactive touch target size (48px / 3rem, WCAG 2.5.5 AAA)"
+      "$description": "Touch target size (48px / 3rem, above the 44px of WCAG 2.5.5): every control keeps it as its hit area"
     },
     "target-sm": {
       "$value": "{spacing.32}",
-      "$description": "Small interactive touch target size (24px / 1.5rem, WCAG 2.5.8 AA)"
+      "$description": "Small target size (32px / 2rem): the fine-pointer target a product can opt into, and the height of --sm text controls. Never under 24px (WCAG 2.5.8)"
     },
     "target-lg": {
       "$value": "{spacing.64}",
-      "$description": "Large interactive touch target size (56px-64px / 4rem)"
+      "$description": "Large target size (64px / 4rem), for a control that needs more"
     },
     "target-min": {
       "$value": "{spacing.target}",
@@ -487,6 +482,10 @@
     "block-2xl": {
       "$value": "{spacing.1280}",
       "$description": "Largest block spacing (e.g. Site width)"
+    },
+    "site-width": {
+      "$value": "75rem",
+      "$description": "The page's content width: the Wrapper's cap, and the Header and Footer bars'"
     },
     "breathe": {
       "$value": "{fluid.spacing.breathe}",
@@ -1594,7 +1593,7 @@
           "$value": "{color.white}"
         },
         "muted": {
-          "$value": "light-dark({color.neutral.800}, {color.neutral.200})"
+          "$value": "light-dark({color.neutral.700}, {color.neutral.300})"
         },
         "accent": {
           "$value": "light-dark({color.blue.700}, {color.blue.200})"

@@ -21,6 +21,7 @@ Two panes side by side: a side pane at its preferred width and a main pane that 
 | Modifier | Effect |
 | :--- | :--- |
 | \`--2xs\` … \`--2xl\` | The side pane's width (default \`--xs\`, 16rem) |
+| \`@xs:\` … \`@7xl:\` + \`split--{width}\` | The side pane's width once the nearest container reaches the size (\`@5xl:\` is 64rem) |
 | \`--end\` | The side pane is last |
 | \`--nowrap\` | Never wrap: the side pane keeps its width, the main shrinks |
 | \`--three\` | Start, centre and end panes in one row |
@@ -69,6 +70,18 @@ export const Wrapping: Story = {
     <div class="stack">
       <div class="split">${sideNav('Plant groups, wide')}${main}</div>
       <div class="max-inline-size-sm"><div class="split">${sideNav('Plant groups, narrow')}${main}</div></div>
+    </div>`,
+};
+
+export const ContainerWidths: Story = {
+  name: 'Container widths',
+  parameters: { docs: { description: { story: '`split--2xs @3xl:split--xs @5xl:split--sm`: the side pane widens as its container grows (8rem, 16rem from 48rem, 24rem from 64rem). Each container here is a `.container-inline` of a different width.' } } },
+  render: () => `
+    <div class="stack">
+      ${['max-w-md', 'max-w-lg', 'max-w-xl'].map((w, i) => `
+        <div class="container-inline ${w}">
+          <div class="split split--2xs @3xl:split--xs @5xl:split--sm split--nowrap">${sideNav('Plant groups ' + (i + 1))}${main}</div>
+        </div>`).join('')}
     </div>`,
 };
 

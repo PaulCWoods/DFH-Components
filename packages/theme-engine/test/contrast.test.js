@@ -26,7 +26,7 @@ test('text moves away from its surface, surfaces away from their text, in each m
 
 test('more steps move further, and none writes an empty block', () => {
   const two = contrastRoles({ ...theme, contrast: { steps: 2 } }, ctx);
-  assert.equal(two['foreground.muted'].light, 'neutral.900');
+  assert.equal(two['foreground.muted'].light, 'neutral.800');
   const off = { ...theme, contrast: { steps: 0 } };
   assert.deepEqual(applyContrast(semantic, off, ctx).$media[CONTRAST_QUERY], {});
 });

@@ -14,7 +14,7 @@ import { resolver } from './gate.js';
 export const COMPONENT_GROUPS = {
   Actions: ['button', 'button-group', 'link', 'block-link', 'menu', 'batch-actions', 'skip-link'],
   Forms: ['input', 'textarea', 'select', 'check', 'switch', 'range', 'range-lockup', 'combobox', 'field', 'fieldset', 'choice', 'choices', 'form'],
-  Surfaces: ['card', 'dialog', 'popover', 'tooltip', 'accordion', 'divider'],
+  Surfaces: ['card', 'poster', 'dialog', 'popover', 'tooltip', 'accordion', 'divider'],
   Feedback: ['banner', 'banner-dock', 'toast', 'status', 'badge', 'progress', 'meter', 'skeleton', 'empty-state'],
   Navigation: ['header', 'footer', 'sidebar', 'navigation-tree', 'breadcrumb', 'pagination', 'stepper', 'tab', 'tab-list', 'tabbed-content'],
   Content: ['prose', 'list', 'table', 'code-block', 'telemetry', 'kbd', 'chip', 'wrapper'],

@@ -23,7 +23,7 @@ A labelled value: "Uptime 99.98%". A description list, so each label is a term a
 - **Value** (\`dd\`): a text atom; a unit is a smaller text atom inside it. Values use tabular figures so they don't jump as they change.
 - **Trend or state:** a \`.status--plain\` with an arrow icon and signed text ("+12%") in the value, so it is never colour alone.
 - **Options:** \`--icon-start\` (the label's icon moves to a gutter at the start of the box, larger and centred; flag \`--telemetry-icon-placement: start\`), \`--inline\` (label beside value), \`--subtle\` (a tint with no border) and \`--plain\` (no surface, border or padding; flag \`--telemetry-prominence\`), \`--round\` (flag \`--telemetry-corners: round\`), \`--compact\` (or any compact container).
-- **Group:** \`.telemetry-group\` is the \`<dl>\`; \`--ruled\` makes one bordered strip with dividers. A single telemetry is a \`<dl class="telemetry">\` with its \`dt\` and \`dd\` directly inside.
+- **Group:** \`.telemetry-group\` is the \`<dl>\`; \`--fill\` grows its items to share the row. A single telemetry is a \`<dl class="telemetry">\` with its \`dt\` and \`dd\` directly inside.
 - **Live values:** don't make the group a live region. If a change matters, announce it in a separate \`role="status"\`.
         `,
       },
@@ -62,12 +62,12 @@ const server: Metric[] = [
 ];
 
 export const Playground: Story = {
-  args: { iconStart: false, inline: false, prominence: 'default', round: false, compact: false, ruled: false, icons: true },
+  args: { iconStart: false, inline: false, prominence: 'default', round: false, compact: false, fill: false, icons: true },
   argTypes: { prominence: { control: 'inline-radio', options: ['default', 'subtle', 'plain'] } },
   render: (args) => {
     const item = [args.iconStart && 'telemetry--icon-start', args.inline && 'telemetry--inline', args.prominence !== 'default' && `telemetry--${args.prominence}`, args.round && 'telemetry--round', args.compact && 'telemetry--compact'].filter(Boolean).join(' ');
     const items = station.map((m) => ({ ...m, icon: args.icons ? m.icon : undefined }));
-    return group('Station', items, { cls: args.ruled ? 'telemetry-group--ruled' : '', item });
+    return group('Station', items, { cls: args.fill ? 'telemetry-group--fill' : '', item });
   },
 };
 
@@ -78,19 +78,22 @@ export const IconStart: Story = {
   render: () => `
     <div class="stack">
       ${group('Station', station, { item: 'telemetry--icon-start' })}
-      ${group('Server health', server.filter((m) => m.icon), { cls: 'telemetry-group--ruled', item: 'telemetry--icon-start' })}
+      ${group('Server health', server.filter((m) => m.icon), { item: 'telemetry--icon-start' })}
       ${group('Station', station, { item: 'telemetry--icon-start telemetry--round telemetry--inline' })}
       <div style="--telemetry-icon-placement: start;">${group('Station, set by a container flag', station, { item: 'telemetry--compact' })}</div>
       <div dir="rtl">${group('Station', station, { item: 'telemetry--icon-start' })}</div>
     </div>`,
 };
 
-export const Ruled: Story = { render: () => group('Server health', server, { cls: 'telemetry-group--ruled' }) };
+export const Fill: Story = {
+  parameters: { docs: { description: { story: '`--fill` grows each item to share the row, as a tab list does.' } } },
+  render: () => group('Server health', server, { cls: 'telemetry-group--fill' }),
+};
 
 export const Trends: Story = {
   render: () => group('This month', [
-    { label: 'Listen hours', value: '128,450', trend: { intent: 'success', arrow: 'ArrowUp', text: '+18.2%' } },
-    { label: 'Drop-off', value: '3.1', unit: '%', trend: { intent: 'danger', arrow: 'ArrowUp', text: '+0.4 pts' } },
+    { label: 'Listen hours', value: '128,450', trend: { intent: 'success', arrow: 'TrendUp', text: '+18.2%' } },
+    { label: 'Drop-off', value: '3.1', unit: '%', trend: { intent: 'danger', arrow: 'TrendUp', text: '+0.4 pts' } },
     { label: 'Bandwidth', value: '14.8', unit: 'TB', trend: { intent: 'neutral', arrow: 'ArrowRight', text: 'Flat' } },
   ], { value: 'heading' }),
 };
@@ -119,7 +122,7 @@ export const Compact: Story = { render: () => group('Station', station, { item: 
 
 export const InACompactRegion: Story = {
   name: 'In a compact region',
-  render: () => `<div class="ui-compact">${group('Server health', server, { cls: 'telemetry-group--ruled' })}</div>`,
+  render: () => `<div class="ui-compact">${group('Server health', server, { cls: 'telemetry-group--fill' })}</div>`,
 };
 
 export const Single: Story = {
@@ -139,5 +142,5 @@ export const WithAState: Story = {
 };
 
 export const RightToLeft: Story = {
-  render: () => `<div dir="rtl">${group('Server health', server, { cls: 'telemetry-group--ruled' })}</div>`,
+  render: () => `<div dir="rtl">${group('Server health', server, { cls: 'telemetry-group--fill' })}</div>`,
 };

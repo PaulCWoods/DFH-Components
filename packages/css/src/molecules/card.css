@@ -568,11 +568,6 @@
     }
   }
 
-  &:has(.link--stretched:focus-visible) {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
-    outline-offset: var(--focus-ring-offset, 2px);
-  }
-
   :where(button, a:not(.link--stretched), [role="button"], input, select, textarea, summary, label) {
     position: relative;
     z-index: 2;

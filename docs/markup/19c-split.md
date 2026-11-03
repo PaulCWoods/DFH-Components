@@ -54,6 +54,15 @@ It won't reorder its panes. The order in the source is the order a keyboard and 
 </div>
 ```
 
+## A Wider Side Pane with More Room
+A container variant changes the side pane's width once the Split's container reaches a size: here 16rem, and 24rem from 64rem up. The panes still wrap on their own below that.
+```html live
+<div class="split split--xs @5xl:split--sm">
+  <div class="card"><p class="text">16rem, or 24rem in a container 64rem wide or wider.</p></div>
+  <div class="card"><p class="text">The main pane takes the rest.</p></div>
+</div>
+```
+
 ## Three Panes
 ```html live
 <div class="split split--three">
@@ -78,6 +87,7 @@ Two panes side by side: a side pane at its preferred width and a main pane that 
 | Modifier | Effect |
 | :--- | :--- |
 | `--2xs` … `--2xl` | The side pane's width (default `--xs`, 16rem) |
+| `@xs:` … `@7xl:` + `split--{width}` | The side pane's width once the nearest container reaches the size (Tailwind's container scale: `xs` 20rem, `sm` 24, `md` 28, `lg` 32, `xl` 36, `2xl` 42, `3xl` 48, `4xl` 56, `5xl` 64, `6xl` 72, `7xl` 80); the widest that applies wins |
 | `--end` | The side pane is the last child |
 | `--nowrap` | Never wrap: the side pane keeps its width, the main shrinks |
 | `--three` | Start, centre and end panes; start and end at their width or their content's, the centre takes the rest. When the centre would drop below its minimum, a side pane wraps to its own full-width row. With `--nowrap`, one row always |
@@ -85,5 +95,6 @@ Two panes side by side: a side pane at its preferred width and a main pane that 
 
 ### Further rules
 - **Hooks**, set on the Split itself: `--gap`, `--align-items` (default `flex-start`; `stretch` for equal-height panes), `--split-side-width`, `--split-main-min-width` (default 24rem), `--split-start-width` and `--split-end-width` (for `--three`). They don't reach a nested split.
+- **Container variants** need a container ancestor (`.main`, `.app__workspace`, `.container-inline`, a Card); without one they never apply. They follow the space the Split's container has, not the screen, so a sidebar beside it counts.
 - **Density:** the gap is the cushion step; inside a compact region it steps down to the default.
 - **Panes that scroll** (a viewport-locked workspace) are the App Shell's job: `.app--viewport` with `.main--viewport`, and `--align-items: stretch` on the Split.

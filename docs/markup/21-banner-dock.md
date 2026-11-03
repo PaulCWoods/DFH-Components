@@ -101,7 +101,7 @@ It is a labelled `<aside>`, which makes it a landmark people can find. It isn't 
   <div class="banner banner--accent banner--round">
     <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
     <div class="banner__body"><p class="text">A new version is available.</p></div>
-    <button type="button" class="button button--strong button--accent banner__action"><span>Reload</span></button>
+    <button type="button" class="button button--strong button--accent banner__action"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg><span>Reload</span></button>
   </div>
 </aside>
 ```

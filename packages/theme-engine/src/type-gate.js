@@ -4,19 +4,22 @@
    Fails block --write and Publish; reports are shown but don't block.
 
    Fail:   a reference to a step, family, font, weight or letter spacing
-           that doesn't exist; a scale that doesn't increase step to step;
+           that doesn't exist; a scale that doesn't increase step to step
+           (steps raised to the minimum size may be equal); a minimum size
+           that isn't a rem or px length, or is larger than the base;
            a hierarchy out of order in any mode; a compact size larger than
            the fixed one; a fluid or cq size whose largest value is more
            than 2.5 times its smallest (zoom to 200% couldn't double it,
            WCAG 1.4.4).
-   Report: a size below 12px; a body or body-lg line height below 1.5
+   Report: a size below 12px (scale.min stops that); more than one step at
+           the minimum size; a body or body-lg line height below 1.5
            (WCAG 1.4.8; small text is captions and labels, not paragraphs); a heading line height above body's; a cq size that
            differs from the fluid one; two styles of the same kind that
            differ only in weight or case at the same size; a style whose
            weight its font doesn't load (the browser fakes it or falls back).
    ========================================================================== */
 
-import { SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, leadingSteps, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
+import { MIN_LENGTH, SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, leadingSteps, minSize, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
 
 export const HIERARCHY = ['display-title', 'title', 'heading', 'subheading', 'small-heading'];
 export const HEADINGS = [...HIERARCHY, 'micro-heading'];
@@ -102,14 +105,24 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
   /* The line-height scale tightens step by step downward */
   if (type.leading && !(type.leading.ratio > 1)) fail('scale', null, `line-height ratio ${type.leading.ratio} isn't above 1`);
 
-  /* The scale increases step to step, fixed and at both ends of the range */
+  /* The minimum: a length, and no larger than the base */
+  const min = minSize(type);
+  if (type.scale.min != null && type.scale.min !== '' && !MIN_LENGTH.test(String(type.scale.min).trim())) fail('scale', null, `minimum size "${type.scale.min}" isn't a length in rem or px`);
+  else if (min > parseFloat(type.scale.base)) fail('scale', null, `minimum size (${px(min)}px) is larger than the base (${px(parseFloat(type.scale.base))}px)`);
+
+  /* The scale increases step to step, fixed and at both ends of the range.
+     Steps raised to the minimum may be equal to each other. */
   const fixed = scaleSteps(type);
   const fluid = fluidSteps(type);
+  const grows = (a, b) => b > a || (min > 0 && a === min && b === min);
+  const floored = new Set();
   for (let n = lo + 1; n <= hi; n++) {
-    if (!(fixed[n] > fixed[n - 1])) fail('scale', null, `fixed step ${n} (${px(fixed[n])}px) isn't larger than step ${n - 1}`);
-    if (!(fluid[n][0] > fluid[n - 1][0])) fail('scale', null, `step ${n} at the smallest viewport isn't larger than step ${n - 1}`);
-    if (!(fluid[n][1] > fluid[n - 1][1])) fail('scale', null, `step ${n} at the largest viewport isn't larger than step ${n - 1}`);
+    if (!grows(fixed[n - 1], fixed[n])) fail('scale', null, `fixed step ${n} (${px(fixed[n])}px) isn't larger than step ${n - 1}`);
+    if (!grows(fluid[n - 1][0], fluid[n][0])) fail('scale', null, `step ${n} at the smallest viewport isn't larger than step ${n - 1}`);
+    if (!grows(fluid[n - 1][1], fluid[n][1])) fail('scale', null, `step ${n} at the largest viewport isn't larger than step ${n - 1}`);
+    if (min > 0 && fixed[n] === min) floored.add(n - 1).add(n);
   }
+  if (floored.size) report('floor', 'scale', `steps ${[...floored].join(', ')} are all at the ${px(min)}px minimum, so they look the same`);
 
   /* Each style's sizes: compact, fluid growth and the floor */
   const sizes = Object.fromEntries(Object.entries(styles).filter(([name]) => !offScale.has(name)).map(([name, s]) => [name, styleSizes(type, s)]).filter(([, v]) => v));

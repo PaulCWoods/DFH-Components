@@ -211,3 +211,12 @@ test('a family can share another\'s font or take a system stack, and loads nothi
   assert.equal(roleFont(type, 'display').family, 'Inter');
   assert.equal(roleStack(type, 'mono'), SYSTEM_STACKS.monospace);
 });
+
+test('a minimum size raises the steps below it, fixed and fluid', () => {
+  const type = { scale: { base: '1rem', min: '12px', ratio: 1.25, steps: [-2, 0] }, fluid: { max: { base: '1.2rem', ratio: 1.25 } } };
+  assert.deepEqual(scaleSteps(type), { '-2': 0.75, '-1': 0.8, 0: 1 });
+  assert.deepEqual(fluidSteps(type)[-2], [0.75, 0.768]);
+  assert.equal(typeGlobal(type)['font-size-min'].$value, '0.75rem');
+  assert.equal(typeCssVars(type)['--typography-font-size-min'], '0.75rem');
+  assert.equal(typeGlobal({ ...type, scale: { ...type.scale, min: undefined } })['font-size-min'].$value, '0rem');
+});

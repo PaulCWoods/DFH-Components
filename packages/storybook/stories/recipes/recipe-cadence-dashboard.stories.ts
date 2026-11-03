@@ -41,15 +41,16 @@ const icon = (name: string, cls = 'icon') =>
    -------------------------------------------------------------------------- */
 const sections = [
   ['Radio', 'Broadcast', true],
-  ['List', 'Schedule', false],
-  ['Grid', 'Library', false],
+  ['Calendar', 'Schedule', false],
+  ['Folder', 'Library', false],
   ['BarChart', 'Analytics', false],
   ['Settings', 'Station settings', false],
 ] as const;
 
 const avatar = `
-  <button type="button" class="button button--plain button--icon button--round">
-    <span class="avatar avatar--sm" aria-hidden="true">AM<span class="badge badge--dot badge--success badge--bottom-end"></span></span>
+  <button type="button" class="avatar avatar--sm">
+    <span aria-hidden="true">AM</span>
+    <span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span>
     <span class="sr-only">Account: Alex Morgan, online</span>
   </button>`;
 
@@ -421,7 +422,7 @@ const outage = `
       <p class="text font-bold">The stream has stalled</p>
       <p class="small-text">The studio uplink passed 250 ms. The emergency cart starts in 12 seconds.</p>
     </div>
-    <button type="button" class="button banner__action">Retry now</button>
+    <button type="button" class="button banner__action">${icon('Refresh')}<span>Retry now</span></button>
   </div>`;
 
 const page = (buffering = false) => `

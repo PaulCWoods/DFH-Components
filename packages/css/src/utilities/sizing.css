@@ -301,3 +301,41 @@
     inline-size: 100%;
     block-size: 100%;
 }
+
+/* --------------------------------------------------------------------------
+   6. Aspect ratio and fit
+   A shape for an image or a media slot, and how an image fills it. An
+   image given a ratio also takes .object-cover, or it stretches.
+   -------------------------------------------------------------------------- */
+
+:where(.aspect-ratio-auto, .aspect-auto) {
+    aspect-ratio: auto;
+}
+
+:where(.aspect-ratio-square, .aspect-square) {
+    aspect-ratio: 1;
+}
+
+:where(.aspect-ratio-video, .aspect-video) {
+    aspect-ratio: 16 / 9;
+}
+
+:where(.aspect-ratio-4\/3, .aspect-4\/3) {
+    aspect-ratio: 4 / 3;
+}
+
+:where(.aspect-ratio-3\/2, .aspect-3\/2) {
+    aspect-ratio: 3 / 2;
+}
+
+:where(.aspect-ratio-3\/4, .aspect-3\/4) {
+    aspect-ratio: 3 / 4;
+}
+
+:where(.object-fit-cover, .object-cover) {
+    object-fit: cover;
+}
+
+:where(.object-fit-contain, .object-contain) {
+    object-fit: contain;
+}

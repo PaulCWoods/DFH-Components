@@ -53,7 +53,7 @@
   --_header-padding-block: var(--header-padding-block, var(--spacing-sm));
   --_header-padding-inline: var(--header-padding-inline, var(--spacing-cushion));
   --_header-gap: var(--header-gap, var(--spacing-md));
-  --_header-max-width: var(--header-max-width, var(--site-width, 75rem));
+  --_header-max-width: var(--header-max-width, var(--spacing-site-width, 75rem));
   /* The bar's content height. Never --header-height: that is the header's
      measured or declared height, read by what must clear it, so sizing the
      header from it would loop */

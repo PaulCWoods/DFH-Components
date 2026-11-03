@@ -538,14 +538,6 @@
       "$value": "1.618"
     }
   },
-  "layout": {
-    "$type": "dimension",
-    "$description": "Global layout dimensions",
-    "site-width": {
-      "$value": "75rem",
-      "$description": "Standard maximum website page width"
-    }
-  },
   "spacing": {
     "0": {
       "$value": "0"
@@ -754,7 +746,7 @@
       },
       "$type": "dimension",
       "minus-2": {
-        "$value": "0.6944rem"
+        "$value": "0.75rem"
       },
       "minus-1": {
         "$value": "0.8333rem"
@@ -843,6 +835,11 @@
       "wide": {
         "$value": "0.125em"
       }
+    },
+    "font-size-min": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "$description": "The smallest a step of the scale may be: smaller steps are raised to it, fixed and fluid. 0 sets no minimum"
     }
   },
   "border-width": {
@@ -986,8 +983,8 @@
         },
         "$type": "dimension",
         "minus-2": {
-          "$value": "fluid(0.6944rem, 0.96rem)",
-          "$description": "Fluid font size step -2 (0.6944rem / 11px Mobile to 0.96rem / 15px Desktop)"
+          "$value": "fluid(0.75rem, 0.96rem)",
+          "$description": "Fluid font size step -2 (0.75rem / 12px Mobile to 0.96rem / 15px Desktop)"
         },
         "minus-1": {
           "$value": "fluid(0.8333rem, 1.2rem)",

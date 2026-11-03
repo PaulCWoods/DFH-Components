@@ -60,8 +60,8 @@ It stays small on purpose. A large stat with a description is a [Card](10-card.m
   <dd class="small-heading">320<span class="small-text">kbps</span></dd>
 </dl>
 
-<!-- One bordered strip, with a divider between items -->
-<dl class="telemetry-group telemetry-group--ruled" aria-label="Network">
+<!-- Items that grow to share the row -->
+<dl class="telemetry-group telemetry-group--fill" aria-label="Network">
   <div class="telemetry">
     <dt class="small-text text-muted">Uptime</dt>
     <dd class="small-heading">99.98%</dd>
@@ -85,7 +85,7 @@ It stays small on purpose. A large stat with a description is a [Card](10-card.m
 ```
 
 ## Trends and States
-A trend or state is a plain status in the value, with an icon and signed text, so it is never colour alone.
+A trend or state is a plain status in the value, with an icon and signed text, so it is never colour alone. It sits a little apart from the figure (`--telemetry-trend-gap`); a unit stays against it.
 ```html live
 <dl class="telemetry-group" aria-label="Listening">
   <div class="telemetry">
@@ -93,7 +93,7 @@ A trend or state is a plain status in the value, with an icon and signed text, s
     <dd class="heading">
       128,450
       <span class="status status--plain status--success">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUp"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#TrendUp"/></svg>
         +18.2%
       </span>
     </dd>
@@ -118,13 +118,13 @@ A labelled value: "Uptime 99.98%". A molecule built on a description list, so ea
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
 | `.telemetry` | `--icon-start`, `--inline`, `--subtle`, `--plain`, `--round`, `--compact` | `--telemetry-icon-placement: start`, `--telemetry-prominence: subtle` or `plain`, `--telemetry-corners: round`, `--ui-sizing: compact` |
-| `.telemetry-group` | `--ruled` | |
+| `.telemetry-group` | `--fill` | |
 
 ### Further rules
 - **No KPI Cards.** A large stat with a description is a `.card` holding a Telemetry.
 - **Prominence:** bordered by default; `--subtle` is a tint with no border (the muted surface other subtle components use; under increased contrast it gains its border back); `--plain` has no surface, border or padding.
 - **One metric:** `<dl class="telemetry">` with its `dt` and `dd` directly inside.
-- **`--ruled`** on the group makes one bordered strip with a Divider between items.
+- **`--fill`** on the group grows each item to share the row, as a Tab List's `--fill` does. Items still wrap when the row is too narrow.
 - **`--icon-start`** moves the label's icon into a gutter at the start of the box: 24px (`--telemetry-lead-icon-size`), centred on the label and value. The markup is unchanged; the icon stays in the `dt`, because a `<dl>` item may only hold terms and descriptions. Items without an icon get no gutter. Set `--telemetry-icon-placement: start` on a group or region to do the same for every item in it.
 
 ## Prominence and Corners

@@ -1067,6 +1067,79 @@
       "$description": "Background behind a thumbnail"
     }
   },
+  "poster": {
+    "$description": "Poster tokens: a picture with content laid over it",
+    "bg": {
+      "$value": "{surface.card}",
+      "$type": "color",
+      "$description": "Fill of the content's panel, and of the scrim"
+    },
+    "translucency": {
+      "$value": "{translucency.subtle}",
+      "$type": "number",
+      "$description": "How see-through the default panel is; never more than 25%"
+    },
+    "scrim-translucency": {
+      "$value": "{translucency.25}",
+      "$type": "number",
+      "$description": "How see-through a subtle poster's scrim is; never more than 25%"
+    },
+    "filter": {
+      "$value": "{surface-layer.filter}",
+      "$type": "other",
+      "$description": "Backdrop filter of the default panel"
+    },
+    "media-bg": {
+      "$value": "{surface.muted}",
+      "$type": "color",
+      "$description": "Shows while the picture loads"
+    },
+    "focus": {
+      "$value": "50% 50%",
+      "$type": "other",
+      "$description": "The point of the picture kept in view as it's cropped (object-position)"
+    },
+    "min-size": {
+      "$value": "{spacing.block-sm}",
+      "$type": "dimension",
+      "$description": "The poster's least height; its content sets more"
+    },
+    "padding": {
+      "$value": "{spacing.cushion}",
+      "$type": "dimension",
+      "$description": "Space between the poster's edge and its content; inline, at least enough to line the content up with the site width"
+    },
+    "compact-padding": {
+      "$value": "{spacing.breathe}",
+      "$type": "dimension"
+    },
+    "radius": {
+      "$value": "0px",
+      "$type": "dimension"
+    },
+    "content-padding": {
+      "$value": "{spacing.breathe}",
+      "$type": "dimension",
+      "$description": "Padding of the content's panel"
+    },
+    "compact-content-padding": {
+      "$value": "{spacing.default}",
+      "$type": "dimension"
+    },
+    "content-radius": {
+      "$value": "{radius}",
+      "$type": "dimension"
+    },
+    "content-max-width": {
+      "$value": "{spacing.block}",
+      "$type": "dimension"
+    },
+    "font-sizing": {
+      "$value": "cq",
+      "$type": "other",
+      "$description": "Type mode of the content: cq grows it with the content's width"
+    }
+  },
   "chip": {
     "$description": "Token representing a value: a selected option, an active filter, a category or tag.",
     "font-size": {
@@ -1469,7 +1542,7 @@
       "$description": "Height of a one-bar compact header. --header-height takes it while a sticky header is compact."
     },
     "max-width": {
-      "$value": "{site-width}",
+      "$value": "{spacing.site-width}",
       "$type": "dimension",
       "$description": "Width cap of a bar, so it lines up with .wrapper"
     },
@@ -1588,7 +1661,7 @@
       "$description": "Gap between the parts of a bar"
     },
     "max-width": {
-      "$value": "{site-width}",
+      "$value": "{spacing.site-width}",
       "$type": "dimension",
       "$description": "Width cap of a bar's content, lined up with .wrapper"
     }
@@ -2586,6 +2659,11 @@
       "$type": "dimension",
       "$description": "Space between label and value"
     },
+    "trend-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Space before a trend status in the value; the figure and its unit stay together"
+    },
     "icon-gap": {
       "$value": "{spacing.8}",
       "$type": "dimension",
@@ -2954,7 +3032,7 @@
   },
   "wrapper": {
     "max-width": {
-      "$value": "{site-width}",
+      "$value": "{spacing.site-width}",
       "$type": "dimension",
       "$description": "Width cap of the content"
     },

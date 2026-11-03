@@ -52,6 +52,7 @@
 @import './molecules/choices.css' layer(molecules);
 @import './molecules/range-lockup.css' layer(molecules);
 @import './molecules/card.css' layer(molecules);
+@import './molecules/poster.css' layer(molecules);
 @import './molecules/button-group.css' layer(molecules);
 @import './molecules/menu.css' layer(molecules);
 @import './molecules/banner.css' layer(molecules);

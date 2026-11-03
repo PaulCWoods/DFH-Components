@@ -61,12 +61,14 @@ A utility sets one property to one value on the element it is on, from a Tier 2 
 
 ### Further rules
 - **Not a utility:** a type size (use a text atom: `.small-text`, `.text`, `.large-text`, `.small-heading` …); a row or column of things (use `.inline`, `.cluster`, `.stack`, `.grid`, `.split`); a component's width or surface (set its token).
+- **Gaps and layout primitives:** `gap-*` also sets the `--gap` hook, so a Grid's column count and a layout primitive's spacing follow it. `gap-x-*` and `gap-y-*` set only their own property.
+- **Aspect ratio:** an image given an `aspect-*` also takes `.object-cover` (or `.object-contain`), or it stretches to the shape. A Card thumb, Thumbnail or Poster sets its own shape and fit: set its token, not these.
 - **Combining:** `.border` draws the border; the style and colour classes change one part of it. A colour class tints a shadow the element already has.
 
 ## Scales
 | Scale | Steps | Tokens |
 | :--- | :--- | :--- |
-| Spacing | `0`, `2xs` 2px, `xs` 4px, `sm` 8px, `md` 16px, `lg` 32px, `xl` 48px, `2xl` 64px, `3xl` 128px, `breathe`, `cushion` (fluid); `auto` for margins | `--spacing-2xs` … `--spacing-3xl`, `--spacing-breathe`, `--spacing-cushion` |
+| Spacing | `0`, `2xs` 2px, `xs` 4px, `sm` 8px, `md` 16px, `lg` 32px, `xl` 48px, `2xl` 64px, `3xl` 128px, `breathe-sm`, `breathe`, `cushion`, `cushion-lg` (fluid); `auto` for margins | `--spacing-2xs` … `--spacing-3xl`, `--spacing-breathe-sm`, `--spacing-breathe`, `--spacing-cushion`, `--spacing-cushion-lg` |
 | Sizes | `2xs` 8rem, `xs` 16rem, `sm` 24rem, `md` 36rem, `lg` 48rem, `xl` 64rem, `2xl` 80rem | `--spacing-block-*` |
 | Radius | `none`, `sm`, `md`, `lg`, `xl`, `full` | `--radius-*` |
 | Font weight | `normal`, `medium`, `semibold`, `bold` | `--font-weight-*` |
@@ -82,7 +84,7 @@ A utility sets one property to one value on the element it is on, from a Tier 2 
 | `color.css` | `bg-*` (`bg-color-*`); `bg-translucent*`; `text-color`; `text-muted`, `text-strong`, `text-accent` … (`text-color-*`); `opacity-0`, `-muted`, `-disabled`, `-100` |
 | `display.css` | `block`, `inline-block`, `flex`, `inline-flex`, `contents`, `hidden` (`display-*`); `display-inline` |
 | `flex.css` | `flex-row`, `flex-col` … (`flex-direction-*`); `flex-wrap`, `flex-nowrap` (`flex-wrap-*`); `items-*` (`align-items-*`); `justify-*` (`justify-content-*`); `self-*` (`align-self-*`); `justify-self-*`; `grow`, `grow-0`, `shrink`, `shrink-0` (`flex-grow-*`, `flex-shrink-*`); `flex-1`, `flex-auto`, `flex-none` |
-| `sizing.css` | `inline-size-{step}`, `min-inline-size-{step}`, `max-inline-size-{step}` and the block forms; `w-full`, `w-auto`, `w-screen`, `min-w-0`, `max-w-full`, `max-w-none`, `h-full`, `h-auto`, `h-screen`, `min-h-0`, `min-h-screen`, `max-h-full`; `size-unit`, `size-target`, `size-{step}`, `size-full` |
+| `sizing.css` | `inline-size-{step}`, `min-inline-size-{step}`, `max-inline-size-{step}` and the block forms; `w-full`, `w-auto`, `w-screen`, `min-w-0`, `max-w-full`, `max-w-none`, `h-full`, `h-auto`, `h-screen`, `min-h-0`, `min-h-screen`, `max-h-full`; `size-unit`, `size-target`, `size-{step}`, `size-full`; `aspect-auto`, `aspect-square`, `aspect-video`, `aspect-4/3`, `aspect-3/2`, `aspect-3/4`; `object-cover`, `object-contain` |
 | `layout-helpers.css` | `relative` … (`position-*`); `overflow-*`, `overflow-x-*`, `overflow-y-*`; `overscroll-*` (`overscroll-behavior-*`); `scrollbar-gutter-*`; `isolate` (`isolation-isolate`); `z-*` |
 | `shadow.css` | `shadow-none`, `-sm`, `-md` (`shadow`), `-lg`, `-inner`, the `-light` forms; `shadow-accent`, `-success`, `-warning`, `-danger` |
 | `focus-helpers.css` | `focus-within`, `focus-within--input`, `focus-within--inset`, `focus-within--border`, `focus-ring` |
@@ -96,6 +98,7 @@ A mode class sets a flag that the components inside read; it styles nothing itse
 | Class | Flag |
 | :--- | :--- |
 | `.ui-compact`, `.fine:ui-compact` | `--ui-sizing: compact` (density), the latter only where the primary pointer is fine |
+| `.sizing-default` | Back to the default size inside a compact region: `--ui-sizing`, the spacing roles and the type |
 | `.font-sizing-fixed`, `-fluid`, `-cq`, `-compact` | `--font-sizing` |
 | `.controls-plain`, `-subtle`, `-sm`, `-lg`, `-round` | `--controls-prominence`, `--controls-size`, `--controls-corners` |
 | `.elements-plain`, `-subtle` | `--elements-prominence`: every element with that prominence (controls, status, Chip, kbd, Icon Box, Tab List, Telemetry); not containers (Card, Sidebar, Banner, Menu, Accordion, Table, Stepper, Empty State) or links |
