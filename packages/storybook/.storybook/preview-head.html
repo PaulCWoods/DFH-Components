@@ -97,14 +97,14 @@
     /* Dividers */
     hr,
     .sbdocs-hr {
-      border-color: var(--border-muted) !important;
+      border-color: var(--border-color-muted) !important;
     }
 
     /* Inline Code snippets outside demos */
     code:not(pre code) {
       background-color: var(--surface-card) !important;
       color: var(--foreground-accent) !important;
-      border: 1px solid var(--border-muted) !important;
+      border: 1px solid var(--border-color-muted) !important;
       padding: 2px 6px !important;
       border-radius: var(--radius-sm, 4px) !important;
     }
@@ -114,7 +114,7 @@
     .docblock-source {
       background-color: var(--syntax-bg) !important;
       color: var(--syntax-text) !important;
-      border: 1px solid var(--border-muted) !important;
+      border: 1px solid var(--border-color-muted) !important;
       border-radius: var(--radius-md, 0.375rem) !important;
     }
 
@@ -124,7 +124,7 @@
     table:not(.docblock-argstable) {
       inline-size: 100% !important;
       border-collapse: collapse !important;
-      border: 1px solid var(--border-muted) !important;
+      border: 1px solid var(--border-color-muted) !important;
       background-color: var(--surface-card) !important;
       color: var(--foreground) !important;
       margin-block: var(--spacing-16, 1rem) !important;
@@ -138,7 +138,7 @@
       th {
         color: var(--foreground) !important;
         background-color: var(--surface-muted, var(--surface)) !important;
-        border: 1px solid var(--border-muted) !important;
+        border: 1px solid var(--border-color-muted) !important;
         padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem) !important;
         font-weight: 700 !important;
         text-align: start !important;
@@ -150,7 +150,7 @@
 
       tr {
         background-color: var(--surface-card) !important;
-        border-bottom: 1px solid var(--border-muted) !important;
+        border-bottom: 1px solid var(--border-color-muted) !important;
       }
 
       /* Dark mode zebra striping using translucent tint instead of hardcoded white */
@@ -160,7 +160,7 @@
 
       td {
         color: var(--foreground) !important;
-        border: 1px solid var(--border-muted) !important;
+        border: 1px solid var(--border-color-muted) !important;
         padding: var(--spacing-8, 0.5rem) var(--spacing-12, 0.75rem) !important;
         background-color: transparent !important;
       }
@@ -177,7 +177,7 @@
       td code {
         background-color: var(--surface, #1e1e1e) !important;
         color: var(--foreground-accent, #7c3aed) !important;
-        border: 1px solid var(--border-muted) !important;
+        border: 1px solid var(--border-color-muted) !important;
         padding: 2px 6px !important;
         border-radius: var(--radius-sm, 4px) !important;
       }
@@ -202,7 +202,7 @@
   div:has(> .docs-story),
   div:has(> .innerZoomElementWrapper),
   div:has(> div > .docs-story) {
-    border-color: var(--border-muted);
+    border-color: var(--border-color-muted);
   }
 
   /* --------------------------------------------------------------------------
@@ -213,7 +213,7 @@
   .docblock-source {
     background-color: var(--syntax-bg) !important;
     color: var(--syntax-text) !important;
-    border: 1px solid var(--border-muted) !important;
+    border: 1px solid var(--border-color-muted) !important;
 
     code {
       color: var(--syntax-text) !important;
@@ -272,7 +272,7 @@
     table {
       color: var(--foreground) !important;
       background-color: var(--surface-card) !important;
-      border-color: var(--border-muted) !important;
+      border-color: var(--border-color-muted) !important;
     }
 
     /* Header Row */
@@ -280,7 +280,7 @@
     th {
       color: var(--foreground) !important;
       background-color: var(--surface) !important;
-      border-color: var(--border-muted) !important;
+      border-color: var(--border-color-muted) !important;
     }
 
     th * {
@@ -292,7 +292,7 @@
     tbody,
     tr {
       background-color: var(--surface-card) !important;
-      border-color: var(--border-muted) !important;
+      border-color: var(--border-color-muted) !important;
       color: var(--foreground) !important;
     }
 
@@ -303,7 +303,7 @@
     /* Cells */
     td {
       color: var(--foreground) !important;
-      border-color: var(--border-muted) !important;
+      border-color: var(--border-color-muted) !important;
       background-color: transparent !important;
     }
 
@@ -569,11 +569,11 @@
   .docblock-code-toggle {
     background-color: var(--surface-card) !important;
     color: var(--foreground) !important;
-    border-color: var(--border-muted) !important;
+    border-color: var(--border-color-muted) !important;
   }
 
   .docblock-source {
     background-color: var(--syntax-bg) !important;
-    border-color: var(--border-muted) !important;
+    border-color: var(--border-color-muted) !important;
   }
 </style>

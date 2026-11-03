@@ -4,11 +4,11 @@
     "$description": "Accordion molecule (details and summary) and accordion group tokens",
     "border-width": {
       "$value": "{panel.border-width}",
-      "$type": "border"
+      "$type": "dimension"
     },
     "border-color": {
       "$value": "{panel.border-color}",
-      "$type": "border"
+      "$type": "color"
     },
     "border-style": {
       "$value": "{panel.border-style}",
@@ -2980,7 +2980,7 @@
     },
     "listbox-border-color": {
       "$value": "{panel.border-color}",
-      "$type": "border"
+      "$type": "color"
     },
     "listbox-border-width": {
       "$value": "{panel.border-width}",
