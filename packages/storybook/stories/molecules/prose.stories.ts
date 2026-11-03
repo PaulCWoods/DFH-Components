@@ -55,7 +55,7 @@ export const Playground: Story = {
   args: { sizing: 'inherit', subtleLinks: false, bodySerif: false },
   argTypes: { sizing: { control: 'inline-radio', options: ['inherit', 'fluid', 'cq', 'compact'] } },
   render: (args) => {
-    const cls = (args.sizing === 'inherit' ? '' : ` font-sizing-${args.sizing}`) + (args.bodySerif ? ' prose--body-serif' : '');
+    const cls = (args.sizing === 'inherit' ? '' : ` font-sizing-${args.sizing}`) + (args.bodySerif ? ' prose--body-alt' : '');
     const style = args.subtleLinks ? ' style="--link-prominence: subtle;"' : '';
     return `<div style="container-type: inline-size;"><article class="prose${cls}"${style}>${article}</article></div>`;
   },
@@ -64,7 +64,7 @@ export const Playground: Story = {
 export const BodySerif: Story = {
   name: 'Body serif',
   parameters: { docs: { description: { story: '`--body-serif`: paragraphs and lists in the alternate body family; headings keep theirs.' } } },
-  render: () => `<div style="container-type: inline-size;"><article class="prose prose--body-serif">${article}</article></div>`,
+  render: () => `<div style="container-type: inline-size;"><article class="prose prose--body-alt">${article}</article></div>`,
 };
 
 export const TextAndHeadings: Story = {

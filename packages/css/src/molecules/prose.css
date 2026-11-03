@@ -275,7 +275,7 @@
 }
 
 /* Body serif: paragraphs and lists in the alternate body family */
-@scope (:where(.prose--body-serif)) to (:where(.prose-end, .code-block)) {
+@scope (:where(.prose--body-alt)) to (:where(.prose-end, .code-block)) {
 
   :where(p,
     ul,
