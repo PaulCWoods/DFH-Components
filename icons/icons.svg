@@ -222,9 +222,8 @@
             <polygon points="90 105 15 105 15 30 45 30 45 15 0 15 0 120 105 120 105 75 90 75 90 105"></polygon>
             <path d="M30 90h25.61l63.75-63.75L93.75 0.64 30 64.39zM45 70.61 93.75 21.86l4.39 4.39L49.39 75H45z"></path>
         </symbol>
-        <symbol id="Email" viewBox="0 0 120 120" stroke-width="15" stroke="currentColor" fill="none" data-name="Layer 1" stroke-miterlimit="10">
-            <rect width="105" height="82.5" class="cls-1" x="7.5" y="18.75"></rect>
-            <polyline class="cls-1" points="7.5 18.75 60 60 112.5 18.75"></polyline>
+        <symbol id="Email" viewBox="0 0 120 120" fill="currentColor" data-name="Layer 1">
+            <path d="M0 11.25v97.5h120v-97.5zM90.82 26.25 60 50.46 29.18 26.25zM15 93.75V34.18l45 35.36 45-35.36v59.57z"></path>
         </symbol>
         <symbol id="Error" viewBox="0 0 120 120" fill="currentColor" data-name="Layer 1">
             <path d="M84.85 0H35.14L0 35.15v49.71l35.15 35.15h49.71l35.15-35.15V35.15zM95.3 84.7 84.69 95.31l-24.7-24.7-24.7 24.7L24.68 84.7 49.38 60 24.68 35.3 35.29 24.69l24.7 24.7 24.7-24.7L95.3 35.3 70.6 60z"></path>
