@@ -17,6 +17,7 @@ Moves the focus ring to a container while a control inside it has keyboard focus
 | \`.focus-within--inset\` | Draws the container's ring inside its edge, for flush or clipped containers. |
 | \`.focus-within--border\` | The container's border takes the ring colour too. |
 | \`.focus-ring\` | The standard ring on an element the reset doesn't ring, such as a focusable scrolling region. |
+| \`.focus-ring--inset\` | Draws an element's own ring inside its edge, for a scrolling region whose edge is clipped or flush with its container. |
 
 - Use the container ring when the controls inside read as one control: a search box with a clear button, a field with a unit.
 - Never remove a ring without drawing another. There is no class that only removes one.
@@ -87,5 +88,19 @@ export const StandaloneRing: Story = {
           ${['Broad beans: February', 'Peas: March', 'Carrots: April', 'Runner beans: May', 'Kale: June', 'Spring cabbage: July', 'Garlic: October'].map((t) => `<li class="small-text">${t}</li>`).join('')}
         </ul>
       </div>
+    </div>`,
+};
+
+export const InsetRing: Story = {
+  name: 'Inset ring',
+  parameters: { docs: { description: { story: '`.focus-ring--inset` on a carousel in a flush card canvas: the ring sits inside the edge, where the card would otherwise clip it.' } } },
+  render: () => `
+    <div class="card max-inline-size-xs">
+      <div class="card__canvas p-0">
+        <ul class="cluster scroll-fade overflow-x-auto p-xs focus-ring focus-ring--inset" role="list" tabindex="0" aria-label="Sowing months">
+          ${['February', 'March', 'April', 'May', 'June', 'July', 'October'].map((t) => `<li class="small-text whitespace-nowrap">${t}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="card__body"><p class="small-text">Scroll the row with the arrow keys once it has focus.</p></div>
     </div>`,
 };

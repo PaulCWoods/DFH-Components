@@ -6,34 +6,130 @@ import Icon from '../components/Icon.astro';
 import { getNav } from '../lib/nav';
 
 const nav = await getNav();
-const sections = nav.filter((s) => s.key);
+
+/* Screenshots for the feature carousels, made by `npm run images` from
+   packages/docs/screenshots into public/home: AVIF, WebP and JPEG at each width */
+const widths = [480, 800, 1200, 1600];
+const sizes = '(min-width: 52rem) 48rem, calc(100vw - 6rem)';
+const srcset = (name: string, ext: string) => widths.map((w) => `/home/${name}-${w}.${ext} ${w}w`).join(', ');
+
+const features = [
+  {
+    title: 'Designer Tools',
+    text: 'Design tokens are centralised in one visual tool. From global colors to the border radius of a button, you have control.',
+    label: 'Token Designer screenshots',
+    shots: [
+      ['designer-color', 'The Token Designer’s colour ramps, with a light preview of buttons, badges and banners in the theme’s colours'],
+      ['designer-typography', 'The Typography designer: the theme’s fonts from Adobe Fonts, beside a dark preview of every text style'],
+      ['designer-shape', 'The Shape designer: radius, border and line roles, with samples of each and the shadow levels'],
+      ['designer-component', 'The Component designer: the Button’s tokens, each with its default and a revert, beside dark previews of every Button'],
+    ],
+  },
+  {
+    title: 'Themes and Brands',
+    text: 'Create multiple themes for multiple brands, or build up a brand family, where sub-brands can inherit global properties and override what they need to.',
+    label: 'Theme screenshots',
+    shots: [
+      ['real-world-home-theme-eden', 'A garden company’s homepage in the Eden theme: serif headings, warm neutrals and a brown accent'],
+      ['real-world-home-theme-dfh', 'The same company’s shop in the Design For Humans theme: condensed capitals and a purple accent'],
+      ['real-world-blog-theme-eden', 'A blog post in the Eden theme, with a breadcrumb, an author byline and a wide photo of a wisteria walk'],
+      ['real-world-inventory-theme-dfh', 'A staff inventory page in the Design For Humans theme: a sidebar, stock figures and a table of products with their status'],
+    ],
+  },
+  {
+    title: 'Figma Sync',
+    text: 'CSS and Figma share the same token system, so designers and developers are always in sync. Get a head start with our ready-made Design File or import into your own.',
+    label: 'Figma screenshots',
+    shots: [
+      ['figma-dfh-components', 'The Figma file’s components page: Banners in each intent and prominence, documented beside each other'],
+      ['figma-dfh-real-world-home', 'The garden company’s homepage rebuilt in Figma from the library’s components, in the Design For Humans theme'],
+      ['figma-dfh-real-world-inventory', 'The blog post and the inventory page in Figma, at desktop and phone widths'],
+      ['figma-dfh-semantics', 'The Figma file’s semantic tokens in the Eden theme: border colours in light and dark, and the heading styles at each sizing'],
+    ],
+  },
+];
+
+/* What sets the library apart, beyond the tools */
+const points = [
+  {
+    icon: 'Person',
+    title: 'Accessible first',
+    text: 'Every part meets WCAG 2.2 AA, and AAA where it can: 48px touch targets, visible focus, and intent never shown by colour alone. Every colour pairing is checked for contrast in light, dark and high contrast before a theme can publish.',
+  },
+  {
+    icon: 'Code',
+    title: 'Built on the platform',
+    text: 'Dialogs are <dialog>, popovers use the popover attribute, and layouts use container queries and anchor positioning. The library ships no JavaScript, so it works in any stack: Astro, Craft or WordPress.',
+  },
+  {
+    icon: 'Expand',
+    title: 'Responsive by nature',
+    text: 'Layouts wrap on their own, type and spacing grow with the screen or their container, and a compact region steps everything inside it down together. Fewer breakpoints, and nothing to keep in sync.',
+  },
+];
 ---
 <BaseLayout title="Design For Humans Components" description="An accessible, token-driven component library built on web standards." nav={nav} current="/" header={false}>
-  <main id="main" class="main font-sizing-fluid">
-    <article class="wrapper stack gap-cushion">
-      <header class="brochure-header stack max-inline-size-2xl">
+  <main id="main" class="main main--flush font-sizing-fluid">
+    <article class="stack gap-cushion">
+      <header class="brochure-header stack wrapper py-cushion">
         <h1 class="display-title brand-frame">
           Design for Humans: <span class="home__title-highlight">Cmpnts</span>
         </h1>
         <p class="large-text text-muted">An accessible, token-driven component library on native HTML and modern CSS, for designers and developers working from one source.</p>
-        <div class="cluster">
-          <a href="/docs/" class="button button--strong button--accent"><span>Read the docs</span><Icon name="ArrowRight" class="icon--dir" /></a>
+        <div class="cluster wrapper">
+          <a href="/docs/" class="button button--strong button--accent"><span>Start here</span><Icon name="ArrowRight" class="icon--dir" /></a>
         </div>
       </header>
-      {sections.length > 0 && (
-        <ul class="grid grid--sm" role="list" aria-label="Sections">
-          {sections.map((s) => (
-            <li>
-              <article class="card h-full">
-                <header class="card__header">
-                  <h2 class="card__title heading"><a href={s.href} class="link link--plain link--stretched">{s.label}</a></h2>
-                </header>
-                <div class="card__body"><p class="text">{s.pages[0].summary}</p></div>
-              </article>
-            </li>
-          ))}
-        </ul>
-      )}
+      <section id="features" aria-labelledby="features-heading">
+      <h2 class="sr-only" id="features-heading">Features</h2>
+
+      
+      <ul class="grid grid--xl grid--carousel px-cushion py-xs focus-ring--inset" role="list" aria-label="Features" tabindex="0">
+        {features.map((f) => (
+          <li>
+            <article class="card min-h-stretch">
+              <figure class="card__canvas color-scheme-dark p-0">
+                <ul class="grid grid--lg grid--carousel scroll-fade overscroll-x-auto p-xs focus-ring--inset" role="list" tabindex="0" aria-label={f.label}>
+                  {f.shots.map(([name, alt]) => (
+                    <li>
+                      <picture>
+                        <source type="image/avif" srcset={srcset(name, 'avif')} sizes={sizes} />
+                        <source type="image/webp" srcset={srcset(name, 'webp')} sizes={sizes} />
+                        <img class="thumbnail thumbnail--stretch aspect-video" src={`/home/${name}-1600.jpg`} srcset={srcset(name, 'jpg')} sizes={sizes} width="1600" height="923" alt={alt} loading="lazy" decoding="async" />
+                      </picture>
+                    </li>
+                  ))}
+                </ul>
+              </figure>
+              <div class="card__content">
+                <header class="card__header"><h3 class="heading">{f.title}</h3></header>
+                <p class="card__body text">{f.text}</p>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+      </section>
+      <section class="stack gap-cushion wrapper py-cushion" aria-labelledby="points-heading">
+      
+      <h2 class="sr-only" id="points-heading">Why Design For Humans</h2>
+      <ul class="grid grid--sm" role="list" aria-labelledby="points-heading">
+        {points.map((p) => (
+          <li class="card h-full">
+            <div class="inline align-items-start">
+              <div class="icon-box icon-box--subtle">
+                <Icon name={p.icon} class="icon--lg" />
+              </div>
+              <div class="lockup gap-sm">
+                <h3 class="card__title heading">{p.title}</h3>
+                <p class="text">{p.text}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="cluster"><a href="/docs/" class="link">Read what makes it different</a></p>
+      </section>
     </article>
   </main>
 </BaseLayout>

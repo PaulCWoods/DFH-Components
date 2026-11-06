@@ -28,6 +28,7 @@ A small picture of a thing: album art, a product shot, a file preview. People ta
 
 - **Size:** the block size (height): default 48px, \`--sm\` 32px, \`--lg\` 64px (flag \`--thumbnail-size-step\`). A compact container steps each down one. A one-off size sets \`--thumbnail-size\`.
 - **Aspect:** square by default; \`--thumbnail-aspect: 4 / 3\` or \`16 / 9\` for previews. The width follows, so a row of mixed shapes lines up. Pictures are cropped to fill (\`object-fit: cover\`).
+- **Stretch:** \`--stretch\` fills its container's inline size and keeps the aspect, for a picture in a card canvas or a carousel slide.
 - **Corners:** rounded by default, \`--round\` for a circle (flag \`--thumbnail-corners: round\`).
 - **Badges:** a count or dot on a corner, hidden from screen readers, with what it means in the name.
 - **No picture:** an icon on the tint, which also shows while an image loads.
@@ -104,6 +105,14 @@ export const Aspect: Story = {
       <img class="thumbnail thumbnail--lg" src="${fern}" alt="Square" />
       <img class="thumbnail thumbnail--lg" style="--thumbnail-aspect: 4 / 3;" src="${fern}" alt="Four by three" />
       <img class="thumbnail thumbnail--lg" style="--thumbnail-aspect: 16 / 9;" src="${fern}" alt="Sixteen by nine" />
+    </div>`,
+};
+
+export const Stretch: Story = {
+  parameters: { docs: { description: { story: '`--stretch` fills the inline size and keeps the aspect, so the height follows the width.' } } },
+  render: () => `
+    <div class="stack max-inline-size-xs">
+      <img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 16 / 9;" src="${fern}" alt="Sixteen by nine, as wide as its container" />
     </div>`,
 };
 

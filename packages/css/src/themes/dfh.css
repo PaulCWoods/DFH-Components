@@ -329,15 +329,24 @@
     --accordion-border-width: var(--border-width-thin);
     --accordion-radius: var(--radius);
     --brand-font-weight: var(--font-weight-bold);
+    --footer-bg: var(--surface-subtle);
+    --header-bg: var(--surface-subtle);
+    --sidebar-bg: var(--surface-subtle);
   }
 
   :where(.color-palette-inverted, .colors-inverted) {
     --accordion-border-color: var(--border-color-quiet);
+    --footer-bg: var(--surface-subtle);
+    --header-bg: var(--surface-subtle);
+    --sidebar-bg: var(--surface-subtle);
   }
 
   * {
     @container style(--color-palette: inverted) {
       --accordion-border-color: var(--border-color-quiet);
+      --footer-bg: var(--surface-subtle);
+      --header-bg: var(--surface-subtle);
+      --sidebar-bg: var(--surface-subtle);
     }
   }
 

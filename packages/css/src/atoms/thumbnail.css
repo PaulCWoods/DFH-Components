@@ -125,6 +125,19 @@
   --_thumbnail-badge-inset: calc(var(--_thumbnail-size) * 0.146);
 }
 
+:where(.thumbnail--stretch) {
+  block-size: auto;
+  inline-size: 100%;
+
+  @supports (inline-size: -webkit-fill-available) {
+    inline-size: -webkit-fill-available;
+  }
+
+  @supports (inline-size: stretch) {
+    inline-size: stretch;
+  }
+}
+
 /* ==========================================================================
    3. Preferences
    ========================================================================== */

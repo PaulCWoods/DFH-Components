@@ -113,6 +113,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 - **Flat** is for a Card that sits in a layout as a panel (a Sidebar pane, a tool column) where an edge and corners would box it in. Under increased contrast it gains a 2px border, like every Card but a plain one.
 - **Flush** drops the padding at the Card's edges for content that brings its own (a Table, an image, a nested layout). The gaps between parts stay. A single part can go flush instead with `__body--flush` and the like.
 - **Material:** `--translucent` combines with any prominence that has a fill.
+- **Canvas:** `.card__canvas` takes `.card__thumb`'s place for media that isn't one image: a carousel, a demo, a chart. It sits on the Card's surface with the Card's padding, so its content needs no frame of its own; `p-0` lets the content run to the edge. Put a carousel's own label and keyboard access on the scrolling element inside it.
 - **Rules and bands:** `--ruled` rules between parts, bands included. `.card__band` is a full-width strip between parts; `--subtle` tints it.
 - **Flush parts:** `__header--flush`, `__body--flush`, `__footer--flush` drop the part's padding. A flush body hands the Card's padding to a flush Tab List.
 - **Flags** are set on a container, never on the Card. Dialog and Popover set `--card-prominence: strong`; `--card-chrome: flat` or `bordered` sets the edge of every Card inside, `--card-intent` their intent. A Card resets the flags for Cards nested inside it; a modifier on the Card beats a flag.
@@ -208,6 +209,20 @@ A surface with named parts. The Card draws its frame and the geometry of its par
     <header class="card__header"><h3 class="card__title heading">Beside the media</h3></header>
     <div class="card__body"><p class="text">Parts beside a thumbnail sit in <code>.card__content</code>.</p></div>
   </div>
+</article>
+```
+
+## Canvas
+```html
+<article class="card">
+  <div class="card__canvas">
+    <ul class="grid grid--carousel" role="list" tabindex="0" aria-label="Garden photos">
+      <li><img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 4 / 3;" src="/examples/thumb.svg" alt="The walled garden in May" /></li>
+      <li><img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 4 / 3;" src="/examples/thumb.svg" alt="The orchard after pruning" /></li>
+    </ul>
+  </div>
+  <header class="card__header"><h3 class="card__title heading">Where the media is more than an image</h3></header>
+  <div class="card__body"><p class="text">The canvas sits where a thumb would and takes any content.</p></div>
 </article>
 ```
 

@@ -16,7 +16,8 @@ Positioning, overflow, overscroll, isolation and z-index. Defined in \`utilities
 | \`.overflow-hidden\` (visible, clip, auto, scroll) | – | \`overflow\` |
 | \`.overflow-x-auto\`, \`-x-hidden\`, \`-y-auto\`, \`-y-hidden\` | – | one axis |
 | \`.overscroll-behavior-contain\` (auto, none) | \`.overscroll-contain\` … | \`overscroll-behavior\` |
-| \`.overscroll-behavior-y-contain\`, \`-y-none\` | \`.overscroll-y-contain\`, \`.overscroll-y-none\` | the block axis |
+| \`.overscroll-behavior-block-auto\` (contain, none) | \`.overscroll-y-auto\` … | the block axis |
+| \`.overscroll-behavior-inline-auto\` (contain, none) | \`.overscroll-x-auto\` … | the inline axis |
 | \`.scrollbar-gutter-stable\`, \`-auto\` | – | \`scrollbar-gutter\` |
 | \`.isolation-isolate\` | \`.isolate\` | a new stacking context |
 | \`.z-base\`, \`-sticky\`, \`-overlay\`, \`-dialog\`, \`-popover\`, \`-toast\`, \`-tooltip\`, \`.z-auto\` | – | \`z-index\` by role |

@@ -43,6 +43,7 @@
 
 /* Inside the edge, for flush or full-bleed containers */
 :where(.focus-within--inset) {
+
     &:has(:focus-visible),
     &:focus-visible {
         outline-offset: calc(var(--focus-ring-offset, 2px) * -2);
@@ -64,4 +65,8 @@
 :where(.focus-ring):focus-visible {
     outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, AccentColor);
     outline-offset: var(--focus-ring-offset, 2px);
+}
+
+:where(.focus-ring--inset):focus-visible {
+    outline-offset: calc(var(--focus-ring-offset, 2px) * -2);
 }

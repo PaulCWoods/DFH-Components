@@ -323,6 +323,23 @@ export const MediaRow: Story = {
   `,
 };
 
+export const Canvas: Story = {
+  parameters: { docs: { description: { story: '`.card__canvas` sits where a thumb would and takes any content: here a carousel of stretched thumbnails. The parts after it take the card\'s padding as they would after a thumb.' } } },
+  render: () => `
+    <article class="card" style="max-inline-size: 24rem;">
+      <div class="card__canvas p-0">
+        <ul class="grid grid--carousel p-xs focus-ring focus-ring--inset" role="list" tabindex="0" aria-label="Garden photos">
+          <li><img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 4 / 3;" src="${img}" alt="The walled garden in May" /></li>
+          <li><img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 4 / 3;" src="${img}" alt="The orchard after pruning" /></li>
+          <li><img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 4 / 3;" src="${img}" alt="Seed trays in the glasshouse" /></li>
+        </ul>
+      </div>
+      <header class="card__header"><h3 class="card__title heading">More than one picture</h3></header>
+      <div class="card__body"><p class="text">The canvas takes the thumb's place for a carousel, a demo or a chart.</p></div>
+    </article>
+  `,
+};
+
 export const Scrolling: Story = {
   render: () => `
     <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr)); gap: var(--spacing-24);">

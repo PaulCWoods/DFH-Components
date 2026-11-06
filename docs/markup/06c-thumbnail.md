@@ -79,13 +79,14 @@ A small picture of a thing: album art, a product shot, a file preview. An atom. 
 ## Options
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.thumbnail` | `--sm`, `--lg`, `--round` | `--thumbnail-size-step: sm \| lg`, `--thumbnail-corners: round` |
+| `.thumbnail` | `--sm`, `--lg`, `--round`, `--stretch` | `--thumbnail-size-step: sm \| lg`, `--thumbnail-corners: round` |
 
 ### Further rules
 - **Size is the block size,** so a row of mixed shapes lines up; the width follows the aspect.
 - **Density:** a compact container steps each size down one.
 - **Sizes:** default 48px, `--sm` 32px, `--lg` 64px (the Avatar's steps). Artwork is often bigger: a one-off size sets `--thumbnail-size` (6rem, 8rem).
 - **Aspect:** square by default. `--thumbnail-aspect: 4 / 3` or `16 / 9` for previews. Pictures are cropped to fill (`object-fit: cover`).
+- **Stretch:** `--stretch` fills the inline size of its container and keeps the aspect, so the block size follows the width: a picture in a Card's canvas or a carousel slide.
 - **Corners:** rounded (`--radius`) by default; `--round` for a circle (a record, a single).
 - **No picture:** an icon on the muted tint, which also shows while an image loads.
 - **Badges:** a count or dot on a [corner](05-badge-status-chip-kbd.md), hidden from screen readers, with what it means in the name. On `--round` the Badge moves in to sit on the edge, as on an Avatar.

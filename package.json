@@ -29,11 +29,13 @@
     "build:docs": "npm run build --workspace=@design-for-humans/docs",
     "build:css": "node scripts/build-css.mjs",
     "build:site": "npm run build:docs && npm run build:storybook && rm -rf packages/docs/dist/storybook && cp -R packages/storybook/storybook-static packages/docs/dist/storybook",
-    "designer": "npm run dev --workspace=@design-for-humans/token-designer"
+    "designer": "npm run dev --workspace=@design-for-humans/token-designer",
+    "images": "node scripts/optimise-images.mjs"
   },
   "devDependencies": {
     "@storybook/html-vite": "^8.0.0",
     "lightningcss": "^1.33.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "sharp": "^0.35.5"
   }
 }

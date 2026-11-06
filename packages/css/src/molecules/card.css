@@ -5,9 +5,10 @@
    the card, so the card styles its frame and part geometry only; typography
    belongs to the text atoms.
 
-   Structure: parts (__thumb, __header, __band, __body, __footer) are direct
-   children of .card. .card__content wraps parts only where they sit beside
-   a __thumb in a row card.
+   Structure: parts (__thumb, __canvas, __header, __band, __body, __footer)
+   are direct children of .card. __canvas takes __thumb's place for media
+   of any kind (a carousel, a demo, a chart). .card__content wraps parts
+   only where they sit beside the media in a row card.
 
    Axes: prominence (default, --strong, --subtle, --plain), chrome (the
    frame's edge: default, --flat, --bordered), intent (neutral, --accent,
@@ -169,7 +170,7 @@
   outline: var(--_card-ring) solid var(--_card-border-color);
 
   /* A card with no parts pads itself */
-  &:not(:has(> :is(.card__thumb, .card__content, .card__header, .card__band, .card__body, .card__footer))) {
+  &:not(:has(> :is(.card__thumb, .card__canvas, .card__content, .card__header, .card__band, .card__body, .card__footer))) {
     padding: var(--_card-padding);
   }
 
@@ -374,7 +375,7 @@
   padding-inline: var(--_card-padding);
   padding-block: var(--_card-part-padding);
 
-  &:where(:first-child, .card__thumb + *) {
+  &:where(:first-child, .card__thumb + *, .card__canvas + *) {
     padding-block-start: var(--_card-padding);
   }
 
@@ -404,6 +405,12 @@
     inline-size: 100%;
     object-fit: cover;
   }
+}
+
+/* Media of any kind, where a thumb sits: padded on the card's surface */
+:where(.card__canvas) {
+  background-color: var(--_card-bg);
+  padding: var(--_card-padding);
 }
 
 /* Parts beside media in a row card */

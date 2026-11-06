@@ -110,7 +110,6 @@
 @import './utilities/display.css' layer(utilities);
 @import './utilities/flex.css' layer(utilities);
 @import './utilities/focus-helpers.css' layer(utilities);
-@import './utilities/layout-helpers.css' layer(utilities);
 @import './utilities/scroll-fade.css' layer(utilities);
 @import './utilities/sticky-shadow.css' layer(utilities);
 @import './utilities/shadow.css' layer(utilities);
@@ -118,6 +117,7 @@
 @import './utilities/spacing.css' layer(utilities);
 @import './utilities/typography.css' layer(utilities);
 /* Last, so hiding wins over the other utilities */
+@import './utilities/layout-helpers.css' layer(utilities);
 @import './utilities/accessibility.css' layer(utilities);
 @import './utilities/responsive-helpers.css' layer(utilities);
 

@@ -88,12 +88,28 @@
     overscroll-behavior: none;
 }
 
-:where(.overscroll-behavior-y-contain, .overscroll-y-contain) {
-    overscroll-behavior-y: contain;
+:where(.overscroll-behavior-block-auto, .overscroll-y-auto) {
+    overscroll-behavior-block: auto;
 }
 
-:where(.overscroll-behavior-y-none, .overscroll-y-none) {
-    overscroll-behavior-y: none;
+:where(.overscroll-behavior-block-contain, .overscroll-y-contain) {
+    overscroll-behavior-block: contain;
+}
+
+:where(.overscroll-behavior-block-none, .overscroll-y-none) {
+    overscroll-behavior-block: none;
+}
+
+:where(.overscroll-behavior-inline-auto, .overscroll-x-auto) {
+    overscroll-behavior-inline: auto;
+}
+
+:where(.overscroll-behavior-inline-contain, .overscroll-x-contain) {
+    overscroll-behavior-inline: contain;
+}
+
+:where(.overscroll-behavior-inline-none, .overscroll-x-none) {
+    overscroll-behavior-inline: none;
 }
 
 :where(.scrollbar-gutter-stable) {

@@ -267,7 +267,8 @@
           ]
         },
         "kit": "lrj6kun",
-        "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
+        "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
+        "figma": "Adapter PE Variable"
       },
       "mencken": {
         "source": "adobe",
@@ -277,7 +278,8 @@
           700
         ],
         "kit": "lrj6kun",
-        "fallback": "Cambria, \"Times New Roman\", Times, serif"
+        "fallback": "Cambria, \"Times New Roman\", Times, serif",
+        "figma": "Mencken Std Text"
       },
       "pt-mono": {
         "source": "adobe",
@@ -295,11 +297,11 @@
         "source": "adobe",
         "family": "avory-i-pe",
         "weights": [
-          800,
-          900
+          800
         ],
         "kit": "lrj6kun",
-        "fallback": "\"Inter\", system-ui, -apple-system, sans-serif"
+        "fallback": "\"Inter\", system-ui, -apple-system, sans-serif",
+        "figma": "Avory I PE"
       }
     },
     "families": {
@@ -636,7 +638,10 @@
     "accordion.border-style": "dashed",
     "accordion.border-color": "{border.color.quiet}",
     "accordion.radius": "{radius}",
-    "brand.font-weight": "{font-weight.bold}"
+    "brand.font-weight": "{font-weight.bold}",
+    "header.bg": "{surface.subtle}",
+    "footer.bg": "{surface.subtle}",
+    "sidebar.bg": "{surface.subtle}"
   },
   "mixes": {
     "color.muted": {
