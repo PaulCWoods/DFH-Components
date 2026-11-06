@@ -108,4 +108,5 @@ Re-import after a change, with the same plugin and the same files. Variables wit
 - **A theme is missing from `dist/themes/`.** It hasn't been built. `export:figma` names any theme it skipped.
 - **An import stops part way.** The plan may not allow that many modes. Use the unified file, or each brand's own folder.
 - **Text styles show the wrong font.** Figma doesn't know the font by that name, or it isn't installed. Set its **Name in Figma** in the Token Designer, and install it.
-- **A weight is missing.** Weights export as Figma's style names (Medium, Semi Bold, Extra Bold). A font that spells its styles differently needs that style picked by hand.
+- **An import stops on an unloaded font.** The importer changes a font family without loading the new font, which Figma needs before it can redraw the text that uses it. Set the font-family variables to the new fonts by hand first (the values then already match), or import into a file with no text bound to them.
+- **A weight looks wrong.** Weights export as numbers (400, 700) bound to font weight, so Figma picks each font's own style for them, whatever the font calls it. A weight the font doesn't have shows the nearest it does, as a browser would.
