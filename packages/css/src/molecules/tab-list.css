@@ -65,7 +65,7 @@
   --_tab-list-transition: var(--tab-list-transition, var(--duration-sm, 150ms));
   --_tab-list-floating-padding: var(--tab-list-floating-padding, var(--spacing-sm));
   --_tab-list-floating-border-width: var(--tab-list-floating-border-width, var(--panel-border-width, 1px));
-  --_tab-list-floating-border-color: var(--tab-list-floating-border-color, var(--border-color-quiet, currentColor));
+  --_tab-list-floating-border-color: var(--tab-list-floating-border-color, var(--panel-border-color, var(--border-color-quiet, currentColor)));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -77,6 +77,10 @@
     --_tab-list-rule-style: 0;
     --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
     --_tab-list-floating-padding-inline: var(--_tab-list-floating-padding);
+  }
+
+  @container style(--tab-list-prominence: subtle) or style(--elements-prominence: subtle) {
+    --_tab-list-rule-prominence: 0;
   }
 
   @container style(--tab-list-prominence: plain) or style(--elements-prominence: plain) {
@@ -206,7 +210,7 @@
 /* Segmented only: an underline list has no surface to tint */
 :where(.tab-list--subtle) {
   --tab-list-prominence: subtle;
-  --_tab-list-rule-prominence: 1;
+  --_tab-list-rule-prominence: 0;
 }
 
 :where(.tab-list--plain) {
@@ -242,7 +246,7 @@
 :where(.tab-list--vertical, .tab-list--end, .tabbed-content--vertical > .tab-list, .tabbed-content--end > .tab-list) {
   --_tab-list-orientation: vertical;
   --_tab-list-underline-gap: 0px;
-  --_tab-list-nested-indent: var(--tab-list-nested-indent, 0px);
+  --_tab-list-nested-indent: var(--tab-list-nested-indent, var(--spacing-0, 0));
 
   flex-direction: column;
   flex-wrap: nowrap;
@@ -270,7 +274,16 @@
     display: flex;
     flex-direction: column;
     row-gap: var(--_tab-list-gap);
-    inline-size: stretch;
+    inline-size: 100%;
+
+    @supports (inline-size: -webkit-fill-available) {
+      inline-size: -webkit-fill-available;
+    }
+
+    @supports (inline-size: stretch) {
+      inline-size: stretch;
+    }
+
     padding-inline-start: var(--_tab-list-nested-indent);
   }
 }
@@ -351,6 +364,10 @@
   overflow: auto;
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
+
+  @supports (inline-size: -webkit-fill-available) {
+    max-inline-size: -webkit-fill-available;
+  }
 
   @supports (inline-size: stretch) {
     max-inline-size: stretch;

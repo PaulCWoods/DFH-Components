@@ -19,6 +19,14 @@
       "light": "aqua.700",
       "dark": "aqua.300"
     },
+    "surface.info": {
+      "light": "aqua.100",
+      "dark": "aqua.900"
+    },
+    "surface.info-strong": {
+      "light": "aqua.700",
+      "dark": "aqua.300"
+    },
     "foreground.accent": {
       "light": "aqua.600",
       "dark": "aqua.300"
@@ -31,18 +39,6 @@
       "light": "aqua.800",
       "dark": "aqua.100"
     },
-    "border.color.accent": {
-      "light": "aqua.500",
-      "dark": "aqua.500"
-    },
-    "surface.info": {
-      "light": "aqua.100",
-      "dark": "aqua.900"
-    },
-    "surface.info-strong": {
-      "light": "aqua.700",
-      "dark": "aqua.300"
-    },
     "foreground.info": {
       "light": "aqua.600",
       "dark": "aqua.300"
@@ -54,6 +50,10 @@
     "foreground.info-pressed": {
       "light": "aqua.800",
       "dark": "aqua.100"
+    },
+    "border.color.accent": {
+      "light": "aqua.500",
+      "dark": "aqua.500"
     },
     "border.color.info": {
       "light": "aqua.500",

@@ -39,7 +39,7 @@
   --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
   --_card-border-color: var(--card-border-color, var(--panel-border-color, currentColor));
   --_card-radius: var(--card-radius, var(--radius));
-  --_card-shadow: none;
+  --_card-shadow: var(--card-shadow, var(--shadow-none, none));
   --_card-raised-shadow: var(--card-strong-shadow, var(--shadow-raised, none));
   --_card-shadow-hover: var(--card-hover-shadow, var(--shadow-raised, none));
   --_card-ring: 0px;
@@ -71,12 +71,14 @@
   @container style(--card-prominence: subtle) {
     --_card-fill: var(--card-subtle-bg, var(--surface-muted, Canvas));
     --_card-border-width: 0px;
+    --_card-shadow: none;
   }
 
   @container style(--card-prominence: plain) {
     --_card-fill: transparent;
     --_card-border-width: 0px;
     --_card-radius: 0px;
+    --_card-shadow: none;
   }
 
   /* Chrome flag: the frame's edge, whatever the prominence */
@@ -191,6 +193,7 @@
 :where(.card--subtle) {
   --_card-fill: var(--card-subtle-bg, var(--surface-muted, Canvas));
   --_card-border-width: 0px;
+  --_card-shadow: none;
 }
 
 :where(.card--plain) {

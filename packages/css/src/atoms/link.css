@@ -88,7 +88,7 @@
   }
 
   /* An icon after the text keeps its distance without an underlined space */
-  & > :where(.icon) {
+  &> :where(.icon) {
     margin-inline-start: 0.25em;
   }
 
@@ -130,7 +130,7 @@
   --_block-link-fill: var(--surface-accent-strong, var(--_block-link-tone));
   --_block-link-fill-pressed: var(--surface-inverted, CanvasText);
   /* Accent text on a translucent fill: the rest tone falls under 4.5:1 */
-  --_block-link-tone-on-tint: var(--foreground-accent-pressed, var(--_block-link-tone));
+  --_block-link-tone-on-tint: var(--foreground-accent-hover, var(--_block-link-tone));
   --_block-link-min-size: var(--block-link-min-size, var(--spacing-target));
   --_block-link-target-size: var(--spacing-target-min, 3rem);
   --_block-link-padding-inline: var(--block-link-padding-inline, var(--spacing));
@@ -217,7 +217,9 @@
 
   cursor: pointer;
   touch-action: manipulation;
-  transition-property: background-color, color, border-color;
+  transition-property: background-color,
+  color,
+  border-color;
   transition-duration: var(--block-link-transition, var(--duration-sm));
   transition-timing-function: var(--timefunc-ease-out, ease-out);
 

@@ -105,6 +105,26 @@ export const Three: Story = {
     </div>`,
 };
 
+export const SidebarColumns: Story = {
+  name: 'Sidebar columns',
+  parameters: { docs: { description: { story: '`--sidebar` gives the side pane, or both ends of `--three`, the app\'s sidebar column (`--app-sidebar-width`), which a compact region narrows. `--nowrap` keeps the ends at the width exactly, and `@3xl:split--sidebar` applies it from a 48em container, where a Sidebar sits beside the main; narrower, the ends fit their content. The second is in a `.ui-compact` region.' } } },
+  render: () => `
+    <div class="stack gap-lg container-inline">
+      <div class="split split--three split--nowrap @3xl:split--sidebar">
+        <div class="card"><div class="card__body"><p class="small-text">Sidebar wide</p></div></div>
+        <div class="card"><div class="card__body"><p class="small-text">Centre</p></div></div>
+        <div class="card"><div class="card__body"><p class="small-text">Sidebar wide</p></div></div>
+      </div>
+      <div class="ui-compact">
+        <div class="split split--three split--nowrap @3xl:split--sidebar">
+          <div class="card"><div class="card__body"><p class="small-text">Compact sidebar wide</p></div></div>
+          <div class="card"><div class="card__body"><p class="small-text">Centre</p></div></div>
+          <div class="card"><div class="card__body"><p class="small-text">Compact sidebar wide</p></div></div>
+        </div>
+      </div>
+    </div>`,
+};
+
 export const EqualHeight: Story = {
   name: 'Equal-height panes, no gap',
   parameters: { docs: { description: { story: '`--align-items: stretch` makes the panes equal in height; `--tight` removes the gap.' } } },

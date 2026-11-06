@@ -40,7 +40,7 @@
   /* Private manifest */
   --_field-gap: var(--field-gap, var(--spacing-sm));
   --_field-inline-gap: var(--field-inline-gap, var(--spacing-12));
-  --_field-label-gap: var(--field-label-gap, 0.25rem);
+  --_field-label-gap: var(--field-label-gap, var(--spacing-xs));
   --_field-label-width: var(--field-label-width, var(--spacing-192));
 
   /* Density */

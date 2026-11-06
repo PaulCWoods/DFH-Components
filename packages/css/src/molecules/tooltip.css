@@ -34,7 +34,7 @@
   --_tooltip-bg: var(--tooltip-bg, var(--surface-inverted, CanvasText));
   --_tooltip-color: var(--tooltip-color, var(--foreground-inverted-strong, Canvas));
   --_tooltip-border-color: var(--tooltip-border-color, transparent);
-  --_tooltip-border-width: var(--tooltip-border-width, 1px);
+  --_tooltip-border-width: var(--tooltip-border-width, var(--border-width-thin, 1px));
   --_tooltip-radius: var(--tooltip-radius, var(--radius-sm));
   --_tooltip-shadow: var(--tooltip-shadow, var(--shadow-sm, none));
   --_tooltip-padding-block: var(--tooltip-padding-block, var(--spacing-xs));

@@ -124,7 +124,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 ## Options
 | Atom | Axes | Container flags |
 | :--- | :--- | :--- |
-| `.input`, `.select`, `.textarea` | Size (`--sm`, `--lg`), prominence (outline, `--subtle`, `--plain`), corners (`--round`) | `--input-*`, `--select-*`, `--textarea-*` (`size`, `prominence`, `corners`) |
+| `.input`, `.select`, `.textarea` | Size (`--sm`, `--lg`), prominence (outline, `--subtle`, `--plain`), corners (`--round`, not on `.textarea`) | `--input-*`, `--select-*` (`size`, `prominence`, `corners`), `--textarea-*` (`size`, `prominence`) |
 | `.checkbox-input`, `.radio-input` | Size (20px, `--lg` 24px) | `--check-size: lg` |
 | `.switch` | Size (`--sm`, `--lg`), prominence (`--subtle`), intent (`--danger`), corners | `--switch-size`, `--switch-prominence`, `--switch-intent`, `--switch-corners` |
 | `.color-input` | Size (`--sm`, `--lg`, `--stretch` to fill its container) | |

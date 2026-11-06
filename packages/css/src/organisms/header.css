@@ -11,6 +11,7 @@
    | Prominence  | default, --plain, --translucent      | none                 |
    | Density     | default, --compact, max-md:--compact | --ui-sizing: compact |
    | Placement   | in flow, --sticky                    | none                 |
+   | Inset       | default, --flush                     | none                 |
 
    Parts:
    - .header__bar is a row: brand, navigation, actions. Its content is capped
@@ -19,6 +20,13 @@
    - .header__nav takes the free space and can shrink, so a scrollable tab
      list fits. The last part always sits at the end, with or without a
      (visible) nav.
+   - A .split in a bar takes the whole bar, its panes centred on the block
+     axis.
+
+   Flush: no inline padding (the safe areas stay) and no block padding on
+   the bar (its height stays), so the bar's content can reach the edges and
+   line up with a Sidebar. A split's end panes then pad like the Sidebar,
+   so the brand lines up with the Sidebar's content.
 
    Sticky: the shadow shows only while the header is stuck (a scroll-state
    query); browsers without one keep the border. While a sticky header is on
@@ -47,9 +55,9 @@
 :where(.header) {
   /* Private manifest */
   --_header-bg: var(--header-bg, var(--surface-card, Canvas));
-  --_header-border-color: var(--header-border-color, var(--border-color-quiet, currentColor));
+  --_header-border-color: var(--header-border-color, var(--app-border-color, var(--border-color-quiet, currentColor)));
   --_header-border-style: var(--header-border-style, var(--app-border-style, solid));
-  --_header-border-width: var(--header-border-width, var(--border-width, 1px));
+  --_header-border-width: var(--header-border-width, var(--app-border-width, var(--border-width, 1px)));
   --_header-padding-block: var(--header-padding-block, var(--spacing-sm));
   --_header-padding-inline: var(--header-padding-inline, var(--spacing-cushion));
   --_header-gap: var(--header-gap, var(--spacing-md));
@@ -136,12 +144,41 @@
 
 :where(.header__skip-link) {
   margin-inline: calc(var(--_header-padding-inline) * -1);
-  inline-size: stretch;
+
+  @supports (inline-size: -webkit-fill-available) {
+    inline-size: -webkit-fill-available;
+  }
+
+  @supports (inline-size: stretch) {
+    inline-size: stretch;
+  }
+}
+
+/* A split in a bar is the whole row */
+:where(.header__bar > .split) {
+  --align-items: center;
+  flex: 1 1 100%;
+  min-inline-size: 0;
 }
 
 /* ==========================================================================
    3. Modifiers
    ========================================================================== */
+
+/* Inset: edge to edge, with the safe areas kept */
+:where(.header--flush) {
+  --_header-padding-inline: 0px;
+
+  :where(.header__bar) {
+    padding-block: 0;
+  }
+
+  /* The panes at the edges pad like the Sidebar (the cushion, which steps
+     down in a compact region) */
+  :where(.header__bar > .split) > :where(:first-child, :last-child) {
+    padding-inline: var(--spacing-cushion, 1rem);
+  }
+}
 
 /* Prominence */
 :where(.header--plain) {

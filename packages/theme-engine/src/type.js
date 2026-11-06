@@ -8,12 +8,16 @@
    The system sets four values: the base size and scale ratio (the fixed
    scale, which is also the small end of fluid type) and the base size and
    ratio at the largest viewport.
-   A style's fluid size runs from its step on the small scale to the same
-   step on the large one, or to another step (growTo) for a bigger change.
-   It can start from a step other than the fixed size (fluidFrom), for a
-   style that's bigger as soon as it grows.
-   An optional minimum (scale.min) raises every step below it, at both ends
-   of the fluid range, so the smallest text stays readable.
+   A style's fluid size runs from its fixed size (its step on the small
+   scale) to the same step on the large one, or to another step (growTo) for
+   a bigger change. Container (cq) sizes run the same way, with the
+   container's width for the viewport's.
+   Three limits keep the scale readable, each a length a theme can change:
+   the floor (scale.min, 0.75rem) raises every step below it, at both ends;
+   the lower ceiling (scale.ceiling.lower, 3rem) holds every size at the
+   small end (fixed, compact, fluid's start) at or under it, so large text
+   still reflows on a narrow screen; the upper ceiling (scale.ceiling.upper,
+   6rem) does the same at the large end.
    ========================================================================== */
 
 /* Step names as the tokens spell them: 2, minus-1 (Tier 1), -1 (cq) */
@@ -32,13 +36,26 @@ export const minSize = (type) => {
   return m ? +m[1] / (m[2] === 'px' ? 16 : 1) : 0;
 };
 
+/* The ceilings, in rem: the largest a size may be at the small end (lower)
+   and at the large end (upper). A theme that sets none gets the defaults;
+   0 sets none (Infinity). Sizes above one are brought down to it. */
+export const CEILINGS = { lower: '3rem', upper: '6rem' };
+export const ceilingSize = (type, end) => {
+  const value = type.scale.ceiling?.[end] ?? CEILINGS[end];
+  const m = String(value).trim().match(MIN_LENGTH);
+  return m && +m[1] > 0 ? +m[1] / (m[2] === 'px' ? 16 : 1) : Infinity;
+};
+/* A size between the floor and a ceiling */
+const limit = (v, min, max) => Math.min(max, Math.max(min, v));
+
 /* The fixed scale, -2 to 8 by default: base × ratio^n, never under the minimum */
 export const scaleSteps = (type) => {
   const [lo, hi] = type.scale.steps ?? [-2, 8];
   const base = rem(type.scale.base);
   const min = minSize(type);
+  const lower = ceilingSize(type, 'lower');
   const out = {};
-  for (let n = lo; n <= hi; n++) out[n] = round(Math.max(min, base * type.scale.ratio ** n));
+  for (let n = lo; n <= hi; n++) out[n] = round(limit(base * type.scale.ratio ** n, min, lower));
   return out;
 };
 
@@ -63,10 +80,14 @@ export const fluidSteps = (type) => {
   const minRatio = type.scale.ratio;
   const maxBase = rem(type.fluid.max.base);
   const min = minSize(type);
+  const [lower, upper] = [ceilingSize(type, 'lower'), ceilingSize(type, 'upper')];
   const out = {};
-  for (let n = lo; n <= hi; n++) out[n] = [round(Math.max(min, base * minRatio ** n)), round(Math.max(min, maxBase * type.fluid.max.ratio ** n))];
+  for (let n = lo; n <= hi; n++) out[n] = [round(limit(base * minRatio ** n, min, lower)), round(limit(maxBase * type.fluid.max.ratio ** n, min, upper))];
   return out;
 };
+
+/* The sizes each step would be with no ceilings, to report what they hold */
+export const unlimitedSteps = (type) => fluidSteps({ ...type, scale: { ...type.scale, ceiling: { lower: 0, upper: 0 } } });
 
 /* A font's CSS family list: its name, quoted, then its fallback stack */
 const quote = (name) => `"${name}"`;
@@ -238,8 +259,14 @@ const setValue = (node, value, extra = {}) => {
 export const typeGlobal = (type, typography = {}) => {
   const out = structuredClone(typography);
 
-  /* Fonts, then the family roles that point at them */
+  /* Fonts, then the family roles that point at them. Exactly the theme's:
+     a font an earlier default theme had goes, so it doesn't linger in the
+     CSS and Figma */
   out['font-family'] = out['font-family'] ?? { $type: 'fontFamily' };
+  const keep = new Set([...Object.keys(type.fonts ?? {}), ...Object.keys(type.families ?? {})]);
+  for (const name of Object.keys(out['font-family'])) {
+    if (!name.startsWith('$') && !keep.has(name)) delete out['font-family'][name];
+  }
   for (const [name, font] of Object.entries(type.fonts ?? {})) {
     out['font-family'][name] = setValue(out['font-family'][name], fontStack(font));
   }
@@ -250,6 +277,12 @@ export const typeGlobal = (type, typography = {}) => {
   /* The scale, and the fluid settings the compiler reads */
   out['font-size-base'] = setValue(out['font-size-base'], type.scale.base, { $type: 'dimension' });
   out['font-size-min'] = setValue(out['font-size-min'], `${minSize(type)}rem`, { $type: 'dimension', $description: 'The smallest a step of the scale may be: smaller steps are raised to it, fixed and fluid. 0 sets no minimum' });
+  /* The ceilings; with none set, no token, so the CSS reads no limit */
+  for (const [end, key, text] of [['lower', 'font-size-max-small', 'at the small end (fixed, compact, fluid at its start)'], ['upper', 'font-size-max-large', 'at the large end of fluid and container sizes']]) {
+    const size = ceilingSize(type, end);
+    if (Number.isFinite(size)) out[key] = setValue(out[key], `${size}rem`, { $type: 'dimension', $description: `The largest a size may be ${text}: larger ones are brought down to it` });
+    else delete out[key];
+  }
   out.ratio = setValue(out.ratio, type.scale.ratio, { $type: 'number' });
   const fluid = (out['fluid-scale'] = out['fluid-scale'] ?? {});
   fluid['mobile-base'] = setValue(fluid['mobile-base'], type.scale.base);
@@ -314,11 +347,9 @@ export const styleTokens = (name, style) => {
   }
   if (style.compact !== undefined) out.push([`${name}-compact`, 'font-size', `{typography.font-size.${stepKey(style.compact)}}`, 'dimension']);
   if (style.fluid !== false && style.size !== undefined) {
-    const from = style.fluidFrom ?? style.size;
-    const to = style.growTo;
+    const [from, to] = [style.size, style.growTo];
     out.push([`${name}-fluid`, 'font-size', `{fluid.typography.font-size.${rangeKey(from, to, stepKey)}}`, 'dimension']);
-    const cq = style.cq ?? { from, to };
-    out.push([`${name}-cq`, 'font-size', `{typography.font-size.cq.${rangeKey(cq.from, cq.to, cqKey)}}`, 'dimension']);
+    out.push([`${name}-cq`, 'font-size', `{typography.font-size.cq.${rangeKey(from, to, cqKey)}}`, 'dimension']);
   }
   return out;
 };
@@ -449,15 +480,10 @@ export const migrateType = (global, semantic) => {
     const fluidRef = refOf(semantic[`${name}-fluid`]?.['font-size']?.$value);
     const cqRef = refOf(semantic[`${name}-cq`]?.['font-size']?.$value);
     if (style.size !== undefined && !fluidRef && !cqRef) style.fluid = false;
+    /* Fluid starts at the fixed size and cq follows fluid: only where it ends is the style's */
     if (fluidRef) {
       const f = stepOf(fluidRef);
-      if (style.size !== undefined && f.from !== style.size) style.fluidFrom = f.from;
       if (f.to !== undefined && f.to !== f.from) style.growTo = f.to;
-    }
-    if (cqRef) {
-      const c = stepOf(cqRef);
-      const expected = { from: style.fluidFrom ?? style.size, to: style.growTo };
-      if (c.from !== expected.from || (c.to ?? c.from) !== (expected.to ?? expected.from)) style.cq = c.to === undefined ? { from: c.from } : c;
     }
     if (Object.keys(style).length) styles[name] = style;
   }
@@ -465,7 +491,7 @@ export const migrateType = (global, semantic) => {
   return {
     fonts,
     families,
-    scale: { base: typo['font-size-base'].$value, ...(parseFloat(typo['font-size-min']?.$value) ? { min: typo['font-size-min'].$value } : {}), ratio: Number(typo.ratio.$value), steps: [-2, 8] },
+    scale: { base: typo['font-size-base'].$value, ...(parseFloat(typo['font-size-min']?.$value) ? { min: typo['font-size-min'].$value } : {}), ...migratedCeiling(typo), ratio: Number(typo.ratio.$value), steps: [-2, 8] },
     leading: (() => {
       const lh = typo['line-height'];
       const keys = Object.keys(lh).filter((k) => !k.startsWith('$')).map((k) => (k.startsWith('minus-') ? -Number(k.slice(6)) : Number(k)));
@@ -478,6 +504,17 @@ export const migrateType = (global, semantic) => {
     },
     styles,
   };
+};
+
+/* The ceilings the tokens hold, where they aren't the defaults: none
+   written means no ceiling, the defaults mean the theme needs no setting */
+const migratedCeiling = (typo) => {
+  const ceiling = {};
+  for (const [end, key] of [['lower', 'font-size-max-small'], ['upper', 'font-size-max-large']]) {
+    const value = typo[key]?.$value ?? 0;
+    if (value !== CEILINGS[end]) ceiling[end] = value;
+  }
+  return Object.keys(ceiling).length ? { ceiling } : {};
 };
 
 /* Follows a ref until it lands under `prefix` (a family, weight or spacing) */
@@ -518,6 +555,10 @@ export const typeCssVars = (type) => {
   const viewports = type.fluid.viewports ?? ['25rem', '80rem'];
   const fluid = fluidSteps(type);
   vars['--typography-font-size-min'] = `${minSize(type)}rem`;
+  for (const [end, name] of [['lower', 'small'], ['upper', 'large']]) {
+    const size = ceilingSize(type, end);
+    vars[`--typography-font-size-max-${name}`] = Number.isFinite(size) ? `${size}rem` : '1000rem';
+  }
   for (const [n, size] of Object.entries(scaleSteps(type))) vars[`--typography-font-size-${n}`] = `${size}rem`;
   if (type.leading) for (const n of Object.keys(leadingSteps(type))) vars[`--typography-line-height-${n}`] = leadingCalc(type.leading, +n);
   for (const [n, [min, max]] of Object.entries(fluid)) {
@@ -527,12 +568,10 @@ export const typeCssVars = (type) => {
   }
   /* The ranges styles grow through (5-8), for both modes */
   for (const style of Object.values(type.styles ?? {})) {
-    const ranges = [[style.size, style.growTo], [style.cq?.from, style.cq?.to]];
-    for (const [from, to] of ranges) {
-      if (from === undefined || to === undefined || to === from || !fluid[from] || !fluid[to]) continue;
-      vars[`--typography-font-size-fluid-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports);
-      vars[`--typography-font-size-cq-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports, 'cqi');
-    }
+    const [from, to] = [style.size, style.growTo];
+    if (from === undefined || to === undefined || to === from || !fluid[from] || !fluid[to]) continue;
+    vars[`--typography-font-size-fluid-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports);
+    vars[`--typography-font-size-cq-${from}-${to}`] = fluidClamp(fluid[from][0], fluid[to][1], viewports, 'cqi');
   }
   /* The text styles: each token the style sets, as the compiler names it */
   for (const [name, style] of Object.entries(type.styles ?? {})) {

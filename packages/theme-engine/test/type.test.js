@@ -47,6 +47,14 @@ test('role tokens name system stacks; fonts.css points them at the theme\'s font
   assert.ok(!css.includes('font-family-serif') && !css.includes('font-family-display'));
 });
 
+test('the Tier 1 families are exactly the theme\'s fonts and roles', () => {
+  const typography = structuredClone(global.typography);
+  typography['font-family'].leftover = { $value: '"Old Font", serif' };
+  const typo = typeGlobal(theme.type, typography);
+  const names = Object.keys(typo['font-family']).filter((k) => !k.startsWith('$'));
+  assert.deepEqual(names.sort(), [...new Set([...Object.keys(theme.type.fonts ?? {}), ...Object.keys(theme.type.families)])].sort());
+});
+
 test('a style that grows to another step points at that range', () => {
   const tokens = styleTokens('display-title', { size: 5, compact: 4, growTo: 8 });
   const sizes = Object.fromEntries(tokens.map(([group, , value]) => [group, value]));
@@ -79,10 +87,13 @@ test('changing the line-height scale rewrites its steps', () => {
   assert.equal(typo['line-height']['minus-3'].$value, 'calc(1.5 * pow(1.125, -3))');
 });
 
-test('a change to a cq step is written, though cq steps exist only in the CSS', () => {
+test('cq follows where fluid ends, though cq steps exist only in the CSS', () => {
   const type = structuredClone(theme.type);
-  type.styles.heading.cq = { from: 1, to: 2 };
-  assert.equal(applyTypeStyles(semantic, type, { global })['heading-cq']['font-size'].$value, '{typography.font-size.cq.1-2}');
+  type.styles.heading.growTo = type.styles.heading.size + 1;
+  const out = applyTypeStyles(semantic, type, { global });
+  const range = `${type.styles.heading.size}-${type.styles.heading.growTo}`;
+  assert.equal(out['heading-cq']['font-size'].$value, `{typography.font-size.cq.${range}}`);
+  assert.equal(out['heading-fluid']['font-size'].$value, `{fluid.typography.font-size.${range}}`);
 });
 
 test('a family is its quoted name, then the fallback', () => {

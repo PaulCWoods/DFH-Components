@@ -33,8 +33,8 @@
 }
 
 /* Back to the default size inside a compact region: undoes everything
-   .ui-compact sets. The spacing roles come back in variables.css, as they
-   read Tier 1. */
+   .ui-compact sets. The spacing roles and the sidebar column come back in
+   variables.css, as they read Tier 1. */
 :where(.sizing-default) {
     --ui-sizing: default;
     --font-sizing: fixed;
@@ -51,6 +51,7 @@
     --spacing-cq-breathe: var(--spacing);
     --spacing-cq-cushion: var(--spacing);
     --spacing-cq-cushion-lg: var(--spacing);
+    --app-sidebar-width: var(--app-sidebar-compact-width);
     --font-sizing: compact;
     font-size: var(--body-compact-font-size);
 }
@@ -68,6 +69,7 @@
         --spacing-cq-breathe: var(--spacing);
         --spacing-cq-cushion: var(--spacing);
         --spacing-cq-cushion-lg: var(--spacing);
+        --app-sidebar-width: var(--app-sidebar-compact-width);
         --font-sizing: compact;
         font-size: var(--body-compact-font-size);
     }

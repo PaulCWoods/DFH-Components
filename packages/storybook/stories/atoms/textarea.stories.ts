@@ -48,9 +48,8 @@ A multi-line text field that grows with its content (\`field-sizing: content\`) 
 | :--- | :--- | :--- |
 | Size | default, \`--sm\`, \`--lg\` | \`--textarea-size\`, \`--controls-size\` |
 | Prominence | outline (default), \`--subtle\`, \`--plain\` | \`--textarea-prominence\`, \`--controls-prominence\` |
-| Corners | \`--round\` | \`--textarea-corners\`, \`--controls-corners\` |
 
-Also \`--one-line\`: starts at one line and grows.
+Also \`--one-line\`: starts at one line and grows. No round corners: a full radius would cut into the text, so a round group (\`--controls-corners: round\`) leaves a textarea's corners as they are.
 
 \`\`\`html
 <div class="field">

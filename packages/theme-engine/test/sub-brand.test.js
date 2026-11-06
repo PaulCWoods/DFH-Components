@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cssDiff, mergeTheme, resolveTheme, scopeCss, themeOverrides } from '../src/index.js';
+import { changedTokens, cssDiff, mergeTheme, resolveTheme, scopeCss, themeOverrides } from '../src/index.js';
 
 test('a sub-brand merges over its parent: objects merge, the rest replaces, null removes', () => {
   const parent = { roles: { a: { light: 'blue.500', dark: 'blue.300' }, b: { light: 'red.500', dark: 'red.300' } }, list: [1, 2], gone: 1 };
@@ -58,6 +58,13 @@ test("the sub-brand's own CSS comes after, and what reads it comes too", () => {
   assert.match(reads, /--ring: var\(--other\)/);
 });
 
+test('changed tokens: what the sub-brand changes and what reads it, not what it shares', () => {
+  const names = changedTokens(parent, next);
+  assert.ok(names.has('--accent') && names.has('--focus') && names.has('--ring'));
+  assert.ok(!names.has('--other'));
+  assert.equal(changedTokens(parent, parent).size, 0);
+});
+
 test('a sub-brand that changes a function fails', () => {
   const fn = (n) => `@function --size(--n) { result: calc(var(--n) * ${n}); }\n:root { --a: 1; }`;
   assert.throws(() => scopeCss('x', fn(1), fn(2)), /--size/);
@@ -76,4 +83,21 @@ test('overrides are the inverse of the merge', () => {
   assert.deepEqual(over, { a: { c: 3 }, d: [1, 2], e: null, f: true });
   assert.deepEqual(mergeTheme(parent, over), theme);
   assert.deepEqual(themeOverrides(parent, parent), {});
+});
+
+test('a token changed in :root is repeated, in order, in every later :root block that sets it, so newer methods still win', () => {
+  const base = [
+    ':root { --size: clamp(1rem, 1vi, 2rem); --other: 1; }',
+    '@supports (opacity: progress(1px, 0px, 1px)) { :root { --end: 1280px; --size: round(var(--p)); } }',
+    '@supports at-rule(@function) and (opacity: progress(1px, 0px, 1px)) { :root { --size: --type-size(0); } }',
+    '.inverted { --size: 3rem; }',
+  ].join('\n');
+  const next = base.replace('clamp(1rem, 1vi, 2rem)', 'clamp(1rem, 2vi, 2rem)').replace('1280px', '1200px');
+  const css = cssDiff(base, next);
+  const at = (s) => css.indexOf(s);
+  assert.ok(at('clamp(1rem, 2vi, 2rem)') < at('round(var(--p))') && at('round(var(--p))') < at('--type-size(0)'), css);
+  assert.ok(at('--end: 1200px') > 0);
+  assert.ok(!css.includes('--other') && !css.includes('3rem'), css);
+  const scoped = scopeCss('x', base, next);
+  assert.ok(scoped.indexOf('clamp(1rem, 2vi, 2rem)') < scoped.indexOf('round(var(--p))') && scoped.indexOf('round(var(--p))') < scoped.indexOf('--type-size(0)'), scoped);
 });

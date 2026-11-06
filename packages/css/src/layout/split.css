@@ -14,6 +14,11 @@
    - --three: start, centre and end panes. They wrap the same way: when the
      centre would be narrower than its minimum, a side pane moves to its own
      row and takes the full width. With --nowrap they stay in one row.
+   - --sidebar: the side pane (both ends of --three) as wide as the app's
+     sidebar column (--app-sidebar-width), which a compact region narrows.
+     With --nowrap the panes line up with a Sidebar exactly; a container
+     variant (@3xl:split--sidebar) keeps it to where a Sidebar sits beside
+     the main.
 
    Hooks (set on the split itself; they don't reach nested layouts):
    --gap, --align-items, --split-side-width, --split-main-min-width,
@@ -213,11 +218,24 @@
 }
 
 /* --------------------------------------------------------------------------
+   7b. Sidebar Width
+   The app's sidebar column, for the side pane or both ends of --three.
+   After --three, so it beats its auto widths.
+   -------------------------------------------------------------------------- */
+:where(.split--sidebar) {
+    --_split-side: var(--app-sidebar-width, var(--spacing-288));
+    --_split-start: var(--app-sidebar-width, var(--spacing-288));
+    --_split-end: var(--app-sidebar-width, var(--spacing-288));
+}
+
+/* --------------------------------------------------------------------------
    8. Container Side Pane Widths
    Apply once the nearest container reaches the size (Tailwind's container
    scale: xs 20rem, sm 24, md 28, lg 32, xl 36, 2xl 42, 3xl 48, 4xl 56, 5xl 64,
    6xl 72, 7xl 80): split--xs @5xl:split--sm widens the side pane in a wide
    container. Larger sizes come later, so the widest that applies wins.
+   @3xl:split--sidebar gives the sidebar column from 48rem, where the app
+   workspace sets a Sidebar beside the main.
    -------------------------------------------------------------------------- */
 @container (width >= 20rem) {
     :where(.\@xs\:split--2xs) {
@@ -246,6 +264,12 @@
 
     :where(.\@xs\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
+    }
+
+    :where(.\@xs\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
     }
 }
 @container (width >= 24rem) {
@@ -276,6 +300,12 @@
     :where(.\@sm\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
     }
+
+    :where(.\@sm\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
+    }
 }
 @container (width >= 28rem) {
     :where(.\@md\:split--2xs) {
@@ -304,6 +334,12 @@
 
     :where(.\@md\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
+    }
+
+    :where(.\@md\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
     }
 }
 @container (width >= 32rem) {
@@ -334,6 +370,12 @@
     :where(.\@lg\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
     }
+
+    :where(.\@lg\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
+    }
 }
 @container (width >= 36rem) {
     :where(.\@xl\:split--2xs) {
@@ -362,6 +404,12 @@
 
     :where(.\@xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
+    }
+
+    :where(.\@xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
     }
 }
 @container (width >= 42rem) {
@@ -392,6 +440,12 @@
     :where(.\@2xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
     }
+
+    :where(.\@2xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
+    }
 }
 @container (width >= 48rem) {
     :where(.\@3xl\:split--2xs) {
@@ -420,6 +474,12 @@
 
     :where(.\@3xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
+    }
+
+    :where(.\@3xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
     }
 }
 @container (width >= 56rem) {
@@ -450,6 +510,12 @@
     :where(.\@4xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
     }
+
+    :where(.\@4xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
+    }
 }
 @container (width >= 64rem) {
     :where(.\@5xl\:split--2xs) {
@@ -478,6 +544,12 @@
 
     :where(.\@5xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
+    }
+
+    :where(.\@5xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
     }
 }
 @container (width >= 72rem) {
@@ -508,6 +580,12 @@
     :where(.\@6xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
     }
+
+    :where(.\@6xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
+    }
 }
 @container (width >= 80rem) {
     :where(.\@7xl\:split--2xs) {
@@ -536,5 +614,11 @@
 
     :where(.\@7xl\:split--2xl) {
         --_split-side: var(--spacing-block-2xl);
+    }
+
+    :where(.\@7xl\:split--sidebar) {
+        --_split-side: var(--app-sidebar-width, var(--spacing-288));
+        --_split-start: var(--app-sidebar-width, var(--spacing-288));
+        --_split-end: var(--app-sidebar-width, var(--spacing-288));
     }
 }

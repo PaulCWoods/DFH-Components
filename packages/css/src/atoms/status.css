@@ -157,7 +157,7 @@
   background-color: var(--_status-bg);
   color: var(--_status-text);
 
-  --icon-size: 1em;
+  --icon-size: calc(var(--icon-base-size, 1) * 1em);
 
   /* Indicator dot (plain prominence). An icon replaces it. */
   &::before {

@@ -81,7 +81,7 @@ An icon is a glyph from the sprite (`icons/icons.svg`, one filled family), sized
 ## Options
 | Atom | Axes | Notes |
 | :--- | :--- | :--- |
-| `.icon` | Size (`1em`, `--sm`, `--lg`, `--stretch` to fill its box); intent (`--accent`, `--info`, `--danger`, `--warning`, `--success`) | `--dir` mirrors in right-to-left text; `--disclosure` rotates with the nearest `[aria-expanded]`. Any other size: set `--icon-size` or the font size. |
+| `.icon` | Size (`--icon-base-size`, `--sm`, `--lg`, `--stretch` to fill its box); intent (`--accent`, `--info`, `--danger`, `--warning`, `--success`) | `--dir` mirrors in right-to-left text; `--disclosure` rotates with the nearest `[aria-expanded]`. Any other size: set `--icon-size` or the font size. `--icon-base-size` is the default size as a plain number of ems (`1`): adjust it for an icon set that sits small or large beside text. Chips, Statuses, Tabs and Buttons follow it. |
 | `.icon-box` | Size (48px, `--sm` 32px, `--lg` 64px); prominence (plain, `--subtle`); corners (`--round`); intent (`--accent`, `--info`, `--success`, `--warning`, `--danger`) | A fixed square frame that lines icons up with controls. Not interactive. Intent colours the icon, and a subtle box takes the intent's tint. Flags: `--icon-box-size`, `--icon-box-prominence`, `--icon-box-corners`, `--icon-box-intent`; a compact container steps it to `--sm`. In forced colours a subtle box keeps an outline. |
 
 ## Icon Box

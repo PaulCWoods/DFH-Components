@@ -98,8 +98,4 @@
       }
     }
   }
-
-  .theme-blog {
-    --brand-font-weight: var(--font-weight-regular);
-  }
 }

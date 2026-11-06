@@ -53,9 +53,11 @@
 
   /* --------------------------------------------------------------------------
      Prominence: Default (Outline)
-     Rest: tone text and border. Hover and active: filled with the tone.
+     Rest: tone text and border on --button-bg. Hover and active: filled
+     with the tone, or tinted with --button-hover-style: tint.
      -------------------------------------------------------------------------- */
-  --_button-bg: transparent;
+  --_button-bg: var(--button-bg, transparent);
+  --_button-hover-style: var(--button-hover-style, fill);
   --_button-text: var(--_button-tone);
   --_button-border-color: var(--_button-tone-border);
   --_button-hover-bg: var(--_button-tone);
@@ -76,6 +78,7 @@
   --_button-font-family: var(--button-font-family, var(--body-font-family, inherit));
   --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   --_button-font-weight: var(--button-font-weight, var(--font-weight-bold, 700));
+  --_button-icon-size: var(--button-icon-size, var(--icon-base-size, 1));
   --_button-inner-gap: var(--button-inner-gap, var(--spacing-12));
   --_button-line-height: var(--button-line-height, var(--control-line-height, 1.25));
   --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
@@ -86,12 +89,30 @@
   --_button-timefunc: var(--button-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   --_button-transition: var(--button-transition, var(--duration-sm, 150ms));
 
+  /* Icons scale with the label: --button-icon-size is a number of ems,
+     the Icon's --icon-base-size unless a Button sets its own */
+  --icon-size: calc(var(--_button-icon-size) * 1em);
+
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
      Declared before the modifier classes below, so a modifier on the button
      beats a flag inherited from a container.
      e.g. .toolbar { --button-prominence: subtle; --button-corners: round; }
      ------------------------------------------------------------------------ */
+
+  /* Default hover: a tint of the resting background, in the normal palette.
+     Mixing towards the inverted surface darkens in light mode and lightens
+     in dark, and over a transparent Button it matches Subtle's hover */
+  @container style(--button-hover-style: tint) {
+    --_button-hover-bg: color-mix(in srgb, var(--surface-inverted, CanvasText), var(--_button-bg) var(--translucency-stronger, 90%));
+    --_button-hover-text: var(--_button-tone-hover);
+    --_button-hover-border-color: var(--_button-border-color);
+    --_button-active-bg: color-mix(in srgb, var(--surface-inverted, CanvasText), var(--_button-bg) var(--translucency-strong, 70%));
+    --_button-active-text: var(--_button-tone-pressed);
+    --_button-active-border-color: var(--_button-border-color);
+    --_button-hover-color-palette: initial;
+    --_button-active-color-palette: initial;
+  }
 
   /* Intent */
   @container style(--button-intent: accent) {
@@ -114,9 +135,15 @@
     --_button-text: var(--_button-on-tone);
     --_button-border-color: var(--_button-tone);
     --_button-hover-bg: var(--_button-tone-hover);
+    --_button-hover-text: var(--_button-on-tone);
     --_button-hover-border-color: var(--_button-tone-hover);
+    --_button-active-bg: var(--_button-tone-pressed);
+    --_button-active-text: var(--_button-on-tone);
+    --_button-active-border-color: var(--_button-tone-pressed);
     --_button-ring-color: var(--_button-tone);
     --_button-color-palette: inverted;
+    --_button-hover-color-palette: inverted;
+    --_button-active-color-palette: inverted;
   }
 
   @container style(--button-prominence: subtle) or style(--controls-prominence: subtle) or style(--elements-prominence: subtle) {
@@ -153,15 +180,15 @@
 
   /* Size, and density from a compact container */
   @container style(--button-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
-    --_button-padding-block: var(--button-sm-padding-block, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
-    --_button-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
+    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2));
+    --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
     --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
     --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
   }
 
   @container style(--button-size: lg) or style(--controls-size: lg) {
-    --_button-padding-block: var(--button-lg-padding-block, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
-    --_button-padding-inline: var(--button-lg-padding-inline, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
+    --_button-padding-block: var(--button-lg-padding-block, var(--spacing-6));
+    --_button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24));
     --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
     --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
   }
@@ -399,16 +426,16 @@
 
 /* Small: 32px visual, 48px hit area unless fine-pointer targets are opted in */
 :where(.button--sm) {
-  --_button-padding-block: var(--button-sm-padding-block, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
-  --_button-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
+  --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2));
+  --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
   --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
 }
 
 /* Large: 64px; steps down to the default size inside a compact container */
 :where(.button--lg) {
-  --_button-padding-block: var(--button-lg-padding-block, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs))));
-  --_button-padding-inline: var(--button-lg-padding-inline, calc(var(--button-lg-min-size, var(--spacing-target-lg)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
+  --_button-padding-block: var(--button-lg-padding-block, var(--spacing-6));
+  --_button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24));
   --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
   --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
 

@@ -54,7 +54,7 @@
   --_chip-gap: var(--chip-gap, var(--spacing-xs));
   --_chip-radius: var(--chip-radius, var(--radius-sm));
   --_chip-border-width: var(--chip-border-width, var(--border-width-thin, 1px));
-  --_chip-remove-target: var(--chip-remove-target, 1.5rem);
+  --_chip-remove-target: var(--chip-remove-target, var(--spacing-24));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -106,7 +106,7 @@
   background-color: var(--_chip-bg);
   color: var(--_chip-text);
 
-  --icon-size: 1em;
+  --icon-size: calc(var(--icon-base-size, 1) * 1em);
 
   /* A removable chip tightens its trailing padding around the button. */
   &:has(> .chip__remove) {

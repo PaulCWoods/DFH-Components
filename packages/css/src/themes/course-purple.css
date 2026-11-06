@@ -58,8 +58,4 @@
       }
     }
   }
-
-  .theme-course-purple {
-    --brand-font-weight: var(--font-weight-regular);
-  }
 }

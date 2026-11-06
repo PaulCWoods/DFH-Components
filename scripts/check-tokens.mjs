@@ -8,7 +8,10 @@
    variables.css), so a fallback can't lean on another component's token.
 
    Fails on: a token whose JSON value differs from a fallback the CSS gives it,
-   a token the CSS reads with no fallback, a token nothing reads.
+   a token the CSS reads with no fallback, a token nothing reads, and a token
+   that names a Tier 2 token ({app.border-width}) whose fallback doesn't
+   read it: the value matches today, but a theme that changes that token
+   would reach Figma and not the CSS.
    -- --json prints the findings instead.
    ========================================================================== */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -130,7 +133,25 @@ for (const file of files) {
   }
 }
 
-const findings = { differ: [], noFallback: [], unread: [] };
+/* Tier 1 names: a Tier 3 default may name a step that a Tier 2 role in the
+   CSS means, so only Tier 2 names must be read by name */
+const tier1 = new Set();
+const walk1 = (node, path) => {
+  if (!node || typeof node !== 'object') return;
+  if ('$value' in node) return void tier1.add(nameOf(path.join('.')));
+  for (const [key, value] of Object.entries(node)) if (!key.startsWith('$')) walk1(value, [...path, key]);
+};
+walk1(JSON.parse(readFileSync(join(root, 'tokens/1-global.json'), 'utf8')), []);
+
+/* Whether a fallback reads a token, through the file's private variables */
+const reads_ = (text, privates, name, depth = 0) => {
+  if (depth > 25) return false;
+  if (new RegExp(`var\\(${name}\\s*[,)]`).test(text)) return true;
+  for (const m of text.matchAll(/var\((--_[\w-]+)/g)) if (privates.has(m[1]) && reads_(privates.get(m[1]), privates, name, depth + 1)) return true;
+  return false;
+};
+
+const findings = { differ: [], noFallback: [], unread: [], unnamed: [] };
 for (const [name, value] of tier3) {
   const uses = reads.get(name);
   if (!uses) {
@@ -141,6 +162,11 @@ for (const [name, value] of tier3) {
   for (const use of uses) {
     if (use.fallback === null) findings.noFallback.push({ name, value, file: use.file });
     else if (resolve(use.fallback, use.privates) !== want) findings.differ.push({ name, value, want, fallback: use.fallback, got: resolve(use.fallback, use.privates), file: use.file });
+    else {
+      const ref = /^\{([^{}]+)\}$/.exec(value.trim())?.[1];
+      const target = ref && nameOf(ref);
+      if (target && defined.has(target) && !tier1.has(target) && !reads_(use.fallback, use.privates, target)) findings.unnamed.push({ name, target, file: use.file });
+    }
   }
 }
 
@@ -149,9 +175,10 @@ if (process.argv.includes('--json')) {
   process.exit(0);
 }
 
-const total = findings.differ.length + findings.noFallback.length + findings.unread.length;
+const total = findings.differ.length + findings.noFallback.length + findings.unread.length + findings.unnamed.length;
 for (const f of findings.differ) console.log(`${f.file}: ${f.name} is ${f.want} in the tokens and ${f.got} in the CSS`);
 for (const f of findings.noFallback) console.log(`${f.file}: ${f.name} has no fallback in the CSS`);
 for (const f of findings.unread) console.log(`${f.name}: nothing reads it`);
+for (const f of findings.unnamed) console.log(`${f.file}: ${f.name}'s fallback doesn't read ${f.target}, which the tokens name`);
 console.log(`check:tokens: ${tier3.size} Tier 3 tokens, ${total ? `${total} problems` : 'no problems'}.`);
 process.exit(total ? 1 : 0);

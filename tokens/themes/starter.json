@@ -32,13 +32,16 @@
       "seed": "#9900ff"
     },
     "amber": {
-      "seed": "#ff9900"
+      "seed": "#ffbb00"
     },
     "green": {
       "seed": "#00ff00"
     },
     "red": {
       "seed": "#ff0000"
+    },
+    "teal": {
+      "seed": "#00ffff"
     }
   },
   "roles": {
@@ -111,16 +114,16 @@
       "dark": "amber.900"
     },
     "surface.info": {
-      "light": "blue.100",
-      "dark": "blue.900"
+      "light": "teal.100",
+      "dark": "teal.900"
     },
     "surface.warning-strong": {
       "light": "amber.700",
       "dark": "amber.300"
     },
     "surface.info-strong": {
-      "light": "blue.700",
-      "dark": "blue.300"
+      "light": "teal.700",
+      "dark": "teal.300"
     },
     "surface.success": {
       "light": "green.100",
@@ -211,24 +214,24 @@
       "dark": "amber.300"
     },
     "foreground.info": {
-      "light": "blue.600",
-      "dark": "blue.300"
+      "light": "teal.600",
+      "dark": "teal.300"
     },
     "foreground.warning-hover": {
       "light": "amber.700",
       "dark": "amber.200"
     },
     "foreground.info-hover": {
-      "light": "blue.700",
-      "dark": "blue.200"
+      "light": "teal.700",
+      "dark": "teal.200"
     },
     "foreground.warning-pressed": {
       "light": "amber.800",
       "dark": "amber.100"
     },
     "foreground.info-pressed": {
-      "light": "blue.800",
-      "dark": "blue.100"
+      "light": "teal.800",
+      "dark": "teal.100"
     },
     "border.color.accent": {
       "light": "blue.500",
@@ -247,8 +250,8 @@
       "dark": "amber.500"
     },
     "border.color.info": {
-      "light": "blue.500",
-      "dark": "blue.500"
+      "light": "teal.500",
+      "dark": "teal.500"
     },
     "border.color.success": {
       "light": "green.500",
@@ -306,17 +309,14 @@
         "case": "none",
         "size": 8,
         "compact": 7,
-        "leading": -4,
-        "cq": {
-          "from": 6
-        }
+        "leading": -4
       },
       "title": {
         "family": "display",
         "weight": "heavy",
         "letterSpacing": "normal",
         "case": "none",
-        "size": 6,
+        "size": 5,
         "compact": 4,
         "leading": -4
       },
@@ -584,9 +584,7 @@
       }
     }
   },
-  "components": {
-    "brand.font-weight": "{font-weight.bold}"
-  },
+  "components": {},
   "mixes": {
     "color.muted": {
       "light": {

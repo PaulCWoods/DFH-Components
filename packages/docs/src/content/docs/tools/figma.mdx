@@ -1,0 +1,111 @@
+---
+title: Figma
+summary: Bring a theme's tokens into Figma as variables or as Tokens Studio tokens, and pick the set that suits your Figma plan.
+order: 30
+---
+
+The Figma export turns every theme into files Figma can import, from the same tokens as the CSS. Colours, spacing, radii, borders, type and shadows keep the names they have in code, so a designer's `surface/card` is a developer's `--surface-card`.
+
+There are two ways in. Pick one per file:
+
+- **Figma variables**, with the free Export/Import Variables plugin by Honza Toman. Variables you bind straight to fills, strokes, gaps and padding.
+- **Tokens Studio**, with the Tokens Studio for Figma plugin. Tokens you apply through the plugin, and the only route to the library's text styles and shadow effects.
+
+## 1. Build the files
+
+The files are built on your machine, not stored in the repository. From the repository's root:
+
+```sh
+npm run build:themes
+npm run export:figma
+```
+
+`build:themes` compiles every theme and `export:figma` writes them into `packages/figma-sync/dist/`. Run both again after any change to a theme. **Publish** in the [Token Designer](/docs/tools/) runs both for you.
+
+## 2. Find your theme
+
+| Folder | What it holds |
+| :--- | :--- |
+| `dist/native-variables/`, `dist/tokens-studio/` | The default, the starter theme |
+| `dist/themes/<name>/` | One other theme or sub-brand, complete on its own |
+| `dist/themes/<name>-modes/` | A theme and all its sub-brands together, a mode per brand |
+
+Every theme's folder has both forms: `native-variables/` and `tokens-studio/`. A sub-brand's own folder is complete, with its parent's tokens included, so it imports without the parent.
+
+## 3. Choose the set for your plan
+
+Figma limits how many modes a variable collection can have: 1 on Starter, 10 on Professional, 20 on Organization and 40 on Enterprise.
+
+| You want | Import | Plan |
+| :--- | :--- | :--- |
+| One brand, one mode: light, fixed type | `dfh-unified.json` | Any, including Starter |
+| One brand, with light and dark, font sizing and spacing modes | `01-color.json`, `02-structure.json`, `03-font-sizing.json`, `04-spacing.json` | Professional and above |
+| A brand and its sub-brands, switchable on any frame | The same four files from `<name>-modes/` | Its README says which plan; usually Organization |
+
+The `-modes` README counts the modes in each collection and names the smallest plan that holds them. When your plan is too small, import each brand's own folder into its own file instead.
+
+## 4a. Import as variables
+
+1. Open the Figma file, then **Plugins** and **Export/Import Variables**.
+2. Go to the **Import** tab.
+3. Import the files from the `native-variables/` folder of your choice:
+   - For one collection, choose `dfh-unified.json`. It makes a collection called Design For Humans with one mode: light colours, fixed type, and spacing at the large end of its range.
+   - For four collections, import `01-color.json`, `02-structure.json`, `03-font-sizing.json` and `04-spacing.json`, in that order, as each one points at variables in the ones before it.
+4. Open **Local variables** and check the collections are there, each grouped into `01 Global`, `02 Semantic` and `03 Component`.
+
+The four collections each do one job:
+
+| Collection | Modes | Holds |
+| :--- | :--- | :--- |
+| Color | Light, Dark | The palette, every colour role and component colour |
+| Structure | One | Fixed spacing, radii, border widths, the fixed type steps and each fluid step's large end, weights and families, shadow sizes and component sizes |
+| Font sizing | Fixed, Fluid Large, Compact | Each text role's size and line height in pixels (`body/font-size`, `body/line-height`), and the component tokens that read them. Components that keep one size at every width, like Badge and Chip, stay in Structure |
+| Spacing | Fixed, Fluid Large | The spacing roles (`breathe`, `cushion`) and the component tokens that read them |
+
+To set a frame's modes, select it and pick one for each collection under **Appearance** in the right-hand panel. Everything inside follows until a frame inside picks its own. With a `-modes` set, the Color menu switches brand too: course Light, course Dark and so on.
+
+## How fluid sizes work in Figma
+
+On the web, a fluid size slides between two screen widths. Figma can't slide, so each frame picks a size for its type and for its spacing, the way a region of a page picks a sizing class.
+
+Fluid type starts at the fixed size and grows to a larger one on wide screens. A fluid region on a narrow screen is the same as fixed, so Figma needs only its other end: Fluid Large.
+
+| Font sizing | Matches | Use it on |
+| :--- | :--- | :--- |
+| Fixed | The default | Most frames: interface text keeps one size at every width |
+| Fluid Large | `.font-sizing-fluid` on a wide screen | A region that grows with the screen, such as an article or a hero, drawn at desktop width |
+| Compact | `.ui-compact` | A dense panel, table or toolbar, at any width |
+
+Spacing grows with the screen whatever the type does, so it has modes of its own:
+
+| Spacing | Matches | Use it on |
+| :--- | :--- | :--- |
+| Fixed | The small end of the spacing range | A phone-width frame, and any compact frame |
+| Fluid Large | The large end | A desktop-width frame |
+
+So a phone mock-up is Fixed and Fixed, and a desktop one is Fixed type with Fluid Large spacing. An article inside the desktop frame takes Fluid Large type. Container sizes (`.font-sizing-cq`) grow the same way as fluid ones, by the container's width rather than the screen's: give the container's frame the mode it would have at that width.
+
+## 4b. Import with Tokens Studio
+
+1. Install **Tokens Studio for Figma** and open it in your file.
+2. Choose **Tools**, then **Load from file**, and pick `tokens-studio/figma-tokens.json` from your theme's folder.
+3. Under **Themes**, pick a theme from each group: **Color** (Light or Dark), **Font sizing** (Fixed, Fluid Large or Compact) and **Spacing** (Fixed or Fluid Large). Theme groups may need Tokens Studio's paid plan. On the free plan, switch the token sets on and off instead: `semantic-light` or `semantic-dark`, one `font-` set and one `spacing-` set.
+4. Choose **Styles & Variables**, then **Export styles** to create the text styles and shadow effects, or **Export variables** for variables.
+
+The text styles come from the same type theme as the CSS. Each one reads its role's size, so it follows the Font sizing you pick, and a copy under `compact/` keeps the compact size for files without themes. Line heights are percentages, so they stay right at every size. A variable can't hold a percentage of the size, so if you build a style from the Variables collections instead, bind its line height to the role's `line-height` in Font sizing, which is in pixels for each mode.
+
+## Fonts
+
+Figma finds a font by the name its font menu shows. A web service may give the same font another name for CSS: Adobe Fonts calls Adapter PE `adapter-pe-variable`. In the Token Designer, edit the font and fill in **Name in Figma**, and the export uses that name. The system stacks of the starter theme export as Inter, Georgia and Roboto Mono. The font must be installed, or one Figma offers, for text to show in it.
+
+## Keep Figma up to date
+
+Re-import after a change, with the same plugin and the same files. Variables with the same names are updated in place, so layers bound to them follow. A variable whose token has been removed stays in Figma until you delete it.
+
+## When something looks wrong
+
+- **A colour or size isn't what the CSS shows.** Run `build:themes` and `export:figma` again: the files only change when both run.
+- **A theme is missing from `dist/themes/`.** It hasn't been built. `export:figma` names any theme it skipped.
+- **An import stops part way.** The plan may not allow that many modes. Use the unified file, or each brand's own folder.
+- **Text styles show the wrong font.** Figma doesn't know the font by that name, or it isn't installed. Set its **Name in Figma** in the Token Designer, and install it.
+- **A weight is missing.** Weights export as Figma's style names (Medium, Semi Bold, Extra Bold). A font that spells its styles differently needs that style picked by hand.

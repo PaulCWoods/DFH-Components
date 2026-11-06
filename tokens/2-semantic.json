@@ -173,11 +173,11 @@
       "$description": "High-contrast success surface for strong alert banners and callouts"
     },
     "info": {
-      "$value": "light-dark({color.blue.100}, {color.blue.900})",
+      "$value": "light-dark({color.teal.100}, {color.teal.900})",
       "$description": "Cautionary or pending review alert banner background"
     },
     "info-strong": {
-      "$value": "light-dark({color.blue.700}, {color.blue.300})",
+      "$value": "light-dark({color.teal.700}, {color.teal.300})",
       "$description": "High-contrast info surface for strong alert banners and callouts"
     }
   },
@@ -273,15 +273,15 @@
       "$description": "Warning pressed state"
     },
     "info": {
-      "$value": "light-dark({color.blue.600}, {color.blue.300})",
+      "$value": "light-dark({color.teal.600}, {color.teal.300})",
       "$description": "info callout text and pending status icons"
     },
     "info-hover": {
-      "$value": "light-dark({color.blue.700}, {color.blue.200})",
+      "$value": "light-dark({color.teal.700}, {color.teal.200})",
       "$description": "info hover state"
     },
     "info-pressed": {
-      "$value": "light-dark({color.blue.800}, {color.blue.100})",
+      "$value": "light-dark({color.teal.800}, {color.teal.100})",
       "$description": "info pressed state"
     }
   },
@@ -326,7 +326,7 @@
         "$description": "Valid input field border"
       },
       "info": {
-        "$value": "{color.blue.500}",
+        "$value": "{color.teal.500}",
         "$description": "info field border"
       }
     },
@@ -450,7 +450,7 @@
     },
     "block-sm": {
       "$value": "{spacing.384}",
-      "$description": "BrandMedium block spacing (e.g. Sidebars)"
+      "$description": "Medium block spacing (e.g. Sidebars)"
     },
     "block": {
       "$value": "{spacing.576}",
@@ -517,7 +517,7 @@
     },
     "medium": {
       "$value": "{typography.font-weight.500}",
-      "$description": "BrandMedium emphasis weight"
+      "$description": "Medium emphasis weight"
     },
     "semibold": {
       "$value": "{typography.font-weight.600}",
@@ -925,7 +925,7 @@
   },
   "title-fixed": {
     "font-size": {
-      "$value": "{typography.font-size.6}",
+      "$value": "{typography.font-size.5}",
       "$type": "dimension",
       "$description": "Title typography size (Step 5)"
     }
@@ -939,14 +939,14 @@
   },
   "title-fluid": {
     "font-size": {
-      "$value": "{fluid.typography.font-size.6}",
+      "$value": "{fluid.typography.font-size.5}",
       "$type": "dimension",
       "$description": "Title typography size (fluid step 4 to 7: 33px Mobile to 114px Desktop)"
     }
   },
   "title-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.6}",
+      "$value": "{typography.font-size.cq.5}",
       "$type": "dimension",
       "$description": "Container-fluid display title typography size using cqi units (Step 4 to 7)"
     }
@@ -996,7 +996,7 @@
   },
   "display-title-cq": {
     "font-size": {
-      "$value": "{typography.font-size.cq.6}",
+      "$value": "{typography.font-size.cq.8}",
       "$type": "dimension",
       "$description": "Container-fluid display title size using cqi units (steps 5 to 8)"
     }
@@ -1060,6 +1060,16 @@
       "$value": "solid",
       "$type": "strokeStyle",
       "$description": "Standard border stroke style for major application landmark components (header, sidebar, footer)"
+    },
+    "sidebar-width": {
+      "$value": "{spacing.288}",
+      "$type": "dimension",
+      "$description": "The app's sidebar column: the Sidebar's width, and what a split--sidebar lines up with. A compact region (.ui-compact) takes it to sidebar-compact-width"
+    },
+    "sidebar-compact-width": {
+      "$value": "{spacing.192}",
+      "$type": "dimension",
+      "$description": "The sidebar column in a compact region"
     }
   },
   "panel": {
@@ -1292,7 +1302,7 @@
           "color": "{shadow.color}"
         }
       ],
-      "$description": "BrandMedium stacked elevation for popovers and hover states"
+      "$description": "Medium stacked elevation for popovers and hover states"
     },
     "lg": {
       "$type": "boxShadow",
@@ -1549,7 +1559,7 @@
           "$value": "light-dark({color.amber.800}, {color.amber.200})"
         },
         "info-strong": {
-          "$value": "light-dark({color.blue.800}, {color.blue.200})"
+          "$value": "light-dark({color.teal.800}, {color.teal.200})"
         },
         "success-strong": {
           "$value": "light-dark({color.green.800}, {color.green.200})"
@@ -1620,19 +1630,19 @@
           "$value": "light-dark({color.amber.700}, {color.amber.200})"
         },
         "info": {
-          "$value": "light-dark({color.blue.700}, {color.blue.200})"
+          "$value": "light-dark({color.teal.700}, {color.teal.200})"
         },
         "warning-hover": {
           "$value": "light-dark({color.amber.800}, {color.amber.100})"
         },
         "info-hover": {
-          "$value": "light-dark({color.blue.800}, {color.blue.100})"
+          "$value": "light-dark({color.teal.800}, {color.teal.100})"
         },
         "warning-pressed": {
           "$value": "light-dark({color.amber.900}, {color.amber.100})"
         },
         "info-pressed": {
-          "$value": "light-dark({color.blue.900}, {color.blue.100})"
+          "$value": "light-dark({color.teal.900}, {color.teal.100})"
         }
       },
       "border": {
@@ -1650,7 +1660,7 @@
             "$value": "light-dark({color.amber.600}, {color.amber.400})"
           },
           "info": {
-            "$value": "light-dark({color.blue.600}, {color.blue.400})"
+            "$value": "light-dark({color.teal.600}, {color.teal.400})"
           },
           "success": {
             "$value": "light-dark({color.green.600}, {color.green.400})"

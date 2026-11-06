@@ -82,7 +82,7 @@ Every size keeps a 48px hit area. \`--sm\` (32px) and buttons stepped down by a 
 \`\`\`
 
 #### Customisation hooks
-They colour the neutral Button at every prominence, set on a Button, a container or the theme; intents keep their own colours: \`--button-color\`, \`--button-color-hover\`, \`--button-color-pressed\`, \`--button-color-border\`, \`--button-on-color\`. Geometry uses the Tier 3 tokens \`--button-padding-*\`, \`--button-min-size\`, \`--button-radius\`, \`--button-inner-gap\`, \`--button-font-*\`, and their \`-sm-\` / \`-lg-\` variants.
+They colour the neutral Button at every prominence, set on a Button, a container or the theme; intents keep their own colours: \`--button-color\`, \`--button-color-hover\`, \`--button-color-pressed\`, \`--button-color-border\`, \`--button-on-color\`. \`--button-bg\` gives the default Button a resting background, and \`--button-hover-style: tint\` (a container or theme flag) tints that background on hover instead of filling it. Geometry uses the Tier 3 tokens \`--button-padding-*\`, \`--button-min-size\`, \`--button-radius\`, \`--button-inner-gap\`, \`--button-font-*\`, and their \`-sm-\` / \`-lg-\` variants.
 
 #### Keyboard
 Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as buttons activate with Enter only. \`aria-disabled="true"\` keeps the button focusable for screen readers but blocks activation.
@@ -358,6 +358,27 @@ export const ContainerAdaptive: Story = {
  * Light, dark and reversed surfaces. Reversed remaps the semantic roles, so
  * the same markup stays legible with no changes.
  */
+export const DefaultBackgroundAndHover: Story = {
+  render: () => {
+    const row = ['', 'button--accent', 'button--danger', 'button--subtle', 'button--strong']
+      .map((cls) => `<button type="button" class="button ${cls}"><span>${cls ? cls.replace('button--', '') : 'Default'}</span></button>`)
+      .join('');
+    const stage = (label: string, style: string) => `
+      <div class="stack">
+        <div class="sb-demo-label">${label}</div>
+        <div class="cluster" style="${style}">${row}</div>
+      </div>`;
+    return `
+      <div class="stack">
+        ${stage('Default: transparent, fill on hover', '')}
+        ${stage('--button-hover-style: tint', '--button-hover-style: tint;')}
+        ${stage('--button-bg: var(--surface-muted)', '--button-bg: var(--surface-muted);')}
+        ${stage('--button-bg: var(--surface-muted); --button-hover-style: tint', '--button-bg: var(--surface-muted); --button-hover-style: tint;')}
+      </div>
+    `;
+  },
+};
+
 export const Surfaces: Story = {
   render: () => {
     const row = PROMINENCES.map(

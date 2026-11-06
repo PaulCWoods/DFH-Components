@@ -5,21 +5,25 @@
 
    Fail:   a reference to a step, family, font, weight or letter spacing
            that doesn't exist; a scale that doesn't increase step to step
-           (steps raised to the minimum size may be equal); a minimum size
-           that isn't a rem or px length, or is larger than the base;
+           (steps raised to the minimum or held to a ceiling may be equal);
+           a minimum size that isn't a rem or px length, or is larger than
+           the base; a ceiling that isn't a length, a lower ceiling below
+           the base or the floor, an upper ceiling below the lower one;
            a hierarchy out of order in any mode; a compact size larger than
-           the fixed one; a fluid or cq size whose largest value is more
+           the fixed one; a fluid size whose largest value is more
            than 2.5 times its smallest (zoom to 200% couldn't double it,
            WCAG 1.4.4).
    Report: a size below 12px (scale.min stops that); more than one step at
-           the minimum size; a body or body-lg line height below 1.5
-           (WCAG 1.4.8; small text is captions and labels, not paragraphs); a heading line height above body's; a cq size that
-           differs from the fluid one; two styles of the same kind that
+           the minimum size; a style at the smallest size (the minimum, or
+           12px without one) set at 400 or lighter, where a thin font can
+           need a larger floor; a body or body-lg line height below 1.5
+           (WCAG 1.4.8; small text is captions and labels, not paragraphs); a heading line height above body's; a style a
+           ceiling holds down, with its size without the ceiling; two styles of the same kind that
            differ only in weight or case at the same size; a style whose
            weight its font doesn't load (the browser fakes it or falls back).
    ========================================================================== */
 
-import { MIN_LENGTH, SYSTEM_STACKS, fluidSteps, fontCovers, fontWeights, leadingSteps, minSize, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
+import { MIN_LENGTH, SYSTEM_STACKS, ceilingSize, unlimitedSteps, fluidSteps, fontCovers, fontWeights, leadingSteps, minSize, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
 
 export const HIERARCHY = ['display-title', 'title', 'heading', 'subheading', 'small-heading'];
 export const HEADINGS = [...HIERARCHY, 'micro-heading'];
@@ -29,22 +33,20 @@ export const BODY = ['body-lg', 'body', 'body-sm', 'body-xs'];
 const READING = ['body-lg', 'body'];
 export const FLUID_LIMIT = 2.5;
 export const FLOOR_PX = 12;
+/* At or below this weight, text at the floor is worth a second look */
+export const WEIGHT_FLOOR = 400;
 
 const names = (group) => Object.keys(group ?? {}).filter((k) => !k.startsWith('$'));
 const px = (r) => +(r * 16).toFixed(1);
 
-/* A style's sizes in rem, per mode. Fluid and cq are [smallest, largest]. */
-export const styleSizes = (type, style) => {
+/* A style's sizes in rem, per mode. Fluid is [smallest, largest], from the
+   fixed size; cq runs the same way, so it's the same range. */
+export const styleSizes = (type, style, steps = { fixed: scaleSteps(type), fluid: fluidSteps(type) }) => {
   if (style.size === undefined) return null;
-  const fixed = scaleSteps(type);
-  const fluid = fluidSteps(type);
+  const { fixed, fluid } = steps;
   const range = (from, to = from) => (fluid[from] && fluid[to] ? [fluid[from][0], fluid[to][1]] : null);
   const out = { fixed: fixed[style.size], compact: fixed[style.compact ?? style.size] };
-  if (style.fluid !== false) {
-    out.fluid = range(style.fluidFrom ?? style.size, style.growTo);
-    const cq = style.cq ?? { from: style.fluidFrom ?? style.size, to: style.growTo };
-    out.cq = range(cq.from, cq.to);
-  }
+  if (style.fluid !== false) out.cq = out.fluid = range(style.size, style.growTo);
   return out;
 };
 
@@ -92,7 +94,7 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
     if (s.family && !families.includes(s.family)) fail('reference', name, `family "${s.family}" isn't one of ${families.join(', ')}`);
     if (s.weight && weights.length && !weights.includes(s.weight)) fail('reference', name, `weight "${s.weight}" isn't one of ${weights.join(', ')}`);
     if (s.letterSpacing && spacings.length && !spacings.includes(s.letterSpacing)) fail('reference', name, `letter spacing "${s.letterSpacing}" isn't one of ${spacings.join(', ')}`);
-    for (const [field, n] of [['size', s.size], ['compact', s.compact], ['growTo', s.growTo], ['fluidFrom', s.fluidFrom], ['cq from', s.cq?.from], ['cq to', s.cq?.to]]) {
+    for (const [field, n] of [['size', s.size], ['compact', s.compact], ['growTo', s.growTo], ]) {
       if (n !== undefined && !inScale(n)) {
         fail('reference', name, `${field} step ${n} is outside the scale (${lo} to ${hi})`);
         offScale.add(name);
@@ -110,16 +112,27 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
   if (type.scale.min != null && type.scale.min !== '' && !MIN_LENGTH.test(String(type.scale.min).trim())) fail('scale', null, `minimum size "${type.scale.min}" isn't a length in rem or px`);
   else if (min > parseFloat(type.scale.base)) fail('scale', null, `minimum size (${px(min)}px) is larger than the base (${px(parseFloat(type.scale.base))}px)`);
 
+  /* The ceilings: lengths, the lower one above the base and the floor, the
+     upper one at least the lower */
+  const [lower, upper] = [ceilingSize(type, 'lower'), ceilingSize(type, 'upper')];
+  for (const end of ['lower', 'upper']) {
+    const value = type.scale.ceiling?.[end];
+    if (value != null && value !== '' && Number(value) !== 0 && !MIN_LENGTH.test(String(value).trim())) fail('scale', null, `${end} ceiling "${value}" isn't a length in rem or px`);
+  }
+  if (lower < parseFloat(type.scale.base)) fail('scale', null, `lower ceiling (${px(lower)}px) is smaller than the base (${px(parseFloat(type.scale.base))}px)`);
+  if (lower <= min) fail('scale', null, `lower ceiling (${px(lower)}px) isn't above the minimum (${px(min)}px)`);
+  if (upper < lower) fail('scale', null, `upper ceiling (${px(upper)}px) is smaller than the lower one (${px(lower)}px)`);
+
   /* The scale increases step to step, fixed and at both ends of the range.
      Steps raised to the minimum may be equal to each other. */
   const fixed = scaleSteps(type);
   const fluid = fluidSteps(type);
-  const grows = (a, b) => b > a || (min > 0 && a === min && b === min);
+  const grows = (a, b, ceiling) => b > a || (a === b && ((min > 0 && a === min) || a === ceiling));
   const floored = new Set();
   for (let n = lo + 1; n <= hi; n++) {
-    if (!grows(fixed[n - 1], fixed[n])) fail('scale', null, `fixed step ${n} (${px(fixed[n])}px) isn't larger than step ${n - 1}`);
-    if (!grows(fluid[n - 1][0], fluid[n][0])) fail('scale', null, `step ${n} at the smallest viewport isn't larger than step ${n - 1}`);
-    if (!grows(fluid[n - 1][1], fluid[n][1])) fail('scale', null, `step ${n} at the largest viewport isn't larger than step ${n - 1}`);
+    if (!grows(fixed[n - 1], fixed[n], lower)) fail('scale', null, `fixed step ${n} (${px(fixed[n])}px) isn't larger than step ${n - 1}`);
+    if (!grows(fluid[n - 1][0], fluid[n][0], lower)) fail('scale', null, `step ${n} at the smallest viewport isn't larger than step ${n - 1}`);
+    if (!grows(fluid[n - 1][1], fluid[n][1], upper)) fail('scale', null, `step ${n} at the largest viewport isn't larger than step ${n - 1}`);
     if (min > 0 && fixed[n] === min) floored.add(n - 1).add(n);
   }
   if (floored.size) report('floor', 'scale', `steps ${[...floored].join(', ')} are all at the ${px(min)}px minimum, so they look the same`);
@@ -128,23 +141,33 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
   const sizes = Object.fromEntries(Object.entries(styles).filter(([name]) => !offScale.has(name)).map(([name, s]) => [name, styleSizes(type, s)]).filter(([, v]) => v));
   for (const [name, sz] of Object.entries(sizes)) {
     if (sz.compact > sz.fixed) fail('compact', name, `compact (${px(sz.compact)}px) is larger than fixed (${px(sz.fixed)}px)`);
-    for (const mode of ['fluid', 'cq']) {
-      const r = sz[mode];
-      if (!r) continue;
-      const growth = r[1] / r[0];
-      if (growth > FLUID_LIMIT) fail('growth', name, `${mode} grows ${growth.toFixed(2)}× (${px(r[0])} to ${px(r[1])}px), more than ${FLUID_LIMIT}×`);
+    if (sz.fluid) {
+      const growth = sz.fluid[1] / sz.fluid[0];
+      if (growth > FLUID_LIMIT) fail('growth', name, `fluid grows ${growth.toFixed(2)}× (${px(sz.fluid[0])} to ${px(sz.fluid[1])}px), more than ${FLUID_LIMIT}×`);
     }
-    const smallest = Math.min(sz.fixed, sz.compact, ...(sz.fluid ?? []), ...(sz.cq ?? []));
+    const smallest = Math.min(sz.fixed, sz.compact, ...(sz.fluid ?? []));
     if (px(smallest) < FLOOR_PX) {
-      const modes = ['fixed', 'compact', 'fluid', 'cq'].filter((m) => (Array.isArray(sz[m]) ? sz[m][0] : sz[m]) === smallest);
+      const modes = ['fixed', 'compact', 'fluid'].filter((m) => (Array.isArray(sz[m]) ? sz[m][0] : sz[m]) === smallest);
       report('floor', name, `${px(smallest)}px (${modes.join(', ')}), below ${FLOOR_PX}px`);
+    }
+  }
+
+  /* The floor and weight: 12px suits most fonts at a regular weight, but a
+     font that's thin at 400 may need more. A report, so the designer looks */
+  const floorPx = min > 0 ? px(min) : FLOOR_PX;
+  for (const [name, sz] of Object.entries(sizes)) {
+    const smallest = px(Math.min(sz.fixed, sz.compact, ...(sz.fluid ?? [])));
+    const weight = styles[name].weight ?? styles.body?.weight;
+    const value = weight && weights.includes(weight) ? Number(resolveToken(`font-weight.${weight}`, [semantic, global])) : NaN;
+    if (smallest <= floorPx && value <= WEIGHT_FLOOR) {
+      report('floor-weight', name, `${smallest}px at weight ${value}: if the font is thin at this weight, raise the minimum size or use a heavier weight`);
     }
   }
 
   /* Hierarchy: each heading at least as large as the next, in every mode */
   const at = (sz, mode, end) => (mode === 'fixed' || mode === 'compact' ? sz[mode] : sz[mode]?.[end] ?? sz.fixed);
   const ordered = HIERARCHY.filter((n) => sizes[n]);
-  const checks = [['fixed'], ['compact'], ['fluid', 0], ['fluid', 1], ['cq', 0], ['cq', 1]];
+  const checks = [['fixed'], ['compact'], ['fluid', 0], ['fluid', 1]];
   for (let i = 1; i < ordered.length; i++) {
     const [big, small] = [ordered[i - 1], ordered[i]];
     for (const [mode, end] of checks) {
@@ -170,11 +193,17 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
     if (lh !== undefined && bodyLh !== undefined && lh > bodyLh) report('line-height', name, `line height ${lh} is looser than body's ${bodyLh}`);
   }
 
-  /* cq follows fluid unless a style says otherwise */
+  /* What the ceilings hold down: each style's size without them */
+  const open = unlimitedSteps(type);
+  const free = { fixed: Object.fromEntries(Object.entries(open).map(([n, [a]]) => [n, a])), fluid: open };
   for (const [name, sz] of Object.entries(sizes)) {
-    if (sz.fluid && sz.cq && (sz.fluid[0] !== sz.cq[0] || sz.fluid[1] !== sz.cq[1])) {
-      report('modes', name, `cq runs ${px(sz.cq[0])} to ${px(sz.cq[1])}px but fluid runs ${px(sz.fluid[0])} to ${px(sz.fluid[1])}px`);
-    }
+    const was = styleSizes(type, styles[name], free);
+    const held = [];
+    if (was.fixed > sz.fixed) held.push(`fixed ${px(was.fixed)}px`);
+    if (was.compact > sz.compact) held.push(`compact ${px(was.compact)}px`);
+    if (was.fluid && was.fluid[0] > sz.fluid[0] && was.fluid[0] !== was.fixed) held.push(`fluid's start ${px(was.fluid[0])}px`);
+    if (held.length) report('ceiling', name, `held to the ${px(lower)}px lower ceiling (${held.join(', ')} without it)`);
+    if (was.fluid && was.fluid[1] > sz.fluid[1]) report('ceiling', name, `held to the ${px(upper)}px upper ceiling (fluid's end ${px(was.fluid[1])}px without it)`);
   }
 
   /* Same kind, same size: only weight or case tells them apart */

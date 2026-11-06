@@ -10,7 +10,7 @@
    | ---------- | ------------------------- | ------------------------------------------------- |
    | Size       | (default) --sm --lg       | --{input,select,textarea,combobox}-size, --controls-size    |
    | Prominence | (outline) --subtle --plain | --{input,select,textarea,combobox}-prominence, --controls-prominence |
-   | Corners    | --round                   | --{input,select,textarea,combobox}-corners, --controls-corners |
+   | Corners    | --round (not textarea)    | --{input,select,combobox}-corners, --controls-corners |
 
    A compact container (--ui-sizing: compact) steps controls to --sm.
    --flush is layout, not prominence: no inline padding and no boundary, for
@@ -225,8 +225,10 @@
       --_control-sides-transparency: 100%;
     }
 
-    @container style(--textarea-corners: round) {
-      --_control-radius: var(--radius-full, 9999px);
+    /* A textarea is several lines tall, so a full radius would cut into its
+       text: it keeps its corners in a round group */
+    @container style(--controls-corners: round) {
+      --_control-radius: var(--input-radius, var(--radius, 0.25rem));
     }
   }
 
@@ -421,7 +423,7 @@
 /* ==========================================================================
    4. Corners
    ========================================================================== */
-:where(.input--round, .select--round, .textarea--round) {
+:where(.input--round, .select--round) {
   --_control-radius: var(--radius-full, 9999px);
 }
 
@@ -522,11 +524,13 @@
 }
 
 :where(.color-input--stretch) {
-  @supports not (width: stretch) {
-    inline-size: 100%;
+  inline-size: 100%;
+
+  @supports (inline-size: -webkit-fill-available) {
+    inline-size: -webkit-fill-available;
   }
 
-  @supports (width: stretch) {
+  @supports (inline-size: stretch) {
     inline-size: stretch;
   }
 }

@@ -6,14 +6,16 @@
 
    | Axis   | Modifiers                                         | Container flag |
    | ------ | ------------------------------------------------- | -------------- |
-   | Size   | (1em) --sm --lg                                    | none: set font-size or --icon-size |
+   | Size   | (--icon-base-size) --sm --lg                       | none: set font-size or --icon-size |
    | Intent | (text colour) --accent --info --danger --warning --success | none: set color |
 
    Also: --dir mirrors a directional glyph in right-to-left text;
    --disclosure rotates with the nearest [aria-expanded].
 
    Hooks: --icon-size (any length) sizes every icon inside an element.
-   Component tokens: --icon-size-sm, --icon-size-lg.
+   Component tokens: --icon-base-size (a plain number of ems, 1 by default:
+   the default size, for an icon set that sits small or large beside text;
+   Chips, Statuses, Tabs and Buttons follow it), --icon-size-sm, --icon-size-lg.
 
    Accessibility:
    - Decorative icons (next to text, or inside a named control) take
@@ -33,7 +35,7 @@
    1. Base Icon (:where(.icon))
    ========================================================================== */
 :where(.icon) {
-  --_icon-size: var(--icon-size, 1em);
+  --_icon-size: var(--icon-size, calc(var(--icon-base-size, 1) * 1em));
   --_icon-mirror: 1;
 
   /* Layout & Sizing */
@@ -62,7 +64,15 @@
 }
 
 :where(.icon--stretch) {
-  --_icon-size: stretch;
+  --_icon-size: 100%;
+
+  @supports (inline-size: -webkit-fill-available) {
+    --_icon-size: -webkit-fill-available;
+  }
+
+  @supports (inline-size: stretch) {
+    --_icon-size: stretch;
+  }
 }
 
 /* ==========================================================================

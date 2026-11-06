@@ -91,7 +91,16 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--switch-gap, var(--spacing-md));
-  inline-size: stretch;
+  inline-size: 100%;
+
+  @supports (inline-size: -webkit-fill-available) {
+    inline-size: -webkit-fill-available;
+  }
+
+  @supports (inline-size: stretch) {
+    inline-size: stretch;
+  }
+
   min-block-size: var(--spacing-target-min, 3rem);
   cursor: pointer;
   user-select: none;

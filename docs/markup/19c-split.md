@@ -72,6 +72,18 @@ A container variant changes the side pane's width once the Split's container rea
 </div>
 ```
 
+## Columns That Line Up with the Sidebar
+`--sidebar` sizes the side pane, or both ends of `--three`, to the app's sidebar column, so a row above or below the workspace lines up with the [Sidebar](34-sidebar.md): a [Header](33-header.md) split into three, with the brand over the Sidebar and the search over the main. The width is a token, `--app-sidebar-width`, which the Sidebar reads too, and a compact region (`.ui-compact`, `.fine:ui-compact`) narrows both. Use `--nowrap` so the ends keep the width exactly, and the container variant so they fit their content where the Sidebar is hidden.
+```html live
+<div class="container-inline">
+  <div class="split split--three split--nowrap @3xl:split--sidebar">
+    <div class="card"><p class="text">As wide as the Sidebar</p></div>
+    <div class="card"><p class="text">Centre, over the main</p></div>
+    <div class="card"><p class="text">As wide as the Sidebar</p></div>
+  </div>
+</div>
+```
+
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |
@@ -90,6 +102,7 @@ Two panes side by side: a side pane at its preferred width and a main pane that 
 | `@xs:` … `@7xl:` + `split--{width}` | The side pane's width once the nearest container reaches the size (Tailwind's container scale: `xs` 20rem, `sm` 24, `md` 28, `lg` 32, `xl` 36, `2xl` 42, `3xl` 48, `4xl` 56, `5xl` 64, `6xl` 72, `7xl` 80); the widest that applies wins |
 | `--end` | The side pane is the last child |
 | `--nowrap` | Never wrap: the side pane keeps its width, the main shrinks |
+| `--sidebar` | The side pane, or both ends of `--three`, as wide as the app's sidebar column (`--app-sidebar-width`: 18rem, 12rem in a compact region). With `--nowrap` the panes line up with a [Sidebar](34-sidebar.md) exactly; `@3xl:split--sidebar` keeps it to where the Sidebar sits beside the main |
 | `--three` | Start, centre and end panes; start and end at their width or their content's, the centre takes the rest. When the centre would drop below its minimum, a side pane wraps to its own full-width row. With `--nowrap`, one row always |
 | `--tight`, `--ruled` | No gap; a rule in the gap |
 

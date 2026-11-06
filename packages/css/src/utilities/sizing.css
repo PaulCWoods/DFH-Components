@@ -3,8 +3,19 @@
    --------------------------------------------------------------------------
    Inline and block sizes from the Tier 2 block scale (--spacing-block-2xs …
    --spacing-block-2xl). Minimum and maximum sizes never exceed the space
-   available. Components size themselves from their tokens; set the token
-   rather than a size class on a component.
+   available, except a minimum with min-w-force beside it
+   (min-w-xs min-w-force), for content that must keep its width and scroll
+   instead, such as a cell in a scrolling table. Components size themselves
+   from their tokens; set the token rather than a size class on a component.
+
+   stretch (w-stretch, h-stretch, size-stretch …) fills the containing block
+   less the element's own margins, where 100% adds them and overflows: a
+   panel with a margin, or a box with padding, fits exactly. Three values,
+   oldest first, each newer one in its own @supports (as plain repeated
+   declarations the minifier keeps only the last): 100%, then
+   -webkit-fill-available (the same sizing under its old name: Safari 7 to
+   26, Chrome 22 to 137, Firefox 146 on width and height), then stretch
+   (Chrome 138, Safari 27). Drop the first two as stretch becomes Baseline.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -43,6 +54,18 @@
     inline-size: 100%;
 }
 
+:where(.inline-size-stretch, .w-stretch) {
+    inline-size: 100%;
+
+    @supports (inline-size: -webkit-fill-available) {
+        inline-size: -webkit-fill-available;
+    }
+
+    @supports (inline-size: stretch) {
+        inline-size: stretch;
+    }
+}
+
 :where(.inline-size-auto, .w-auto) {
     inline-size: auto;
 }
@@ -58,34 +81,74 @@
 
 :where(.min-inline-size-2xs, .min-w-2xs) {
     min-inline-size: min(var(--spacing-block-2xs, 8rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block-2xs, 8rem);
+    }
 }
 
 :where(.min-inline-size-xs, .min-w-xs) {
     min-inline-size: min(var(--spacing-block-xs, 16rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block-xs, 16rem);
+    }
 }
 
 :where(.min-inline-size-sm, .min-w-sm) {
     min-inline-size: min(var(--spacing-block-sm, 24rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block-sm, 24rem);
+    }
 }
 
 :where(.min-inline-size-md, .min-w-md) {
     min-inline-size: min(var(--spacing-block, 36rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block, 36rem);
+    }
 }
 
 :where(.min-inline-size-lg, .min-w-lg) {
     min-inline-size: min(var(--spacing-block-lg, 48rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block-lg, 48rem);
+    }
 }
 
 :where(.min-inline-size-xl, .min-w-xl) {
     min-inline-size: min(var(--spacing-block-xl, 64rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block-xl, 64rem);
+    }
 }
 
 :where(.min-inline-size-2xl, .min-w-2xl) {
     min-inline-size: min(var(--spacing-block-2xl, 80rem), 100%);
+
+    &:where(.min-inline-size-force, .min-w-force) {
+        min-inline-size: var(--spacing-block-2xl, 80rem);
+    }
 }
 
 :where(.min-inline-size-0, .min-w-0) {
     min-inline-size: 0;
+}
+
+:where(.min-inline-size-stretch, .min-w-stretch) {
+    min-inline-size: 100%;
+
+    @supports (min-inline-size: -webkit-fill-available) {
+        min-inline-size: -webkit-fill-available;
+    }
+
+    @supports (min-inline-size: stretch) {
+        min-inline-size: stretch;
+    }
 }
 
 :where(.max-inline-size-2xs, .max-w-2xs) {
@@ -118,6 +181,18 @@
 
 :where(.max-inline-size-full, .max-w-full) {
     max-inline-size: 100%;
+}
+
+:where(.max-inline-size-stretch, .max-w-stretch) {
+    max-inline-size: 100%;
+
+    @supports (max-inline-size: -webkit-fill-available) {
+        max-inline-size: -webkit-fill-available;
+    }
+
+    @supports (max-inline-size: stretch) {
+        max-inline-size: stretch;
+    }
 }
 
 :where(.max-inline-size-none, .max-w-none) {
@@ -159,6 +234,18 @@
 
 :where(.block-size-full, .h-full) {
     block-size: 100%;
+}
+
+:where(.block-size-stretch, .h-stretch) {
+    block-size: 100%;
+
+    @supports (block-size: -webkit-fill-available) {
+        block-size: -webkit-fill-available;
+    }
+
+    @supports (block-size: stretch) {
+        block-size: stretch;
+    }
 }
 
 :where(.block-size-auto, .h-auto) {
@@ -210,6 +297,18 @@
     min-block-size: 100%;
 }
 
+:where(.min-block-size-stretch, .min-h-stretch) {
+    min-block-size: 100%;
+
+    @supports (min-block-size: -webkit-fill-available) {
+        min-block-size: -webkit-fill-available;
+    }
+
+    @supports (min-block-size: stretch) {
+        min-block-size: stretch;
+    }
+}
+
 :where(.min-block-size-screen, .min-h-screen) {
     min-block-size: 100dvb;
 }
@@ -244,6 +343,18 @@
 
 :where(.max-block-size-full, .max-h-full) {
     max-block-size: 100%;
+}
+
+:where(.max-block-size-stretch, .max-h-stretch) {
+    max-block-size: 100%;
+
+    @supports (max-block-size: -webkit-fill-available) {
+        max-block-size: -webkit-fill-available;
+    }
+
+    @supports (max-block-size: stretch) {
+        max-block-size: stretch;
+    }
 }
 
 
@@ -300,6 +411,21 @@
 :where(.size-full) {
     inline-size: 100%;
     block-size: 100%;
+}
+
+:where(.size-stretch) {
+    inline-size: 100%;
+    block-size: 100%;
+
+    @supports (inline-size: -webkit-fill-available) {
+        inline-size: -webkit-fill-available;
+        block-size: -webkit-fill-available;
+    }
+
+    @supports (inline-size: stretch) {
+        inline-size: stretch;
+        block-size: stretch;
+    }
 }
 
 /* --------------------------------------------------------------------------

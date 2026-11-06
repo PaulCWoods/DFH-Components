@@ -235,3 +235,50 @@ export const StretchAndPhoneDensity: Story = {
       </div>
     </div>`,
 };
+
+const overSidebar = (id: string, density = '') => `
+  <div class="app ${density}">
+    <div class="header header--flush header--stretch">
+      <div class="header__bar">
+        <div class="split split--three split--nowrap @3xl:split--sidebar">
+          ${brand}
+          <form role="search" aria-label="Plants, ${id}">
+            <input type="search" class="input input--subtle inline-size-full" placeholder="Search plants" aria-label="Search plants, ${id}">
+          </form>
+          <div class="cluster cluster--end gap-xs">
+            <button type="button" class="button button--plain button--icon">${icon('Bell')}<span class="sr-only">Notifications</span></button>
+            <button type="button" class="button">Sign in</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app__workspace">
+      <div class="sidebar max-md:hide">
+        <div class="sidebar__body">
+          <nav class="navigation-tree" aria-label="Sections, ${id}">
+            <ol>
+              <li><a href="#" class="button" aria-current="page">${icon('Home')}<span>Borders</span></a></li>
+              <li><a href="#" class="button">${icon('Calendar')}<span>Calendar</span></a></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="main p-cushion"><p class="text">The search sits over the main; the brand and the actions over columns as wide as the Sidebar.</p></div>
+    </div>
+  </div>`;
+
+export const OverASidebar: Story = {
+  name: 'Three columns over a Sidebar',
+  parameters: {
+    docs: {
+      description: {
+        story: '`--flush` drops the band\'s inline padding (the safe areas stay) and the bar\'s block padding (its height stays). The Split\'s ends take the app\'s sidebar column (`--app-sidebar-width`) from 48em with `@3xl:split--sidebar`, and pad like the Sidebar. In a compact region (`.ui-compact` on the app) the Sidebar and the ends narrow together.',
+      },
+    },
+  },
+  render: () => `
+    <div class="stack gap-lg">
+      ${overSidebar('default')}
+      ${overSidebar('compact', 'ui-compact')}
+    </div>`,
+};

@@ -252,74 +252,74 @@
     },
     "amber": {
       "100": {
-        "$value": "#ffeddc",
+        "$value": "#ffeed0",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(95.5% 0.030 64.6)"
+            "oklch": "oklch(95.5% 0.044 82.1)"
           }
         }
       },
       "200": {
-        "$value": "#ffdbba",
+        "$value": "#ffdda1",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(91.3% 0.060 64.6)"
+            "oklch": "oklch(91.3% 0.086 82.1)"
           }
         }
       },
       "300": {
-        "$value": "#ffb66e",
+        "$value": "#f0c062",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(83.1% 0.123 64.6)"
+            "oklch": "oklch(83.1% 0.124 82.1)"
           }
         }
       },
       "400": {
-        "$value": "#ea8e16",
+        "$value": "#d59c00",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(72.7% 0.159 64.6)"
+            "oklch": "oklch(72.7% 0.150 82.1)"
           }
         }
       },
       "500": {
-        "$value": "#bb6f00",
+        "$value": "#a97b00",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(61.2% 0.138 64.6)"
+            "oklch": "oklch(61.2% 0.126 82.1)"
           }
         }
       },
       "600": {
-        "$value": "#8d5300",
+        "$value": "#7f5c00",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(49.8% 0.112 64.6)"
+            "oklch": "oklch(49.8% 0.103 82.1)"
           }
         }
       },
       "700": {
-        "$value": "#663a00",
+        "$value": "#5b4100",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(39.4% 0.089 64.6)"
+            "oklch": "oklch(39.4% 0.081 82.1)"
           }
         }
       },
       "800": {
-        "$value": "#492800",
+        "$value": "#412d00",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(31.2% 0.070 64.6)"
+            "oklch": "oklch(31.2% 0.064 82.1)"
           }
         }
       },
       "900": {
-        "$value": "#3a1f00",
+        "$value": "#342300",
         "$extensions": {
           "com.designforhumans.theme-engine": {
-            "oklch": "oklch(27.0% 0.061 64.6)"
+            "oklch": "oklch(27.0% 0.056 82.1)"
           }
         }
       }
@@ -471,6 +471,80 @@
           }
         }
       }
+    },
+    "teal": {
+      "100": {
+        "$value": "#bbfffe",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(95.5% 0.067 194.8)"
+          }
+        }
+      },
+      "200": {
+        "$value": "#9ef4f3",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(91.3% 0.083 194.8)"
+          }
+        }
+      },
+      "300": {
+        "$value": "#5fdede",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(83.1% 0.112 194.8)"
+          }
+        }
+      },
+      "400": {
+        "$value": "#00bebe",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(72.7% 0.124 194.8)"
+          }
+        }
+      },
+      "500": {
+        "$value": "#009797",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(61.2% 0.105 194.8)"
+          }
+        }
+      },
+      "600": {
+        "$value": "#007171",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(49.8% 0.085 194.8)"
+          }
+        }
+      },
+      "700": {
+        "$value": "#005151",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(39.4% 0.067 194.8)"
+          }
+        }
+      },
+      "800": {
+        "$value": "#003939",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(31.2% 0.053 194.8)"
+          }
+        }
+      },
+      "900": {
+        "$value": "#002d2d",
+        "$extensions": {
+          "com.designforhumans.theme-engine": {
+            "oklch": "oklch(27.0% 0.046 194.8)"
+          }
+        }
+      }
     }
   },
   "opacity": {
@@ -557,6 +631,9 @@
     "8": {
       "$value": "0.5rem"
     },
+    "10": {
+      "$value": "0.625rem"
+    },
     "12": {
       "$value": "0.75rem"
     },
@@ -575,6 +652,9 @@
     "64": {
       "$value": "4rem"
     },
+    "96": {
+      "$value": "6rem"
+    },
     "128": {
       "$value": "8rem"
     },
@@ -583,6 +663,9 @@
     },
     "256": {
       "$value": "16rem"
+    },
+    "288": {
+      "$value": "18rem"
     },
     "320": {
       "$value": "20rem"
@@ -628,18 +711,6 @@
   "typography": {
     "font-family": {
       "$type": "fontFamilies",
-      "inter": {
-        "$value": "\"Inter\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
-      },
-      "georgia": {
-        "$value": "\"Georgia\", Cambria, \"Times New Roman\", Times, serif"
-      },
-      "jetbrains-mono": {
-        "$value": "\"JetBrains Mono\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
-      },
-      "plus-jakarta-sans": {
-        "$value": "\"Plus Jakarta Sans\", \"Inter\", system-ui, -apple-system, sans-serif"
-      },
       "sans": {
         "$value": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif"
       },
@@ -651,27 +722,6 @@
       },
       "display": {
         "$value": "{typography.font-family.sans}"
-      },
-      "pt-sans": {
-        "$value": "\"PT Sans\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
-      },
-      "pt-serif": {
-        "$value": "\"PT Serif\", Cambria, \"Times New Roman\", Times, serif"
-      },
-      "pt-mono": {
-        "$value": "\"adapter-mono-pe-variable\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
-      },
-      "adapter-sans": {
-        "$value": "\"adapter-pe-variable\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif"
-      },
-      "mencken": {
-        "$value": "\"mencken-std-text\", Cambria, \"Times New Roman\", Times, serif"
-      },
-      "adapter-mono": {
-        "$value": "\"adapter-mono-pe-variable\", Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
-      },
-      "avory": {
-        "$value": "\"avory-i-pe\", \"Inter\", system-ui, -apple-system, sans-serif"
       }
     },
     "font-size-base": {
@@ -739,10 +789,10 @@
         "$value": "2.986rem"
       },
       "7": {
-        "$value": "3.5832rem"
+        "$value": "3rem"
       },
       "8": {
-        "$value": "4.2998rem"
+        "$value": "3rem"
       },
       "$type": "dimension",
       "minus-2": {
@@ -771,7 +821,7 @@
       },
       "500": {
         "$value": 500,
-        "$description": "BrandMedium"
+        "$description": "Medium"
       },
       "600": {
         "$value": 600,
@@ -840,6 +890,16 @@
       "$value": "0.75rem",
       "$type": "dimension",
       "$description": "The smallest a step of the scale may be: smaller steps are raised to it, fixed and fluid. 0 sets no minimum"
+    },
+    "font-size-max-small": {
+      "$value": "3rem",
+      "$type": "dimension",
+      "$description": "The largest a size may be at the small end (fixed, compact, fluid at its start): larger ones are brought down to it"
+    },
+    "font-size-max-large": {
+      "$value": "6rem",
+      "$type": "dimension",
+      "$description": "The largest a size may be at the large end of fluid and container sizes: larger ones are brought down to it"
     }
   },
   "border-width": {
@@ -974,12 +1034,12 @@
           "$description": "Fluid font size step 6 (2.986rem / 48px Mobile to 5.722rem / 92px Desktop)"
         },
         "7": {
-          "$value": "fluid(3.5832rem, 7.1526rem)",
-          "$description": "Fluid font size step 7 (3.5832rem / 57px Mobile to 7.1526rem / 114px Desktop)"
+          "$value": "fluid(3rem, 6rem)",
+          "$description": "Fluid font size step 7 (3rem / 48px Mobile to 6rem / 96px Desktop)"
         },
         "8": {
-          "$value": "fluid(4.2998rem, 8.9407rem)",
-          "$description": "Fluid font size step 8 (4.2998rem / 69px Mobile to 8.9407rem / 143px Desktop)"
+          "$value": "fluid(3rem, 6rem)",
+          "$description": "Fluid font size step 8 (3rem / 48px Mobile to 6rem / 96px Desktop)"
         },
         "$type": "dimension",
         "minus-2": {

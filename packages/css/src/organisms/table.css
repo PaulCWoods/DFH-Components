@@ -122,7 +122,7 @@
      blur, so nothing shows above or below the cell; --_table-dir flips
      the side in right-to-left text. */
   --_table-dir: 1;
-  --_table-column-shadow-size: var(--table-column-shadow-size, 0.5rem);
+  --_table-column-shadow-size: var(--table-column-shadow-size, var(--spacing-8));
   --_table-column-shadow-color: var(--shadow-color, transparent);
   --_table-column-shadow-end:
     calc(var(--_table-dir) * var(--_table-column-shadow-size)) 0 var(--_table-column-shadow-size) calc(var(--_table-column-shadow-size) * -1) var(--_table-column-shadow-color),
@@ -213,6 +213,13 @@
     background-color: var(--_table-head-bg);
     border-block-end: var(--_table-head-border-width) solid var(--_table-border-color);
     vertical-align: bottom;
+  }
+
+  /* Row groups: a body that follows another is ruled off like the head.
+     Drawn on its first row's cells, so it also shows when the borders are
+     separate (a sticky head) */
+  :where(tbody + tbody > tr:first-child) > :where(th, td) {
+    border-block-start: var(--_table-head-border-width) solid var(--_table-border-color);
   }
 
   :where(tfoot th, tfoot td) {
@@ -327,7 +334,7 @@
 }
 
 :where(.table__col--index) {
-  inline-size: var(--table-col-index-width, calc(var(--spacing-md) * 2.5));
+  inline-size: var(--table-col-index-width, var(--spacing-48));
   text-align: center;
   white-space: nowrap;
 }
@@ -337,7 +344,7 @@
 }
 
 :where(.table__col--sm) {
-  inline-size: var(--table-col-sm-width, calc(var(--spacing-md) * 6));
+  inline-size: var(--table-col-sm-width, var(--spacing-96));
 }
 
 :where(.table__col--md) {
@@ -353,7 +360,7 @@
 }
 
 :where(.table__col--actions) {
-  inline-size: var(--table-col-actions-width, calc(var(--spacing-md) * 6.5));
+  inline-size: var(--table-col-actions-width, var(--spacing-96));
   text-align: end;
   white-space: nowrap;
 }
@@ -467,7 +474,15 @@
   display: flex;
   gap: 0.5em;
   inline-size: 100%;
-  inline-size: stretch;
+
+  @supports (inline-size: -webkit-fill-available) {
+    inline-size: -webkit-fill-available;
+  }
+
+  @supports (inline-size: stretch) {
+    inline-size: stretch;
+  }
+
   margin-block: calc(var(--_table-cell-padding-block) * -1);
   margin-inline: calc(var(--_table-cell-padding-inline) * -1);
   padding-block: var(--_table-cell-padding-block);

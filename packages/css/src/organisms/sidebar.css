@@ -40,11 +40,11 @@
 :where(.sidebar) {
   /* Private manifest */
   --_sidebar-bg: var(--sidebar-bg, var(--surface-card, Canvas));
-  --_sidebar-border-color: var(--sidebar-border-color, var(--border-color-quiet, currentColor));
+  --_sidebar-border-color: var(--sidebar-border-color, var(--app-border-color, var(--border-color-quiet, currentColor)));
   --_sidebar-border-style: var(--sidebar-border-style, var(--app-border-style, solid));
-  --_sidebar-border-width: var(--sidebar-border-width, var(--border-width, 1px));
+  --_sidebar-border-width: var(--sidebar-border-width, var(--app-border-width, var(--border-width, 1px)));
   --_sidebar-padding: var(--sidebar-padding, var(--spacing-cushion));
-  --_sidebar-width: var(--sidebar-width, 18rem);
+  --_sidebar-width: var(--sidebar-width, var(--app-sidebar-width, var(--spacing-288)));
   --_sidebar-min-width: var(--sidebar-min-width, 14rem);
   --_sidebar-offset: 0px;
   --_sidebar-safe-start: var(--safe-area-inset-inline-start, 0px);
@@ -54,8 +54,8 @@
 
   @container style(--ui-sizing: compact) {
     --_sidebar-padding: var(--sidebar-compact-padding, var(--spacing));
-    --_sidebar-width: var(--sidebar-compact-width, 12rem);
-    --_sidebar-min-width: var(--sidebar-compact-width, 12rem);
+    --_sidebar-width: var(--sidebar-compact-width, var(--app-sidebar-compact-width, var(--spacing-192)));
+    --_sidebar-min-width: var(--sidebar-compact-width, var(--app-sidebar-compact-width, var(--spacing-192)));
   }
 
   background-color: var(--_sidebar-bg);
@@ -212,8 +212,8 @@
 :where(.sidebar--compact) {
   --ui-sizing: compact;
   --_sidebar-padding: var(--sidebar-compact-padding, var(--spacing));
-  --_sidebar-width: var(--sidebar-compact-width, 12rem);
-  --_sidebar-min-width: var(--sidebar-compact-width, 12rem);
+  --_sidebar-width: var(--sidebar-compact-width, var(--app-sidebar-compact-width, var(--spacing-192)));
+  --_sidebar-min-width: var(--sidebar-compact-width, var(--app-sidebar-compact-width, var(--spacing-192)));
 }
 
 /* Pinned beside the scrolling page */

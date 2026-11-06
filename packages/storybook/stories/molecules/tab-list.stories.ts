@@ -263,7 +263,7 @@ export const Floating: Story = {
 export const Docked: Story = {
   render: () =>
     withTabBehaviour(`
-    <div class="sb-demo-stage">
+    <div class="sb-demo-stage min-h-2xs">
       <nav class="${listClasses({ style: 'segmented', round: true, extra: ['tab-list--floating', 'tab-list--docked'] })}" aria-label="App">
         <a href="#" class="tab tab--icon" aria-current="page">${icon('Home')}<span class="tab__text">Home</span></a>
         <a href="#" class="tab tab--icon">${icon('Search')}<span class="tab__text">Search</span></a>

@@ -54,7 +54,7 @@
 
   /* Geometry */
   --_banner-radius: var(--banner-radius, var(--radius));
-  --_banner-shadow: var(--banner-shadow, none);
+  --_banner-shadow: var(--banner-shadow, var(--shadow-none, none));
   --_banner-padding: var(--banner-padding, var(--spacing-sm));
   --_banner-body-padding: var(--banner-body-padding, var(--spacing-sm));
   --_banner-gap: var(--banner-gap, var(--spacing-0));

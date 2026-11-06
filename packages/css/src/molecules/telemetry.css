@@ -45,7 +45,7 @@
   --_telemetry-trend-gap: var(--telemetry-trend-gap, var(--spacing-sm));
   --_telemetry-icon-gap: var(--telemetry-icon-gap, var(--spacing-sm));
   --_telemetry-lead-icon-size: var(--telemetry-lead-icon-size, var(--spacing-24));
-  --_telemetry-min-size: var(--telemetry-min-size, 3rem);
+  --_telemetry-min-size: var(--telemetry-min-size, var(--spacing-48));
   /* The icon gutter: none until --icon-start and an icon are both present */
   --_telemetry-gutter: 0px;
 
@@ -179,7 +179,7 @@
 
 :where(.telemetry--compact) {
   --ui-sizing: compact;
-  --_telemetry-min-size: var(--telemetry-compact-min-size, 2rem);
+  --_telemetry-min-size: var(--telemetry-compact-min-size, var(--spacing-32));
   --_telemetry-padding-block: var(--telemetry-compact-padding-block, var(--spacing-xs));
   --_telemetry-padding-inline: var(--telemetry-compact-padding-inline, var(--spacing-sm));
 }

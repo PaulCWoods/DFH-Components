@@ -172,6 +172,7 @@ Options: `--bordered` (outer frame and column rules), `--striped`, `--hover`, `-
 - A layout grid is not a Table. Use a Table only for data with rows and columns.
 - **Type:** the Table resets to fixed sizing and uses the body text tokens; head and foot cells are bold. Text atoms in cells win.
 - **Compact:** `--compact` or any compact region: 8px by 12px padding and compact text.
+- **Row groups:** split the body into several `<tbody>`s, one per group; a `<tbody>` that follows another is ruled off like the head. Name a group with a first row holding `<th scope="rowgroup" colspan="…">`.
 - **Sticky parts cover what scrolls under them,** so set `scroll-padding-block` on the container to the part's height, to keep a focused control in view (WCAG 2.4.11).
 
 ## Cells and Columns

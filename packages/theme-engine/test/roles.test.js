@@ -31,7 +31,7 @@ test('changing a role changes what the gate measures', () => {
 
 test('unknown roles and colours are refused', () => {
   assert.throws(() => applyRoles(semantic, { 'surface.nope': { light: 'white', dark: 'black' } }), /Unknown role/);
-  assert.throws(() => applyRoles(semantic, { 'surface.card': { light: 'teal.500', dark: 'black' } }, { palette, global }), /no colour/);
+  assert.throws(() => applyRoles(semantic, { 'surface.card': { light: 'mauve.500', dark: 'black' } }, { palette, global }), /no colour/);
 });
 
 test('roles group into surface, foreground and border', () => {

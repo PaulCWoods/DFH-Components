@@ -117,6 +117,24 @@ A real `<header>`, so it can't be shown live on this page, which has its own.
 ```
 Two bars in one `<header>`, with a rule between them. One landmark, one band.
 
+## Three Columns over a Sidebar
+```html live
+<div class="header header--flush header--stretch">
+  <div class="header__bar">
+    <div class="split split--three split--nowrap @3xl:split--sidebar">
+      <a href="/" class="brand"><span class="brand__name">Woodland Plants</span></a>
+      <form role="search" aria-label="Plants, three columns example">
+        <input type="search" class="input input--subtle inline-size-full" placeholder="Search plants" aria-label="Search plants">
+      </form>
+      <div class="cluster cluster--end">
+        <button type="button" class="button">Sign in</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+In an app with a [Sidebar](34-sidebar.md), the ends of the bar can be as wide as the Sidebar and the centre as wide as the main, so the search or navigation sits over the content it serves. `--flush` takes away the band's inline padding (the safe areas stay) and the bar's block padding (its height stays), and the [Split](19c-split.md)'s end panes pad like the Sidebar instead, so the Brand lines up with the Sidebar's content. `@3xl:split--sidebar` gives the ends the app's sidebar column from 48em, where the Sidebar sits beside the main; on a phone they fit their content. A compact region narrows the Sidebar and the ends together, so put the density on the region (`.fine:ui-compact` on the app), not `--compact` on the Header alone.
+
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |
@@ -136,12 +154,14 @@ The band at the top of a page or app that holds the Brand, the main navigation a
 | Density | default, `--compact`, `max-md:header--compact` | `--ui-sizing: compact` |
 | Placement | in flow, `--sticky` | none |
 | Width | bars capped at the site width (default), `--stretch` (no cap) | none |
+| Inset | padded (default), `--flush` (no inline padding but the safe areas, no block padding on the bars) | none |
 
 ### Further rules
 - **`.header`** is the band: always full width. Its inline padding (`--header-padding-inline`, plus the safe-area insets) keeps the bars off the screen edge, the way a Wrapper's gutter does.
 - **`.header__bar`** is a row. It is capped at `--header-max-width` (the site width) and centred, so its content lines up with a `.wrapper`'s. Its content is at least `--header-bar-min-size` tall (the target size; `--header-compact-bar-min-size` when compact), plus its block padding. Raise `--header-bar-min-size` for a taller header: `--header-height` is built from it, so the offsets follow. Never size the Header from `--header-height`; that is the height things that clear the Header read, and a script that measures the Header into it would loop.
 - **The Brand** is a [`.brand`](06d-brand.md): the mark and name, as a Link home.
 - **`.header__nav`** takes the free space and can shrink, so a scrollable Tab List fits. The bar's last part always sits at the end.
+- **A Split in a bar** takes the whole bar, with its panes centred on the block axis. In a `--flush` Header its first and last panes pad by the cushion, as the Sidebar does.
 - `--sticky` pins the Header to the top of the scrolling page. Its shadow shows only while it is stuck (a scroll-state query); browsers without one keep the border.
 - A gallery of headers on one page uses `<div class="header">` so there is still only one banner.
 

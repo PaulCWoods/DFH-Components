@@ -350,6 +350,10 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
   const desktopRatio = parseFloat(fluidScale['desktop-ratio']?.$value !== undefined ? fluidScale['desktop-ratio'].$value : 1.25) || 1.25;
   // The smallest a step may be: smaller steps are raised to it (0: no minimum)
   const minRem = parseFloat(typo['font-size-min']?.$value || '0') || 0;
+  // The ceilings: the largest a size may be at the small end and at the
+  // large end (no token: no ceiling)
+  const maxSmallRem = parseFloat(typo['font-size-max-small']?.$value) || Infinity;
+  const maxLargeRem = parseFloat(typo['font-size-max-large']?.$value) || Infinity;
 
   let changed = false;
 
@@ -359,7 +363,7 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
 
   steps.forEach(step => {
     const key = step < 0 ? `minus-${Math.abs(step)}` : `${step}`;
-    const calculatedRem = +Math.max(minRem, baseRem * Math.pow(ratio, step)).toFixed(4);
+    const calculatedRem = +Math.min(maxSmallRem, Math.max(minRem, baseRem * Math.pow(ratio, step))).toFixed(4);
     const expectedVal = `${calculatedRem}rem`;
 
     if (!typo['font-size'][key]) {
@@ -382,8 +386,8 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
 
   steps.forEach(step => {
     const key = step < 0 ? `minus-${Math.abs(step)}` : `${step}`;
-    const lowRem = +Math.max(minRem, mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
-    const highRem = +Math.max(minRem, desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
+    const lowRem = +Math.min(maxSmallRem, Math.max(minRem, mobileBase * Math.pow(mobileRatio, step))).toFixed(4);
+    const highRem = +Math.min(maxLargeRem, Math.max(minRem, desktopBase * Math.pow(desktopRatio, step))).toFixed(4);
     const expectedVal = `fluid(${lowRem}rem, ${highRem}rem)`;
     const expectedDesc = `Fluid font size step ${step} (${lowRem}rem / ${Math.round(lowRem * 16)}px Mobile to ${highRem}rem / ${Math.round(highRem * 16)}px Desktop)`;
 
@@ -417,7 +421,9 @@ function syncGlobalTypographyScale(globalJson, globalPath) {
     mobileRatio,
     desktopBase,
     desktopRatio,
-    minRem
+    minRem,
+    maxSmallRem,
+    maxLargeRem
   };
 }
 
@@ -491,6 +497,10 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
   const desktopBase = scaleParams?.desktopBase || 1.5;
   const desktopRatio = scaleParams?.desktopRatio || 1.25;
   const floorRem = scaleParams?.minRem || 0;
+  const lowCap = scaleParams?.maxSmallRem ?? Infinity;
+  const highCap = scaleParams?.maxLargeRem ?? Infinity;
+  const low = (rem) => +Math.min(lowCap, Math.max(floorRem, rem)).toFixed(4);
+  const high = (rem) => +Math.min(highCap, Math.max(floorRem, rem)).toFixed(4);
 
   const baseSteps = [-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8];
   const allStepDefs = new Map();
@@ -498,8 +508,8 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
   // 1. Add standard single-integer scale steps
   baseSteps.forEach(step => {
     const key = String(step);
-    const minRem = +Math.max(floorRem, mobileBase * Math.pow(mobileRatio, step)).toFixed(4);
-    const maxRem = +Math.max(floorRem, desktopBase * Math.pow(desktopRatio, step)).toFixed(4);
+    const minRem = low(mobileBase * Math.pow(mobileRatio, step));
+    const maxRem = high(desktopBase * Math.pow(desktopRatio, step));
     allStepDefs.set(key, {
       key,
       isCompound: false,
@@ -520,8 +530,8 @@ function generateFluidSystem(globalTokens, discoveredSteps = new Set(), scalePar
     if (!parsed) return;
     const key = parsed.isCompound ? `${parsed.minStep}-${parsed.maxStep}` : String(parsed.minStep);
     if (!allStepDefs.has(key)) {
-      const minRem = +Math.max(floorRem, mobileBase * Math.pow(mobileRatio, parsed.minStep)).toFixed(4);
-      const maxRem = +Math.max(floorRem, desktopBase * Math.pow(desktopRatio, parsed.maxStep)).toFixed(4);
+      const minRem = low(mobileBase * Math.pow(mobileRatio, parsed.minStep));
+      const maxRem = high(desktopBase * Math.pow(desktopRatio, parsed.maxStep));
       allStepDefs.set(key, {
         key,
         isCompound: parsed.isCompound,
@@ -590,16 +600,16 @@ ${progressiveVars.join('\n')}
   // CSS Level 5 @function definitions for spacing and typography
   const functionDefs = [
     `@function --type-size(--n) {
-  result: round(max(var(--typography-font-size-min, 0rem), var(--font-size-base) * pow(var(--font-size-ratio), var(--n))), var(--_interval));
+  result: round(min(var(--typography-font-size-max-small, 1000rem), max(var(--typography-font-size-min, 0rem), var(--font-size-base) * pow(var(--font-size-ratio), var(--n)))), var(--_interval));
 }`,
     `@function --type-size-fluid(--n, --n2: false) {
-  --_mn: max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
-  --_mx: max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  --_mn: min(var(--typography-font-size-max-small, 1000rem), max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n))));
+  --_mx: min(var(--typography-font-size-max-large, 1000rem), max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2)))));
   result: round(var(--_mn) + var(--_progress) * (var(--_mx) - var(--_mn)), var(--_interval));
 }`,
     `@function --type-size-cq(--n, --n2: false) {
-  --_mn: max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n)));
-  --_mx: max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2))));
+  --_mn: min(var(--typography-font-size-max-small, 1000rem), max(var(--typography-font-size-min, 0rem), var(--_min-font-size) * pow(var(--_min-ratio), var(--n))));
+  --_mx: min(var(--typography-font-size-max-large, 1000rem), max(var(--typography-font-size-min, 0rem), var(--_max-font-size) * pow(var(--_max-ratio), if(style(--n2: false): var(--n); else: var(--n2)))));
   result: round(var(--_mn) + var(--_progress-cq) * (var(--_mx) - var(--_mn)), var(--_interval));
 }`,
     `@function --line-height(--n) {
@@ -769,9 +779,16 @@ ${cond.variables.join('\n')}
 }`);
     });
 
-    // Append fluid system progressive enhancement block
+    // Fluid type, oldest method first so each newer one wins where it's supported:
+    // clamp() (in :root above), then progress(), then @function with progress().
+    // When a method is Baseline Widely Available, the one before it can go.
     if (fluidSystem) {
       conditionalBlocks.push(fluidSystem.progressiveBlock);
+      conditionalBlocks.push(`@supports at-rule(@function) and (opacity: progress(1px, 0px, 1px)) {
+  :root {
+${fluidSystem.supportsMapping.join('\n')}
+  }
+}`);
     }
 
     // Build unified CSS Level 5 @function block
@@ -780,8 +797,7 @@ ${cond.variables.join('\n')}
       ...(fluidSystem ? fluidSystem.functionDefs : [])
     ];
     const allSupportsMappings = [
-      ...(shadowSystem ? shadowSystem.supportsMapping : []),
-      ...(fluidSystem ? fluidSystem.supportsMapping : [])
+      ...(shadowSystem ? shadowSystem.supportsMapping : [])
     ];
 
     let functionsBlock = '';
@@ -835,14 +851,14 @@ ${invertedContrastVars.join('\n')}
 }`;
     }
 
-    // The fluid spacing roles as :root sets them, for .sizing-default: a region inside a compact one
-    // (.ui-compact) takes them back. Here rather than in the utility, as they read Tier 1.
-    const spacingRoles = allCssLines.filter((line) => /^\s*--spacing-(cq-)?(breathe|cushion)(-sm|-lg)?:/.test(line));
+    // The fluid spacing roles and the sidebar column as :root sets them, for .sizing-default: a
+    // region inside a compact one (.ui-compact) takes them back. Here rather than in the utility, as they read Tier 1.
+    const spacingRoles = allCssLines.filter((line) => /^\s*--(spacing-(cq-)?(breathe|cushion)(-sm|-lg)?|app-sidebar-width):/.test(line));
     if (spacingRoles.length > 0) {
       invertedBlock += `
 
 /* ==========================================================================
-   Default Sizing (.sizing-default): the spacing roles, back from compact
+   Default Sizing (.sizing-default): the spacing roles and sidebar column, back from compact
    ========================================================================== */
 :where(.sizing-default) {
 ${spacingRoles.join('\n')}

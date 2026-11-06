@@ -57,7 +57,7 @@
   }
 
   :where(:scope) {
-    --_prose-indent: var(--prose-indent, calc(var(--spacing) * 1.5));
+    --_prose-indent: var(--prose-indent, var(--spacing-24));
   }
 
   :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, blockquote, figure, pre, table, hr, hgroup) {

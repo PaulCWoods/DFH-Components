@@ -17,7 +17,7 @@ import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildTheme, componentCss, cssDiff, fontLinks, fontsCss, resolveTheme, scopeCss, scopeClass } from '../src/index.js';
+import { buildTheme, changedTokens, componentCss, componentValue, cssDiff, fontLinks, fontsCss, resolveTheme, scopeCss, scopeClass } from '../src/index.js';
 import { readTheme, themeConfig, themeNames } from '../src/theme-files.js';
 import { writeHeadLinks } from '../src/font-files.js';
 
@@ -75,13 +75,26 @@ Object.keys(files).forEach((name) => visit(name));
 
 const stripComment = (css) => css.replace(/^\/\*[\s\S]*?\*\/\s*/, '');
 /* A Tier 3 token the default customises and this theme doesn't goes back to its own default */
-const themeComponents = (theme) => {
+const tier3Default = (path) => path.split('.').reduce((node, key) => node[key], component).$value;
+const effectiveComponents = (theme) => {
   const reset = Object.fromEntries(
     Object.keys(defaultTheme.components ?? {})
       .filter((path) => !(path in (theme.components ?? {})))
-      .map((path) => [path, path.split('.').reduce((node, key) => node[key], component).$value]),
+      .map((path) => [path, tier3Default(path)]),
   );
-  return stripComment(componentCss({ ...reset, ...(theme.components ?? {}) }, component));
+  return { ...reset, ...(theme.components ?? {}) };
+};
+const themeComponents = (theme) => stripComment(componentCss(effectiveComponents(theme), component));
+/* A sub-brand's: only what differs from its parent, or reads a token the
+   sub-brand changes (the parent's value was worked out on :root) */
+const subBrandComponents = (theme, parentTheme, changedNames) => {
+  const own = effectiveComponents(theme);
+  const parent = effectiveComponents(parentTheme);
+  const reads = (value) => [...componentValue(value).matchAll(/var\((--[\w-]+)/g)].some(([, name]) => changedNames.has(name));
+  const paths = [...new Set([...Object.keys(own), ...Object.keys(parent)])];
+  const value = (set, path) => set[path] ?? tier3Default(path);
+  const differs = Object.fromEntries(paths.filter((p) => value(own, p) !== value(parent, p) || reads(value(own, p))).map((p) => [p, value(own, p)]));
+  return stripComment(componentCss(differs, component));
 };
 const compiled = { [config.default]: variables };
 const resolvedThemes = { [config.default]: defaultTheme };
@@ -128,7 +141,8 @@ for (const name of order.filter((n) => n !== config.default)) {
     const roles = ownFonts.replace(/@font-face\s*\{[^}]*\}/g, '');
     let scoped;
     try {
-      scoped = scopeCss(name, compiled[parent], compiled[name], `${roles}\n${components}`);
+      const ownComponents = subBrandComponents(theme, resolvedThemes[parent], changedTokens(compiled[parent], compiled[name], roles));
+      scoped = scopeCss(name, compiled[parent], compiled[name], `${roles}\n${ownComponents}`);
     } catch (error) {
       console.error(`✖ ${name}: ${error.message}. Nothing written for it.`);
       failed = true;

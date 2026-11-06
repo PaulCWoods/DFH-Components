@@ -60,7 +60,7 @@
 
   /* Density: compact items have less padding, so the inset follows */
   @container style(--ui-sizing: compact) {
-    --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md)))));
+    --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, var(--spacing-10)));
   }
 
   display: block;
@@ -97,13 +97,14 @@
 
 :where(.navigation-tree--compact) {
   --ui-sizing: compact;
-  --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md)))));
+  --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, var(--spacing-10)));
 }
 
 /* ==========================================================================
    2. Items: buttons, full width, content at the start
    ========================================================================== */
 :where(.navigation-tree) :where(li)> :where(.button) {
+  border-radius: 0;
   inline-size: 100%;
   justify-content: flex-start;
   text-align: start;
@@ -116,7 +117,7 @@
   }
 
   /* The label takes the room, so a trailing badge or status sits at the end */
-  > :where(span:not(.visually-hidden, .badge, .status, .chip), .button__text, .lockup) {
+  > :where(span:not(.visually-hidden, .badge, .status, .chip, .button__icon), .button__text, .lockup) {
     flex-grow: 1;
     text-align: start;
   }
@@ -144,7 +145,7 @@
     &::before {
       background-color: var(--_navigation-tree-rail-color);
       content: "";
-      inline-size: max(var(--_navigation-tree-rail-width), var(--_button-radius));
+      inline-size: var(--_navigation-tree-rail-width);
       inset-block: calc(var(--_button-border-width) * -1);
       inset-inline-start: calc(var(--_button-border-width) * -1);
       position: absolute;

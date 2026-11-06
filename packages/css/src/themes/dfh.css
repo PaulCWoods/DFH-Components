@@ -60,7 +60,15 @@
     --color-red-800: #620001;
     --color-red-900: #500001;
     --typography-font-family-display: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --typography-font-family-adapter-sans: "adapter-pe-variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --typography-font-family-mencken: "mencken-std-text", Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-pt-mono: "adapter-mono-pe-variable", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --typography-font-family-avory: "avory-i-pe", "Inter", system-ui, -apple-system, sans-serif;
     --typography-fluid-scale-max-viewport: 75rem;
+    --typography-font-size-7: 3.5832rem;
+    --typography-font-size-8: 4.25rem;
+    --typography-font-size-max-small: 4.25rem;
+    --typography-font-size-max-large: 9rem;
     --fluid-spacing-breathe-sm: clamp(0.75rem, 0.63rem + 0.5vi, 1rem);
     --fluid-spacing-breathe: clamp(1rem, 0.83rem + 0.67vi, 1.3333rem);
     --fluid-spacing-cushion: clamp(1rem, 0.61rem + 1.56vi, 1.7778rem);
@@ -73,7 +81,7 @@
     --fluid-typography-font-size-5: clamp(2.4883rem, 1.44rem + 4.18vi, 4.5776rem);
     --fluid-typography-font-size-6: clamp(2.986rem, 1.62rem + 5.47vi, 5.722rem);
     --fluid-typography-font-size-7: clamp(3.5832rem, 1.8rem + 7.14vi, 7.1526rem);
-    --fluid-typography-font-size-8: clamp(4.2998rem, 1.98rem + 9.28vi, 8.9407rem);
+    --fluid-typography-font-size-8: clamp(4.25rem, 1.9rem + 9.38vi, 8.9407rem);
     --fluid-typography-font-size--2: clamp(0.75rem, 0.65rem + 0.42vi, 0.96rem);
     --fluid-typography-font-size--1: clamp(0.8333rem, 0.65rem + 0.73vi, 1.2rem);
     --fluid-spacing-cq-breathe-sm: clamp(0.75rem, 0.63rem + 0.5cqi, 1rem);
@@ -90,7 +98,7 @@
     --typography-font-size-fluid-5: clamp(2.4883rem, 1.44rem + 4.18vi, 4.5776rem);
     --typography-font-size-fluid-6: clamp(2.986rem, 1.62rem + 5.47vi, 5.722rem);
     --typography-font-size-fluid-7: clamp(3.5832rem, 1.8rem + 7.14vi, 7.1526rem);
-    --typography-font-size-fluid-8: clamp(4.2998rem, 1.98rem + 9.28vi, 8.9407rem);
+    --typography-font-size-fluid-8: clamp(4.25rem, 1.9rem + 9.38vi, 8.9407rem);
     --typography-font-size-cq--2: clamp(0.75rem, 0.65rem + 0.42cqi, 0.96rem);
     --typography-font-size-cq--1: clamp(0.8333rem, 0.65rem + 0.73cqi, 1.2rem);
     --typography-font-size-cq-0: clamp(1rem, 0.75rem + 1cqi, 1.5rem);
@@ -101,7 +109,7 @@
     --typography-font-size-cq-5: clamp(2.4883rem, 1.44rem + 4.18cqi, 4.5776rem);
     --typography-font-size-cq-6: clamp(2.986rem, 1.62rem + 5.47cqi, 5.722rem);
     --typography-font-size-cq-7: clamp(3.5832rem, 1.8rem + 7.14cqi, 7.1526rem);
-    --typography-font-size-cq-8: clamp(4.2998rem, 1.98rem + 9.28cqi, 8.9407rem);
+    --typography-font-size-cq-8: clamp(4.25rem, 1.9rem + 9.38cqi, 8.9407rem);
     --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-33));
     --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
     --surface-accent-dark: var(--color-purple-800);
@@ -109,21 +117,29 @@
     --surface-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
     --surface-complementary-dark: var(--color-blue-800);
     --surface-complementary-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
+    --surface-info: light-dark(var(--color-blue-100), var(--color-blue-900));
+    --surface-info-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
     --foreground-accent: light-dark(var(--color-purple-600), var(--color-purple-300));
     --foreground-accent-hover: light-dark(var(--color-purple-700), var(--color-purple-200));
     --foreground-accent-pressed: light-dark(var(--color-purple-800), var(--color-purple-100));
     --foreground-complementary: light-dark(var(--color-blue-600), var(--color-blue-300));
     --foreground-complementary-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
     --foreground-complementary-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
+    --foreground-info: light-dark(var(--color-blue-600), var(--color-blue-300));
+    --foreground-info-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
+    --foreground-info-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
     --border-color-accent: var(--color-purple-500);
     --border-color-complementary: light-dark(var(--color-blue-600), var(--color-blue-500));
+    --border-color-info: var(--color-blue-500);
     --body-font-weight: var(--font-weight-medium);
-    --heading-cq-font-size: var(--typography-font-size-cq-3);
-    --heading-fluid-font-size: var(--typography-font-size-fluid-3);
+    --body-alt-font-weight: var(--font-weight-regular);
     --subheading-line-height: var(--typography-line-height--3);
     --small-heading-line-height: var(--typography-line-height--3);
     --title-letter-spacing: var(--typography-spacing-tight);
     --title-text-transform: uppercase;
+    --title-fixed-font-size: var(--typography-font-size-6);
+    --title-fluid-font-size: var(--typography-font-size-fluid-6);
+    --title-cq-font-size: var(--typography-font-size-cq-6);
     --display-title-letter-spacing: var(--typography-spacing-xtight);
     --display-title-text-transform: uppercase;
     --display-title-compact-font-size: var(--typography-font-size-6);
@@ -141,20 +157,81 @@
       --surface-complementary: light-dark(var(--color-blue-100), var(--color-blue-900));
       --surface-complementary-dark: var(--color-blue-900);
       --surface-complementary-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --surface-info-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
       --foreground-accent: light-dark(var(--color-purple-700), var(--color-purple-200));
       --foreground-accent-hover: light-dark(var(--color-purple-800), var(--color-purple-100));
       --foreground-accent-pressed: light-dark(var(--color-purple-900), var(--color-purple-100));
       --foreground-complementary: light-dark(var(--color-blue-700), var(--color-blue-200));
       --foreground-complementary-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
       --foreground-complementary-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
+      --foreground-info: light-dark(var(--color-blue-700), var(--color-blue-200));
+      --foreground-info-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
+      --foreground-info-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
       --border-color-accent: light-dark(var(--color-purple-600), var(--color-purple-400));
       --border-color-complementary: light-dark(var(--color-blue-700), var(--color-blue-400));
+      --border-color-info: light-dark(var(--color-blue-600), var(--color-blue-400));
       --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-25));
     }
   }
   @supports (opacity: progress(1px, 0px, 1px)) {
     :root {
       --_max-viewport: 1200px;
+      --fluid-spacing-breathe-sm: round(0.75rem + var(--_progress) * (1rem - 0.75rem), var(--_interval));
+      --fluid-spacing-breathe: round(1rem + var(--_progress) * (1.3333rem - 1rem), var(--_interval));
+      --fluid-spacing-cushion: round(1rem + var(--_progress) * (1.7778rem - 1rem), var(--_interval));
+      --fluid-spacing-cushion-lg: round(1rem + var(--_progress) * (2.3704rem - 1rem), var(--_interval));
+      --fluid-spacing-cq-breathe-sm: round(0.75rem + var(--_progress-cq) * (1rem - 0.75rem), var(--_interval));
+      --fluid-spacing-cq-breathe: round(1rem + var(--_progress-cq) * (1.3333rem - 1rem), var(--_interval));
+      --fluid-spacing-cq-cushion: round(1rem + var(--_progress-cq) * (1.7778rem - 1rem), var(--_interval));
+      --fluid-spacing-cq-cushion-lg: round(1rem + var(--_progress-cq) * (2.3704rem - 1rem), var(--_interval));
+      --typography-font-size-fluid--2: round(0.75rem + var(--_progress) * (0.96rem - 0.75rem), var(--_interval));
+      --typography-font-size-fluid--1: round(0.8333rem + var(--_progress) * (1.2rem - 0.8333rem), var(--_interval));
+      --typography-font-size-fluid-0: round(1rem + var(--_progress) * (1.5rem - 1rem), var(--_interval));
+      --typography-font-size-fluid-1: round(1.2rem + var(--_progress) * (1.875rem - 1.2rem), var(--_interval));
+      --typography-font-size-fluid-2: round(1.44rem + var(--_progress) * (2.3438rem - 1.44rem), var(--_interval));
+      --typography-font-size-fluid-3: round(1.728rem + var(--_progress) * (2.9297rem - 1.728rem), var(--_interval));
+      --typography-font-size-fluid-4: round(2.0736rem + var(--_progress) * (3.6621rem - 2.0736rem), var(--_interval));
+      --typography-font-size-fluid-5: round(2.4883rem + var(--_progress) * (4.5776rem - 2.4883rem), var(--_interval));
+      --typography-font-size-fluid-6: round(2.986rem + var(--_progress) * (5.722rem - 2.986rem), var(--_interval));
+      --typography-font-size-fluid-7: round(3.5832rem + var(--_progress) * (7.1526rem - 3.5832rem), var(--_interval));
+      --typography-font-size-fluid-8: round(4.25rem + var(--_progress) * (8.9407rem - 4.25rem), var(--_interval));
+      --typography-font-size-cq--2: round(0.75rem + var(--_progress-cq) * (0.96rem - 0.75rem), var(--_interval));
+      --typography-font-size-cq--1: round(0.8333rem + var(--_progress-cq) * (1.2rem - 0.8333rem), var(--_interval));
+      --typography-font-size-cq-0: round(1rem + var(--_progress-cq) * (1.5rem - 1rem), var(--_interval));
+      --typography-font-size-cq-1: round(1.2rem + var(--_progress-cq) * (1.875rem - 1.2rem), var(--_interval));
+      --typography-font-size-cq-2: round(1.44rem + var(--_progress-cq) * (2.3438rem - 1.44rem), var(--_interval));
+      --typography-font-size-cq-3: round(1.728rem + var(--_progress-cq) * (2.9297rem - 1.728rem), var(--_interval));
+      --typography-font-size-cq-4: round(2.0736rem + var(--_progress-cq) * (3.6621rem - 2.0736rem), var(--_interval));
+      --typography-font-size-cq-5: round(2.4883rem + var(--_progress-cq) * (4.5776rem - 2.4883rem), var(--_interval));
+      --typography-font-size-cq-6: round(2.986rem + var(--_progress-cq) * (5.722rem - 2.986rem), var(--_interval));
+      --typography-font-size-cq-7: round(3.5832rem + var(--_progress-cq) * (7.1526rem - 3.5832rem), var(--_interval));
+      --typography-font-size-cq-8: round(4.25rem + var(--_progress-cq) * (8.9407rem - 4.25rem), var(--_interval));
+    }
+  }
+  @supports at-rule(@function) and (opacity: progress(1px, 0px, 1px)) {
+    :root {
+      --typography-font-size-fluid--2: --type-size-fluid(-2);
+      --typography-font-size-fluid--1: --type-size-fluid(-1);
+      --typography-font-size-fluid-0: --type-size-fluid(0);
+      --typography-font-size-fluid-1: --type-size-fluid(1);
+      --typography-font-size-fluid-2: --type-size-fluid(2);
+      --typography-font-size-fluid-3: --type-size-fluid(3);
+      --typography-font-size-fluid-4: --type-size-fluid(4);
+      --typography-font-size-fluid-5: --type-size-fluid(5);
+      --typography-font-size-fluid-6: --type-size-fluid(6);
+      --typography-font-size-fluid-7: --type-size-fluid(7);
+      --typography-font-size-fluid-8: --type-size-fluid(8);
+      --typography-font-size-cq--2: --type-size-cq(-2);
+      --typography-font-size-cq--1: --type-size-cq(-1);
+      --typography-font-size-cq-0: --type-size-cq(0);
+      --typography-font-size-cq-1: --type-size-cq(1);
+      --typography-font-size-cq-2: --type-size-cq(2);
+      --typography-font-size-cq-3: --type-size-cq(3);
+      --typography-font-size-cq-4: --type-size-cq(4);
+      --typography-font-size-cq-5: --type-size-cq(5);
+      --typography-font-size-cq-6: --type-size-cq(6);
+      --typography-font-size-cq-7: --type-size-cq(7);
+      --typography-font-size-cq-8: --type-size-cq(8);
     }
   }
   :where(.color-palette-inverted, .colors-inverted) {
@@ -162,12 +239,17 @@
     --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
     --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
     --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+    --surface-info: light-dark(var(--color-blue-900), var(--color-blue-100));
+    --surface-info-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
     --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
     --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
     --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
     --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-600));
     --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
     --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+    --foreground-info: light-dark(var(--color-blue-300), var(--color-blue-600));
+    --foreground-info-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
+    --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
     --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
   }
   * {
@@ -176,12 +258,17 @@
       --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
       --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
       --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+      --surface-info: light-dark(var(--color-blue-900), var(--color-blue-100));
+      --surface-info-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
       --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
       --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
       --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-800));
       --foreground-complementary: light-dark(var(--color-blue-300), var(--color-blue-600));
       --foreground-complementary-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
       --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
+      --foreground-info: light-dark(var(--color-blue-300), var(--color-blue-600));
+      --foreground-info-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
+      --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
       --border-color-complementary: light-dark(var(--color-blue-500), var(--color-blue-600));
     }
   }
@@ -191,14 +278,19 @@
       --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
       --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
       --surface-complementary-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+      --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
       --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
       --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
       --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
       --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-700));
       --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
       --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+      --foreground-info: light-dark(var(--color-blue-200), var(--color-blue-700));
+      --foreground-info-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+      --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
       --border-color-accent: light-dark(var(--color-purple-400), var(--color-purple-600));
       --border-color-complementary: light-dark(var(--color-blue-400), var(--color-blue-700));
+      --border-color-info: light-dark(var(--color-blue-400), var(--color-blue-600));
     }
     * {
       @container style(--color-palette: inverted) {
@@ -206,14 +298,19 @@
         --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
         --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
         --surface-complementary-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+        --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
         --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
         --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
         --foreground-accent-pressed: light-dark(var(--color-purple-100), var(--color-purple-900));
         --foreground-complementary: light-dark(var(--color-blue-200), var(--color-blue-700));
         --foreground-complementary-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
         --foreground-complementary-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+        --foreground-info: light-dark(var(--color-blue-200), var(--color-blue-700));
+        --foreground-info-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+        --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
         --border-color-accent: light-dark(var(--color-purple-400), var(--color-purple-600));
         --border-color-complementary: light-dark(var(--color-blue-400), var(--color-blue-700));
+        --border-color-info: light-dark(var(--color-blue-400), var(--color-blue-600));
       }
     }
   }
@@ -227,7 +324,21 @@
 
 
   :root {
-    --brand-font-weight: var(--font-weight-regular);
+    --accordion-border-color: var(--border-color-quiet);
+    --accordion-border-style: dashed;
+    --accordion-border-width: var(--border-width-thin);
+    --accordion-radius: var(--radius);
+    --brand-font-weight: var(--font-weight-bold);
+  }
+
+  :where(.color-palette-inverted, .colors-inverted) {
+    --accordion-border-color: var(--border-color-quiet);
+  }
+
+  * {
+    @container style(--color-palette: inverted) {
+      --accordion-border-color: var(--border-color-quiet);
+    }
   }
 
 }

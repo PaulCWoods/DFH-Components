@@ -61,6 +61,28 @@ const changed = (base, next) => {
   return { decls, children };
 };
 
+/* A theme is linked after the library, so a value it changes in one :root
+   block beats every block the library sets the same token in, the ones
+   meant to win (@supports progress(), @function) among them. Every :root
+   block that sets a changed token keeps it, in the compiled order, so the
+   theme's cascade is the compiled one: clamp(), then progress(), then
+   @function, each where it's supported. */
+const isRootPath = (path) => path.length > 0 && preludeOf(path.at(-1)) === ':root' && path.slice(0, -1).every((k) => preludeOf(k).startsWith('@') && !preludeOf(k).startsWith('@function'));
+const rootNames = (node, path = []) => [...(isRootPath(path) ? node.decls.keys() : []), ...[...node.children].flatMap(([key, child]) => rootNames(child, [...path, key]))];
+export const inCascade = (diff, next) => {
+  const names = new Set(rootNames(diff));
+  const keep = (from, have, path) => {
+    const out = { decls: new Map(), children: new Map() };
+    for (const [k, v] of from.decls) if (have?.decls.has(k) || (names.has(k) && isRootPath(path))) out.decls.set(k, v);
+    for (const [key, child] of from.children) {
+      const sub = keep(child, have?.children.get(key), [...path, key]);
+      if (sub.decls.size || sub.children.size) out.children.set(key, sub);
+    }
+    return out;
+  };
+  return keep(next, diff, []);
+};
+
 const print = (node, indent = '') =>
   [
     ...[...node.decls].map(([k, v]) => `${indent}${k}: ${v};`),
@@ -68,4 +90,7 @@ const print = (node, indent = '') =>
   ].join('\n');
 
 /** The CSS that turns `baseCss` into `nextCss` */
-export const cssDiff = (baseCss, nextCss) => print(changed(parseBlocks(baseCss), parseBlocks(nextCss)));
+export const cssDiff = (baseCss, nextCss) => {
+  const next = parseBlocks(nextCss);
+  return print(inCascade(changed(parseBlocks(baseCss), next), next));
+};

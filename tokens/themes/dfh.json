@@ -323,7 +323,11 @@
       "steps": [
         -2,
         8
-      ]
+      ],
+      "ceiling": {
+        "lower": "4.25rem",
+        "upper": "9rem"
+      }
     },
     "leading": {
       "base": 1.6,
@@ -351,10 +355,7 @@
         "case": "uppercase",
         "size": 8,
         "compact": 6,
-        "leading": -4,
-        "cq": {
-          "from": 6
-        }
+        "leading": -4
       },
       "title": {
         "family": "display",
@@ -372,8 +373,7 @@
         "case": "none",
         "size": 2,
         "compact": 1,
-        "leading": -3,
-        "fluidFrom": 3
+        "leading": -3
       },
       "subheading": {
         "family": "sans",
@@ -436,7 +436,8 @@
         "weight": "medium"
       },
       "body-alt": {
-        "family": "serif"
+        "family": "serif",
+        "weight": "regular"
       },
       "body-strong": {
         "weight": "bold"
@@ -630,7 +631,13 @@
       }
     }
   },
-  "components": {},
+  "components": {
+    "accordion.border-width": "{border.width.thin}",
+    "accordion.border-style": "dashed",
+    "accordion.border-color": "{border.color.quiet}",
+    "accordion.radius": "{radius}",
+    "brand.font-weight": "{font-weight.bold}"
+  },
   "mixes": {
     "color.muted": {
       "light": {

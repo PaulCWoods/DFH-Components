@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applyComponents, buildPalette, COMPONENT_GROUPS, componentCss, componentGate, componentTokens, componentValue, tokenOptions } from '../src/index.js';
+import { applyComponents, buildPalette, COMPONENT_GROUPS, componentCss, componentGate, componentTokens, componentValue, tokenGroups, tokenOptions } from '../src/index.js';
 
 const read = (file) => JSON.parse(readFileSync(new URL(`../../../tokens/${file}`, import.meta.url)));
 const theme = read('themes/starter.json');
@@ -18,8 +18,8 @@ test('every component with tokens is in exactly one group', () => {
 
 test('every list offers only values that exist, and every token has a list or a typed value', () => {
   for (const t of componentTokens(component)) {
-    const { options, custom } = tokenOptions(t, { semantic, global });
-    assert.ok(options.length || custom, `${t.path} offers nothing`);
+    const { kind, options, custom } = tokenOptions(t, { semantic, global });
+    assert.ok(options.length || custom || kind === 'number', `${t.path} offers nothing`);
     for (const option of options) {
       const missing = componentGate({ [t.path]: option }, { component, semantic, global }).failures.filter((f) => !/under 4\.5:1/.test(f.message));
       assert.deepEqual(missing, [], `${t.path} ${option}`);
@@ -36,7 +36,9 @@ test('lists fit the token', () => {
   assert.ok(options('card.padding').includes('{spacing.16}'));
   assert.ok(options('card.strong-shadow').includes('{shadow.lg}'));
   assert.ok(options('divider.style').includes('dashed'));
-  assert.equal(tokenOptions(token('sidebar.width'), { semantic, global }).custom, true);
+  assert.ok(options('sidebar.width').includes('{app.sidebar-width}'));
+  assert.ok(options('sidebar.compact-width').includes('{app.sidebar-compact-width}'));
+  assert.equal(tokenOptions(token('sidebar.min-width'), { semantic, global }).custom, true);
   assert.equal(tokenOptions(token('card.radius'), { semantic, global }).custom, false);
 });
 
@@ -95,6 +97,18 @@ test('the gate fails an unknown token, a missing reference and a value that esca
   assert.deepEqual(styles({ 'card.radius': '{radius.lg}', 'sidebar.width': '20rem' }), []);
 });
 
+test('a number token takes a plain number, never a unit', () => {
+  const styles = (o) => componentGate(o, ctx).failures.map((f) => f.style);
+  assert.equal(tokenOptions(token('icon.base-size'), { semantic, global }).kind, 'number');
+  assert.equal(tokenOptions(token('button.icon-size'), { semantic, global }).kind, 'number');
+  assert.deepEqual(styles({ 'icon.base-size': '1.1' }), []);
+  assert.deepEqual(styles({ 'icon.base-size': '1.1rem' }), ['icon.base-size']);
+  assert.deepEqual(styles({ 'button.icon-size': '1.25' }), []);
+  assert.deepEqual(styles({ 'button.icon-size': '1.25em' }), ['button.icon-size']);
+  assert.deepEqual(styles({ 'button.icon-size': '20px' }), ['button.icon-size']);
+  assert.deepEqual(styles({ 'button.icon-size': '0' }), ['button.icon-size']);
+});
+
 test("a part's text and background under 4.5:1 fail, in either order", () => {
   const pair = componentTokens(component).find((t) => /(^|-)bg$/.test(t.key) && component[t.component][t.key.replace(/bg$/, 'color')]);
   const color = `${pair.component}.${pair.key.replace(/bg$/, 'color')}`;
@@ -108,4 +122,43 @@ test('a lone colour is only warned about', () => {
   const { failures, warnings } = componentGate({ 'card.bg': '{foreground}' }, ctx);
   assert.deepEqual(failures, []);
   assert.ok(warnings.length);
+});
+
+test('a colour list puts the family its name asks for first', () => {
+  const first = (path) => tokenOptions(token(path), { semantic, global }).groups[0].label;
+  assert.equal(first('card.border-color'), 'Borders and lines');
+  assert.equal(first('card.bg'), 'Surfaces');
+  assert.equal(first('card.subtitle-color'), 'Text');
+  const all = tokenOptions(token('card.bg'), { semantic, global });
+  assert.deepEqual(all.groups.flatMap((g) => g.options).sort(), [...all.options].sort());
+});
+
+test("the Button's resting background is measured against its colour, and a transparent one against the page", () => {
+  assert.ok(componentGate({ 'button.bg': '{foreground}' }, ctx).failures.some((f) => f.style === 'button.bg'));
+  assert.deepEqual(componentGate({ 'button.bg': '{surface.muted}' }, ctx).failures, []);
+  const { failures, warnings } = componentGate({ 'button.color': '{surface}' }, ctx);
+  assert.deepEqual(failures, []);
+  assert.ok(warnings.some((w) => w.style === 'button.color'));
+});
+
+test('the hover style offers fill and tint', () => {
+  assert.deepEqual(tokenOptions(token('button.hover-style'), { semantic, global }).options, ['fill', 'tint']);
+});
+
+test('tokenGroups: by kind, then sizes and density, keeping order', () => {
+  const t = (key) => ({ key });
+  const groups = tokenGroups(['sm.font-size', 'transition', 'bg', 'font-size', 'radius', 'padding', 'compact.padding', 'col-sm-width', 'hover-style', 'z-index'].map(t));
+  assert.deepEqual(
+    groups.map((g) => [g.id, g.tokens.map((x) => x.key)]),
+    [
+      ['color', ['bg', 'hover-style']],
+      ['edge', ['radius']],
+      ['space', ['padding', 'col-sm-width']],
+      ['type', ['font-size']],
+      ['motion', ['transition']],
+      ['other', ['z-index']],
+      ['sm', ['sm.font-size']],
+      ['compact', ['compact.padding']],
+    ],
+  );
 });

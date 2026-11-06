@@ -134,11 +134,12 @@ A side panel beside the main content: section navigation, filters, tools. An org
 | Prominence | default (surface and an edge), `--subtle` (a tint, no edge), `--plain` (no surface, no edge), `--floating` (inset, rounded, raised) | none |
 | Density | default, `--compact` | `--ui-sizing: compact` |
 | Placement | start (default), `--end`; in flow, `--sticky` | none |
-| Width | default (`--sidebar-width`, 18rem, at least `--sidebar-min-width`), `--rail` (`--sidebar-rail-width`, 4.5rem) | none |
+| Width | default (`--sidebar-width`, the app's sidebar column `--app-sidebar-width`, 18rem, at least `--sidebar-min-width`), `--rail` (`--sidebar-rail-width`, 4.5rem) | none |
 
 ### Further rules
 - **Safe areas:** under `.viewport-fit-cover` the edge a Sidebar touches gets the device's inset, and it widens by the same amount so its content keeps its room. A sticky Sidebar, or one in a viewport shell, also clears the bottom inset, and it sits below the top inset. A `--floating` one moves its margin instead.
 - **Prominence:** `--subtle` sets a panel apart without an edge. `--plain` is for secondary content that needs no panel, such as an "On this page" list. More contrast gives `--subtle` an edge.
+- **Width:** the Sidebar takes the app's sidebar column, `--app-sidebar-width` (a Tier 2 token), which a [Split](19c-split.md) with `--sidebar` reads too, so a header split into three lines up with it. A compact region (`.ui-compact`, `.fine:ui-compact`) narrows the column for both. `--compact` on the Sidebar alone narrows only the Sidebar, so put the density on the region when other rows line up with it. Set `--sidebar-width` only for a Sidebar that stands apart.
 - **Tokens:** `sidebar.bg`, `subtle-bg`, `border-width`, `border-color`, `border-style`, `padding`, `width`, `min-width`, `rail-width`.
 
 ## Parts

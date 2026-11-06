@@ -73,7 +73,7 @@
 
   /* Density: headings line up with the compact items */
   @container style(--ui-sizing: compact) {
-    --_menu-heading-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
+    --_menu-heading-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
   }
 
   box-sizing: border-box;
@@ -118,7 +118,7 @@
 
 :where(.menu--compact) {
   --ui-sizing: compact;
-  --_menu-heading-padding-inline: var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md))));
+  --_menu-heading-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
 }
 
 /* Increased contrast: a thicker edge instead of a shadow */

@@ -52,7 +52,7 @@
 :where(.empty-state) {
   /* Private manifest */
   --_empty-state-gap: var(--empty-state-gap, var(--spacing-md));
-  --_empty-state-content-max-width: var(--empty-state-content-max-width, 28rem);
+  --_empty-state-content-max-width: var(--empty-state-content-max-width, var(--spacing-448));
   --_empty-state-align: center;
   --_empty-state-text-align: center;
 

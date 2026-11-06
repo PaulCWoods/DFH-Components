@@ -56,7 +56,7 @@
   display: inline-flex;
   font-family: var(--brand-font-family, var(--display-title-font-family, inherit));
   font-size: var(--_brand-font-size);
-  font-weight: var(--brand-font-weight, var(--font-weight-regular, normal));
+  font-weight: var(--brand-font-weight, var(--font-weight-bold, bold));
   gap: var(--_brand-gap);
   letter-spacing: var(--brand-letter-spacing, var(--typography-spacing-normal, normal));
   line-height: var(--brand-line-height, var(--display-title-line-height));
@@ -95,6 +95,7 @@
 
 :where(.brand__name) {
   white-space: nowrap;
+  text-box: trim-both cap alphabetic;
 }
 
 /* Beside a mark, the name gives way on the narrowest screens. Visually hidden,

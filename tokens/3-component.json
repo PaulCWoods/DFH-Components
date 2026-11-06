@@ -15,7 +15,7 @@
       "$type": "strokeStyle"
     },
     "radius": {
-      "$value": "{radius.md}",
+      "$value": "{panel.radius}",
       "$type": "dimension"
     },
     "padding": {
@@ -209,7 +209,7 @@
       "$type": "fontFamily"
     },
     "font-weight": {
-      "$value": "{font-weight.regular}",
+      "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
     "font-size": {
@@ -280,7 +280,7 @@
       "$type": "dimension"
     },
     "sm-size": {
-      "$value": "1rem",
+      "$value": "{spacing}",
       "$type": "dimension"
     },
     "color": {
@@ -383,12 +383,12 @@
   "list": {
     "$description": "Bulleted and numbered lists outside prose, spaced like prose's bare lists.",
     "indent": {
-      "$value": "calc({spacing} * 1.5)",
+      "$value": "{spacing.24}",
       "$type": "dimension",
       "$description": "Inline-start indent that holds the markers, as prose.indent"
     },
     "gap": {
-      "$value": "calc({spacing} / 2)",
+      "$value": "{spacing.sm}",
       "$type": "dimension",
       "$description": "Space between items, half the prose block space. Compact sizing halves it"
     }
@@ -446,6 +446,11 @@
   },
   "icon": {
     "$description": "Inline SVG glyph sized in em, so it follows the text around it.",
+    "base-size": {
+      "$value": 1,
+      "$type": "number",
+      "$description": "Default icon size in ems of the text beside it: a plain number, 1 by default. Adjust it for an icon set that sits small or large"
+    },
     "size-sm": {
       "$value": "0.875em",
       "$type": "dimension",
@@ -555,7 +560,7 @@
       }
     },
     "shadow": {
-      "$value": "none",
+      "$value": "{shadow.none}",
       "$type": "shadow",
       "$description": "Shadow"
     }
@@ -824,6 +829,11 @@
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
+    "icon-size": {
+      "$value": "{icon.base-size}",
+      "$type": "number",
+      "$description": "Icons in a Button, in ems of its text: a plain number, the Icon's base size by default"
+    },
     "padding-block": {
       "$value": "{spacing.4}",
       "$type": "dimension"
@@ -867,11 +877,11 @@
         "$type": "dimension"
       },
       "padding-block": {
-        "$value": "calc({button.sm.min-size} / {button.min-size} * {button.padding-block})",
+        "$value": "{spacing.2}",
         "$type": "dimension"
       },
       "padding-inline": {
-        "$value": "calc({button.sm.min-size} / {button.min-size} * {button.padding-inline})",
+        "$value": "{spacing.10}",
         "$type": "dimension"
       }
     },
@@ -885,11 +895,11 @@
         "$type": "dimension"
       },
       "padding-block": {
-        "$value": "calc({button.lg.min-size} / {button.min-size} * {button.padding-block})",
+        "$value": "{spacing.6}",
         "$type": "dimension"
       },
       "padding-inline": {
-        "$value": "calc({button.lg.min-size} / {button.min-size} * {button.padding-inline})",
+        "$value": "{spacing.24}",
         "$type": "dimension"
       }
     },
@@ -913,10 +923,25 @@
       "$type": "color",
       "$description": "The neutral Button's resting border"
     },
+    "placeholder-border-color": {
+      "$value": "{border.color.quiet}",
+      "$type": "color",
+      "$description": "The dashed border of .button--placeholder at rest"
+    },
     "on-color": {
       "$value": "{foreground.inverted-strong}",
       "$type": "color",
       "$description": "Text on a filled Button, at every intent"
+    },
+    "bg": {
+      "$value": "transparent",
+      "$type": "color",
+      "$description": "The default Button's resting background. Strong, Subtle and Plain keep their own"
+    },
+    "hover-style": {
+      "$value": "fill",
+      "$type": "other",
+      "$description": "How the default Button shows hover and press: fill (with its colour, in the inverted palette) or tint (its background, darkened in light mode and lightened in dark)"
     },
     "font-family": {
       "$value": "{body.font-family}",
@@ -978,6 +1003,11 @@
     "radius": {
       "$value": "{radius}",
       "$type": "dimension"
+    },
+    "shadow": {
+      "$value": "{shadow.none}",
+      "$type": "shadow",
+      "$description": "Shadow of a default card (subtle, plain and flat cards take none; a strong card takes strong-shadow)"
     },
     "strong-shadow": {
       "$value": "{shadow.raised}",
@@ -1114,7 +1144,7 @@
       "$type": "dimension"
     },
     "radius": {
-      "$value": "0px",
+      "$value": "{radius.none}",
       "$type": "dimension"
     },
     "content-padding": {
@@ -1125,6 +1155,11 @@
     "compact-content-padding": {
       "$value": "{spacing.default}",
       "$type": "dimension"
+    },
+    "content-shadow": {
+      "$value": "{shadow.none}",
+      "$type": "shadow",
+      "$description": "Shadow of the content's panel (none on subtle, plain and flush posters)"
     },
     "content-radius": {
       "$value": "{radius}",
@@ -1180,7 +1215,7 @@
       "$type": "dimension"
     },
     "remove-target": {
-      "$value": "1.5rem",
+      "$value": "{spacing.24}",
       "$type": "dimension",
       "$description": "Minimum hit area of the remove button (WCAG 2.5.8)"
     },
@@ -1329,7 +1364,7 @@
       "$description": "Space between the parts in a compact region"
     },
     "content-max-width": {
-      "$value": "28rem",
+      "$value": "{spacing.448}",
       "$type": "dimension",
       "$description": "Measure of the title and description"
     },
@@ -1383,7 +1418,7 @@
       "$type": "color"
     },
     "label-gap": {
-      "$value": "0.25rem",
+      "$value": "{spacing.xs}",
       "$type": "dimension",
       "$description": "Gap between the label and its hint"
     }
@@ -1399,7 +1434,7 @@
       "$type": "dimension"
     },
     "legend-gap": {
-      "$value": "0.25rem",
+      "$value": "{spacing.xs}",
       "$type": "dimension",
       "$description": "Gap between the legend and its hint"
     }
@@ -1599,7 +1634,7 @@
       "$description": "Padding of the sidebar parts"
     },
     "width": {
-      "$value": "18rem",
+      "$value": "{app.sidebar-width}",
       "$type": "dimension",
       "$description": "Preferred width"
     },
@@ -1619,7 +1654,7 @@
       "$description": "Padding when compact"
     },
     "compact-width": {
-      "$value": "12rem",
+      "$value": "{app.sidebar-compact-width}",
       "$type": "dimension",
       "$description": "Width when compact"
     }
@@ -1920,7 +1955,7 @@
       "$description": "Space between blocks in prose at container-query sizing"
     },
     "indent": {
-      "$value": "calc({spacing} * 1.5)",
+      "$value": "{spacing.24}",
       "$type": "dimension",
       "$description": "Inline-start indent for lists, description details and blockquotes"
     },
@@ -2304,7 +2339,7 @@
       "$description": "Alternating background color for striped table rows"
     },
     "radius": {
-      "$value": "{radius}",
+      "$value": "{panel.radius}",
       "$type": "dimension",
       "$description": "Outer corner radius for card/contained tables"
     },
@@ -2314,7 +2349,7 @@
       "$description": "Inline padding of the first and last cells. A flush card body sets it to the card padding; --plain sets it to 0"
     },
     "col-index-width": {
-      "$value": "calc({spacing.16} * 2.5)",
+      "$value": "{spacing.48}",
       "$type": "dimension",
       "$description": "Width of an index, counter or checkbox column"
     },
@@ -2324,7 +2359,7 @@
       "$description": "Extra-small column width"
     },
     "col-sm-width": {
-      "$value": "calc({spacing.16} * 6)",
+      "$value": "{spacing.96}",
       "$type": "dimension",
       "$description": "Small column width (times, durations, short states)"
     },
@@ -2344,12 +2379,12 @@
       "$description": "Extra-large column width (titles, notes, descriptions)"
     },
     "col-actions-width": {
-      "$value": "calc({spacing.16} * 6.5)",
+      "$value": "{spacing.96}",
       "$type": "dimension",
       "$description": "Width of an actions column"
     },
     "column-shadow-size": {
-      "$value": "0.5rem",
+      "$value": "{spacing.8}",
       "$type": "dimension",
       "$description": "Size of the shadow beside a sticky first column"
     }
@@ -2609,7 +2644,7 @@
       "$description": "Distance of a docked tab list from the viewport's bottom edge"
     },
     "nested-indent": {
-      "$value": "0px",
+      "$value": "{spacing.0}",
       "$type": "dimension",
       "$description": "Indent of a nested list in a vertical Tab List"
     }
@@ -2692,12 +2727,12 @@
       "$type": "dimension"
     },
     "min-size": {
-      "$value": "3rem",
+      "$value": "{spacing.48}",
       "$type": "dimension",
       "$description": "Minimum height of a reading"
     },
     "compact-min-size": {
-      "$value": "2rem",
+      "$value": "{spacing.32}",
       "$type": "dimension",
       "$description": "Minimum height when compact"
     }
@@ -2867,7 +2902,7 @@
       "$description": "Border colour"
     },
     "border-width": {
-      "$value": "1px",
+      "$value": "{border.width.thin}",
       "$type": "dimension",
       "$description": "Border width"
     }
@@ -2995,7 +3030,7 @@
       "$type": "shadow"
     },
     "listbox-max-height": {
-      "$value": "18rem",
+      "$value": "{spacing.256}",
       "$type": "dimension",
       "$description": "Longest list before it scrolls"
     },

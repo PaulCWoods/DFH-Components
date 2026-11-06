@@ -61,6 +61,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ```
 - **Icon-only Buttons** keep a text label in `.sr-only`, so screen readers, translation and voice control ("click Search site") all have a name. The icon is `aria-hidden`.
 - **`.icon--dir`** mirrors an arrow in right-to-left text.
+- **`--button-icon-size`** sizes the icons in a Button as a number of ems of its text (`1.25` is a quarter larger). It defaults to the Icon's `--icon-base-size`, so a correction for the icon set reaches Buttons too. Set it on a Button, a container or the theme. It's a plain number, so it scales with every Button size.
 - **`--labeled`** keeps the text when a container hides Button labels (`--ui-labels: hidden`).
 - An [Avatar](06-avatar.md) in a Button: a plain round icon Button holding a hidden Avatar.
 
@@ -163,3 +164,15 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 - `.buttons-strong`, `-subtle`, `-plain`, `-sm`, `-lg` and `-round` set the flags (`--button-prominence`, `--button-size`, `--button-corners`) on a container. A modifier on the Button beats the flag.
 - The shared `--controls-prominence`, `--controls-size` and `--controls-corners` flags (and `.controls-*` classes) reach Buttons and [form controls](07-form-controls.md) together.
 - **Colour tokens:** `--button-color`, `--button-color-hover`, `--button-color-pressed` and `--button-color-border` colour the neutral Button at every prominence, set on a Button, a container or the theme. Intents keep their own colours. `--button-on-color` is the text on every fill.
+
+## Default Background and Hover
+```html live cluster
+<div class="cluster" style="--button-bg: var(--surface-muted); --button-hover-style: tint;">
+  <button type="button" class="button"><span>Tinted hover</span></button>
+  <button type="button" class="button button--accent"><span>Accent</span></button>
+  <button type="button" class="button button--strong"><span>Strong keeps its fill</span></button>
+</div>
+```
+- `--button-bg` is the default Button's resting background (`transparent` by default). Set it on a Button, a container or the theme. Strong, Subtle and Plain keep their own.
+- `--button-hover-style` is `fill` (the default: hover fills the Button with its colour, in the inverted palette) or `tint` (hover darkens the resting background in light mode and lightens it in dark, in the normal palette). It's a container flag, so set it on a container or the theme, not on the Button.
+- The theme's component gate checks `--button-bg` against `--button-color` at 4.5:1.

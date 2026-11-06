@@ -17,7 +17,7 @@
    sub-brand that changes one fails.
    ========================================================================== */
 
-import { parseBlocks, preludeOf } from './css-diff.js';
+import { inCascade, parseBlocks, preludeOf } from './css-diff.js';
 
 const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v);
 
@@ -117,6 +117,19 @@ const print = (tree, cls, indent = '', inSelector = false) =>
     }),
   ].join('\n');
 
+const names = (tree) => [...tree.decls.keys(), ...[...tree.children.values()].flatMap(names)];
+
+/**
+ * Every token the sub-brand changes from its parent, with every :root token
+ * that reads one: a parent's value that reads one of these was worked out
+ * on :root, so the sub-brand has to repeat it.
+ */
+export const changedTokens = (parentCss, nextCss, own = '') => {
+  const next = parseBlocks(nextCss);
+  const ownNames = rootBlocks(parseBlocks(own)).flatMap(([, n]) => [...n.decls.keys()]);
+  return new Set([...names(withDependents(changed(parseBlocks(parentCss), next), next, ownNames)), ...ownNames]);
+};
+
 /**
  * The CSS that turns the parent's compiled tokens into the sub-brand's,
  * inside .theme-<name>. `own` is CSS the sub-brand always carries (its
@@ -131,7 +144,8 @@ export const scopeCss = (name, parentCss, nextCss, own = '') => {
   if (functions.length) throw new Error(`a sub-brand can't change ${functions.map((f) => f.match(/@function\s+(--[\w-]+)/)?.[1] ?? f).join(', ')} (functions are global): change the type scale and shadows in its parent`);
   const ownTree = parseBlocks(own);
   const ownNames = rootBlocks(ownTree).flatMap(([, n]) => [...n.decls.keys()]);
-  withDependents(diff, next, ownNames);
+  /* In the compiled order, with every :root block that sets a changed token */
+  const scoped = inCascade(withDependents(diff, next, ownNames), next);
   /* The sub-brand's own CSS goes after, so it wins over the tokens it repeats */
-  return [print(diff, scopeClass(name)), print(ownTree, scopeClass(name))].filter((s) => s.trim()).join('\n\n');
+  return [print(scoped, scopeClass(name)), print(ownTree, scopeClass(name))].filter((s) => s.trim()).join('\n\n');
 };

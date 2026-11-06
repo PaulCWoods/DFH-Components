@@ -55,7 +55,7 @@
   --_combobox-listbox-border-width: var(--combobox-listbox-border-width, var(--panel-border-width, 1px));
   --_combobox-listbox-radius: var(--combobox-listbox-radius, var(--panel-radius, 0.25rem));
   --_combobox-listbox-shadow: var(--combobox-listbox-shadow, var(--shadow-md, none));
-  --_combobox-listbox-max-size: var(--combobox-listbox-max-height, 18rem);
+  --_combobox-listbox-max-size: var(--combobox-listbox-max-height, var(--spacing-256));
   --_combobox-listbox-padding: var(--combobox-listbox-padding, var(--spacing-xs));
   --_combobox-listbox-offset: var(--combobox-listbox-offset, 0.25rem);
   --_combobox-option-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));

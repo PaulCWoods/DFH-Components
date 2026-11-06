@@ -3,8 +3,9 @@
    --------------------------------------------------------------------------
    A multi-line text field that grows with its content (field-sizing:
    content) between a minimum and maximum number of lines. Size, prominence,
-   corners, flags and states come from the text control base in input.css;
-   this file sets the textarea's own spacing and line limits.
+   flags and states come from the text control base in input.css; this file
+   sets the textarea's own spacing and line limits. No round corners: a full
+   radius cuts into several lines of text, so a round group leaves it as is.
 
    Modifiers: --one-line starts at one line and grows.
    Hooks: --textarea-lines-min, --textarea-lines-max.

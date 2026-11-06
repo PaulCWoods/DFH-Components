@@ -26,7 +26,7 @@
 :where(.fieldset) {
   /* Private manifest */
   --_fieldset-gap: var(--fieldset-gap, var(--spacing-md));
-  --_fieldset-legend-gap: var(--fieldset-legend-gap, 0.25rem);
+  --_fieldset-legend-gap: var(--fieldset-legend-gap, var(--spacing-xs));
 
   /* Density */
   @container style(--ui-sizing: compact) {

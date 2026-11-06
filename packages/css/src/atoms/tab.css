@@ -78,7 +78,7 @@
   --_tab-radius: 0px;
   /* Icons size through the icon's own hook, so .icon--dir can still mirror
      them (a scale here would replace the mirror) */
-  --_tab-icon-size: var(--icon-size, 1em);
+  --_tab-icon-size: var(--icon-size, calc(var(--icon-base-size, 1) * 1em));
   --_tab-justify: center;
   --_tab-text-align: center;
   --_tab-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
@@ -98,8 +98,8 @@
     --_tab-font-size: var(--tab-sm-font-size, var(--control-sm-font-size, 0.875rem));
     --_tab-min-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
     --_tab-line-width: var(--tab-sm-list-indicator-width, 2px);
-    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-block, var(--spacing-xs)))));
-    --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, var(--button-sm-padding-inline, calc(var(--button-sm-min-size, var(--spacing-target-sm)) / var(--button-min-size, var(--spacing-target)) * var(--button-padding-inline, var(--spacing-md)))));
+    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, var(--spacing-2)));
+    --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, var(--button-sm-padding-inline, var(--spacing-10)));
   }
 
   /* Type only: steps the label down without changing geometry */
@@ -315,7 +315,7 @@
    ========================================================================== */
 :where(.tab--icon),
 :where(.tab:not(:has(.tab__text)):has(:where(.visually-hidden, .sr-only, .sr))) {
-  --_tab-icon-size: calc(var(--icon-size, 1em) * 1.25);
+  --_tab-icon-size: calc(var(--icon-size, calc(var(--icon-base-size, 1) * 1em)) * 1.25);
   --_tab-inner-gap: 0px;
   --_tab-padding-inline: var(--_tab-padding-block);
 

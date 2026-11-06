@@ -1,0 +1,4 @@
+{
+  "$description": "A sub-brand of starter: class=\"theme-eden\".",
+  "extends": "starter"
+}

@@ -55,7 +55,7 @@ test('compact larger than fixed fails', () => {
 
 test('growing more than 2.5 times fails (WCAG 1.4.4)', () => {
   const { failures } = edit((t) => (t.styles.heading.growTo = 8));
-  assert.deepEqual(rules(failures.filter((f) => f.rule === 'growth')), ['growth:heading', 'growth:heading']);
+  assert.deepEqual(rules(failures.filter((f) => f.rule === 'growth')), ['growth:heading']);
 });
 
 test('a style\'s sizes follow the system unless it grows to another step', () => {
@@ -70,15 +70,34 @@ test('a style\'s sizes follow the system unless it grows to another step', () =>
   const grows = styleSizes(theme.type, { ...style, growTo: 6 });
   assert.equal(grows.fluid[0], sizes.fluid[0]);
   assert.ok(grows.fluid[1] > sizes.fluid[1]);
-  const cq = styleSizes(theme.type, { ...style, cq: { from: 3 } });
-  assert.deepEqual(cq.fluid, sizes.fluid);
-  assert.ok(cq.cq[0] < sizes.fluid[0]);
+  assert.deepEqual(grows.cq, grows.fluid);
   assert.equal(styleSizes(theme.type, { ...style, fluid: false }).fluid, undefined);
-  /* fluidFrom starts fluid (and cq) from another step; fixed stays */
-  const bigger = styleSizes(theme.type, { ...style, fluidFrom: 6 });
-  assert.equal(bigger.fixed, sizes.fixed);
-  assert.ok(bigger.fluid[0] > sizes.fluid[0]);
-  assert.deepEqual(bigger.cq, bigger.fluid);
+  /* Fluid always starts at the fixed size, and cq always follows it: the old settings do nothing */
+  assert.deepEqual(styleSizes(theme.type, { ...style, fluidFrom: 6, cq: { from: 3 } }), sizes);
+});
+
+test('the ceilings hold large sizes down and say so; 0 lifts one', () => {
+  const big = edit(() => {});
+  const display = styleSizes(theme.type, theme.type.styles['display-title']);
+  assert.equal(display.fixed, 3);
+  assert.equal(display.fluid[1], 6);
+  assert.ok(big.reports.some((r) => r.rule === 'ceiling' && r.style === 'display-title' && /lower/.test(r.message)));
+  assert.ok(big.reports.some((r) => r.rule === 'ceiling' && r.style === 'display-title' && /upper/.test(r.message)));
+  const off = structuredClone(theme.type);
+  off.scale.ceiling = { lower: 0, upper: 0 };
+  assert.ok(styleSizes(off, off.styles['display-title']).fixed > 3);
+  assert.ok(!typeGate(off, files).reports.some((r) => r.rule === 'ceiling'));
+  /* A narrow display font can take a higher lower ceiling */
+  const narrow = structuredClone(theme.type);
+  narrow.scale.ceiling = { lower: '4rem' };
+  assert.equal(styleSizes(narrow, narrow.styles['display-title']).fixed, 4);
+});
+
+test('ceilings out of order fail', () => {
+  const rules = (fn) => edit(fn).failures.filter((f) => f.rule === 'scale').map((f) => f.message);
+  assert.ok(rules((t) => (t.scale.ceiling = { lower: '0.5rem' })).some((m) => /lower ceiling/.test(m)));
+  assert.ok(rules((t) => (t.scale.ceiling = { lower: '4rem', upper: '3rem' })).some((m) => /upper ceiling/.test(m)));
+  assert.ok(rules((t) => (t.scale.ceiling = { lower: 'big' })).some((m) => /isn't a length/.test(m)));
 });
 
 test('a tight line height is reported on reading text, not on small text', () => {
@@ -137,4 +156,12 @@ test('steps at the minimum may be equal; a bad or too large minimum fails', () =
   assert.ok(!flat.reports.some((r) => r.rule === 'floor' && r.style !== 'scale'));
   assert.ok(edit((t) => (t.scale.min = '12')).failures.some((r) => r.rule === 'scale'));
   assert.ok(edit((t) => (t.scale.min = '1.5rem')).failures.some((r) => r.rule === 'scale'));
+});
+
+test('a style at the floor in a regular or lighter weight is reported, a heavier one isn\'t', () => {
+  const floorWeight = (fn) => edit(fn).reports.filter((r) => r.rule === 'floor-weight').map((r) => r.style);
+  const regular = floorWeight((t) => (t.styles['body-xs'].weight = 'regular'));
+  assert.ok(regular.includes('body-xs'));
+  const bold = floorWeight((t) => (t.styles['body-xs'].weight = 'bold'));
+  assert.ok(!bold.includes('body-xs'));
 });

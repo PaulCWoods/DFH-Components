@@ -79,7 +79,7 @@
 
   @container style(--badge-size: sm) or style(--ui-sizing: compact) {
     --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2));
-    --_badge-size: var(--badge-sm-size, 1rem);
+    --_badge-size: var(--badge-sm-size, var(--spacing, 1rem));
     --_badge-text-padding-inline: 0px;
   }
 
@@ -145,7 +145,7 @@
    ========================================================================== */
 :where(.badge--sm) {
   --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2));
-  --_badge-size: var(--badge-sm-size, 1rem);
+  --_badge-size: var(--badge-sm-size, var(--spacing, 1rem));
 }
 
 /* Dot: presence of something new, without a count. */

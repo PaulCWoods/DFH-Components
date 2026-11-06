@@ -6,12 +6,12 @@
     --title-letter-spacing: var(--heading-letter-spacing);
     --title-text-transform: none;
     --panel-border-width: var(--border-width-thin);
+    --panel-radius: var(--radius);
     --radius: var(--radius-md);
     --radius-sm: var(--radius-2);
-    --panel-radius: var(--radius);
   }
 
   .theme-docs {
-    --brand-font-weight: var(--font-weight-regular);
+    --accordion-radius: var(--radius);
   }
 }
