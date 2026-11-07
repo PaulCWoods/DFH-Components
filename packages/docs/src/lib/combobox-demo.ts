@@ -11,21 +11,34 @@ export const enhance = (root: HTMLElement) => {
     const multi = list.getAttribute('aria-multiselectable') === 'true';
     const isStatic = list.classList.contains('combobox__listbox--static');
     const options = () => [...list.querySelectorAll<HTMLElement>('[role="option"]')];
-    const visible = () => options().filter((o) => !o.hidden && o.getAttribute('aria-disabled') !== 'true');
+    /* Disabled options stay reachable with the arrow keys, so people learn
+       they exist; they just can't be chosen */
+    const visible = () => options().filter((o) => !o.hidden);
+    const disabled = (o: HTMLElement) => o.getAttribute('aria-disabled') === 'true';
     const label = (o: HTMLElement) => (o.querySelector('[data-label]') ?? o).textContent!.trim().replace(/\s+/g, ' ');
 
     const isOpen = () => input.getAttribute('aria-expanded') === 'true';
+    const show = (on: boolean) => {
+      input.setAttribute('aria-expanded', String(on));
+      if (!list.hasAttribute('popover')) return;
+      if (on && !list.matches(':popover-open')) list.showPopover();
+      if (!on && list.matches(':popover-open')) list.hidePopover();
+    };
     const open = () => {
       if (isOpen()) return;
-      input.setAttribute('aria-expanded', 'true');
-      if (list.hasAttribute('popover')) list.showPopover();
+      show(true);
       filter();
     };
     const close = () => {
       if (isStatic || !isOpen()) return;
-      input.setAttribute('aria-expanded', 'false');
-      if (list.hasAttribute('popover') && list.matches(':popover-open')) list.hidePopover();
+      show(false);
       setActive(null);
+    };
+    /* Clearing a single select's text clears its choice too */
+    const clear = () => {
+      input.value = '';
+      if (!multi) options().forEach((o) => o.setAttribute('aria-selected', 'false'));
+      filter();
     };
     const setActive = (o: HTMLElement | null) => {
       options().forEach((x) => x.classList.toggle('is-active', x === o));
@@ -47,6 +60,8 @@ export const enhance = (root: HTMLElement) => {
       if (empty) empty.hidden = n > 0;
       if (status) status.textContent = n ? `${n} result${n === 1 ? '' : 's'}` : 'No results';
       setActive(null);
+      /* Nothing to show: the list closes rather than point at nothing */
+      if (!isStatic && isOpen() && !n) show(false);
     };
     const chip = (o: HTMLElement) => {
       const c = document.createElement('span');
@@ -73,32 +88,49 @@ export const enhance = (root: HTMLElement) => {
 
     options().forEach((o, i) => {
       if (!o.id) o.id = `${list.id}-${i}`;
-      o.addEventListener('mousedown', (e) => e.preventDefault());
       o.addEventListener('click', () => {
-        if (o.getAttribute('aria-disabled') !== 'true') select(o);
+        if (!disabled(o)) select(o);
       });
+    });
+    /* A press anywhere in the list (an option, a group label, the
+       scrollbar) keeps focus in the input; tabindex="-1" keeps it in the
+       box where a browser moves it anyway */
+    list.tabIndex = -1;
+    list.addEventListener('mousedown', (e) => e.preventDefault());
+    /* A press on the field outside the input (an icon, between Chips) puts
+       focus in the input */
+    box.querySelector('.combobox__control')?.addEventListener('mousedown', (e) => {
+      const t = e.target as HTMLElement;
+      if (t === input || t.closest('button')) return;
+      e.preventDefault();
+      input.focus();
     });
     input.addEventListener('input', () => {
       if (isOpen()) filter();
-      else open();
+      else {
+        show(true);
+        filter();
+      }
     });
     input.addEventListener('keydown', (e) => {
-      const v = visible();
-      const cur = v.findIndex((o) => o.classList.contains('is-active'));
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
         open();
+        /* Read the options after opening, which filters them */
+        const v = visible();
+        const cur = v.findIndex((o) => o.classList.contains('is-active'));
         const step = e.key === 'ArrowDown' ? 1 : -1;
         setActive(v[(cur + step + v.length) % v.length] ?? null);
-      } else if (e.key === 'Enter' && cur > -1) {
+        return;
+      }
+      const v = visible();
+      const cur = v.findIndex((o) => o.classList.contains('is-active'));
+      if (e.key === 'Enter' && cur > -1) {
         e.preventDefault();
-        select(v[cur]);
+        if (!disabled(v[cur])) select(v[cur]);
       } else if (e.key === 'Escape') {
         if (isOpen() && !isStatic) close();
-        else {
-          input.value = '';
-          filter();
-        }
+        else clear();
       } else if (e.key === 'Backspace' && multi && !input.value && tags?.lastElementChild) {
         const last = tags.lastElementChild as HTMLElement;
         list.querySelector(`#${last.dataset.for}`)?.setAttribute('aria-selected', 'false');
@@ -111,8 +143,7 @@ export const enhance = (root: HTMLElement) => {
       input.focus();
     });
     box.querySelector('.combobox__clear')?.addEventListener('click', () => {
-      input.value = '';
-      filter();
+      clear();
       input.focus();
     });
     tags?.addEventListener('click', (e) => {

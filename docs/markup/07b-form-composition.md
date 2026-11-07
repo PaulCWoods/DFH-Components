@@ -51,6 +51,8 @@ Nothing here writes words for you. "(optional)" goes in the label, written by wh
 ## Rules
 - **Required and optional are written, never generated.** Mark the fewer case in the label, usually `<span class="text-muted">(optional)</span>`. Required controls keep `required`, which screen readers announce.
 - **Errors are not alerts.** Link an error to its control with `aria-describedby` and set `aria-invalid="true"`. A script that inserts an error after the page loads may add `role="alert"`; server-rendered errors take no role. Every error starts with a Warning icon, so it is never colour alone.
+- **One way to validate.** Either let the browser check the Form (`required`, `type`, `pattern`) and show its own messages, or put `novalidate` on the Form and show the library's errors with an error summary. Never both, or people meet two different messages for one mistake.
+- **A failed submit gets an error summary** when the Form has more than one Field: a danger Banner at the top of the Form that counts the problems and links to each Field. Focus moves to it, and the page title starts with "Error:".
 
 ## Keyboard and screen readers
 The browser provides all of this for native controls. Script only what it can't know, such as where to send focus after a failed submit.
@@ -58,7 +60,7 @@ The browser provides all of this for native controls. Script only what it can't 
 - **Space** toggles a Checkbox. **Arrow keys** move between radios and select as they go.
 - **Enter** in a single-line Field submits the Form.
 - **A screen reader** hears the label, "required" from `required`, the hint and error from `aria-describedby`, and "invalid" from `aria-invalid`. It hears the legend on entering a Fieldset.
-- **After a failed submit,** move focus to the first invalid control. An error inserted by script may take `role="alert"`.
+- **After a failed submit,** move focus to the error summary (it has `tabindex="-1"`), or to the invalid control when there is only one. Moving focus reads the summary out, so it takes no `role="alert"`. Its links take people to each Field.
 
 ## Field
 Order: label, hint, error, control. The error comes before the control, so a screen-reader user hears it before reaching the Field and a magnifier user sees it beside the label.
@@ -169,6 +171,38 @@ Each `.choice` is a `<label>` holding the box and its text; the whole row is the
 ```
 - The actions are a Button Group; align them with a `justify-*` utility. In an aligned form they line up with the controls.
 
+## Summarise Errors at the Top
+After a failed submit, a summary at the top of the Form says how many things need fixing and links to each one. Focus moves to it, so a screen reader reads it out and a keyboard user starts from it. Each error is also shown beside its Field, in the same words.
+```html live width=md
+<form class="form" novalidate>
+  <div id="plot-errors" class="banner banner--danger" tabindex="-1" aria-labelledby="plot-errors-title">
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+    <div class="banner__body">
+      <h2 id="plot-errors-title" class="text font-bold">There are 2 problems with your application</h2>
+      <ul class="list">
+        <li><a class="link" href="#plot-name">Enter your full name</a></li>
+        <li><a class="link" href="#plot-number">Enter a plot number, like A-14</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="field">
+    <label for="plot-name" class="field__label label">Full name</label>
+    <p id="plot-name-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter your full name</p>
+    <input id="plot-name" class="input" autocomplete="name" aria-invalid="true" aria-describedby="plot-name-error" />
+  </div>
+  <div class="field">
+    <label for="plot-number" class="field__label label">Plot number</label>
+    <p id="plot-number-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter a plot number, like A-14</p>
+    <input id="plot-number" class="input" aria-invalid="true" aria-describedby="plot-number-error" value="14" />
+  </div>
+  <div class="form__actions button-group">
+    <button type="submit" class="button button--strong button--accent"><span>Apply</span></button>
+  </div>
+</form>
+```
+- On submit, the product's script fills the summary, shows it, sets `document.title` to start with "Error: " and calls `focus()` on it. Server-rendered pages do the same on load.
+- Each link's `href` is the control's `id`, so following it moves focus into the Field.
+
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |
@@ -178,6 +212,7 @@ Each `.choice` is a `<label>` holding the box and its text; the whole row is the
 | Link the hint and error to the control with `aria-describedby`. | Leave the hint as nearby text that screen readers skip. |
 | Ask a group question with a Fieldset and legend. | Put a heading above loose checkboxes. |
 | Show errors after someone has had a go at a Field. | Show errors on a Form nobody has touched yet. |
+| Move focus to an error summary after a failed submit. | Leave people at the submit button, unaware anything went wrong. |
 
 ## Reference
 What goes around the [form controls](07-form-controls.md).

@@ -28,6 +28,9 @@
   --_range-track-height: var(--range-track-height, var(--spacing-sm));
   --_range-track-bg: var(--range-track-bg, var(--surface-muted, transparent));
   --_range-track-radius: var(--range-track-radius, var(--radius, 0.25rem));
+  /* The track's own edge, at least 3:1 against the page (WCAG 1.4.11) */
+  --_range-track-edge-width: var(--range-track-border-width, var(--control-border-width, 1px));
+  --_range-track-edge-color: var(--range-track-border-color, var(--border-color-control, currentColor));
   --_range-thumb-size: var(--range-thumb-size, var(--spacing-24));
   --_range-thumb-radius: var(--range-thumb-radius, var(--radius-full, 9999px));
   --_range-thumb-border-width: var(--range-thumb-border-width, var(--border-width, 1px));
@@ -99,7 +102,7 @@
     background: linear-gradient(var(--_range-fill-direction),
         var(--_range-tone) var(--value, 0%),
         var(--_range-track-bg) var(--value, 0%));
-    border: 0;
+    border: var(--_range-track-edge-width) solid var(--_range-track-edge-color);
     border-radius: var(--_range-track-radius);
   }
 
@@ -123,7 +126,7 @@
   &::-moz-range-track {
     block-size: var(--_range-track-height);
     background-color: var(--_range-track-bg);
-    border: 0;
+    border: var(--_range-track-edge-width) solid var(--_range-track-edge-color);
     border-radius: var(--_range-track-radius);
   }
 
@@ -187,7 +190,7 @@
   }
 
   &:where(:disabled, [aria-disabled="true"]) {
-    opacity: var(--opacity-disabled, 0.4);
+    opacity: var(--opacity-disabled, 0.5);
     cursor: not-allowed;
 
     &::-webkit-slider-thumb {
@@ -199,13 +202,31 @@
     }
   }
 
-  @media (prefers-contrast: more) {
-    &::-webkit-slider-runnable-track {
-      outline: 1px solid currentColor;
+  /* Forced colours would paint the track and thumb as Canvas: the range
+     draws itself in system colours instead */
+  @media (forced-colors: active) {
+    forced-color-adjust: none;
+    --_range-tone: Highlight;
+    --_range-tone-pressed: Highlight;
+    --_range-track-bg: Canvas;
+    --_range-track-edge-color: CanvasText;
+    --_range-thumb-border-color: Canvas;
+    --_range-thumb-shadow: none;
+
+    &:focus-visible {
+      &::-webkit-slider-thumb {
+        outline-color: CanvasText;
+      }
+
+      &::-moz-range-thumb {
+        outline-color: CanvasText;
+      }
     }
 
-    &::-moz-range-track {
-      outline: 1px solid currentColor;
+    &:where(:disabled, [aria-disabled="true"]) {
+      --_range-tone: GrayText;
+      --_range-track-edge-color: GrayText;
+      opacity: 1;
     }
   }
 
@@ -258,11 +279,10 @@
   --_range-tone-pressed: var(--foreground-danger-pressed, var(--_range-tone));
 }
 
-/* Optional scale labels under a range */
+/* Optional scale labels under a range; their type comes from a text atom */
 :where(.range__scale-ticks) {
   display: flex;
   justify-content: space-between;
   inline-size: 100%;
-  font-size: var(--body-sm-fixed-font-size, 0.875rem);
   color: var(--foreground-muted, currentColor);
 }

@@ -29,6 +29,9 @@
     --divider-orientation: vertical;
     --_gap: var(--gap, var(--spacing, 1rem));
     --_justify: var(--justify-content, normal);
+    /* Controls inside reach at most halfway across the gap to the next in
+       the row (their hit areas) */
+    --target-gap-inline: var(--_gap);
 
     @container style(--ui-sizing: compact) {
         --_gap: var(--gap, var(--spacing-compact, 0.5rem));
@@ -89,4 +92,24 @@
     @supports (rule: 1px) {
         --_gap: var(--rule-width, 1px);
     }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.cluster) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
+  }
 }

@@ -67,7 +67,7 @@ A single-line text field. Input, select and textarea share one base (\`atoms/inp
 \`\`\`
 
 #### Accessibility
-- Every prominence keeps a 3:1 edge (WCAG 1.4.11): outline has a full border; subtle and plain keep the bottom border.
+- Outline has a full 3:1 border and plain keeps its bottom border. Subtle is a tinted field with no border; the border comes back in high contrast and forced colours.
 - \`--sm\` is 32px, the same as a small button. A field can't take a hit-area buffer, so that is also its target: above the 24px minimum (WCAG 2.5.8), below the 48px touch target. To shrink only for mouse and trackpad users, put the controls in a \`fine:ui-compact\` container.
 - Invalid styling follows \`:user-invalid\` and \`aria-invalid="true"\`. Pair it with a \`.field__error\` message. Valid fields are not recoloured.
 `,
@@ -125,13 +125,13 @@ export const Playground: Story = {
 };
 
 /**
- * Outline, subtle and plain. Each keeps a 3:1 edge; subtle and plain keep it on the bottom only.
+ * Outline, subtle and plain. Outline has a full 3:1 border and plain a bottom border; subtle has none until high contrast or forced colours.
  */
 export const Prominence: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${PROMINENCES.map((p) => field(p, (id) => `<input id="${id}" type="text" class="${inputClasses('default', p)}" placeholder="Search projects" />`)).join('')}
-      ${field('round', (id) => `<input id="${id}" type="search" class="input input--round" placeholder="Search projects" />`)}
+      ${PROMINENCES.map((p, i) => field(['Project name', 'Client', 'Reference'][i] ?? 'Project', (id) => `<input id="${id}" type="text" class="${inputClasses('default', p)}" placeholder="Search projects" />`)).join('')}
+      ${field('Search', (id) => `<input id="${id}" type="search" class="input input--round" placeholder="Search projects" />`)}
     </div>
   `,
 };
@@ -145,16 +145,16 @@ export const Sizes: Story = {
       ${SIZES.map(
         (s) => `
       <div style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: var(--spacing-16);">
-        ${field(s, (id) => `<input id="${id}" type="text" class="${inputClasses(s)}" placeholder="${s}" />`)}
+        ${field('Title', (id) => `<input id="${id}" type="text" class="${inputClasses(s)}" />`)}
         <button type="button" class="button${s !== 'default' ? ` button--${s}` : ''}"><span>Apply</span></button>
       </div>`
       ).join('')}
       <div style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: var(--spacing-16);" class="ui-compact">
-        ${field('Compact container', (id) => `<input id="${id}" type="text" class="input" placeholder="Steps to sm" />`)}
+        ${field('Tag', (id) => `<input id="${id}" type="text" class="input" />`)}
         <button type="button" class="button"><span>Apply</span></button>
       </div>
       <div style="display: grid; grid-template-columns: 1fr auto; align-items: end; gap: var(--spacing-16);" class="fine:ui-compact">
-        ${field('fine:ui-compact', (id) => `<input id="${id}" type="text" class="input" placeholder="sm with a mouse, default on touch" />`)}
+        ${field('Owner', (id) => `<input id="${id}" type="text" class="input" />`)}
         <button type="button" class="button"><span>Apply</span></button>
       </div>
     </div>
@@ -167,15 +167,15 @@ export const Sizes: Story = {
 export const States: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${field('Resting', (id) => `<input id="${id}" type="text" class="input" placeholder="Placeholder text" />`)}
-      ${field('Filled', (id) => `<input id="${id}" type="text" class="input" value="Ada Lovelace" />`)}
+      ${field('Full name', (id) => `<input id="${id}" type="text" class="input" />`)}
+      ${field('Author', (id) => `<input id="${id}" type="text" class="input" value="Ada Lovelace" />`)}
       <div class="field">
         <label for="input-invalid" class="field__label label">Invalid</label>
         <p id="input-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter an email address in the form name@example.com.</p>
         <input id="input-invalid" type="email" class="input" value="ada@" aria-invalid="true" aria-describedby="input-invalid-error" />
       </div>
-      ${field('Read-only', (id) => `<input id="${id}" type="text" class="input" value="INV-2048" readonly />`)}
-      ${field('Disabled', (id) => `<input id="${id}" type="text" class="input" value="Locked" disabled />`)}
+      ${field('Invoice number', (id) => `<input id="${id}" type="text" class="input" value="INV-2048" readonly />`)}
+      ${field('Workspace', (id) => `<input id="${id}" type="text" class="input" value="Design For Humans" disabled />`)}
     </div>
   `,
 };
@@ -236,16 +236,18 @@ export const Types: Story = {
 };
 
 /**
- * Colour and file inputs.
+ * Colour and file inputs. A colour input comes in three sizes, and
+ * `--stretch` fills its container.
  */
 export const ColorAndFile: Story = {
   render: () => `
     <div class="sb-demo-stage stack">
       <div class="cluster items-end">
         ${['color-input--sm', '', 'color-input--lg']
-          .map((m, i) => field(['sm', 'default', 'lg'][i], (id) => `<input id="${id}" type="color" class="${['color-input', m].filter(Boolean).join(' ')}" value="#00a39a" />`))
+          .map((m, i) => field(['Accent', 'Brand', 'Background'][i], (id) => `<input id="${id}" type="color" class="${['color-input', m].filter(Boolean).join(' ')}" value="#00a39a" />`))
           .join('')}
       </div>
+      ${field('Seed colour (stretches to fill)', (id) => `<input id="${id}" type="color" class="color-input color-input--stretch" value="#3a7bd5" />`)}
       ${field('Attachment', (id) => `<input id="${id}" type="file" class="file-input" />`)}
     </div>
   `,

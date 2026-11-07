@@ -63,6 +63,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--_batch-actions-gap);
+  --target-gap-inline: var(--_batch-actions-gap);
   /* A bar is never shorter than its targets: small buttons keep their hit
      areas inside it, however little padding it has and however many rows
      it wraps to */
@@ -266,5 +267,25 @@
   :where(.batch-actions:not(.batch-actions--plain)) {
     --_batch-actions-border-width: var(--border-width-medium, 2px);
     --_batch-actions-shadow: none;
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.batch-actions) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
   }
 }

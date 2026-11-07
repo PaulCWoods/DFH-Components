@@ -79,10 +79,12 @@ Some choices aren't about attention, consequence or size, so they aren't axes. T
 - They must not share modifier names. There is one density modifier, `--compact`; `--dense` is not used.
 - `--compact` sets `--ui-sizing: compact` on the container, so nested layout primitives tighten their gaps, typography atoms step down, and nested controls step down to their `--sm` size, all through `@container style(--ui-sizing: compact)`. This is the one density flag; per-component density flags (`--ui-density`, `--control-density`, `--menu-density` and similar) are migrated to it.
 - To step down type alone without changing geometry or controls, set `--font-sizing: compact` on the region.
-- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8). Native fields are one exception (see the decisions log): an input can't take a buffer, so `--sm` text, select, colour and range controls are 32px, visual and target alike. Choice rows in a compact container are the other: the row is the target, so it is 32px to sit with compact fields.
+- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer, unless neighbours sit closer than that (see the next rule). On any pointer it never falls below 24px (WCAG 2.5.8). Native fields are one exception (see the decisions log): an input can't take a buffer, so `--sm` text, select and colour controls are 32px, visual and target alike. A range is its own target and keeps the full size. Choice rows in a compact container are the other: the row is the target, so it is 32px to sit with compact fields.
 - A bar is never shorter than its targets. A container whose job is to hold a row of controls (a Header bar, a tab list, batch actions, pagination) is at least as tall as the minimum target for the pointer mode, so the controls' hit areas stay inside it. Compact tightens its padding and type; only fine-pointer targets make it shorter.
+- A hit area never covers another control. A buffer reaches at most halfway across the gap to its neighbour, so each control owns its half and a tap on what looks like one control never activates the next; joined controls (no gap) take no buffer between them. In a tight group a small control's target is then its own size plus the gap, under 48px on touch: that is accepted (a product that wants full targets there leaves the group at its default size, or scopes compact to fine pointers with `fine:ui-compact`), and it never falls below 24px. A container that sets controls side by side (a Button Group, Menu, Navigation Tree, Tab List, Batch Actions, Cluster, Inline) gives its gap as `--target-gap-inline` or `--target-gap-block`, along the line its items sit on, and frees the outer side of its first and last items (`--target-gap-inline-start` and the other sides); it resets those sides on itself, and a Card, Popover or Dialog starts afresh.
 - A container never clips its controls' hit areas. One that hides its overflow (a code block, a banner, a dock) leaves room for the buffers of the controls at its edges, by padding or by placing them inside.
-- The visible control is the target. Where the library draws a control around a native field (a combobox, a search field), the field fills it, so a tap anywhere on what looks like the control reaches the field.
+- The visible control is the target. Where the library draws a control around a native field (a combobox, a search field, a switch), the field fills it, so a tap anywhere on what looks like the control reaches the field.
+- A row is not a target when a stray tap would change something at once. A Switch's row and hint don't toggle it; only the control and its label do.
 - A checkbox or radio with no visible label (selecting a row) can't take a buffer, so it takes its target from a `<label>` around it that fills the table cell or card corner. Its name stays in `aria-label`.
 - Text links stacked in a list are at least 24px apart (WCAG 2.5.8). Where a list of links needs 48px targets, its links are block links.
 
@@ -259,6 +261,7 @@ A component is only as clear as the words in it. The library ships no copy, so t
 - Plain language: short sentences, common words, no jargon the user didn't bring. Headings and labels are front-loaded so the first words carry the meaning.
 - Accessible names match the visible label, starting with the same words (WCAG 2.5.3).
 - Mark the less common case in a form: "(optional)" in the label, written by the author.
+- After a failed submit, a form with more than one field leads with an error summary: a danger banner that counts the problems and links to each field, focused by script, with "Error:" at the start of the page title. Each error is repeated beside its field in the same words.
 
 ## 10. Decisions log
 
@@ -290,7 +293,7 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | Must every stylesheet have a forced-colors block? | No. Real borders and text survive forced colours unaided. Every story is checked in forced colours by script, and a component gets a block only where the check finds something lost. |
 | Where may viewport media queries be used? | In the parts that span the page (app shell, Header, Sidebar), the viewport-prefixed responsive helpers, and user preferences. Everything else uses container queries. |
 | Is a colour-flipped region reversed or inverted? | Inverted, as the code says (`.color-palette-inverted`). One word for one thing. |
-| Should tight groups of small controls avoid overlapping hit areas? | No. WCAG 2.5.8 allows overlap; the later control wins. Dense toolbars that need exact targets opt into fine-pointer targets. |
+| Should tight groups of small controls avoid overlapping hit areas? | Yes (reversed, Nov 2026). Overlap let the later control take taps on the earlier one's own box: on a phone, people hit the wrong item in the docs sidebar and the header's scheme switch. A buffer now reaches halfway across the gap and stops. The cost, a target under 48px in a tight group on touch, is accepted. |
 | Does each prominence need an explicit modifier, such as `--outline`? | Not yet. Add one only when a real case needs to override a container's prominence back to the default. |
 | Is a card's edge part of prominence? | No. Prominence sets the fill; the card's chrome axis (`--flat`, `--bordered`) sets the edge, and `--flush` the padding, so each modifier keeps to one axis. `--plain` keeps its edgeless look; `.card--plain.card--bordered` is the outline the row above anticipated. Chrome is card-only until a second surface needs it. |
 | How are badge, chip, status and kbd told apart? | By job. Attached count or dot: badge. State of a thing: status. Value or tag, optionally removable: chip. Key: kbd. There is no separate "label" atom. |
@@ -318,7 +321,10 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | How do links work on a dark band? | Put `.color-scheme-dark` on the band. Every `light-dark()` token inside flips, links included. |
 | How are bare links styled? | The reset gives an unclassed `<a>` an underline and the surrounding text colour, so it reads as a link without a class. |
 | Do checkboxes and radios take an intent? | No. A checkbox has a state, not a status. Invalid turns it danger. |
-| What boundary do borderless controls keep? | Subtle and plain controls keep a 3:1 bottom border (`--border-color-control`). `--flush` drops it only inside a bar that draws the boundary itself. |
+| What boundary do borderless controls keep? | Plain keeps a 3:1 bottom border (`--border-color-control`). Subtle is a tinted field with no border, by choice: WCAG 1.4.11 doesn't ask a field for a boundary. Its border comes back under `prefers-contrast: more` and in forced colours. `--flush` drops the boundary only inside a bar that draws it. |
+| Browser validation or the library's errors? | One or the other, never both. Either the browser checks the form and shows its own messages, or the form has `novalidate` and shows the library's errors with an error summary. |
+| What does the library give a component whose behaviour needs a script? | Its CSS, its states and a reference demo of the product's script (a Combobox's is in the docs package), which keeps the documented keyboard map. The demo isn't shipped. |
+| Does a Range Lockup take its own size or a border? | No. It takes size from `.controls-sm` or `.controls-lg`, like any group of controls. A border or surface around it is an override or utilities, not an option. |
 | What size does a text atom take by default? | Its fixed step, at every width, headings included. A container chooses fluid, `cq` or compact sizing through `--font-sizing` (or `--ui-sizing: compact`); the appearance-mode classes set it. |
 | How many names can a utility have? | Two at most: a verbose name (property and value) and Tailwind's shorthand where Tailwind has one with the same meaning. |
 | How many small text steps are there? | One: `.small-text` (step −1). `.micro-text` is removed. `.micro-heading` is the uppercase eyebrow, a separate job. |
@@ -338,7 +344,7 @@ Run this on every component during the audit. A component is ready for v1 only w
 - [ ] Fully keyboard operable, visible focus, no trap; a control that hides its input (a toggle Button, a choice) shows the ring on what it draws
 - [ ] A current or selected item has a cue beyond a tint (section 1)
 - [ ] Contrast verified for text (AA) and for boundaries and focus (3:1), with AAA reachable through library options
-- [ ] Works in forced-colors, reduced-motion and high-contrast preferences
+- [ ] Works in forced-colors, reduced-motion and high-contrast preferences; selected, current and checked states still show in forced colours
 - [ ] Touch target meets the documented size for each pointer mode, including `--sm` sizes on coarse pointers
 - [ ] Colour is never the only signal; every non-neutral intent has an icon, role or text
 

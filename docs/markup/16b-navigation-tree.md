@@ -105,7 +105,7 @@ Nested links to the sections of a site or a page: a docs Sidebar, a table of con
 
 ### Further rules
 - **Items** are `<a class="button">` in `<li>`, in regular weight and the muted colour (`--navigation-tree-color`). They keep the Button's targets (48px, or 32px compact or with fine-pointer targets), focus ring and wrapping. A trailing Badge or status sits at the end.
-- **Alignment:** everything lines up on the item label's inset (the Button's border and padding). A nested list starts under its parent's label, a ruled tree draws its line there, and headings use the same inset.
+- **Alignment:** everything lines up on the item label's inset (the Button's border and padding). A nested list starts under its parent's label, a ruled tree draws its line there, and headings use the same inset. In a Card or Sidebar body the tree reaches out to their edges, so the rows span the full width; the inset is never more than their padding, and every item's padding follows it, so the tree never overflows them.
 - **Headings:** `<li class="navigation-tree__heading">` holding a text atom, as in the Menu, so it lines up with the item labels. A heading that names the whole tree goes there too, with `aria-labelledby` on the `<nav>`.
 
 ## Site Navigation

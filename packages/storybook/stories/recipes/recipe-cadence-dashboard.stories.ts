@@ -193,10 +193,10 @@ const position = (id: string) => `
   </div>`;
 
 const volume = (id: string) => `
-  <div class="range-lockup range-lockup--sm">
-    <button type="button" class="button button--plain button--icon button--sm" aria-pressed="false">${icon('VolumeOn')}<span class="sr-only">Mute</span></button>
+  <div class="range-lockup controls-sm">
+    <button type="button" class="button button--plain button--icon" aria-pressed="false">${icon('VolumeOn')}<span class="sr-only">Mute</span></button>
     <input id="${id}-volume" type="range" class="range" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume" />
-    <output for="${id}-volume" class="range-lockup__output">85%</output>
+    <output for="${id}-volume" class="range-lockup__output small-text font-mono">85%</output>
   </div>`;
 
 const levels = (id: string) => `
@@ -396,8 +396,8 @@ const settingsDialog = `
           <label for="set-codec" class="field__label label">Codec</label>
           <select id="set-codec" class="select"><option>AAC, 320 kbps</option><option>AAC-HE, 192 kbps</option><option>FLAC</option></select>
         </div>
-        <label class="switch"><span class="switch__label label">Loudness normalisation <span class="small-text text-muted">Holds every track at −14 LUFS</span></span><input type="checkbox" role="switch" class="sr-only" checked /><span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span></label>
-        <label class="switch"><span class="switch__label label">Fall back to the emergency cart <span class="small-text text-muted">When the buffer drops under 10 ms</span></span><input type="checkbox" role="switch" class="sr-only" checked /><span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span></label>
+        <div class="switch"><div class="switch__label"><label for="set-loudness" class="label">Loudness normalisation</label><p id="set-loudness-hint" class="small-text text-muted">Holds every track at −14 LUFS</p></div><span class="switch__control"><input type="checkbox" role="switch" id="set-loudness" aria-describedby="set-loudness-hint" checked /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
+        <div class="switch"><div class="switch__label"><label for="set-fallback" class="label">Fall back to the emergency cart</label><p id="set-fallback-hint" class="small-text text-muted">When the buffer drops under 10 ms</p></div><span class="switch__control"><input type="checkbox" role="switch" id="set-fallback" aria-describedby="set-fallback-hint" checked /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
         <div class="field">
           <div class="field__header">
             <label for="set-buffer" class="field__label label">Buffer</label>

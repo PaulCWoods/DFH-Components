@@ -43,6 +43,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--_button-group-gap);
+  /* Hit areas reach at most halfway across the gap; joined, not at all */
+  --target-gap-inline: var(--_button-group-gap);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -62,6 +64,9 @@
    ========================================================================== */
 :where(.button-group--vertical) {
   --divider-orientation: horizontal;
+  /* Hit areas meet halfway between the rows instead */
+  --target-gap-block: var(--_button-group-gap);
+  --target-gap-inline: initial;
 
   align-items: stretch;
   flex-direction: column;
@@ -174,5 +179,25 @@
   > :where(li:not(:has(~ li))) > :where(.button) {
     border-end-start-radius: var(--_button-radius);
     border-start-end-radius: 0;
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.button-group) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
   }
 }

@@ -27,7 +27,7 @@ const toc = headings.filter((h) => h.depth === 2);
 ---
 <BaseLayout title={title} description={summary} nav={nav} current={current}>
   <div class="app__workspace theme-docs">
-    <div class="sidebar sidebar--sticky max-lg:hide">
+    <div class="sidebar sidebar--sticky max-lg:hide fine:ui-compact">
       <div class="sidebar__body">
         <NavTree nav={nav} current={current} mode="section" idPrefix="section-nav" />
       </div>
@@ -49,9 +49,9 @@ const toc = headings.filter((h) => h.depth === 2);
       </div>
     </main>
     {toc.length > 1 && (
-      <div class="sidebar sidebar--end sidebar--plain sidebar--sticky max-xl:hide">
+      <div class="sidebar sidebar--end sidebar--plain sidebar--sticky max-xl:hide fine:ui-compact">
         <div class="sidebar__body">
-          <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="toc-heading">
+          <nav class="navigation-tree navigation-tree--ruled" aria-labelledby="toc-heading">
             <ol>
               <li class="navigation-tree__heading"><h2 id="toc-heading" class="subheading">On this page</h2></li>
               {toc.map((h) => <li><a href={`#${h.slug}`} class="button"><span>{h.text}</span></a></li>)}

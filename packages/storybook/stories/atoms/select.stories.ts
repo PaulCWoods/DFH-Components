@@ -114,8 +114,8 @@ export const Playground: Story = {
 export const Prominence: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${PROMINENCES.map((p) => field(p, (id) => `<select id="${id}" class="${selectClasses('default', p)}">${OPTIONS}</select>`)).join('')}
-      ${field('round', (id) => `<select id="${id}" class="select select--round">${OPTIONS}</select>`)}
+      ${PROMINENCES.map((p, i) => field(['Team', 'Region', 'Language'][i] ?? 'Team', (id) => `<select id="${id}" class="${selectClasses('default', p)}">${OPTIONS}</select>`)).join('')}
+      ${field('Time zone', (id) => `<select id="${id}" class="select select--round">${OPTIONS}</select>`)}
     </div>
   `,
 };
@@ -129,8 +129,8 @@ export const Sizes: Story = {
       ${SIZES.map(
         (s) => `
       <div style="display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: var(--spacing-16);">
-        ${field(`Select ${s}`, (id) => `<select id="${id}" class="${selectClasses(s)}">${OPTIONS}</select>`)}
-        ${field(`Input ${s}`, (id) => `<input id="${id}" type="text" class="input${s !== 'default' ? ` input--${s}` : ''}" />`)}
+        ${field('Status', (id) => `<select id="${id}" class="${selectClasses(s)}">${OPTIONS}</select>`)}
+        ${field('Assignee', (id) => `<input id="${id}" type="text" class="input${s !== 'default' ? ` input--${s}` : ''}" />`)}
         <button type="button" class="button${s !== 'default' ? ` button--${s}` : ''}"><span>Apply</span></button>
       </div>`
       ).join('')}
@@ -149,8 +149,8 @@ export const States: Story = {
         <p id="select-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>
         <select id="select-invalid" class="select" aria-invalid="true" aria-describedby="select-invalid-error">${OPTIONS}</select>
       </div>
-      ${field('Disabled', (id) => `<select id="${id}" class="select" disabled>${OPTIONS}</select>`)}
-      ${field('List box (size="4")', (id) => `<select id="${id}" class="select" size="4">${OPTIONS}</select>`)}
+      ${field('Plan', (id) => `<select id="${id}" class="select" disabled>${OPTIONS}</select>`)}
+      ${field('Reviewers', (id) => `<select id="${id}" class="select" size="4">${OPTIONS}</select>`)}
     </div>
   `,
 };

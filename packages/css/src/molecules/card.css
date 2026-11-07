@@ -33,6 +33,15 @@
    1. Base
    ========================================================================== */
 :where(.card) {
+  /* A new set of controls: a row the card sits in no longer limits their
+     hit areas */
+  --target-gap-inline: initial;
+  --target-gap-block: initial;
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
   /* Private manifest */
   --_card-fill: var(--card-bg, var(--surface-card, Canvas));
   --_card-bg: var(--_card-fill);

@@ -118,15 +118,21 @@
   /* The box, centred on the first line of text */
   > :where(.checkbox-input, .radio-input) {
     font: inherit;
-    margin-block: calc((1lh - var(--_check-size, 1.25rem)) / 2);
+    margin-block: calc((1lh - var(--_check-size, 1lh)) / 2);
   }
 
   /* A disabled choice dims, unless a disabled fieldset already does */
-  &:where(:has(:disabled)) {
+  &:where(:has(> :disabled, > [aria-disabled="true"])) {
     cursor: not-allowed;
 
     &:where(:not(:disabled *, [aria-disabled="true"] *)) {
       opacity: var(--opacity-disabled, 0.5);
+    }
+
+    /* Forced colours mark it with GrayText rather than a fade */
+    @media (forced-colors: active) {
+      opacity: 1;
+      color: GrayText;
     }
   }
 }

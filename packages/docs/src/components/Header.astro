@@ -27,7 +27,7 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
         ))}
       </ul>
     </nav>
-    <div class="cluster gap-xs">
+    <div class="cluster gap-xs fine:ui-compact">
       <button type="button" class="button button--plain button--icon" commandfor="search" command="show-modal">
         <Icon name="Search" /><span class="sr-only">Search</span>
       </button>
@@ -40,10 +40,10 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
 </header>
 
 <dialog id="site-nav" class="dialog dialog--drawer dialog--start" aria-labelledby="drawer-title" closedby="any">
-  <article class="card">
-    <header class="card__header">
+  <article class="card fine:ui-compact">
+    <header class="card__header align-items-center">
       <h2 id="drawer-title" class="card__title heading">Menu</h2>
-      <button type="button" class="button button--plain button--sm button--icon" commandfor="site-nav" command="close">
+      <button type="button" class="button button--plain button--icon" commandfor="site-nav" command="close">
         <span class="sr-only">Close</span><Icon name="Close" />
       </button>
     </header>
@@ -51,7 +51,6 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
       <NavTree nav={nav} current={current} mode="all" idPrefix="drawer-nav" />
     </div>
     <footer class="card__footer">
-      <span class="small-text" aria-hidden="true">Colour scheme</span>
       <SchemeToggle />
     </footer>
   </article>

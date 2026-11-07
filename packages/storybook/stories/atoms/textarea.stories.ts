@@ -101,7 +101,7 @@ export const Playground: Story = {
 export const Prominence: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${PROMINENCES.map((p) => field(p, (id) => `<textarea id="${id}" class="${textareaClasses('default', p)}"></textarea>`)).join('')}
+      ${PROMINENCES.map((p, i) => field(['Summary', 'Notes', 'Reply'][i] ?? 'Notes', (id) => `<textarea id="${id}" class="${textareaClasses('default', p)}"></textarea>`)).join('')}
     </div>
   `,
 };
@@ -112,7 +112,7 @@ export const Prominence: Story = {
 export const Sizes: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${SIZES.map((s) => field(s, (id) => `<textarea id="${id}" class="${textareaClasses(s)}"></textarea>`)).join('')}
+      ${SIZES.map((s, i) => field(['Caption', 'Description', 'Abstract'][i] ?? 'Description', (id) => `<textarea id="${id}" class="${textareaClasses(s)}"></textarea>`)).join('')}
     </div>
   `,
 };
@@ -123,8 +123,8 @@ export const Sizes: Story = {
 export const Lines: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${field('Comment (--one-line)', (id) => `<textarea id="${id}" class="textarea textarea--one-line" placeholder="Add a comment"></textarea>`)}
-      ${field('Notes (--textarea-lines-max: 5)', (id) => `<textarea id="${id}" class="textarea" style="--textarea-lines-max: 5;">One\nTwo\nThree\nFour\nFive\nSix\nSeven</textarea>`)}
+      ${field('Comment', (id) => `<textarea id="${id}" class="textarea textarea--one-line" placeholder="Add a comment"></textarea>`)}
+      ${field('Notes', (id) => `<textarea id="${id}" class="textarea" style="--textarea-lines-max: 5;">One\nTwo\nThree\nFour\nFive\nSix\nSeven</textarea>`)}
     </div>
   `,
 };
@@ -140,8 +140,8 @@ export const States: Story = {
         <p id="textarea-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>
         <textarea id="textarea-invalid" class="textarea" aria-invalid="true" aria-describedby="textarea-invalid-error"></textarea>
       </div>
-      ${field('Read-only', (id) => `<textarea id="${id}" class="textarea" readonly>Submitted on 3 March.</textarea>`)}
-      ${field('Disabled', (id) => `<textarea id="${id}" class="textarea" disabled>Locked</textarea>`)}
+      ${field('Delivery note', (id) => `<textarea id="${id}" class="textarea" readonly>Submitted on 3 March.</textarea>`)}
+      ${field('Internal note', (id) => `<textarea id="${id}" class="textarea" disabled>Locked</textarea>`)}
     </div>
   `,
 };

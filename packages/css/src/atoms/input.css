@@ -19,8 +19,11 @@
    Classes only: bare <input>, <select> and <textarea> keep browser styling.
 
    Accessibility:
-   - 1.4.11 Non-text Contrast: every prominence keeps a 3:1 edge. Outline has
-     a full border; subtle and plain keep the bottom border.
+   - 1.4.11 Non-text Contrast: outline has a full 3:1 border and plain a
+     3:1 bottom border. Subtle is a tint with no border, a choice the
+     product makes (WCAG doesn't require a field to have one): its label
+     must sit with it. Its border comes back in high contrast and forced
+     colours.
    - 2.5.8 Target Size: --sm is 32px, the same as a small button. A field
      can't take an ::after buffer, so that is also its hit area: above the
      24px minimum, below the 48px touch target. Use --sm where the pointer
@@ -148,13 +151,14 @@
     @container style(--input-prominence: subtle) {
       --_control-bg: var(--surface-translucent, transparent);
       --_control-hover-bg: var(--surface-translucent-strong, transparent);
-      --_control-sides-transparency: 100%;
+      --_control-border-width: 0px;
     }
 
     @container style(--input-prominence: plain) {
       --_control-bg: transparent;
       --_control-hover-bg: var(--surface-translucent, transparent);
       --_control-sides-transparency: 100%;
+      --_control-radius: 0px;
     }
 
     @container style(--input-corners: round) {
@@ -184,13 +188,14 @@
     @container style(--select-prominence: subtle) {
       --_control-bg: var(--surface-translucent, transparent);
       --_control-hover-bg: var(--surface-translucent-strong, transparent);
-      --_control-sides-transparency: 100%;
+      --_control-border-width: 0px;
     }
 
     @container style(--select-prominence: plain) {
       --_control-bg: transparent;
       --_control-hover-bg: var(--surface-translucent, transparent);
       --_control-sides-transparency: 100%;
+      --_control-radius: 0px;
     }
 
     @container style(--select-corners: round) {
@@ -216,13 +221,14 @@
     @container style(--textarea-prominence: subtle) {
       --_control-bg: var(--surface-translucent, transparent);
       --_control-hover-bg: var(--surface-translucent-strong, transparent);
-      --_control-sides-transparency: 100%;
+      --_control-border-width: 0px;
     }
 
     @container style(--textarea-prominence: plain) {
       --_control-bg: transparent;
       --_control-hover-bg: var(--surface-translucent, transparent);
       --_control-sides-transparency: 100%;
+      --_control-radius: 0px;
     }
 
     /* A textarea is several lines tall, so a full radius would cut into its
@@ -260,6 +266,7 @@
       --_control-bg: transparent;
       --_control-hover-bg: var(--surface-translucent, transparent);
       --_control-sides-transparency: 100%;
+      --_control-radius: 0px;
     }
 
     @container style(--combobox-chrome: flush) {
@@ -272,6 +279,56 @@
 
     @container style(--combobox-corners: round) {
       --_control-radius: var(--radius-full, 9999px);
+    }
+  }
+
+  /* A compact container steps a large flag back to default, as it does
+     .input--lg (the flags above come after the compact step) */
+  @container style(--controls-size: lg) and style(--ui-sizing: compact) {
+    --_control-min-size: var(--_control-default-min-size);
+    --_control-padding-block: var(--_control-default-padding-block);
+    --_control-padding-inline: var(--_control-default-padding-inline);
+    --_control-font-size: var(--_control-default-font-size);
+    --_control-line-height: var(--_control-default-line-height);
+  }
+
+  &:where(.input) {
+    @container style(--input-size: lg) and style(--ui-sizing: compact) {
+      --_control-min-size: var(--_control-default-min-size);
+      --_control-padding-block: var(--_control-default-padding-block);
+      --_control-padding-inline: var(--_control-default-padding-inline);
+      --_control-font-size: var(--_control-default-font-size);
+      --_control-line-height: var(--_control-default-line-height);
+    }
+  }
+
+  &:where(.select) {
+    @container style(--select-size: lg) and style(--ui-sizing: compact) {
+      --_control-min-size: var(--_control-default-min-size);
+      --_control-padding-block: var(--_control-default-padding-block);
+      --_control-padding-inline: var(--_control-default-padding-inline);
+      --_control-font-size: var(--_control-default-font-size);
+      --_control-line-height: var(--_control-default-line-height);
+    }
+  }
+
+  &:where(.textarea) {
+    @container style(--textarea-size: lg) and style(--ui-sizing: compact) {
+      --_control-min-size: var(--_control-default-min-size);
+      --_control-padding-block: var(--_control-default-padding-block);
+      --_control-padding-inline: var(--_control-default-padding-inline);
+      --_control-font-size: var(--_control-default-font-size);
+      --_control-line-height: var(--_control-default-line-height);
+    }
+  }
+
+  &:where(.combobox__control) {
+    @container style(--combobox-size: lg) and style(--ui-sizing: compact) {
+      --_control-min-size: var(--_control-default-min-size);
+      --_control-padding-block: var(--_control-default-padding-block);
+      --_control-padding-inline: var(--_control-default-padding-inline);
+      --_control-font-size: var(--_control-default-font-size);
+      --_control-line-height: var(--_control-default-line-height);
     }
   }
 
@@ -291,8 +348,8 @@
   color: var(--_control-color);
   appearance: none;
 
-  /* Surface & Edge: the sides fade out for subtle and plain; the bottom edge
-     always stays, so the field keeps a 3:1 boundary. */
+  /* Surface & Edge: the sides fade out for plain, which keeps its bottom
+     edge; subtle has no border until high contrast or forced colours */
   background-color: var(--_control-bg);
   border: var(--_control-border-width) solid;
   border-color: color-mix(in srgb, var(--_control-edge-color), transparent var(--_control-sides-transparency));
@@ -309,10 +366,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
-  }
-
-  @media (prefers-contrast: more) {
-    --_control-border-width: 2px;
   }
 
   &::placeholder {
@@ -428,17 +481,34 @@
 }
 
 /* ==========================================================================
-   5. Flush (.input--flush, .select--flush, .textarea--flush)
+   5. Flush (.input--flush)
    Only inside a container that draws a 3:1 boundary and the focus ring
    (for example .focus-within on a card header).
    ========================================================================== */
-:where(.input--flush, .select--flush, .textarea--flush) {
+:where(.input--flush) {
   --_control-bg: transparent;
   --_control-hover-bg: transparent;
   --_control-edge-color: transparent;
   --_control-hover-edge-color: transparent;
   --_control-focus-edge-color: transparent;
   --_control-padding-inline: 0px;
+}
+
+/* ==========================================================================
+   5b. High contrast and forced colours: subtle's border comes back, and
+   every field shows its whole edge. After the modifiers, so it wins.
+   ========================================================================== */
+@media (prefers-contrast: more) {
+  :where(.input, .select, .textarea, .combobox__control):where(:not(.input--flush)) {
+    --_control-border-width: var(--input-border-width, var(--control-border-width, 1px));
+  }
+}
+
+@media (forced-colors: active) {
+  :where(.input, .select, .textarea, .combobox__control):where(:not(.input--flush)) {
+    --_control-border-width: var(--input-border-width, var(--control-border-width, 1px));
+    border-color: CanvasText;
+  }
 }
 
 /* ==========================================================================

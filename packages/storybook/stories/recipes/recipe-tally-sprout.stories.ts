@@ -381,12 +381,14 @@ const step1 = (errors: boolean) => `
     <span class="choice__label">Lives in Ward 4<span class="small-text text-muted">Residents pay the subsidised rate</span></span>
   </label>`;
 
-const toggle = (label: string, desc: string, checked = true) => `
-  <label class="switch">
-    <span class="switch__label label">${label} <span class="small-text text-muted">${desc}</span></span>
-    <input type="checkbox" role="switch" class="sr-only"${checked ? ' checked' : ''} />
-    <span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span>
-  </label>`;
+const toggle = (label: string, desc: string, checked = true, id = `lease-${label.toLowerCase().replace(/\W+/g, '-')}`) => `
+  <div class="switch">
+    <div class="switch__label">
+      <label for="${id}" class="label">${label}</label>
+      <p id="${id}-hint" class="small-text text-muted">${desc}</p>
+    </div>
+    <span class="switch__control"><input type="checkbox" role="switch" id="${id}" aria-describedby="${id}-hint"${checked ? ' checked' : ''} /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span>
+  </div>`;
 
 const step2 = `
   ${toggle('Organic growing', 'No synthetic pesticides or fertilisers')}

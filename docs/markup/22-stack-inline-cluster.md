@@ -112,6 +112,7 @@ One-dimensional flows. Layout primitives (`layout/stack.css`, `layout/inline.css
 
 ### Further rules
 - **Hooks:** `--gap`, `--align-items`, `--justify-content`, set on the element itself. They don't reach nested layouts, so `style="--gap: 0"` on an outer stack leaves an inner stack alone. A gap utility (`gap-xs`) also works and wins.
+- **Hit areas:** Inline and Cluster pass their gap to the controls in the row as `--target-gap-inline`, so a small Button's hit area reaches at most halfway to the next and never covers it. The first and last items reach freely outward. Stack doesn't: a column of controls belongs in a vertical Button Group or a Menu.
 - **Density:** inside a compact region the gap steps down: the default to the compact step (`spacing.compact`), `--cushioned` to the default.
 - **Rules elsewhere:** `--ruled` is for the primitives. For any other flex or grid container (a Button Group, a Card body), use the `.rule` utility, or `.column-rule` / `.row-rule` for one axis. Gap decorations are progressive enhancement (not yet in Safari or Firefox): the gap alone must still separate the content.
 - **Cluster** is `display: flex` and fills its parent; it was `inline-flex`.

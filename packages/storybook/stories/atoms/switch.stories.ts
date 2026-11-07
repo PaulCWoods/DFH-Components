@@ -15,15 +15,22 @@ interface SwitchArgs {
 
 const SIZES: Size[] = ['sm', 'default', 'lg'];
 
-const switchEl = (label: string, mods: string[] = [], attrs = '', hint = '') => `
-  <label class="${['switch', ...mods.filter(Boolean)].join(' ')}">
-    <span class="switch__label label">${label}${hint ? ` <span class="small-text text-muted">${hint}</span>` : ''}</span>
-    <input type="checkbox" role="switch" class="sr-only" ${attrs} />
-    <span class="switch__control" aria-hidden="true">
-      <span class="switch__option switch__option--off">Off</span>
-      <span class="switch__option switch__option--on">On</span>
+let uid = 0;
+const switchEl = (label: string, mods: string[] = [], attrs = '', hint = '') => {
+  const id = `switch-${++uid}`;
+  return `
+  <div class="${['switch', ...mods.filter(Boolean)].join(' ')}">
+    <div class="switch__label">
+      <label for="${id}" class="label">${label}</label>${hint ? `
+      <p id="${id}-hint" class="small-text text-muted">${hint}</p>` : ''}
+    </div>
+    <span class="switch__control">
+      <input type="checkbox" role="switch" id="${id}"${hint ? ` aria-describedby="${id}-hint"` : ''} ${attrs} />
+      <span class="switch__option switch__option--off" aria-hidden="true">Off</span>
+      <span class="switch__option switch__option--on" aria-hidden="true">On</span>
     </span>
-  </label>`;
+  </div>`;
+};
 
 const meta: Meta<SwitchArgs> = {
   title: 'Atoms/Switch',
@@ -32,7 +39,7 @@ const meta: Meta<SwitchArgs> = {
     docs: {
       description: {
         component: `
-A segmented Off / On toggle: a label wrapping a checkbox with \`role="switch"\`. State is read with \`:has(:checked)\`, so no script is needed.
+A segmented Off / On toggle: a checkbox with \`role="switch"\` that fills the drawn control, named by a \`<label for>\`. State is read with \`:has(:checked)\`, so no script is needed.
 
 | Axis | Modifiers | Container flags |
 | :--- | :--- | :--- |
@@ -42,18 +49,23 @@ A segmented Off / On toggle: a label wrapping a checkbox with \`role="switch"\`.
 | Corners | \`--round\` | \`--switch-corners\`, \`--controls-corners\` |
 
 - A compact container steps the switch to \`--sm\`.
-- The whole label row is the target, at least \`--spacing-target-min\` tall, whatever the control's visual size.
-- The On and Off text states the value; colour only reinforces it (WCAG 1.4.1).
+- The control is the target: the checkbox fills it and reaches \`--spacing-target-min\` whatever its visual size. The label text toggles it too; the hint and the rest of the row don't, so it can't be switched by accident.
+- A hint is linked with \`aria-describedby\`, so it isn't part of the name. The Off and On text is hidden: the role says the state.
+- The selected side is bold on the indicator and says Off or On, so the state isn't colour alone (WCAG 1.4.1), and it shows in forced colours.
+- Subtle has no border; it comes back in forced colours and high contrast.
 
 \`\`\`html
-<label class="switch">
-  <span class="switch__label label">Notifications</span>
-  <input type="checkbox" role="switch" class="sr-only" />
-  <span class="switch__control" aria-hidden="true">
-    <span class="switch__option switch__option--off">Off</span>
-    <span class="switch__option switch__option--on">On</span>
+<div class="switch">
+  <div class="switch__label">
+    <label for="notify" class="label">Notifications</label>
+    <p id="notify-hint" class="small-text text-muted">Email and push</p>
+  </div>
+  <span class="switch__control">
+    <input type="checkbox" role="switch" id="notify" aria-describedby="notify-hint" />
+    <span class="switch__option switch__option--off" aria-hidden="true">Off</span>
+    <span class="switch__option switch__option--on" aria-hidden="true">On</span>
   </span>
-</label>
+</div>
 \`\`\`
 `,
       },
@@ -97,8 +109,10 @@ export const Playground: Story = {
 export const Sizes: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${SIZES.map((s) => switchEl(`Size ${s}`, [s !== 'default' ? `switch--${s}` : ''], 'checked')).join('')}
-      <div class="ui-compact">${switchEl('Compact container', [], 'checked')}</div>
+      ${switchEl('Show line numbers', ['switch--sm'], 'checked')}
+      ${switchEl('Autosave drafts', [], 'checked')}
+      ${switchEl('Large print', ['switch--lg'], 'checked')}
+      <div class="ui-compact">${switchEl('Show grid lines (compact container)', [], 'checked')}</div>
     </div>
   `,
 };
@@ -109,10 +123,10 @@ export const Sizes: Story = {
 export const Variants: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${switchEl('Outline', [], 'checked')}
-      ${switchEl('Subtle', ['switch--subtle'], 'checked')}
-      ${switchEl('Danger', ['switch--danger'], 'checked', 'Deletes data after 30 days')}
-      ${switchEl('Round', ['switch--round'], 'checked')}
+      ${switchEl('Weekly digest', [], 'checked')}
+      ${switchEl('Sound effects (subtle)', ['switch--subtle'], 'checked')}
+      ${switchEl('Auto-delete old drafts', ['switch--danger'], 'checked', 'Deletes drafts after 30 days')}
+      ${switchEl('Location sharing (round)', ['switch--round'], 'checked')}
     </div>
   `,
 };
@@ -123,10 +137,10 @@ export const Variants: Story = {
 export const States: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${switchEl('Off')}
-      ${switchEl('On', [], 'checked')}
-      ${switchEl('Disabled', [], 'disabled')}
-      ${switchEl('Disabled, on', [], 'disabled checked')}
+      ${switchEl('Dark mode')}
+      ${switchEl('Notifications', [], 'checked')}
+      ${switchEl('Two-step sign-in', [], 'disabled', 'Set up an authenticator first')}
+      ${switchEl('Backups', [], 'disabled checked', 'Managed by your organisation')}
     </div>
   `,
 };

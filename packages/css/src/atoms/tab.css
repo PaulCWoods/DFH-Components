@@ -235,12 +235,16 @@
      Hit Area (WCAG 2.5.5 / 2.5.8)
      Extends the target to --_tab-target-size when the visual size is
      smaller. Collapses to the tab's own box when it is already larger.
+     It reaches at most halfway across the list's gap (--target-gap-*),
+     so it never covers the next tab.
      ------------------------------------------------------------------------ */
   &::after {
     content: "";
     position: absolute;
-    inset-block: min(0px, calc((100% - var(--_tab-target-size)) / 2));
-    inset-inline: min(0px, calc((100% - var(--_tab-target-size)) / 2));
+    inset-block-start: min(0px, max(calc((100% - var(--_tab-target-size)) / 2), var(--target-gap-block-start, var(--target-gap-block, 100vmax)) / -2 - var(--_tab-border-width, 0px)));
+    inset-block-end: min(0px, max(calc((100% - var(--_tab-target-size)) / 2), var(--target-gap-block-end, var(--target-gap-block, 100vmax)) / -2 - var(--_tab-border-width, 0px)));
+    inset-inline-start: min(0px, max(calc((100% - var(--_tab-target-size)) / 2), var(--target-gap-inline-start, var(--target-gap-inline, 100vmax)) / -2 - var(--_tab-border-width, 0px)));
+    inset-inline-end: min(0px, max(calc((100% - var(--_tab-target-size)) / 2), var(--target-gap-inline-end, var(--target-gap-inline, 100vmax)) / -2 - var(--_tab-border-width, 0px)));
   }
 
   /* Hover: the surface changes, never the text colour */

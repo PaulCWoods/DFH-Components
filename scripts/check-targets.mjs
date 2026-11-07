@@ -8,18 +8,30 @@
    - target: a control whose hit area is smaller than the target for the
      pointer mode, read from its own --spacing-target-min: 48px with touch
      targets (the default), 32px with fine-pointer targets. Native fields
-     (text, select, colour, range, file) and choice rows may be 32px in
-     either mode, since an input can't take a buffer. Overlapping a neighbouring
-     control's hit area is allowed; the later one wins.
+     (text, select, colour, file) and choice rows may be 32px in either
+     mode, since an input can't take a buffer. A range is its own target,
+     so it meets the full size. Where neighbours meet before the full
+     size, each owning its half of the gap, the target is what's left
+     (PRINCIPLES §2 accepts it; CROWDED=1 lists them). That includes a
+     control at the end of a wrapped line, which its group caps for an item
+     CSS can't see has moved to the next line.
+   - covered: a neighbour's hit area reaches over part of a control's drawn
+     box, so a tap on what looks like one control activates another.
    - text links meet WCAG 2.5.8 (AA) instead: 24px, or no other control
      within 12px of the centre. Links in running text are exempt.
    - spill: a control's hit area reaches past the bar that holds it (a
      header, tab list, batch actions, pagination or code block's bar), so it
      covers the page beside the bar or is clipped. A bar is never shorter
      than its targets.
+   - edge: a text field (or the control drawn around it) with no visible
+     edge, at least half opaque, under prefers-contrast: more and in forced
+     colours. In normal colours a field may go without one (subtle): WCAG
+     1.4.11 doesn't ask a field for a boundary. --flush is exempt: its
+     container draws the edge.
    - forced colours: a control whose boundary (a border or fill) disappears
-     in forced colours, or a selected or current item that looks the same as
-     its neighbours there.
+     in forced colours, or a selected, current or checked item that looks
+     the same as its neighbours there (a checked input the browser draws
+     itself is left to the browser).
 
    Hit areas are measured the way a finger meets them: points around the
    control's centre, at half the target size, must land on the control (or
@@ -68,7 +80,7 @@ const targetProbe = (fine) => `(() => {
   const needAt = (el) => px(getComputedStyle(el).getPropertyValue('--spacing-target-min').trim() || '48px') || ${fine ? 32 : 48};
   const textLink = 'a:not(.button, .block-link, .brand, .tab, .chip, .avatar, .thumbnail, .skip-link)';
   /* Native fields can't take a ::after buffer, so --sm is 32px */
-  const textField = 'input:not([type="checkbox"], [type="radio"], [type="button"], [type="submit"], [type="reset"]), select, textarea';
+  const textField = 'input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"], [type="reset"]), select, textarea';
   const choice = 'input[type="checkbox"], input[type="radio"]';
   const bars = '.header, .tab-list, .batch-actions, .pagination, .code-block__bar';
   const owns = (el, hit) => !!hit && (el === hit || el.contains(hit) || [...(el.labels || [])].some((l) => l.contains(hit)));
@@ -81,10 +93,12 @@ const targetProbe = (fine) => `(() => {
     return false;
   };
   /* Whether a point is outside the visible box of a scroller that the
-     control itself is partly scrolled out of: it comes into view with
-     focus. A control wholly inside still needs its buffer inside. */
+     control itself (or the label around it) is partly scrolled out of: it
+     comes into view with focus. A control wholly inside still needs its buffer inside. */
   const scrolledOut = (el, x, y) => {
-    const box = el.getBoundingClientRect();
+    /* A box inside a label is measured by the label it fills (a choice row) */
+    const label = el.labels?.[0];
+    const box = (label && label.contains(el) ? label : el).getBoundingClientRect();
     for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
       const cs = getComputedStyle(a);
       if (!/auto|scroll/.test(cs.overflowX + cs.overflowY)) continue;
@@ -113,6 +127,23 @@ const targetProbe = (fine) => `(() => {
     /* Covered, or scrolled out of its scroller: not reachable here */
     if (!inView(cx, cy) || !owns(el, document.elementFromPoint(cx, cy))) continue;
 
+    /* Its drawn box is its own: points just inside each edge and corner
+       don't land on a neighbour's buffer */
+    const neighbourAt = (x, y) => {
+      if (!inView(x, y) || scrolledOut(el, x, y)) return null;
+      const hit = document.elementFromPoint(x, y);
+      if (owns(el, hit) || overlay(el, hit)) return null;
+      const other = hit?.closest(controls);
+      return other && other !== el && !other.contains(el) && !el.contains(other) ? other : null;
+    };
+    const e = 4;
+    const covering = [[box.left + e, cy], [box.right - e, cy], [cx, box.top + e], [cx, box.bottom - e], [box.left + e, box.top + e], [box.right - e, box.top + e], [box.left + e, box.bottom - e], [box.right - e, box.bottom - e]]
+      .map(([x, y]) => neighbourAt(x, y)).find(Boolean);
+    if (covering) {
+      out.push('covered ' + name(el) + ' "' + label(el) + '": ' + name(covering) + ' "' + label(covering) + '" reaches over its box');
+      continue;
+    }
+
     const need = needAt(el);
     const link = el.matches(textLink);
     const min = link ? 24 : el.matches(textField + ', ' + choice) ? Math.min(need, 32) : need;
@@ -129,8 +160,34 @@ const targetProbe = (fine) => `(() => {
       const neighbour = !!other && other !== el && !other.contains(el);
       /* A text link only needs space around it (the spacing exception) */
       if (link) { if (neighbour) short.push(side); continue; }
-      /* Overlapping a neighbour is allowed; the later control wins */
-      if (neighbour) continue;
+      /* Neighbours meet before the full size, each owning half the gap. A
+         neighbouring item that holds a control (the next chip, holding its
+         remove button) counts as one. */
+      const holds = (h) => { for (let a = h; a && !a.contains(el); a = a.parentElement) if (a.matches(controls) || a.querySelector(controls)) return true; return false; };
+      let crowded = neighbour || holds(hit);
+      /* Or the point is in the empty half of a gap, with the next item
+         further along: the hit area stopped halfway to it. A group can't
+         tell whether its next item is interactive, so any item counts. */
+      const item = (h) => !!h && !h.contains(el) && !el.contains(h);
+      for (let t = 2; !crowded && t <= half; t += 2) {
+        const fx = x + Math.sign(dx) * t, fy = y + Math.sign(dy) * t;
+        if (inView(fx, fy)) crowded = item(document.elementFromPoint(fx, fy));
+      }
+      /* Or the control ends a line of a row that wraps: the group caps it
+         for the next item, which CSS can't see has moved to the next line */
+      if (!crowded && dx) {
+        for (let a = el; a?.parentElement; a = a.parentElement) {
+          const p = getComputedStyle(a.parentElement);
+          if (!/flex/.test(p.display) || p.flexWrap !== 'wrap') continue;
+          const next = dx > 0 ? a.nextElementSibling : a.previousElementSibling;
+          const r = a.getBoundingClientRect(), n = next?.getBoundingClientRect();
+          /* The last item ends a line too, unless it is on the first */
+          const first = a.parentElement.firstElementChild.getBoundingClientRect();
+          crowded = n ? (dx > 0 ? n.top >= r.bottom - 1 : n.bottom <= r.top + 1) : dx > 0 && first.bottom <= r.top + 1;
+          break;
+        }
+      }
+      if (crowded) { if (${process.env.CROWDED ? 'true' : 'false'}) out.push('crowded ' + name(el) + ' "' + label(el) + '" ' + Math.round(box.right - box.left) + 'x' + Math.round(box.bottom - box.top) + ' (' + side + ')'); continue; }
       short.push(side);
     }
     if (short.length) {
@@ -175,12 +232,32 @@ const boundary = `
   };
 `;
 
+/* Before forced colours: which controls have a boundary to keep */
 const forcedBefore = `(() => {
   ${helpers}
   ${boundary}
-  const els = [...document.querySelectorAll(controls)].filter(visible);
-  window.__forced = els.map((el) => ({ el, edge: hasBoundary(el) }));
-  return els.length;
+  window.__forced = [...document.querySelectorAll(controls)].filter(visible).map((el) => ({ el, edge: hasBoundary(el) }));
+})()`;
+
+/* Under high contrast and forced colours: every text field, or the control
+   drawn around it (a combobox), has an edge. --flush is the exception, for
+   a container that draws the edge itself. */
+const edgeProbe = `(() => {
+  ${helpers}
+  ${boundary}
+  const out = [];
+  const typed = 'input:not([type]), input[type="text"], input[type="email"], input[type="search"], input[type="tel"], input[type="url"], input[type="password"], input[type="number"], input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], select, textarea';
+  for (const el of document.querySelectorAll(typed)) {
+    if (!visible(el) || el.closest('[class*="--flush"]')) continue;
+    const box = el.getBoundingClientRect();
+    let edged_ = hasBoundary(el);
+    for (let a = el.parentElement, i = 0; !edged_ && a && i < 3; a = a.parentElement, i++) {
+      const r = a.getBoundingClientRect();
+      if (r.height <= box.height + 32 && hasBoundary(a)) edged_ = true;
+    }
+    if (!edged_) out.push('edge ' + name(el) + ' "' + label(el) + '": a text field with no edge');
+  }
+  return out;
 })()`;
 
 const forcedAfter = `(() => {
@@ -194,6 +271,14 @@ const forcedAfter = `(() => {
     if (!visible(el)) continue;
     const p = peer(el);
     if (p && look(el) === look(p)) out.push('forced colours ' + name(el) + ' "' + label(el) + '": selected or current, but looks like ' + name(p));
+  }
+  /* A checked input the library draws (appearance: none, as a Switch's):
+     compare what draws it with an unchecked one of the same kind */
+  const host = (el) => el.closest('.switch__control, label') || el;
+  for (const el of document.querySelectorAll('input:checked')) {
+    if (getComputedStyle(el).appearance !== 'none' || !visible(host(el))) continue;
+    const p = [...document.querySelectorAll('input[type="' + el.type + '"]:not(:checked)')].find((q) => q.className === el.className && getComputedStyle(q).appearance === 'none' && host(q) !== host(el) && host(q).className === host(el).className && visible(host(q)));
+    if (p && look(host(el)) === look(host(p))) out.push('forced colours ' + name(el) + ' "' + label(el) + '": checked, but looks like an unchecked one');
   }
   return out;
 })()`;
@@ -223,7 +308,10 @@ for (const [n, id] of ids.entries()) {
 
   await sb.size(...sizes[0]);
   await sb.evaluate(forcedBefore);
+  await sb.media([{ name: 'prefers-contrast', value: 'more' }]);
+  for (const p of (await sb.evaluate(edgeProbe)) || []) note(id, 'high contrast', p);
   await sb.media([{ name: 'forced-colors', value: 'active' }]);
+  for (const p of (await sb.evaluate(edgeProbe)) || []) note(id, 'forced', p);
   for (const p of (await sb.evaluate(forcedAfter)) || []) note(id, 'forced', p);
   await sb.media([]);
 }

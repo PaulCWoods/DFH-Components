@@ -42,8 +42,13 @@
   --_navigation-tree-gap: var(--navigation-tree-gap, var(--spacing-2xs));
 
   /* Where an item's label starts inside its row: the button's border and
-     padding. Nested lists, guide lines and headings all line up on it. */
-  --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-padding-inline, var(--spacing-md)));
+     padding. Nested lists, guide lines and headings all line up on it.
+     Inside a card or sidebar the tree reaches out to their edges, so the
+     padding is never more than theirs (--_navigation-tree-room): the tree
+     never overflows them, and every item takes the same padding. */
+  --_navigation-tree-border: var(--button-border-width, var(--border-width, 1px));
+  --_navigation-tree-padding: min(var(--button-padding-inline, var(--spacing-md)), var(--_navigation-tree-room, 100vmax) - var(--_navigation-tree-border));
+  --_navigation-tree-inset: calc(var(--_navigation-tree-border) + var(--_navigation-tree-padding));
   --_navigation-tree-rule-width: var(--navigation-tree-rule-width, var(--rule-width, 1px));
   --_navigation-tree-rule: var(--_navigation-tree-rule-width) var(--navigation-tree-rule-style, var(--rule-style, solid)) var(--navigation-tree-rule-color, var(--rule-color, currentColor));
   --_navigation-tree-current-bg: var(--navigation-tree-current-bg, var(--surface-translucent, transparent));
@@ -58,16 +63,26 @@
   --button-font-weight: var(--font-weight-normal, 400);
   --font-sizing: fixed;
 
+  /* Hit areas reach at most halfway to the next item, and not across the
+     sides, whatever row the tree sits in */
+  --target-gap-block: var(--_navigation-tree-gap);
+  --target-gap-inline: initial;
+
   /* Density: compact items have less padding, so the inset follows */
   @container style(--ui-sizing: compact) {
-    --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, var(--spacing-10)));
+    --_navigation-tree-padding: min(var(--button-sm-padding-inline, var(--spacing-10)), var(--_navigation-tree-room, 100vmax) - var(--_navigation-tree-border));
   }
 
   display: block;
   min-inline-size: 0;
 
-  :where(.card__body:not(.card__body--flush),
-    .sidebar__body:not(.sidebar__body--flush)) & {
+  :where(.sidebar__body:not(.sidebar__body--flush)) & {
+    --_navigation-tree-room: var(--_sidebar-padding);
+    margin-inline: calc(var(--_navigation-tree-inset) * -1);
+  }
+
+  :where(.card__body:not(.card__body--flush)) & {
+    --_navigation-tree-room: var(--_card-padding);
     margin-inline: calc(var(--_navigation-tree-inset) * -1);
   }
 
@@ -97,13 +112,14 @@
 
 :where(.navigation-tree--compact) {
   --ui-sizing: compact;
-  --_navigation-tree-inset: calc(var(--button-border-width, var(--border-width, 1px)) + var(--button-sm-padding-inline, var(--spacing-10)));
+  --_navigation-tree-padding: min(var(--button-sm-padding-inline, var(--spacing-10)), var(--_navigation-tree-room, 100vmax) - var(--_navigation-tree-border));
 }
 
 /* ==========================================================================
    2. Items: buttons, full width, content at the start
    ========================================================================== */
 :where(.navigation-tree) :where(li)> :where(.button) {
+  --_button-padding-inline: var(--_navigation-tree-padding);
   border-radius: 0;
   inline-size: 100%;
   justify-content: flex-start;
@@ -192,4 +208,32 @@
   :where(.navigation-tree) :where(li)> :where(.button[aria-current])::before {
     background-color: Highlight;
   }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.navigation-tree) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(ol, ul) > :where(li:first-child, .navigation-tree__heading + li) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(ol, ul) > :where(li:last-child:not(:has(> ol, > ul)), li:has(+ .navigation-tree__heading):not(:has(> ol, > ul))) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
+  }
+}
+
+/* A nested list starts afresh too: its items have neighbours on every side */
+:where(.navigation-tree) :where(li) > :where(ol, ul) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
 }

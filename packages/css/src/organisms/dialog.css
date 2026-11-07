@@ -47,6 +47,15 @@
    1. Base
    ========================================================================== */
 :where(.dialog) {
+  /* A new set of controls: the page's rows no longer limit their hit
+     areas */
+  --target-gap-inline: initial;
+  --target-gap-block: initial;
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
   /* Private manifest */
   --_dialog-width: var(--dialog-width, var(--spacing-block, 36rem));
   --_dialog-drawer-width: var(--dialog-drawer-width, var(--spacing-block-sm, 24rem));

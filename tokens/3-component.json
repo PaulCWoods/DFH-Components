@@ -2110,6 +2110,16 @@
       "$type": "dimension",
       "$description": "Corner radius for slider track"
     },
+    "track-border-width": {
+      "$value": "{control.border-width}",
+      "$type": "dimension",
+      "$description": "Width of the track's edge"
+    },
+    "track-border-color": {
+      "$value": "{border.color.control}",
+      "$type": "color",
+      "$description": "Colour of the track's edge, at least 3:1 against the page (WCAG 1.4.11)"
+    },
     "thumb-size": {
       "$value": "{spacing.24}",
       "$type": "dimension",
@@ -2162,10 +2172,6 @@
     },
     "lg-gap": {
       "$value": "{spacing.12}",
-      "$type": "dimension"
-    },
-    "padding-inline": {
-      "$value": "{spacing.8}",
       "$type": "dimension"
     }
   },
@@ -2488,11 +2494,11 @@
       "$type": "dimension"
     },
     "option-min-size": {
-      "$value": "{spacing.48}",
+      "$value": "{spacing.target}",
       "$type": "dimension"
     },
     "sm-option-min-size": {
-      "$value": "{spacing.32}",
+      "$value": "{spacing.target-sm}",
       "$type": "dimension"
     }
   },
@@ -3043,7 +3049,7 @@
       "$value": "{shadow.md}",
       "$type": "shadow"
     },
-    "listbox-max-height": {
+    "listbox-max-size": {
       "$value": "{spacing.256}",
       "$type": "dimension",
       "$description": "Longest list before it scrolls"
@@ -3074,7 +3080,7 @@
       "$description": "Selected options also show a check icon"
     },
     "listbox-offset": {
-      "$value": "0.25rem",
+      "$value": "{spacing.4}",
       "$type": "dimension",
       "$description": "Gap between the field and its list"
     }

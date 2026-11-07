@@ -95,8 +95,8 @@ export const Playground: Story = {
 export const Sizes: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${SIZES.map((s) => field(`Size ${s}`, 40, rangeClasses(s))).join('')}
-      <div class="ui-compact">${field('Compact container', 40)}</div>
+      ${SIZES.map((s, n) => field(['Bass', 'Mid', 'Treble'][n], 40, rangeClasses(s))).join('')}
+      <div class="ui-compact">${field('Balance', 40)}</div>
     </div>
   `,
 };
@@ -107,7 +107,7 @@ export const Sizes: Story = {
 export const Intents: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${INTENTS.map((i, n) => field(i, 20 + n * 15, rangeClasses('default', i))).join('')}
+      ${INTENTS.map((i, n) => field(['Brightness', 'Upload limit', 'Battery saver', 'Fan speed', 'Disk use'][n] ?? 'Level', 20 + n * 15, rangeClasses('default', i))).join('')}
     </div>
   `,
 };
@@ -118,8 +118,8 @@ export const Intents: Story = {
 export const States: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${field('Enabled', 50)}
-      ${field('Disabled', 50, 'range', 'disabled')}
+      ${field('Volume', 50)}
+      ${field('Bass boost (needs headphones)', 50, 'range', 'disabled')}
     </div>
   `,
 };
@@ -144,11 +144,11 @@ export const Steps: Story = {
     <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="range-steps" class="field__label label">Text size</label>
-        <input id="range-steps" type="range" class="range" min="0" max="100" step="25" value="50" style="--value: 50%;" list="range-steps-list" ${SYNC} />
+        <input id="range-steps" type="range" class="range" min="0" max="100" step="25" value="50" style="--value: 50%;" list="range-steps-list" aria-valuetext="M" oninput="this.style.setProperty('--value', this.value + '%'); this.setAttribute('aria-valuetext', ['XS', 'S', 'M', 'L', 'XL'][this.value / 25]);" />
         <datalist id="range-steps-list">
           <option value="0"></option><option value="25"></option><option value="50"></option><option value="75"></option><option value="100"></option>
         </datalist>
-        <div class="range__scale-ticks" aria-hidden="true"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+        <div class="range__scale-ticks small-text" aria-hidden="true"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
       </div>
     </div>
   `,
@@ -160,16 +160,20 @@ export const Steps: Story = {
 export const RangeLockup: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md stack">
-      ${['', 'range-lockup--sm', 'range-lockup--bordered range-lockup--round range-lockup--fill']
-        .map((mods, n) => {
+      ${[
+        ['', 'Track one'],
+        [' controls-sm', 'Track two'],
+        [' range-lockup--fill', 'Track three'],
+      ]
+        .map(([mods, track], n) => {
           const id = `lockup-${n}`;
           return `
-        <div class="${['range-lockup', mods].filter(Boolean).join(' ')}">
-          <button type="button" class="button button--subtle button--icon${mods.includes('sm') ? ' button--sm' : ''}" aria-label="Mute">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
+        <div class="range-lockup${mods}">
+          <button type="button" class="button button--subtle button--icon" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')">
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg><span class="sr-only">Mute ${track.toLowerCase()}</span>
           </button>
-          <input id="${id}" type="range" class="range" min="0" max="100" value="70" style="--value: 70%;" aria-label="Volume" ${SYNC} />
-          <output for="${id}" class="range-lockup__output">70%</output>
+          <input id="${id}" type="range" class="range" min="0" max="100" value="70" style="--value: 70%;" aria-label="${track} volume" ${SYNC} />
+          <output for="${id}" class="range-lockup__output small-text font-mono">70%</output>
         </div>`;
         })
         .join('')}

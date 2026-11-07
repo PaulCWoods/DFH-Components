@@ -171,10 +171,10 @@ Chips sit before the input and wrap. Each remove Button names its value. The lis
 ## The Product's Script
 The library ships no script. The product's script must:
 1. Show the list (`showPopover()`) and set `aria-expanded="true"` on typing, ArrowDown or the toggle; hide it and set `false` on Escape, a single selection or leaving the field.
-2. Filter: set `hidden` on options (and on groups with none left), show `.combobox__empty` when nothing matches, and put the count or "No results" in the status element.
-3. Move the active option with ArrowUp and ArrowDown: `.is-active` on the option and `aria-activedescendant` on the input. Focus stays in the input. Scroll the option into view.
-4. Select with Enter or a click (prevent the mousedown so focus stays in the input): set `aria-selected`; fill the input (single) or add a Chip (multi).
-5. Escape with the list closed clears the input. In multi-select, Backspace in an empty input removes the last Chip. After removing a Chip, return focus to the input.
+2. Filter: set `hidden` on options (and on groups with none left), and put the count or "No results" in the status element. When nothing matches, hide the list and set `aria-expanded="false"`, so the input doesn't claim an open list, and show `.combobox__empty` under the field.
+3. Move the active option with ArrowUp and ArrowDown: `.is-active` on the option and `aria-activedescendant` on the input. Focus stays in the input. Scroll the option into view. Disabled options are reached too, so people learn they exist; Enter does nothing on one.
+4. Select with Enter or a click: set `aria-selected`; fill the input (single) or add a Chip (multi). Prevent `mousedown` on the whole list, and give it `tabindex="-1"`, so pressing an option, a group label or the scrollbar keeps focus in the field. A press on the field outside the input (an icon, a gap between Chips) moves focus into the input.
+5. Escape with the list closed clears the input, and in a single select its choice (`aria-selected="false"`) too; so does the clear Button. In multi-select, Backspace in an empty input removes the last Chip. After removing a Chip, return focus to the input.
 
 ## Do and Don't
 | Do | Don't |
@@ -199,7 +199,7 @@ A text field that filters a list of options: single select, or multi-select with
 
 ### Further rules
 - **The field** matches an input of the same size and prominence. Its focus ring shows while the input has focus; `aria-invalid="true"` or `disabled` on the input sets the field's invalid or disabled look.
-- **The list** is `popover="manual"`, so no Card or Dialog clips it. It anchors to its own field in CSS (no inline styles), opens below and flips above when there is no room. A list without `popover` sits under the field and can be clipped.
+- **The list** is `popover="manual"`, so no Card or Dialog clips it. It anchors to its own field in CSS (no inline styles), opens below and flips above when there is no room, and is never taller than the room on its side, so every option stays in reach at high zoom.
 - **Options** are at least 48px tall (or the product's fine-pointer target). The check icon shows on selected options; the selected text takes the accent colour.
 
 ## Option Content, Groups and No Results

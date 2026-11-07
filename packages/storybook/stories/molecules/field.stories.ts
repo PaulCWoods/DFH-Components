@@ -26,7 +26,7 @@ One control with its label, and optionally a hint, an error and an output. The f
 - **Errors** are linked with \`aria-describedby\`, and the control takes \`aria-invalid="true"\`. No role: a script that inserts an error after the page loads may add \`role="alert"\`. The Warning icon means the error is never colour alone.
 - **Required and optional** are written in the label, never generated. Mark the fewer case, usually "(optional)".
 - **Header:** \`.field__header\` puts the label and an \`<output>\` or a link at either end.
-- **Options:** \`--inline\` (the label beside its control). A disabled control dims its field.
+- **Options:** \`--inline\` (the label beside its control). A disabled control dims its label and itself; the hint, error and output stay readable.
         `,
       },
     },

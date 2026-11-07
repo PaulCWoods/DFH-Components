@@ -100,8 +100,10 @@
     &::after {
       content: "";
       position: absolute;
-      inset-block: min(0px, calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2));
-      inset-inline: min(0px, calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2));
+      inset-block-start: min(0px, max(calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2), var(--target-gap-block-start, var(--target-gap-block, 100vmax)) / -2));
+      inset-block-end: min(0px, max(calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2), var(--target-gap-block-end, var(--target-gap-block, 100vmax)) / -2));
+      inset-inline-start: min(0px, max(calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2), var(--target-gap-inline-start, var(--target-gap-inline, 100vmax)) / -2));
+      inset-inline-end: min(0px, max(calc((100% - var(--spacing-target-min, var(--spacing-target, 3rem))) / 2), var(--target-gap-inline-end, var(--target-gap-inline, 100vmax)) / -2));
     }
 
     &:focus-visible {

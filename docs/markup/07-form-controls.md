@@ -22,7 +22,7 @@ Corners: Rounded, Round=input--round
 ## Purpose
 A form is where a page asks the most of someone. The browser already knows a lot about that job: the right on-screen keyboard, autofill, keyboard use, how to tell a screen reader what a control is. Every control here is the native element with a class, so all of that keeps working.
 
-Text inputs, Selects and Textareas share one base, so they line up and change together, and every prominence keeps an edge of at least 3:1, because a field people can't find can't be filled in. The browser still draws the Checkbox and radio, so they stay legible in forced colours.
+Text inputs, Selects and Textareas share one base, so they line up and change together. The outline and plain prominences keep an edge of at least 3:1, because a field people can't find can't be filled in. Subtle is a tinted field with no border, a choice for dense, familiar forms; its border comes back for people who ask for more contrast and in forced colours. The browser still draws the Checkbox and radio, so they stay legible in forced colours.
 
 Styling is opt-in through classes. A bare `<input>` keeps its browser rendering, so anything you embed from elsewhere isn't restyled by accident.
 
@@ -36,6 +36,7 @@ Styling is opt-in through classes. A bare `<input>` keeps its browser rendering,
 ## Rules
 - **Classes only.** Bare `<input>`, `<select>` and `<textarea>` keep browser styling.
 - **Validation:** invalid styling follows `:user-invalid` and `aria-invalid="true"`; always pair it with a `.field__error` message. Valid fields are not recoloured.
+- **One way to validate.** Either let the browser validate (`required`, `type`, `pattern`, and its own messages), or put `novalidate` on the form and show the library's errors with an [error summary](07b-form-composition.md). Never both: people get the browser's bubble and then a second, different message.
 - **Hit area:** `--sm` text controls are 32px, and a field can't take a hit-area buffer, so that is also its target. Put touch-facing forms in `fine:ui-compact` rather than using `--sm` directly. Put checkboxes and radios in a `.choice` label.
 - **Range fill:** `--value` drives the fill in Blink and WebKit, so a script must update it on `input`.
 
@@ -77,25 +78,32 @@ A Checkbox or radio goes in a `.choice` label, so the whole row is the target; a
 ## A Switch Acts at Once
 Use a Switch when flipping it changes the setting straight away. If nothing happens until someone submits a form, it's a Checkbox.
 ```html live width=md
-<label class="switch">
-  <span class="switch__label label">Notifications <span class="small-text text-muted">Email and push</span></span>
-  <input type="checkbox" role="switch" class="sr-only" checked />
-  <span class="switch__control" aria-hidden="true">
-    <span class="switch__option switch__option--off">Off</span>
-    <span class="switch__option switch__option--on">On</span>
+<div class="switch">
+  <div class="switch__label">
+    <label for="notify" class="label">Notifications</label>
+    <p id="notify-hint" class="small-text text-muted">Email and push</p>
+  </div>
+  <span class="switch__control">
+    <input type="checkbox" role="switch" id="notify" aria-describedby="notify-hint" checked />
+    <span class="switch__option switch__option--off" aria-hidden="true">Off</span>
+    <span class="switch__option switch__option--on" aria-hidden="true">On</span>
   </span>
-</label>
+</div>
 
 <!-- Small, round, danger -->
-<label class="switch switch--sm switch--round switch--danger">
-  <span class="switch__label label">Auto-delete</span>
-  <input type="checkbox" role="switch" class="sr-only" />
-  <span class="switch__control" aria-hidden="true">
-    <span class="switch__option switch__option--off">Off</span>
-    <span class="switch__option switch__option--on">On</span>
+<div class="switch switch--sm switch--round switch--danger">
+  <div class="switch__label">
+    <label for="auto-delete" class="label">Delete old drafts automatically</label>
+  </div>
+  <span class="switch__control">
+    <input type="checkbox" role="switch" id="auto-delete" />
+    <span class="switch__option switch__option--off" aria-hidden="true">Off</span>
+    <span class="switch__option switch__option--on" aria-hidden="true">On</span>
   </span>
-</label>
+</div>
 ```
+
+Only the control and its label toggle it. The row and the hint don't, so a stray tap while scrolling can't change a setting. The hint is read with the Switch through `aria-describedby`, and the Off and On text is hidden, because the role already says on or off.
 
 ## Show a Range's Value
 A slider shows roughly where it is, and an `<output>` beside it gives the number.
@@ -117,6 +125,7 @@ A slider shows roughly where it is, and an `<output>` beside it gives the number
 | Set the right `type` and `autocomplete`. | Make people retype what the browser already knows. |
 | Put checkboxes and radios in a `.choice` label. | Leave a 20px box as the whole target. |
 | Use `.ui-compact` on a dense region. | Add `--sm` to every control in it. |
+| Choose browser validation or `novalidate` with library errors. | Show the browser's message and the library's for the same field. |
 
 ## Reference
 Six atoms: input (with colour and file), select, textarea, checkbox and radio, switch, range. What goes around them (field, Fieldset, choices, form) is in [form composition](07b-form-composition.md).
@@ -126,23 +135,24 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 | :--- | :--- | :--- |
 | `.input`, `.select`, `.textarea` | Size (`--sm`, `--lg`), prominence (outline, `--subtle`, `--plain`), corners (`--round`, not on `.textarea`) | `--input-*`, `--select-*` (`size`, `prominence`, `corners`), `--textarea-*` (`size`, `prominence`) |
 | `.checkbox-input`, `.radio-input` | Size (20px, `--lg` 24px) | `--check-size: lg` |
-| `.switch` | Size (`--sm`, `--lg`), prominence (`--subtle`), intent (`--danger`), corners | `--switch-size`, `--switch-prominence`, `--switch-intent`, `--switch-corners` |
+| `.switch` | Size (`--sm`, `--lg`), prominence (`--subtle`, no border until high contrast or forced colours), intent (`--danger`), corners | `--switch-size`, `--switch-prominence`, `--switch-intent`, `--switch-corners` |
 | `.color-input` | Size (`--sm`, `--lg`, `--stretch` to fill its container) | |
 | `.range` | Size, intent (`--info`, `--success`, `--warning`, `--danger`) | `--range-size`, `--range-intent` |
+| `.range-lockup` | Size from `.controls-sm` or `.controls-lg` on it; `--fill` to take the full width | `--range-size`, `--controls-size` |
 
 ### Further rules
 - **Classes only.** Bare `<input>`, `<select>` and `<textarea>` keep browser styling; the reset gives them back their native rendering.
 - **One base for text controls.** `.input`, `.select` and `.textarea` share `atoms/input.css` section 1: the same size, prominence, corners, flags and states.
 - Group flags `--controls-size`, `--controls-prominence` and `--controls-corners` reach every control, Buttons included. Group classes: `.controls-sm`, `.controls-lg`, `.controls-subtle`, `.controls-plain`, `.controls-round`. `.elements-subtle` and `.elements-plain` (`--elements-prominence`) reach controls too, along with the other [non-container elements](36-utilities.md). A compact container (`--ui-sizing: compact`) steps controls to `--sm`.
-- **Every prominence keeps a 3:1 edge** (`--border-color-control`). Outline has a full border; subtle and plain keep the bottom border.
+- **Edges.** Outline has a full 3:1 border (`--border-color-control`) and plain keeps its bottom border. Subtle has no border, a deliberate choice: WCAG 1.4.11 doesn't ask a field for a boundary. The border comes back under `prefers-contrast: more` and in forced colours.
 - **`--flush`** (text controls) drops the inline padding and the boundary. Use it only inside a bar that draws both, such as a command palette header with `.focus-within`.
-- **Hit area:** `--sm` text controls are 32px, matching small Buttons; a Field can't take a hit-area buffer, so this is also its target (above the 24px minimum). Put touch-facing forms in `fine:ui-compact` rather than using `--sm` directly. Switch and range keep a hit area of at least `--spacing-target-min` whatever their visual size. Put checkboxes and radios in a `.choice` label.
+- **Hit area:** `--sm` text controls are 32px, matching small Buttons; a Field can't take a hit-area buffer, so this is also its target (above the 24px minimum). Put touch-facing forms in `fine:ui-compact` rather than using `--sm` directly. A Switch and a Range keep a hit area of at least `--spacing-target-min` whatever their visual size (a Switch's checkbox fills its control and reaches out to it). Put checkboxes and radios in a `.choice` label.
 - Checkboxes have no intent: a Checkbox has a state, not a Status.
 
 ## Text, Colour and File Inputs
 ```html live width=md
 <div class="field">
-  <label for="user-email" class="field__label label">Email Address</label>
+  <label for="user-email" class="field__label label">Email address</label>
   <p id="user-email-hint" class="field__hint small-text">We will never share your email address.</p>
   <input id="user-email" type="email" class="input" autocomplete="email" aria-describedby="user-email-hint" />
 </div>
@@ -155,15 +165,36 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 </div>
 
 <!-- Size, prominence and corners -->
-<input type="search" class="input input--sm" aria-label="Filter" />
-<input type="text" class="input input--lg" aria-label="Title" />
-<input type="text" class="input input--subtle" aria-label="First name" />
-<input type="text" class="input input--plain" aria-label="Last name" />
-<input type="search" class="input input--round" aria-label="Search" />
+<div class="field">
+  <label for="filter-projects" class="field__label label">Filter projects</label>
+  <input id="filter-projects" type="search" class="input input--sm" />
+</div>
+<div class="field">
+  <label for="plot-title" class="field__label label">Plot title</label>
+  <input id="plot-title" type="text" class="input input--lg" />
+</div>
+<div class="field">
+  <label for="given-name" class="field__label label">First name</label>
+  <input id="given-name" type="text" class="input input--subtle" autocomplete="given-name" />
+</div>
+<div class="field">
+  <label for="family-name" class="field__label label">Last name</label>
+  <input id="family-name" type="text" class="input input--plain" autocomplete="family-name" />
+</div>
+<div class="field">
+  <label for="site-search" class="field__label label">Search the site</label>
+  <input id="site-search" type="search" class="input input--round" />
+</div>
 
-<!-- Colour and file -->
-<input type="color" class="color-input" value="#00a39a" aria-label="Brand colour" />
-<input type="file" class="file-input" aria-label="Attachment" />
+<!-- Colour (--sm, --lg, or --stretch to fill its container) and file -->
+<div class="field">
+  <label for="brand-colour" class="field__label label">Brand colour</label>
+  <input id="brand-colour" type="color" class="color-input" value="#00a39a" />
+</div>
+<div class="field">
+  <label for="attachment" class="field__label label">Attachment</label>
+  <input id="attachment" type="file" class="file-input" />
+</div>
 ```
 
 ## Textarea (grows with `field-sizing: content`)
@@ -174,13 +205,16 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 </div>
 
 <!-- Starts at one line and grows; cap the height with --textarea-lines-max -->
-<textarea class="textarea textarea--one-line" aria-label="Comment"></textarea>
+<div class="field">
+  <label for="comment" class="field__label label">Comment</label>
+  <textarea id="comment" class="textarea textarea--one-line"></textarea>
+</div>
 ```
 
 ## Select
 ```html live width=md
 <div class="field">
-  <label for="role-select" class="field__label label">Primary Role</label>
+  <label for="role-select" class="field__label label">Primary role</label>
   <select id="role-select" class="select">
     <option value="">Choose a role</option>
     <option value="lead">Accessibility Lead</option>
@@ -188,11 +222,14 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 </div>
 
 <!-- Customizable select (appearance: base-select; other browsers show the native select) -->
-<select class="select select--custom" aria-label="Conformance target">
-  <button type="button"><selectedcontent></selectedcontent></button>
-  <option value="aa" selected>WCAG 2.2 AA</option>
-  <option value="aaa">WCAG 2.2 AAA</option>
-</select>
+<div class="field">
+  <label for="conformance" class="field__label label">Conformance target</label>
+  <select id="conformance" class="select select--custom">
+    <button type="button"><selectedcontent></selectedcontent></button>
+    <option value="aa" selected>WCAG 2.2 AA</option>
+    <option value="aaa">WCAG 2.2 AAA</option>
+  </select>
+</div>
 ```
 
 ## Range & Range Lockup
@@ -207,25 +244,35 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 </div>
 
 <!-- Size and intent: pair intent with an output that states the value -->
-<input type="range" class="range range--sm" min="0" max="100" value="30" style="--value: 30%;" aria-label="Balance" />
-<input type="range" class="range range--danger" min="0" max="100" value="92" style="--value: 92%;" aria-label="Disk use" />
-
-<!-- Range lockup (molecule): button + range + readout -->
-<div class="range-lockup range-lockup--sm">
-  <button type="button" class="button button--subtle button--icon button--sm" aria-label="Mute the first track">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
-  </button>
-  <input id="lockup-vol" type="range" class="range" min="0" max="100" value="85" style="--value: 85%;" aria-label="First track volume" />
-  <output for="lockup-vol" class="range-lockup__output">85%</output>
+<div class="field">
+  <div class="field__header">
+    <label for="balance" class="field__label label">Balance</label>
+    <output for="balance" class="small-text">30%</output>
+  </div>
+  <input id="balance" type="range" class="range range--sm" min="0" max="100" value="30" style="--value: 30%;" />
+</div>
+<div class="field">
+  <div class="field__header">
+    <label for="disk-use" class="field__label label">Disk use limit</label>
+    <output for="disk-use" class="small-text">92%, nearly full</output>
+  </div>
+  <input id="disk-use" type="range" class="range range--danger" min="0" max="100" value="92" style="--value: 92%;" />
 </div>
 
-<!-- Bordered and round (the boundary lights up while a child has focus) -->
-<div class="range-lockup range-lockup--bordered range-lockup--round range-lockup--fill">
-  <button type="button" class="button button--plain button--icon button--sm" aria-label="Mute the second track">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg>
+<!-- Range lockup (molecule): button + range + readout; size it with .controls-sm or .controls-lg -->
+<div class="range-lockup controls-sm">
+  <button type="button" class="button button--subtle button--icon" aria-pressed="false">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg><span class="sr-only">Mute</span>
   </button>
-  <input id="lockup-vol-2" type="range" class="range" min="0" max="100" value="40" style="--value: 40%;" aria-label="Second track volume" />
-  <output for="lockup-vol-2" class="range-lockup__output">40%</output>
+  <input id="lockup-vol" type="range" class="range" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume" />
+  <output for="lockup-vol" class="range-lockup__output small-text font-mono">85%</output>
+</div>
+
+<!-- Scale labels under a stepped range: keep aria-valuetext in step with them -->
+<div class="field">
+  <label for="text-size" class="field__label label">Text size</label>
+  <input id="text-size" type="range" class="range" min="0" max="100" step="25" value="50" style="--value: 50%;" aria-valuetext="M" />
+  <div class="range__scale-ticks small-text" aria-hidden="true"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
 </div>
 ```
 

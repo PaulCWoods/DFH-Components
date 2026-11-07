@@ -82,6 +82,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  /* Items meet, so their hit areas stop at each other */
+  --target-gap-block: 0px;
+  --target-gap-inline: initial;
   list-style: none;
   margin: 0;
   padding: var(--_menu-padding);
@@ -244,5 +247,25 @@
 @media (forced-colors: active) {
   :where(.menu) > :where(li) > :where(.button[aria-current]:not([aria-current="false"]))::before {
     background-color: Highlight;
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.menu) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(li:first-child, .menu__heading + li) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(li:last-child, li:has(+ .menu__heading)) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
   }
 }

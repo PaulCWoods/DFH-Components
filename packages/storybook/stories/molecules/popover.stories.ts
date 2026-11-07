@@ -112,14 +112,14 @@ export const Content: Story = {
       <article class="card card--compact card--ruled">
         <header class="card__header"><h3 class="card__title heading" id="ct-settings-title">Preferences</h3></header>
         <div class="card__body stack">
-          <label class="switch">
-            <span class="switch__label label">High contrast</span>
-            <input type="checkbox" role="switch" class="sr-only" />
-            <span class="switch__control" aria-hidden="true">
-              <span class="switch__option switch__option--off">Off</span>
-              <span class="switch__option switch__option--on">On</span>
+          <div class="switch">
+            <label for="pop-contrast" class="switch__label label">High contrast</label>
+            <span class="switch__control">
+              <input type="checkbox" role="switch" id="pop-contrast" />
+              <span class="switch__option switch__option--off" aria-hidden="true">Off</span>
+              <span class="switch__option switch__option--on" aria-hidden="true">On</span>
             </span>
-          </label>
+          </div>
           <label class="choice"><input type="checkbox" class="checkbox-input" checked /><span>Reduce motion</span></label>
         </div>
         <footer class="card__footer">

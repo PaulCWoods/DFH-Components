@@ -26,7 +26,7 @@ A list of checkbox or radio labels. Each \`.choice\` is a \`<label>\` holding th
 \`\`\`
 
 - **Rows** are at least 48px tall (32px when the product opts into fine-pointer targets) and only as wide as their text. The box sits centred on the first line.
-- **Size** follows the box: \`checkbox-input--lg\` / \`radio-input--lg\`, or the \`--check-size: lg\` flag, widens the gap beside it. The text is the body text around it.
+- **Size** follows the box: \`checkbox-input--lg\` / \`radio-input--lg\`, or the \`--check-size: lg\` flag, widens the gap beside it. The text matches the text controls beside it (\`--choice-font-size\`).
 - **Descriptions:** \`.choice__label\` with a \`.small-text\` line.
 - **Compact:** in a compact form, fieldset or \`.ui-compact\` region, rows are 32px, the text steps to the small-control size and the box to 16px, to match the fields around them.
 - **Options:** \`--inline\` (flag \`--choices-layout: inline\`). A \`<ul class="choices">\` works too; its items step aside.

@@ -240,12 +240,20 @@
      Hit Area (WCAG 2.5.5 / 2.5.8)
      Extends the target to --_button-target-size when the visual size is
      smaller. Collapses to the button's own box when it is already larger.
+     A container that sets controls side by side (a Button Group, a
+     Cluster) gives its gap as --target-gap-inline or --target-gap-block,
+     and the buffer reaches at most halfway across: each control owns its
+     half of the gap and never covers a neighbour. -start and -end on each
+     axis override one side (the group's first and last items reach freely
+     outward).
      ------------------------------------------------------------------------ */
   &::after {
     content: "";
     position: absolute;
-    inset-block: min(0px, calc((100% - var(--_button-target-size)) / 2));
-    inset-inline: min(0px, calc((100% - var(--_button-target-size)) / 2));
+    inset-block-start: min(0px, max(calc((100% - var(--_button-target-size)) / 2), var(--target-gap-block-start, var(--target-gap-block, 100vmax)) / -2 - var(--_button-border-width, 0px)));
+    inset-block-end: min(0px, max(calc((100% - var(--_button-target-size)) / 2), var(--target-gap-block-end, var(--target-gap-block, 100vmax)) / -2 - var(--_button-border-width, 0px)));
+    inset-inline-start: min(0px, max(calc((100% - var(--_button-target-size)) / 2), var(--target-gap-inline-start, var(--target-gap-inline, 100vmax)) / -2 - var(--_button-border-width, 0px)));
+    inset-inline-end: min(0px, max(calc((100% - var(--_button-target-size)) / 2), var(--target-gap-inline-end, var(--target-gap-inline, 100vmax)) / -2 - var(--_button-border-width, 0px)));
   }
 
   /* ------------------------------------------------------------------------

@@ -115,6 +115,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--_header-gap);
+  --target-gap-inline: var(--_header-gap);
   max-inline-size: var(--_header-max-width);
   /* At least the target size plus its padding: --header-height tall */
   min-block-size: calc(var(--_header-min-size) + 2 * var(--_header-padding-block));
@@ -281,5 +282,25 @@
 @media (prefers-reduced-motion: reduce) {
   :where(.header--sticky)::after {
     transition: none;
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.header__bar) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
   }
 }

@@ -32,6 +32,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ## Rules
 - **Never colour alone** (WCAG 1.4.1): the label says what happens ("Delete project"), or an icon does.
 - **Every size keeps a 48px hit area** (WCAG 2.5.5), unless the product opts into fine-pointer targets. Never below 24px (2.5.8).
+- **A hit area never covers another control.** In a group it reaches at most halfway across the gap to the next Button, so a tap always lands on the Button it looks like it lands on. Small Buttons in a tight group get their own size plus the gap; scope compact to fine pointers with `fine:ui-compact` where touch should keep 48px.
 - **One modifier per axis.** Write `.button--subtle.button--accent`. A class that fuses two axes doesn't exist.
 
 ## Keyboard and screen readers
@@ -152,6 +153,7 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 ```
 - **Every size keeps a 48px hit area** (WCAG 2.5.5) through `::after`, unless the product opts into fine-pointer targets with `:root { --spacing-target-min: var(--spacing-target-sm); }`. Never below 24px (2.5.8).
 - A compact container (`--ui-sizing: compact`) steps Buttons to `--sm`.
+- **Neighbours:** a container that sets Buttons side by side gives its gap as `--target-gap-inline` (a row) or `--target-gap-block` (a column), and each Button's hit area reaches at most halfway across it. Button Group, Menu, Navigation Tree, Tab List, Batch Actions, Cluster and Inline do this, and free the outer side of their first and last items (`--target-gap-inline-start: 100vmax` and the other sides). A container of your own does the same; a Card, Popover or Dialog starts afresh.
 
 ### Disabled
 - **`disabled`** takes a Button out of the Tab order. Use it when there's nothing to learn by reaching it.

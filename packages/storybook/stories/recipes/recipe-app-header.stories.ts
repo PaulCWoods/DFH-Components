@@ -193,8 +193,10 @@ export const TwoRows: Story = {
           <li><span class="avatar avatar--sm" role="img" aria-label="Jordan Lee">JL</span></li>
           <li><span class="avatar avatar--sm avatar--count" role="img" aria-label="3 others">+3</span></li>
         </ul>
-        <button type="button" class="button button--sm">${icon('Duplicate')}<span>Duplicate</span></button>
-        <button type="button" class="button button--sm button--strong button--accent">${icon('Download')}<span>Export</span></button>
+        <div class="cluster gap-xs">
+          <button type="button" class="button button--sm">${icon('Duplicate')}<span>Duplicate</span></button>
+          <button type="button" class="button button--sm button--strong button--accent">${icon('Download')}<span>Export</span></button>
+        </div>
       </div>
     </div>`)}${page('Combobox')}`,
   ),

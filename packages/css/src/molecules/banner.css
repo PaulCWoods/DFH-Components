@@ -191,6 +191,13 @@
     opacity: 0;
   }
 
+  /* A banner that script focuses (an error summary, tabindex="-1") shows
+     it, however focus got there */
+  &:where([tabindex="-1"]):focus {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
   /* The intent icon sits in an icon box the size of the buttons, aligned
      with them */
   > :where(.icon-box) {
@@ -328,6 +335,17 @@
 :where(.banner__action) {
   align-self: var(--_banner-align);
   flex-shrink: 0;
+}
+
+/* Two actions side by side: their hit areas meet halfway between them.
+   Over the message and the banner's edge they reach freely, since neither
+   does anything when tapped. */
+:where(.banner__action:has(+ .banner__action)) {
+  --target-gap-inline-end: var(--_banner-gap);
+}
+
+:where(.banner__action + .banner__action) {
+  --target-gap-inline-start: var(--_banner-gap);
 }
 
 /* ==========================================================================

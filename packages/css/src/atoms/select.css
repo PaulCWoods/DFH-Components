@@ -97,7 +97,7 @@
       padding: var(--select-picker-padding, var(--spacing-xs));
       color: var(--foreground, CanvasText);
       background-color: var(--surface-card, Canvas);
-      border: var(--_control-border-width) solid var(--border-color-muted, currentColor);
+      border: var(--panel-border-width, 1px) solid var(--border-color-muted, currentColor);
       border-radius: var(--_control-radius);
       box-shadow: var(--shadow-lg, none);
     }
@@ -133,6 +133,22 @@
 
       small {
         display: none;
+      }
+    }
+
+    /* Forced colours paint backgrounds as Canvas: the icon is drawn with a
+       system colour, and the hovered option is highlighted like the
+       selected one */
+    @media (forced-colors: active) {
+      &::picker-icon {
+        forced-color-adjust: none;
+        background-color: CanvasText;
+      }
+
+      :where(option):hover {
+        forced-color-adjust: none;
+        background-color: Highlight;
+        color: HighlightText;
       }
     }
 

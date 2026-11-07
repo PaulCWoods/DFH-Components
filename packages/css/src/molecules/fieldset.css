@@ -44,6 +44,11 @@
     margin-block-start: var(--_fieldset-gap);
   }
 
+  /* An error about the whole group sits close under the hint, as in a field */
+  > :where(.fieldset__hint) + :where(.field__error) {
+    margin-block-start: var(--_fieldset-legend-gap);
+  }
+
   &:where(:disabled, [aria-disabled="true"]) {
     opacity: var(--opacity-disabled, 0.5);
   }
@@ -58,7 +63,7 @@
   margin: 0 0 var(--_fieldset-gap);
   padding: 0;
 
-  &:where(:has(+ .fieldset__hint)) {
+  &:where(:has(+ .fieldset__hint, + .field__error)) {
     margin-block-end: var(--_fieldset-legend-gap);
   }
 

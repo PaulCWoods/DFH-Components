@@ -63,7 +63,9 @@
 
 @container form (inline-size > 32rem) {
   :where(.form--aligned) {
-    :where(.field:not(.field--inline)) {
+    /* A field or fieldset inside a fieldset already sits in the second
+       column, so it stacks there rather than making a column of its own */
+    :where(.field:not(.field--inline, .fieldset .field)) {
       align-items: baseline;
       column-gap: var(--field-inline-gap, var(--spacing-12));
       display: grid;
@@ -96,7 +98,7 @@
     /* A fieldset can't be a grid (see fieldset.css), so the legend and hint
        float in the first column and the rest sits beside them, in order: a
        group's error stays above its controls. */
-    :where(.fieldset) {
+    :where(.fieldset:not(.fieldset .fieldset)) {
       > :where(.fieldset__legend) {
         inline-size: var(--field-label-width, var(--spacing-192));
         margin-block-end: 0;

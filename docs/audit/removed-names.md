@@ -61,3 +61,6 @@ What each component pass removed and what replaced it, moved here from the publi
 
 ## Actions
 - `.button--flush` (a link that lines up with text is a Link, `.link`); `.button--icon-lg` and `.buttons-icon-lg` (set `--button-icon-size`); `.button__text--placeholder`; the `hide-decor` class and `--ui-decor` flag on Button and Tab; the Divider's `--direction` flag (use `--divider-orientation`).
+
+## Forms
+- `.select--flush` and `.textarea--flush` (use `.input--flush`, which every text control takes); `.range-lockup--sm` and `--lg` (put `.controls-sm` or `.controls-lg` on the lockup); `.range-lockup--bordered` and `--round` (a border or surface is an override or utilities); the `--range-lockup-padding-inline` token; typography on `.range-lockup__output` and `.range__scale-ticks` (use `.small-text`, with `.font-mono` on the readout); the `--combobox-listbox-max-height` token (now `--combobox-listbox-max-size`); a Combobox list without `popover`; the Switch as one `<label>` row with a visually hidden checkbox (now a `<label for>` beside a control the checkbox fills).

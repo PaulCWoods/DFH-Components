@@ -92,8 +92,8 @@ const filters = (selected: { light: string[]; colours: string[] }) => `
         ${facet(
           'Availability',
           `<div class="stack gap-xs">
-            <label class="switch"><span class="switch__label label">In stock only</span><input type="checkbox" role="switch" class="sr-only" name="stock" checked /><span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span></label>
-            <label class="switch"><span class="switch__label label">Native species</span><input type="checkbox" role="switch" class="sr-only" name="native" /><span class="switch__control" aria-hidden="true"><span class="switch__option switch__option--off">Off</span><span class="switch__option switch__option--on">On</span></span></label>
+            <div class="switch"><label for="filter-stock" class="switch__label label">In stock only</label><span class="switch__control"><input type="checkbox" role="switch" id="filter-stock" name="stock" checked /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
+            <div class="switch"><label for="filter-native" class="switch__label label">Native species</label><span class="switch__control"><input type="checkbox" role="switch" id="filter-native" name="native" /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
           </div>`,
           false,
         )}

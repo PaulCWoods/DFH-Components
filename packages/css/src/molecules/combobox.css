@@ -16,8 +16,11 @@
    | Size       | (default) --sm --lg      | --combobox-size, --controls-size              |
    | Prominence | (outline) --subtle --plain | --combobox-prominence, --controls-prominence |
    | Corners    | --round                  | --combobox-corners, --controls-corners        |
+   | Chrome     | --flush                  | --combobox-chrome                             |
 
    A compact region steps the field to --sm and the options' text down.
+   --flush drops the field's padding and boundary, for a bar that draws
+   them (a command palette).
 
    The list is popover="manual": in the top layer no card or dialog clips it.
    It anchors to its own control through a scoped anchor name, below it and
@@ -55,9 +58,9 @@
   --_combobox-listbox-border-width: var(--combobox-listbox-border-width, var(--panel-border-width, 1px));
   --_combobox-listbox-radius: var(--combobox-listbox-radius, var(--panel-radius, 0.25rem));
   --_combobox-listbox-shadow: var(--combobox-listbox-shadow, var(--shadow-md, none));
-  --_combobox-listbox-max-size: var(--combobox-listbox-max-height, var(--spacing-256));
+  --_combobox-listbox-max-size: var(--combobox-listbox-max-size, var(--spacing-256));
   --_combobox-listbox-padding: var(--combobox-listbox-padding, var(--spacing-xs));
-  --_combobox-listbox-offset: var(--combobox-listbox-offset, 0.25rem);
+  --_combobox-listbox-offset: var(--combobox-listbox-offset, var(--spacing-xs));
   --_combobox-option-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_combobox-option-padding-block: var(--combobox-option-padding-block, var(--spacing-sm));
   --_combobox-option-padding-inline: var(--combobox-option-padding-inline, var(--spacing-12));
@@ -68,13 +71,16 @@
   --_combobox-gap: var(--spacing, 1rem);
 
   /* ------------------------------------------------------------------------
-     Container Flags: the options step down with the field
+     Container Flags: the options step down with the field. Queried from
+     the parts, so they also see the flag --sm sets on .combobox itself
      ------------------------------------------------------------------------ */
-  @container style(--ui-sizing: compact) or style(--controls-size: sm) or style(--combobox-size: sm) {
-    --_combobox-font-size: var(--body-compact-font-size, 0.875rem);
-    --_combobox-option-padding-block: calc(var(--spacing, 1rem) / 4);
-    --_combobox-option-padding-inline: calc(var(--spacing, 1rem) / 2);
-    --_combobox-gap: calc(var(--spacing, 1rem)/2);
+  > * {
+    @container style(--ui-sizing: compact) or style(--controls-size: sm) or style(--combobox-size: sm) {
+      --_combobox-font-size: var(--body-compact-font-size, 0.875rem);
+      --_combobox-option-padding-block: calc(var(--spacing, 1rem) / 4);
+      --_combobox-option-padding-inline: calc(var(--spacing, 1rem) / 2);
+      --_combobox-gap: calc(var(--spacing, 1rem) / 2);
+    }
   }
 
   /* The list anchors to this combobox's own control */
@@ -91,9 +97,6 @@
    ========================================================================== */
 :where(.combobox--sm) {
   --combobox-size: sm;
-  --_combobox-font-size: var(--body-compact-font-size, 0.875rem);
-  --_combobox-option-padding-block: calc(var(--spacing, 1rem) / 4);
-  --_combobox-option-padding-inline: calc(var(--spacing, 1rem) / 2);
 }
 
 :where(.combobox--lg) {
@@ -122,9 +125,14 @@
 :where(.combobox__control) {
   anchor-name: --combobox;
   display: flex;
-  flex-wrap: wrap;
+  /* One row: Chips wrap inside .combobox__tags, so the field and its
+     buttons stay side by side (a wrapped row would sit under the field's
+     reach into the padding) */
+  flex-wrap: nowrap;
   align-items: center;
   column-gap: var(--_combobox-gap);
+  /* The field and the buttons beside it each take half the gap */
+  --target-gap-inline: var(--_combobox-gap);
   inline-size: 100%;
   cursor: text;
 
@@ -146,17 +154,31 @@
 }
 
 :where(.combobox__input) {
+  /* Inline, the field reaches halfway into the gap beside its neighbours
+     (their hit areas take the other half), or the control's padding at
+     either end */
+  --_combobox-input-reach-start: calc(var(--_combobox-gap) / 2);
+  --_combobox-input-reach-end: calc(var(--_combobox-gap) / 2);
+
+  &:first-child {
+    --_combobox-input-reach-start: var(--_control-padding-inline, 0px);
+  }
+
+  &:last-child {
+    --_combobox-input-reach-end: var(--_control-padding-inline, 0px);
+  }
+
   flex: 1 1 5rem;
   /* The drawn control is the target: the field reaches under the
-     control's block padding and border, so a tap anywhere on it lands in
-     the field. The control still draws the border. */
+     control's padding and border, so a tap anywhere on it lands in the
+     field. The control still draws the border. */
   align-self: stretch;
   min-inline-size: 3ch;
   min-block-size: 0;
-  margin: 0;
   margin-block: calc((var(--_control-padding-block, 0px) + var(--_control-border-width, 0px)) * -1);
-  padding: 0;
+  margin-inline: calc(var(--_combobox-input-reach-start) * -1) calc(var(--_combobox-input-reach-end) * -1);
   padding-block: calc(var(--_control-padding-block, 0px) + var(--_control-border-width, 0px));
+  padding-inline: var(--_combobox-input-reach-start) var(--_combobox-input-reach-end);
   border: 0;
   outline: none;
   background: transparent;
@@ -197,9 +219,12 @@
 /* Chips before the input */
 :where(.combobox__tags) {
   display: inline-flex;
+  flex: 0 1 auto;
   flex-wrap: wrap;
+  min-inline-size: 0;
   align-items: center;
   gap: calc(var(--_combobox-gap) / 2);
+  --target-gap-inline: calc(var(--_combobox-gap) / 2);
   padding-block: var(--_control-padding-block);
 }
 
@@ -231,24 +256,15 @@
     inset: auto;
     margin-block: var(--_combobox-listbox-offset);
     min-inline-size: anchor-size(inline);
+    /* Never taller than the room on its side, so every option stays in
+       reach on a short screen or at high zoom */
+    max-block-size: min(var(--_combobox-listbox-max-size), 100%);
 
     /* A closed popover stays hidden: display: flex would override that */
     &:not(:popover-open) {
       display: none;
     }
   }
-
-  /* Without the popover attribute: under the control, shown while open */
-  &:where(:not([popover], .combobox__listbox--static)) {
-    position: absolute;
-    z-index: var(--z-index-dropdown, 100);
-    inset-block-start: calc(100% + var(--_combobox-listbox-offset));
-    inset-inline: 0;
-  }
-}
-
-:where(.combobox:not(:has([role="combobox"][aria-expanded="true"])) > .combobox__listbox:not([popover], .combobox__listbox--static)) {
-  display: none;
 }
 
 /* A list with no options left hides; .combobox__empty says so */
@@ -374,5 +390,42 @@
 @media (prefers-contrast: more) {
   :where(.combobox__listbox) {
     border-width: calc(var(--_combobox-listbox-border-width) * 2);
+  }
+}
+
+/* Hit areas: the first and last things in the field reach freely over its
+   padding and border, which do nothing when tapped */
+:where(.combobox__control) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.combobox__tags) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  /* The last Chip meets the field halfway across the control's gap */
+  > :where(:last-child) {
+    --target-gap-inline-end: var(--_combobox-gap);
   }
 }

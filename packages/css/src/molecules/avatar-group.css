@@ -22,6 +22,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--avatar-group-gap, var(--spacing-sm));
+  --target-gap-inline: var(--avatar-group-gap, var(--spacing-sm));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -35,6 +36,7 @@
   flex-wrap: nowrap;
   gap: 0;
   isolation: isolate;
+  --target-gap-inline: 0px;
 
   :where(.avatar) {
     box-shadow: 0 0 0 var(--avatar-group-ring-width, var(--border-width, 2px)) var(--avatar-group-ring-color, var(--surface, Canvas));
@@ -44,5 +46,25 @@
   > :where(.avatar) + :where(.avatar),
   > :where(li) + :where(li) > :where(.avatar) {
     margin-inline-start: calc(var(--_avatar-size) * var(--avatar-group-overlap, 0.33) * -1);
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.avatar-group) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
   }
 }

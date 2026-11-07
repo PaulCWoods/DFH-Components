@@ -31,6 +31,15 @@
    1. Base
    ========================================================================== */
 :where(.popover) {
+  /* A new set of controls: the invoker's row no longer limits their hit
+     areas */
+  --target-gap-inline: initial;
+  --target-gap-block: initial;
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
   /* The card or menu inside floats */
   --card-prominence: strong;
   --menu-prominence: strong;

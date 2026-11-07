@@ -108,6 +108,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--_tab-list-gap);
+  --target-gap-inline: var(--_tab-list-gap);
   min-inline-size: 0;
   /* A bar is never shorter than its targets: small tabs keep their 48px
      hit areas inside the list on touch. Underline tabs stretch to the band,
@@ -262,6 +263,9 @@
    -------------------------------------------------------------------------- */
 :where(.tab-list--vertical, .tab-list--end, .tabbed-content--vertical > .tab-list, .tabbed-content--end > .tab-list) {
   --_tab-list-orientation: vertical;
+  /* Hit areas meet halfway between the tabs, above and below */
+  --target-gap-block: var(--_tab-list-gap);
+  --target-gap-inline: initial;
   --_tab-list-underline-gap: 0px;
   --_tab-list-nested-indent: var(--tab-list-nested-indent, var(--spacing-0, 0));
 
@@ -493,5 +497,27 @@
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: none;
+  }
+}
+
+/* Hit areas: the group's own sides start afresh, so an edge freed for it
+   as an item of an outer group doesn't reach its items. Its first and last
+   items reach freely outward, where there is no neighbour to cover. */
+:where(.tab-list) {
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child),
+  > :where(ul, ol) > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+    --target-gap-block-start: 100vmax;
+  }
+
+  > :where(:last-child),
+  > :where(ul, ol) > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+    --target-gap-block-end: 100vmax;
   }
 }
