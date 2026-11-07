@@ -29,7 +29,7 @@ const features = [
   {
     title: 'Themes and Brands',
     href: '/docs/start/themes/',
-    text: 'Create multiple themes for multiple brands, or build up a brand family, where sub-brands can inherit global properties and override what they need to.',
+    text: 'Create multiple themes for multiple brands, or build up a brand family, where sub-brands can inherit global properties.',
     label: 'Theme screenshots',
     shots: [
       ['real-world-home-theme-eden', 'A garden company’s homepage in the Eden theme: serif headings, warm neutrals and a brown accent'],
@@ -41,7 +41,7 @@ const features = [
   {
     title: 'Figma Sync',
     href: '/docs/tools/figma/',
-    text: 'CSS and Figma share the same token system, so designers and developers are always in sync. Get a head start with our ready-made Design File or import into your own.',
+    text: 'CSS and Figma share the same token system, so designers and developers are always in sync.',
     label: 'Figma screenshots',
     shots: [
       ['figma-dfh-components', 'The Figma file’s components page: Banners in each intent and prominence, documented beside each other'],
@@ -95,7 +95,7 @@ const points = [
           <li>
             <article class="card min-h-stretch">
               <figure class="card__canvas p-0">
-                <ul class="grid grid--lg grid--carousel overscroll-x-auto p-xs focus-ring--inset" role="list" tabindex="0" aria-label={f.label}>
+                <ul class="grid grid--lg grid--carousel gap-xs overscroll-x-auto p-xs focus-ring--inset" role="list" tabindex="0" aria-label={f.label}>
                   {f.shots.map(([name, alt]) => (
                     <li>
                       <picture>
@@ -128,7 +128,7 @@ const points = [
               </div>
               <div class="lockup gap-sm">
                 <h3 class="card__title heading"><a href={p.href} class="link link--plain link--stretched">{p.title}</a></h3>
-                <p class="text text-balance">{p.text}</p>
+                <p class="text max-w-md text-balance">{p.text}</p>
               </div>
             </div>
           </li>
