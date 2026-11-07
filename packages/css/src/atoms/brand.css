@@ -48,7 +48,6 @@
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
     --_brand-font-size: var(--brand-compact-font-size, var(--typography-font-size-1));
-    --_brand-min-size: var(--spacing-target-sm, 2rem);
   }
 
   align-items: center;
@@ -66,8 +65,11 @@
   text-underline-offset: var(--_brand-underline-offset);
 
   /* Only a link is a target: a brand on any other element has no states */
+  /* Wide enough too, for a mark on its own; the mark stays at the start
+     edge, so it lines up with the content below */
   &:where(a) {
     min-block-size: var(--_brand-min-size);
+    min-inline-size: var(--_brand-min-size);
   }
 
   &:where(a):hover,
@@ -98,9 +100,9 @@
   text-box: trim-both cap alphabetic;
 }
 
-/* Beside a mark, the name gives way on the narrowest screens. Visually hidden,
+/* Beside a mark, the name gives way in the narrowest containers. Visually hidden,
    not display: none, so the link keeps its name */
-@media (width <=20em) {
+@container (inline-size <= 20em) {
   :where(.brand__mark + .brand__name) {
     block-size: 1px;
     clip-path: inset(50%);

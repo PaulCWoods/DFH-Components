@@ -10,7 +10,8 @@
    .card--success on air, .card--warning cued):
    1. .deck__vinyl: a spinning record, on a round .thumbnail.
    2. .deck-dock: the docked player. The position slider runs the full width
-      along its top edge; below it, one row with the track at the start, the
+      across its top, in the range's own target-tall box (the track alone is
+      too thin to touch); below it, one row with the track at the start, the
       transport in the true centre and the time and volume at the end.
    ========================================================================== */
 
@@ -55,10 +56,10 @@
    2. Docked player
    ========================================================================== */
 
-/* The position slider along the top edge, full width */
+/* The position slider across the top, full width. It keeps the range's
+   block size, so the whole band is its target */
 :where(.deck-dock__position) {
   display: block;
-  block-size: auto;
 }
 
 /* One row: start, true centre, end */

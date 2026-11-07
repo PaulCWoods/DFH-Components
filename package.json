@@ -22,6 +22,7 @@
     "check:utilities": "node scripts/check-utilities.js",
     "check:tokens": "node scripts/check-tokens.mjs",
     "check:layout": "node scripts/check-layout.mjs",
+    "check:targets": "node scripts/check-targets.mjs",
     "check:docs": "node scripts/check-docs.mjs",
     "storybook": "npm run storybook --workspace=@design-for-humans/storybook",
     "build:storybook": "npm run build-storybook --workspace=@design-for-humans/storybook",

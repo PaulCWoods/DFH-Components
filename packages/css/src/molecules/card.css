@@ -210,11 +210,6 @@
   --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
 }
 
-:where(.card--dense) {
-  --_card-padding: var(--card-compact-padding, var(--spacing));
-  --_card-inner-padding: var(--card-compact-inner-padding, var(--spacing));
-}
-
 /* Chrome: --flat drops the edge (border, corners and shadow) and keeps the
    fill; --bordered draws the border at any prominence */
 :where(.card--flat) {

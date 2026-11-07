@@ -57,6 +57,7 @@
 :where(.inline-size-stretch, .w-stretch) {
     inline-size: 100%;
 
+    /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
     @supports (inline-size: -webkit-fill-available) {
         inline-size: -webkit-fill-available;
     }
@@ -142,6 +143,7 @@
 :where(.min-inline-size-stretch, .min-w-stretch) {
     min-inline-size: 100%;
 
+    /* legacy: Safari before stretch; remove when min-inline-size: stretch is Baseline widely available */
     @supports (min-inline-size: -webkit-fill-available) {
         min-inline-size: -webkit-fill-available;
     }
@@ -186,6 +188,7 @@
 :where(.max-inline-size-stretch, .max-w-stretch) {
     max-inline-size: 100%;
 
+    /* legacy: Safari before stretch; remove when max-inline-size: stretch is Baseline widely available */
     @supports (max-inline-size: -webkit-fill-available) {
         max-inline-size: -webkit-fill-available;
     }
@@ -239,6 +242,7 @@
 :where(.block-size-stretch, .h-stretch) {
     block-size: 100%;
 
+    /* legacy: Safari before stretch; remove when block-size: stretch is Baseline widely available */
     @supports (block-size: -webkit-fill-available) {
         block-size: -webkit-fill-available;
     }
@@ -300,6 +304,7 @@
 :where(.min-block-size-stretch, .min-h-stretch) {
     min-block-size: 100%;
 
+    /* legacy: Safari before stretch; remove when min-block-size: stretch is Baseline widely available */
     @supports (min-block-size: -webkit-fill-available) {
         min-block-size: -webkit-fill-available;
     }
@@ -348,6 +353,7 @@
 :where(.max-block-size-stretch, .max-h-stretch) {
     max-block-size: 100%;
 
+    /* legacy: Safari before stretch; remove when max-block-size: stretch is Baseline widely available */
     @supports (max-block-size: -webkit-fill-available) {
         max-block-size: -webkit-fill-available;
     }
@@ -417,6 +423,7 @@
     inline-size: 100%;
     block-size: 100%;
 
+    /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
     @supports (inline-size: -webkit-fill-available) {
         inline-size: -webkit-fill-available;
         block-size: -webkit-fill-available;

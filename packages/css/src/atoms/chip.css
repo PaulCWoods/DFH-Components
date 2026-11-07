@@ -54,7 +54,7 @@
   --_chip-gap: var(--chip-gap, var(--spacing-xs));
   --_chip-radius: var(--chip-radius, var(--radius-sm));
   --_chip-border-width: var(--chip-border-width, var(--border-width-thin, 1px));
-  --_chip-remove-target: var(--chip-remove-target, var(--spacing-24));
+  --_chip-remove-target: var(--chip-remove-target, var(--spacing-target-min));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -147,7 +147,9 @@
   line-height: inherit;
   cursor: pointer;
 
-  /* Hit area: at least 24px, centred on the visible button. */
+  /* Hit area: the pointer's minimum target, centred on the visible button
+     (48px on touch). It overlaps the end of the chip; the chip itself does
+     nothing, so a tap there can only mean remove. */
   &::after {
     content: "";
     position: absolute;

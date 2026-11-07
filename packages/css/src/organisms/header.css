@@ -65,7 +65,7 @@
   /* The bar's content height. Never --header-height: that is the header's
      measured or declared height, read by what must clear it, so sizing the
      header from it would loop */
-  --_header-min-size: var(--header-bar-min-size, var(--spacing-target-min, var(--spacing-target, 3rem)));
+  --_header-min-size: var(--header-bar-min-size, var(--spacing-target, 3rem));
   --_header-shadow: var(--header-shadow, var(--shadow-md, none));
   --_header-translucency: var(--header-translucency, var(--translucency-subtle, 10%));
   --_header-filter: var(--header-filter, var(--surface-layer-filter, none));
@@ -77,12 +77,13 @@
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
     --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
-    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm));
+    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem));
   }
 
-  /* Its rows can adapt to its width; the stuck shadow queries its position */
-  /* A browser without scroll-state would drop the whole declaration, and
-     the responsive helpers inside would have no container */
+  /* Its rows can adapt to its width; the stuck shadow queries its position.
+     legacy: a browser without scroll-state would drop the whole declaration,
+     and the responsive helpers inside would have no container; remove the
+     first declaration when scroll-state queries are Baseline widely available */
   container: header / inline-size;
 
   @supports (container-type: scroll-state) {
@@ -145,6 +146,7 @@
 :where(.header__skip-link) {
   margin-inline: calc(var(--_header-padding-inline) * -1);
 
+  /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
   @supports (inline-size: -webkit-fill-available) {
     inline-size: -webkit-fill-available;
   }
@@ -191,19 +193,22 @@
   backdrop-filter: var(--_header-filter);
 }
 
-/* Density: the bar and the atoms in it step down, as in a compact
-   container. max-md:header--compact does it below 48rem only (a phone). */
+/* Density: the padding and the atoms in the bar step down, as in a compact
+   container. The bar stays as tall as the pointer's minimum target, so the
+   Buttons' hit areas stay inside the band; it shrinks only where the product
+   has opted into fine-pointer targets. max-md:header--compact does it below
+   48rem only (a phone). */
 :where(.header--compact) {
   --ui-sizing: compact;
   --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
-  --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm, 2rem));
+  --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem));
 }
 
 @media (width < 48rem) {
   :where(.max-md\:header--compact) {
     --ui-sizing: compact;
     --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
-    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-sm, 2rem));
+    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem));
   }
 }
 
@@ -238,19 +243,19 @@
 /* Focus Not Obscured (2.4.11): focused elements scroll clear of the header */
 :where(:root:has(.header--sticky)) {
   /* The header pads itself clear of a notch, on top of its height */
-  scroll-padding-block-start: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target-min)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
+  scroll-padding-block-start: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
 }
 
 /* A compact sticky header is shorter, so what clears it follows. The
    :has() argument gives these the token's own specificity (0,1,0), so
    they beat the token and a product's :root override (later) beats them. */
 :where(:root):has(.header--sticky.header--compact) {
-  --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-sm)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
+  --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
 }
 
 @media (width < 48rem) {
   :where(:root):has(.header--sticky.max-md\:header--compact) {
-    --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-sm)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
+    --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
   }
 }
 

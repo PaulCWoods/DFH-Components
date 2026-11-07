@@ -66,6 +66,7 @@
 :where(.icon--stretch) {
   --_icon-size: 100%;
 
+  /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
   @supports (inline-size: -webkit-fill-available) {
     --_icon-size: -webkit-fill-available;
   }

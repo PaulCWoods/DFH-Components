@@ -54,6 +54,9 @@
      corners */
   --_tab-list-tab-size: var(--tab-min-size, var(--spacing-target, 3rem));
   --_tab-list-round-radius: calc(var(--_tab-list-tab-size) / 2 + var(--_tab-list-floating-padding) + var(--_tab-list-floating-border-width));
+  /* Room around tabs smaller than the target, so their hit areas stay
+     inside the list (none at the default size, or with fine targets) */
+  --_tab-list-target-room: max(0px, (var(--spacing-target-min, 3rem) - var(--_tab-list-tab-size)) / 2);
   --_tab-list-floating-padding-inline: var(--_tab-list-gap);
 
   /* Geometry & Colour */
@@ -73,6 +76,9 @@
      beats a flag inherited from a container.
      ------------------------------------------------------------------------ */
   @container style(--tab-list-style: segmented) {
+    --_tab-list-align: center;
+    --_tab-list-padding-block: var(--_tab-list-target-room);
+    --_tab-list-padding-inline: var(--_tab-list-target-room);
     --_tab-list-style-gap: var(--tab-list-segmented-gap, var(--spacing-sm));
     --_tab-list-rule-style: 0;
     --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
@@ -103,8 +109,16 @@
   flex-wrap: wrap;
   gap: var(--_tab-list-gap);
   min-inline-size: 0;
+  /* A bar is never shorter than its targets: small tabs keep their 48px
+     hit areas inside the list on touch. Underline tabs stretch to the band,
+     so the indicator still meets the rule; segmented tabs sit centred with
+     room around them, however many rows they wrap to. */
+  align-items: var(--_tab-list-align, stretch);
+  box-sizing: border-box;
+  min-block-size: var(--spacing-target-min, 3rem);
   margin: 0;
-  padding: 0;
+  padding-block: var(--_tab-list-padding-block, 0px);
+  padding-inline: var(--_tab-list-padding-inline, 0px);
   list-style: none;
   scroll-padding: var(--_tab-list-gap);
 
@@ -201,6 +215,9 @@
    ========================================================================== */
 :where(.tab-list--segmented) {
   --tab-list-style: segmented;
+  --_tab-list-align: center;
+  --_tab-list-padding-block: var(--_tab-list-target-room);
+  --_tab-list-padding-inline: var(--_tab-list-target-room);
   --_tab-list-style-gap: var(--tab-list-segmented-gap, var(--spacing-sm));
   --_tab-list-rule-style: 0;
   --_tab-list-segmented-radius: var(--tab-radius, var(--radius, 0.25rem));
@@ -248,9 +265,13 @@
   --_tab-list-underline-gap: 0px;
   --_tab-list-nested-indent: var(--tab-list-nested-indent, var(--spacing-0, 0));
 
+  /* A column: the first and last tabs need room above and below */
+  --_tab-list-padding-block: var(--_tab-list-target-room);
+
   flex-direction: column;
   flex-wrap: nowrap;
   flex-shrink: 0;
+  align-items: stretch;
   min-block-size: 0;
   box-shadow: inset calc(var(--_tab-list-rule) * var(--_tab-list-rule-sign) * var(--_tab-list-dir)) 0 0 var(--_tab-list-rule-color);
 
@@ -276,6 +297,7 @@
     row-gap: var(--_tab-list-gap);
     inline-size: 100%;
 
+    /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
     @supports (inline-size: -webkit-fill-available) {
       inline-size: -webkit-fill-available;
     }
@@ -365,6 +387,7 @@
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
 
+  /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
   @supports (inline-size: -webkit-fill-available) {
     max-inline-size: -webkit-fill-available;
   }
@@ -440,6 +463,7 @@
    ========================================================================== */
 
 /* Without anchor positioning the selected tab draws its own indicator */
+/* legacy: browsers without anchor positioning; remove when it is Baseline widely available */
 @supports not (anchor-name: --a) {
   :where(.tab-list)::before {
     display: none;

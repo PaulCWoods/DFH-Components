@@ -156,9 +156,9 @@ export const DockedInACard: Story = {
             <tr><th scope="col"><span class="sr-only">Selected</span></th><th scope="col">Variety</th><th scope="col">Location</th></tr>
           </thead>
           <tbody>
-            <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Brandywine" checked /></td><td>Brandywine</td><td>Bed A-02</td></tr>
-            <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Genovese" checked /></td><td>Genovese basil</td><td>Greenhouse 1</td></tr>
-            <tr><td><input type="checkbox" class="checkbox-input" aria-label="Select Sungold" /></td><td>Sungold</td><td>Bed B-04</td></tr>
+            <tr><td><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select Brandywine" checked /></label></td><td>Brandywine</td><td>Bed A-02</td></tr>
+            <tr><td><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select Genovese" checked /></label></td><td>Genovese basil</td><td>Greenhouse 1</td></tr>
+            <tr><td><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select Sungold" /></label></td><td>Sungold</td><td>Bed B-04</td></tr>
           </tbody>
         </table>
       </div>

@@ -59,6 +59,7 @@ Sorting, selection and paging depend on your data, so they are the page's job. T
 - **Scroll container:** a Table that can be wider than its column sits in `.table-container`, with `tabindex="0"`, `role="region"` and a unique name (`aria-labelledby` the caption, or `aria-label`), so it can be scrolled by keyboard and found (WCAG 2.1.1, 1.4.10).
 - **Caption:** names the Table. It sets no type: put a text atom on it (`.small-heading`), or `.sr-only` to hide it.
 - **Headers:** `scope="col"` on column headers, `scope="row"` on the first cell of a row that names it.
+- **Selecting rows:** wrap each row's Checkbox in `<label class="choice">` and name it with `aria-label` ("Select Brandywine"). The label fills its cell, so the whole cell is the target: a Checkbox on its own is 20px, and an input can't take the invisible buffer a Button has.
 
 ## Keyboard and screen readers
 The browser provides all of this, given a real `<table>` and a focusable container. The page's script only sorts the rows and updates the state.
@@ -154,6 +155,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 | Name the Table with a `<caption>` and a text atom. | Leave it unnamed, or look for a caption class. |
 | Put `aria-sort` on the `<th>`. | Put it on the sort Button. |
 | Use `--hover` only where rows have actions or selection. | Highlight read-only rows. |
+| Wrap a row's Checkbox in `<label class="choice">`, so the cell is its target. | Leave a bare 20px Checkbox in the cell. |
 | End-align numbers with `.table__cell--numeric`. | Centre a column of figures. |
 | Use a Grid for layout. | Set `display` on table elements. |
 
@@ -183,7 +185,7 @@ Options: `--bordered` (outer frame and column rules), `--striped`, `--hover`, `-
 | `.table__cell--fit` | cells | Shrinks the column to its content, no wrapping (dates, codes). |
 | `.table__cell--nowrap` | cells | No wrapping. |
 | `.table__cell--truncate` | an element in a cell | One line with an ellipsis. Put the full text in a `title` or elsewhere. |
-| `.table__col--index` | `<col>` or header cell | Narrow, centred (row number, checkbox). |
+| `.table__col--index` | `<col>` or header cell | Narrow, centred (row number, checkbox). A `<label class="choice">` alone in a cell fills it, padding and all, so the cell is the Checkbox's target and the row is at least the target tall. |
 | `.table__col--xs` … `--xl` | `<col>` or header cell | Fixed widths from `--table-col-*-width`. |
 | `.table__col--actions` | `<col>` or header cell | Width for row actions, end-aligned. Name the header with `<span class="sr-only">Actions</span>`. |
 | `.table__col--fill` | `<col>` or header cell | Takes the remaining width. |

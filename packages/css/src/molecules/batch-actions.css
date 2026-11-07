@@ -37,13 +37,22 @@
   --_batch-actions-filter: var(--batch-actions-filter, var(--surface-layer-filter, none));
   --_batch-actions-shadow: var(--batch-actions-shadow, var(--shadow-lg, none));
   --_batch-actions-padding: var(--batch-actions-padding, var(--spacing-sm));
+  /* Room for small buttons' hit areas: none at the default size, where the
+     buttons are the target; half the difference when they step down */
+  --_batch-actions-target-room: 0px;
+  --_batch-actions-inset: max(var(--_batch-actions-padding), var(--_batch-actions-target-room));
   --_batch-actions-gap: var(--batch-actions-gap, var(--spacing-md));
   --_batch-actions-offset: var(--batch-actions-offset, var(--spacing-24));
   --_batch-actions-max-width: var(--batch-actions-max-width, 46rem);
-  --_batch-actions-radius: var(--batch-actions-radius, calc(var(--button-radius, var(--radius)) + var(--_batch-actions-padding) + var(--_batch-actions-border-width)));
+  --_batch-actions-radius: var(--batch-actions-radius, calc(var(--button-radius, var(--radius)) + var(--_batch-actions-inset) + var(--_batch-actions-border-width)));
   --_batch-actions-z-index: var(--batch-actions-z-index, var(--z-index-sticky));
   --_batch-actions-transition: var(--batch-actions-transition, var(--duration-sm));
   --_batch-actions-exit: 100%;
+
+  /* In a compact region the buttons step down, so they need the room too */
+  @container style(--ui-sizing: compact) {
+    --_batch-actions-target-room: max(0px, (var(--spacing-target-min, 3rem) - var(--spacing-target-sm, 2rem)) / 2);
+  }
 
   /* A divider between groups stands upright */
   --direction: row;
@@ -53,7 +62,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--_batch-actions-gap);
-  padding: var(--_batch-actions-padding);
+  /* A bar is never shorter than its targets: small buttons keep their hit
+     areas inside it, however little padding it has and however many rows
+     it wraps to */
+  min-block-size: var(--spacing-target-min, 3rem);
+  padding: var(--_batch-actions-inset);
 
   /* Floating at the bottom centre of the viewport */
   inline-size: max-content;
@@ -210,13 +223,14 @@
 /* Rounded to the height of one row of buttons, so a wrapped bar keeps its shape */
 :where(.batch-actions--round) {
   --button-corners: round;
-  --_batch-actions-radius: calc(var(--button-min-size, var(--spacing-target)) / 2 + var(--_batch-actions-padding) + var(--_batch-actions-border-width));
+  --_batch-actions-radius: calc(var(--button-min-size, var(--spacing-target)) / 2 + var(--_batch-actions-inset) + var(--_batch-actions-border-width));
 }
 
 :where(.batch-actions--compact) {
   --ui-sizing: compact;
   --_batch-actions-gap: var(--batch-actions-compact-gap, var(--spacing-sm));
   --_batch-actions-padding: var(--batch-actions-compact-padding, var(--spacing-xs));
+  --_batch-actions-target-room: max(0px, (var(--spacing-target-min, 3rem) - var(--spacing-target-sm, 2rem)) / 2);
 }
 
 /* Increased contrast: a thicker edge instead of a shadow */

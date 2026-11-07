@@ -57,6 +57,7 @@ It ships no script and no mobile menu. Because the Header is a container, a menu
 - **The [Skip Link](07-skip-link.md) comes first,** before the Header.
 - **Navigation** is a `<nav>` with an `aria-label`; the current page has `aria-current="page"`.
 - **Narrow widths:** the Header is a container, so `@max-3xl:hide` and `@3xl:hide` swap the navigation for a menu Button by the Header's own width. The menu Button opens a Popover (`.popover` with a `.menu` of links) or a Dialog, or sets `aria-expanded` and `aria-controls` on a panel the product's script shows.
+- **Touch targets:** a compact Header keeps its bar as tall as the pointer's minimum target, so on a touch screen its Buttons' hit areas never reach past the band into the page below. Only fine-pointer targets make it shorter.
 - **Focus Not Obscured (WCAG 2.4.11):** while a sticky header is on the page, the page's `scroll-padding-block-start` is `--header-height` (a target-sized bar, its padding and border), so a focused element scrolls clear of it. If the Header is taller (two rows), set `--header-height` on `:root`. The Sidebar reads the same hook for its sticky offset.
 
 ## Keyboard and screen readers
@@ -158,7 +159,7 @@ The band at the top of a page or app that holds the Brand, the main navigation a
 
 ### Further rules
 - **`.header`** is the band: always full width. Its inline padding (`--header-padding-inline`, plus the safe-area insets) keeps the bars off the screen edge, the way a Wrapper's gutter does.
-- **`.header__bar`** is a row. It is capped at `--header-max-width` (the site width) and centred, so its content lines up with a `.wrapper`'s. Its content is at least `--header-bar-min-size` tall (the target size; `--header-compact-bar-min-size` when compact), plus its block padding. Raise `--header-bar-min-size` for a taller header: `--header-height` is built from it, so the offsets follow. Never size the Header from `--header-height`; that is the height things that clear the Header read, and a script that measures the Header into it would loop.
+- **`.header__bar`** is a row. It is capped at `--header-max-width` (the site width) and centred, so its content lines up with a `.wrapper`'s. Its content is at least `--header-bar-min-size` tall (the target size, which fine-pointer targets don't change; `--header-compact-bar-min-size` when compact), plus its block padding. Raise `--header-bar-min-size` for a taller header: `--header-height` is built from it, so the offsets follow. Never size the Header from `--header-height`; that is the height things that clear the Header read, and a script that measures the Header into it would loop.
 - **The Brand** is a [`.brand`](06d-brand.md): the mark and name, as a Link home.
 - **`.header__nav`** takes the free space and can shrink, so a scrollable Tab List fits. The bar's last part always sits at the end.
 - **A Split in a bar** takes the whole bar, with its panes centred on the block axis. In a `--flush` Header its first and last panes pad by the cushion, as the Sidebar does.
@@ -190,6 +191,6 @@ The band at the top of a page or app that holds the Brand, the main navigation a
 ```
 - `--plain`: no surface and no border, for a Header over a hero or a page that draws its own edge.
 - `--translucent`: the content scrolls under a see-through surface with a blur. Solid under more contrast.
-- `--compact`: the bar steps down to `--header-compact-bar-min-size` (the small target) with less padding, and it sets `--ui-sizing: compact`, so the Buttons and text inside step down too (an app toolbar). `max-md:header--compact` does the same below 48rem only, for a Header that tightens on a phone.
+- `--compact`: the bar's padding steps down, and it sets `--ui-sizing: compact`, so the Buttons and text inside step down too (an app toolbar). The bar stays at least `--header-compact-bar-min-size` tall, the pointer's minimum target, so the Buttons' 48px hit areas stay inside the band on a touch screen: 56px instead of 64px. It is shorter only where the product has opted into fine-pointer targets (`--spacing-target-min: var(--spacing-target-sm)` on `:root` inside `@media (pointer: fine)`), where the band is 40px. `max-md:header--compact` does the same below 48rem only, for a Header that tightens on a phone.
 - A sticky compact header sets `--header-height` to `--header-compact-height`, so scroll padding and sticky panes follow. (A product that loads its tokens in a later cascade layer than its components repeats that rule in the tokens' layer.)
 - A dark header is `.color-scheme-dark` on the band; an inverted one is `.color-palette-inverted`.

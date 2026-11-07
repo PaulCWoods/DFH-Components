@@ -50,7 +50,7 @@ The links behave as links, so there's nothing to script.
   </ol>
 </nav>
 ```
-A page that links to itself keeps the same `aria-current`, and gives people a way to reload it.
+A page that links to itself keeps the same `aria-current`, and gives people a way to reload it. It takes the current page's foreground colour, not the link colour, so it reads as the current page and not as one more link back; in forced colours it is text-coloured for the same reason.
 
 ## Another Separator
 ```html live

@@ -171,7 +171,7 @@ const row = (p: Plot, selected: string[], expanded: string[]) => {
   const open = expanded.includes(p.id);
   return `
   <tr>
-    <td class="table__col--index"><input type="checkbox" class="checkbox-input" aria-label="Select plot ${p.id}"${selected.includes(p.id) ? ' checked' : ''} /></td>
+    <td class="table__col--index"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select plot ${p.id}"${selected.includes(p.id) ? ' checked' : ''} /></label></td>
     <th scope="row" class="font-mono">${p.id}</th>
     <td>${p.type}</td>
     <td>
@@ -206,7 +206,7 @@ const row = (p: Plot, selected: string[], expanded: string[]) => {
 const tableHead = `
   <thead>
     <tr>
-      <th scope="col" class="table__col--index"><input type="checkbox" class="checkbox-input" aria-label="Select all plots" /></th>
+      <th scope="col" class="table__col--index"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select all plots" /></label></th>
       <th scope="col">Plot</th>
       <th scope="col">Type</th>
       <th scope="col">Plot holder</th>

@@ -1215,9 +1215,9 @@
       "$type": "dimension"
     },
     "remove-target": {
-      "$value": "{spacing.24}",
+      "$value": "{spacing.target-min}",
       "$type": "dimension",
-      "$description": "Minimum hit area of the remove button (WCAG 2.5.8)"
+      "$description": "Hit area of the remove button: the pointer's minimum target (48px on touch, 32px with fine-pointer targets)"
     },
     "sm-font-size": {
       "$value": "{typography.font-size.minus-2}",
@@ -1557,14 +1557,14 @@
       "$description": "Space between the parts of a bar"
     },
     "bar-min-size": {
-      "$value": "{spacing.target-min}",
+      "$value": "{spacing.target}",
       "$type": "dimension",
       "$description": "Least height of a bar's content, inside its padding. Raise it for a taller header; --header-height follows."
     },
     "compact-bar-min-size": {
-      "$value": "{spacing.target-sm}",
+      "$value": "{spacing.target-min}",
       "$type": "dimension",
-      "$description": "Least height of a bar's content in a compact header"
+      "$description": "Least height of a bar's content in a compact header: the pointer's minimum target, so the Buttons' hit areas stay inside the band. Smaller only where the product has opted into fine-pointer targets."
     },
     "height": {
       "$value": "calc({header.bar-min-size} + {header.padding-block} * 2 + {header.border-width})",

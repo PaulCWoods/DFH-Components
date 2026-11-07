@@ -526,6 +526,7 @@
 :where(.color-input--stretch) {
   inline-size: 100%;
 
+  /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
   @supports (inline-size: -webkit-fill-available) {
     inline-size: -webkit-fill-available;
   }

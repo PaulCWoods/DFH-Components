@@ -201,6 +201,29 @@
     :where(.button-group) {
       flex-wrap: nowrap;
     }
+
+    /* A row-selection checkbox's label fills its cell, so the whole cell is
+       the target: an input can't take a buffer. The row is at least the
+       target tall; the checkbox keeps its aria-label. The box stays at the
+       cell's start, so it lines up with the table's inset like text. */
+    > :where(.choice:only-child) {
+      display: flex;
+      margin-block: calc(var(--_table-cell-padding-block) * -1);
+      margin-inline: calc(var(--_table-cell-padding-inline) * -1);
+      min-inline-size: var(--spacing-target-min, 3rem);
+      padding-block: var(--_table-cell-padding-block);
+      padding-inline: var(--_table-cell-padding-inline);
+    }
+
+    &:first-child > :where(.choice:only-child) {
+      margin-inline-start: calc(var(--_table-inset) * -1);
+      padding-inline-start: var(--_table-inset);
+    }
+
+    &:last-child > :where(.choice:only-child) {
+      margin-inline-end: calc(var(--_table-inset) * -1);
+      padding-inline-end: var(--_table-inset);
+    }
   }
 
   :where(th) {
@@ -475,6 +498,7 @@
   gap: 0.5em;
   inline-size: 100%;
 
+  /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
   @supports (inline-size: -webkit-fill-available) {
     inline-size: -webkit-fill-available;
   }

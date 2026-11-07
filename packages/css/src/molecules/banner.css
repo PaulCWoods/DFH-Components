@@ -162,7 +162,8 @@
   align-items: center;
   display: flex;
   gap: var(--_banner-gap);
-  overflow: clip;
+  /* No overflow clip: it would cut off the action's hit area in a compact
+     banner, and nothing inside draws past the concentric corners */
   padding: var(--_banner-padding);
 
   /* Surface */

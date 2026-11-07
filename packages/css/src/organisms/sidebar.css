@@ -230,7 +230,7 @@
 
 /* Below a sticky header */
 :where(:root:has(.header--sticky) .sidebar--sticky) {
-  --_sidebar-offset: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target-min)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
+  --_sidebar-offset: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
 }
 
 /* ==========================================================================

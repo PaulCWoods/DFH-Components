@@ -25,6 +25,8 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 | Intent | Status or consequence | neutral (default), `--accent`, `--danger`, `--warning`, `--success`, `--info` |
 
 - **Intent never relies on colour alone** (WCAG 1.4.1): pair every non-neutral intent with an icon, a role (`role="alert"`, `role="status"`) or descriptive text.
+- **A bar is never shorter than its targets:** a container that holds a row of controls (a Header bar, a tab list, batch actions, pagination) is at least `--spacing-target-min` tall, so on touch a compact one tightens its padding and type and keeps 48px. Only fine-pointer targets make it shorter.
+- **Nothing clips a hit area, and the drawn control is the target:** a container that hides its overflow leaves room for its edge controls' buffers; a native field fills the control drawn around it; an unlabelled row-selection checkbox takes its target from a `<label>` filling its cell; links stacked in a list sit at least 24px apart (block links for 48px). `npm run check:targets` checks all of it.
 - **Smaller size never shrinks the hit area:** `--sm` controls (and controls stepped down by a compact container) keep a 48px target unless the product has opted into fine-pointer targets, and never drop below 24px (WCAG 2.5.8). Text fields can't take a buffer, so `--sm` text controls are 32px. The library never switches fine-pointer mode on automatically with `@media (pointer: fine)`; `fine:ui-compact` is the product's opt-in.
 
 ### Legacy → Canonical Names
@@ -185,12 +187,14 @@ DFH-Components/
 | `npm run sync:icons` | Root | Propagates `icons/icons.svg` to CSS package, Storybook, Astro docs, and Craft CMS blog. |
 | `npm run check:tokens` | Root | Fails when a Tier 3 token's value in `tokens/3-component.json` differs from a fallback the CSS gives it, the CSS reads it with no fallback, or nothing reads it. Tier 3 counts as unset, as it is in `variables.css`. |
 | `npm run check:layout` | Root | Loads the built Storybook's layout and recipe stories (or `-- '<id pattern>'`) in headless Chrome at 10 screen sizes and fails on content a clipping element strands out of reach, or a page wider than the screen. Run `build:storybook` first. |
+| `npm run check:targets` | Root | Loads the built Storybook's component and recipe stories (or `-- '<id pattern>'`) in headless Chrome, with touch targets and with fine-pointer targets, at a desktop and a phone width, and in forced colours. Fails on: a control whose hit area is under the target its own `--spacing-target-min` asks for (text fields and choice rows 32px; text links WCAG's 24px or spacing; links in running text exempt), a hit area that reaches past the bar holding it (header, tab list, batch actions, pagination), a control whose border or fill disappears in forced colours, and a selected or current item that looks like its neighbours there. `ROOT_STYLE='--token: value'` tries a token on `:root` without a rebuild. Run `build:storybook` first. |
 
 ### 3. Linting & Testing Status
 - **Formatting:** Prettier (`^3.0.0`) configured via package.json.
 - **Linter:** TODO (No standalone `npm run lint` script or stylelint configured yet; manual adherence to CSS commenting and zero-specificity rules required).
 - **Accessibility / Automated Testing:** Every Storybook story automatically runs axe-core assertions via `@storybook/addon-a11y`.
 - **Layout reachability:** `npm run check:layout` (after `build:storybook`) checks that no clipping element strands content at any of 10 screen sizes. Run it after any change to layout, shell, sidebar or recipe CSS.
+- **Targets and forced colours:** `npm run check:targets` (after `build:storybook`) checks hit areas in both pointer modes, bars against their targets, and forced colours. Run it after any change to a control's size, a bar or a forced-colors block.
 - **Unit / Integration Tests:** TODO (No Jest/Vitest runner configured yet).
 
 ---
@@ -241,13 +245,13 @@ The stylesheet cascade is strictly defined in `packages/css/src/index.css`:
 7. **Utilities:** `@import './utilities/*.css';` (immutable overrides)
 8. **Overrides:** `@import './overrides.css';` (project-specific overrides)
 
-**Cascade layers (PRINCIPLES §7, pending migration):** `index.css` will declare
+**Cascade layers (PRINCIPLES §7):** `index.css` declares
 ```css
 @layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
 ```
-with every stylesheet in its layer. Until then the order above is enforced by import order. Components stay wrapped in `:where()` either way.
+and imports every stylesheet into its layer, so utilities and overrides win by layer, never by specificity. Components stay wrapped in `:where()`, so specificity inside a layer is zero.
 
-**Fonts (PRINCIPLES §4):** Library CSS must not load fonts or make any external request. The Google Fonts `@import` in `index.css` is pending removal. Font tokens default to system stacks; Storybook (`.storybook/preview-head.html`) and the docs site load their own fonts in the page head.
+**Fonts (PRINCIPLES §4):** Library CSS must not load fonts or make any external request. Font tokens default to system stacks; a theme's fonts come with its stylesheet (`fonts.css` for the default, `themes/<name>.css` for the others), and Storybook (`.storybook/preview-head.html`) and the docs site load the site theme's fonts in the page head.
 
 ---
 

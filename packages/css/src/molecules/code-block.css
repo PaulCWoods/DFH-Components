@@ -86,6 +86,10 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-xs, 0.5rem);
+  /* A bar is never shorter than its targets: the block clips its overflow,
+     so the small buttons' hit areas must fit inside the bar */
+  box-sizing: border-box;
+  min-block-size: var(--spacing-target-min, 3rem);
   padding-block: var(--_code-block-bar-padding-block);
   padding-inline: var(--_code-block-padding);
   background-color: var(--_code-block-bar-bg);

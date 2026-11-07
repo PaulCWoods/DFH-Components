@@ -58,4 +58,17 @@
       color: var(--_breadcrumb-current-color);
     }
   }
+
+  /* The current page as a link (a page that links to itself) looks like
+     the current page, not like the links before it */
+  :where(a[aria-current="page"]) {
+    color: var(--_breadcrumb-current-color);
+  }
+
+  /* Forced colours paint every link LinkText: the current page is text */
+  @media (forced-colors: active) {
+    :where(a[aria-current="page"]) {
+      color: CanvasText;
+    }
+  }
 }

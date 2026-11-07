@@ -1,6 +1,6 @@
 # Component Library Principles
 
-Oct 26, 2026 · @Paul Woods · Updated Oct 27, 2026
+Oct 26, 2026 · @Paul Woods · Updated Nov 7, 2026
 
 ## Purpose
 
@@ -8,7 +8,7 @@ These principles decide what belongs in the library, how it is built, and when a
 
 The library serves two audiences from one source of truth. Developers consume the CSS; designers consume the same tokens as Figma Variables and Tokens Studio sets through `packages/figma-sync/`. A change to token tiers, axis names or variant values is not done until it has clean parity in both.
 
-Each section ends in rules that can be tested. **Must** means a component fails review without it, **should** means a documented exception is needed to skip it, and **may** is optional. Section 10 turns the rules into the checklist for the refinement pass.
+Each section ends in rules that can be tested. **Must** means a component fails review without it, **should** means a documented exception is needed to skip it, and **may** is optional. Section 11 turns the rules into the checklist for the refinement pass.
 
 ## 1. Foundations: accessible, responsive, content first
 
@@ -19,13 +19,13 @@ Every component works for everyone, at any size, before it looks good. Accessibi
 - Every component must meet WCAG 2.2 AA. AA is the floor, and AAA must always be achievable using the library itself, through documented options or tokens and without custom code (for example the 48px touch target default and an enhanced-contrast mode).
 - Native HTML elements come first (`details`, `dialog`, `button`, popover). ARIA is added only where no native element does the job.
 - Each component must be fully operable by keyboard, with a visible focus indicator and no keyboard trap.
-- Each component must survive forced-colors mode, `prefers-reduced-motion`, `prefers-contrast`, 200% text zoom, 400% reflow and user text-spacing overrides.
+- Each component must survive forced-colors mode, `prefers-reduced-motion`, `prefers-contrast`, 200% text zoom, 400% reflow and user text-spacing overrides. Forced colours and target sizes are checked by script on every component and recipe story (`npm run check:targets`); a component adds a `forced-colors` block only where the check finds something lost.
 - Borderless or subtle designs must still give controls and focus a 3:1 non-text boundary (WCAG 1.4.11).
 
 **Responsiveness is core**
 
 - Every component must work from the smallest practical container up to the largest, with no horizontal scroll except in components that scroll by design (tables, carousels).
-- Components respond to their container (container queries), not the viewport. Media queries belong only to the app shell and to user-preference features such as `pointer` and `prefers-*`.
+- Components respond to their container (container queries), not the viewport. Viewport media queries belong only to the parts that span the page (the app shell, the Header and the Sidebar), to the viewport-prefixed responsive helpers (`max-md:`, `lg:` …), and to user-preference features such as `pointer` and `prefers-*`.
 - Layout is fluid by default (auto-fit grids, intrinsic sizing, `clamp()`); fixed breakpoints are the exception and must be justified.
 - Where a size is named, it is Tailwind's: viewport `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem, `2xl` 96rem; container `@xs` 20rem through `@7xl` 80rem. One scale serves the responsive helpers, the grid's container column counts, a stack's `@{size}:inline` and card's responsive prominence.
 
@@ -66,13 +66,19 @@ A variant exists only if it serves a different need, not a different taste. Vari
 - They must not share modifier names. There is one density modifier, `--compact`; `--dense` is not used.
 - `--compact` sets `--ui-sizing: compact` on the container, so nested layout primitives tighten their gaps, typography atoms step down, and nested controls step down to their `--sm` size, all through `@container style(--ui-sizing: compact)`. This is the one density flag; per-component density flags (`--ui-density`, `--control-density`, `--menu-density` and similar) are migrated to it.
 - To step down type alone without changing geometry or controls, set `--font-sizing: compact` on the region.
-- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8). Text fields are one exception (see §9): they can't take a buffer, so `--sm` text controls are 32px, visual and target alike. Choice rows in a compact container are the other: the row is the target, so it is 32px to sit with compact fields.
+- A smaller visual size never shrinks the hit area. Unless the product has opted into fine-pointer targets, a `--sm` control, or one stepped down by a compact container, keeps a 48px target through a transparent `::after` or a padding buffer. On any pointer it never falls below 24px (WCAG 2.5.8). Native fields are one exception (see the decisions log): an input can't take a buffer, so `--sm` text, select, colour and range controls are 32px, visual and target alike. Choice rows in a compact container are the other: the row is the target, so it is 32px to sit with compact fields.
+- A bar is never shorter than its targets. A container whose job is to hold a row of controls (a Header bar, a tab list, batch actions, pagination) is at least as tall as the minimum target for the pointer mode, so the controls' hit areas stay inside it. Compact tightens its padding and type; only fine-pointer targets make it shorter.
+- A container never clips its controls' hit areas. One that hides its overflow (a code block, a banner, a dock) leaves room for the buffers of the controls at its edges, by padding or by placing them inside.
+- The visible control is the target. Where the library draws a control around a native field (a combobox, a search field), the field fills it, so a tap anywhere on what looks like the control reaches the field.
+- A checkbox or radio with no visible label (selecting a row) can't take a buffer, so it takes its target from a `<label>` around it that fills the table cell or card corner. Its name stays in `aria-label`.
+- Text links stacked in a list are at least 24px apart (WCAG 2.5.8). Where a list of links needs 48px targets, its links are block links.
 
 **Pointer is opt-in**
 
 - The library defaults to 48px targets on every device, which meets WCAG 2.5.5 (AAA) everywhere.
 - A product that knows its users are on mouse or trackpad may opt into fine-pointer targets (32px) with a single root token. It may set that token inside `@media (pointer: fine)` itself, but the library never does so automatically.
 - Fine-pointer mode changes the minimum target only. It never shrinks visual sizes on its own.
+- Pointer is a mode in Figma too (Targets: Touch, Fine), so a designer can see what a fine-pointer layout does to the bars and controls that read the minimum target.
 - To shrink visual sizes only for mouse and trackpad users, a product puts `fine:ui-compact` on a region. It applies compact density inside `@media (pointer: fine)`; touch screens keep the default size. Like the target token, it is the product's choice, never a library default.
 
 **Intent**
@@ -87,7 +93,7 @@ Complex components are assembled from simpler ones, and every layer has one job.
 
 1. **Layout primitives** (stack, inline, cluster, grid, split, wrapper, and the app shell: app, workspace, main) own space and arrangement. They hold no content styling, and their settings (`--gap`, `--align-items` and the like) stay on the element they are set on.
 2. **Atoms** are indivisible and meaningful alone (button, input, link, badge, avatar).
-3. **Molecules** combine atoms for one purpose (card, banner, menu, button group, batch actions, breadcrumb, navigation tree, pagination, stepper, field, fieldset, choices, avatar group, lockup, telemetry, prose, accordion, combobox, empty state).
+3. **Molecules** combine atoms for one purpose (card, poster, banner, banner dock, toast, popover, tooltip, menu, button group, batch actions, breadcrumb, navigation tree, pagination, stepper, tab list, field, fieldset, choices, range lockup, avatar group, lockup, telemetry, prose, code block, accordion, combobox, empty state).
 4. **Organisms** combine molecules and primitives into a complete region (table, dialog, header, footer, sidebar, form).
 
 Structural components (layout, bands, headers) and content components (prose, media, data) are kept separate and combined, so a card is a structure that can hold any content.
@@ -171,7 +177,7 @@ Colour is created and manipulated in OKLCH and consumed only through semantic ro
 - OKLCH lightness is perceptual, not a contrast guarantee. Every text and UI pairing must be verified against WCAG contrast (and checked with APCA as a second opinion) in the build, not by eye.
 - Components use semantic roles only: surface, text, muted text, border, and the intent roles (accent, info, success, warning, danger). Raw colour values never appear in a component.
 - Every semantic role must define light and dark values. `light-dark()` and relative colour syntax keep the definitions short.
-- Reversed is a surface context, not a third theme. A reversed region remaps the semantic roles to their inverse in either mode, so a component placed on it stays legible with no changes.
+- Inverted is a surface context, not a third theme. An inverted region (`.color-palette-inverted`) remaps the semantic roles to their inverse in either mode, so a component placed on it stays legible with no changes.
 - Colour never carries meaning alone. Status needs an icon, label or pattern as well (WCAG 1.4.1).
 - State colours (hover, active, disabled) are derived from the base role with `color-mix()` or relative syntax in OKLCH, not hand-picked per component.
 
@@ -228,7 +234,20 @@ Accessibility wins every conflict. Beyond that, these rules settle the common on
 | Modern CSS vs. support | Use Baseline widely available features. Newer ones need a fallback and a removal tag. |
 | CSS convenience vs. Figma parity | A token or axis that cannot be represented in Figma Variables needs a documented reason, or it is changed. |
 
-## 9. Decisions log
+## 9. Content: words are part of the interface
+
+A component is only as clear as the words in it. The library ships no copy, so these rules are for the markup in its docs and recipes, and for products built on it.
+
+- A button says what happens, as a verb and its object: "Save changes", "Delete project". Not "OK", "Submit" or "Click here".
+- A link says where it goes. Its text makes sense out of context, since screen readers list links on their own (WCAG 2.4.4).
+- An error says what went wrong and how to fix it, in the field's terms: "Enter a date after today", not "Invalid input". It never blames the user.
+- An empty state says why it is empty and what to do next.
+- Meaning never depends on position, shape or colour alone: no "the button on the right" or "the green items" (WCAG 1.3.3).
+- Plain language: short sentences, common words, no jargon the user didn't bring. Headings and labels are front-loaded so the first words carry the meaning.
+- Accessible names match the visible label, starting with the same words (WCAG 2.5.3).
+- Mark the less common case in a form: "(optional)" in the label, written by the author.
+
+## 10. Decisions log
 
 Settled questions from the audit, recorded so they are not reopened without new information.
 
@@ -250,6 +269,14 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | Does the Google Fonts import stay? | No. System stacks by default; fonts load in Storybook and docs heads only. |
 | May Tier 3 tokens reference Tier 1? | Yes, to choose a scale step: in the token JSON, and as the fallback where the CSS reads the hook. Use a Tier 2 token where one means that step. Never a colour ramp, and never a step without a hook. |
 | Where does a Tier 3 default live? | In the component CSS, as the hook's fallback, with the same value in the token JSON for Figma. `check:tokens` keeps them equal. Tier 3 isn't compiled into `variables.css`. |
+| Can a compact bar be shorter than its targets? | No. A bar's minimum height is `--spacing-target-min`, the pointer mode's minimum target, so on touch a compact Header keeps 48px and tightens its padding and type instead. A product that wants a shorter bar for mouse users opts into fine-pointer targets inside `@media (pointer: fine)`. The default bar uses `--spacing-target`, so fine-pointer targets never shrink it on their own. |
+| Does the bar rule cover containers that clip? | Yes. Any container that hides its overflow is a bar for this purpose: it never cuts off a control's hit area, by its height or its overflow. |
+| What is the target of a control drawn around a native field? | The whole drawn control. The native field fills it, so tapping its padding reaches the field. |
+| How does an unlabelled row-selection checkbox meet the target? | Through a `<label>` around it that fills its cell (or the card's corner), since an input can't take a `::after` buffer. The accessible name stays in `aria-label` on the input. |
+| How far apart are links in a list? | At least 24px from centre to centre, which meets WCAG 2.5.8 through spacing. For 48px targets, use block links. |
+| Must every stylesheet have a forced-colors block? | No. Real borders and text survive forced colours unaided. Every story is checked in forced colours by script, and a component gets a block only where the check finds something lost. |
+| Where may viewport media queries be used? | In the parts that span the page (app shell, Header, Sidebar), the viewport-prefixed responsive helpers, and user preferences. Everything else uses container queries. |
+| Is a colour-flipped region reversed or inverted? | Inverted, as the code says (`.color-palette-inverted`). One word for one thing. |
 | Should tight groups of small controls avoid overlapping hit areas? | No. WCAG 2.5.8 allows overlap; the later control wins. Dense toolbars that need exact targets opt into fine-pointer targets. |
 | Does each prominence need an explicit modifier, such as `--outline`? | Not yet. Add one only when a real case needs to override a container's prominence back to the default. |
 | Is a card's edge part of prominence? | No. Prominence sets the fill; the card's chrome axis (`--flat`, `--bordered`) sets the edge, and `--flush` the padding, so each modifier keeps to one axis. `--plain` keeps its edgeless look; `.card--plain.card--bordered` is the outline the row above anticipated. Chrome is card-only until a second surface needs it. |
@@ -284,7 +311,7 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | How many small text steps are there? | One: `.small-text` (step −1). `.micro-text` is removed. `.micro-heading` is the uppercase eyebrow, a separate job. |
 | Is card a molecule or an organism? | A molecule. A card is a surface with named slots; what goes in its body is content, not part of the card. Components that compose a card (popover, dialog) then sit at or above it in the cascade, so a positioning shell is never overridden by the card it wraps. |
 
-## 10. Refinement checklist
+## 11. Refinement checklist
 
 Run this on every component during the audit. A component is ready for v1 only when every item passes or has a recorded exception.
 
@@ -313,11 +340,15 @@ Run this on every component during the audit. A component is ready for v1 only w
 - [ ] Uses Tier-2 semantic tokens only; no Tier-1 references and no raw values
 - [ ] Contract is documented: states, structure, keyboard map
 
+**Content**
+
+- [ ] Buttons, links, errors and empty states in its examples follow section 9
+
 **Design quality**
 
 - [ ] Structure comes from type, space and alignment before boxes
 - [ ] Icons are used only where they earn their place
-- [ ] Light, dark and reversed surfaces all pass
+- [ ] Light, dark and inverted surfaces all pass
 - [ ] Content stays first; chrome is on demand
 
 **Code health**

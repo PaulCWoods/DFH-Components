@@ -298,6 +298,7 @@
   }
 }
 
+/* legacy: browsers without anchor positioning; remove when it is Baseline widely available */
 @supports not (anchor-name: --a) {
   :where(.tab):where([aria-selected="true"], [aria-current]:not([aria-current="false"])) {
     --_tab-line: var(--_tab-indicator);
@@ -430,6 +431,7 @@
         color: HighlightText;
         outline-color: HighlightText;
 
+        /* legacy: browsers without anchor positioning; remove when it is Baseline widely available */
         @supports not (anchor-name: --a) {
           background-color: Highlight;
           border-color: Highlight;

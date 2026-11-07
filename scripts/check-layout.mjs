@@ -14,58 +14,19 @@
      npm run build:storybook
      npm run check:layout                    # layout and recipe stories
      npm run check:layout -- 'organisms-'    # stories whose id matches
-   Set CHROME_PATH if Chrome isn't in the default macOS location.
+   Set CHROME_PATH if Chrome isn't in the default macOS location
+   (scripts/lib/storybook-chrome.mjs).
 
    Exits 1 when it finds a problem, so it can gate a pass.
    ========================================================================== */
-import { spawn } from 'node:child_process';
-import { createServer } from 'node:http';
-import { existsSync, mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { extname, join, normalize } from 'node:path';
+import { openStorybook, progress, progressDone } from './lib/storybook-chrome.mjs';
 
-const root = new URL('../packages/storybook/storybook-static/', import.meta.url).pathname;
 const filter = new RegExp(process.argv[2] || '^(layout-|recipes-)');
-const chromePath = process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const widths = [375, 768, 1024, 1280, 1600];
 const heights = [600, 900];
 const tolerance = 16;
 
-if (!existsSync(join(root, 'index.json'))) {
-  console.error('check:layout: no built Storybook. Run npm run build:storybook first.');
-  process.exit(2);
-}
-
-/* Static server for storybook-static */
-const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2' };
-const server = createServer((req, res) => {
-  let path = normalize(decodeURIComponent(new URL(req.url, 'http://x').pathname)).replace(/^(\.\.[/\\])+/, '');
-  let file = join(root, path);
-  if (existsSync(file) && statSync(file).isDirectory()) file = join(file, 'index.html');
-  if (!existsSync(file)) { res.writeHead(404); res.end(); return; }
-  res.writeHead(200, { 'content-type': types[extname(file)] || 'application/octet-stream' });
-  res.end(readFileSync(file));
-});
-await new Promise((r) => server.listen(0, '127.0.0.1', r));
-const base = `http://127.0.0.1:${server.address().port}`;
-
-/* Chrome over the DevTools protocol */
-const profile = mkdtempSync(join(tmpdir(), 'check-layout-'));
-const port = 9400 + Math.floor(Math.random() * 400);
-const chrome = spawn(chromePath, ['--headless=new', `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`, 'about:blank'], { stdio: 'ignore' });
-let targets;
-for (let i = 0; i < 40 && !targets; i++) {
-  await new Promise((r) => setTimeout(r, 250));
-  targets = await fetch(`http://127.0.0.1:${port}/json`).then((r) => r.json()).catch(() => undefined);
-}
-const ws = new WebSocket(targets.find((t) => t.type === 'page').webSocketDebuggerUrl);
-await new Promise((r) => (ws.onopen = r));
-let seq = 0;
-const pending = {};
-ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending[m.id]) { pending[m.id](m); delete pending[m.id]; } };
-const send = (method, params = {}) => new Promise((r) => { const id = ++seq; pending[id] = r; ws.send(JSON.stringify({ id, method, params })); });
-const evaluate = async (expression) => (await send('Runtime.evaluate', { expression, returnByValue: true })).result?.result?.value;
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const sb = await openStorybook('check:layout');
 
 /* Runs in the page: what's out of reach at this size. A clipping element is
    only a problem when something visible inside it sits beyond its edge with
@@ -98,21 +59,17 @@ const probe = `(() => {
   return out;
 })()`;
 
-const index = JSON.parse(readFileSync(join(root, 'index.json'), 'utf8'));
-const ids = Object.values(index.entries).filter((e) => e.type === 'story' && filter.test(e.id)).map((e) => e.id);
+const ids = sb.ids(filter);
 const problems = [];
 
 const started = Date.now();
 for (const [n, id] of ids.entries()) {
-  if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write(`\r${n + 1}/${ids.length} ${id}`.padEnd(80));
-  await send('Emulation.setDeviceMetricsOverride', { width: widths.at(-1), height: heights.at(-1), deviceScaleFactor: 1, mobile: false });
-  await send('Page.navigate', { url: `${base}/iframe.html?id=${id}&viewMode=story` });
-  await wait(1200);
+  progress(`${n + 1}/${ids.length} ${id}`);
+  await sb.load(id, { width: widths.at(-1), height: heights.at(-1) });
   for (const w of widths) {
     for (const h of heights) {
-      await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: w < 600 });
-      await wait(150);
-      for (const p of (await evaluate(probe)) || []) {
+      await sb.size(w, h);
+      for (const p of (await sb.evaluate(probe)) || []) {
         const line = `${id} @ ${w}x${h}: ${p}`;
         problems.push(line);
         console.log(line);
@@ -121,12 +78,8 @@ for (const [n, id] of ids.entries()) {
   }
 }
 
-ws.close();
-chrome.kill();
-server.close();
-try { rmSync(profile, { recursive: true, force: true }); } catch {}
-
-if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write('\n');
+sb.close();
+progressDone();
 const took = Math.round((Date.now() - started) / 1000);
 if (problems.length) {
   console.log(`\ncheck:layout: ${problems.length} problem(s) in ${ids.length} stories (${took}s).`);
