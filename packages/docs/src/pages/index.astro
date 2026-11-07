@@ -16,6 +16,7 @@ const srcset = (name: string, ext: string) => widths.map((w) => `/home/${name}-$
 const features = [
   {
     title: 'Designer Tools',
+    href: '/docs/tools/#token-designer',
     text: 'Design tokens are centralised in one visual tool. From global colors to the border radius of a button, you have control.',
     label: 'Token Designer screenshots',
     shots: [
@@ -27,6 +28,7 @@ const features = [
   },
   {
     title: 'Themes and Brands',
+    href: '/docs/start/themes/',
     text: 'Create multiple themes for multiple brands, or build up a brand family, where sub-brands can inherit global properties and override what they need to.',
     label: 'Theme screenshots',
     shots: [
@@ -38,6 +40,7 @@ const features = [
   },
   {
     title: 'Figma Sync',
+    href: '/docs/tools/figma/',
     text: 'CSS and Figma share the same token system, so designers and developers are always in sync. Get a head start with our ready-made Design File or import into your own.',
     label: 'Figma screenshots',
     shots: [
@@ -54,17 +57,20 @@ const points = [
   {
     icon: 'Person',
     title: 'Accessible first',
-    text: 'Every part meets WCAG 2.2 AA, and AAA where it can: 48px touch targets, visible focus, and intent never shown by colour alone. Every colour pairing is checked for contrast in light, dark and high contrast before a theme can publish.',
+    href: '/docs/#what-makes-it-different',
+    text: 'WCAG 2.2 AA, and AAA where it can. Every theme’s contrast is checked before it can publish.',
   },
   {
     icon: 'Code',
     title: 'Built on the platform',
-    text: 'Dialogs are <dialog>, popovers use the popover attribute, and layouts use container queries and anchor positioning. The library ships no JavaScript, so it works in any stack: Astro, Craft or WordPress.',
+    href: '/docs/start/',
+    text: 'Native HTML and modern CSS, with no JavaScript, so it works in any stack: React, Vue or Angular.',
   },
   {
     icon: 'Expand',
     title: 'Responsive by nature',
-    text: 'Layouts wrap on their own, type and spacing grow with the screen or their container, and a compact region steps everything inside it down together. Fewer breakpoints, and nothing to keep in sync.',
+    href: '/docs/components/#layout',
+    text: 'Layouts wrap on their own, and type and spacing grow with the screen or their container.',
   },
 ];
 ---
@@ -102,8 +108,8 @@ const points = [
                 </ul>
               </figure>
               <div class="card__content">
-                <header class="card__header"><h3 class="heading">{f.title}</h3></header>
-                <p class="card__body text">{f.text}</p>
+                <header class="card__header"><h3 class="heading"><a href={f.href} class="link link--plain link--stretched">{f.title}</a></h3></header>
+                <div class="card__body"><p class="text max-w-md text-balance">{f.text}</p></div>
               </div>
             </article>
           </li>
@@ -121,7 +127,7 @@ const points = [
                 <Icon name={p.icon} class="icon--lg" />
               </div>
               <div class="lockup gap-sm">
-                <h3 class="card__title heading">{p.title}</h3>
+                <h3 class="card__title heading"><a href={p.href} class="link link--plain link--stretched">{p.title}</a></h3>
                 <p class="text">{p.text}</p>
               </div>
             </div>
