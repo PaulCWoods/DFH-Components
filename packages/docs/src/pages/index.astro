@@ -123,12 +123,12 @@ const points = [
         {points.map((p) => (
           <li class="card h-full">
             <div class="inline align-items-start">
-              <div class="icon-box icon-box--subtle">
-                <Icon name={p.icon} class="icon--lg" />
+              <div class="icon-box icon-box--subtle" style="--icon-size: 1.6em">
+                <Icon name={p.icon} />
               </div>
               <div class="lockup gap-sm">
                 <h3 class="card__title heading"><a href={p.href} class="link link--plain link--stretched">{p.title}</a></h3>
-                <p class="text">{p.text}</p>
+                <p class="text text-balance">{p.text}</p>
               </div>
             </div>
           </li>
