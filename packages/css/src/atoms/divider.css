@@ -6,9 +6,9 @@
 
    Orientation follows the direct parent only:
    - horizontal by default;
-   - vertical when the parent sets --direction: row (.inline, .cluster,
-     .button-group, .batch-actions). --direction doesn't inherit, so a
-     divider deeper inside a row stays horizontal;
+   - vertical when the parent sets --divider-orientation: vertical
+     (.inline, .cluster, .button-group, .batch-actions). The flag doesn't
+     inherit, so a divider deeper inside a row stays horizontal;
    - vertical anywhere with aria-orientation="vertical", which is also what
      assistive technology hears. Add it whenever a divider is vertical.
 
@@ -22,7 +22,7 @@
    <li role="separator" class="divider"></li>   (inside <menu>, <ul>, <ol>)
    ========================================================================== */
 
-@property --direction {
+@property --divider-orientation {
   syntax: "*";
   inherits: false;
 }
@@ -45,7 +45,7 @@
   color: inherit;
   list-style: none;
 
-  @container style(--direction: row) {
+  @container style(--divider-orientation: vertical) {
     block-size: auto;
     inline-size: 0;
     border-block-start: 0;

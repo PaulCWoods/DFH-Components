@@ -19,11 +19,11 @@ A rule between groups. Organisms (menu, combobox, batch actions, button group) p
 
 | Axis | Values |
 | :--- | :--- |
-| Orientation | Horizontal (default); vertical when the **direct parent** sets \`--direction: row\` (\`.inline\`, \`.cluster\`, \`.button-group\`, \`.batch-actions\`), or with \`aria-orientation="vertical"\` |
+| Orientation | Horizontal (default); vertical when the **direct parent** sets \`--divider-orientation: vertical\` (\`.inline\`, \`.cluster\`, \`.button-group\`, \`.batch-actions\`), or with \`aria-orientation="vertical"\` |
 | Prominence | Default (quiet, decorative), \`--strong\` (at least 3:1, for a rule that is the only boundary) |
 | Style | Solid, \`--dashed\` |
 
-- \`--direction\` doesn't inherit: a divider deeper inside a row stays horizontal.
+- \`--divider-orientation\` doesn't inherit: a divider deeper inside a row stays horizontal.
 - Put \`aria-orientation="vertical"\` on a vertical divider, or \`aria-hidden="true"\` if it is purely decorative.
 - In \`<menu>\`, \`<ul>\` or \`<ol>\`: \`<li role="separator" class="divider"></li>\`.
 - A bare \`<hr>\` gets a quiet rule from the reset.
@@ -93,7 +93,7 @@ export const Prominence: Story = {
 
 /**
  * Vertical comes from the direct parent: .inline, .cluster, .button-group and
- * .batch-actions set --direction: row. A divider nested deeper (here, inside a
+ * .batch-actions set --divider-orientation: vertical. A divider nested deeper (here, inside a
  * card in a row) stays horizontal.
  */
 export const Orientation: Story = {

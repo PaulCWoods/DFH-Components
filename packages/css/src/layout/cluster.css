@@ -25,6 +25,8 @@
    1. Base
    -------------------------------------------------------------------------- */
 :where(.cluster) {
+    /* A divider between its items stands upright */
+    --divider-orientation: vertical;
     --_gap: var(--gap, var(--spacing, 1rem));
     --_justify: var(--justify-content, normal);
 

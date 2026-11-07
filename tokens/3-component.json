@@ -863,6 +863,10 @@
       "$value": "{duration.sm}",
       "$type": "duration"
     },
+    "timefunc": {
+      "$value": "{timefunc.ease-in-out}",
+      "$type": "other"
+    },
     "radius": {
       "$value": "{radius}",
       "$type": "dimension"
@@ -2950,6 +2954,16 @@
       "$value": "{foreground.muted}",
       "$type": "color",
       "$description": "Colour of a group heading"
+    },
+    "rail-width": {
+      "$value": "{spacing.4}",
+      "$type": "dimension",
+      "$description": "Width of the rail beside the current item"
+    },
+    "rail-color": {
+      "$value": "{foreground.accent}",
+      "$type": "color",
+      "$description": "Colour of the rail beside the current item (at least 3:1 against the menu)"
     },
     "rule-width": {
       "$value": "{rule.width}",

@@ -55,7 +55,7 @@ export const Playground: Story = {
   args: { primary: 'Full sun', secondary: 'Mycorrhizal fungi and leaf mulch', align: 'start', gap: '0px' },
   argTypes: { align: { control: 'inline-radio', options: ['start', 'center', 'end'] } },
   render: (args) => `
-    <span class="lockup${args.align !== 'start' ? ` text-${args.align}` : ''}" style="--lockup-gap: ${args.gap}; inline-size: 20rem;">
+    <span class="lockup${args.align !== 'start' ? ` text-${args.align}` : ''}" style="--lockup-gap: ${args.gap}; inline-size: min(20rem, 100%);">
       <span class="small-heading">${args.primary}</span>
       <span class="small-text text-muted">${args.secondary}</span>
     </span>`,
@@ -77,7 +77,7 @@ export const Identity: Story = {
 
 export const Aligned: Story = {
   render: () => `
-    <div class="stack" style="inline-size: 20rem;">
+    <div class="stack" style="inline-size: min(20rem, 100%);">
       ${lockup('Plot A-12', 'Raised bed', { cls: 'text-center' })}
       ${lockup('Plot B-04', 'In-ground', { cls: 'text-end' })}
     </div>`,

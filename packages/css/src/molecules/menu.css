@@ -45,6 +45,8 @@
   --_menu-padding: var(--menu-padding, var(--spacing-xs));
   --_menu-heading-color: var(--menu-heading-color, var(--foreground-muted, currentColor));
   --_menu-heading-padding-inline: var(--button-padding-inline, var(--spacing-md));
+  --_menu-rail-width: var(--menu-rail-width, var(--spacing-xs));
+  --_menu-rail-color: var(--menu-rail-color, var(--foreground-accent, currentColor));
   --_menu-rule: var(--menu-rule-width, var(--rule-width, 1px)) var(--menu-rule-style, var(--rule-style, solid)) var(--menu-rule-color, var(--rule-color, currentColor));
 
   /* Items are plain buttons */
@@ -62,6 +64,7 @@
   @container style(--menu-prominence: subtle) {
     --_menu-fill: var(--menu-subtle-bg, var(--surface-muted, Canvas));
     --_menu-border-width: 0px;
+    --_menu-shadow: none;
   }
 
   @container style(--menu-prominence: plain) {
@@ -106,6 +109,7 @@
 :where(.menu--subtle) {
   --_menu-fill: var(--menu-subtle-bg, var(--surface-muted, Canvas));
   --_menu-border-width: 0px;
+  --_menu-shadow: none;
 }
 
 :where(.menu--plain) {
@@ -141,7 +145,9 @@
   }
 }
 
-/* Rules between items replace the dividers where gap decorations work */
+/* Rules between items replace the dividers where gap decorations work.
+   legacy: the dividers stand in until gap decorations are Baseline widely
+   available; then drop the @supports and the dividers */
 :where(.menu--ruled) {
   @supports (rule: 1px) {
     rule: var(--_menu-rule);
@@ -161,7 +167,7 @@
   text-align: start;
 
   /* The label takes the room, so trailing meta sits at the end */
-  > :where(span:not(.visually-hidden, .badge, .status, .chip), .button__text, .lockup) {
+  > :where(span:not(.sr-only, .visually-hidden, .button__icon, .badge, .status, .chip, .avatar), .button__text, .lockup) {
     flex-grow: 1;
     text-align: start;
   }
@@ -176,8 +182,10 @@
     visibility: visible;
   }
 
-  /* The current page is a tint, not a filled button */
+  /* The current page is not a filled button: bold text, a tint and a rail
+     inside its start edge, so it doesn't rest on the tint alone */
   &:where([aria-current]:not([aria-current="false"])) {
+    --_button-font-weight: var(--font-weight-bold, 700);
     --_button-bg: var(--surface-translucent-strong, transparent);
     --_button-text: var(--foreground, CanvasText);
     --_button-border-color: transparent;
@@ -191,6 +199,17 @@
     --_button-color-palette: initial;
     --_button-hover-color-palette: initial;
     --_button-active-color-palette: initial;
+
+    &::before {
+      background-color: var(--_menu-rail-color);
+      border-end-start-radius: var(--_button-radius);
+      border-start-start-radius: var(--_button-radius);
+      content: "";
+      inline-size: var(--_menu-rail-width);
+      inset-block: calc(var(--_button-border-width) * -1);
+      inset-inline-start: calc(var(--_button-border-width) * -1);
+      position: absolute;
+    }
   }
 }
 
@@ -217,4 +236,13 @@
 :where(.menu) > :where(.divider) {
   margin-block: var(--_menu-padding);
   margin-inline: calc(var(--_menu-padding) * -1);
+}
+
+/* ==========================================================================
+   5. Forced colours: the rail uses a system colour
+   ========================================================================== */
+@media (forced-colors: active) {
+  :where(.menu) > :where(li) > :where(.button[aria-current]:not([aria-current="false"]))::before {
+    background-color: Highlight;
+  }
 }

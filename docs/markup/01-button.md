@@ -88,7 +88,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 </div>
 ```
 - **A toggle Button** takes `aria-pressed`; its label stays the same as it changes ("Bold", not "Bold on").
-- **A Checkbox or radio styled as a Button** is a `<label class="button">` around a visually hidden input. It needs no script, and the Input keeps its keyboard and screen-reader behaviour. `.icon--on` and `.icon--off` show with the state.
+- **A Checkbox or radio styled as a Button** is a `<label class="button">` around a visually hidden input. It needs no script, and the Input keeps its keyboard and screen-reader behaviour. `.icon--on` and `.icon--off` show with the state, and the label draws the focus ring while its input has focus.
 
 ## A Link that Looks Like a Button
 ```html live cluster
@@ -130,7 +130,7 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 <button type="button" class="button button--placeholder"><span>Add item</span></button>
 ```
 - **Default** is an outline. **Strong** is filled, for the main action. **Subtle** is a tint with no border, **plain** has neither: for actions that sit among content (toolbars, Card footers).
-- A selected Button (`.is-active`, `aria-current` other than `false`, `:checked`, `aria-pressed="true"`) looks strong, unless a pressed Button shows its own `.icon--on` check. A Menu or Navigation Tree shows the current link as a tint instead.
+- A selected Button (`.is-active`, `aria-current` other than `false`, `:checked`, `aria-pressed="true"`) looks strong, unless a pressed Button shows its own `.icon--on` check. A Menu or Navigation Tree shows the current link in bold with a tint and a rail instead.
 
 ## Intent
 ```html live cluster
@@ -152,6 +152,11 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 ```
 - **Every size keeps a 48px hit area** (WCAG 2.5.5) through `::after`, unless the product opts into fine-pointer targets with `:root { --spacing-target-min: var(--spacing-target-sm); }`. Never below 24px (2.5.8).
 - A compact container (`--ui-sizing: compact`) steps Buttons to `--sm`.
+
+### Disabled
+- **`disabled`** takes a Button out of the Tab order. Use it when there's nothing to learn by reaching it.
+- **`aria-disabled="true"`** keeps it in the Tab order and announced as unavailable, so people can find it and the reason nearby. The library stops pointer clicks, but Enter and Space still fire: the product's script must ignore them.
+- **A Link can't be disabled.** Leave out `href` and add `role="link" aria-disabled="true"` while it goes nowhere.
 
 ## Set on a Container
 ```html live cluster

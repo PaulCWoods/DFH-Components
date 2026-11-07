@@ -94,6 +94,7 @@ Size: Default, Small=block-link--sm
 - **The underline marks the Link** (WCAG 1.4.1). It is drawn at the full link colour and thickens on hover; there is no hover colour.
 - **No intent or size on links.** A destructive action is a `.button--danger`; an inline link takes the size of its text.
 - **Bare `<a>`** (no class) keeps an underline and the text colour, from the reset.
+- **An icon before the text:** make the Link a row, `<a class="link link--plain inline gap-xs">` with the icon and a `<span>` of text. The row's gap spaces the icon, so the icon lines up with the text above and below the Link, as a Button's padding wouldn't let it.
 - `.link--stretched` makes the Link's `::after` cover its nearest positioned ancestor, for a whole-row or whole-card target.
 - Block link `--sm` keeps a 48px hit area unless the product opts into fine-pointer targets; a compact container steps it to `--sm`. Its label wraps, which is why it isn't a Button.
 

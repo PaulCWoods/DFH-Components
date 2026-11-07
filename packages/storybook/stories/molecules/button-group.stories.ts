@@ -107,7 +107,7 @@ export const Layout: Story = {
       <h3 class="small-heading">Fill: the buttons share the width</h3>
       <div class="button-group button-group--fill">
         <button type="button" class="button"><span>Cancel</span></button>
-        <button type="button" class="button button--strong button--accent"><span>Submit</span></button>
+        <button type="button" class="button button--strong button--accent"><span>Send message</span></button>
       </div>
 
       <h3 class="small-heading">End part and text</h3>
@@ -130,7 +130,7 @@ export const Layout: Story = {
         <button type="button" class="button"><span>Paste</span></button>
       </div>
       <div class="button-group buttons-subtle" role="group" aria-label="File">
-        <button type="button" class="button"><span>Edit</span></button>
+        <button type="button" class="button"><span>Rename</span></button>
         <button type="button" class="button"><span>Share</span></button>
         <hr class="divider" aria-orientation="vertical">
         <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>

@@ -169,6 +169,13 @@
   color: var(--foreground, CanvasText);
   outline: var(--_card-ring) solid var(--_card-border-color);
 
+  /* The intent ring is an outline, so a focusable card (a scroller with
+     tabindex) draws the focus ring in its place */
+  &:focus-visible {
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
   /* A card with no parts pads itself */
   &:not(:has(> :is(.card__thumb, .card__canvas, .card__content, .card__header, .card__band, .card__body, .card__footer))) {
     padding: var(--_card-padding);

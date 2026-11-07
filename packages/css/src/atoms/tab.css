@@ -370,12 +370,6 @@
       display: none;
     }
   }
-
-  @container style(--ui-decor: hidden) {
-    :where(.icon, svg, .ui-decor) {
-      display: none;
-    }
-  }
 }
 
 :where(.hide-labels) :where(.tab:has(.icon)),
@@ -398,13 +392,6 @@
   }
 
   :is(kbd, .kbd, .chip, .status, .badge) {
-    display: none;
-  }
-}
-
-:where(.hide-decor) :where(.tab:has(.icon)),
-:where(.tab:has(.icon).hide-decor) {
-  :where(.icon, svg, .ui-decor) {
     display: none;
   }
 }

@@ -6,11 +6,12 @@
    has no alignment options: a justify-* utility on the group, or the
    layout around it, decides where the buttons sit.
 
-   Options: --joined (one control: shared edges, outer corners rounded),
-   --vertical (a column of full-width buttons), --fill (fills its
+   Options: --joined (one control: shared edges, outer corners rounded;
+   one row whose labels wrap when space runs out), --vertical (a column of full-width buttons), --fill (fills its
    container; the buttons share the width), --ruled (rules between the
    buttons, where gap decorations are supported), --compact (density).
-   Part: __end pushes itself and what follows to the end of a row.
+   Part: __end pushes itself and what follows to the end of a row (not in
+   a joined group).
 
    A group whose buttons share a purpose takes role="group" and a label.
    Exclusive choices are radio inputs inside the buttons; toggles use
@@ -31,7 +32,7 @@
   --_button-group-rule: var(--button-group-rule-width, var(--rule-width, 1px)) var(--button-group-rule-style, var(--rule-style, solid)) var(--button-group-rule-color, var(--rule-color, currentColor));
 
   /* A divider between buttons stands upright */
-  --direction: row;
+  --divider-orientation: vertical;
 
   /* Density: a compact container closes the gaps */
   @container style(--ui-sizing: compact) {
@@ -60,7 +61,7 @@
    2. Orientation, width and density
    ========================================================================== */
 :where(.button-group--vertical) {
-  --direction: column;
+  --divider-orientation: horizontal;
 
   align-items: stretch;
   flex-direction: column;
@@ -99,17 +100,24 @@
    so its border and focus ring show in full. Subtle and plain buttons have
    no edge to share, so they meet without overlapping and their
    translucent fills don't double.
+
+   It stays one row: where space runs out the buttons narrow and their
+   labels wrap (never below the target size), rather than the row
+   overflowing. __end and --ruled don't apply: a joined group has no gap
+   to push across or rule.
    ========================================================================== */
 :where(.button-group--joined) {
   --_button-group-gap: 0px;
 
   flex-wrap: nowrap;
+  max-inline-size: 100%;
 
   > :where(.button),
   > :where(li) > :where(.button) {
     --_button-group-overlap: calc(var(--_button-border-width) * -1);
 
     border-radius: 0;
+    flex-shrink: 1;
 
     @container style(--button-prominence: subtle) or style(--button-prominence: plain) or style(--controls-prominence: subtle) or style(--controls-prominence: plain) or style(--elements-prominence: subtle) or style(--elements-prominence: plain) {
       --_button-group-overlap: 0px;

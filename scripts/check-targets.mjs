@@ -80,6 +80,20 @@ const targetProbe = (fine) => `(() => {
     }
     return false;
   };
+  /* Whether a point is outside the visible box of a scroller that the
+     control itself is partly scrolled out of: it comes into view with
+     focus. A control wholly inside still needs its buffer inside. */
+  const scrolledOut = (el, x, y) => {
+    const box = el.getBoundingClientRect();
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      const cs = getComputedStyle(a);
+      if (!/auto|scroll/.test(cs.overflowX + cs.overflowY)) continue;
+      const r = a.getBoundingClientRect();
+      const cut = box.left < r.left || box.right > r.right || box.top < r.top || box.bottom > r.bottom;
+      if (cut && (x < r.left || x > r.right || y < r.top || y > r.bottom)) return true;
+    }
+    return false;
+  };
   const running = (el) => {
     if (!el.matches('a') || getComputedStyle(el).display !== 'inline') return false;
     const block = el.parentElement?.closest('p, li, dd, td, th, blockquote, figcaption, legend, label, .text, .small-text, .large-text');
@@ -106,7 +120,7 @@ const targetProbe = (fine) => `(() => {
     const short = [];
     for (const [dx, dy, side] of [[-half, 0, 'start'], [half, 0, 'end'], [0, -half, 'top'], [0, half, 'bottom']]) {
       const x = cx + dx, y = cy + dy;
-      if (!inView(x, y)) continue;
+      if (!inView(x, y) || scrolledOut(el, x, y)) continue;
       const hit = document.elementFromPoint(x, y);
       if (owns(el, hit) || overlay(el, hit)) continue;
       /* A neighbouring control, not one around this one (a focusable

@@ -118,7 +118,7 @@ export const Stack: Story = {
 
 export const Placements: Story = {
   render: () => `
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));">
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));">
       ${['top-start', 'top-center', 'top-end', 'bottom-start', 'bottom-center', 'bottom-end']
         .map((p) => frame(`
           <div class="toast-stack toast-stack--${p}" role="status" aria-label="Notifications, ${p}">

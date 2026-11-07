@@ -5,12 +5,15 @@
  * Cascade layers fix precedence by layer, not by import order or specificity
  * (PRINCIPLES §7). Later layers win; unlayered consumer CSS beats every layer.
  * Components stay wrapped in :where() so specificity inside a layer is zero.
+ * The library puts nothing in site: it's where a site's own components and
+ * its additions to the library's go, after the library's components and
+ * layout and under its utilities.
  *
  * The library loads no fonts (PRINCIPLES §4). Font tokens name the brand face
  * first and end in a system stack; consumers link or self-host the faces.
  */
 
-@layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
+@layer reset, tokens, atoms, molecules, organisms, layout, site, utilities, overrides;
 
 @import './reset.css' layer(reset);
 @import './variables.css' layer(tokens);

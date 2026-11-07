@@ -29,7 +29,7 @@ It's a real `<hr>`, or a `role="separator"` in a list, so the separation reaches
 
 ## Rules
 - **A vertical Divider takes `aria-orientation="vertical"`:** assistive technology hears it, and it forces the orientation. A purely decorative Divider can take `aria-hidden="true"` instead.
-- **Only the direct parent turns it vertical.** `--direction` doesn't inherit, so a Divider nested deeper inside a row stays horizontal.
+- **Only the direct parent turns it vertical.** `--divider-orientation` doesn't inherit, so a Divider nested deeper inside a row stays horizontal.
 - **In a list,** an `<hr>` isn't allowed. Inside `<menu>`, `<ul>` or `<ol>`, use `<li role="separator" class="divider"></li>`. In a listbox, where a separator isn't allowed, use `role="none"`.
 
 ## Vertical (in a row)
@@ -63,7 +63,7 @@ A rule between groups. Components (Menu, Batch Actions, Button Group) place it; 
 ## Options
 | Axis | Values |
 | :--- | :--- |
-| Orientation | Horizontal (default); vertical when the **direct parent** sets `--direction: row` (`.inline`, `.cluster`, `.button-group`, `.batch-actions`), or anywhere with `aria-orientation="vertical"` |
+| Orientation | Horizontal (default); vertical when the **direct parent** sets `--divider-orientation: vertical` (`.inline`, `.cluster`, `.button-group`, `.batch-actions`), or anywhere with `aria-orientation="vertical"` |
 | Prominence | Default (quiet, decorative), `--strong` (at least 3:1, for a rule that is the only boundary) |
 | Style | Solid (default), `--dashed` |
 

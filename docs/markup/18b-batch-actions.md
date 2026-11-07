@@ -106,7 +106,7 @@ The browser handles the Buttons. Filling the status element is the product's scr
     <div class="batch-actions__actions button-group">
       <button type="button" class="button button--strong button--accent"><span>Archive</span></button>
     </div>
-    <button type="button" class="button button--plain batch-actions__dismiss"><span>Deselect all</span></button>
+    <button type="button" class="button button--plain batch-actions__dismiss"><span>Clear selection</span></button>
   </div>
 </article>
 ```
@@ -133,7 +133,10 @@ The bar shown while items are selected: how many, the actions on them, and a way
 | Overflow | wraps by default; `--scrollable` keeps one row |
 
 ### Further rules
-- **Hiding.** Set `hidden`; the bar fades and slides away (fades only when inline or with reduced motion).
+- **Hiding.** Set `hidden`; the bar fades and slides away (an inline bar only fades). With reduced motion it goes at once.
+- **Focus after an action.** When an action (Archive, Delete) or Dismiss hides the bar, the script moves focus to the list, or to the item after the ones removed. Focus never stays on a hidden Button.
+- **Not supported:** a floating `--plain` bar, which has no surface to stand on over the page (use `--plain` only with `--inline` or `--docked`), and `--round` on a docked bar, which stays square from edge to edge.
+- **Short screens.** Below 30rem of screen height (a phone on its side, 400% zoom) a floating bar keeps to one row and its actions scroll, so it never covers most of the page.
 
 ## Scrollable
 ```html live width=md

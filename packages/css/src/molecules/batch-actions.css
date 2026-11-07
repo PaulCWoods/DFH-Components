@@ -14,7 +14,8 @@
    viewport), --docked (sticks to the bottom of its scroll container),
    --inline (in flow). Prominence: default, --strong (inverted), --plain.
    Also --round, --compact and --scrollable (one row; the actions scroll
-   between a fixed summary and dismiss button).
+   between a fixed summary and dismiss button). A floating bar does that
+   on its own on a short screen.
 
    <div class="batch-actions" role="group" aria-label="Selected files">
      <p class="batch-actions__summary small-heading">3 selected</p>
@@ -55,7 +56,7 @@
   }
 
   /* A divider between groups stands upright */
-  --direction: row;
+  --divider-orientation: vertical;
 
   align-items: center;
   box-sizing: border-box;
@@ -137,10 +138,8 @@
   max-inline-size: none;
 }
 
-/* Sticks to the bottom of its scroll container, edge to edge */
+/* Sticks to the bottom of its scroll container, edge to edge (square: see 4) */
 :where(.batch-actions--docked) {
-  --_batch-actions-radius: 0;
-
   border-block-end: 0;
   border-inline: 0;
   inset-block-end: 0;
@@ -148,10 +147,10 @@
   position: sticky;
 }
 
-/* In flow; fades rather than slides */
+/* In flow; fades rather than slides. Its corners match the floating bar's,
+   concentric with the buttons inside */
 :where(.batch-actions--inline) {
   --_batch-actions-exit: 0;
-  --_batch-actions-radius: var(--batch-actions-radius, var(--panel-radius, 0));
 
   position: static;
 }
@@ -201,6 +200,30 @@
   }
 }
 
+/* A short screen (a phone on its side, 400% zoom): a floating bar keeps to
+   one row, its actions scrolling, so it doesn't cover the page. The
+   viewport's height, because the bar is fixed to the viewport */
+@media (height < 30rem) {
+  :where(.batch-actions:not(.batch-actions--docked, .batch-actions--inline)) {
+    flex-wrap: nowrap;
+
+    > :where(.batch-actions__summary, .batch-actions__dismiss, .divider) {
+      flex: none;
+    }
+
+    > :where(.batch-actions__summary) {
+      white-space: nowrap;
+    }
+
+    > :where(.batch-actions__actions) {
+      flex: 1 1 auto;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+  }
+}
+
 /* ==========================================================================
    4. Prominence, corners and density (pure token maps)
    ========================================================================== */
@@ -224,6 +247,11 @@
 :where(.batch-actions--round) {
   --button-corners: round;
   --_batch-actions-radius: calc(var(--button-min-size, var(--spacing-target)) / 2 + var(--_batch-actions-inset) + var(--_batch-actions-border-width));
+}
+
+/* Docked runs edge to edge, so it stays square however it's rounded */
+:where(.batch-actions--docked) {
+  --_batch-actions-radius: 0;
 }
 
 :where(.batch-actions--compact) {

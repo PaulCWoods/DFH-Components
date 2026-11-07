@@ -27,7 +27,9 @@ The bar shown while items are selected: how many, the actions on them, and a way
 \`\`\`
 
 - **A group, not a toolbar:** \`role="toolbar"\` promises arrow keys, and the library ships no script.
-- **Summary** is text. Announce the count from an empty \`role="status"\` element outside the bar, which a hidden bar can't do for itself. Toggle \`hidden\`; it fades and slides away.
+- **Summary** is text. Announce the count from an empty \`role="status"\` element outside the bar, which a hidden bar can't do for itself. Toggle \`hidden\`; it fades and slides away (it just goes, with reduced motion).
+- **Focus:** when an action or the dismiss button hides the bar, move focus somewhere that makes sense (the list, or the first item), never leave it on a hidden button.
+- **Not supported:** a floating \`--plain\` bar (it has nothing to stand on over the page; use \`--plain\` only \`--inline\` or \`--docked\`), and \`--round\` on a docked bar (it stays square, edge to edge).
 - **Placement:** floating (default, fixed at the bottom centre), \`--docked\`, \`--inline\`. **Prominence:** default, \`--strong\` (inverted), \`--plain\`. Also \`--round\`, \`--compact\` and \`--scrollable\` (one row: the actions scroll with a fade between a fixed summary and dismiss button).
 
 The floating stories sit in a stage with a transform, so the fixed bar stays inside it.
@@ -46,7 +48,7 @@ const icon = (name: string) =>
 const actions = (cls = 'buttons-subtle', more = false) => `
   <div class="batch-actions__actions button-group ${cls}">
     <button type="button" class="button">${icon('Download')}<span>Export</span></button>
-    <button type="button" class="button">${icon('Edit')}<span>Edit</span></button>${more ? `
+    <button type="button" class="button">${icon('Folder')}<span>Move</span></button>${more ? `
     <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
     <button type="button" class="button">${icon('Share')}<span>Share</span></button>
     <button type="button" class="button">${icon('Print')}<span>Print</span></button>` : ''}
@@ -91,14 +93,15 @@ export const Playground: Story = {
 export const Selection: Story = {
   render: () => {
     const files = ['Brief.pdf', 'Moodboard.fig', 'Notes.md', 'Budget.xlsx'];
-    const update = `const s=this.closest('[data-demo]');const n=s.querySelectorAll('input:checked').length;const b=s.querySelector('.batch-actions');b.hidden=n===0;if(n)b.querySelector('[role=status]').textContent=n+' selected';`;
-    const clear = `const s=this.closest('[data-demo]');s.querySelectorAll('input:checked').forEach(c=>c.checked=false);s.querySelector('.batch-actions').hidden=true;s.querySelector('input').focus();`;
+    const update = `const s=this.closest('[data-demo]');const n=s.querySelectorAll('input:checked').length;const b=s.querySelector('.batch-actions');b.hidden=n===0;if(n)b.querySelector('.batch-actions__summary').textContent=n+' selected';s.querySelector('[role=status]').textContent=n?n+' selected':'Selection cleared';`;
+    const clear = `const s=this.closest('[data-demo]');s.querySelectorAll('input:checked').forEach(c=>c.checked=false);s.querySelector('.batch-actions').hidden=true;s.querySelector('[role=status]').textContent='Selection cleared';s.querySelector('input').focus();`;
     return `
       <div data-demo style="transform: translate(0); min-block-size: 20rem; padding: 1.5rem;">
         <fieldset class="fieldset">
           <legend class="fieldset__legend small-heading">Files</legend>
           ${files.map((f) => `<label class="choice"><input type="checkbox" class="checkbox-input" onchange="${update}" /><span>${f}</span></label>`).join('')}
         </fieldset>
+        <p class="sr-only" role="status"></p>
         <div class="batch-actions batch-actions--round" role="group" aria-label="Selected files" hidden>
           <p class="batch-actions__summary small-heading">0 selected</p>
           <hr class="divider" aria-hidden="true">
@@ -168,7 +171,7 @@ export const DockedInACard: Story = {
           <button type="button" class="button button--strong button--accent"><span>Log harvest</span></button>
           <button type="button" class="button button--danger"><span>Remove</span></button>
         </div>
-        <button type="button" class="button button--plain batch-actions__dismiss"><span>Deselect all</span></button>
+        <button type="button" class="button button--plain batch-actions__dismiss"><span>Clear selection</span></button>
       </div>
     </article>`,
 };

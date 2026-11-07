@@ -32,6 +32,7 @@ A list of actions, usually opened from a button in a popover: buttons and links 
 - **No ARIA menu roles.** It is a list, and Tab moves through it. \`role="menu"\` promises arrow keys and typeahead, which need a script the library doesn't ship; the popover already gives Escape and light dismiss.
 - **Checkable items** are buttons with \`aria-pressed\` and a check icon with \`.icon--on\`.
 - **Current page:** a link with \`aria-current="page"\` shows as a tint.
+- **Current item:** a link to the current page has \`aria-current="page"\` and shows bold, with a tint and a rail at its start (Highlight in forced colours).
 - **Prominence:** default, \`--strong\` (raised; a popover sets \`--menu-prominence: strong\`), \`--subtle\`, \`--plain\`. Also \`--compact\`, \`--translucent\` and \`--ruled\`.
         `,
       },
@@ -47,6 +48,10 @@ const icon = (name: string, cls = '') =>
 
 const item = (iconName: string, label: string, meta = '', cls = '') =>
   `<li><button type="button" class="button${cls ? ` ${cls}` : ''}">${iconName ? icon(iconName) : ''}<span>${label}</span>${meta}</button></li>`;
+
+/* Places are links; the current one has aria-current and shows a rail */
+const link = (iconName: string, label: string, meta = '', current = '') =>
+  `<li><a href="#${label.toLowerCase()}" class="button"${current ? ` aria-current="${current}"` : ''}>${icon(iconName)}<span>${label}</span>${meta}</a></li>`;
 
 const kbd = (k: string) => `<kbd class="kbd">${k}</kbd>`;
 
@@ -102,9 +107,9 @@ export const Prominence: Story = {
       <div class="stack" style="gap: 0.5rem;">
         <h3 class="small-heading">${label}</h3>
         <menu class="${cls}" aria-label="${label}">
-          ${item('User', 'Profile')}
-          ${item('Bell', 'Notifications', '<span class="status"><span class="status__text">3 new</span></span>')}
-          ${item('Settings', 'Settings', kbd('⌘,'))}
+          ${link('User', 'Profile', '', 'page')}
+          ${link('Bell', 'Notifications', '<span class="status"><span class="status__text">3 new</span></span>')}
+          ${link('Settings', 'Settings', kbd('⌘,'))}
         </menu>
       </div>`;
     return `

@@ -8,10 +8,14 @@
    variables.css), so a fallback can't lean on another component's token.
 
    Fails on: a token whose JSON value differs from a fallback the CSS gives it,
-   a token the CSS reads with no fallback, a token nothing reads, and a token
+   a token the CSS reads with no fallback, a token nothing reads, a token
    that names a Tier 2 token ({app.border-width}) whose fallback doesn't
-   read it: the value matches today, but a theme that changes that token
-   would reach Figma and not the CSS.
+   read it (the value matches today, but a theme that changes that token
+   would reach Figma and not the CSS), and a hook named after a component
+   (--button-*) that the CSS reads but the JSON doesn't have, or reads with
+   two different defaults. Hooks set in markup or computed from other values
+   are listed below with the reason; hooks still to add are listed with the
+   pass that adds them.
    -- --json prints the findings instead.
    ========================================================================== */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -107,6 +111,35 @@ const tokenValue = (value) => {
   return normalise(follow(toCss(value)));
 };
 
+/* Hooks a component reads that aren't design tokens, so Figma has no value
+   for them: set on one element in markup, passed down by a parent, or
+   computed from other values when unset */
+const notTokens = new Map(Object.entries({
+  '--icon-size': 'set in markup or by a parent; defaults to the base size in ems',
+  '--skeleton-width': 'set in markup; each shape has its own default',
+  '--skeleton-height': 'set in markup; each shape matches the control it stands in for',
+  '--card-font-sizing': 'passed down by a dialog',
+  '--batch-actions-radius': 'computed: concentric with the buttons inside',
+}));
+
+/* Hooks to add to the JSON (or to the list above) in their component's pass */
+const pending = new Map(Object.entries({
+  '--accordion-inset': 'disclosure (it also has two defaults)',
+  '--badge-text-padding-inline': 'indicators',
+  '--banner-align': 'messages',
+  '--banner-plain-gap': 'messages',
+  '--card-body-max-block-size': 'surfaces',
+  '--card-dir': 'surfaces',
+  '--card-header-align': 'surfaces',
+  '--card-thumb-aspect-ratio': 'surfaces',
+  '--input-lg-inner-gap': 'forms',
+  '--input-min-chars': 'forms',
+  '--input-picker-icon-space': 'forms',
+  '--input-sm-inner-gap': 'forms',
+  '--tab-list-inset': 'navigation',
+  '--tab-sm-list-indicator-width': 'navigation',
+}));
+
 /* Every read of a Tier 3 token in the component CSS */
 const files = [];
 const collect = (dir) => {
@@ -119,7 +152,10 @@ const collect = (dir) => {
 ['atoms', 'molecules', 'organisms', 'layout', 'utilities'].forEach((dir) => collect(join(src, dir)));
 files.push(join(src, 'reset.css'));
 
+const components = Object.keys(JSON.parse(readFileSync(join(root, 'tokens/3-component.json'), 'utf8'))).filter((k) => !k.startsWith('$'));
+const componentOf = (name) => components.find((c) => name.startsWith(`--${c}-`));
 const reads = new Map();
+const untracked = new Map();
 for (const file of files) {
   const css = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
   /* A private variable counts as its first declaration, the file's manifest */
@@ -127,7 +163,13 @@ for (const file of files) {
   for (const m of css.matchAll(/(--_[\w-]+):\s*([^;]+);/g)) if (!privates.has(m[1])) privates.set(m[1], m[2].trim());
   for (let i = css.indexOf('var(--'); i !== -1; i = css.indexOf('var(--', i + 1)) {
     const { name, fallback } = readVar(css, i);
-    if (!tier3.has(name)) continue;
+    if (!tier3.has(name)) {
+      if (fallback !== null && !defined.has(name) && componentOf(name) && !notTokens.has(name)) {
+        if (!untracked.has(name)) untracked.set(name, []);
+        untracked.get(name).push({ fallback: fallback.replace(/\s+/g, ' '), file: relative(src, file) });
+      }
+      continue;
+    }
     if (!reads.has(name)) reads.set(name, []);
     reads.get(name).push({ fallback, privates, file: relative(src, file) });
   }
@@ -151,7 +193,14 @@ const reads_ = (text, privates, name, depth = 0) => {
   return false;
 };
 
-const findings = { differ: [], noFallback: [], unread: [], unnamed: [] };
+const findings = { differ: [], noFallback: [], unread: [], unnamed: [], missing: [], twoDefaults: [] };
+for (const [name, uses] of untracked) {
+  const defaults = [...new Set(uses.map((u) => u.fallback))];
+  if (defaults.length > 1 && !pending.has(name)) findings.twoDefaults.push({ name, defaults, files: [...new Set(uses.map((u) => u.file))] });
+  if (!pending.has(name)) findings.missing.push({ name, file: uses[0].file, fallback: defaults[0] });
+}
+/* A pending hook that has been added, or no longer read, comes off the list */
+for (const name of pending.keys()) if (!untracked.has(name)) findings.missing.push({ name, stale: true });
 for (const [name, value] of tier3) {
   const uses = reads.get(name);
   if (!uses) {
@@ -175,10 +224,12 @@ if (process.argv.includes('--json')) {
   process.exit(0);
 }
 
-const total = findings.differ.length + findings.noFallback.length + findings.unread.length + findings.unnamed.length;
+const total = Object.values(findings).reduce((n, list) => n + list.length, 0);
 for (const f of findings.differ) console.log(`${f.file}: ${f.name} is ${f.want} in the tokens and ${f.got} in the CSS`);
 for (const f of findings.noFallback) console.log(`${f.file}: ${f.name} has no fallback in the CSS`);
 for (const f of findings.unread) console.log(`${f.name}: nothing reads it`);
 for (const f of findings.unnamed) console.log(`${f.file}: ${f.name}'s fallback doesn't read ${f.target}, which the tokens name`);
-console.log(`check:tokens: ${tier3.size} Tier 3 tokens, ${total ? `${total} problems` : 'no problems'}.`);
+for (const f of findings.missing) console.log(f.stale ? `${f.name}: listed as pending, but the CSS no longer reads it outside the JSON; take it off the list` : `${f.file}: ${f.name} (default ${f.fallback}) isn't in the tokens`);
+for (const f of findings.twoDefaults) console.log(`${f.files.join(', ')}: ${f.name} has ${f.defaults.length} defaults: ${f.defaults.join(' | ')}`);
+console.log(`check:tokens: ${tier3.size} Tier 3 tokens${pending.size ? ` (${pending.size} hooks still to add)` : ''}, ${total ? `${total} problems` : 'no problems'}.`);
 process.exit(total ? 1 : 0);

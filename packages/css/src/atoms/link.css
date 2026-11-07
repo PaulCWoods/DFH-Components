@@ -92,6 +92,12 @@
     margin-inline-start: 0.25em;
   }
 
+  /* A Link that is a row (.inline) has an icon before its text: the row's
+     gap spaces it, so the icon lines up with the text around the link */
+  &:where(.inline) > :where(.icon) {
+    margin-inline-start: 0;
+  }
+
   /* ------------------------------------------------------------------------
      Stretched: the link's ::after covers its nearest positioned ancestor,
      so a whole card or row is the target.

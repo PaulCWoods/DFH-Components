@@ -10,9 +10,13 @@
      between, so that content can't be reached;
    - page overflow: the page is wider than the screen (a sideways scroll).
 
+   Layout and recipe stories run at a grid of 12 sizes. Component stories
+   (atoms, molecules, organisms) run at 320px, where WCAG 1.4.10 asks
+   content to reflow, and at a desktop width.
+
    Usage:
      npm run build:storybook
-     npm run check:layout                    # layout and recipe stories
+     npm run check:layout                    # every story
      npm run check:layout -- 'organisms-'    # stories whose id matches
    Set CHROME_PATH if Chrome isn't in the default macOS location
    (scripts/lib/storybook-chrome.mjs).
@@ -21,10 +25,18 @@
    ========================================================================== */
 import { openStorybook, progress, progressDone } from './lib/storybook-chrome.mjs';
 
-const filter = new RegExp(process.argv[2] || '^(layout-|recipes-)');
-const widths = [375, 768, 1024, 1280, 1600];
-const heights = [600, 900];
+const filter = new RegExp(process.argv[2] || '^(layout-|recipes-|atoms-|molecules-|organisms-)');
+const grid = [320, 375, 768, 1024, 1280, 1600].flatMap((w) => [600, 900].map((h) => [w, h]));
+const component = [[320, 640], [1280, 900]];
+const sizesFor = (id) => (/^(atoms|molecules|organisms)-/.test(id) ? component : grid);
 const tolerance = 16;
+
+/* Known problems, each waiting for its component's pass: reported, but they
+   don't fail the run. Take one off when its pass fixes it. */
+const known = new Map(Object.entries({
+  'molecules-pagination--joined': 'navigation: eight joined 48px targets need 384px, and a joined row can\'t wrap',
+  'organisms-header--over-a-sidebar': 'navigation: a three-column split that never wraps has no phone layout',
+}));
 
 const sb = await openStorybook('check:layout');
 
@@ -65,15 +77,18 @@ const problems = [];
 const started = Date.now();
 for (const [n, id] of ids.entries()) {
   progress(`${n + 1}/${ids.length} ${id}`);
-  await sb.load(id, { width: widths.at(-1), height: heights.at(-1) });
-  for (const w of widths) {
-    for (const h of heights) {
-      await sb.size(w, h);
-      for (const p of (await sb.evaluate(probe)) || []) {
-        const line = `${id} @ ${w}x${h}: ${p}`;
-        problems.push(line);
-        console.log(line);
+  const sizes = sizesFor(id);
+  await sb.load(id, { width: 1600, height: 900 });
+  for (const [w, h] of sizes) {
+    await sb.size(w, h);
+    for (const p of (await sb.evaluate(probe)) || []) {
+      const line = `${id} @ ${w}x${h}: ${p}`;
+      if (known.has(id)) {
+        console.log(`${line} (known: ${known.get(id)})`);
+        continue;
       }
+      problems.push(line);
+      console.log(line);
     }
   }
 }
@@ -85,4 +100,4 @@ if (problems.length) {
   console.log(`\ncheck:layout: ${problems.length} problem(s) in ${ids.length} stories (${took}s).`);
   process.exit(1);
 }
-console.log(`check:layout: ${ids.length} stories at ${widths.length * heights.length} sizes, nothing out of reach (${took}s).`);
+console.log(`check:layout: ${ids.length} stories (layouts and recipes at ${grid.length} sizes, components at ${component.length}), nothing out of reach${known.size ? ` (${known.size} known, waiting for their pass)` : ''} (${took}s).`);

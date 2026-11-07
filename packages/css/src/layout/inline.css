@@ -46,8 +46,10 @@
     padding: 0;
 }
 
-/* A row */
+/* A row: a divider between its items stands upright */
 :where(.inline) {
+    --divider-orientation: vertical;
+
     align-items: var(--align-items, center);
     flex-direction: row;
 }

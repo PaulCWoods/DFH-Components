@@ -58,3 +58,6 @@ What each component pass removed and what replaced it, moved here from the publi
 
 ## Stack, Inline and Cluster
 - `.inline-responsive`, `--{size}`, `--between`, `--end`, `--tight`, `--cushioned`, `--ruled`: `.stack` with `@{size}:inline`, `.stack--tight`, `--cushioned`, `--ruled`, and the `--justify-content` hook.
+
+## Actions
+- `.button--flush` (a link that lines up with text is a Link, `.link`); `.button--icon-lg` and `.buttons-icon-lg` (set `--button-icon-size`); `.button__text--placeholder`; the `hide-decor` class and `--ui-decor` flag on Button and Tab; the Divider's `--direction` flag (use `--divider-orientation`).

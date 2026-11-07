@@ -19,13 +19,14 @@ Every component works for everyone, at any size, before it looks good. Accessibi
 - Every component must meet WCAG 2.2 AA. AA is the floor, and AAA must always be achievable using the library itself, through documented options or tokens and without custom code (for example the 48px touch target default and an enhanced-contrast mode).
 - Native HTML elements come first (`details`, `dialog`, `button`, popover). ARIA is added only where no native element does the job.
 - Each component must be fully operable by keyboard, with a visible focus indicator and no keyboard trap.
-- Each component must survive forced-colors mode, `prefers-reduced-motion`, `prefers-contrast`, 200% text zoom, 400% reflow and user text-spacing overrides. Forced colours and target sizes are checked by script on every component and recipe story (`npm run check:targets`); a component adds a `forced-colors` block only where the check finds something lost.
+- Each component must survive forced-colors mode, `prefers-reduced-motion`, `prefers-contrast`, 200% text zoom, 400% reflow and user text-spacing overrides. Forced colours and target sizes are checked by script on every component and recipe story (`npm run check:targets`); a component adds a `forced-colors` block only where the check finds something lost. Visible focus is checked by tabbing through every story (`npm run check:focus`), and reflow by loading every story at 320px (`npm run check:layout`).
+- A current or selected item differs from its neighbours by more than a tint: a rail, a weight, an icon, an underline or a fill, at 3:1 against what's around it, that still shows in forced colours.
 - Borderless or subtle designs must still give controls and focus a 3:1 non-text boundary (WCAG 1.4.11).
 
 **Responsiveness is core**
 
 - Every component must work from the smallest practical container up to the largest, with no horizontal scroll except in components that scroll by design (tables, carousels).
-- Components respond to their container (container queries), not the viewport. Viewport media queries belong only to the parts that span the page (the app shell, the Header and the Sidebar), to the viewport-prefixed responsive helpers (`max-md:`, `lg:` …), and to user-preference features such as `pointer` and `prefers-*`.
+- Components respond to their container (container queries), not the viewport. Viewport media queries belong only to the parts that span the page (the app shell, the Header and the Sidebar), to placements fixed to the viewport (a floating bar may query the viewport's height, to stay out of the way on a short or zoomed screen), to the viewport-prefixed responsive helpers (`max-md:`, `lg:` …), and to user-preference features such as `pointer` and `prefers-*`.
 - Layout is fluid by default (auto-fit grids, intrinsic sizing, `clamp()`); fixed breakpoints are the exception and must be justified.
 - Where a size is named, it is Tailwind's: viewport `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem, `2xl` 96rem; container `@xs` 20rem through `@7xl` 80rem. One scale serves the responsive helpers, the grid's container column counts, a stack's `@{size}:inline` and card's responsive prominence.
 
@@ -48,7 +49,19 @@ A variant exists only if it serves a different need, not a different taste. Vari
 | Prominence | Everything with a surface | Default | `--strong`, `--subtle`, `--plain` | Explicit modifier |
 | Intent | Everything that can signal status or consequence | Neutral | `--accent`, `--danger`, `--warning`, `--success`, `--info` | Explicit modifier, mapped 1:1 to Tier-2 semantic roles |
 
-- A new variant must name the user need it serves and which existing axis it belongs to. If it fits none, the component is probably two components.
+- A new variant must name the user need it serves and which existing axis it belongs to, or which option family below. If it fits none, the component is probably two components.
+
+**Options outside the axes**
+
+Some choices aren't about attention, consequence or size, so they aren't axes. They are recognised families, each with the same names everywhere it appears. Each option still sets one thing and names the need it serves.
+
+| Family | Options | What it decides |
+| --- | --- | --- |
+| Corners | `--round` | Pill or circle ends instead of the radius token |
+| Placement | `--floating`, `--docked`, `--inline`, `--sticky`, `--fixed-*` | Where a component sits relative to the page or its scroller |
+| Arrangement | `--joined`, `--vertical`, `--fill`, `--ruled`, `--end`, `--flush` | How the parts of a container sit together |
+| Material | `--translucent` | What the surface is made of, with any prominence that has a fill |
+| Overflow | `--scrollable` | Whether content that doesn't fit wraps or scrolls |
 - Combinations are not multiplied by default. A component documents only the combinations it supports and tests.
 - Defaults are the most accessible and most forgiving option. Opting into fine, compact, small or minimal is a deliberate step.
 - Every variant must be reachable by token or one modifier, not by overriding component CSS.
@@ -208,10 +221,10 @@ The library should get smaller over time. Every release adds capability and remo
 - **Cascade layers.** `index.css` declares a fixed layer order, and every stylesheet sits in its layer:
 
   ```css
-  @layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
+  @layer reset, tokens, atoms, molecules, organisms, layout, site, utilities, overrides;
   ```
 
-  Layers formalise the cascade that import order provides today. Components stay wrapped in `:where()` so specificity inside a layer remains zero, and utilities and overrides win by layer, never by specificity.
+  Layers formalise the cascade that import order provides today. Components stay wrapped in `:where()` so specificity inside a layer remains zero, and utilities and overrides win by layer, never by specificity. The library leaves `site` empty: a product's own components and its additions to the library's go there, so they beat the library's components and layout and lose to its utilities. A product's token choices go in `tokens`, and what a CMS's output still needs in `reset`.
 - **Native over scripted.** Prefer native elements and CSS (`dialog`, popover, anchor positioning, scroll-state queries, `details`) before JavaScript. Where JavaScript is needed, it enhances working HTML.
 - **Tokens as custom properties.** Registered properties (`@property`) are used where typed values or animation help.
 - **Logical properties** are the default, so right-to-left and vertical writing modes work without extra code.
@@ -310,6 +323,10 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | How many names can a utility have? | Two at most: a verbose name (property and value) and Tailwind's shorthand where Tailwind has one with the same meaning. |
 | How many small text steps are there? | One: `.small-text` (step −1). `.micro-text` is removed. `.micro-heading` is the uppercase eyebrow, a separate job. |
 | Is card a molecule or an organism? | A molecule. A card is a surface with named slots; what goes in its body is content, not part of the card. Components that compose a card (popover, dialog) then sit at or above it in the cascade, so a positioning shell is never overridden by the card it wraps. |
+| What about options that aren't variants, such as `--round` or `--docked`? | They are option families outside the six axes: corners, placement, arrangement, material and overflow (section 2). Each sets one thing, with the same name everywhere, and names its need. |
+| Is a tint enough to mark the current item? | No. A current or selected item needs a cue that isn't colour alone, at 3:1, which survives forced colours. A Menu and a Navigation Tree use bold text and a rail. |
+| May a fixed or floating bar use a viewport query? | Yes, for its height only: on a short or zoomed screen (400% reflow is 320 by 256) it may drop to one scrolling row so it doesn't cover the page. |
+| What is the Divider's orientation flag called? | `--divider-orientation` (`vertical` or `horizontal`), set by a parent whose items sit in a row (`.inline`, `.cluster`, Button Group, Batch Actions). It doesn't inherit. `--direction` is removed. |
 
 ## 11. Refinement checklist
 
@@ -318,7 +335,8 @@ Run this on every component during the audit. A component is ready for v1 only w
 **Accessibility**
 
 - [ ] Uses the right native element; ARIA only where needed
-- [ ] Fully keyboard operable, visible focus, no trap
+- [ ] Fully keyboard operable, visible focus, no trap; a control that hides its input (a toggle Button, a choice) shows the ring on what it draws
+- [ ] A current or selected item has a cue beyond a tint (section 1)
 - [ ] Contrast verified for text (AA) and for boundaries and focus (3:1), with AAA reachable through library options
 - [ ] Works in forced-colors, reduced-motion and high-contrast preferences
 - [ ] Touch target meets the documented size for each pointer mode, including `--sm` sizes on coarse pointers
@@ -332,12 +350,12 @@ Run this on every component during the audit. A component is ready for v1 only w
 
 **Restraint and architecture**
 
-- [ ] Variants map to the shared axes (pointer, size, density, presentation, prominence, intent)
+- [ ] Variants map to the shared axes (pointer, size, density, presentation, prominence, intent) or a recognised option family (corners, placement, arrangement, material, overflow)
 - [ ] Each modifier sets one axis; no compound modifiers
 - [ ] Size modifiers only on atoms and controls; `--compact` only on containers
 - [ ] Every variant has a named user need; unsupported combinations are documented
 - [ ] Sits at the right atomic level, with dependencies listed, and is in v1 scope
-- [ ] Uses Tier-2 semantic tokens only; no Tier-1 references and no raw values
+- [ ] Uses Tier-2 semantic tokens only; no Tier-1 references and no raw values; every hook it reads is in the tokens with one default (`npm run check:tokens`)
 - [ ] Contract is documented: states, structure, keyboard map
 
 **Content**

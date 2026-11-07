@@ -34,7 +34,9 @@ It is deliberately not an ARIA menu. `role="menu"` promises arrow keys, typeahea
 
 ## Rules
 - **No ARIA Menu roles.** A Menu is a list (`<menu>`), and Tab moves through it. `role="menu"` promises arrow keys, typeahead and focus management, which need a script the library doesn't ship. So no `role="menu"`, `menuitem`, `role="none"` or `aria-haspopup="menu"`; a Popover already provides Escape and light dismiss, and `popovertarget` exposes the expanded state.
-- **Items** are `<li>` holding a `.button` (or an `<a class="button">`). A destructive item is `.button--danger`, with a label that says what it does. A Link to the current page has `aria-current="page"` and shows as a tint, not a filled Button.
+- **Items** are `<li>` holding a `.button` (or an `<a class="button">`). A destructive item is `.button--danger`, with a label that says what it does. A Link to the current page has `aria-current="page"` and shows in bold with a tint and a rail at its start, not as a filled Button, so the current item never rests on colour alone.
+- **Disabled items** are `disabled` Buttons, which Tab skips. When people need to find an item and learn why they can't use it, use `aria-disabled="true"` instead: it stays in the Tab order, and the product's script must ignore its clicks and keys. Say why nearby, or in the item's description.
+- **Long labels wrap** inside the item; the shortcut or status stays at the end. Keep labels to a few words, starting with a verb for actions.
 - **Checkable items** are Buttons with `aria-pressed` and a check icon with `.icon--on`; the check keeps its space while off, so labels line up.
 
 ## Keyboard and screen readers

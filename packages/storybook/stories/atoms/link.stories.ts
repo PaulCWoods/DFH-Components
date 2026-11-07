@@ -104,6 +104,24 @@ export const External: Story = {
 };
 
 /**
+ * An icon before the text: the Link is a row (.inline), whose gap spaces the
+ * icon, so the icon lines up with the heading below.
+ */
+export const LeadingIcon: Story = {
+  render: () => `
+    <div class="sb-demo-stage stack" style="max-inline-size: 24rem;">
+      <div>
+        <a href="#" class="link link--plain inline gap-xs">
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
+          <span>All courses</span>
+        </a>
+      </div>
+      <h2 class="heading">Fundamentally accessible</h2>
+    </div>
+  `,
+};
+
+/**
  * On a dark band, .color-scheme-dark flips every token inside it.
  */
 export const OnADarkBand: Story = {

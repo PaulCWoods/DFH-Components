@@ -27,7 +27,7 @@
 
    Usage:
    <button type="button" class="button button--strong button--accent">
-     <span>Primary Action</span>
+     <span>Save changes</span>
    </button>
    ========================================================================== */
 
@@ -74,6 +74,7 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
+  --_button-border-style: solid;
   --_button-border-width: var(--button-border-width, var(--border-width, 1px));
   --_button-font-family: var(--button-font-family, var(--body-font-family, inherit));
   --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
@@ -180,7 +181,7 @@
 
   /* Size, and density from a compact container */
   @container style(--button-size: sm) or style(--controls-size: sm) or style(--ui-sizing: compact) {
-    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2));
+    --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2xs));
     --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
     --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
     --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
@@ -232,7 +233,7 @@
   /* Surface, Border & Shape */
   background-color: var(--_button-bg);
   border-radius: var(--_button-radius);
-  border: var(--_button-border-width) solid var(--_button-border-color);
+  border: var(--_button-border-width) var(--_button-border-style) var(--_button-border-color);
   color: var(--_button-text);
 
   /* ------------------------------------------------------------------------
@@ -276,7 +277,9 @@
       outline: none;
     }
 
-    &:focus-visible {
+    /* A toggle (label.button) draws the ring of the hidden input it holds */
+    &:focus-visible,
+    &:where(label):has(input:focus-visible) {
       outline: var(--focus-ring-width, 2px) solid var(--_button-ring-color);
       outline-offset: var(--focus-ring-offset, 2px);
     }
@@ -286,6 +289,7 @@
         --color-palette: var(--_button-hover-color-palette);
         --_button-ring-color: var(--_button-tone);
         background-color: var(--_button-hover-bg);
+        border-style: solid;
         border-color: var(--_button-hover-border-color);
         color: var(--_button-hover-text);
       }
@@ -295,6 +299,7 @@
       --color-palette: var(--_button-active-color-palette);
       --_button-ring-color: var(--_button-tone);
       background-color: var(--_button-active-bg);
+      border-style: solid;
       border-color: var(--_button-active-border-color);
       color: var(--_button-active-text);
     }
@@ -384,16 +389,6 @@
   --_button-active-color-palette: initial;
 }
 
-:where(.button--flush) {
-  --_button-padding-inline: 0;
-  --_button-hover-bg: transparent;
-  --_button-hover-text: var(--foreground-accent-hover);
-  --_button-hover-border-color: transparent;
-  --_button-active-bg: transparent;
-  --_button-active-text: var(--foreground-accent-pressed);
-  --_button-active-border-color: transparent;
-}
-
 /* Strong, and the selected states that render as strong: a current page
    or step (aria-current), a selection, a checked input, a pressed toggle.
    A pressed toggle with its own check icon (.icon--on) shows the check
@@ -415,9 +410,9 @@
 }
 
 /* Placeholder: dashed outline for "add" affordances */
-:where(.button--placeholder):not(:hover, :active) {
+:where(.button--placeholder) {
   --_button-border-color: var(--button-placeholder-border-color, var(--border-color-quiet, currentColor));
-  border-style: dashed;
+  --_button-border-style: dashed;
 }
 
 /* ==========================================================================
@@ -426,7 +421,7 @@
 
 /* Small: 32px visual, 48px hit area unless fine-pointer targets are opted in */
 :where(.button--sm) {
-  --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2));
+  --_button-padding-block: var(--button-sm-padding-block, var(--spacing-2xs));
   --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
   --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
@@ -564,12 +559,6 @@
   }
 }
 
-/* Icon Size Modifiers */
-:where(.buttons-icon-lg .button),
-:where(.button--icon-lg) {
-  --icon-size: var(--icon-size-lg, 1.25em);
-}
-
 /* Container-Adaptive Presentation (labels collapse to icon-only) */
 :where(.button:not(.button--labeled):has(.icon)) {
   @container style(--ui-labels: hidden) {
@@ -595,12 +584,6 @@
         .badge--top-start,
         .badge--bottom-end,
         .badge--bottom-start)) {
-      display: none;
-    }
-  }
-
-  @container style(--ui-decor: hidden) {
-    > :where(.icon, svg, .ui-decor) {
       display: none;
     }
   }
@@ -634,13 +617,6 @@
   }
 }
 
-:where(.hide-decor) :where(.button:not(.button--labeled):has(.icon)),
-:where(.button:not(.button--labeled):has(.icon).hide-decor) {
-  > :where(.icon, svg, .ui-decor) {
-    display: none;
-  }
-}
-
 /* ==========================================================================
    8. Link Resets & Text (:where(a.button), .button__text)
    ========================================================================== */
@@ -661,11 +637,6 @@
   &:where(:only-child) {
     text-align: center;
   }
-}
-
-:where(.button__text--placeholder) {
-  font-weight: var(--button-placeholder-font-weight, var(--body-font-weight, 400));
-  opacity: var(--opacity-muted, 0.7);
 }
 
 /* ==========================================================================

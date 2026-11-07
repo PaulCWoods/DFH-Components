@@ -102,16 +102,18 @@ A set of related Buttons laid out together: a row by default, or a column. The g
 | Option | Values |
 | :--- | :--- |
 | Orientation | row (default), `--vertical` (full-width Buttons, content centred) |
-| Joined | `--joined`: one control; shared edges overlap, only the outer corners round |
+| Joined | `--joined`: one control; shared edges overlap, only the outer corners round; one row whose labels wrap |
 | Width | the content's (default), `--fill` (fills its container; the Buttons share the width) |
 | Rules | `--ruled`: rules between the Buttons where gap decorations are supported |
 | Density | `--compact` (sets `--ui-sizing: compact`) |
-| Part | `__end` pushes itself and what follows to the end of the row |
+| Part | `__end` pushes itself and what follows to the end of the row (not in a joined group) |
 
 ### Further rules
 - **Button looks come from the Buttons.** Set them for the whole group with `.buttons-strong`, `.buttons-subtle`, `.buttons-plain`, `.buttons-sm`, `.buttons-lg` or `.buttons-round` (or the flags they set).
 - **Text in a group** is a text atom (`.small-text`), not a part of the group.
-- **Dividers** between Buttons stand upright on their own; give them `aria-orientation="vertical"`.
+- **Dividers** between Buttons stand upright in a row on their own; give them `aria-orientation="vertical"` there, so assistive technology hears it. In a `--vertical` group they lie flat, so leave the attribute off.
+- **A joined group stays one row.** Where space runs out its Buttons narrow and their labels wrap, never below the target size. Keep it to a few short labels; more than will fit on a phone is a [Select](07-form-controls.md) or [Tabs](24-tabs.md).
+- **Not with joined:** `__end` and `--ruled`. A joined group has no gap to push across or to rule.
 
 ## Actions
 ```html live
@@ -130,7 +132,7 @@ A set of related Buttons laid out together: a row by default, or a column. The g
 
 <div class="button-group button-group--fill">
   <button type="button" class="button"><span>Cancel</span></button>
-  <button type="button" class="button button--strong button--accent"><span>Submit</span></button>
+  <button type="button" class="button button--strong button--accent"><span>Send message</span></button>
 </div>
 
 <div class="button-group">

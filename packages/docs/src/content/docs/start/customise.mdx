@@ -1,22 +1,57 @@
 ---
 title: Your own styles
-summary: Change how a component looks, or add your own, without fighting the library. Set a token first, add to a class next, and build your own component last.
+summary: Change how a component looks, or add your own, without fighting the library. Set a token first, add to a class next, build your own component last, and keep your CSS in the library's layers.
 order: 10
 ---
 
 The library gets you off the ground with a solid set of components. When a product needs something more bespoke, there are three routes. Take the first one that does the job: each one after it gives you more freedom, and more to look after.
 
-## Why your CSS always wins
+## Where your CSS goes
 
 Every library rule is wrapped in `:where()`, so it has no specificity, and each part of the library sits in a cascade layer, in this order:
 
 ```css
-@layer reset, tokens, atoms, molecules, organisms, layout, utilities, overrides;
+@layer reset, tokens, atoms, molecules, organisms, layout, site, utilities, overrides;
 ```
 
-A later layer beats an earlier one whatever the selector, and CSS written outside any layer beats every layer. So a plain `.button { }` in your own stylesheet wins over the library without `!important` or a longer selector.
+A later layer beats an earlier one whatever the selector. Put your CSS in the same layers, and it slots into that order. The library leaves `site` empty for you: it comes after the library's components and layout, so your CSS wins over them without `!important` or a longer selector, and before its utilities, so a `.p-sm` or `.hidden` on your own component still works.
 
-If you'd rather keep your styles in the layers too, put them in `@layer overrides { }`. That layer comes last, so it beats the rest of the library, and unlayered CSS can still beat it.
+| What it is | Layer |
+| :--- | :--- |
+| Token choices: the library's component tokens and your own | `tokens` |
+| What a CMS's or plugin's output still needs | `reset` |
+| Your components, and what you add to the library's | `site` |
+| A last word that must beat the utilities too (rare) | `overrides` |
+
+A layer you add to is appended to it, so your token choices come after the library's tokens, and win.
+
+### Stay out of unlayered CSS
+
+CSS written outside any layer beats every layer, the utilities included. That makes it a blunt tool: a plain `.card { }` wins over the library, but it also wins over `.p-sm` on the same element. It's also where most CMSs and plugins put their own CSS, so unlayered CSS on a page competes with them by specificity alone, which is the fight the layers exist to end. See [CSS from a CMS or plugin](#css-from-a-cms-or-plugin).
+
+### One file per thing, one entry file
+
+Keep one file per component and an entry file that imports each one into its layer:
+
+```css
+/* site.css */
+@import url("tokens.css") layer(tokens);
+@import url("cms.css") layer(reset);
+@import url("components/pull-quote.css") layer(site);
+@import url("components/lesson-card.css") layer(site);
+```
+
+The files themselves hold plain CSS with native nesting, and no layer of their own. Bundle the entry file into one stylesheet for production (Lightning CSS and most bundlers keep the layers), so the browser doesn't fetch each import in turn. A preprocessor isn't needed: nesting, custom properties and layers are all CSS.
+
+Link it after the library and its theme:
+
+```html
+<link rel="stylesheet" href="/css/index.css" />
+<link rel="stylesheet" href="/css/themes/dfh.css" />
+<link rel="stylesheet" href="/css/site.css" />
+```
+
+When several sites share components, give the shared ones a stylesheet of their own, versioned like the library, and link it between the theme and each site's own CSS.
 
 ## 1. Set a token
 
@@ -33,6 +68,7 @@ For the whole product, set it in the [Token Designer](/docs/tools/). It writes t
 The same token in your stylesheet does the same for every match:
 
 ```css
+/* tokens.css */
 .plant-shop {
   --button-color: var(--foreground-complementary);
   --card-radius: var(--radius-lg);
@@ -43,7 +79,7 @@ Point a token at a semantic token (`--foreground-complementary`, `--radius-lg`),
 
 ## 2. Add to a class
 
-When no token covers it, add to the library's own class:
+When no token covers it, add to the library's own class, in the `site` layer:
 
 ```css
 .button {
@@ -81,6 +117,35 @@ You can also make a variant of a library component by setting its tokens under a
   --button-radius: var(--radius-full);
 }
 ```
+
+### Use the class, not a copy of it
+
+Put the library's class on the markup. Don't copy a component's declarations into your own rules, through a Sass mixin or by hand: the copy doesn't follow the theme's later changes, the sizing modes or compact regions, and it sits in a later layer, so it overrides the real class wherever both meet. The same goes for elements: the library styles its classes, not a bare `input` or `h2`, so markup without the class looks unstyled on purpose.
+
+## CSS from a CMS or plugin
+
+A CMS styles its own output, and almost always outside any layer, so its rules beat every library rule whatever their specificity. Patching each one with `!important` is the fight to avoid. Instead:
+
+1. **Turn its styles off on the front end.** Most CMSs can dequeue their block and theme styles; the editor keeps them. In WordPress, that's `wp_dequeue_style()` for `wp-block-library`, `classic-theme-styles` and `global-styles`, and the `register_block_type_args` filter for each core block's own stylesheet.
+2. **Put back only what's missing, in `reset`.** Usually that's a few utility classes its templates print, such as WordPress's `.screen-reader-text` and its text-alignment classes. A stylesheet you can't turn off can still be imported into the layer: `@import url("plugin.css") layer(reset);`.
+3. **Give its markup the library's classes.** Where you control a template, write the library's markup in it. Where the CMS builds the markup, use its filters to add the classes, or override its template: WooCommerce's account forms, for example, take Field markup in a theme template, and its address fields take the Field classes from the `woocommerce_form_field_args` filter.
+4. **Wrap content you can't class in [Prose](/docs/components/molecules/prose/).** Prose styles every element in it, whatever classes the CMS gave it. Anything inside that should stay a component, such as a form, goes in a `.prose-end`.
+5. **Style the CMS's own blocks as your own components.** A block the library has no equivalent for, such as a pull quote or a code embed, is route 3 with the CMS's class as the selector. Keep them together, one file per block, in `site`:
+
+```css
+/* components/pull-quote.css */
+.wp-block-pullquote {
+  border-block: var(--border-width-thick) solid var(--border-color-accent);
+  padding-block: var(--spacing-breathe);
+  text-align: center;
+
+  p {
+    font-family: var(--subheading-font-family);
+  }
+}
+```
+
+Inside Prose, a block's own rules in `site` come after Prose's, so they win where the two meet.
 
 ## Keep it accessible
 

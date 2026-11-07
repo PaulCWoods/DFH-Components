@@ -58,13 +58,13 @@ Selected states (\`.is-active\`, \`aria-current\`, a checked input inside a \`<l
 \`\`\`html
 <!-- Primary action: strong prominence + accent intent -->
 <button type="button" class="button button--strong button--accent">
-  <span>Save Changes</span>
+  <span>Save changes</span>
 </button>
 
 <!-- Danger: always pair intent with an icon or text (WCAG 1.4.1) -->
 <button type="button" class="button button--danger">
   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
-  <span>Delete Item</span>
+  <span>Delete item</span>
 </button>
 
 <!-- Icon-only: keep an accessible name -->
@@ -85,7 +85,7 @@ Every size keeps a 48px hit area. \`--sm\` (32px) and buttons stepped down by a 
 They colour the neutral Button at every prominence, set on a Button, a container or the theme; intents keep their own colours: \`--button-color\`, \`--button-color-hover\`, \`--button-color-pressed\`, \`--button-color-border\`, \`--button-on-color\`. \`--button-bg\` gives the default Button a resting background, and \`--button-hover-style: tint\` (a container or theme flag) tints that background on hover instead of filling it. Geometry uses the Tier 3 tokens \`--button-padding-*\`, \`--button-min-size\`, \`--button-radius\`, \`--button-inner-gap\`, \`--button-font-*\`, and their \`-sm-\` / \`-lg-\` variants.
 
 #### Keyboard
-Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as buttons activate with Enter only. \`aria-disabled="true"\` keeps the button focusable for screen readers but blocks activation.
+Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as buttons activate with Enter only. \`aria-disabled="true"\` keeps the button focusable and announced as unavailable, and the library stops pointer clicks, but Enter and Space still activate it: the product's script must ignore them.
 `,
       },
     },
@@ -110,7 +110,7 @@ Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as b
     `;
 
     const control = args.isLink
-      ? `<a href="#" class="${classes}" role="button" ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</a>`
+      ? `<a href="#" class="${classes}" ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</a>`
       : `<button type="button" class="${classes}" ${args.disabled ? 'disabled' : ''} ${args.ariaDisabled ? 'aria-disabled="true"' : ''}>${content}</button>`;
 
     return `<div class="sb-demo-stage sb-demo-constrained--md">${control}</div>`;
@@ -125,7 +125,7 @@ type Story = StoryObj<ButtonArgs>;
  */
 export const Playground: Story = {
   args: {
-    label: 'Save Changes',
+    label: 'Save changes',
     prominence: 'strong',
     intent: 'accent',
     size: 'default',
@@ -159,7 +159,7 @@ export const ProminenceAndIntent: Story = {
       <hr class="divider" />
       <div class="sb-demo-label">Placeholder (dashed, for "add" affordances)</div>
       <div class="cluster">
-        <button type="button" class="button button--placeholder"><span>+ Add Item</span></button>
+        <button type="button" class="button button--placeholder">${'<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>'}<span>Add a section</span></button>
       </div>
     </div>
   `,
@@ -180,14 +180,14 @@ export const States: Story = {
           <button type="button" class="${buttonClasses(prominence, 'accent')}"><span>Resting</span></button>
           <button type="button" class="${buttonClasses(prominence, 'accent')} is-active" aria-pressed="true"><span>Selected</span></button>
           <button type="button" class="${buttonClasses(prominence, 'accent')}" disabled><span>Disabled</span></button>
-          <button type="button" class="${buttonClasses(prominence, 'accent')}" aria-disabled="true"><span>Aria Disabled</span></button>
+          <button type="button" class="${buttonClasses(prominence, 'accent')}" aria-disabled="true"><span>Unavailable (aria-disabled)</span></button>
         </div>`,
         )
         .join('')}
       <div class="sb-demo-label">Link styled as a button</div>
       <div class="cluster">
-        <a href="#" class="button" role="button"><span>Link Button</span></a>
-        <a href="#" class="button" role="button" aria-disabled="true"><span>Link Aria Disabled</span></a>
+        <a href="#" class="button"><span>View the guide</span></a>
+        <a class="button" role="link" aria-disabled="true"><span>Guide unavailable</span></a>
       </div>
     </div>
   `,
@@ -254,7 +254,7 @@ export const ContainerFlags: Story = {
       <div class="sb-demo-label">Parent: style="--button-intent: danger;" (one child overrides with .button--strong)</div>
       <div class="cluster" style="--button-intent: danger;">
         <button type="button" class="button"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Remove</span></button>
-        <button type="button" class="button button--strong"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete All</span></button>
+        <button type="button" class="button button--strong"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete all files</span></button>
       </div>
 
       <div class="sb-demo-label">Parent: style="--ui-sizing: compact;" (density steps controls to --sm; --lg steps to default)</div>
@@ -289,7 +289,7 @@ export const IconOnlyAndShapes: Story = {
         <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
       </button>
       <button type="button" class="button button--strong button--accent button--round">
-        <span>Get Started</span>
+        <span>Get started</span>
         <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
       </button>
       <button type="button" class="button button--plain button--icon button--round" aria-label="Alex Morgan profile, online"><span class="avatar avatar--sm" aria-hidden="true"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="" /><span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span></span></button>
@@ -354,10 +354,6 @@ export const ContainerAdaptive: Story = {
   `,
 };
 
-/**
- * Light, dark and reversed surfaces. Reversed remaps the semantic roles, so
- * the same markup stays legible with no changes.
- */
 export const DefaultBackgroundAndHover: Story = {
   render: () => {
     const row = ['', 'button--accent', 'button--danger', 'button--subtle', 'button--strong']
@@ -379,6 +375,10 @@ export const DefaultBackgroundAndHover: Story = {
   },
 };
 
+/**
+ * Light, dark and inverted surfaces. Inverted remaps the semantic roles, so
+ * the same markup stays legible with no changes.
+ */
 export const Surfaces: Story = {
   render: () => {
     const row = PROMINENCES.map(
@@ -396,7 +396,7 @@ export const Surfaces: Story = {
           <div class="cluster">${row}</div>
         </div>
         <div class="sb-demo-stage stack color-palette-inverted" style="background: var(--surface); color: var(--foreground);">
-          <div class="sb-demo-label">Reversed (.color-palette-inverted)</div>
+          <div class="sb-demo-label">Inverted (.color-palette-inverted)</div>
           <div class="cluster">${row}</div>
         </div>
       </div>
