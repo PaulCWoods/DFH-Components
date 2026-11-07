@@ -94,7 +94,7 @@ const points = [
         {features.map((f) => (
           <li>
             <article class="card min-h-stretch">
-              <figure class="card__canvas color-scheme-dark p-0">
+              <figure class="card__canvas p-0">
                 <ul class="grid grid--lg grid--carousel overscroll-x-auto p-xs focus-ring--inset" role="list" tabindex="0" aria-label={f.label}>
                   {f.shots.map(([name, alt]) => (
                     <li>
@@ -108,7 +108,7 @@ const points = [
                 </ul>
               </figure>
               <div class="card__content">
-                <header class="card__header"><h3 class="heading"><a href={f.href} class="link link--plain link--stretched">{f.title}</a></h3></header>
+                <header class="card__header"><h3 class="heading"><a href={f.href} class="link link--plain">{f.title}</a></h3></header>
                 <div class="card__body"><p class="text max-w-md text-balance">{f.text}</p></div>
               </div>
             </article>
