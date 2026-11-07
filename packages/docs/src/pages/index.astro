@@ -4,6 +4,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import { getNav } from '../lib/nav';
+/* The brand frame around the title: a DFH site component, from DFH Shared
+   Styles, not the library */
+import 'dfh-shared-styles/dist/components/brand-frame.css';
 
 const nav = await getNav();
 
@@ -79,7 +82,7 @@ const points = [
     <article class="stack gap-cushion">
       <header class="brochure-header stack wrapper py-cushion">
         <h1 class="display-title brand-frame">
-          Design for Humans: <span class="home__title-highlight">Cmpnts</span>
+          Design for Humans: <span class="text-accent">Cmpnts</span>
         </h1>
         <p class="large-text text-muted">An accessible, token-driven component library on native HTML and modern CSS, for designers and developers working from one source.</p>
         <div class="cluster wrapper">
@@ -141,18 +144,6 @@ const points = [
 </BaseLayout>
 
 <style>
-:is(.brand-logo, .brand-frame) {
-    border: var(--brand-border-width, 0.125em) solid currentColor;
-    line-height: 0.9;
-    padding-block: var(--brand-padding-block, 0.125em);
-    padding-inline: var(--brand-padding-inline, 0.095em);
-    text-box: trim-both cap alphabetic;
-}
-
-.home__title-highlight {
-    color: var(--foreground-accent);
-}
-
 .brochure-header {
   gap: calc(var(--spacing-breathe) * var(--sizing-ratio));
 }
