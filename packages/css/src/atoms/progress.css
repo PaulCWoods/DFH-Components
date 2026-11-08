@@ -39,7 +39,7 @@
 :where(.progress, .meter) {
   --_bar-radius: var(--radius, 0.25rem);
   --_bar-track-bg: var(--surface-muted, transparent);
-  --_bar-transition: 200ms;
+  --_bar-transition: var(--duration-sm, 150ms);
 
   appearance: none;
   display: block;
@@ -54,10 +54,10 @@
   overflow: hidden;
   vertical-align: middle;
 
-  /* Forced colours and high contrast: give the bar a visible boundary */
+  /* High contrast: give the bar a visible boundary */
   @media (prefers-contrast: more) {
-    outline: 1px solid var(--border-color-control, currentColor);
-    outline-offset: 1px;
+    outline: var(--border-width-thin, 1px) solid var(--border-color-control, currentColor);
+    outline-offset: var(--border-width-thin, 1px);
   }
 }
 
@@ -291,6 +291,22 @@
 
 :where(.progress--danger) {
   --_progress-tone: var(--foreground-danger, AccentColor);
+}
+
+/* Forced colours would flatten the value into the track: the track is
+   Canvas with a CanvasText edge, the value Highlight. After the atoms and
+   modifiers, so it beats their tones. */
+@media (forced-colors: active) {
+  :where(.progress, .meter) {
+    --_bar-track-bg: Canvas;
+    --_progress-tone: Highlight;
+    --_meter-optimum: Highlight;
+    --_meter-suboptimum: Highlight;
+    --_meter-critical: Highlight;
+    forced-color-adjust: none;
+    outline: var(--border-width-thin, 1px) solid CanvasText;
+    outline-offset: var(--border-width-thin, 1px);
+  }
 }
 
 /* ==========================================================================

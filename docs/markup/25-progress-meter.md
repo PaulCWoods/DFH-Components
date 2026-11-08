@@ -38,6 +38,7 @@ A bar never works alone. It backs up the name and value in the text beside it, s
 - **Name every bar and state its value as text beside it.** The bar backs up the text, so colour never carries the meaning alone (WCAG 1.4.1) and the empty track needn't reach 3:1.
 - **Meter colour follows the value.** With `low`, `high` and `optimum` set, the browser picks the region: optimum is success, the next warning, the worst danger. With none set, the Meter fills in accent. Meter has no intent classes.
 - **Indeterminate progress** has no `value`. Put `aria-busy="true"` on the region being loaded, never on the progress. Under reduced motion the sweep becomes a static hatch.
+- **Forced colours** draw the track as the page with an edge and the value as a highlight, so a bar never disappears into its track.
 
 ## Keyboard and screen readers
 - **Neither takes focus or keys.** They report; they aren't controls.

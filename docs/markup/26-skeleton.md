@@ -14,7 +14,7 @@ related: [progress-meter, card, empty-state]
   <span class="skeleton" data-axes aria-hidden="true"></span>
 </div>
 ---
-Shape: Text=skeleton--text, Heading=skeleton--heading, Avatar=skeleton--avatar, Button=skeleton--button, Input=skeleton--input, Badge=skeleton--badge, Media=skeleton--media
+Shape: Text=skeleton--text, Heading=skeleton--heading, Avatar=skeleton--avatar, Button=skeleton--button, Input=skeleton--input, Status=skeleton--status, Media=skeleton--media
 Motion: Shimmer, Pulse=skeleton--pulse
 ```
 
@@ -105,8 +105,8 @@ A placeholder that holds the space of content still loading, so nothing moves wh
 ## Options
 | Use | Markup |
 | :--- | :--- |
-| Shape | `.skeleton` with `--text`, `--heading`, `--avatar`, `--button`, `--input`, `--badge` or `--media`. A bare `.skeleton` is a block sized by `--skeleton-width` and `--skeleton-height`. |
-| Companion | `.skeleton` on `.avatar`, `.button`, `.input`, `.textarea`, `.select`, `.badge`, `.chip`, `.status` or `.kbd`. The atom keeps its own box; the Skeleton replaces the paint. |
+| Shape | `.skeleton` with `--text`, `--heading`, `--avatar`, `--button`, `--input`, `--status` or `--media`. A bare `.skeleton` is a block sized by `--skeleton-width` and `--skeleton-height`. |
+| Companion | `.skeleton` on `.avatar`, `.thumbnail`, `.button`, `.input`, `.textarea`, `.select`, `.badge`, `.chip`, `.status` or `.kbd`. The atom keeps its own box; the Skeleton replaces the paint. |
 | Width | `--w-50`, `--w-75`, `--w-90`; any other with `--skeleton-width` (per element, not inherited) |
 | Motion | Shimmer (default), `--pulse`; `--skeleton-motion: shimmer \| pulse \| none` on a container |
 
@@ -119,7 +119,7 @@ A placeholder that holds the space of content still loading, so nothing moves wh
 ```html live cluster
 <span class="skeleton skeleton--avatar" aria-hidden="true"></span>
 <span class="skeleton skeleton--button" aria-hidden="true"></span>
-<span class="skeleton skeleton--badge" aria-hidden="true"></span>
+<span class="skeleton skeleton--status" aria-hidden="true"></span>
 <span class="skeleton skeleton--media" aria-hidden="true"></span>
 <span class="skeleton" aria-hidden="true" style="--skeleton-width: 12rem; --skeleton-height: 2rem;"></span>
 ```

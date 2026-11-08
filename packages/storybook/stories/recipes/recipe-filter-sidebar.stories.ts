@@ -132,8 +132,8 @@ const skeletonCard = (w: string) => `
         <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true"></span><span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span></p>
       </div>
       <footer class="card__footer inline inline--between">
-        <span class="skeleton skeleton--badge" aria-hidden="true"></span>
-        <span class="skeleton skeleton--badge" aria-hidden="true"></span>
+        <span class="skeleton skeleton--status" aria-hidden="true"></span>
+        <span class="skeleton skeleton--status" aria-hidden="true"></span>
       </footer>
     </article>
   </li>`;

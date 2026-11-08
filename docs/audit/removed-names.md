@@ -75,3 +75,6 @@ What each component pass removed and what replaced it, moved here from the publi
 
 ## Surfaces
 - The popover polyfill's `.:popover-open` class (the Popover API is Baseline widely available); `font-size: 0` on `.card__thumb`.
+
+## Indicators
+- `.skeleton--badge` (now `.skeleton--status`: it stands in for a Status pill, and a Badge is a count or dot).

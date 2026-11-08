@@ -150,6 +150,7 @@
 :where(.badge--sm) {
   --_badge-font-size: var(--badge-sm-font-size, var(--typography-font-size--2));
   --_badge-size: var(--badge-sm-size, var(--spacing, 1rem));
+  --_badge-text-padding-inline: 0px;
 }
 
 /* Dot: presence of something new, without a count. */

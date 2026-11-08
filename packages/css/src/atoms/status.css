@@ -189,6 +189,13 @@
   }
 }
 
+/* More contrast: a subtle status gets its edge back, as subtle fields do */
+@media (prefers-contrast: more) {
+  :where(.status--subtle) {
+    --_status-border-color: var(--_status-tone-border);
+  }
+}
+
 :where(.status__text) {
   text-box: trim-both cap alphabetic;
 }

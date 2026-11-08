@@ -6,10 +6,10 @@
 
    Two ways to use it:
    - A shape: .skeleton with --text, --heading, --avatar, --button, --input,
-     --badge or --media. A bare .skeleton is a block sized by
+     --status or --media. A bare .skeleton is a block sized by
      --skeleton-width and --skeleton-height.
-   - A companion: .skeleton on another atom (.avatar, .button, .input,
-     .textarea, .select, .badge, .chip, .status, .kbd). The atom keeps its
+   - A companion: .skeleton on another atom (.avatar, .thumbnail, .button,
+     .input, .textarea, .select, .badge, .chip, .status, .kbd). The atom keeps its
      own box; the skeleton only replaces the paint.
 
    Text lines size from the text atom they sit in: --text and --heading are
@@ -25,7 +25,7 @@
 
    Markup:
    <section aria-busy="true" aria-labelledby="feed-title">
-     <p class="visually-hidden" role="status">Loading activity…</p>
+     <p class="sr-only" role="status">Loading activity…</p>
      <div class="small-heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
      <p class="text">
        <span class="skeleton skeleton--text" aria-hidden="true"></span>
@@ -95,17 +95,21 @@
   }
 }
 
-/* The avatar is a molecule, so it loads after this file: recolour it
-   through its own hook instead. */
+/* Avatar and Thumbnail load after this file and set their own fill:
+   recolour them through their hooks instead. */
 :where(.avatar.skeleton) {
   --avatar-bg: var(--_skeleton-color);
   --avatar-border-color: transparent;
 }
 
+:where(.thumbnail.skeleton) {
+  --thumbnail-bg: var(--_skeleton-color);
+}
+
 /* ==========================================================================
    2. Box (standalone skeletons only; companions keep their atom's box)
    ========================================================================== */
-:where(.skeleton:not(.avatar, .button, .input, .textarea, .select, .badge, .chip, .status, .kbd)) {
+:where(.skeleton:not(.avatar, .thumbnail, .button, .input, .textarea, .select, .badge, .chip, .status, .kbd)) {
   display: block;
   box-sizing: border-box;
   inline-size: var(--skeleton-width, 100%);
@@ -146,7 +150,7 @@
   }
 
   /* The size of a status pill: its text's cap height plus its padding. */
-  &:where(.skeleton--badge) {
+  &:where(.skeleton--status) {
     font-size: var(--status-font-size, var(--body-sm-fixed-font-size));
     inline-size: var(--skeleton-width, 8ch);
     block-size: var(--skeleton-height, calc(1cap + 2 * var(--status-padding-block, var(--spacing-6))));

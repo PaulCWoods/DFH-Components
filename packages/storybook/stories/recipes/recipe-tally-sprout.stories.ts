@@ -272,7 +272,7 @@ const skeletonRows = () =>
     <td><span class="skeleton skeleton--text skeleton--w-75"></span></td>
     <td><div class="inline"><span class="skeleton skeleton--avatar"></span><span class="skeleton skeleton--text"></span></div></td>
     <td><span class="skeleton skeleton--text skeleton--w-75"></span></td>
-    <td><span class="skeleton skeleton--badge"></span></td>
+    <td><span class="skeleton skeleton--status"></span></td>
     <td><span class="skeleton skeleton--text"></span></td>
     <td></td>
   </tr>`,
