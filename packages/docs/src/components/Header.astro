@@ -17,7 +17,8 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
   <div class="header__bar">
     <a href="/" class="brand">
       <Icon name="BrandDesignForHumans" class="brand__mark" />
-      <span class="brand__name">Cmpnts</span>
+      <span class="brand__name" aria-hidden="true">Cmpnts</span>
+      <span class="sr-only">Design for Humans: Components</span>
     </a>
     <nav class="header__nav tab-list tab-list--plain tab-list--scrollable max-lg:hide" aria-label="Sections">
       <ul>

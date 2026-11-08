@@ -10,6 +10,9 @@
 		},
 		{
 			"path": "../DFH-Course-Theme"
+		},
+		{
+			"path": "../DFH-Shared-Styles"
 		}
 	],
 	"settings": {}
