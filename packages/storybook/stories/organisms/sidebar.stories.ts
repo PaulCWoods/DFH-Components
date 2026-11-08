@@ -97,7 +97,7 @@ export const Sticky: Story = {
     <div class="app">
       <a href="#main" class="skip-link">Skip to content</a>
       <header class="header header--sticky">
-        <div class="header__bar"><a href="#" class="link link--plain small-heading">Woodland Plants</a><button type="button" class="button">Sign in</button></div>
+        <div class="header__bar"><a href="#" class="brand"><span class="brand__name">Woodland Plants</span></a><button type="button" class="button">Sign in</button></div>
       </header>
       <div class="app__workspace">
         ${panel('sidebar--sticky')}
@@ -154,7 +154,7 @@ export const SmallScreens: Story = {
       <a href="#main" class="skip-link">Skip to content</a>
       <header class="header">
         <div class="header__bar">
-          <a href="#" class="link link--plain small-heading">Woodland Plants</a>
+          <a href="#" class="brand"><span class="brand__name">Woodland Plants</span></a>
           <button type="button" class="button button--plain button--icon md:hide" commandfor="plant-nav" command="show-modal" aria-haspopup="dialog">
             <span class="sr-only">Plant groups</span>${icon('Navigation')}
           </button>

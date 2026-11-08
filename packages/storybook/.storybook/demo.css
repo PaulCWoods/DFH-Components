@@ -25,6 +25,15 @@
   max-inline-size: 36rem;
 }
 
+/* A window that scrolls on its own, for sticky parts: the docs page clips
+   a story, so the page itself can't scroll it. Focused links scroll clear
+   of a sticky header, as :root does on a real page. */
+:where(.sb-demo-viewport) {
+  block-size: 28rem;
+  overflow: auto;
+  scroll-padding-block-start: var(--header-height, 4rem);
+}
+
 /* A plain label for a row or region of a demo */
 :where(.sb-demo-label) {
   font-size: var(--font-size-xs, 0.75rem);

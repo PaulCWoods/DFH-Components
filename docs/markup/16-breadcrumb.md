@@ -65,7 +65,7 @@ A page that links to itself keeps the same `aria-current`, and gives people a wa
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |
-| Mark the last item with `aria-current="page"`. | Show the current page in bold, or with `.is-current`. |
+| Mark the last item with `aria-current="page"`. | Show the current page in bold. |
 | Put a text atom on the list. | Set a font size on the Breadcrumb. |
 | Change the character with `--breadcrumb-separator`. | Type separators into the markup, where screen readers read them. |
 | Use a Stepper for the stages of a task. | Use a trail where the order is a sequence of tasks. |

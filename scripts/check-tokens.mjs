@@ -136,8 +136,6 @@ const pending = new Map(Object.entries({
   '--input-min-chars': 'forms',
   '--input-picker-icon-space': 'forms',
   '--input-sm-inner-gap': 'forms',
-  '--tab-list-inset': 'navigation',
-  '--tab-sm-list-indicator-width': 'navigation',
 }));
 
 /* Every read of a Tier 3 token in the component CSS */

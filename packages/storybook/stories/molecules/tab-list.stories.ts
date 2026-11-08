@@ -169,53 +169,14 @@ export const ContainerFlags: Story = {
   `),
 };
 
-/**
- * Nested navigation: <ul>/<li> with group labels (.tab-list__content) and
- * disclosure buttons beside the tabs.
- */
-export const NestedNavigation: Story = {
-  render: () => `
-    <div class="sb-demo-stage sb-demo-constrained--sm">
-      <nav class="tab-list tab-list--segmented tab-list--subtle tab-list--vertical tab-list--sm" aria-label="Documentation">
-        <ul>
-          <li>
-            <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nested-start">
-              <span class="sr-only">Getting started</span>${icon('ChevronDown')}
-            </button>
-            <span class="tab-list__content small-heading">Getting started</span>
-            <ul id="nested-start">
-              <li><a href="#" class="tab" aria-current="page"><span class="tab__text">Overview</span></a></li>
-              <li><a href="#" class="tab"><span class="tab__text">Installation</span></a></li>
-              <li><a href="#" class="tab"><span class="tab__text">Design tokens</span></a></li>
-            </ul>
-          </li>
-          <li>
-            <button type="button" class="button button--plain button--sm button--icon" aria-expanded="true" aria-controls="nested-components">
-              <span class="sr-only">Components</span>${icon('ChevronDown')}
-            </button>
-            <span class="tab-list__content small-heading">Components</span>
-            <ul id="nested-components">
-              <li><a href="#" class="tab"><span class="tab__text">Buttons</span></a></li>
-              <li><a href="#" class="tab"><span class="tab__text">Tabs</span><span class="status status--sm"><span class="status__text">Updated</span></span></a></li>
-            </ul>
-          </li>
-          <li><a href="#" class="tab"><span class="tab__text">Changelog</span></a></li>
-        </ul>
-      </nav>
-    </div>
-  `,
-};
-
-/**
- * One row that scrolls, with edges that fade while there is more to see.
- * Without --scrollable a list wraps.
- */
 export const Scrollable: Story = {
   render: () =>
     withTabBehaviour(`
     <div class="sb-demo-stage sb-demo-constrained--sm stack">
       <span class="sb-demo-tag">--scrollable</span>
       ${navList('Scrollable', ['Overview', 'Milestones', 'Roadmap', 'Analytics', 'Team members', 'Integrations', 'Audit log', 'Settings'], { extra: ['tab-list--scrollable'] })}
+      <span class="sb-demo-tag">--segmented --sm --scrollable</span>
+      ${navList('Scrollable small', ['Overview', 'Milestones', 'Roadmap', 'Analytics', 'Team members', 'Integrations'], { style: 'segmented', sm: true, extra: ['tab-list--scrollable'] })}
       <span class="sb-demo-tag">default: wraps</span>
       ${navList('Wrapping', ['All topics', 'Accessibility', 'Design tokens', 'Architecture', 'Typography', 'WCAG 2.2'], { style: 'segmented', prominence: 'subtle' })}
     </div>

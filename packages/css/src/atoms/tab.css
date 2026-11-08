@@ -97,8 +97,8 @@
   @container style(--tab-list-size: sm) or style(--ui-sizing: compact) {
     --_tab-font-size: var(--tab-sm-font-size, var(--control-sm-font-size, 0.875rem));
     --_tab-min-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
-    --_tab-line-width: var(--tab-sm-list-indicator-width, 2px);
-    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, var(--spacing-2)));
+    --_tab-line-width: var(--tab-sm-list-indicator-width, var(--border-width-medium, 2px));
+    --_tab-padding-block: var(--tab-sm-padding-block, var(--button-sm-padding-block, var(--spacing-2xs)));
     --_tab-segmented-padding-inline: var(--tab-sm-padding-inline, var(--button-sm-padding-inline, var(--spacing-10)));
   }
 
@@ -319,7 +319,7 @@
    a badge count spelled out for screen readers).
    ========================================================================== */
 :where(.tab--icon),
-:where(.tab:not(:has(.tab__text)):has(:where(.visually-hidden, .sr-only, .sr))) {
+:where(.tab:not(:has(.tab__text)):has(:where(.visually-hidden, .sr-only))) {
   --_tab-icon-size: calc(var(--icon-size, calc(var(--icon-base-size, 1) * 1em)) * 1.25);
   --_tab-inner-gap: 0px;
   --_tab-padding-inline: var(--_tab-padding-block);
@@ -370,7 +370,7 @@
       border: 0;
     }
 
-    :is(kbd, .kbd, .chip, .status, .badge) {
+    :is(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
       display: none;
     }
   }
@@ -395,7 +395,7 @@
     border: 0;
   }
 
-  :is(kbd, .kbd, .chip, .status, .badge) {
+  :is(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
     display: none;
   }
 }
@@ -434,6 +434,6 @@
 
 @media (prefers-contrast: more) {
   :where(.tab) {
-    --_tab-list-indicator-width: max(var(--tab-list-indicator-width, var(--border-width-thick)), var(--border-width-thick));
+    --_tab-line-width: max(var(--tab-list-indicator-width, var(--border-width-thick)), var(--border-width-thick));
   }
 }

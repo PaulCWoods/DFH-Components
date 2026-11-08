@@ -45,10 +45,11 @@ Every axis sits on the list, because Tabs in a row should match each other. The 
 - **Not for steps in order:** that is a [Stepper](30-stepper.md).
 - **Not for reading several sections together:** an [Accordion](04-accordion.md) keeps them open at once, and plain headings let people scan.
 - **Not for an action:** something that changes data is a [Button](01-button.md).
+- **Not for a choice with no panel** (a billing period, a view): that is a joined [Button Group](14-button-group.md) of radio inputs.
 
 ## Rules
 - **Selected state is ARIA only:** `aria-selected="true"` in a tablist, `aria-current` (any value but `"false"`) in navigation. No class.
-- **Underline is for navigation and sections; segmented switches a view.**
+- **Underline is for navigation and sections; segmented suits a few short panels.** A choice with no panel is a joined [Button Group](14-button-group.md) of radio inputs, not Tabs.
 - **Icon-only Tabs:** `.tab--icon`, with the label kept in `.tab__text`. `.hide-labels` on the list, or `--ui-labels: hidden` on a container, collapses labels to icons.
 - **Counts:** hide a Badge from assistive technology and spell the count out in visually hidden text.
 
@@ -121,29 +122,27 @@ For `role="tablist"`, the product supplies the WAI-ARIA Tabs pattern. The exampl
 ```
 
 ## Segmented
+Segmented Tabs suit a few short panels that sit side by side, such as two views of the same plant.
 ```html live
-<div class="tab-list tab-list--segmented tab-list--subtle tab-list--round" role="tablist" aria-label="Billing period">
-  <button type="button" role="tab" class="tab" aria-selected="true">
-    <span class="tab__text">Monthly</span>
-  </button>
-  <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1">
-    <span class="tab__text">Annual</span>
-    <span class="status status--accent status--sm"><span class="status__text">Save 20%</span></span>
-  </button>
-</div>
-
-<!-- Icon-only -->
-<div class="tab-list tab-list--segmented tab-list--round" role="tablist" aria-label="Editor view">
-  <button type="button" role="tab" class="tab tab--icon" aria-selected="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Code"/></svg>
-    <span class="tab__text">Code</span>
-  </button>
-  <button type="button" role="tab" class="tab tab--icon" aria-selected="false" tabindex="-1">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Edit"/></svg>
-    <span class="tab__text">Design</span>
-  </button>
+<div class="tabbed-content">
+  <div class="tab-list tab-list--segmented tab-list--subtle tab-list--round" role="tablist" aria-label="Plant views">
+    <button type="button" role="tab" id="seg-tab-1" class="tab" aria-selected="true" aria-controls="seg-panel-1">
+      <span class="tab__text">Care</span>
+    </button>
+    <button type="button" role="tab" id="seg-tab-2" class="tab" aria-selected="false" aria-controls="seg-panel-2" tabindex="-1">
+      <span class="tab__text">Planting</span>
+    </button>
+  </div>
+  <div id="seg-panel-1" role="tabpanel" class="tab-panel" aria-labelledby="seg-tab-1" tabindex="0">
+    <p>Water in dry spells and mulch each spring.</p>
+  </div>
+  <div id="seg-panel-2" role="tabpanel" class="tab-panel" aria-labelledby="seg-tab-2" tabindex="0" hidden>
+    <p>Plant in autumn, in soil that holds moisture.</p>
+  </div>
 </div>
 ```
+
+A choice that switches no panel, such as a billing period or an editor view, isn't a set of Tabs. It is a joined [Button Group](14-button-group.md) of radio inputs, which needs no script and gets arrow keys from the browser.
 
 ## Do and Don't
 | Do | Don't |

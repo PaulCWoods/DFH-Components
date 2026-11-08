@@ -102,8 +102,9 @@
   border-block-end: var(--_header-border-width) var(--_header-border-style) var(--_header-border-color);
 }
 
-/* At the top of the page, clear a notch */
-:where(.header:first-child) {
+/* At the top of the page, clear a notch (a Skip Link before it doesn't
+   count: it is off screen until focused) */
+:where(.header:nth-child(1 of :not(.skip-link))) {
   padding-block-start: var(--safe-area-inset-top, 0px);
 }
 
@@ -142,19 +143,6 @@
   flex: 1 1 0;
   min-inline-size: 0;
   padding-inline-start: var(--_header-gap);
-}
-
-:where(.header__skip-link) {
-  margin-inline: calc(var(--_header-padding-inline) * -1);
-
-  /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
-  @supports (inline-size: -webkit-fill-available) {
-    inline-size: -webkit-fill-available;
-  }
-
-  @supports (inline-size: stretch) {
-    inline-size: stretch;
-  }
 }
 
 /* A split in a bar is the whole row */
@@ -244,19 +232,19 @@
 /* Focus Not Obscured (2.4.11): focused elements scroll clear of the header */
 :where(:root:has(.header--sticky)) {
   /* The header pads itself clear of a notch, on top of its height */
-  scroll-padding-block-start: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
+  scroll-padding-block-start: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width, 1px)))) + var(--safe-area-inset-top, 0px));
 }
 
 /* A compact sticky header is shorter, so what clears it follows. The
    :has() argument gives these the token's own specificity (0,1,0), so
    they beat the token and a product's :root override (later) beats them. */
 :where(:root):has(.header--sticky.header--compact) {
-  --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
+  --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width, 1px))));
 }
 
 @media (width < 48rem) {
   :where(:root):has(.header--sticky.max-md\:header--compact) {
-    --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width))));
+    --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width, 1px))));
   }
 }
 

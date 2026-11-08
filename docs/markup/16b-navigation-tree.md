@@ -41,7 +41,7 @@ Despite the name, it takes no `role="tree"`, which promises arrow-key handling t
 - **Not for the trail above a page:** that is a [Breadcrumb](16-breadcrumb.md).
 
 ## Rules
-- **Current location:** `aria-current` on the Link: `page` in site navigation, `location` (or `true`) in a table of contents. It shows bold text in the foreground colour, a tint, and a rail inside the Button's inline start. The rail is `--navigation-tree-rail-width` (4px) or the Button's radius, whichever is greater, and its start corners follow the Button's, so it sits flush in the curve. No class.
+- **Current location:** `aria-current` on the Link: `page` in site navigation, `location` (or `true`) in a table of contents. It shows bold text in the foreground colour, a tint, and a rail inside the Button's inline start. The rail is square, `--navigation-tree-rail-width` (4px) wide, since the tree's items have square corners. No class.
 - **Nesting** is a nested `<ol>` or `<ul>` inside the item's `<li>`. Don't fake depth with classes.
 - **Collapsible branches** are not supported yet.
 

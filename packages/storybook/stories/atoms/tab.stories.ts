@@ -98,7 +98,7 @@ type Story = StoryObj<TabArgs>;
 export const Playground: Story = {};
 
 /**
- * Rest, selected and disabled, in both styles. Click a tab to select it.
+ * Rest, current and disabled, in both styles, as navigation links.
  */
 export const States: Story = {
   render: () =>
@@ -108,11 +108,11 @@ export const States: Story = {
         .map(
           (style) => `
         <span class="sb-demo-tag">${style}</span>
-        <div class="${listClasses({ style })}" role="tablist" aria-label="${style} states">
-          <button type="button" role="tab" class="tab" aria-selected="true" tabindex="0"><span class="tab__text">Selected</span></button>
-          <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1"><span class="tab__text">Rest</span></button>
-          <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1" disabled><span class="tab__text">Disabled</span></button>
-        </div>`
+        <nav class="${listClasses({ style })}" aria-label="${style} states">
+          <a href="#" class="tab" aria-current="page"><span class="tab__text">Current</span></a>
+          <a href="#" class="tab"><span class="tab__text">Rest</span></a>
+          <a role="link" class="tab" aria-disabled="true"><span class="tab__text">Disabled</span></a>
+        </nav>`
         )
         .join('')}
     </div>
@@ -130,18 +130,18 @@ export const Content: Story = {
         .map(
           (style) => `
         <span class="sb-demo-tag">${style}</span>
-        <div class="${listClasses({ style })}" role="tablist" aria-label="${style} content">
-          <button type="button" role="tab" class="tab" aria-selected="true" tabindex="0">${icon('Home')}<span class="tab__text">Icon</span></button>
-          <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1">
+        <nav class="${listClasses({ style })}" aria-label="${style} content">
+          <a href="#" class="tab" aria-current="page">${icon('Home')}<span class="tab__text">Icon</span></a>
+          <a href="#" class="tab">
             <span class="tab__text">Badge</span>
             <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="sr-only">, 14 open</span>
-          </button>
-          <button type="button" role="tab" class="tab" aria-selected="false" tabindex="-1">
+          </a>
+          <a href="#" class="tab">
             <span class="tab__text">Status</span>
             <span class="status status--sm"><span class="status__text">Beta</span></span>
-          </button>
-          <button type="button" role="tab" class="tab tab--icon" aria-selected="false" tabindex="-1">${icon('Settings')}<span class="tab__text">Settings</span></button>
-        </div>`
+          </a>
+          <a href="#" class="tab tab--icon">${icon('Settings')}<span class="tab__text">Settings</span></a>
+        </nav>`
         )
         .join('')}
     </div>

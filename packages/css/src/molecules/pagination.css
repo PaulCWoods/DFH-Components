@@ -11,14 +11,18 @@
    href and aria-disabled="true". The gap marker is hidden from screen
    readers, since the page numbers already say which pages are skipped.
 
+   It fills its row and responds to its own width: narrower than 30rem it
+   keeps Previous, the current page and Next, and hides the other pages
+   and the gaps, so a row of 48px targets never overflows a phone.
+
    <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
-     <a class="button button--icon" href="/page/1">…<span class="visually-hidden">Previous page</span></a>
+     <a class="button button--icon" href="/page/1">…<span class="sr-only">Previous page</span></a>
      <a class="button" href="/page/1"><span>1</span></a>
      <a class="button" href="/page/2" aria-current="page"><span>2</span></a>
      <a class="button" href="/page/3"><span>3</span></a>
      <span class="pagination__gap" aria-hidden="true">…</span>
      <a class="button" href="/page/10"><span>10</span></a>
-     <a class="button button--icon" href="/page/3">…<span class="visually-hidden">Next page</span></a>
+     <a class="button button--icon" href="/page/3">…<span class="sr-only">Next page</span></a>
    </nav>
    ========================================================================== */
 
@@ -26,16 +30,20 @@
   /* Private manifest */
   --_pagination-gap-color: var(--pagination-gap-color, var(--foreground-muted, currentColor));
 
+  /* Its own width decides how many pages show */
+  container-type: inline-size;
+
   /* A tighter gap than other button groups */
   --button-group-gap: var(--pagination-gap, var(--spacing-xs));
 
-  /* Number buttons are square: the inline padding matches the block padding */
-  > :where(.button:not(:has(.icon))) {
+  /* Page numbers are square: the inline padding matches the block padding.
+     Text Previous and Next links, at the ends, keep theirs. */
+  > :where(.button:not(:has(.icon), :first-child, :last-child)) {
     --_button-padding-inline: var(--_button-padding-block);
   }
 }
 
-/* Skipped pages: an ellipsis as wide as a page button */
+/* Skipped pages: an ellipsis in a column as wide as a small page button */
 :where(.pagination__gap) {
   align-items: center;
   color: var(--_pagination-gap-color);
@@ -43,4 +51,11 @@
   justify-content: center;
   min-inline-size: var(--spacing-target-sm, 2rem);
   user-select: none;
+}
+
+/* A narrow row: Previous, the current page and Next */
+@container (inline-size < 30rem) {
+  :where(.pagination) > :where(.button:not([aria-current="page"], :first-child, :last-child), .pagination__gap) {
+    display: none;
+  }
 }

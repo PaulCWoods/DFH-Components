@@ -1,7 +1,7 @@
 ---
 title: Pagination
 tier: molecule
-summary: Links that move between the pages of one List.
+summary: Links that move between the pages of one list.
 tokens: pagination
 storybook: molecules-pagination
 related: [button-group, button, breadcrumb, table]
@@ -43,9 +43,10 @@ The page numbers already say which pages are missing, so the marker is hidden fr
 - **Not for the stages of a task:** that is a [Stepper](30-stepper.md).
 
 ## Rules
-- **Current page:** `aria-current="page"` on its Link. The Button shows `aria-current` as selected; no `.is-active`.
+- **Current page:** `aria-current="page"` on its Link. The Button shows `aria-current` as selected; no class.
 - **No previous or next page:** keep the control, as a Link with no `href`, `role="link"` and `aria-disabled="true"` (without an `href` it has no role of its own), so the row doesn't shift.
 - **Skipped pages:** `<span class="pagination__gap" aria-hidden="true">…</span>`. The page numbers already say which pages are missing, so the marker is hidden.
+- **Narrow rows:** Pagination fills its row and responds to its own width. Narrower than 30rem it keeps Previous, the current page and Next, and hides the other pages and gaps, so its 48px targets never overflow a phone. Put Previous and Next first and last, and don't put Pagination in a row that sizes to its content.
 
 ## Keyboard and screen readers
 The links behave as links, so there's nothing to script.

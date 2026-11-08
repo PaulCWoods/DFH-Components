@@ -8,9 +8,8 @@
 
    The current item is marked with aria-current ("page" for a site,
    "location" or "true" for a table of contents) and shows bold text in the
-   foreground colour, a tint, and a rail inside the button's inline start,
-   rounded to the button's corners. Other items are regular weight in a
-   quieter colour.
+   foreground colour, a tint, and a square rail inside the button's inline
+   start. Other items are regular weight in a quieter colour.
 
    Everything lines up on the label's inset (the button's border and
    padding): nested lists start under their parent's label, guide lines
@@ -60,7 +59,7 @@
   /* Items are plain buttons in regular weight and a quieter colour; the
      current item stands out in weight and colour */
   --button-prominence: plain;
-  --button-font-weight: var(--font-weight-normal, 400);
+  --button-font-weight: var(--font-weight-regular, 400);
   --font-sizing: fixed;
 
   /* Hit areas reach at most halfway to the next item, and not across the
@@ -156,8 +155,7 @@
     --_button-hover-color-palette: initial;
     --_button-active-color-palette: initial;
 
-    /* The rail fills the button's start edge, over its border: as wide as
-       the rail width or the button's radius, whichever is greater */
+    /* The rail fills the button's start edge, over its border */
     &::before {
       background-color: var(--_navigation-tree-rail-color);
       content: "";
@@ -202,11 +200,13 @@
 }
 
 /* ==========================================================================
-   5. Forced colours: the rail uses a system colour
+   5. Forced colours: the current item is Highlight (the Button's own
+   forced-colours rule), so the rail is drawn in HighlightText on it
    ========================================================================== */
 @media (forced-colors: active) {
-  :where(.navigation-tree) :where(li)> :where(.button[aria-current])::before {
-    background-color: Highlight;
+  :where(.navigation-tree) :where(li)> :where(.button[aria-current]:not([aria-current="false"]))::before {
+    background-color: HighlightText;
+    forced-color-adjust: none;
   }
 }
 

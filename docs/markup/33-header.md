@@ -122,7 +122,7 @@ Two bars in one `<header>`, with a rule between them. One landmark, one band.
 ```html live
 <div class="header header--flush header--stretch">
   <div class="header__bar">
-    <div class="split split--three split--nowrap @3xl:split--sidebar">
+    <div class="split split--three @3xl:split--sidebar">
       <a href="/" class="brand"><span class="brand__name">Woodland Plants</span></a>
       <form role="search" aria-label="Plants, three columns example">
         <input type="search" class="input input--subtle inline-size-full" placeholder="Search plants" aria-label="Search plants">
@@ -134,13 +134,13 @@ Two bars in one `<header>`, with a rule between them. One landmark, one band.
   </div>
 </div>
 ```
-In an app with a [Sidebar](34-sidebar.md), the ends of the bar can be as wide as the Sidebar and the centre as wide as the main, so the search or navigation sits over the content it serves. `--flush` takes away the band's inline padding (the safe areas stay) and the bar's block padding (its height stays), and the [Split](19c-split.md)'s end panes pad like the Sidebar instead, so the Brand lines up with the Sidebar's content. `@3xl:split--sidebar` gives the ends the app's sidebar column from 48em, where the Sidebar sits beside the main; on a phone they fit their content. A compact region narrows the Sidebar and the ends together, so put the density on the region (`.fine:ui-compact` on the app), not `--compact` on the Header alone.
+In an app with a [Sidebar](34-sidebar.md), the ends of the bar can be as wide as the Sidebar and the centre as wide as the main, so the search or navigation sits over the content it serves. `--flush` takes away the band's inline padding (the safe areas stay) and the bar's block padding (its height stays), and the [Split](19c-split.md)'s end panes pad like the Sidebar instead, so the Brand lines up with the Sidebar's content. `@3xl:split--sidebar` gives the ends the app's sidebar column from 48em, where the Sidebar sits beside the main; narrower, the Split wraps as usual. A compact region narrows the Sidebar and the ends together, so put the density on the region (`.fine:ui-compact` on the app), not `--compact` on the Header alone.
 
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |
 | Use one `<header>` per page, with the Skip Link before it. | Label the banner with `aria-label`. |
-| Use two `__bar`s for two rows. | Add a second header, or a `.header-container`. |
+| Use two `__bar`s for two rows. | Add a second header, or a wrapper around the bars. |
 | Raise `--header-bar-min-size` for a taller header. | Size the Header from `--header-height`. |
 | Swap the navigation for a menu Button with `@max-3xl:hide` and `@3xl:hide`. | Hide the navigation with nothing in its place. |
 | Put `.color-scheme-dark` on the band for a dark header. | Build a layout inside it with a Wrapper and padding utilities. |

@@ -13,7 +13,7 @@
    The list inside --vertical or --end becomes vertical without a class.
 
    Keyboard: the consumer supplies the APG tabs pattern (roving tabindex,
-   arrow keys, Home and End). See AGENTS.md §24.
+   arrow keys, Home and End). See docs/markup/24-tabs.md.
 
    Usage:
    <div class="tabbed-content">
@@ -35,6 +35,11 @@
    ========================================================================== */
 :where(.tabbed-content) {
   --_tabbed-content-gap: var(--tabbed-content-gap, var(--spacing-md));
+
+  /* Density: a compact container closes the gap */
+  @container style(--ui-sizing: compact) {
+    --_tabbed-content-gap: var(--tabbed-content-compact-gap, var(--spacing-sm));
+  }
 
   display: flex;
   flex-direction: column;

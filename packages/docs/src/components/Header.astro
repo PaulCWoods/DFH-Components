@@ -14,7 +14,6 @@ const { nav, current } = Astro.props;
 const inSection = (s: Section) => s.pages.some((p) => p.href === current);
 ---
 <header class="header header--sticky header--stretch">
-  <a href="#main" class="skip-link header__skip-link">Skip to main content</a>
   <div class="header__bar">
     <a href="/" class="brand">
       <Icon name="BrandDesignForHumans" class="brand__mark" />

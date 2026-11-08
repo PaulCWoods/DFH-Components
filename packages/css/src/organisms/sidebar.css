@@ -174,7 +174,6 @@
 
 /* A floating panel: inset, rounded, raised */
 :where(.sidebar--floating) {
-  background-color: var(--sidebar-bg, var(--surface-card, Canvas));
   border: var(--_sidebar-border-width) var(--_sidebar-border-style) var(--_sidebar-border-color);
   border-radius: var(--radius-md, 0.5rem);
   box-shadow: var(--shadow-md, none);
@@ -188,8 +187,6 @@
 :where(.sidebar--floating.sidebar--end) {
   --_sidebar-margin-start: 0px;
   --_sidebar-margin-end: var(--safe-area-inset-inline-end, 0px);
-  --_sidebar-safe-start: 0px;
-  --_sidebar-safe-end: 0px;
 }
 
 /* A narrow rail of icon buttons */
@@ -216,6 +213,12 @@
   --_sidebar-min-width: var(--sidebar-compact-width, var(--app-sidebar-compact-width, var(--spacing-192)));
 }
 
+/* A compact rail stays a rail */
+:where(.sidebar--rail.sidebar--compact) {
+  --_sidebar-width: var(--sidebar-rail-width, 4.5rem);
+  --_sidebar-min-width: var(--sidebar-rail-width, 4.5rem);
+}
+
 /* Pinned beside the scrolling page */
 :where(.sidebar--sticky, .app--viewport .sidebar) {
   --_sidebar-safe-bottom: var(--safe-area-inset-bottom, 0px);
@@ -228,9 +231,18 @@
   position: sticky;
 }
 
+/* Where the workspace stacks it above the main (below 48rem, as the app
+   shell does), it is a band in the flow: sticking would cover the page */
+@media (width < 48rem) {
+  :where(.app__workspace > .sidebar--sticky) {
+    block-size: auto;
+    position: static;
+  }
+}
+
 /* Below a sticky header */
 :where(:root:has(.header--sticky) .sidebar--sticky) {
-  --_sidebar-offset: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width)))) + var(--safe-area-inset-top, 0px));
+  --_sidebar-offset: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width, 1px)))) + var(--safe-area-inset-top, 0px));
 }
 
 /* ==========================================================================

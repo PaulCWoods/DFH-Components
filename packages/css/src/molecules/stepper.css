@@ -22,14 +22,14 @@
      <li class="stepper__item is-complete">
        <div class="stepper__step">
          <span class="stepper__indicator" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
-         <span class="stepper__title small-heading"><span class="visually-hidden">Completed: </span>Details</span>
+         <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
          <span class="stepper__description small-text">Verified</span>
        </div>
      </li>
      <li class="stepper__item" aria-current="step">
        <div class="stepper__step">
          <span class="stepper__indicator micro-heading" aria-hidden="true">2</span>
-         <span class="stepper__title small-heading"><span class="visually-hidden">Current: </span>Agreement</span>
+         <span class="stepper__title small-heading"><span class="sr-only">Current: </span>Agreement</span>
        </div>
      </li>
      …
@@ -49,12 +49,16 @@
   --_stepper-indicator-color: var(--stepper-indicator-color, var(--foreground-muted, currentColor));
   --_stepper-indicator-border-color: var(--stepper-indicator-border-color, var(--border-color-quiet, currentColor));
   --_stepper-current-color: var(--stepper-current-color, var(--foreground-accent, currentColor));
+  --_stepper-current-on-color: var(--stepper-current-on-color, var(--foreground-inverted-strong, Canvas));
+  --_stepper-current-fill: var(--_stepper-current-color);
+  --_stepper-current-ink: var(--_stepper-current-on-color);
+  --_stepper-current-ring-width: var(--_stepper-indicator-border-width);
   --_stepper-complete-color: var(--stepper-complete-color, var(--foreground-success, currentColor));
   --_stepper-complete-on-color: var(--stepper-complete-on-color, var(--foreground-inverted-strong, Canvas));
   --_stepper-complete-fill: var(--_stepper-complete-color);
   --_stepper-complete-ink: var(--_stepper-complete-on-color);
   --_stepper-invalid-color: var(--stepper-invalid-color, var(--foreground-danger, currentColor));
-  --_stepper-track-width: var(--stepper-track-width, var(--border-width-medium));
+  --_stepper-track-width: var(--stepper-track-width, var(--border-width-medium, 2px));
   --_stepper-track-color: var(--stepper-track-color, var(--border-color-quiet, currentColor));
   --_stepper-description-color: var(--stepper-description-color, var(--foreground-muted, currentColor));
   --_stepper-transition: var(--duration-sm, 150ms);
@@ -70,6 +74,9 @@
     --_stepper-indicator-border-width: 0px;
     --_stepper-complete-fill: transparent;
     --_stepper-complete-ink: var(--_stepper-complete-color);
+    --_stepper-current-fill: transparent;
+    --_stepper-current-ink: var(--_stepper-current-color);
+    --_stepper-current-ring-width: var(--stepper-indicator-border-width, var(--border-width-medium, 2px));
   }
 
   /* Type grows with the stepper's width */
@@ -87,6 +94,7 @@
 :where(.stepper__item) {
   /* Per-step colours, set by the state maps below */
   --_stepper-step-ring: var(--_stepper-indicator-border-color);
+  --_stepper-step-ring-width: var(--_stepper-indicator-border-width);
   --_stepper-step-fill: var(--_stepper-indicator-bg);
   --_stepper-step-ink: var(--_stepper-indicator-color);
   --_stepper-step-title: var(--_stepper-description-color);
@@ -156,7 +164,7 @@
   align-items: center;
   background-color: var(--_stepper-step-fill);
   block-size: var(--_stepper-indicator-size);
-  border: var(--_stepper-indicator-border-width) solid var(--_stepper-step-ring);
+  border: var(--_stepper-step-ring-width) solid var(--_stepper-step-ring);
   border-radius: 50%;
   box-sizing: border-box;
   color: var(--_stepper-step-ink);
@@ -184,8 +192,11 @@
    3. State maps
    ========================================================================== */
 :where(.stepper__item[aria-current="step"]) {
+  /* Filled, not just recoloured; a plain stepper rings it instead */
   --_stepper-step-ring: var(--_stepper-current-color);
-  --_stepper-step-ink: var(--_stepper-current-color);
+  --_stepper-step-ring-width: var(--_stepper-current-ring-width);
+  --_stepper-step-fill: var(--_stepper-current-fill);
+  --_stepper-step-ink: var(--_stepper-current-ink);
   --_stepper-step-title: var(--foreground, CanvasText);
 }
 
@@ -249,12 +260,16 @@
    5. Prominence, density and narrow containers
    ========================================================================== */
 
-/* Plain: the number or icon without its circle, coloured by state */
+/* Plain: the number or icon without its circle, coloured by state; the
+   current step keeps its ring */
 :where(.stepper--plain) {
   --_stepper-indicator-bg: transparent;
   --_stepper-indicator-border-width: 0px;
   --_stepper-complete-fill: transparent;
   --_stepper-complete-ink: var(--_stepper-complete-color);
+  --_stepper-current-fill: transparent;
+  --_stepper-current-ink: var(--_stepper-current-color);
+  --_stepper-current-ring-width: var(--stepper-indicator-border-width, var(--border-width-medium, 2px));
 }
 
 :where(.stepper--compact) {
@@ -274,13 +289,22 @@
    ========================================================================== */
 @media (prefers-contrast: more) {
   :where(.stepper) {
-    --_stepper-track-width: var(--border-width-4, 3px);
+    --_stepper-track-width: var(--border-width-thick, 4px);
   }
 }
 
 @media (forced-colors: active) {
   :where(.stepper__item[aria-current="step"]) :where(.stepper__indicator) {
+    background-color: Highlight;
     border-color: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+
+  /* The track is a background, which forced colours would remove */
+  :where(.stepper__item:not(:last-child))::after {
+    background-color: CanvasText;
+    forced-color-adjust: none;
   }
 }
 

@@ -26,7 +26,7 @@ Nested links to the sections of a site or a page: a docs sidebar, a table of con
 </nav>
 \`\`\`
 
-- **Current location:** \`aria-current\` on the link (\`page\` for a site, \`location\` or \`true\` for a table of contents). It shows bold text in the foreground colour, a tint and a rail inside the button's start edge, rounded to its corners; other items are regular weight in a quieter colour. Nested lists, guide lines and headings all line up on the item label.
+- **Current location:** \`aria-current\` on the link (\`page\` for a site, \`location\` or \`true\` for a table of contents). It shows bold text in the foreground colour, a tint and a square rail inside the button's start edge; other items are regular weight in a quieter colour. Nested lists, guide lines and headings all line up on the item label.
 - **Nesting** is nested lists inside the item. **Headings** are \`<li class="navigation-tree__heading">\` with a text atom.
 - **Options:** \`--ruled\` (guide lines beside nested lists), \`--compact\` (32px rows; the button keeps its 48px hit area unless the product opts into fine-pointer targets).
 - **Not a menu:** a menu is actions in a popover; a tree is navigation with depth and a current location. **Not a tab list:** tabs switch views of one thing.

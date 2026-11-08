@@ -40,15 +40,17 @@ export default meta;
 type Story = StoryObj;
 
 const sideNav = (label = 'Plant groups') => `
-  <nav class="card" aria-label="${label}">
+  <div class="card">
     <div class="card__body">
-      <ul class="stack" role="list">
-        <li><a href="#" class="link" aria-current="page">Perennials</a></li>
-        <li><a href="#" class="link">Ferns</a></li>
-        <li><a href="#" class="link">Grasses</a></li>
-      </ul>
+      <nav class="navigation-tree" aria-label="${label}">
+        <ul>
+          <li><a href="#" class="button" aria-current="page"><span>Perennials</span></a></li>
+          <li><a href="#" class="button"><span>Ferns</span></a></li>
+          <li><a href="#" class="button"><span>Grasses</span></a></li>
+        </ul>
+      </nav>
     </div>
-  </nav>`;
+  </div>`;
 const main = `
   <div class="stack">
     <h2 class="subheading">Perennials</h2>
@@ -107,16 +109,16 @@ export const Three: Story = {
 
 export const SidebarColumns: Story = {
   name: 'Sidebar columns',
-  parameters: { docs: { description: { story: '`--sidebar` gives the side pane, or both ends of `--three`, the app\'s sidebar column (`--app-sidebar-width`), which a compact region narrows. `--nowrap` keeps the ends at the width exactly, and `@3xl:split--sidebar` applies it from a 48em container, where a Sidebar sits beside the main; narrower, the ends fit their content. The second is in a `.ui-compact` region.' } } },
+  parameters: { docs: { description: { story: '`--sidebar` gives the side pane, or both ends of `--three`, the app\'s sidebar column (`--app-sidebar-width`), which a compact region narrows. It keeps one row with the ends at the width exactly, and `@3xl:split--sidebar` applies it from a 48em container, where a Sidebar sits beside the main; narrower, the Split wraps as usual. The second is in a `.ui-compact` region.' } } },
   render: () => `
     <div class="stack gap-lg container-inline">
-      <div class="split split--three split--nowrap @3xl:split--sidebar">
+      <div class="split split--three @3xl:split--sidebar">
         <div class="card"><div class="card__body"><p class="small-text">Sidebar wide</p></div></div>
         <div class="card"><div class="card__body"><p class="small-text">Centre</p></div></div>
         <div class="card"><div class="card__body"><p class="small-text">Sidebar wide</p></div></div>
       </div>
       <div class="ui-compact">
-        <div class="split split--three split--nowrap @3xl:split--sidebar">
+        <div class="split split--three @3xl:split--sidebar">
           <div class="card"><div class="card__body"><p class="small-text">Compact sidebar wide</p></div></div>
           <div class="card"><div class="card__body"><p class="small-text">Centre</p></div></div>
           <div class="card"><div class="card__body"><p class="small-text">Compact sidebar wide</p></div></div>

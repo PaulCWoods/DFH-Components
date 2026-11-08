@@ -15,7 +15,7 @@ The band at the top of a page or app that holds the brand, the main navigation a
 <a href="#main" class="skip-link">Skip to content</a>
 <header class="header header--sticky">
   <div class="header__bar">
-    <a href="/" class="link link--plain small-heading">Woodland Plants</a>
+    <a href="/" class="brand"><span class="brand__name">Woodland Plants</span></a>
     <nav class="header__nav tab-list tab-list--plain tab-list--scrollable" aria-label="Main">
       <ul>
         <li><a href="/plants" class="tab" aria-current="page"><span class="tab__text">Plants</span></a></li>
@@ -147,13 +147,15 @@ export const Sticky: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Scroll the canvas: the shadow appears once the header is stuck. Tab back up through the links: each focused link scrolls clear of the header.',
+        story: 'Scroll the frame: the shadow appears once the header is stuck. Tab back up through the links: each focused link scrolls clear of the header.',
       },
     },
   },
   render: () => `
-    <header class="header header--sticky header--translucent">${siteBar('sticky')}</header>
-    ${content(14)}`,
+    <div class="sb-demo-viewport">
+      <header class="header header--sticky header--translucent">${siteBar('sticky')}</header>
+      ${content(14)}
+    </div>`,
 };
 
 export const Prominence: Story = {
@@ -189,7 +191,7 @@ export const CompactAppHeader: Story = {
     <header class="header header--compact color-scheme-dark">
       <div class="header__bar">
         <span class="lockup">
-          <a href="#" class="link link--plain small-heading">Border planner</a>
+          <a href="#" class="brand"><span class="brand__name">Border planner</span></a>
           <span class="small-text text-muted">Saved 2 minutes ago</span>
         </span>
         <div class="cluster gap-xs">
@@ -208,7 +210,7 @@ export const RightToLeft: Story = {
     <div dir="rtl" lang="ar">
       <header class="header">
         <div class="header__bar">
-          <a href="#" class="link link--plain small-heading text-nowrap">نباتات الغابة</a>
+          <a href="#" class="brand"><span class="brand__name">نباتات الغابة</span></a>
           <nav class="header__nav tab-list tab-list--plain tab-list--scrollable" aria-label="رئيسي">
             <ul>
               <li><a href="#" class="tab" aria-current="page"><span class="tab__text">النباتات</span></a></li>
@@ -240,7 +242,7 @@ const overSidebar = (id: string, density = '') => `
   <div class="app ${density}">
     <div class="header header--flush header--stretch">
       <div class="header__bar">
-        <div class="split split--three split--nowrap @3xl:split--sidebar">
+        <div class="split split--three @3xl:split--sidebar">
           ${brand}
           <form role="search" aria-label="Plants, ${id}">
             <input type="search" class="input input--subtle inline-size-full" placeholder="Search plants" aria-label="Search plants, ${id}">

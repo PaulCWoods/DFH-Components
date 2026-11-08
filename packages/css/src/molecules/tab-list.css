@@ -130,10 +130,6 @@
   :where(ul, li) {
     display: contents;
   }
-
-  :where(li) :where(.tab-list__content) {
-    display: none;
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -243,7 +239,7 @@
 /* The list's own size: the flag above reaches its tabs, this its corners */
 :where(.tab-list--sm, .tab-list.ui-compact) {
   --_tab-list-tab-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
-  --_tab-list-indicator-width: var(--tab-sm-list-indicator-width, 2px);
+  --_tab-list-indicator-width: var(--tab-sm-list-indicator-width, var(--border-width-medium, 2px));
 }
 
 :where(.tab-list--round) {
@@ -267,7 +263,6 @@
   --target-gap-block: var(--_tab-list-gap);
   --target-gap-inline: initial;
   --_tab-list-underline-gap: 0px;
-  --_tab-list-nested-indent: var(--tab-list-nested-indent, var(--spacing-0, 0));
 
   /* A column: the first and last tabs need room above and below */
   --_tab-list-padding-block: var(--_tab-list-target-room);
@@ -278,51 +273,11 @@
   align-items: stretch;
   min-block-size: 0;
   box-shadow: inset calc(var(--_tab-list-rule) * var(--_tab-list-rule-sign) * var(--_tab-list-dir)) 0 0 var(--_tab-list-rule-color);
-
-  /* A tab beside a button or other content in a list item */
-  :where(li:has(.button, .tab-list__content)) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--_tab-list-gap);
-
-    > :where(.tab) {
-      flex-grow: 1;
-    }
-
-    :where(.button) {
-      display: inline-flex;
-    }
-  }
-
-  :where(li ul) {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--_tab-list-gap);
-    inline-size: 100%;
-
-    /* legacy: Safari before stretch; remove when inline-size: stretch is Baseline widely available */
-    @supports (inline-size: -webkit-fill-available) {
-      inline-size: -webkit-fill-available;
-    }
-
-    @supports (inline-size: stretch) {
-      inline-size: stretch;
-    }
-
-    padding-inline-start: var(--_tab-list-nested-indent);
-  }
 }
 
 :where(.tab-list--end, .tabbed-content--end > .tab-list) {
   --_tab-list-side: end;
   --_tab-list-rule-sign: 1;
-}
-
-:where(.tab-list__content) {
-  display: block;
-  flex: 1;
-  padding-block: var(--tab-list-content-padding-block, var(--spacing-sm));
 }
 
 /* --------------------------------------------------------------------------
@@ -352,22 +307,6 @@
   :where(.tab) {
     --_tab-segmented-padding-inline: var(--_tab-list-inset);
     --_tab-segmented-radius: 0px;
-  }
-
-  :where(.tab-list__content) {
-    padding-inline: var(--_tab-list-inset);
-
-    &:has(+ :where(.button)) {
-      padding-inline-end: 0px;
-    }
-  }
-
-  :where(.button)+ :where(.tab-list__content) {
-    padding-inline-start: 0px;
-  }
-
-  :where(.button:has(+ .tab-list__content)) {
-    margin-inline-start: calc(var(--_tab-list-inset) - 0.5rem);
   }
 }
 
@@ -412,9 +351,10 @@
     mask-image: linear-gradient(var(--_scroll-fade-to), transparent, black calc(var(--scroll-fade-start) * var(--_scroll-fade-size)), black calc(100% - var(--scroll-fade-end) * var(--_scroll-fade-size)), transparent);
   }
 
+  /* Hit areas stay inside the row, so they never scroll it; the list's
+     padding leaves room for them above and below */
   :where(.tab)::after {
-    inset-block: min(0px, 100%);
-    inset-inline: min(0px, 100%);
+    inset-inline: 0px;
   }
 }
 

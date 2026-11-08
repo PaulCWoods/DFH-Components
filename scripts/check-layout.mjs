@@ -34,8 +34,6 @@ const tolerance = 16;
 /* Known problems, each waiting for its component's pass: reported, but they
    don't fail the run. Take one off when its pass fixes it. */
 const known = new Map(Object.entries({
-  'molecules-pagination--joined': 'navigation: eight joined 48px targets need 384px, and a joined row can\'t wrap',
-  'organisms-header--over-a-sidebar': 'navigation: a three-column split that never wraps has no phone layout',
 }));
 
 const sb = await openStorybook('check:layout');

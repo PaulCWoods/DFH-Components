@@ -16,9 +16,10 @@
      row and takes the full width. With --nowrap they stay in one row.
    - --sidebar: the side pane (both ends of --three) as wide as the app's
      sidebar column (--app-sidebar-width), which a compact region narrows.
-     With --nowrap the panes line up with a Sidebar exactly; a container
-     variant (@3xl:split--sidebar) keeps it to where a Sidebar sits beside
-     the main.
+     The panes keep one row and the side panes their width exactly, so they
+     line up with a Sidebar; a container variant (@3xl:split--sidebar) keeps
+     it to where a Sidebar sits beside the main, and narrower the split
+     wraps as usual.
 
    Hooks (set on the split itself; they don't reach nested layouts):
    --gap, --align-items, --split-side-width, --split-main-min-width,
@@ -48,6 +49,8 @@
     --_gap: var(--gap, var(--spacing-cushion));
     --_split-side: var(--split-side-width, var(--spacing-block-xs, 16rem));
     --_split-main-min: min(var(--split-main-min-width, var(--spacing-block-sm, 24rem)), 100%);
+    --_split-wrap: wrap;
+    --_split-side-grow: 1;
 
     @container style(--ui-sizing: compact) {
         --_gap: var(--gap, var(--spacing, 1rem));
@@ -55,13 +58,13 @@
 
     align-items: var(--align-items, flex-start);
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: var(--_split-wrap);
     gap: var(--_gap);
 
     /* The side pane */
     > :where(:first-child) {
         flex-basis: var(--_split-side);
-        flex-grow: 1;
+        flex-grow: var(--_split-side-grow);
     }
 
     /* The main pane */
@@ -90,7 +93,7 @@
 
     > :where(:last-child) {
         flex-basis: var(--_split-side);
-        flex-grow: 1;
+        flex-grow: var(--_split-side-grow);
         min-inline-size: 0;
     }
 }
@@ -188,7 +191,7 @@
     --_split-end: var(--split-end-width, auto);
 
     > :where(:first-child) {
-        flex: 1 1 var(--_split-start);
+        flex: var(--_split-side-grow) 1 var(--_split-start);
     }
 
     > :where(:nth-child(2)) {
@@ -197,7 +200,7 @@
     }
 
     > :where(:last-child) {
-        flex: 1 1 var(--_split-end);
+        flex: var(--_split-side-grow) 1 var(--_split-end);
         min-inline-size: 0;
     }
 
@@ -220,12 +223,17 @@
 /* --------------------------------------------------------------------------
    7b. Sidebar Width
    The app's sidebar column, for the side pane or both ends of --three.
-   After --three, so it beats its auto widths.
+   After --three, so it beats its auto widths. One row, the side panes at
+   the width exactly and the main taking the rest, so the columns line up
+   with a Sidebar beside the main.
    -------------------------------------------------------------------------- */
 :where(.split--sidebar) {
     --_split-side: var(--app-sidebar-width, var(--spacing-288));
     --_split-start: var(--app-sidebar-width, var(--spacing-288));
     --_split-end: var(--app-sidebar-width, var(--spacing-288));
+    --_split-wrap: nowrap;
+    --_split-side-grow: 0;
+    --_split-main-min: 0px;
 }
 
 /* --------------------------------------------------------------------------
@@ -270,6 +278,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 24rem) {
@@ -305,6 +316,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 28rem) {
@@ -340,6 +354,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 32rem) {
@@ -375,6 +392,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 36rem) {
@@ -410,6 +430,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 42rem) {
@@ -445,6 +468,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 48rem) {
@@ -480,6 +506,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 56rem) {
@@ -515,6 +544,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 64rem) {
@@ -550,6 +582,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 72rem) {
@@ -585,6 +620,9 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }
 @container (width >= 80rem) {
@@ -620,5 +658,8 @@
         --_split-side: var(--app-sidebar-width, var(--spacing-288));
         --_split-start: var(--app-sidebar-width, var(--spacing-288));
         --_split-end: var(--app-sidebar-width, var(--spacing-288));
+        --_split-wrap: nowrap;
+        --_split-side-grow: 0;
+        --_split-main-min: 0px;
     }
 }

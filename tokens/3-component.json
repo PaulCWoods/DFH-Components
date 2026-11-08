@@ -1888,6 +1888,11 @@
       "$type": "color",
       "$description": "Ring and number colour of the current step"
     },
+    "current-on-color": {
+      "$value": "{foreground.inverted-strong}",
+      "$type": "color",
+      "$description": "Number on the current step's filled indicator"
+    },
     "complete-color": {
       "$value": "{foreground.success}",
       "$type": "color",
@@ -2580,6 +2585,11 @@
         "$value": "{button.sm.padding-inline}",
         "$type": "dimension",
         "$description": "Small segmented and vertical tab inline padding"
+      },
+      "list-indicator-width": {
+        "$value": "{border.width.medium}",
+        "$type": "dimension",
+        "$description": "Selection line width on small and compact underline tabs"
       }
     }
   },
@@ -2621,11 +2631,6 @@
       "$type": "color",
       "$description": "Selection line and segmented fill colour"
     },
-    "content-padding-block": {
-      "$value": "{spacing.8}",
-      "$type": "dimension",
-      "$description": "Vertical padding of non-tab content in a list item"
-    },
     "transition": {
       "$value": "{duration.sm}",
       "$type": "duration",
@@ -2653,10 +2658,10 @@
       "$type": "dimension",
       "$description": "Distance of a docked tab list from the viewport's bottom edge"
     },
-    "nested-indent": {
-      "$value": "{spacing.0}",
+    "inset": {
+      "$value": "{tab.padding-inline}",
       "$type": "dimension",
-      "$description": "Indent of a nested list in a vertical Tab List"
+      "$description": "Where a flush tab list's labels start, to line up with the content around it; card and sidebar flush bodies set it"
     }
   },
   "tabbed-content": {
@@ -2666,6 +2671,11 @@
       "$value": "{spacing.16}",
       "$type": "dimension",
       "$description": "Gap between the tab list and the panels"
+    },
+    "compact-gap": {
+      "$value": "{spacing.sm}",
+      "$type": "dimension",
+      "$description": "Gap between the tab list and the panel in a compact region"
     }
   },
   "telemetry": {
