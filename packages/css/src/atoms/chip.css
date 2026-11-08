@@ -118,6 +118,13 @@
   }
 }
 
+/* More contrast: a subtle chip gets its edge back, as a subtle Status does */
+@media (prefers-contrast: more) {
+  :where(.chip--subtle) {
+    --_chip-border-color: var(--chip-color-border, var(--border-color-muted, currentColor));
+  }
+}
+
 :where(.chip__text) {
   text-box: trim-both cap alphabetic;
 }

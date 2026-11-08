@@ -2388,6 +2388,11 @@
       "$type": "color",
       "$description": "Alternating background color for striped table rows"
     },
+    "row-selected-bg": {
+      "$value": "{surface.accent}",
+      "$type": "color",
+      "$description": "Background color for a row whose selection checkbox is checked"
+    },
     "radius": {
       "$value": "{panel.radius}",
       "$type": "dimension",

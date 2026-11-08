@@ -17,7 +17,7 @@
    uses --prose-space, fluid --prose-space-fluid, cq --prose-space-cq, and
    compact (or --ui-sizing: compact) half the fixed space.
 
-   --body-serif sets paragraphs and lists in the alternate body family
+   .prose--body-alt sets paragraphs and lists in the alternate body family
    (--body-alt-font-family, a serif in both themes); headings keep theirs.
 
    WCAG: 1.4.8 (text blocks held to --body-measure; no justified text),
@@ -286,8 +286,9 @@
 }
 
 
-/* A .prose-end block sits outside the scope, so it takes the rhythm here */
-:where(.prose > .prose-end) {
+/* A .prose-end block or Code Block sits outside the scope, so it takes the
+   rhythm here */
+:where(.prose > :is(.prose-end, .code-block)) {
   margin-block: var(--_prose-space, 1rem);
 
   &:first-child {

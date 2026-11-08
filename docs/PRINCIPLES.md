@@ -74,6 +74,10 @@ Some choices aren't about attention, consequence or size, so they aren't axes. T
 - Axis values use the canonical names in the table across every component. `--primary` and `--destructive` are pre-v1 names for `--accent` and `--danger` and are removed with the other aliases (section 7).
 - Where intent is set by script, it may also be exposed as `[data-intent="danger"]`, mapping to the same tokens as the modifier.
 
+**Region flags set one axis for everything in a region**
+
+- A component's own flag (`--button-prominence`, `--chip-size`) reaches that component in a region. Two shared flags reach several at once: `--controls-prominence`, `--controls-size` and `--controls-corners` reach every control (Buttons and form controls), and `--elements-prominence` reaches every element with a prominence axis (controls, Status, Chip, Kbd, Icon Box, Tab List, Telemetry), never a container. A modifier on the component beats any flag; set either a component's own flag or a shared one in a region, not both. The `.controls-*` and `.elements-*` utilities set them.
+
 **Size and density are different things**
 
 - Size scales a control's own height, type and padding (button, input, select, badge, avatar). Only atoms and interactive controls take a size modifier.

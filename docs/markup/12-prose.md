@@ -117,7 +117,7 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 - **Lists:** lists are indented by `--prose-indent`. Nested ordered lists step decimal, lower-latin, lower-roman. In a `<dl>`, `dt` is strong and `dd` is indented.
 - **Rules and quotes:** an `hr` uses the Divider tokens. A `blockquote` has an inline-start rule (`--prose-blockquote-border-width`).
 - **Figures:** the caption is small text in `--prose-figcaption-color`, half a rhythm below the media.
-- **Code:** a `pre` is a dark band in both themes (`--prose-code-block-bg`, `--prose-code-block-text`). Long lines wrap, so it is never a scrolling region. Code reads left to right in every direction. Inline `code` has a subtle tint (`--prose-code-bg`).
+- **Code:** a `pre` is a dark band in both themes (`--prose-code-block-bg`, `--prose-code-block-text`). Long lines wrap, so it is never a scrolling region. Code reads left to right in every direction. Inline `code` has a subtle tint (`--prose-code-bg`). A Code Block placed straight in the prose keeps its own styles and takes the prose rhythm around it.
 - Put every component and widget in prose inside a `.prose-end`.
 - Write emoji in the text. There are no emoji classes.
 

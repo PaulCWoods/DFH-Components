@@ -203,13 +203,16 @@
 /* ==========================================================================
    4. Preferences
    ========================================================================== */
+/* More contrast: a darker edge */
 @media (prefers-contrast: more) {
   :where(.telemetry) {
-    --telemetry-border-color: CanvasText;
     --_telemetry-border-color: CanvasText;
   }
+}
 
-  /* A subtle telemetry's fill may not show, so it gains the border */
+/* More contrast and forced colours: a subtle telemetry's fill may not show,
+   so it gains the border */
+@media (prefers-contrast: more), (forced-colors: active) {
   :where(.telemetry--subtle) {
     --_telemetry-border-width: var(--telemetry-border-width, var(--border-width-thin, 1px));
   }

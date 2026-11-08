@@ -59,7 +59,7 @@ Sorting, selection and paging depend on your data, so they are the page's job. T
 - **Scroll container:** a Table that can be wider than its column sits in `.table-container`, with `tabindex="0"`, `role="region"` and a unique name (`aria-labelledby` the caption, or `aria-label`), so it can be scrolled by keyboard and found (WCAG 2.1.1, 1.4.10).
 - **Caption:** names the Table. It sets no type: put a text atom on it (`.small-heading`), or `.sr-only` to hide it.
 - **Headers:** `scope="col"` on column headers, `scope="row"` on the first cell of a row that names it.
-- **Selecting rows:** wrap each row's Checkbox in `<label class="choice">` and name it with `aria-label` ("Select Brandywine"). The label fills its cell, so the whole cell is the target: a Checkbox on its own is 20px, and an input can't take the invisible buffer a Button has.
+- **Selecting rows:** wrap each row's Checkbox in `<label class="choice">` and name it with `aria-label` ("Select Brandywine"). The label fills its cell, so the whole cell is the target: a Checkbox on its own is 20px, and an input can't take the invisible buffer a Button has. A row whose Checkbox is checked takes the selected tint (`--table-row-selected-bg`), and in forced colours it is drawn in the system's selection colours.
 
 ## Keyboard and screen readers
 The browser provides all of this, given a real `<table>` and a focusable container. The page's script only sorts the rows and updates the state.

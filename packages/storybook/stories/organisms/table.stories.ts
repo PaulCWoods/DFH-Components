@@ -120,6 +120,15 @@ export const Rows: Story = {
           </tbody>
         </table>
       </div>
+      <div class="table-container" tabindex="0" role="region" aria-labelledby="rows-selected">
+        <table class="table table--hover">
+          <caption id="rows-selected" class="small-heading">Selected, from the row's Checkbox</caption>
+          <thead><tr><th scope="col" class="table__cell--fit"><span class="sr-only">Select</span></th><th scope="col">Plant</th><th scope="col" class="table__cell--numeric">In stock</th></tr></thead>
+          <tbody>${plants.slice(0, 3).map((p, i) => `
+            <tr><td class="table__cell--fit"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select ${p.name}"${i === 1 ? ' checked' : ''} /></label></td><th scope="row">${p.name}</th><td class="table__cell--numeric">${p.stock}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
     </div>`,
 };
 

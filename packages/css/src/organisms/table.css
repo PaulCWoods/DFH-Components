@@ -109,6 +109,7 @@
   --_table-head-color: var(--table-head-color, var(--foreground-strong, currentColor));
   --_table-row-hover-bg: var(--table-row-hover-bg, var(--surface-translucent-strong, transparent));
   --_table-row-stripe-bg: var(--table-row-stripe-bg, var(--surface-translucent, transparent));
+  --_table-row-selected-bg: var(--table-row-selected-bg, var(--surface-accent, Highlight));
   --_table-sticky-bg: var(--table-cell-sticky-bg, var(--surface-card, Canvas));
   --_table-sticky-filter: var(--table-cell-sticky-filter, var(--surface-layer-filter, none));
   --_table-cell-padding-block: var(--table-cell-padding-block, var(--spacing-12));
@@ -290,8 +291,22 @@
 :where(.table--hover) :where(tbody tr) {
   transition: background-color var(--_table-transition) ease;
 
-  &:is(:hover, :focus-within) {
+  &:where(:hover, :focus-within) {
     background-color: var(--_table-row-hover-bg);
+  }
+}
+
+/* Selected: a row whose selection Checkbox is checked */
+:where(.table) :where(tbody tr:has(> :is(th, td) > .choice input:checked)) {
+  background-color: var(--_table-row-selected-bg);
+
+  /* Forced colours drop the tint, so draw the row in the system's selection colours */
+  @media (forced-colors: active) {
+    & > :where(th, td) {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
   }
 }
 
@@ -484,6 +499,11 @@
   background-image: none;
 }
 
+/* A selected row keeps its tint on the sticky cells over the content */
+:where(.table--sticky-first-column, .table--sticky-last-column) :where(tbody tr:has(> :is(th, td) > .choice input:checked)) > :where(th, td) {
+  background-image: linear-gradient(var(--_table-row-selected-bg), var(--_table-row-selected-bg));
+}
+
 /* ==========================================================================
    6. Sort Button
    --------------------------------------------------------------------------
@@ -515,12 +535,14 @@
   text-decoration-thickness: var(--link-hover-underline-thickness, var(--border-width-medium));
   text-underline-offset: var(--underline-offset, 0.25em);
 
-  &:hover,
-  &:focus-visible {
-    text-decoration-line: underline;
+  @media (hover: hover) {
+    &:hover {
+      text-decoration-line: underline;
+    }
   }
 
   &:focus-visible {
+    text-decoration-line: underline;
     outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
     outline-offset: calc(var(--focus-ring-offset, 2px) * -1);
   }

@@ -1,11 +1,12 @@
 /* ==========================================================================
    Design For Humans: Kbd Primitive
    --------------------------------------------------------------------------
-   A keyboard key or shortcut. No intent and no prominence.
+   A keyboard key or shortcut. No intent.
 
-   | Axis    | Modifiers | Container flag                          |
-   | ------- | --------- | --------------------------------------- |
-   | Size    | --sm      | --kbd-size (--ui-sizing: compact steps to sm) |
+   | Axis       | Modifiers                     | Container flag                                |
+   | ---------- | ----------------------------- | --------------------------------------------- |
+   | Prominence | (raised key) --subtle (flat)  | --kbd-prominence                              |
+   | Size       | --sm                          | --kbd-size (--ui-sizing: compact steps to sm) |
 
    A combination nests one <kbd> per key inside an outer .kbd, which then
    acts as a wrapper and draws no key of its own.

@@ -102,7 +102,7 @@ Four atoms, chosen by **job**, not by look. If it's attached to something, it's 
 | :--- | :--- | :--- |
 | `.badge` | Count or dot attached to a host (tab, Button, nav item, icon), inline after its label or in a corner | Intent, size, presentation (`--dot`). Prominence fixed at strong. |
 | `.status` | State of a thing: text with an optional dot or icon | Prominence (default outline pill, `--strong`, `--subtle`, `--plain` dot and text), intent, size, `--round`; `--no-dot` (text only). Under more contrast a subtle Status gets its edge back. |
-| `.chip` | Value token: selected option, active filter, category or tag; optionally removable | Prominence (default outline, `--subtle`, `--plain`), size, `--round`. No intent. |
+| `.chip` | Value token: selected option, active filter, category or tag; optionally removable | Prominence (default outline, `--subtle`, `--plain`), size, `--round`. No intent. Under more contrast a subtle Chip gets its edge back. |
 | `.kbd` | Keyboard key or shortcut | Size; prominence (`--subtle`, a thinner lower edge) |
 
 ### Further rules

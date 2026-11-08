@@ -122,7 +122,7 @@ A labelled value: "Uptime 99.98%". A molecule built on a description list, so ea
 
 ### Further rules
 - **No KPI Cards.** A large stat with a description is a `.card` holding a Telemetry.
-- **Prominence:** bordered by default; `--subtle` is a tint with no border (the muted surface other subtle components use; under increased contrast it gains its border back); `--plain` has no surface, border or padding.
+- **Prominence:** bordered by default; `--subtle` is a tint with no border (the muted surface other subtle components use; under increased contrast and in forced colours it gains its border back); `--plain` has no surface, border or padding.
 - **One metric:** `<dl class="telemetry">` with its `dt` and `dd` directly inside.
 - **`--fill`** on the group grows each item to share the row, as a Tab List's `--fill` does. Items still wrap when the row is too narrow.
 - **`--icon-start`** moves the label's icon into a gutter at the start of the box: 24px (`--telemetry-lead-icon-size`), centred on the label and value. The markup is unchanged; the icon stays in the `dt`, because a `<dl>` item may only hold terms and descriptions. Items without an icon get no gutter. Set `--telemetry-icon-placement: start` on a group or region to do the same for every item in it.
