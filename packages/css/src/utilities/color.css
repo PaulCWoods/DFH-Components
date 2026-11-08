@@ -122,6 +122,32 @@
     backdrop-filter: blur(24px);
 }
 
+/* Reduced transparency: translucent backgrounds turn solid, blurs go */
+@media (prefers-reduced-transparency: reduce) {
+    :where(.bg-translucent-subtle) {
+        background-color: var(--bg-color, var(--surface-card, Canvas));
+        backdrop-filter: none;
+    }
+
+    :where(.bg-translucent) {
+        background-color: var(--bg-color, var(--surface-card, Canvas));
+        backdrop-filter: none;
+    }
+
+    :where(.bg-translucent-strong) {
+        background-color: var(--bg-color, var(--surface-card, Canvas));
+        backdrop-filter: none;
+    }
+
+    :where(.bg-blur) {
+        backdrop-filter: none;
+    }
+
+    :where(.bg-blur-strong) {
+        backdrop-filter: none;
+    }
+}
+
 /* --------------------------------------------------------------------------
    3. Text colour
    -------------------------------------------------------------------------- */

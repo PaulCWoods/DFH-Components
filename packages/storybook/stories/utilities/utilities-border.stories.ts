@@ -42,7 +42,7 @@ export default meta;
 type Story = StoryObj;
 
 const box = (cls: string, label = `.${cls.split(' ').join('.')}`) =>
-  `<div class="${cls} p-md"><p class="small-text font-mono">${label}</p></div>`;
+  `<div class="${cls} p-md"><p class="small-text font-mono wrap-anywhere">${label}</p></div>`;
 
 export const Playground: Story = {
   args: { width: 'border', style: 'solid', colour: 'default', radius: 'md' },

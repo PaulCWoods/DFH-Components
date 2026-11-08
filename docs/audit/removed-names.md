@@ -3,7 +3,7 @@
 What each component pass removed and what replaced it, moved here from the public component pages. `AGENTS.md` has the same migration as one table.
 
 ## Accordion
-- `--flush` (use `--plain`), `--transparent` (the default has no surface), `--ruled`, `--no-icon`, `.accordion-group--no-icons`, `.accordion-group--tight` (use `--joined`), `.accordion__icon`, `--accordion-variation` (use `--accordion-prominence`), the open surface, `--ui-density` on accordions; the `open-bg`, `hover-border` and `inner-border-*` tokens and the `--accordion-summary-*` names.
+- `--flush` in its old meaning (use `--plain`; `--flush` came back for content that meets the frame), `--transparent` (the default has no surface), `--ruled`, `--no-icon`, `.accordion-group--no-icons`, `.accordion-group--tight` (use `--joined`), `.accordion__icon`, `--accordion-variation` (use `--accordion-prominence`), the open surface, `--ui-density` on accordions; the `open-bg`, `hover-border` and `inner-border-*` tokens and the `--accordion-summary-*` names.
 
 ## Lockup
 - `<b>` / `<small>` lines (use text atoms), `lockup--*` modifiers.
@@ -69,3 +69,9 @@ What each component pass removed and what replaced it, moved here from the publi
 - `.header__skip-link` (the [Skip Link](../markup/07-skip-link.md) comes before the Header); the Tab List's nested navigation (`.tab-list__content`, nested lists and buttons in its items, the `nested-indent` and `content-padding-block` tokens: use a Navigation Tree); Tabs with no panel as a view switcher (use a joined Button Group of radio inputs); `--nowrap` on a Split that lines up with the Sidebar (`--sidebar` keeps one row itself).
 - From the wayfinding pass: `.breadcrumb__list`, `__item`, `__link` and `.is-current`; `.nav-tree*` and `.navigation-tree__list`, `__item`, `__link`, `__text`, `__label`, `--indicator`, `--toc`, `--flush`; `.pagination--center`, `--end`, `--between`, `__ellipsis` and `.is-active` on pages; `.page-count` and its parts; `.stepper__list`, `__content`, `__label`, `__desc`, `__indicator-text`, `--inline` and `.is-active` on steps.
 - `.header--flush` came back with a new meaning: it drops the band's inline padding and the bar's block padding, for a Header over a Sidebar.
+
+## Divider
+- `.divider--vertical` (use `aria-orientation="vertical"`), `--subtle`, `--quiet`, `--accent` (use `.divider--strong` for more weight), `--dotted` (use `--dashed`), `--sm`, `--md`, `--lg`; `.menu__separator`, `.batch-actions__separator`, `.combobox__separator` (use `.divider`, an `<li role="separator">` in lists; a Combobox separates its groups with a rule); the `--divider-border-*` tokens (use `--divider-width`, `--divider-style`, `--divider-color`); styling of a bare `<hr>`.
+
+## Surfaces
+- The popover polyfill's `.:popover-open` class (the Popover API is Baseline widely available); `font-size: 0` on `.card__thumb`.

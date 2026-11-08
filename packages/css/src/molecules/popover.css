@@ -65,8 +65,7 @@
   transition-property: opacity, scale, display, overlay;
   transition-timing-function: var(--_popover-timefunc);
 
-  /* .\:popover-open is the popover polyfill's class */
-  &:where(:popover-open, .\:popover-open) {
+  &:where(:popover-open) {
     /* A column, so a tall card shrinks to the space and scrolls its body */
     display: flex;
     flex-direction: column;
@@ -178,12 +177,12 @@
 /* ==========================================================================
    3. Reduced Motion
    ========================================================================== */
+/* Reduced motion: no scale, only the fade (no movement) */
 @media (prefers-reduced-motion: reduce) {
   :where(.popover) {
     scale: none;
-    transition-duration: 0s;
 
-    &:where(:popover-open, .\:popover-open) {
+    &:where(:popover-open) {
       scale: none;
 
       @starting-style {

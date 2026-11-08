@@ -267,6 +267,14 @@
   }
 }
 
+/* Reduced transparency: the material turns solid */
+@media (prefers-reduced-transparency: reduce) {
+  :where(.header--translucent) {
+    --_header-translucency: 0%;
+    --_header-filter: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where(.header--sticky)::after {
     transition: none;

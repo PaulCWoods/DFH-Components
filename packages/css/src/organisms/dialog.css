@@ -34,7 +34,7 @@
    <dialog id="my-dialog" class="dialog" aria-labelledby="dialog-title">
      <div class="card">
        <header class="card__header">
-         <h2 id="dialog-title" class="card__title small-heading">Dialog title</h2>
+         <h2 id="dialog-title" class="card__title heading">Dialog title</h2>
          <button type="button" class="button button--plain button--icon" commandfor="my-dialog" command="close">…</button>
        </header>
        <div class="card__body card__body--scrollable">…</div>
@@ -109,7 +109,7 @@
   }
 
   /* Without a card (an image, a video), the dialog draws a card's surface */
-  &:not(:has(> .card)) {
+  &:where(:not(:has(> .card))) {
     background-color: var(--card-bg, var(--surface-card, Canvas));
     border: var(--card-border-width, var(--panel-border-width, 1px)) var(--card-border-style, var(--panel-border-style, solid)) var(--card-border-color, var(--panel-border-color, currentColor));
     border-radius: var(--_dialog-radius);
@@ -201,11 +201,11 @@
 
     block-size: 100%;
     /* It runs to three screen edges: its content stays clear of a notch */
-    padding-block: var(--safe-area-inset-top, 0px) var(--safe-area-inset-bottom, 0px);
-    padding-inline-end: var(--safe-area-inset-inline-end, 0px);
+    padding-block: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-top, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-bottom, 0px));
+    padding-inline-end: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-end, 0px));
   }
 
-  &:not(:has(> .card)) {
+  &:where(:not(:has(> .card))) {
     border-radius: 0;
   }
 
@@ -223,7 +223,7 @@
   > :where(.card) {
     border-inline-end-width: var(--_card-border-width);
     border-inline-start-width: 0;
-    padding-inline: var(--safe-area-inset-inline-start, 0px) 0;
+    padding-inline: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-start, 0px)) var(--_card-self-padding, 0px);
   }
 }
 
@@ -242,8 +242,8 @@
     block-size: auto;
     border-width: 0;
     border-block-start-width: var(--_card-border-width);
-    padding-block: 0 var(--safe-area-inset-bottom, 0px);
-    padding-inline: var(--safe-area-inset-inline-start, 0px) var(--safe-area-inset-inline-end, 0px);
+    padding-block: var(--_card-self-padding, 0px) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-bottom, 0px));
+    padding-inline: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-start, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-end, 0px));
   }
 }
 

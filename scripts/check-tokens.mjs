@@ -119,19 +119,15 @@ const notTokens = new Map(Object.entries({
   '--skeleton-width': 'set in markup; each shape has its own default',
   '--skeleton-height': 'set in markup; each shape matches the control it stands in for',
   '--card-font-sizing': 'passed down by a dialog',
+  '--accordion-inset': 'passed down by a flush card body; defaults to the padding, or 0 when plain',
   '--batch-actions-radius': 'computed: concentric with the buttons inside',
 }));
 
 /* Hooks to add to the JSON (or to the list above) in their component's pass */
 const pending = new Map(Object.entries({
-  '--accordion-inset': 'disclosure (it also has two defaults)',
   '--badge-text-padding-inline': 'indicators',
   '--banner-align': 'messages',
   '--banner-plain-gap': 'messages',
-  '--card-body-max-block-size': 'surfaces',
-  '--card-dir': 'surfaces',
-  '--card-header-align': 'surfaces',
-  '--card-thumb-aspect-ratio': 'surfaces',
   '--input-lg-inner-gap': 'forms',
   '--input-min-chars': 'forms',
   '--input-picker-icon-space': 'forms',

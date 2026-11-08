@@ -1056,12 +1056,12 @@
       "$description": "Space between parts"
     },
     "hgroup-gap": {
-      "$value": "{spacing.4}",
+      "$value": "{spacing.xs}",
       "$type": "dimension",
       "$description": "Gap between title and subtitle"
     },
     "band-gap": {
-      "$value": "{spacing.8}",
+      "$value": "{spacing.sm}",
       "$type": "dimension",
       "$description": "Gap between items in a band"
     },
@@ -1099,6 +1099,36 @@
       "$value": "{surface.muted}",
       "$type": "color",
       "$description": "Background behind a thumbnail"
+    },
+    "dir": {
+      "$value": "column",
+      "$type": "string",
+      "$description": "Direction of the card's parts: column, or row for media beside .card__content"
+    },
+    "header-align": {
+      "$value": "flex-start",
+      "$type": "string",
+      "$description": "Cross-axis alignment of the header's title and actions"
+    },
+    "header-gap": {
+      "$value": "{spacing.sm}",
+      "$type": "dimension",
+      "$description": "Gap between the header's title and its actions"
+    },
+    "footer-gap": {
+      "$value": "{spacing.sm}",
+      "$type": "dimension",
+      "$description": "Gap between the footer's actions"
+    },
+    "thumb-aspect-ratio": {
+      "$value": "2 / 1",
+      "$type": "string",
+      "$description": "Aspect ratio of the media in .card__thumb"
+    },
+    "body-max-block-size": {
+      "$value": "none",
+      "$type": "string",
+      "$description": "Maximum height of a scrollable body"
     }
   },
   "poster": {
@@ -1280,7 +1310,7 @@
       "$type": "color"
     },
     "backdrop-filter": {
-      "$value": "var(--surface-layer-filter)",
+      "$value": "{surface-layer.filter}",
       "$type": "other"
     },
     "transition": {
@@ -1596,7 +1626,7 @@
       "$description": "How see-through --translucent is"
     },
     "filter": {
-      "$value": "{surface.layer-filter}",
+      "$value": "{surface-layer.filter}",
       "$type": "other",
       "$description": "Backdrop filter of --translucent"
     },
@@ -1927,12 +1957,12 @@
   "popover": {
     "$description": "Popover layer tokens. The popover draws no surface: its card or menu does.",
     "max-width": {
-      "$value": "{spacing.384}",
+      "$value": "{spacing.block-sm}",
       "$type": "dimension",
       "$description": "Widest a popover grows before its content wraps; a product or container may raise it"
     },
     "offset": {
-      "$value": "{spacing.8}",
+      "$value": "{spacing.sm}",
       "$type": "dimension",
       "$description": "Gap between the invoker and the popover"
     },
@@ -2872,12 +2902,12 @@
       "$description": "Tooltip text weight; size and line height come from the small-text step"
     },
     "padding-block": {
-      "$value": "{spacing.4}",
+      "$value": "{spacing.xs}",
       "$type": "dimension",
       "$description": "Tooltip block padding"
     },
     "padding-inline": {
-      "$value": "{spacing.8}",
+      "$value": "{spacing.sm}",
       "$type": "dimension",
       "$description": "Tooltip inline padding"
     },

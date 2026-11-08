@@ -58,8 +58,10 @@ Some choices aren't about attention, consequence or size, so they aren't axes. T
 | Family | Options | What it decides |
 | --- | --- | --- |
 | Corners | `--round` | Pill or circle ends instead of the radius token |
-| Placement | `--floating`, `--docked`, `--inline`, `--sticky`, `--fixed-*` | Where a component sits relative to the page or its scroller |
-| Arrangement | `--joined`, `--vertical`, `--fill`, `--ruled`, `--end`, `--flush` | How the parts of a container sit together |
+| Placement | `--floating`, `--docked`, `--inline`, `--sticky`, `--fixed-*`; for content inside a frame, `--inline-center`, `--inline-end`, `--block-start`, `--block-end` | Where a component sits relative to the page or its scroller, or where its content sits inside it |
+| Arrangement | `--joined`, `--vertical`, `--fill`, `--ruled`, `--end` | How the parts of a container sit together |
+| Inset | `--flush` | Whether the padding at a container's edges stays, for content that brings its own or lines up with the content around it |
+| Width | `--stretch`, `--rail` | How wide a container is: full width past the page's measure, or narrowed to icons |
 | Material | `--translucent` | What the surface is made of, with any prominence that has a fill |
 | Overflow | `--scrollable` | Whether content that doesn't fit wraps or scrolls |
 - Combinations are not multiplied by default. A component documents only the combinations it supports and tests.
@@ -294,6 +296,10 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | Where may viewport media queries be used? | In the parts that span the page (app shell, Header, Sidebar), the viewport-prefixed responsive helpers, and user preferences. Everything else uses container queries. |
 | Is a colour-flipped region reversed or inverted? | Inverted, as the code says (`.color-palette-inverted`). One word for one thing. |
 | Should tight groups of small controls avoid overlapping hit areas? | Yes (reversed, Nov 2026). Overlap let the later control take taps on the earlier one's own box: on a phone, people hit the wrong item in the docs sidebar and the header's scheme switch. A buffer now reaches halfway across the gap and stops. The cost, a target under 48px in a tight group on touch, is accepted. |
+| What does reduced motion do to a layer opening? | It removes movement, not change (Nov 2026). Dialogs, Popovers and Tooltips drop their slide and scale but keep a short fade, which moves nothing and softens the change. |
+| Can markup rely on invoker commands (`commandfor`, `command`) before they are widely available? | Yes, with a fallback (Nov 2026). Every current browser supports them; the Dialog docs give a few lines of script for older ones. The library still ships no script. |
+| How does a surface keep its edge in forced colours? | Every Card but a plain one draws at least a 1px border there, since forced colours flatten fills and drop shadows (Nov 2026). Poster does the same. |
+| What does reduced transparency change? | Every see-through surface turns solid and drops its blur (Nov 2026): the `--translucent` material on Header, Banner, Card and Menu, Poster's panel, the layer surface (`--surface-layer`, `--surface-layer-filter`) and the translucent utilities. Tints that mark a state, such as a hover wash or a status fill, stay: nothing shows through them. Where a browser can't report the preference (Firefox), nothing changes. |
 | Does each prominence need an explicit modifier, such as `--outline`? | Not yet. Add one only when a real case needs to override a container's prominence back to the default. |
 | Is a card's edge part of prominence? | No. Prominence sets the fill; the card's chrome axis (`--flat`, `--bordered`) sets the edge, and `--flush` the padding, so each modifier keeps to one axis. `--plain` keeps its edgeless look; `.card--plain.card--bordered` is the outline the row above anticipated. Chrome is card-only until a second surface needs it. |
 | How are badge, chip, status and kbd told apart? | By job. Attached count or dot: badge. State of a thing: status. Value or tag, optionally removable: chip. Key: kbd. There is no separate "label" atom. |
@@ -329,7 +335,7 @@ Settled questions from the audit, recorded so they are not reopened without new 
 | How many names can a utility have? | Two at most: a verbose name (property and value) and Tailwind's shorthand where Tailwind has one with the same meaning. |
 | How many small text steps are there? | One: `.small-text` (step −1). `.micro-text` is removed. `.micro-heading` is the uppercase eyebrow, a separate job. |
 | Is card a molecule or an organism? | A molecule. A card is a surface with named slots; what goes in its body is content, not part of the card. Components that compose a card (popover, dialog) then sit at or above it in the cascade, so a positioning shell is never overridden by the card it wraps. |
-| What about options that aren't variants, such as `--round` or `--docked`? | They are option families outside the six axes: corners, placement, arrangement, material and overflow (section 2). Each sets one thing, with the same name everywhere, and names its need. |
+| What about options that aren't variants, such as `--round` or `--docked`? | They are option families outside the six axes: corners, placement, arrangement, inset, width, material and overflow (section 2). Each sets one thing, with the same name everywhere, and names its need. |
 | Is a tint enough to mark the current item? | No. A current or selected item needs a cue that isn't colour alone, at 3:1, which survives forced colours. A Menu and a Navigation Tree use bold text and a rail. |
 | May a fixed or floating bar use a viewport query? | Yes, for its height only: on a short or zoomed screen (400% reflow is 320 by 256) it may drop to one scrolling row so it doesn't cover the page. |
 | What is the Divider's orientation flag called? | `--divider-orientation` (`vertical` or `horizontal`), set by a parent whose items sit in a row (`.inline`, `.cluster`, Button Group, Batch Actions). It doesn't inherit. `--direction` is removed. |
@@ -356,7 +362,7 @@ Run this on every component during the audit. A component is ready for v1 only w
 
 **Restraint and architecture**
 
-- [ ] Variants map to the shared axes (pointer, size, density, presentation, prominence, intent) or a recognised option family (corners, placement, arrangement, material, overflow)
+- [ ] Variants map to the shared axes (pointer, size, density, presentation, prominence, intent) or a recognised option family (corners, placement, arrangement, inset, width, material, overflow)
 - [ ] Each modifier sets one axis; no compound modifiers
 - [ ] Size modifiers only on atoms and controls; `--compact` only on containers
 - [ ] Every variant has a named user need; unsupported combinations are documented

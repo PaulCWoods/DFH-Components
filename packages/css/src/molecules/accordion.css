@@ -50,6 +50,7 @@
   --_accordion-border-width: var(--accordion-border-width, var(--panel-border-width, 1px));
   --_accordion-border-inline-width: var(--_accordion-border-width);
   --_accordion-border-start-width: var(--_accordion-border-width);
+  --_accordion-border-end-width: var(--_accordion-border-width);
   --_accordion-radius: var(--accordion-radius, var(--panel-radius, 0.25rem));
   --_accordion-padding-block: var(--accordion-padding, var(--spacing, 1rem));
   --_accordion-padding-inline: var(--accordion-padding, var(--spacing, 1rem));
@@ -98,7 +99,7 @@
   background-color: var(--_accordion-bg);
   border-color: var(--_accordion-border-color);
   border-style: var(--_accordion-border-style);
-  border-width: var(--_accordion-border-start-width) var(--_accordion-border-inline-width) var(--_accordion-border-width);
+  border-width: var(--_accordion-border-start-width) var(--_accordion-border-inline-width) var(--_accordion-border-end-width);
   border-radius: var(--_accordion-radius);
   transition: padding-block-end var(--_accordion-transition) var(--_accordion-timefunc);
 
@@ -111,9 +112,6 @@
     --_accordion-transition: 0s;
   }
 
-  @media (prefers-contrast: more) {
-    --_accordion-border-width: calc(var(--accordion-border-width, var(--panel-border-width, 1px)) * 2);
-  }
 }
 
 /* ==========================================================================
@@ -137,6 +135,13 @@
 
   &::-webkit-details-marker {
     display: none;
+  }
+
+  /* Forced colours drop gradients, so the icon keeps its own colours */
+  @media (forced-colors: active) {
+    &::after {
+      forced-color-adjust: none;
+    }
   }
 
   /* State icon: a plus whose upright bar closes into a minus */
@@ -224,8 +229,10 @@
 }
 
 /* The content meets the frame, for what brings its own padding: a code block,
-   a table, an image. Clipped so it keeps the frame's corners. */
+   a table, an image. Clipped so it keeps the frame's corners; a plain
+   summary doesn't bleed past the clip. */
 :where(.accordion--flush) {
+  --_accordion-bleed: 0px;
   --_accordion-content-inset: 0px;
   --_accordion-content-padding-end: 0px;
   overflow: clip;
@@ -246,6 +253,41 @@
 
   &:where(.accordion--plain) {
     --_accordion-border-start-width: 0px;
+  }
+}
+
+/* Filling a flush Card part, a plain accordion leaves the outer edges to
+   the Card, which draws its border and rules there */
+:where(.card__body--flush, .card--flush > .card__body) {
+  > :where(.accordion--plain:first-child) {
+    --_accordion-border-start-width: 0px;
+  }
+
+  > :where(.accordion--plain:last-child) {
+    --_accordion-border-end-width: 0px;
+  }
+
+  > :where(.accordion:first-child) {
+    @container style(--accordion-prominence: plain) {
+      --_accordion-border-start-width: 0px;
+    }
+  }
+
+  > :where(.accordion:last-child) {
+    @container style(--accordion-prominence: plain) {
+      --_accordion-border-end-width: 0px;
+    }
+  }
+}
+
+/* Increased contrast: a thicker frame; plain rules stay rules */
+@media (prefers-contrast: more) {
+  :where(.accordion:not(.accordion--plain)) {
+    --_accordion-border-width: max(var(--accordion-border-width, var(--panel-border-width, 1px)), var(--border-width-medium, 2px));
+
+    @container style(--accordion-prominence: plain) {
+      --_accordion-border-width: var(--rule-width, 1px);
+    }
   }
 }
 

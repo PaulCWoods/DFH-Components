@@ -73,7 +73,7 @@ export const Justify: Story = {
   render: () => `
     <div class="stack">
       ${['start', 'center', 'end', 'between', 'around', 'evenly'].map((j) => `
-        <div class="flex justify-${j} gap-sm bg-subtle rounded-md p-sm">${chips()}<span class="chip font-mono">.justify-${j}</span></div>`).join('')}
+        <div class="flex flex-wrap justify-${j} gap-sm bg-subtle rounded-md p-sm">${chips()}<span class="chip font-mono">.justify-${j}</span></div>`).join('')}
     </div>`,
 };
 

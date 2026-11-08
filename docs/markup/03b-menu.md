@@ -130,7 +130,7 @@ A list of actions, usually opened from a Button in a [Popover](03-popover.md): B
 | :--- | :--- | :--- |
 | Prominence | default (surface and border), `--strong` (raised, with a shadow), `--subtle` (tint, no border), `--plain` (no surface, for a Menu inside a Card or Sidebar) | `--menu-prominence` (a Popover sets `strong`) |
 | Density | `--compact` (sets `--ui-sizing: compact`) | |
-| Material | `--translucent` | |
+| Material | `--translucent` | Solid under more contrast or reduced transparency |
 | Rules | `--ruled`: rules between items, replacing the Dividers where gap decorations are supported | |
 
 ### Further rules

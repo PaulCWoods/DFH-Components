@@ -124,7 +124,7 @@ One message with an intent, in one row: an optional icon, the body and optional 
 - **Icon box:** the icon sits in an `.icon-box` (`aria-hidden="true"`). Inside a Banner the box is the size of the Banner's small Buttons, and both align to the start of the row (`--banner-align`; a dock centres them).
 - **Typography** comes from text atoms: `.text` or `.small-text` for the message, `.text.font-bold` for a title. The Banner sets no type.
 - **Buttons** inside are small and subtle by default; mark the main one `--strong --accent` if it needs weight.
-- **Material:** `--translucent` (opt-in) combines with any prominence that has a fill.
+- **Material:** `--translucent` (opt-in) combines with any prominence that has a fill. It turns solid when the user asks for more contrast or reduced transparency.
 
 ## Neutral
 ```html live

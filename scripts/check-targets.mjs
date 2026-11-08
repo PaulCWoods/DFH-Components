@@ -19,6 +19,8 @@
      box, so a tap on what looks like one control activates another.
    - text links meet WCAG 2.5.8 (AA) instead: 24px, or no other control
      within 12px of the centre. Links in running text are exempt.
+   - scroll regions (tabindex for the keyboard, no control role) aren't targets:
+     nothing taps them.
    - spill: a control's hit area reaches past the bar that holds it (a
      header, tab list, batch actions, pagination or code block's bar), so it
      covers the page beside the bar or is clipped. A bar is never shorter
@@ -114,8 +116,12 @@ const targetProbe = (fine) => `(() => {
     return !!block && block.textContent.trim().length > el.textContent.trim().length + 8;
   };
 
+  /* A scroll region takes focus so the keyboard can scroll it; nothing
+     taps it, so it isn't a target */
+  const scrollRegion = (el) => el.matches('[tabindex]:not(a, button, input, select, textarea, summary, [role=button], [role=link], [role=checkbox], [role=radio], [role=switch], [role=tab], [role=option], [role=menuitem], [role=slider])') && /auto|scroll/.test(getComputedStyle(el).overflowX + getComputedStyle(el).overflowY);
+
   for (const el of document.querySelectorAll(controls)) {
-    if (!visible(el) || running(el)) continue;
+    if (!visible(el) || running(el) || scrollRegion(el)) continue;
     let box = el.getBoundingClientRect();
     /* A checkbox or radio's target is its row: the box and its label */
     if (el.matches(choice) && el.labels?.length) {

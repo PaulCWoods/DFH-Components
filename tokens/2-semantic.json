@@ -1705,6 +1705,18 @@
           "$value": "{duration.0}"
         }
       }
+    },
+    "(prefers-reduced-transparency: reduce)": {
+      "surface": {
+        "layer": {
+          "$value": "{surface.card}"
+        }
+      },
+      "surface-layer": {
+        "filter": {
+          "$value": "none"
+        }
+      }
     }
   },
   "micro-heading-fluid": {

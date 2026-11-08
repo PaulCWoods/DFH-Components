@@ -21,7 +21,7 @@
 
    <button type="button" class="button button--icon" interestfor="tip-bold">
      <svg class="icon" …></svg>
-     <span class="visually-hidden">Bold</span>
+     <span class="sr-only">Bold</span>
    </button>
    <div id="tip-bold" popover="hint" class="tooltip" aria-hidden="true">Bold</div>
    ========================================================================== */
@@ -86,8 +86,7 @@
   transition-property: opacity, scale, display, overlay;
   transition-timing-function: var(--_tooltip-timefunc);
 
-  /* .\:popover-open is the popover polyfill's class */
-  &:where(:popover-open, .\:popover-open) {
+  &:where(:popover-open) {
     opacity: 1;
     scale: 1;
 
@@ -238,12 +237,12 @@
 /* ==========================================================================
    3. Reduced Motion & High Contrast
    ========================================================================== */
+/* Reduced motion: no scale, only the fade (no movement) */
 @media (prefers-reduced-motion: reduce) {
   :where(.tooltip) {
     scale: none;
-    transition-duration: 0s;
 
-    &:where(:popover-open, .\:popover-open) {
+    &:where(:popover-open) {
       scale: none;
 
       @starting-style {
@@ -260,6 +259,13 @@
     --_tooltip-shadow: none;
   }
 
+  :where(.tooltip)::before {
+    content: none;
+  }
+}
+
+/* Forced colours: the arrow has no edge, and would paint over the border */
+@media (forced-colors: active) {
   :where(.tooltip)::before {
     content: none;
   }

@@ -434,3 +434,36 @@ export const Loading: Story = {
     </article>
   `,
 };
+
+/**
+ * A flag on the container and a modifier on the Card set different axes, so
+ * both apply: the intent's border shows on a plain and a subtle Card, the
+ * flat chrome stays flat on a strong Card.
+ */
+export const FlagsAndModifiers: Story = {
+  name: 'Flags and modifiers',
+  render: () => `
+    <div class="stack">
+      <div class="grid grid--3-col" style="--card-intent: danger;">
+        ${['card--plain', 'card--subtle', 'card--strong']
+          .map(
+            (cls) => `
+          <article class="card ${cls}">
+            <div class="card__body"><p class="text"><strong>At risk:</strong> .${cls} with the danger flag</p></div>
+          </article>`,
+          )
+          .join('')}
+      </div>
+      <div class="grid grid--3-col" style="--card-chrome: flat;">
+        ${['card--strong', 'card--bordered', 'card--accent']
+          .map(
+            (cls) => `
+          <article class="card ${cls}">
+            <div class="card__body"><p class="text">${cls === 'card--accent' ? '<strong>Selected:</strong> ' : ''}.${cls} with the flat flag</p></div>
+          </article>`,
+          )
+          .join('')}
+      </div>
+    </div>
+  `,
+};

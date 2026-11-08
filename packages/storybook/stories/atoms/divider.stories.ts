@@ -15,7 +15,7 @@ const meta: Meta<DividerArgs> = {
     docs: {
       description: {
         component: `
-A rule between groups. Organisms (menu, combobox, batch actions, button group) place it; they never restyle it.
+A rule between groups. Organisms (menu, batch actions, button group) place it; they never restyle it.
 
 | Axis | Values |
 | :--- | :--- |

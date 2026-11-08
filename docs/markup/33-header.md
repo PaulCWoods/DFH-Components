@@ -190,7 +190,7 @@ The band at the top of a page or app that holds the Brand, the main navigation a
 </div>
 ```
 - `--plain`: no surface and no border, for a Header over a hero or a page that draws its own edge.
-- `--translucent`: the content scrolls under a see-through surface with a blur. Solid under more contrast.
+- `--translucent`: the content scrolls under a see-through surface with a blur. Solid under more contrast or reduced transparency.
 - `--compact`: the bar's padding steps down, and it sets `--ui-sizing: compact`, so the Buttons and text inside step down too (an app toolbar). The bar stays at least `--header-compact-bar-min-size` tall, the pointer's minimum target, so the Buttons' 48px hit areas stay inside the band on a touch screen: 56px instead of 64px. It is shorter only where the product has opted into fine-pointer targets (`--spacing-target-min: var(--spacing-target-sm)` on `:root` inside `@media (pointer: fine)`), where the band is 40px. `max-md:header--compact` does the same below 48rem only, for a Header that tightens on a phone.
 - A sticky compact header sets `--header-height` to `--header-compact-height`, so scroll padding and sticky panes follow. (A product that loads its tokens in a later cascade layer than its components repeats that rule in the tokens' layer.)
 - A dark header is `.color-scheme-dark` on the band; an inverted one is `.color-palette-inverted`.

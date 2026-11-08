@@ -148,6 +148,14 @@
   }
 }
 
+/* Reduced transparency: the material turns solid */
+@media (prefers-reduced-transparency: reduce) {
+  :where(.menu--translucent) {
+    --_menu-bg: var(--_menu-fill);
+    backdrop-filter: none;
+  }
+}
+
 /* Rules between items replace the dividers where gap decorations work.
    legacy: the dividers stand in until gap decorations are Baseline widely
    available; then drop the @supports and the dividers */

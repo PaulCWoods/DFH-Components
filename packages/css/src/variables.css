@@ -705,6 +705,13 @@
   }
 }
 
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+  --surface-layer: var(--surface-card);
+  --surface-layer-filter: none;
+  }
+}
+
 @supports (opacity: progress(1px, 0px, 1px)) {
   :root {
     --_min-viewport: 400px;

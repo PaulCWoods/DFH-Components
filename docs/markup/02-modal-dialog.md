@@ -69,6 +69,20 @@ The browser provides all of this for a modal `<dialog>`. There's nothing to scri
 - **Escape** closes it, and focus returns to the control that opened it.
 - **A screen reader** announces it as a dialog with the name from `aria-labelledby`, and can't read the inert page behind it. A confirmation also reads its message, through `aria-describedby`.
 
+**Older browsers.** The Buttons open and close the Dialog with `commandfor` and `command`, which every current browser supports but older ones ignore. Until that support is widely available, a product that needs those browsers adds a few lines that do the same where `command` is missing:
+```js
+if (!('command' in HTMLButtonElement.prototype)) {
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('button[commandfor]');
+    const dialog = button && document.getElementById(button.getAttribute('commandfor'));
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    const command = button.getAttribute('command');
+    if (command === 'show-modal') dialog.showModal();
+    else if (command === 'close') dialog.close(button.value);
+  });
+}
+```
+
 ## Confirmation
 ```html live cluster
 <button type="button" class="button" commandfor="delete-dialog" command="show-modal"><span>Delete plot</span></button>
@@ -252,7 +266,7 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 - **Drawers** are full height and follow the text direction. Use the end side for settings and details and the start side for navigation. On a narrow screen a drawer leaves a 3rem strip of the page beside it.
 - **`.dialog--bottom`** pins a floating Dialog near the bottom, within reach of a thumb, keeping the cushion below it. An on-screen keyboard can cover it, so use `.dialog--top` for anything with a field.
 - **Bottom sheets** (`.dialog--drawer.dialog--bottom`) are full width and flush with the bottom edge, as tall as their content, up to the screen less a 3rem strip, and the body scrolls beyond that. There's no drag to dismiss, since that needs a script: give it a close button, and `closedby="any"` if tapping outside should close it.
-- **Motion.** It fades and moves in over `--duration-sm`, and exit mirrors entry. Reduced motion keeps the fade only; more contrast drops the backdrop blur.
+- **Motion.** It fades and moves in over `--duration-sm`, and exit mirrors entry. Reduced motion keeps the fade only; more contrast and reduced transparency drop the backdrop blur.
 - **Without a Card** (an image, a video), the Dialog draws a Card's surface itself.
 
 ## Dialog
@@ -323,7 +337,13 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 
 <dialog id="plan-dialog" class="dialog" aria-labelledby="plan-title" closedby="any">
   <figure class="stack">
-    <figcaption id="plan-title" class="small-heading">Site plan</figcaption>
+    <figcaption class="inline inline--between">
+      <span id="plan-title" class="small-heading">Site plan</span>
+      <button type="button" class="button button--plain button--icon" commandfor="plan-dialog" command="close">
+        <span class="sr-only">Close</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      </button>
+    </figcaption>
     <img src="/examples/cover.svg" alt="Abstract artwork standing in for the plan of the plots" />
   </figure>
 </dialog>

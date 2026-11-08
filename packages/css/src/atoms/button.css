@@ -562,13 +562,13 @@
     .badge:not(.badge--top-end,
       .badge--top-start,
       .badge--bottom-end,
-      .badge--bottom-start)) {
+      .badge--bottom-start)):not(.button__icon) {
     display: none;
   }
 }
 
 /* Container-Adaptive Presentation (labels collapse to icon-only) */
-:where(.button:not(.button--labeled):has(.icon)) {
+:where(.button:not(.button--labeled):has(.icon, .button__icon)) {
   @container style(--ui-labels: hidden) {
     --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
@@ -591,14 +591,14 @@
       .badge:not(.badge--top-end,
         .badge--top-start,
         .badge--bottom-end,
-        .badge--bottom-start)) {
+        .badge--bottom-start)):not(.button__icon) {
       display: none;
     }
   }
 }
 
-:where(.hide-labels) :where(.button:not(.button--labeled):has(.icon)),
-:where(.button:not(.button--labeled):has(.icon).hide-labels) {
+:where(.hide-labels) :where(.button:not(.button--labeled):has(.icon, .button__icon)),
+:where(.button:not(.button--labeled):has(.icon, .button__icon).hide-labels) {
   --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
   > :where(span:not(.button__icon, .badge, .avatar), .button__text, .ui-label) {
@@ -620,7 +620,7 @@
     .badge:not(.badge--top-end,
       .badge--top-start,
       .badge--bottom-end,
-      .badge--bottom-start)) {
+      .badge--bottom-start)):not(.button__icon) {
     display: none;
   }
 }

@@ -451,10 +451,10 @@ export const WithoutACard: Story = {
     ${opener('plan-dialog', 'View site plan')}
     <dialog id="plan-dialog" class="dialog" aria-labelledby="plan-title" closedby="any">
       <figure class="stack">
-        <div class="inline inline--between">
-          <figcaption id="plan-title" class="small-heading">Site plan</figcaption>
+        <figcaption class="inline inline--between">
+          <span id="plan-title" class="small-heading">Site plan</span>
           ${closeButton('plan-dialog')}
-        </div>
+        </figcaption>
         <svg viewBox="0 0 320 180" role="img" aria-label="Three rows of plots, A to C, with the tool locker by the gate">
           <rect x="1" y="1" width="318" height="178" fill="none" stroke="currentColor" />
           ${['A', 'B', 'C']

@@ -309,6 +309,14 @@
   }
 }
 
+/* Reduced transparency: the material turns solid */
+@media (prefers-reduced-transparency: reduce) {
+  :where(.banner--translucent) {
+    background-color: var(--_banner-bg);
+    backdrop-filter: none;
+  }
+}
+
 /* ==========================================================================
    4. Parts
    ========================================================================== */

@@ -74,8 +74,7 @@ The parts in a column, in source order.
 ```
 
 ## Link Lists, Then Legal Text
-Link lists, then legal text.
-
+Group the links under headings in a bar of their own, and put the legal text in the bar after them.
 ```html live
 <div class="footer">
   <div class="footer__bar">
