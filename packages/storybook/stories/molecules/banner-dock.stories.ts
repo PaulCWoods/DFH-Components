@@ -33,7 +33,7 @@ Pins a banner to the page edge: site announcements, maintenance notices, consent
 | \`--floating\` | Inset from the edge; the banner keeps its frame. Combine with a placement. |
 
 - A dock is an \`<aside>\` with a label. It is not an alert: \`role="alert"\` belongs on a region that is in the page before an urgent message arrives.
-- Dismiss by setting \`hidden\` on the dock; it slides off its edge, or goes at once with reduced motion.
+- Dismiss by setting \`hidden\` on the dock; it slides off its edge, or fades without sliding with reduced motion.
 - The demos below draw each dock inside a frame (\`contain: layout\`) so fixed placements stay in the frame.
         `,
       },

@@ -46,7 +46,7 @@ It isn't a live region. One that arrives along with its content isn't reliably a
 - A `<div>`, not a landmark. Use a `<section>` with a heading only when the Empty State is the whole content of a page or panel.
 - The heading level fits the page outline; the class sets the size. In a Table cell, the title can be a `<p>`.
 - When a search or filter empties a list, put the news in a `role="status"` element that is on the page from the start ("No plants match", or the result count). The Empty State isn't a live region: one added with its content isn't reliably announced, and a whole block would be read out.
-- **`hidden`** works on it: show it with `hidden = false`, not an inline `display`.
+- **`hidden`** works on it, as on anything: show it with `hidden = false`, not an inline `display`.
 
 ## Say What's Empty and What to Do
 ```html live width=md
@@ -150,5 +150,5 @@ The block shown where content would be when there is none: a search or filter mi
 
 ### Further rules
 - **Parts** are layout hooks only. Type comes from the text atom on the title (`.subheading`, or `.small-heading` when compact) and the description (`.small-text`, muted by the Empty State). Actions are `.button`s, or a `.button-group`.
-- **The visual** is an `.icon-box`, which the Empty State makes large, subtle and round (small when compact), with a 1.5em icon (1.25em when compact). Or an illustration (`<img alt="">` or an `aria-hidden` `<svg>`), capped at 10rem.
+- **The visual** is an `.icon-box`, which the Empty State makes large, subtle and round (small when compact), with a 1.5em icon (1.25em when compact). Or an illustration (`<img alt="">` or an `aria-hidden` `<svg>`), capped at 8rem (`--empty-state-visual-max-size`).
 - **Padding:** none by default. The Empty State sits in something that has its own (a Card body, a Table cell, a Dialog, a page section). Add room with a `padding-block-*` utility.

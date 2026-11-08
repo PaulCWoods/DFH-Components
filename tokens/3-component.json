@@ -1402,6 +1402,11 @@
       "$type": "dimension",
       "$description": "Measure of the title and description"
     },
+    "visual-max-size": {
+      "$value": "{spacing.block-2xs}",
+      "$type": "dimension",
+      "$description": "Largest an illustration in the visual grows"
+    },
     "description-color": {
       "$value": "{foreground.muted}",
       "$type": "color",

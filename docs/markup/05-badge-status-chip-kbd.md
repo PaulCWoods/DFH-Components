@@ -111,7 +111,7 @@ Four atoms, chosen by **job**, not by look. If it's attached to something, it's 
 - A compact container (`--ui-sizing: compact`) steps all four to `--sm`.
 - **Height:** a default status or Chip is at least as tall as a small Button (`--status-min-size`, `--chip-min-size`, both `spacing.target-sm`, 32px), so they line up side by side. Plain, `--sm` and compact ones take their content's height.
 - Wrap the text in `.badge__text`, `.status__text` or `.chip__text`. It trims the text box to cap height (`text-box: trim-both cap alphabetic`) so the text centres optically; padding-block is sized for trimmed text. Bare text still renders, just slightly off-centre and shorter. Scripts that change the text must update the `__text` span, not the parent.
-- **Corner Badges and Avatars:** a corner Badge goes inside the Avatar. The Avatar pulls it onto its round edge and rings it in the surface colour; see [Avatar](06-avatar.md).
+- **Corner Badges follow the host's shape.** A corner Badge goes inside its host. An Avatar, Thumbnail or Button hands the Badge its corner radius, and the Badge moves in to sit on the curve: on the rim of a round host, barely in from the corner of a square one. Avatars and Thumbnails also ring it in the surface colour; see [Avatar](06-avatar.md). Another rounded host can do the same by setting `--badge-host-radius` and `--badge-host-size` (its height) on the Badge.
 
 ## Status
 The text carries the state (WCAG 1.4.1).

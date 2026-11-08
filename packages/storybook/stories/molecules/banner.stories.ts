@@ -222,7 +222,7 @@ export const SeveralActions: Story = {
 export const Dismissal: Story = {
   render: () => `
     <div class="stack" style="max-inline-size: 40rem;">
-      ${banner('', '<p class="text">Dismiss sets <code>hidden</code>; the banner fades out, or goes at once with reduced motion.</p>', { intent: 'success', action: dismiss })}
+      ${banner('', '<p class="text">Dismiss sets <code>hidden</code>; the banner fades out, with reduced motion too.</p>', { intent: 'success', action: dismiss })}
       <button type="button" class="button button--sm" onclick="this.previousElementSibling.hidden = false"><span>Show again</span></button>
     </div>
   `,

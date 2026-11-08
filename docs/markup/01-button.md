@@ -62,6 +62,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ```
 - **Icon-only Buttons** keep a text label in `.sr-only`, so screen readers, translation and voice control ("click Search site") all have a name. The icon is `aria-hidden`. Anything with `.button__icon` (an icon, a Status, a Kbd) stays visible when the label is hidden, so it can stand in for the icon; it's decoration, so the hidden label still names the Button.
 - **`.icon--dir`** mirrors an arrow in right-to-left text.
+- **A corner [Badge](05-badge-status-chip-kbd.md)** (a count or dot) sits on the Button's curve: on the rim of a `--round` Button, barely in from the corner of a square one. The count goes in the Button's name, and the Badge is `aria-hidden`.
 - **`--button-icon-size`** sizes the icons in a Button as a number of ems of its text (`1.25` is a quarter larger). It defaults to the Icon's `--icon-base-size`, so a correction for the icon set reaches Buttons too. Set it on a Button, a container or the theme. It's a plain number, so it scales with every Button size.
 - **`--labeled`** keeps the text when a container hides Button labels (`--ui-labels: hidden`).
 - An [Avatar](06-avatar.md) in a Button: a plain round icon Button holding a hidden Avatar.

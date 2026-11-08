@@ -61,6 +61,8 @@
   --_banner-body-gap: var(--banner-body-gap, var(--spacing-4, 0.25rem));
   --_banner-align: var(--banner-align, flex-start);
   --_banner-transition: var(--banner-transition, var(--duration-sm));
+  --_banner-safe-start: 0px;
+  --_banner-safe-end: 0px;
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))
@@ -75,6 +77,7 @@
     --_banner-subtle-tint: var(--surface-accent, Canvas);
     --_banner-tone-border: var(--border-color-accent, currentColor);
     --_banner-solid: var(--surface-accent-strong, var(--foreground-accent, CanvasText));
+    --link-color: var(--_banner-tone);
   }
 
   @container style(--banner-intent: info) {
@@ -83,6 +86,7 @@
     --_banner-subtle-tint: var(--surface-info, Canvas);
     --_banner-tone-border: var(--border-color-info, currentColor);
     --_banner-solid: var(--surface-info-strong, var(--foreground-info, CanvasText));
+    --link-color: var(--_banner-tone);
   }
 
   @container style(--banner-intent: success) {
@@ -91,6 +95,7 @@
     --_banner-subtle-tint: var(--surface-success, Canvas);
     --_banner-tone-border: var(--border-color-success, currentColor);
     --_banner-solid: var(--surface-success-strong, var(--foreground-success, CanvasText));
+    --link-color: var(--_banner-tone);
   }
 
   @container style(--banner-intent: warning) {
@@ -99,6 +104,7 @@
     --_banner-subtle-tint: var(--surface-warning, Canvas);
     --_banner-tone-border: var(--border-color-warning, currentColor);
     --_banner-solid: var(--surface-warning-strong, var(--foreground-warning, CanvasText));
+    --link-color: var(--_banner-tone);
   }
 
   @container style(--banner-intent: danger) {
@@ -107,6 +113,7 @@
     --_banner-subtle-tint: var(--surface-danger, Canvas);
     --_banner-tone-border: var(--border-color-danger, currentColor);
     --_banner-solid: var(--surface-danger-strong, var(--foreground-danger, CanvasText));
+    --link-color: var(--_banner-tone);
   }
 
   /* Density (before prominence, so a plain banner stays flush) */
@@ -150,12 +157,14 @@
     --_banner-radius: 0;
     --_banner-edge-inline: 0px;
     --_banner-edge-start: 0px;
+    --_banner-safe-start: var(--safe-area-inset-top, 0px);
   }
 
   @container style(--banner-dock: bottom) {
     --_banner-radius: 0;
     --_banner-edge-inline: 0px;
     --_banner-edge-end: 0px;
+    --_banner-safe-end: var(--safe-area-inset-bottom, 0px);
   }
 
   /* Layout */
@@ -165,6 +174,9 @@
   /* No overflow clip: it would cut off the action's hit area in a compact
      banner, and nothing inside draws past the concentric corners */
   padding: var(--_banner-padding);
+  /* Docked at an edge, it pads itself clear of a notch or home indicator */
+  padding-block-start: calc(var(--_banner-padding) + var(--_banner-safe-start));
+  padding-block-end: calc(var(--_banner-padding) + var(--_banner-safe-end));
 
   /* Surface */
   background-color: var(--_banner-bg);
@@ -177,11 +189,11 @@
   box-shadow: var(--_banner-shadow);
   color: var(--_banner-text);
 
-  /* Dismissal: [hidden] fades the banner out; entry fades it in */
+  /* Dismissal: [hidden] fades the banner out; entry fades it in. A fade
+     isn't motion, so reduced motion keeps it. */
   transition-behavior: allow-discrete;
   transition-duration: var(--_banner-transition);
-  transition-property: opacity,
-  display;
+  transition-property: opacity, display;
 
   &[hidden] {
     opacity: 0;
@@ -204,10 +216,6 @@
     align-self: var(--_banner-align);
     color: var(--_banner-icon);
     flex-shrink: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    --_banner-transition: 0s;
   }
 }
 
@@ -359,6 +367,17 @@
 /* ==========================================================================
    5. Accessibility & media queries
    ========================================================================== */
+
+/* Forced colours replace the fill, so every banner but plain keeps an edge */
+@media (forced-colors: active) {
+  :where(.banner:not(.banner--plain)) {
+    --_banner-border-width: var(--border-width-thin, 1px);
+
+    @container style(--banner-prominence: plain) {
+      --_banner-border-width: 0px;
+    }
+  }
+}
 
 /* Increased contrast: a thicker edge on every banner that has a surface */
 @media (prefers-contrast: more) {

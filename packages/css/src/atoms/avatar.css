@@ -47,8 +47,6 @@
   --_avatar-border-width: var(--avatar-border-width, var(--border-width-thin, 1px));
   --_avatar-border-color: var(--avatar-border-color, var(--border-color-quiet, currentColor));
   --_avatar-border-style: solid;
-  /* How far a corner badge moves in to sit on a round edge (1 - 1/√2) / 2 */
-  --_avatar-badge-inset: calc(var(--_avatar-size) * 0.146);
 
   /* ------------------------------------------------------------------------
      Container flags, declared before the modifier classes
@@ -65,7 +63,6 @@
 
   @container style(--avatar-corners: square) {
     --_avatar-radius: var(--avatar-square-radius, var(--radius));
-    --_avatar-badge-inset: 0px;
   }
 
   align-items: center;
@@ -131,10 +128,11 @@
     inline-size: 50%;
   }
 
-  /* A corner badge sits on the round edge, ringed in the surface colour */
+  /* A corner badge sits on the edge's curve, ringed in the surface colour */
   > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
+    --badge-host-radius: var(--_avatar-radius);
+    --badge-host-size: var(--_avatar-size);
     box-shadow: 0 0 0 var(--avatar-group-ring-width, var(--border-width, 2px)) var(--avatar-group-ring-color, var(--surface, Canvas));
-    margin: var(--_avatar-badge-inset);
   }
 }
 
@@ -165,7 +163,6 @@
 
 :where(.avatar--square) {
   --_avatar-radius: var(--avatar-square-radius, var(--radius));
-  --_avatar-badge-inset: 0px;
 }
 
 /* ==========================================================================

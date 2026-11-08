@@ -73,6 +73,9 @@ ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending[m.id])
 const send = (method, params = {}) => new Promise((r) => { const id = ++seq; pending[id] = r; ws.send(JSON.stringify({ id, method, params })); });
 const evaluate = async (expression) => (await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true })).result?.result?.value;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+/* Colour transitions finish before contrast is measured: wait for the
+   running ones (up to 3s), not a fixed time a busy machine can outrun */
+const settled = `new Promise((done) => requestAnimationFrame(() => Promise.race([Promise.allSettled(document.getAnimations().filter((a) => a instanceof CSSTransition).map((a) => a.finished)), new Promise((r) => setTimeout(r, 3000))]).then(() => done(true))))`;
 
 /* In the page: its internal links (not those in live examples, which
    point at made-up pages), and its ids */
@@ -130,14 +133,13 @@ for (const [n, page] of pages.entries()) {
   await evaluate(axeSource + ';0');
   for (const scheme of ['light', 'dark']) {
     await evaluate(`document.documentElement.classList.remove('color-scheme-light', 'color-scheme-dark'); document.documentElement.classList.add('color-scheme-${scheme}')`);
-    /* Let colour transitions finish before measuring contrast */
-    await wait(600);
+    await evaluate(settled);
     for (const v of (await evaluate(axeRun)) || []) report(`${page} axe ${scheme}: ${v}`);
     /* Each playground choice once, with the others at their start */
     const choices = await evaluate(`document.querySelectorAll('[data-controls] input').length`);
     for (let i = 0; i < choices; i++) {
       await evaluate(`document.querySelectorAll('[data-controls] input')[${i}].click()`);
-      await wait(250);
+      await evaluate(settled);
       for (const v of (await evaluate(axeRun)) || []) report(`${page} axe ${scheme}, choice ${i + 1}: ${v}`);
       /* The code says what the choice did, and nothing of the playground's own */
       if (!(await evaluate(`(() => { const input = document.querySelectorAll('[data-controls] input')[${i}]; const code = input.closest('[data-playground]').querySelector('.code-block code').textContent; return input.dataset.classes.split(' ').every((c) => code.includes(c)) && !/data-(axes|label)/.test(code); })()`))) report(`${page} choice ${i + 1}: the code doesn't match`);

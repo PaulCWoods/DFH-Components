@@ -34,7 +34,8 @@ It is a labelled `<aside>`, which makes it a landmark people can find. It isn't 
 
 ## Rules
 - A dock is an `<aside>` with an `aria-label`. The Banner inside takes no role.
-- Dismiss by setting `hidden` on the dock; it slides off its edge (at once with reduced motion).
+- Dismiss by setting `hidden` on the dock; it slides off its edge. With reduced motion it fades without sliding.
+- **With a sticky [Header](33-header.md),** keep the dock in flow above it: it scrolls away and the Header sticks. Both sticky would cover each other. A notice that must stay in view goes in a `--fixed-bottom` dock.
 - **A fixed dock sits over the page,** so leave room for it, or a focused element can end up behind it (WCAG 2.4.11). `scroll-padding-block` on the scroller keeps focus clear.
 
 ## Sticky Notice
@@ -88,7 +89,7 @@ It is a labelled `<aside>`, which makes it a landmark people can find. It isn't 
 | Placement | Behaviour |
 | :--- | :--- |
 | (none) | In flow at the top of the page |
-| `--sticky` | Sticks to the top on scroll |
+| `--sticky` | Sticks to the top on scroll; not with a sticky Header |
 | `--fixed-top`, `--fixed-bottom` | Pinned to the viewport edge |
 | `--floating` | Inset from the edge; the Banner keeps its frame. Combine with a placement. |
 

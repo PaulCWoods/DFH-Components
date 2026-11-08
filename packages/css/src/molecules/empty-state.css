@@ -74,11 +74,6 @@
   text-align: var(--_empty-state-text-align);
 }
 
-/* The display above would otherwise beat the hidden attribute */
-:where(.empty-state[hidden]) {
-  display: none;
-}
-
 /* ==========================================================================
    2. Parts (layout hooks only: type comes from the atoms on them)
    ========================================================================== */
@@ -100,7 +95,7 @@
   /* An illustration keeps to a modest size */
   > :where(img, svg:not(.icon)) {
     block-size: auto;
-    max-inline-size: min(100%, 10rem);
+    max-inline-size: min(100%, var(--empty-state-visual-max-size, var(--spacing-block-2xs, 8rem)));
   }
 }
 
@@ -140,8 +135,8 @@
 /* Prominence: a dashed, tinted frame */
 :where(.empty-state--subtle) {
   background-color: var(--empty-state-subtle-bg, var(--surface-translucent, transparent));
-  border: var(--border-width-1, 1px) dashed var(--empty-state-subtle-border-color, var(--border-color-quiet, currentColor));
-  border-radius: var(--panel-radius, var(--radius-md, 0.5rem));
+  border: var(--border-width-thin, 1px) dashed var(--empty-state-subtle-border-color, var(--border-color-quiet, currentColor));
+  border-radius: var(--panel-radius, var(--radius-md, 0.25rem));
   padding: var(--empty-state-subtle-padding, var(--spacing-lg));
 }
 

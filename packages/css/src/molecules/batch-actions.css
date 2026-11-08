@@ -101,9 +101,9 @@
     translate: 0 var(--_batch-actions-exit);
   }
 
+  /* Reduced motion keeps the fade and drops the slide */
   @media (prefers-reduced-motion: reduce) {
     --_batch-actions-exit: 0;
-    --_batch-actions-transition: 0s;
   }
 }
 

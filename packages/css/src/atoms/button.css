@@ -538,6 +538,13 @@
   }
 }
 
+/* A corner badge sits on the button's curve: on the rim of a round button,
+   barely in from the corner of a square one */
+:where(.button) > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
+  --badge-host-radius: var(--_button-radius);
+  --badge-host-size: var(--_button-min-size);
+}
+
 /* Icon-Only Button (minimal presentation; keeps an accessible name) */
 
 :where(.button--icon) {

@@ -44,7 +44,7 @@ An alert isn't a component. What makes a message urgent is how it is announced, 
 - **Intent is never colour alone.** A Banner with a non-neutral intent starts with an icon, or states its intent in the text.
 - **Structure:** icon, `.banner__body`, then `.banner__action` on one Button or on a `.cluster` of them. Actions can instead go in a `.cluster` at the end of the body, under the message. No other parts.
 - **Roles:** an in-flow Banner takes no role and no `aria-label`. Put `role="status"` (polite) or `role="alert"` (urgent) on a region that is in the page before its message arrives, and insert the Banner into it.
-- **Dismiss** by setting `hidden`; the Banner fades out (at once with reduced motion).
+- **Dismiss** by setting `hidden`; the Banner fades out. A fade isn't motion, so it stays with reduced motion.
 
 ## Keyboard and screen readers
 A Banner is static, so the browser has nothing to do until a message arrives or someone dismisses one. Both are the product's script.
@@ -124,6 +124,9 @@ One message with an intent, in one row: an optional icon, the body and optional 
 - **Icon box:** the icon sits in an `.icon-box` (`aria-hidden="true"`). Inside a Banner the box is the size of the Banner's small Buttons, and both align to the start of the row (`--banner-align`; a dock centres them).
 - **Typography** comes from text atoms: `.text` or `.small-text` for the message, `.text.font-bold` for a title. The Banner sets no type.
 - **Buttons** inside are small and subtle by default; mark the main one `--strong --accent` if it needs weight.
+- **Forced colours** replace the fill, so every Banner but `--plain` draws a 1px edge there.
+- **Links** in a Banner with an intent, from a class or the flag, take the intent's colour.
+- **Docked** at a page edge, a Banner pads itself clear of a notch or home indicator.
 - **Material:** `--translucent` (opt-in) combines with any prominence that has a fill. It turns solid when the user asks for more contrast or reduced transparency.
 
 ## Neutral

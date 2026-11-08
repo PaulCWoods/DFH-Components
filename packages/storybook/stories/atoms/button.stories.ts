@@ -301,6 +301,38 @@ export const IconOnlyAndShapes: Story = {
  * Native checkbox and radio inputs inside `<label class="button">`. Checked
  * renders as strong, with no JavaScript.
  */
+/**
+ * A corner badge sits on the button's curve: on the rim of a round button,
+ * barely in from the corner of a square one.
+ */
+export const CornerBadge: Story = {
+  render: () => `
+    <div class="sb-demo-stage cluster">
+      <button type="button" class="button button--icon">
+        <span class="sr-only">Notifications, 3 unread</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
+      </button>
+      <button type="button" class="button button--icon button--round">
+        <span class="sr-only">Notifications, 3 unread</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
+      </button>
+      <button type="button" class="button button--icon button--round button--subtle">
+        <span class="sr-only">Messages, new</span>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <span class="badge badge--dot badge--accent badge--top-end" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="button button--round">
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <span>Inbox</span>
+        <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">12</span></span>
+        <span class="sr-only">, 12 unread</span>
+      </button>
+    </div>
+  `,
+};
+
 export const Toggles: Story = {
   render: () => `
     <div class="sb-demo-stage cluster">

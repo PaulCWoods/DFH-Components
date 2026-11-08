@@ -133,7 +133,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
 | Overflow | wraps by default; `--scrollable` keeps one row |
 
 ### Further rules
-- **Hiding.** Set `hidden`; the bar fades and slides away (an inline bar only fades). With reduced motion it goes at once.
+- **Hiding.** Set `hidden`; the bar fades and slides away (an inline bar only fades). With reduced motion it fades without sliding.
 - **Focus after an action.** When an action (Archive, Delete) or Dismiss hides the bar, the script moves focus to the list, or to the item after the ones removed. Focus never stays on a hidden Button.
 - **Not supported:** a floating `--plain` bar, which has no surface to stand on over the page (use `--plain` only with `--inline` or `--docked`), and `--round` on a docked bar, which stays square from edge to edge.
 - **Short screens.** Below 30rem of screen height (a phone on its side, 400% zoom) a floating bar keeps to one row and its actions scroll, so it never covers most of the page.

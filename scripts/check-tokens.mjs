@@ -120,6 +120,9 @@ const notTokens = new Map(Object.entries({
   '--skeleton-height': 'set in markup; each shape matches the control it stands in for',
   '--card-font-sizing': 'passed down by a dialog',
   '--accordion-inset': 'passed down by a flush card body; defaults to the padding, or 0 when plain',
+  '--header-clearance': 'worked out by a sticky header on the root: its height plus the notch',
+  '--badge-host-radius': 'handed down by the host (Avatar, Thumbnail, Button): its corner radius',
+  '--badge-host-size': 'handed down by the host: its height, which caps the radius',
   '--batch-actions-radius': 'computed: concentric with the buttons inside',
 }));
 

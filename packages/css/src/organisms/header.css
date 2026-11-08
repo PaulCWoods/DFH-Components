@@ -231,8 +231,11 @@
 
 /* Focus Not Obscured (2.4.11): focused elements scroll clear of the header */
 :where(:root:has(.header--sticky)) {
-  /* The header pads itself clear of a notch, on top of its height */
-  scroll-padding-block-start: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width, 1px)))) + var(--safe-area-inset-top, 0px));
+  /* The header pads itself clear of a notch, on top of its height.
+     --header-clearance is what a sticky header covers, for anything else
+     that has to stay clear of it (a toast stack at the top). */
+  --header-clearance: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width, 1px)))) + var(--safe-area-inset-top, 0px));
+  scroll-padding-block-start: var(--header-clearance);
 }
 
 /* A compact sticky header is shorter, so what clears it follows. The

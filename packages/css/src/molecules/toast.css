@@ -89,13 +89,19 @@
   margin-inline: auto;
 }
 
+/* Top placements clear a sticky header, which would otherwise sit under them */
+:where(:root:has(.header--sticky)) :where(.toast-stack--top-start, .toast-stack--top-center, .toast-stack--top-end) {
+  --_toast-block-start: calc(var(--_toast-offset) + var(--header-clearance, var(--safe-area-inset-top, 0px)));
+}
+
 /* ==========================================================================
    3. Toast (on a banner)
    ========================================================================== */
 :where(.toast) {
   --_toast-transition: var(--toast-transition, var(--duration-sm));
   --_toast-timefunc: var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
-  --_toast-shift: 0.5rem;
+  --_toast-shift: var(--spacing-sm, 0.5rem);
+  --_toast-scale: 0.96;
 
   /* Its own, so a toast floats with or without a stack */
   --banner-shadow: var(--toast-shadow, var(--shadow-md, none));
@@ -111,18 +117,19 @@
 
   @starting-style {
     opacity: 0;
-    scale: 0.96;
+    scale: var(--_toast-scale);
     translate: 0 var(--_toast-shift);
   }
 
   &[hidden] {
     opacity: 0;
-    scale: 0.96;
+    scale: var(--_toast-scale);
   }
 
+  /* Reduced motion keeps the fade and drops the movement */
   @media (prefers-reduced-motion: reduce) {
-    --_toast-shift: 0;
-    --_toast-transition: 0s;
+    --_toast-shift: 0px;
+    --_toast-scale: none;
   }
 }
 

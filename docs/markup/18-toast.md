@@ -102,3 +102,5 @@ A Toast is a [Banner](11-banner.md) with `.toast`: it gains a shadow and entry a
 
 ### Further rules
 - Toasts usually take `banner--round`.
+- With reduced motion a Toast fades in and out without moving or scaling.
+- A top stack sits below a sticky [Header](33-header.md), so it never covers the Header's controls.

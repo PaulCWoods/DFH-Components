@@ -7,7 +7,8 @@
    flag, and never styles the banner directly.
 
    Placements: (none) in flow at the top of the page, --sticky (sticks to the
-   top on scroll), --fixed-top, --fixed-bottom. --floating insets the banner
+   top on scroll; not with a sticky header, which it would cover: keep the
+   dock in flow above it), --fixed-top, --fixed-bottom. --floating insets the banner
    from the edge and keeps its frame; combine it with a placement.
 
    An alert is a role, not a dock: use role="alert" or role="status" on a
@@ -41,7 +42,8 @@
   display: block;
   inline-size: 100%;
 
-  /* Dismissal: [hidden] slides the dock off its edge */
+  /* Dismissal: [hidden] slides the dock off its edge; reduced motion
+     keeps the fade and drops the slide */
   transition-behavior: allow-discrete;
   transition-duration: var(--_banner-dock-transition);
   transition-property: opacity, translate, display;
@@ -53,7 +55,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     --_banner-dock-exit: 0;
-    --_banner-dock-transition: 0s;
   }
 }
 

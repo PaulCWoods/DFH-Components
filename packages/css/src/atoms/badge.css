@@ -16,6 +16,10 @@
 
    Placement: inline by default; --top-end, --top-start, --bottom-end and
    --bottom-start pin it to a corner of the nearest positioned ancestor.
+   A host with rounded corners hands the badge its shape
+   (--badge-host-radius, --badge-host-size) and the badge moves in to sit
+   on the curve, not in the empty corner of the box. Avatar, Thumbnail and
+   Button do this.
 
    Accessibility:
    - The count must be part of the host's accessible name, e.g.
@@ -165,6 +169,9 @@
 :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
   --_badge-shift-inline: 50%;
   --_badge-shift-block: -50%;
+  /* On the host's curve: a corner of radius r sits r(1 - 1/√2) in from the
+     box, and a radius can't be more than half the host's height */
+  margin: calc(min(var(--badge-host-radius, 0px), var(--badge-host-size, 0px) / 2) * 0.293);
   position: absolute;
   translate: var(--_badge-shift-inline) var(--_badge-shift-block);
 }
