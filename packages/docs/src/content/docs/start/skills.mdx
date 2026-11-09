@@ -1,0 +1,42 @@
+---
+title: Skills for AI agents
+summary: Five skills that teach a coding agent to build with the library the way its docs do, versioned with the CSS.
+order: 20
+---
+import pkg from '../../../../../css/package.json';
+export const version = pkg.version;
+export const install = `v=${pkg.version}
+for s in accessibility tokens composition ui-guidance design-principles; do
+  mkdir -p .claude/skills/$s
+  curl -fsSL https://components.designforhumans.blog/skills/$v/$s/SKILL.md -o .claude/skills/$s/SKILL.md
+done`;
+
+A coding agent that hasn't read these docs writes generic markup: a `div` that should be a `<dialog>`, a hard-coded colour where a role belongs, a new class for something a modifier already does. The skills give an agent what these docs teach, in a form it loads when the task calls for it.
+
+## The skills
+
+| Skill | Teaches |
+| :--- | :--- |
+| `accessibility` | Accessible markup and CSS with the library: native elements, names, forms, targets, focus, contrast and preferences. |
+| `tokens` | Using and customising tokens: the roles to build with, component tokens, themes, sizing modes and fallbacks. |
+| `composition` | Composing screens: which component fits, options before CSS, layout primitives, text atoms, density, narrow screens and states. |
+| `ui-guidance` | Interface copy and interaction choices: Buttons and links, forms, feedback, dialogs or pages, navigation, tables. |
+| `design-principles` | Grouping, hierarchy, interaction laws and usability heuristics, each tied to what the library does about it. |
+
+Each is one `SKILL.md` file: a name, a description that tells the agent when to load it, and the guidance. They link to these docs rather than repeating them.
+
+## Add them to a project
+
+The skills are published for each version of the library, alongside its CSS, at `components.designforhumans.blog/skills/<version>/`. Use the version your project links. This fetches the skills for <code>{version}</code> into a project's `.claude/skills/` folder, where Claude Code finds them:
+
+<div class="code-block">
+  <pre class="code-block__code" tabindex="0" role="group" aria-label="Shell commands"><code>{install}</code></pre>
+</div>
+
+For another agent, save the files wherever it reads skills or instructions, or point its instructions file (an `AGENTS.md`, for example) at them. `index.json` in each version's folder lists the skills with their descriptions.
+
+## Keep them in step
+
+A skill describes the library at its version: the components, options and tokens that version has. When you raise the version of the CSS your project links, fetch the skills of the same version. Each file says its version in a comment at its top.
+
+Skills guide an agent; they don't check its work. Review what it writes the way you'd review anyone's: in a browser, with a keyboard, with a screen reader and at a phone's width.

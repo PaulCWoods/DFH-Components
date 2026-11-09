@@ -176,10 +176,12 @@
      never needs a scrolling region. Code reads left to right in every
      direction.
      ========================================================================== */
+  /* A long name or address breaks rather than widen the page (1.4.10) */
   :where(:not(pre) > code) {
     background-color: var(--prose-code-bg, var(--surface-translucent, transparent));
     border-radius: var(--radius-sm, 0);
     box-decoration-break: clone;
+    overflow-wrap: anywhere;
     padding-inline: 0.25em;
   }
 

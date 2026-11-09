@@ -4,7 +4,7 @@ Each folder is one skill: a `SKILL.md` with a name and a description that says w
 
 There are two audiences.
 
-**Shared skills** are for agents building products with the library, in any project. They stand alone. They link to the docs site (components.designforhumans.blog), never to files in this repo, and will ship with the library.
+**Shared skills** are for agents building products with the library, in any project. They stand alone. They link to the docs site (components.designforhumans.blog), never to files in this repo. `npm run build:skills` publishes them with each release at `components.designforhumans.blog/skills/<version>/`, and fails if one points into the repo; the docs page `start/skills.mdx` says how to add them to a project.
 
 | Skill | For |
 | :--- | :--- |
