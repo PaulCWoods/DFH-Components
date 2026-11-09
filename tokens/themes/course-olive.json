@@ -8,12 +8,12 @@
   },
   "roles": {
     "surface.accent": {
-      "light": "olive.200",
-      "dark": "olive.800"
+      "light": "olive.100",
+      "dark": "olive.900"
     },
     "surface.accent-dark": {
-      "light": "olive.800",
-      "dark": "olive.800"
+      "light": "olive.900",
+      "dark": "olive.900"
     },
     "surface.accent-strong": {
       "light": "olive.700",

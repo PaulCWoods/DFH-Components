@@ -12,8 +12,8 @@
     --color-aqua-700: #005246;
     --color-aqua-800: #003a31;
     --color-aqua-900: #002e26;
-    --surface-accent: light-dark(var(--color-aqua-200), var(--color-aqua-800));
-    --surface-accent-dark: var(--color-aqua-800);
+    --surface-accent: light-dark(var(--color-aqua-100), var(--color-aqua-900));
+    --surface-accent-dark: var(--color-aqua-900);
     --surface-accent-strong: light-dark(var(--color-aqua-700), var(--color-aqua-300));
     --surface-info: light-dark(var(--color-aqua-100), var(--color-aqua-900));
     --surface-info-strong: light-dark(var(--color-aqua-700), var(--color-aqua-300));
@@ -28,8 +28,6 @@
   }
   @media (prefers-contrast: more) {
     .theme-blog {
-      --surface-accent: light-dark(var(--color-aqua-100), var(--color-aqua-900));
-      --surface-accent-dark: var(--color-aqua-900);
       --surface-accent-strong: light-dark(var(--color-aqua-800), var(--color-aqua-200));
       --surface-info-strong: light-dark(var(--color-aqua-800), var(--color-aqua-200));
       --foreground-accent: light-dark(var(--color-aqua-700), var(--color-aqua-200));
@@ -43,7 +41,7 @@
     }
   }
   :is(.theme-blog:is(:where(.color-palette-inverted, .colors-inverted)), .theme-blog :is(:where(.color-palette-inverted, .colors-inverted))) {
-    --surface-accent: light-dark(var(--color-aqua-800), var(--color-aqua-200));
+    --surface-accent: light-dark(var(--color-aqua-900), var(--color-aqua-100));
     --surface-accent-strong: light-dark(var(--color-aqua-300), var(--color-aqua-700));
     --surface-info: light-dark(var(--color-aqua-900), var(--color-aqua-100));
     --surface-info-strong: light-dark(var(--color-aqua-300), var(--color-aqua-700));
@@ -56,7 +54,7 @@
   }
   :is(.theme-blog, .theme-blog *) {
     @container style(--color-palette: inverted) {
-      --surface-accent: light-dark(var(--color-aqua-800), var(--color-aqua-200));
+      --surface-accent: light-dark(var(--color-aqua-900), var(--color-aqua-100));
       --surface-accent-strong: light-dark(var(--color-aqua-300), var(--color-aqua-700));
       --surface-info: light-dark(var(--color-aqua-900), var(--color-aqua-100));
       --surface-info-strong: light-dark(var(--color-aqua-300), var(--color-aqua-700));
@@ -70,7 +68,6 @@
   }
   @media (prefers-contrast: more) {
     :is(.theme-blog:is(:where(.color-palette-inverted, .colors-inverted)), .theme-blog :is(:where(.color-palette-inverted, .colors-inverted))) {
-      --surface-accent: light-dark(var(--color-aqua-900), var(--color-aqua-100));
       --surface-accent-strong: light-dark(var(--color-aqua-200), var(--color-aqua-800));
       --surface-info-strong: light-dark(var(--color-aqua-200), var(--color-aqua-800));
       --foreground-accent: light-dark(var(--color-aqua-200), var(--color-aqua-700));
@@ -84,7 +81,6 @@
     }
     :is(.theme-blog, .theme-blog *) {
       @container style(--color-palette: inverted) {
-        --surface-accent: light-dark(var(--color-aqua-900), var(--color-aqua-100));
         --surface-accent-strong: light-dark(var(--color-aqua-200), var(--color-aqua-800));
         --surface-info-strong: light-dark(var(--color-aqua-200), var(--color-aqua-800));
         --foreground-accent: light-dark(var(--color-aqua-200), var(--color-aqua-700));

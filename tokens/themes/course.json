@@ -3,12 +3,12 @@
   "extends": "dfh",
   "roles": {
     "surface.accent": {
-      "light": "blue.200",
-      "dark": "blue.800"
+      "light": "blue.100",
+      "dark": "blue.900"
     },
     "surface.accent-dark": {
-      "light": "blue.800",
-      "dark": "blue.800"
+      "light": "blue.900",
+      "dark": "blue.900"
     },
     "surface.accent-strong": {
       "light": "blue.700",

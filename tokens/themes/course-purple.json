@@ -3,12 +3,12 @@
   "extends": "course",
   "roles": {
     "surface.accent": {
-      "light": "purple.200",
-      "dark": "purple.800"
+      "light": "purple.100",
+      "dark": "purple.900"
     },
     "surface.accent-dark": {
-      "light": "purple.800",
-      "dark": "purple.800"
+      "light": "purple.900",
+      "dark": "purple.900"
     },
     "surface.accent-strong": {
       "light": "purple.700",

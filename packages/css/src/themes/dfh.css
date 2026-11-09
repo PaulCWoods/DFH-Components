@@ -111,11 +111,11 @@
     --typography-font-size-cq-7: clamp(3.5832rem, 1.8rem + 7.14cqi, 7.1526rem);
     --typography-font-size-cq-8: clamp(4.25rem, 1.9rem + 9.38cqi, 8.9407rem);
     --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-33));
-    --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
-    --surface-accent-dark: var(--color-purple-800);
+    --surface-accent: light-dark(var(--color-purple-100), var(--color-purple-900));
+    --surface-accent-dark: var(--color-purple-900);
     --surface-accent-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
-    --surface-complementary: light-dark(var(--color-blue-200), var(--color-blue-800));
-    --surface-complementary-dark: var(--color-blue-800);
+    --surface-complementary: light-dark(var(--color-blue-100), var(--color-blue-900));
+    --surface-complementary-dark: var(--color-blue-900);
     --surface-complementary-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
     --surface-info: light-dark(var(--color-blue-100), var(--color-blue-900));
     --surface-info-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
@@ -151,11 +151,7 @@
   }
   @media (prefers-contrast: more) {
     :root {
-      --surface-accent: light-dark(var(--color-purple-100), var(--color-purple-900));
-      --surface-accent-dark: var(--color-purple-900);
       --surface-accent-strong: light-dark(var(--color-purple-800), var(--color-purple-200));
-      --surface-complementary: light-dark(var(--color-blue-100), var(--color-blue-900));
-      --surface-complementary-dark: var(--color-blue-900);
       --surface-complementary-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
       --surface-info-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
       --foreground-accent: light-dark(var(--color-purple-700), var(--color-purple-200));
@@ -235,9 +231,9 @@
     }
   }
   :where(.color-palette-inverted, .colors-inverted) {
-    --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
+    --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
     --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
-    --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
+    --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
     --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
     --surface-info: light-dark(var(--color-blue-900), var(--color-blue-100));
     --surface-info-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
@@ -254,9 +250,9 @@
   }
   * {
     @container style(--color-palette: inverted) {
-      --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
+      --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
       --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
-      --surface-complementary: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
       --surface-complementary-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
       --surface-info: light-dark(var(--color-blue-900), var(--color-blue-100));
       --surface-info-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
@@ -274,9 +270,7 @@
   }
   @media (prefers-contrast: more) {
     :where(.color-palette-inverted, .colors-inverted) {
-      --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
       --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
-      --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
       --surface-complementary-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
       --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
       --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
@@ -294,9 +288,7 @@
     }
     * {
       @container style(--color-palette: inverted) {
-        --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
         --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
-        --surface-complementary: light-dark(var(--color-blue-900), var(--color-blue-100));
         --surface-complementary-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
         --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
         --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));

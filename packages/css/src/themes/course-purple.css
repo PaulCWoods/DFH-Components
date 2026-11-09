@@ -3,8 +3,8 @@
    It holds only what the sub-brand changes. */
 @layer tokens {
   .theme-course-purple {
-    --surface-accent: light-dark(var(--color-purple-200), var(--color-purple-800));
-    --surface-accent-dark: var(--color-purple-800);
+    --surface-accent: light-dark(var(--color-purple-100), var(--color-purple-900));
+    --surface-accent-dark: var(--color-purple-900);
     --surface-accent-strong: light-dark(var(--color-purple-700), var(--color-purple-300));
     --foreground-accent: light-dark(var(--color-purple-600), var(--color-purple-300));
     --foreground-accent-hover: light-dark(var(--color-purple-700), var(--color-purple-200));
@@ -13,8 +13,6 @@
   }
   @media (prefers-contrast: more) {
     .theme-course-purple {
-      --surface-accent: light-dark(var(--color-purple-100), var(--color-purple-900));
-      --surface-accent-dark: var(--color-purple-900);
       --surface-accent-strong: light-dark(var(--color-purple-800), var(--color-purple-200));
       --foreground-accent: light-dark(var(--color-purple-700), var(--color-purple-200));
       --foreground-accent-hover: light-dark(var(--color-purple-800), var(--color-purple-100));
@@ -23,7 +21,7 @@
     }
   }
   :is(.theme-course-purple:is(:where(.color-palette-inverted, .colors-inverted)), .theme-course-purple :is(:where(.color-palette-inverted, .colors-inverted))) {
-    --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
+    --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
     --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
     --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
     --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
@@ -31,7 +29,7 @@
   }
   :is(.theme-course-purple, .theme-course-purple *) {
     @container style(--color-palette: inverted) {
-      --surface-accent: light-dark(var(--color-purple-800), var(--color-purple-200));
+      --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
       --surface-accent-strong: light-dark(var(--color-purple-300), var(--color-purple-700));
       --foreground-accent: light-dark(var(--color-purple-300), var(--color-purple-600));
       --foreground-accent-hover: light-dark(var(--color-purple-200), var(--color-purple-700));
@@ -40,7 +38,6 @@
   }
   @media (prefers-contrast: more) {
     :is(.theme-course-purple:is(:where(.color-palette-inverted, .colors-inverted)), .theme-course-purple :is(:where(.color-palette-inverted, .colors-inverted))) {
-      --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
       --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
       --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
       --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));
@@ -49,7 +46,6 @@
     }
     :is(.theme-course-purple, .theme-course-purple *) {
       @container style(--color-palette: inverted) {
-        --surface-accent: light-dark(var(--color-purple-900), var(--color-purple-100));
         --surface-accent-strong: light-dark(var(--color-purple-200), var(--color-purple-800));
         --foreground-accent: light-dark(var(--color-purple-200), var(--color-purple-700));
         --foreground-accent-hover: light-dark(var(--color-purple-100), var(--color-purple-800));

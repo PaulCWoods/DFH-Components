@@ -8,12 +8,12 @@
   },
   "roles": {
     "surface.accent": {
-      "light": "aqua.200",
-      "dark": "aqua.800"
+      "light": "aqua.100",
+      "dark": "aqua.900"
     },
     "surface.accent-dark": {
-      "light": "aqua.800",
-      "dark": "aqua.800"
+      "light": "aqua.900",
+      "dark": "aqua.900"
     },
     "surface.accent-strong": {
       "light": "aqua.700",

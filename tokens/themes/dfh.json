@@ -75,24 +75,24 @@
       "dark": "black"
     },
     "surface.accent": {
-      "light": "purple.200",
-      "dark": "purple.800"
+      "light": "purple.100",
+      "dark": "purple.900"
     },
     "surface.accent-dark": {
-      "light": "purple.800",
-      "dark": "purple.800"
+      "light": "purple.900",
+      "dark": "purple.900"
     },
     "surface.accent-strong": {
       "light": "purple.700",
       "dark": "purple.300"
     },
     "surface.complementary": {
-      "light": "blue.200",
-      "dark": "blue.800"
+      "light": "blue.100",
+      "dark": "blue.900"
     },
     "surface.complementary-dark": {
-      "light": "blue.800",
-      "dark": "blue.800"
+      "light": "blue.900",
+      "dark": "blue.900"
     },
     "surface.complementary-strong": {
       "light": "blue.700",

@@ -3,8 +3,8 @@
    It holds only what the sub-brand changes. */
 @layer tokens {
   .theme-course {
-    --surface-accent: light-dark(var(--color-blue-200), var(--color-blue-800));
-    --surface-accent-dark: var(--color-blue-800);
+    --surface-accent: light-dark(var(--color-blue-100), var(--color-blue-900));
+    --surface-accent-dark: var(--color-blue-900);
     --surface-accent-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
     --foreground-accent: light-dark(var(--color-blue-600), var(--color-blue-300));
     --foreground-accent-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
@@ -13,8 +13,6 @@
   }
   @media (prefers-contrast: more) {
     .theme-course {
-      --surface-accent: light-dark(var(--color-blue-100), var(--color-blue-900));
-      --surface-accent-dark: var(--color-blue-900);
       --surface-accent-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
       --foreground-accent: light-dark(var(--color-blue-700), var(--color-blue-200));
       --foreground-accent-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
@@ -23,7 +21,7 @@
     }
   }
   :is(.theme-course:is(:where(.color-palette-inverted, .colors-inverted)), .theme-course :is(:where(.color-palette-inverted, .colors-inverted))) {
-    --surface-accent: light-dark(var(--color-blue-800), var(--color-blue-200));
+    --surface-accent: light-dark(var(--color-blue-900), var(--color-blue-100));
     --surface-accent-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
     --foreground-accent: light-dark(var(--color-blue-300), var(--color-blue-600));
     --foreground-accent-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
@@ -31,7 +29,7 @@
   }
   :is(.theme-course, .theme-course *) {
     @container style(--color-palette: inverted) {
-      --surface-accent: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --surface-accent: light-dark(var(--color-blue-900), var(--color-blue-100));
       --surface-accent-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
       --foreground-accent: light-dark(var(--color-blue-300), var(--color-blue-600));
       --foreground-accent-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
@@ -40,7 +38,6 @@
   }
   @media (prefers-contrast: more) {
     :is(.theme-course:is(:where(.color-palette-inverted, .colors-inverted)), .theme-course :is(:where(.color-palette-inverted, .colors-inverted))) {
-      --surface-accent: light-dark(var(--color-blue-900), var(--color-blue-100));
       --surface-accent-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
       --foreground-accent: light-dark(var(--color-blue-200), var(--color-blue-700));
       --foreground-accent-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
@@ -49,7 +46,6 @@
     }
     :is(.theme-course, .theme-course *) {
       @container style(--color-palette: inverted) {
-        --surface-accent: light-dark(var(--color-blue-900), var(--color-blue-100));
         --surface-accent-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
         --foreground-accent: light-dark(var(--color-blue-200), var(--color-blue-700));
         --foreground-accent-hover: light-dark(var(--color-blue-100), var(--color-blue-800));

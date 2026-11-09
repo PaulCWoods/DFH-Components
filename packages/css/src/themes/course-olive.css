@@ -12,8 +12,8 @@
     --color-olive-700: #444b00;
     --color-olive-800: #2f3500;
     --color-olive-900: #252a00;
-    --surface-accent: light-dark(var(--color-olive-200), var(--color-olive-800));
-    --surface-accent-dark: var(--color-olive-800);
+    --surface-accent: light-dark(var(--color-olive-100), var(--color-olive-900));
+    --surface-accent-dark: var(--color-olive-900);
     --surface-accent-strong: light-dark(var(--color-olive-700), var(--color-olive-300));
     --foreground-accent: light-dark(var(--color-olive-600), var(--color-olive-300));
     --foreground-accent-hover: light-dark(var(--color-olive-700), var(--color-olive-200));
@@ -22,8 +22,6 @@
   }
   @media (prefers-contrast: more) {
     .theme-course-olive {
-      --surface-accent: light-dark(var(--color-olive-100), var(--color-olive-900));
-      --surface-accent-dark: var(--color-olive-900);
       --surface-accent-strong: light-dark(var(--color-olive-800), var(--color-olive-200));
       --foreground-accent: light-dark(var(--color-olive-700), var(--color-olive-200));
       --foreground-accent-hover: light-dark(var(--color-olive-800), var(--color-olive-100));
@@ -32,7 +30,7 @@
     }
   }
   :is(.theme-course-olive:is(:where(.color-palette-inverted, .colors-inverted)), .theme-course-olive :is(:where(.color-palette-inverted, .colors-inverted))) {
-    --surface-accent: light-dark(var(--color-olive-800), var(--color-olive-200));
+    --surface-accent: light-dark(var(--color-olive-900), var(--color-olive-100));
     --surface-accent-strong: light-dark(var(--color-olive-300), var(--color-olive-700));
     --foreground-accent: light-dark(var(--color-olive-300), var(--color-olive-600));
     --foreground-accent-hover: light-dark(var(--color-olive-200), var(--color-olive-700));
@@ -40,7 +38,7 @@
   }
   :is(.theme-course-olive, .theme-course-olive *) {
     @container style(--color-palette: inverted) {
-      --surface-accent: light-dark(var(--color-olive-800), var(--color-olive-200));
+      --surface-accent: light-dark(var(--color-olive-900), var(--color-olive-100));
       --surface-accent-strong: light-dark(var(--color-olive-300), var(--color-olive-700));
       --foreground-accent: light-dark(var(--color-olive-300), var(--color-olive-600));
       --foreground-accent-hover: light-dark(var(--color-olive-200), var(--color-olive-700));
@@ -49,7 +47,6 @@
   }
   @media (prefers-contrast: more) {
     :is(.theme-course-olive:is(:where(.color-palette-inverted, .colors-inverted)), .theme-course-olive :is(:where(.color-palette-inverted, .colors-inverted))) {
-      --surface-accent: light-dark(var(--color-olive-900), var(--color-olive-100));
       --surface-accent-strong: light-dark(var(--color-olive-200), var(--color-olive-800));
       --foreground-accent: light-dark(var(--color-olive-200), var(--color-olive-700));
       --foreground-accent-hover: light-dark(var(--color-olive-100), var(--color-olive-800));
@@ -58,7 +55,6 @@
     }
     :is(.theme-course-olive, .theme-course-olive *) {
       @container style(--color-palette: inverted) {
-        --surface-accent: light-dark(var(--color-olive-900), var(--color-olive-100));
         --surface-accent-strong: light-dark(var(--color-olive-200), var(--color-olive-800));
         --foreground-accent: light-dark(var(--color-olive-200), var(--color-olive-700));
         --foreground-accent-hover: light-dark(var(--color-olive-100), var(--color-olive-800));
