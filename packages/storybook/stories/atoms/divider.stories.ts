@@ -47,9 +47,9 @@ A rule between groups. Organisms (menu, batch actions, button group) place it; t
   args: { strong: false, dashed: false },
   render: (args) => `
     <div class="sb-demo-stage stack">
-      <p class="text" style="margin: 0;">Above the rule.</p>
+      <p class="text m-0">Above the rule.</p>
       <hr class="${cls(args)}">
-      <p class="text" style="margin: 0;">Below the rule.</p>
+      <p class="text m-0">Below the rule.</p>
       <div class="inline">
         <span>Before</span>
         <hr class="${cls(args)}" aria-orientation="vertical">
@@ -117,12 +117,12 @@ export const Orientation: Story = {
       <span class="sb-demo-tag">Card inside .inline: the card's divider stays horizontal</span>
       <div class="inline" style="align-items: stretch;">
         <div class="card stack">
-          <p class="text" style="margin: 0;">Section one</p>
+          <p class="text m-0">Section one</p>
           <hr class="divider">
-          <p class="text" style="margin: 0;">Section two</p>
+          <p class="text m-0">Section two</p>
         </div>
         <hr class="divider" aria-orientation="vertical">
-        <p class="text" style="margin: 0;">Beside the card</p>
+        <p class="text m-0">Beside the card</p>
       </div>
     </div>
   `,
@@ -135,7 +135,7 @@ export const Orientation: Story = {
 export const InOrganisms: Story = {
   render: () => `
     <div class="sb-demo-stage stack">
-      <menu class="menu" aria-label="Document options" style="max-inline-size: 16rem;">
+      <menu class="menu max-w-xs" aria-label="Document options">
         <li><button type="button" class="button"><span>Duplicate</span></button></li>
         <li><button type="button" class="button"><span>Export</span></button></li>
         <li role="separator" class="divider"></li>

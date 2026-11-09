@@ -262,7 +262,7 @@
       "$type": "fontWeight"
     },
     "size": {
-      "$value": "1.25rem",
+      "$value": "{spacing.20}",
       "$type": "dimension",
       "$description": "Minimum block and inline size of a count badge"
     },
@@ -308,6 +308,11 @@
     "font-weight": {
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
+    },
+    "line-height": {
+      "$value": "{typography.line-height.minus-2}",
+      "$type": "number",
+      "$description": "Line height of a status's text when it wraps"
     },
     "text-transform": {
       "$value": "none",
@@ -1219,6 +1224,11 @@
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
+    "line-height": {
+      "$value": "{typography.line-height.minus-2}",
+      "$type": "number",
+      "$description": "Line height of a chip's text when it wraps"
+    },
     "text-transform": {
       "$value": "none",
       "$type": "other"
@@ -1586,7 +1596,7 @@
       "$description": "Block padding of a bar in a compact header"
     },
     "padding-inline": {
-      "$value": "{spacing.cushion}",
+      "$value": "{app.padding-inline}",
       "$type": "dimension",
       "$description": "Inline padding of a bar"
     },
@@ -1670,7 +1680,7 @@
     "padding": {
       "$value": "{spacing.cushion}",
       "$type": "dimension",
-      "$description": "Padding of the sidebar parts"
+      "$description": "Block padding of the sidebar parts"
     },
     "width": {
       "$value": "{app.sidebar-width}",
@@ -1690,7 +1700,12 @@
     "compact-padding": {
       "$value": "{spacing}",
       "$type": "dimension",
-      "$description": "Padding when compact"
+      "$description": "Block padding when compact"
+    },
+    "padding-inline": {
+      "$value": "{app.padding-inline}",
+      "$type": "dimension",
+      "$description": "Inline padding of the sidebar parts: the app's, so the content lines up with the Header. Density doesn't change it"
     },
     "compact-width": {
       "$value": "{app.sidebar-compact-width}",
@@ -1724,8 +1739,18 @@
       "$type": "dimension",
       "$description": "Block padding of a bar"
     },
+    "compact-padding-block": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Block padding of a bar in a compact region"
+    },
+    "compact-gap": {
+      "$value": "{spacing.8}",
+      "$type": "dimension",
+      "$description": "Space between a bar's parts in a compact region"
+    },
     "padding-inline": {
-      "$value": "{spacing.cushion}",
+      "$value": "{app.padding-inline}",
       "$type": "dimension",
       "$description": "Inline padding of a bar"
     },
@@ -3072,7 +3097,7 @@
       "$description": "Radius for avatar and badge shapes"
     },
     "duration": {
-      "$value": "1.6s",
+      "$value": "{duration.xl}",
       "$type": "duration",
       "$description": "One cycle of the shimmer or pulse"
     }

@@ -165,7 +165,7 @@ export const Disabled: Story = {
 
 export const Compact: Story = {
   render: () => `
-    <div class="ui-compact stack" style="max-inline-size: 24rem;">
+    <div class="ui-compact stack max-w-sm">
       ${field('compact-name', { label: 'Full name' })}
       ${field('compact-plot', { label: 'Plot number', hint: 'Like A-14.', error: 'Enter a plot number' })}
     </div>`,

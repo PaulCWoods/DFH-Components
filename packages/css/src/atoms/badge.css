@@ -51,7 +51,7 @@
      -------------------------------------------------------------------------- */
   --_badge-font-size: var(--badge-font-size, var(--body-sm-fixed-font-size));
   --_badge-font-weight: var(--badge-font-weight, var(--font-weight-bold));
-  --_badge-size: var(--badge-size, 1.25rem);
+  --_badge-size: var(--badge-size, var(--spacing-20));
   --_badge-padding-inline: var(--badge-padding-inline, var(--spacing-xs));
   --_badge-text-padding-inline: var(--badge-text-padding-inline, 0.1em);
   --_badge-dot-size: var(--badge-dot-size, var(--spacing-12));

@@ -483,6 +483,11 @@
       "sm": 32,
       "default": 48,
       "lg": 64
+    },
+    "app": {
+      "padding-inline": "cushion",
+      "sidebar-width": 288,
+      "sidebar-compact-width": 192
     }
   },
   "shape": {

@@ -47,6 +47,7 @@
      -------------------------------------------------------------------------- */
   --_chip-font-size: var(--chip-font-size, var(--body-sm-fixed-font-size));
   --_chip-font-weight: var(--chip-font-weight, var(--font-weight-bold));
+  --_chip-line-height: var(--chip-line-height, var(--typography-line-height--2));
   --_chip-text-transform: var(--chip-text-transform, none);
   --_chip-min-size: var(--chip-min-size, var(--spacing-target-sm));
   --_chip-padding-block: var(--chip-padding-block, var(--spacing-6));
@@ -97,7 +98,7 @@
   /* Typography */
   font-size: var(--_chip-font-size);
   font-weight: var(--_chip-font-weight);
-  line-height: 1.25;
+  line-height: var(--_chip-line-height);
   text-transform: var(--_chip-text-transform);
 
   /* Surface */

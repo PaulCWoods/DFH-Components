@@ -58,7 +58,10 @@
   padding-block: var(--_tooltip-padding-block);
   padding-inline: var(--_tooltip-padding-inline);
 
-  /* Type: the small-text step, so the tooltip follows --font-sizing */
+  /* Type: the small-text step, so the tooltip follows --font-sizing. The
+     tooltip sets it itself (as Badge, Status and Chip do) because its text
+     has no element to carry a text atom, and a .small-text on the tooltip
+     would lose to this layer anyway */
   font-family: var(--body-font-family);
   font-size: var(--body-sm-fixed-font-size);
   font-weight: var(--tooltip-font-weight, var(--font-weight-medium));
@@ -80,7 +83,7 @@
 
   /* Entry and exit, closed state */
   opacity: 0;
-  scale: 0.96;
+  scale: var(--scale-enter, 0.96);
   transition-behavior: allow-discrete;
   transition-duration: var(--_tooltip-transition);
   transition-property: opacity, scale, display, overlay;
@@ -92,7 +95,7 @@
 
     @starting-style {
       opacity: 0;
-      scale: 0.96;
+      scale: var(--scale-enter, 0.96);
     }
   }
 }

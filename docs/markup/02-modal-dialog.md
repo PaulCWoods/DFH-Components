@@ -268,6 +268,7 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 - **Bottom sheets** (`.dialog--drawer.dialog--bottom`) are full width and flush with the bottom edge, as tall as their content, up to the screen less a 3rem strip, and the body scrolls beyond that. There's no drag to dismiss, since that needs a script: give it a close button, and `closedby="any"` if tapping outside should close it.
 - **Motion.** It fades and moves in over `--duration-sm`, and exit mirrors entry. Reduced motion keeps the fade only; more contrast and reduced transparency drop the backdrop blur.
 - **Without a Card** (an image, a video), the Dialog draws a Card's surface itself.
+- **Combining modifiers.** Pick one placement: centred, `--top`, `--bottom`, or a drawer. `--start` and `--bottom` change a drawer's edge only when paired with `--drawer`; `--start` alone does nothing, and `--top` on a drawer does nothing. `--scrollable` works with any placement. Use one scroll at a time: `--scrollable` or `.card__body--scrollable`, not both.
 
 ## Dialog
 ```html live cluster

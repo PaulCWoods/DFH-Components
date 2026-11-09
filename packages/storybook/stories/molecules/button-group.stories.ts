@@ -87,7 +87,7 @@ export const Joined: Story = {
       </div>
 
       <h3 class="small-heading">Vertical</h3>
-      <div class="button-group button-group--joined button-group--vertical" role="radiogroup" aria-label="Plan" style="max-inline-size: 16rem;">${radios('plan', ['Monthly', 'Yearly', 'Lifetime'])}</div>
+      <div class="button-group button-group--joined button-group--vertical max-w-xs" role="radiogroup" aria-label="Plan">${radios('plan', ['Monthly', 'Yearly', 'Lifetime'])}</div>
 
       <h3 class="small-heading">Right to left</h3>
       <div dir="rtl" class="button-group button-group--joined buttons-round" role="radiogroup" aria-label="Range, right to left">${radios('range-rtl', ['Day', 'Week', 'Month'])}</div>
@@ -96,7 +96,7 @@ export const Joined: Story = {
 
 export const Layout: Story = {
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       <h3 class="small-heading">Vertical: full-width buttons, content centred</h3>
       <div class="button-group button-group--vertical" style="max-inline-size: 20rem;">
         <button type="button" class="button button--strong button--accent">${icon('Email')}<span>Continue with email</span></button>

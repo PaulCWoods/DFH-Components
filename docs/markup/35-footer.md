@@ -124,10 +124,11 @@ The band at the bottom of a page or app: site links, legal text, contact details
 | :--- | :--- |
 | Arrangement | one row (default), `--stacked` (each bar's parts in a column) |
 | Width | bars capped at the site width (default), `--stretch` (no cap) |
+| Density | default, compact in a compact region (`.ui-compact` on the Footer or around it): each bar's padding and gap tighten |
 
 ### Further rules
-- **`.footer`** is the band: surface, top border, and inline padding (`--footer-padding-inline`, plus the safe-area insets). Always full width.
+- **`.footer`** is the band: surface, top border, and inline padding (`--footer-padding-inline`, by default the app's `--app-padding-inline`, plus the safe-area insets), so it lines up with the Header. Always full width.
 - **`.footer__bar`** is a row, capped at `--footer-max-width` (the site width) and centred, so its content lines up with a `.wrapper`'s and the Header's. The last part sits at the end; a single part fills the row. Two rows are two bars, with a rule between them.
 - **`--stacked`** sets each bar's parts in a column, in source order, at the start: the site links above the legal line. One line suits a short footer on a docs or app page; stacked suits a site whose links come first.
 - **`--stretch`** drops the width cap.
-- **Tokens:** `footer.bg`, `border-width`, `border-color`, `border-style`, `padding-block`, `padding-inline`, `gap`, `max-width`.
+- **Tokens:** `footer.bg`, `border-width`, `border-color`, `border-style`, `padding-block`, `padding-inline`, `gap`, `max-width`, `compact-padding-block`, `compact-gap`.

@@ -125,7 +125,7 @@ export const SizesWithText: Story = {
       ${['small-text', 'small-text', 'text', 'small-heading', 'heading', 'title']
         .map(
           (preset) => `
-        <p class="${preset}" style="margin: 0;">
+        <p class="${preset} m-0">
           ${SIZES.map((s) => icon('Bell', iconClasses(s))).join(' ')}
           <span class="sb-demo-tag">${preset}</span>
         </p>`

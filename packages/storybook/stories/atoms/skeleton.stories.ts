@@ -177,7 +177,7 @@ export const Motion: Story = {
  */
 export const LoadingCard: Story = {
   render: () => `
-    <div class="sb-demo-stage" style="max-inline-size: 24rem;">
+    <div class="sb-demo-stage max-w-sm">
       <article class="card" aria-busy="true" aria-labelledby="skeleton-card-title">
         <header class="card__header">
           <span class="skeleton skeleton--avatar" aria-hidden="true"></span>

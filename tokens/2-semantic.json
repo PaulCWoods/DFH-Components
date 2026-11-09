@@ -1061,6 +1061,11 @@
       "$type": "strokeStyle",
       "$description": "Standard border stroke style for major application landmark components (header, sidebar, footer)"
     },
+    "padding-inline": {
+      "$value": "{spacing.cushion}",
+      "$type": "dimension",
+      "$description": "The inline padding of the landmarks (Header, Sidebar, Footer), so their content lines up. Resolved on :root, so a compact region inside the page doesn't move it; .ui-compact on the root does"
+    },
     "sidebar-width": {
       "$value": "{spacing.288}",
       "$type": "dimension",
@@ -1202,6 +1207,13 @@
     },
     "xl": {
       "$value": "{duration.2}"
+    }
+  },
+  "scale": {
+    "$type": "number",
+    "enter": {
+      "$value": 0.96,
+      "$description": "The scale an overlay (Dialog, Popover, Tooltip, Toast) grows from as it opens and shrinks to as it closes"
     }
   },
   "timefunc": {

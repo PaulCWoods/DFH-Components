@@ -73,7 +73,7 @@ export const Playground: Story = {
 
 export const Compact: Story = {
   render: () => `
-    <form class="form form--compact" style="max-inline-size: 24rem;" onsubmit="event.preventDefault();">
+    <form class="form form--compact max-w-sm" onsubmit="event.preventDefault();">
       <div class="field">
         <label for="compact-name" class="field__label label">Full name</label>
         <input id="compact-name" class="input" autocomplete="name" />

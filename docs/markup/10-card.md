@@ -65,6 +65,13 @@ Because it is only a surface with parts, Dialog and Popover are built on it. Lea
 </article>
 ```
 
+## Keyboard and screen readers
+- **A linked Card is one Tab stop:** the Link in its title. Enter follows it. Clicking anywhere on the Card follows it too, but only the title is the Link's name, so a screen reader announces "Article headline, link", not the whole Card.
+- **Other controls in a linked Card** are separate Tab stops after the Link, in reading order. Keep them few; each one is a stop on every Card in a grid.
+- **Don't wrap the Card in an `<a>`.** Its whole text becomes the link's name, and nothing inside can be a control.
+- **A scrolling part** (`__body--scrollable`, `--scrollable`) takes `tabindex="0"` and a name, so keyboard users can reach it and scroll it with the arrow keys.
+- **A Card in a list** is an `<li>` or an `<article>` in one, so a screen reader says how many there are.
+
 ## Status and Action in the header
 The title takes the space and pushes what follows it to the end. A one-line title sits on the centre line of a taller action beside it; a longer title or a heading group lines up with the top of the action.
 

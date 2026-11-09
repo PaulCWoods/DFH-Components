@@ -86,7 +86,7 @@ export const InACard: Story = {
 };
 
 export const Compact: Story = {
-  render: () => `<div style="max-inline-size: 24rem;">${address('compact', 'fieldset--compact')}</div>`,
+  render: () => `<div class="max-w-sm">${address('compact', 'fieldset--compact')}</div>`,
 };
 
 export const Disabled: Story = {

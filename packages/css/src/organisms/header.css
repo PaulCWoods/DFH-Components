@@ -59,7 +59,7 @@
   --_header-border-style: var(--header-border-style, var(--app-border-style, solid));
   --_header-border-width: var(--header-border-width, var(--app-border-width, var(--border-width, 1px)));
   --_header-padding-block: var(--header-padding-block, var(--spacing-sm));
-  --_header-padding-inline: var(--header-padding-inline, var(--spacing-cushion));
+  --_header-padding-inline: var(--header-padding-inline, var(--app-padding-inline, var(--spacing-cushion)));
   --_header-gap: var(--header-gap, var(--spacing-md));
   --_header-max-width: var(--header-max-width, var(--spacing-site-width, 75rem));
   /* The bar's content height. Never --header-height: that is the header's
@@ -164,10 +164,9 @@
     padding-block: 0;
   }
 
-  /* The panes at the edges pad like the Sidebar (the cushion, which steps
-     down in a compact region) */
+  /* The panes at the edges pad like the Sidebar (the app's inline padding) */
   :where(.header__bar > .split) > :where(:first-child, :last-child) {
-    padding-inline: var(--spacing-cushion, 1rem);
+    padding-inline: var(--app-padding-inline, var(--spacing-cushion, 1rem));
   }
 }
 

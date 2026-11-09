@@ -140,7 +140,7 @@ A side panel beside the main content: section navigation, filters, tools. An org
 - **Safe areas:** under `.viewport-fit-cover` the edge a Sidebar touches gets the device's inset, and it widens by the same amount so its content keeps its room. A sticky Sidebar, or one in a viewport shell, also clears the bottom inset, and it sits below the top inset. A `--floating` one moves its margin instead.
 - **Prominence:** `--subtle` sets a panel apart without an edge. `--plain` is for secondary content that needs no panel, such as an "On this page" list. More contrast gives `--subtle` an edge.
 - **Width:** the Sidebar takes the app's sidebar column, `--app-sidebar-width` (a Tier 2 token), which a [Split](19c-split.md) with `--sidebar` reads too, so a header split into three lines up with it. A compact region (`.ui-compact`, `.fine:ui-compact`) narrows the column for both. `--compact` on the Sidebar alone narrows only the Sidebar, so put the density on the region when other rows line up with it. Set `--sidebar-width` only for a Sidebar that stands apart.
-- **Tokens:** `sidebar.bg`, `subtle-bg`, `border-width`, `border-color`, `border-style`, `padding`, `width`, `min-width`, `rail-width`.
+- **Tokens:** `sidebar.bg`, `subtle-bg`, `border-width`, `border-color`, `border-style`, `padding`, `compact-padding`, `padding-inline`, `width`, `min-width`, `rail-width`.
 
 ## Parts
 ```html live width=md
@@ -165,5 +165,6 @@ A side panel beside the main content: section navigation, filters, tools. An org
 ```
 - **`__header`**, **`__band`** (a filter field, a segmented Tab List), **`__body`**, **`__footer`** (at the bottom). Parts next to each other share the padding between them.
 - **`__body`** scrolls when the Sidebar has a height (`--sticky`, or in an `.app--viewport` shell), and holds its scroll (`overscroll-behavior: contain`).
+- **Inline padding** is the app's (`--app-padding-inline`), the same as the Header's and the Footer's, so their content lines up. A compact Sidebar tightens only its block padding.
 - **`__body--flush`** takes the body's inline padding off, so a `.tab-list--flush` runs edge to edge with its labels lined up with the Header.
 - **`--ruled`** draws a rule between the parts.

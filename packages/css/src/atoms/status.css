@@ -54,6 +54,7 @@
      -------------------------------------------------------------------------- */
   --_status-font-size: var(--status-font-size, var(--body-sm-fixed-font-size));
   --_status-font-weight: var(--status-font-weight, var(--font-weight-bold));
+  --_status-line-height: var(--status-line-height, var(--typography-line-height--2));
   --_status-text-transform: var(--status-text-transform, none);
   --_status-min-size: var(--status-min-size, var(--spacing-target-sm));
   --_status-padding-block: var(--status-padding-block, var(--spacing-6));
@@ -148,7 +149,7 @@
   /* Typography */
   font-size: var(--_status-font-size);
   font-weight: var(--_status-font-weight);
-  line-height: 1.25;
+  line-height: var(--_status-line-height);
   text-transform: var(--_status-text-transform);
 
   /* Surface */

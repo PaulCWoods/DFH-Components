@@ -144,11 +144,11 @@ export const SizingModes: Story = {
         (m) => `
         <section class="stack ${m.cls}" style="container-type: inline-size; max-inline-size: 24rem;" aria-label="${m.mode} mode">
           <span class="sb-demo-tag">${m.note}</span>
-          <p class="title" style="margin: 0;">Title</p>
-          <p class="heading" style="margin: 0;">Heading</p>
-          <p class="small-heading" style="margin: 0;">Small heading</p>
-          <p class="text" style="margin: 0;">Body copy for reading.</p>
-          <p class="small-text text-muted" style="margin: 0;">Small text</p>
+          <p class="title m-0">Title</p>
+          <p class="heading m-0">Heading</p>
+          <p class="small-heading m-0">Small heading</p>
+          <p class="text m-0">Body copy for reading.</p>
+          <p class="small-text text-muted m-0">Small text</p>
         </section>`
       ).join('')}
     </div>
@@ -166,9 +166,9 @@ export const ContainerMode: Story = {
           (w) => `
         <section class="font-sizing-cq stack" style="container-type: inline-size; inline-size: min(${w}, 100%); border: 1px dashed var(--border-color-quiet); padding: var(--spacing-16);" aria-label="Container ${w} wide">
           <span class="sb-demo-tag">${w} container</span>
-          <p class="display-title" style="margin: 0;">Display</p>
-          <p class="heading" style="margin: 0;">Section heading</p>
-          <p class="text" style="margin: 0;">Body copy grows with the container, not the window.</p>
+          <p class="display-title m-0">Display</p>
+          <p class="heading m-0">Section heading</p>
+          <p class="text m-0">Body copy grows with the container, not the window.</p>
         </section>`
         )
         .join('')}
@@ -209,11 +209,11 @@ export const Compact: Story = {
 export const Composition: Story = {
   render: () => `
     <article class="sb-demo-stage stack" aria-labelledby="text-composition-title">
-      <p class="micro-heading text-muted" style="margin: 0;">Release notes</p>
-      <h2 id="text-composition-title" class="heading" style="margin: 0;">Text atoms are fixed by default</h2>
-      <p class="large-text" style="margin: 0;">Containers decide when type grows with the viewport or the container, or steps down.</p>
-      <p class="text" style="margin: 0;">Each atom takes one step of the scale. Put <code>.font-sizing-fluid</code> on an article to let its headings grow on wide screens, or <code>.font-sizing-cq</code> on a container to size type to the container.</p>
-      <p class="small-text text-muted" style="margin: 0;">Published 28 October 2026 · <span class="font-bold">3 minute read</span></p>
+      <p class="micro-heading text-muted m-0">Release notes</p>
+      <h2 id="text-composition-title" class="heading m-0">Text atoms are fixed by default</h2>
+      <p class="large-text m-0">Containers decide when type grows with the viewport or the container, or steps down.</p>
+      <p class="text m-0">Each atom takes one step of the scale. Put <code>.font-sizing-fluid</code> on an article to let its headings grow on wide screens, or <code>.font-sizing-cq</code> on a container to size type to the container.</p>
+      <p class="small-text text-muted m-0">Published 28 October 2026 · <span class="font-bold">3 minute read</span></p>
     </article>
   `,
 };
@@ -225,7 +225,7 @@ export const Composition: Story = {
  */
 export const Lists: Story = {
   render: () => `
-    <div class="grid grid--2-col grid--xs gap-md" style="max-inline-size: 48rem;">
+    <div class="grid grid--2-col grid--xs gap-md max-w-lg">
       <article class="card">
         <header class="card__header"><h3 class="card__title small-heading">Bulleted</h3></header>
         <div class="card__body stack gap-sm">

@@ -55,7 +55,7 @@
   --_skeleton-shimmer: var(--skeleton-shimmer, color-mix(in srgb, var(--surface) 60%, transparent));
   --_skeleton-radius: var(--skeleton-radius, var(--radius-sm));
   --_skeleton-radius-round: var(--skeleton-radius-round, var(--radius-full));
-  --_skeleton-duration: var(--skeleton-duration, 1.6s);
+  --_skeleton-duration: var(--skeleton-duration, var(--duration-xl));
 
   background-color: var(--_skeleton-color);
   background-image: linear-gradient(90deg, transparent, var(--_skeleton-shimmer), transparent);

@@ -59,7 +59,7 @@ test('a theme without them leaves the tokens as they are', () => {
 });
 
 test('a site width that isn\'t a length, and targets off the scale, too small or out of order, fail', () => {
-  const steps = [0, 1, 2, 4, 8, 16, 24, 32, 48, 64, 128];
+  const steps = [0, 1, 2, 4, 8, 16, 24, 32, 48, 64, 128, 192, 288];
   const rules = (patch) => spaceGate({ ...structuredClone(theme.space), ...patch }, { steps }).failures.map((f) => f.style).sort();
   assert.deepEqual(rules({ 'site-width': 'wide' }), ['site-width']);
   assert.deepEqual(rules({ 'site-width': '72rem' }), []);
@@ -67,4 +67,29 @@ test('a site width that isn\'t a length, and targets off the scale, too small or
   assert.deepEqual(rules({ targets: { sm: 16, default: 48, lg: 64 } }), ['target sm']);
   assert.deepEqual(rules({ targets: { sm: 24, default: 32, lg: 64 } }), ['target default']);
   assert.deepEqual(rules({ targets: { sm: 32, default: 64, lg: 48 } }), ['target lg']);
+});
+
+test('the app sizes write the app group, a role as a fluid reference', () => {
+  const space = { ...structuredClone(theme.space), app: { 'padding-inline': 'breathe', 'sidebar-width': 256, 'sidebar-compact-width': 192 } };
+  const out = applySpaceRoles(semantic, space);
+  assert.equal(out.app['padding-inline'].$value, '{spacing.breathe}');
+  assert.equal(out.app['sidebar-width'].$value, '{spacing.256}');
+  assert.equal(out.app['padding-inline'].$description, semantic.app['padding-inline'].$description);
+  const vars = spaceCssVars(space);
+  assert.equal(vars['--app-padding-inline'], 'var(--spacing-breathe)');
+  assert.equal(vars['--app-sidebar-compact-width'], '12rem');
+  space.app['padding-inline'] = 16;
+  assert.equal(applySpaceRoles(semantic, space).app['padding-inline'].$value, '{spacing.16}');
+});
+
+test('app sizes off the scale, a compact column wider than the sidebar, or padding that crowds it, fail', () => {
+  const steps = [0, 1, 2, 4, 8, 16, 24, 32, 48, 64, 128, 192, 256, 288];
+  const app = (patch) => ({ app: { 'padding-inline': 'cushion', 'sidebar-width': 288, 'sidebar-compact-width': 192, ...patch } });
+  const rules = (patch) => spaceGate({ ...structuredClone(theme.space), ...app(patch) }, { steps }).failures.map((f) => f.style).sort();
+  assert.deepEqual(rules({}), []);
+  assert.deepEqual(rules({ 'sidebar-width': 300 }), ['sidebar-width']);
+  assert.deepEqual(rules({ 'sidebar-compact-width': 288, 'sidebar-width': 256 }), ['sidebar-compact-width']);
+  assert.deepEqual(rules({ 'padding-inline': 'roomy' }), ['padding-inline']);
+  assert.deepEqual(rules({ 'padding-inline': 64 }), ['padding-inline']);
+  assert.deepEqual(rules({ 'padding-inline': 24 }), []);
 });

@@ -68,7 +68,7 @@
     }
   }
 
-  :where(figure, pre, table, hr) {
+  :where(figure, pre, table, hr, section) {
     margin-block-start: var(--_prose-space);
 
     &:first-child {

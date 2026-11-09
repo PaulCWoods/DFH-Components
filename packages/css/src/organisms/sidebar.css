@@ -44,6 +44,9 @@
   --_sidebar-border-style: var(--sidebar-border-style, var(--app-border-style, solid));
   --_sidebar-border-width: var(--sidebar-border-width, var(--app-border-width, var(--border-width, 1px)));
   --_sidebar-padding: var(--sidebar-padding, var(--spacing-cushion));
+  /* Inline: the app's, as the Header's, so the content lines up; density
+     changes only the block padding */
+  --_sidebar-padding-inline: var(--sidebar-padding-inline, var(--app-padding-inline, var(--spacing-cushion)));
   --_sidebar-width: var(--sidebar-width, var(--app-sidebar-width, var(--spacing-288)));
   --_sidebar-min-width: var(--sidebar-min-width, 14rem);
   --_sidebar-offset: 0px;
@@ -84,14 +87,14 @@
   justify-content: space-between;
   min-block-size: var(--spacing-target, 3rem);
   padding: var(--_sidebar-padding);
-  padding-inline: calc(var(--_sidebar-padding) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding) + var(--_sidebar-safe-end));
+  padding-inline: calc(var(--_sidebar-padding-inline) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding-inline) + var(--_sidebar-safe-end));
 }
 
 :where(.sidebar__band) {
   box-sizing: border-box;
   flex-shrink: 0;
   padding-block: calc(var(--_sidebar-padding) / 2);
-  padding-inline: calc(var(--_sidebar-padding) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding) + var(--_sidebar-safe-end));
+  padding-inline: calc(var(--_sidebar-padding-inline) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding-inline) + var(--_sidebar-safe-end));
 }
 
 /* Scrolls when the sidebar has a height (sticky, or in a viewport shell) */
@@ -102,7 +105,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: var(--_sidebar-padding);
-  padding-inline: calc(var(--_sidebar-padding) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding) + var(--_sidebar-safe-end));
+  padding-inline: calc(var(--_sidebar-padding-inline) + var(--_sidebar-safe-start)) calc(var(--_sidebar-padding-inline) + var(--_sidebar-safe-end));
   scrollbar-gutter: stable;
   scrollbar-width: thin;
 }
@@ -132,7 +135,7 @@
 
 /* Edge to edge: a flush list lines its labels up with the header */
 :where(.sidebar__body--flush) {
-  --tab-list-inset: var(--_sidebar-padding);
+  --tab-list-inset: var(--_sidebar-padding-inline);
 
   padding-inline: var(--_sidebar-safe-start) var(--_sidebar-safe-end);
 }
@@ -194,6 +197,7 @@
   --_sidebar-width: var(--sidebar-rail-width, 4.5rem);
   --_sidebar-min-width: var(--sidebar-rail-width, 4.5rem);
   --_sidebar-padding: var(--spacing-compact, 0.5rem);
+  --_sidebar-padding-inline: var(--spacing-compact, 0.5rem);
 
   align-items: center;
 

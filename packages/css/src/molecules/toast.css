@@ -101,7 +101,7 @@
   --_toast-transition: var(--toast-transition, var(--duration-sm));
   --_toast-timefunc: var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
   --_toast-shift: var(--spacing-sm, 0.5rem);
-  --_toast-scale: 0.96;
+  --_toast-scale: var(--scale-enter, 0.96);
 
   /* Its own, so a toast floats with or without a stack */
   --banner-shadow: var(--toast-shadow, var(--shadow-md, none));

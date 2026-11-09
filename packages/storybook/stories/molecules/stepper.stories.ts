@@ -98,7 +98,7 @@ export const Playground: Story = {
 
 export const States: Story = {
   render: () => `
-    <div style="max-inline-size: 48rem;">
+    <div class="max-w-lg">
       ${stepper([
         { title: 'Identity', description: 'Verified', state: 'complete' },
         { title: 'Soil agreement', description: 'Signature missing', state: 'invalid' },
@@ -142,7 +142,7 @@ export const Plain: Story = {
       { title: 'Review' },
     ];
     return `
-      <div class="stack" style="max-inline-size: 48rem;">
+      <div class="stack max-w-lg">
         ${stepper(steps, 'stepper--plain', 'Plot registration, plain')}
         <div style="max-inline-size: 20rem;">${stepper(steps, 'stepper--plain stepper--vertical', 'Plot registration, plain vertical')}</div>
       </div>`;
@@ -162,7 +162,7 @@ export const Vertical: Story = {
 
 export const Compact: Story = {
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       ${stepper(registration, 'stepper--compact', 'Registration, compact')}
       ${stepper(registration, 'stepper--compact stepper--vertical', 'Registration, compact vertical')}
     </div>`,
@@ -170,10 +170,10 @@ export const Compact: Story = {
 
 export const NarrowContainer: Story = {
   name: 'Narrow container',
-  render: () => `<div style="max-inline-size: 24rem;">${stepper(registration, '', 'Registration, narrow')}</div>`,
+  render: () => `<div class="max-w-sm">${stepper(registration, '', 'Registration, narrow')}</div>`,
 };
 
 export const RightToLeft: Story = {
   name: 'Right to left',
-  render: () => `<div dir="rtl" style="max-inline-size: 48rem;">${stepper(registration, '', 'Registration, right to left')}</div>`,
+  render: () => `<div class="max-w-lg" dir="rtl">${stepper(registration, '', 'Registration, right to left')}</div>`,
 };

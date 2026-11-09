@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html';
 import photo800 from '../../../docs/public/examples/poster-800.jpg';
 import photo1600 from '../../../docs/public/examples/poster-1600.jpg';
 import photo2400 from '../../../docs/public/examples/poster-2400.jpg';
+import clip from '../../../docs/public/examples/poster-clip.webm';
 
 const srcset = `${photo800} 800w, ${photo1600} 1600w, ${photo2400} 2400w`;
 
@@ -150,4 +151,15 @@ export const Hero: Story = {
     </picture>
     ${content('Gardens of Eden', 'h1', 'display-title').replace('<h1 class', '<h1 id="poster-hero-title" class')}
   </section>`,
+};
+
+/* A video in place of the photo: muted, played once on load and stopped
+   within 5 seconds, so it needs no pause control (WCAG 2.2.2). A longer
+   or looping video needs a pause button. The photo is its poster frame,
+   and what it shows until it plays. Decorative, so hidden from assistive
+   technology, as alt="" hides a photo. */
+export const Video: Story = {
+  render: () => `<div class="poster">
+    <video class="poster__media" src="${clip}" poster="${photo1600}" muted autoplay playsinline preload="auto" aria-hidden="true"></video>${content('Watch the garden grow')}
+  </div>`,
 };

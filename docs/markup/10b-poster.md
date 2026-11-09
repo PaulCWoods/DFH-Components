@@ -144,3 +144,4 @@ A picture with content laid over it. A molecule: a `.poster` holds a `.poster__m
 - **Colour:** the panel and scrim are the card surface of the Poster's scheme. `.color-scheme-dark` or `.color-palette-inverted` on the Poster turns them dark.
 - **Density:** `--compact` (or a compact container) steps the padding and the content down.
 - **Corners:** square by default (`--poster-radius`), for a full-width band. A Poster inside the page's width can take `.rounded-lg`.
+- **Video:** a `<video class="poster__media">` takes the picture's place, `muted` and `playsinline`, with a `poster` frame it shows until it plays and `aria-hidden="true"` when it's decoration. Played once on load (`autoplay`, no `loop`), it must stop within 5 seconds; a longer or looping video needs a visible pause button (WCAG 2.2.2), and shouldn't start on its own under `prefers-reduced-motion`, which needs a script.

@@ -10,6 +10,9 @@
    width) and centred, so it lines up with .wrapper. The last part sits at
    the end. Two rows are two bars, with a rule between them.
 
+   Density: a compact region (--ui-sizing: compact) tightens each bar's
+   padding and gap.
+
    Modifiers: --stacked sets each bar's parts in a column, in source order,
    at the start (site links above the legal line). --stretch drops the
    width cap.
@@ -39,7 +42,7 @@
   --_footer-border-style: var(--footer-border-style, var(--app-border-style, solid));
   --_footer-border-width: var(--footer-border-width, var(--app-border-width, var(--border-width, 1px)));
   --_footer-padding-block: var(--footer-padding-block, var(--spacing-md));
-  --_footer-padding-inline: var(--footer-padding-inline, var(--spacing-cushion));
+  --_footer-padding-inline: var(--footer-padding-inline, var(--app-padding-inline, var(--spacing-cushion)));
   --_footer-gap: var(--footer-gap, var(--spacing, 1rem));
   --_footer-max-width: var(--footer-max-width, var(--spacing-site-width, 75rem));
 
@@ -64,6 +67,12 @@
    2. Parts
    ========================================================================== */
 :where(.footer__bar) {
+  /* Queried from the bar, so .ui-compact works on the Footer or around it */
+  @container style(--ui-sizing: compact) {
+    --_footer-padding-block: var(--footer-compact-padding-block, var(--spacing-sm));
+    --_footer-gap: var(--footer-compact-gap, var(--spacing-compact, 0.5rem));
+  }
+
   align-items: center;
   box-sizing: content-box;
   display: flex;

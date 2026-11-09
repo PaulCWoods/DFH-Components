@@ -5,7 +5,8 @@
    the default theme (tokens/themes.json), prints each role at both ends of the fluid range and
    runs the space gate. --write (only when nothing fails) replaces
    fluid.spacing in tokens/1-global.json and points the spacing roles of
-   tokens/2-semantic.json at it, with the site width and target sizes.
+   tokens/2-semantic.json at it, with the site width, target sizes and the
+   app's sizes (landmark padding, sidebar column).
    ========================================================================== */
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -34,6 +35,7 @@ for (const [role, [min, max]] of Object.entries(spaceSteps(space))) console.log(
 
 if (space['site-width']) console.log(`\nSite width: ${space['site-width']}`);
 if (space.targets) console.log(`Targets: ${Object.entries(space.targets).map(([k, v]) => `${k} ${v}px`).join(', ')}`);
+if (space.app) console.log(`App: ${Object.entries(space.app).map(([k, v]) => `${k} ${typeof v === 'number' ? `${v}px` : v}`).join(', ')}`);
 
 const { failures } = spaceGate(space, { steps: spacingSteps(global) });
 if (failures.length) {
@@ -49,6 +51,6 @@ if (process.argv.includes('--write')) {
   global.fluid = { ...global.fluid, spacing: spaceFluidBlock(space) };
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
   writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applySpaceRoles(semantic, space), null, 2));
-  console.log('\nWrote fluid.spacing in tokens/1-global.json and the spacing roles, site width and targets in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
+  console.log('\nWrote fluid.spacing in tokens/1-global.json and the spacing roles, site width, targets and app sizes in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
 }
 process.exit(failures.length ? 1 : 0);

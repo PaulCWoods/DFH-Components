@@ -277,7 +277,7 @@ export const LinkedCard: Story = {
 
 export const Density: Story = {
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       <article class="card">
         <header class="card__header"><h3 class="card__title heading">Default</h3></header>
         <div class="card__body"><p class="text">Padding from <code>--card-padding</code>.</p></div>
@@ -326,7 +326,7 @@ export const MediaRow: Story = {
 export const Canvas: Story = {
   parameters: { docs: { description: { story: '`.card__canvas` sits where a thumb would and takes any content: here a carousel of stretched thumbnails. The parts after it take the card\'s padding as they would after a thumb.' } } },
   render: () => `
-    <article class="card" style="max-inline-size: 24rem;">
+    <article class="card max-w-sm">
       <div class="card__canvas p-0">
         <ul class="grid grid--carousel p-xs focus-ring focus-ring--inset" role="list" tabindex="0" aria-label="Garden photos">
           <li><img class="thumbnail thumbnail--stretch" style="--thumbnail-aspect: 4 / 3;" src="${img}" alt="The walled garden in May" /></li>
@@ -370,7 +370,7 @@ export const Scrolling: Story = {
 export const HeaderSecondLine: Story = {
   name: 'Header with a second line',
   render: () => `
-    <article class="card" style="max-inline-size: 48rem;">
+    <article class="card max-w-lg">
       <header class="card__header">
         <hgroup class="card__hgroup">
           <h3 class="card__title heading">Queue and schedule</h3>
@@ -389,7 +389,7 @@ export const HeaderSecondLine: Story = {
 export const CardWithBand: Story = {
   name: 'Bands',
   render: () => `
-    <article class="card card--ruled" style="max-inline-size: 48rem;">
+    <article class="card card--ruled max-w-lg">
       <header class="card__header">
         <hgroup class="card__hgroup">
           <h3 class="card__title heading">Project pipeline</h3>

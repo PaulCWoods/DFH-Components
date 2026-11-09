@@ -158,11 +158,11 @@ The band at the top of a page or app that holds the Brand, the main navigation a
 | Inset | padded (default), `--flush` (no inline padding but the safe areas, no block padding on the bars) | none |
 
 ### Further rules
-- **`.header`** is the band: always full width. Its inline padding (`--header-padding-inline`, plus the safe-area insets) keeps the bars off the screen edge, the way a Wrapper's gutter does.
+- **`.header`** is the band: always full width. Its inline padding (`--header-padding-inline`, plus the safe-area insets) keeps the bars off the screen edge, the way a Wrapper's gutter does. It defaults to `--app-padding-inline`, which the Sidebar and Footer share, and density doesn't change it.
 - **`.header__bar`** is a row. It is capped at `--header-max-width` (the site width) and centred, so its content lines up with a `.wrapper`'s. Its content is at least `--header-bar-min-size` tall (the target size, which fine-pointer targets don't change; `--header-compact-bar-min-size` when compact), plus its block padding. Raise `--header-bar-min-size` for a taller header: `--header-height` is built from it, so the offsets follow. Never size the Header from `--header-height`; that is the height things that clear the Header read, and a script that measures the Header into it would loop.
 - **The Brand** is a [`.brand`](06d-brand.md): the mark and name, as a Link home.
 - **`.header__nav`** takes the free space and can shrink, so a scrollable Tab List fits. The bar's last part always sits at the end.
-- **A Split in a bar** takes the whole bar, with its panes centred on the block axis. In a `--flush` Header its first and last panes pad by the cushion, as the Sidebar does.
+- **A Split in a bar** takes the whole bar, with its panes centred on the block axis. In a `--flush` Header its first and last panes pad by the app's inline padding (`--app-padding-inline`), as the Sidebar does.
 - `--sticky` pins the Header to the top of the scrolling page. Its shadow shows only while it is stuck (a scroll-state query); browsers without one keep the border.
 - A gallery of headers on one page uses `<div class="header">` so there is still only one banner.
 

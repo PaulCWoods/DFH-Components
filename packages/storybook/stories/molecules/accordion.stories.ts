@@ -60,13 +60,13 @@ export const Playground: Story = {
   },
   render: (args) => {
     const cls = [args.prominence === 'plain' && 'accordion--plain', args.compact && 'accordion--compact'].filter(Boolean).join(' ');
-    return `<div style="max-inline-size: 36rem;">${item(args.summary, text.watering, args.open ? ' open' : '', cls)}</div>`;
+    return `<div class="max-w-md">${item(args.summary, text.watering, args.open ? ' open' : '', cls)}</div>`;
   },
 };
 
 export const Prominence: Story = {
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       <h3 class="small-heading">Default</h3>
       ${item('Watering', text.watering, ' open')}
       <h3 class="small-heading">--plain</h3>
@@ -85,7 +85,7 @@ export const SummaryContent: Story = {
     },
   },
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       ${item('Bare summary', text.watering)}
       ${item('Subheading on the summary', text.watering, '', '', 'subheading')}
       <details class="accordion">
@@ -99,7 +99,7 @@ export const SummaryContent: Story = {
 export const FlushContent: Story = {
   name: 'Flush content',
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       <details class="accordion accordion--flush" open>
         <summary>Default frame</summary>
         <div class="code-block code-block--flush">
@@ -125,7 +125,7 @@ export const Groups: Story = {
     },
   },
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       <h3 class="small-heading">Group</h3>
       <div class="accordion-group">${three()}</div>
       <h3 class="small-heading">--joined</h3>
@@ -146,7 +146,7 @@ export const Compact: Story = {
     },
   },
   render: () => `
-    <div class="stack" style="max-inline-size: 36rem;">
+    <div class="stack max-w-md">
       <div class="accordion-group">${three('accordion--compact')}</div>
       <div class="ui-compact accordion-group">${three('accordion--plain')}</div>
     </div>`,
@@ -170,7 +170,7 @@ export const InACard: Story = {
     },
   },
   render: () => `
-    <article class="card" style="max-inline-size: 36rem;">
+    <article class="card max-w-md">
       <header class="card__header"><h3 class="card__title subheading">Planting guide</h3></header>
       <div class="card__body card__body--flush">
         <div class="accordion-group">${three('accordion--plain')}</div>
@@ -181,7 +181,7 @@ export const InACard: Story = {
 export const RightToLeft: Story = {
   name: 'Right to left',
   render: () => `
-    <div dir="rtl" lang="ar" class="stack" style="max-inline-size: 36rem;">
+    <div dir="rtl" lang="ar" class="stack max-w-md">
       ${item('الري', 'اسقِ النباتات بعمق مرة في الأسبوع خلال الصيف الأول.', ' open')}
       ${item('التربة', 'معظم نباتات الغابات تحب تربة تحتفظ بالرطوبة وتصرف الماء.', '', 'accordion--plain')}
     </div>`,

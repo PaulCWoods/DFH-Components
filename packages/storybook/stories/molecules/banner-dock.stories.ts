@@ -96,7 +96,7 @@ export const Playground: Story = {
 
 export const Placements: Story = {
   render: () => `
-    <div class="stack" style="max-inline-size: 48rem;">
+    <div class="stack max-w-lg">
       ${frame(`
         <aside class="banner-dock" aria-label="Release notice">
           <div class="banner banner--info">${iconBox('Info')}<div class="banner__body"><p class="text">In flow: scrolls away with the page.</p></div>${dismiss}</div>
@@ -131,7 +131,7 @@ export const Placements: Story = {
 
 export const Dismissal: Story = {
   render: () => `
-    <div class="stack" style="max-inline-size: 48rem;">
+    <div class="stack max-w-lg">
       ${frame(`
         <aside class="banner-dock banner-dock--sticky" aria-label="Outage notice" id="dock-dismiss-demo">
           <div class="banner banner--strong banner--danger">${iconBox('Error')}<div class="banner__body"><p class="text"><strong>Partial outage:</strong> payments are degraded.</p></div>${dismiss}</div>

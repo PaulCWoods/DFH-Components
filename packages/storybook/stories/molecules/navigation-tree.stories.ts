@@ -89,7 +89,7 @@ export const WithHeadings: Story = {
 export const TableOfContents: Story = {
   name: 'Table of contents',
   render: () => `
-    <div style="max-inline-size: 16rem;">
+    <div class="max-w-xs">
       <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="toc-heading">
         <ol>
           <li class="navigation-tree__heading"><h2 id="toc-heading" class="micro-heading">On this page</h2></li>

@@ -397,7 +397,7 @@
     padding-block-start: var(--_card-padding);
   }
 
-  &:where(:last-child) {
+  &:where(:last-child, :has(+ :last-child:where([hidden]))) {
     padding-block-end: var(--_card-padding);
   }
 }
@@ -558,8 +558,8 @@
 :where(.card--ruled) {
   --_card-part-padding: var(--_card-inner-padding);
 
-  > :where(.card__header, .card__band, .card__body, .card__footer):not(:last-child),
-  > :where(.card__content)> :where(.card__header, .card__band, .card__body, .card__footer):not(:last-child) {
+  > :where(.card__header, .card__band, .card__body, .card__footer):not(:last-child):not([hidden]),
+  > :where(.card__content)> :where(.card__header, .card__band, .card__body, .card__footer):not(:last-child):not([hidden]) {
     border-block-end: var(--_card-rule);
   }
 }

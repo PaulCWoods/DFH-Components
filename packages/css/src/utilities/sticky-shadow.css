@@ -35,7 +35,7 @@
 :where(.sticky-shadow) {
   --_sticky-shadow: var(--sticky-shadow, var(--shadow-md, none));
 
-  background-color: var(--sticky-shadow-bg, inherit);
+  background-color: var(--sticky-shadow-bg, var(--bg-color, inherit));
   inset-block-start: 0;
   position: sticky;
   transition: box-shadow var(--duration-sm, 150ms) ease-out;

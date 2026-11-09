@@ -109,7 +109,7 @@ export const External: Story = {
  */
 export const LeadingIcon: Story = {
   render: () => `
-    <div class="sb-demo-stage stack" style="max-inline-size: 24rem;">
+    <div class="sb-demo-stage stack max-w-sm">
       <div>
         <a href="#" class="link link--plain inline gap-xs">
           <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>

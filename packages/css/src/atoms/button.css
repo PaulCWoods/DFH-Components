@@ -103,7 +103,8 @@
 
   /* Default hover: a tint of the resting background, in the normal palette.
      Mixing towards the inverted surface darkens in light mode and lightens
-     in dark, and over a transparent Button it matches Subtle's hover */
+     in dark, and over a transparent Button it matches Subtle's hover. In
+     sRGB, because the resting background can be transparent (PRINCIPLES §5) */
   @container style(--button-hover-style: tint) {
     --_button-hover-bg: color-mix(in srgb, var(--surface-inverted, CanvasText), var(--_button-bg) var(--translucency-stronger, 90%));
     --_button-hover-text: var(--_button-tone-hover);

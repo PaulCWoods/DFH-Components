@@ -77,12 +77,12 @@ export const Aligned: Story = {
     <div class="stack">
       <div style="max-inline-size: 40rem;">${registration('aligned', 'form--aligned', true)}</div>
       <p class="small-text text-muted">Below 32rem, the labels stack:</p>
-      <div style="max-inline-size: 24rem;">${registration('aligned-narrow', 'form--aligned')}</div>
+      <div class="max-w-sm">${registration('aligned-narrow', 'form--aligned')}</div>
     </div>`,
 };
 
 export const Compact: Story = {
-  render: () => `<div style="max-inline-size: 24rem;">${registration('compact', 'form--compact')}</div>`,
+  render: () => `<div class="max-w-sm">${registration('compact', 'form--compact')}</div>`,
 };
 
 export const FieldsInAGrid: Story = {

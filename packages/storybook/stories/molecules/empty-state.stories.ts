@@ -104,7 +104,7 @@ export const Playground: Story = {
       .filter(Boolean)
       .join(' ');
     const glyph = { neutral: 'Search', accent: 'Star', info: 'Info', success: 'Check', warning: 'Warning', danger: 'Error' }[args.intent as string];
-    return `<div style="max-inline-size: 36rem;">${emptyState({
+    return `<div class="max-w-md">${emptyState({
       cls,
       glyph,
       title: args.title,
@@ -177,7 +177,7 @@ export const FirstUse: Story = {
     },
   },
   render: () => `
-    <div style="max-inline-size: 36rem;">
+    <div class="max-w-md">
       ${emptyState({
         glyph: 'Plus',
         cls: 'empty-state--accent',
@@ -224,7 +224,7 @@ export const Subtle: Story = {
     },
   },
   render: () => `
-    <div style="max-inline-size: 36rem;">
+    <div class="max-w-md">
       ${emptyState({
         cls: 'empty-state--subtle',
         glyph: 'Upload',

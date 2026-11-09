@@ -59,7 +59,7 @@
 
   /* Entry and exit, closed state */
   opacity: 0;
-  scale: 0.96;
+  scale: var(--scale-enter, 0.96);
   transition-behavior: allow-discrete;
   transition-duration: var(--_popover-transition);
   transition-property: opacity, scale, display, overlay;
@@ -74,7 +74,7 @@
 
     @starting-style {
       opacity: 0;
-      scale: 0.96;
+      scale: var(--scale-enter, 0.96);
     }
   }
 

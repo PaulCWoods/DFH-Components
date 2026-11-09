@@ -148,6 +148,22 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 - `--hover` only for rows with actions or selection; a highlight on a read-only row suggests it does something. A row whose control has focus is highlighted too.
 - A control doesn't make its row taller than the control. Name each row's Buttons uniquely (hidden text with the row's name).
 
+## Select Rows
+```html live
+<div class="table-container" tabindex="0" role="region" aria-label="Plants to order">
+  <table class="table table--hover">
+    <thead><tr><th scope="col" class="table__cell--fit"><span class="sr-only">Select</span></th><th scope="col">Plant</th><th scope="col" class="table__cell--numeric">In stock</th></tr></thead>
+    <tbody>
+      <tr><td class="table__cell--fit"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select Brunnera" /></label></td><th scope="row">Brunnera</th><td class="table__cell--numeric">24</td></tr>
+      <tr><td class="table__cell--fit"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select Hellebore" checked /></label></td><th scope="row">Hellebore</th><td class="table__cell--numeric">8</td></tr>
+      <tr><td class="table__cell--fit"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select Hosta" /></label></td><th scope="row">Hosta</th><td class="table__cell--numeric">31</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+- A checked row takes the selected tint (`--table-row-selected-bg`) from its Checkbox, with no class to add. The tint isn't the only sign: the Checkbox says it too (WCAG 1.4.1).
+- Each Checkbox's `<label class="choice">` fills its cell, so the whole cell is the target.
+
 ## Do and Don't
 | Do | Don't |
 | :--- | :--- |

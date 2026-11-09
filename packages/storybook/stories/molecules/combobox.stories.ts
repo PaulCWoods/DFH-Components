@@ -127,14 +127,14 @@ export const Playground: Story = {
   },
   render: (args) => {
     const cls = [args.size !== 'default' && `combobox--${args.size}`, args.prominence !== 'default' && `combobox--${args.prominence}`, args.round && 'combobox--round'].filter(Boolean).join(' ');
-    return story(`<div style="max-inline-size: 24rem;">${field({ id: 'pg', label: 'Plant', cls, placeholder: 'Type to filter' })}</div>`)();
+    return story(`<div class="max-w-sm">${field({ id: 'pg', label: 'Plant', cls, placeholder: 'Type to filter' })}</div>`)();
   },
 };
 
 export const SingleSelect: Story = {
   name: 'Single select',
   render: story(`
-    <div class="stack" style="max-inline-size: 24rem;">
+    <div class="stack max-w-sm">
       ${field({ id: 'single', label: 'Plant', value: 'Brunnera', start: 'Search', clear: true })}
     </div>`),
 };
@@ -169,7 +169,7 @@ export const Groups: Story = {
     },
   },
   render: story(`
-    <div style="max-inline-size: 24rem;">
+    <div class="max-w-sm">
       ${field({
         id: 'grouped',
         label: 'Plant',
@@ -245,7 +245,7 @@ export const NoResults: Story = {
       },
     },
   },
-  render: story(`<div style="max-inline-size: 24rem;">${field({ id: 'none', label: 'Plant', empty: true, placeholder: 'Try “rose”' })}</div>`),
+  render: story(`<div class="max-w-sm">${field({ id: 'none', label: 'Plant', empty: true, placeholder: 'Try “rose”' })}</div>`),
 };
 
 export const SizesAndProminence: Story = {
@@ -276,7 +276,7 @@ export const SizesAndProminence: Story = {
 export const InvalidAndDisabled: Story = {
   name: 'Invalid and disabled',
   render: story(`
-    <div class="stack" style="max-inline-size: 24rem;">
+    <div class="stack max-w-sm">
       ${field(
         { id: 'invalid', label: 'Plant', value: 'Rose', inputAttrs: ' aria-invalid="true" aria-describedby="invalid-error"' },
         `<p id="invalid-error" class="field__error small-text">${icon('Warning')} Choose a plant from the list</p>`,
@@ -304,7 +304,7 @@ export const InAClippingCard: Story = {
 export const RightToLeft: Story = {
   name: 'Right to left',
   render: story(`
-    <div dir="rtl" lang="ar" style="max-inline-size: 24rem;">
+    <div class="max-w-sm" dir="rtl" lang="ar">
       ${field({
         id: 'rtl',
         label: 'النبات',
