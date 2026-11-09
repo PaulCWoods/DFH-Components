@@ -509,7 +509,7 @@
 /* Toggle icons (.icon--on / .icon--off) for checkbox, radio and pressed buttons */
 :where(.button:has(.icon--off),
   .button:has(input[type="checkbox"], input[type="radio"])) {
-  .icon--on {
+  :where(.icon--on) {
     display: none;
   }
 }
@@ -519,11 +519,11 @@
   .button[aria-pressed="true"],
   details[open] > summary.button,
   .button:has(+ [popover]:popover-open)) {
-  .icon--on {
+  :where(.icon--on) {
     display: block;
   }
 
-  .icon--off {
+  :where(.icon--off) {
     display: none;
   }
 }
@@ -540,7 +540,7 @@
   .button:not(:has(.icon--off))[aria-expanded="true"],
   .button:not(:has(.icon--off))[aria-pressed="true"],
   details[open] > summary.button:not(:has(.icon--off)),
-  .button:not(:has(.icon--off)):has(+ [popover]:popover-open)) .icon--on {
+  .button:not(:has(.icon--off)):has(+ [popover]:popover-open)) :where(.icon--on) {
   display: inline;
   scale: 1;
   opacity: 1;
@@ -579,14 +579,14 @@
     border: 0;
   }
 
-  :is(kbd,
+  :where(kbd,
     .kbd,
     .chip,
     .status,
     .badge:not(.badge--top-end,
       .badge--top-start,
       .badge--bottom-end,
-      .badge--bottom-start)):not(.button__icon) {
+      .badge--bottom-start)):where(:not(.button__icon)) {
     display: none;
   }
 }
@@ -608,14 +608,14 @@
       border: 0;
     }
 
-    :is(kbd,
+    :where(kbd,
       .kbd,
       .chip,
       .status,
       .badge:not(.badge--top-end,
         .badge--top-start,
         .badge--bottom-end,
-        .badge--bottom-start)):not(.button__icon) {
+        .badge--bottom-start)):where(:not(.button__icon)) {
       display: none;
     }
   }
@@ -637,14 +637,14 @@
     border: 0;
   }
 
-  :is(kbd,
+  :where(kbd,
     .kbd,
     .chip,
     .status,
     .badge:not(.badge--top-end,
       .badge--top-start,
       .badge--bottom-end,
-      .badge--bottom-start)):not(.button__icon) {
+      .badge--bottom-start)):where(:not(.button__icon)) {
     display: none;
   }
 }

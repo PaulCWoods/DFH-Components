@@ -1,0 +1,24 @@
+---
+title: Foundations
+summary: The tokens under every component, in three tiers, and how a theme builds them.
+---
+
+Every colour, size, line and movement in the library is a token: a CSS custom property with a name that says what it's for. Components never use a raw value, so a theme changes them all at once.
+
+## Three tiers
+
+| Tier | What it holds | Examples |
+| :--- | :--- | :--- |
+| **Global** | The raw scales: colour ramps, type steps, spacing steps, durations. | `--color-blue-500`, `--spacing-16` |
+| **Semantic** | Roles, each pointing at a global value: a surface, text on it, a border, a radius, a shadow. Colour roles are a light and dark pair. | `--surface-card`, `--foreground-muted`, `--radius` |
+| **Component** | One component's choices, each falling back to a role. | `--button-bg`, `--card-padding` |
+
+Build with the semantic roles. They carry the meaning, so they keep working when the theme, the colour scheme or the contrast preference changes. A global step is a raw value; reach for one only when no role says what you mean.
+
+## From a theme
+
+You don't edit the global and semantic tokens by hand. A theme file picks a few things (a colour per hue, a type scale, a spacing ratio, line widths and shadows, durations and easing), and the build generates the tokens from them. Before it writes anything, it checks them: text contrast in light and dark, a type scale in order, spacing that grows, targets big enough to tap. A theme that fails a check isn't written.
+
+The [Token Designer](/docs/tools/) edits a theme visually, with every check running as you change it, and the same tokens reach Figma as variables.
+
+The pages in this section show the theme these docs wear, read from it when the site is built, so they always match it.

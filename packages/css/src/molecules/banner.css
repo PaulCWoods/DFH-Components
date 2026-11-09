@@ -197,7 +197,7 @@
   transition-property: opacity,
   display;
 
-  &[hidden] {
+  &:where([hidden]) {
     opacity: 0;
   }
 

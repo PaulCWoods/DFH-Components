@@ -72,7 +72,7 @@
     outline-offset: var(--focus-ring-offset, 2px);
   }
 
-  &[hidden] {
+  &:where([hidden]) {
     display: none;
   }
 }

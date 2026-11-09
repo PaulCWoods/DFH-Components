@@ -345,7 +345,7 @@
     border: 0;
   }
 
-  :is(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
+  :where(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
     display: none;
   }
 }
@@ -370,7 +370,7 @@
       border: 0;
     }
 
-    :is(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
+    :where(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
       display: none;
     }
   }
@@ -395,7 +395,7 @@
     border: 0;
   }
 
-  :is(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
+  :where(kbd, .kbd, .chip, .status, .badge:not(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
     display: none;
   }
 }

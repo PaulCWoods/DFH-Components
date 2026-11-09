@@ -1,0 +1,32 @@
+---
+/* The site theme's colour ramps, drawn from their custom properties, with
+   each step's OKLCH lightness from the theme engine */
+import { ramps, stepNames } from '../../lib/theme-data.mjs';
+---
+<div class="table-container">
+  <table class="table table--compact">
+    <caption class="small-text text-start">Each hue's steps, light to dark, with the OKLCH lightness of each (0 is black, 100 white).</caption>
+    <thead>
+      <tr>
+        <th scope="col">Hue</th>
+        {stepNames.map((s) => <th scope="col" class="table__cell--center">{s}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {ramps.map((r) => (
+        <tr>
+          <th scope="row">{r.hue}</th>
+          {stepNames.map((s) => {
+            const sw = r.steps.find((x) => x.step === s);
+            return sw ? (
+              <td class="table__cell--center">
+                <span class="display-block rounded-md border min-w-target h-target w-full" style={`background-color: var(${sw.name})`} aria-hidden="true"></span>
+                <span class="small-text">{sw.l}</span>
+              </td>
+            ) : <td></td>;
+          })}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

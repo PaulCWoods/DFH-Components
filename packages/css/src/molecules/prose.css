@@ -164,7 +164,7 @@
     margin-block-start: calc(var(--_prose-space) / 2);
     text-wrap: balance;
 
-    p {
+    :where(p) {
       font: inherit;
     }
   }

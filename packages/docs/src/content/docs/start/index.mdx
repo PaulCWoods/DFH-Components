@@ -15,7 +15,7 @@ Copy `packages/css/src` into your project and link its entry file:
 <link rel="stylesheet" href="/css/index.css" />
 ```
 
-That file brings in the reset, the tokens, every component and the utilities, each in its own cascade layer. Your own CSS sits outside those layers, so it wins without any fight over specificity.
+That file brings in the reset, the tokens, every component and the utilities, each in its own cascade layer. Put your own CSS in the `site` layer and it wins over the library's components without any fight over specificity, while the utilities still work on it. [Customise](/docs/start/customise/) shows how.
 
 Out of the box the library wears its starter theme: system fonts and a blue accent. To wear another theme, link its stylesheet after the entry file. Each one holds only what that theme changes, and its header comment lists any font links it needs in your page head:
 

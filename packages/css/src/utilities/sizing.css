@@ -2,8 +2,9 @@
    Design For Humans: Sizing Utilities
    --------------------------------------------------------------------------
    Inline and block sizes from the Tier 2 block scale (--spacing-block-2xs …
-   --spacing-block-2xl). Minimum and maximum sizes never exceed the space
-   available, except a minimum with min-w-force beside it
+   --spacing-block-2xl), plus unit (--spacing) and target (--spacing-target,
+   a control's height) on every one. Minimum and maximum sizes never
+   exceed the space available, except a minimum with min-w-force beside it
    (min-w-xs min-w-force), for content that must keep its width and scroll
    instead, such as a cell in a scrolling table. Components size themselves
    from their tokens; set the token rather than a size class on a component.
@@ -21,6 +22,14 @@
 /* --------------------------------------------------------------------------
    1. Inline size
    -------------------------------------------------------------------------- */
+
+:where(.inline-size-unit, .w-unit) {
+    inline-size: var(--spacing, 1rem);
+}
+
+:where(.inline-size-target, .w-target) {
+    inline-size: var(--spacing-target, 3rem);
+}
 
 :where(.inline-size-2xs, .w-2xs) {
     inline-size: var(--spacing-block-2xs, 8rem);
@@ -79,6 +88,14 @@
 /* --------------------------------------------------------------------------
    2. Minimum and maximum inline size
    -------------------------------------------------------------------------- */
+
+:where(.min-inline-size-unit, .min-w-unit) {
+    min-inline-size: var(--spacing, 1rem);
+}
+
+:where(.min-inline-size-target, .min-w-target) {
+    min-inline-size: var(--spacing-target, 3rem);
+}
 
 :where(.min-inline-size-2xs, .min-w-2xs) {
     min-inline-size: min(var(--spacing-block-2xs, 8rem), 100%);
@@ -153,6 +170,14 @@
     }
 }
 
+:where(.max-inline-size-unit, .max-w-unit) {
+    max-inline-size: var(--spacing, 1rem);
+}
+
+:where(.max-inline-size-target, .max-w-target) {
+    max-inline-size: var(--spacing-target, 3rem);
+}
+
 :where(.max-inline-size-2xs, .max-w-2xs) {
     max-inline-size: min(var(--spacing-block-2xs, 8rem), 100%);
 }
@@ -206,6 +231,14 @@
 /* --------------------------------------------------------------------------
    3. Block size
    -------------------------------------------------------------------------- */
+
+:where(.block-size-unit, .h-unit) {
+    block-size: var(--spacing, 1rem);
+}
+
+:where(.block-size-target, .h-target) {
+    block-size: var(--spacing-target, 3rem);
+}
 
 :where(.block-size-2xs, .h-2xs) {
     block-size: var(--spacing-block-2xs, 8rem);
@@ -265,6 +298,14 @@
    4. Minimum and maximum block size
    -------------------------------------------------------------------------- */
 
+:where(.min-block-size-unit, .min-h-unit) {
+    min-block-size: var(--spacing, 1rem);
+}
+
+:where(.min-block-size-target, .min-h-target) {
+    min-block-size: var(--spacing-target, 3rem);
+}
+
 :where(.min-block-size-2xs, .min-h-2xs) {
     min-block-size: var(--spacing-block-2xs, 8rem);
 }
@@ -316,6 +357,14 @@
 
 :where(.min-block-size-screen, .min-h-screen) {
     min-block-size: 100dvb;
+}
+
+:where(.max-block-size-unit, .max-h-unit) {
+    max-block-size: var(--spacing, 1rem);
+}
+
+:where(.max-block-size-target, .max-h-target) {
+    max-block-size: var(--spacing-target, 3rem);
 }
 
 :where(.max-block-size-2xs, .max-h-2xs) {

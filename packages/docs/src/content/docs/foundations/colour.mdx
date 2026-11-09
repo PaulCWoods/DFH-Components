@@ -1,0 +1,66 @@
+---
+title: Colour
+summary: Colour ramps built in OKLCH from a few picked colours, roles in light and dark, and a contrast check every theme must pass.
+order: 1
+---
+import Ramps from '../../../components/foundations/Ramps.astro';
+import Pairings from '../../../components/foundations/Pairings.astro';
+
+A theme picks one colour for each hue. The build turns each into a ramp of steps, gives every colour role a step from those ramps in light and dark, and measures every pairing of text and surface before it writes a thing.
+
+## The ramps
+
+<Ramps />
+
+A picked colour sets its hue's hue and chroma. Its lightness gives way to one curve that every hue shares, from the light end (100) to the dark end (900). So the 500 of blue and the 500 of amber look equally light, and a role that works in one hue works in another.
+
+That's possible because the ramps are built in OKLCH, a colour space made to match how people see lightness. In older spaces, a yellow and a blue at the same "lightness" look nothing alike. Chroma peaks at 500 and tapers towards each end, so the light steps stay soft and the dark ones stay rich. Each step is held inside the colours a screen can show, so nothing clips to a different hue.
+
+Neutral has two steps beyond its ends: 000, lighter than 100, and 1000, darker than 900. Neutral, red, amber and green are in every theme, because the page, danger, warning and success depend on them. A theme adds any other hue it needs.
+
+## Roles
+
+Components never use a ramp step. They use roles: `--surface` and `--surface-card` for what things sit on, `--foreground` and `--foreground-muted` for text, `--border-color` for lines, and a set for each intent (accent, danger, warning, success, info). Each role is a pair, written with `light-dark()`, so one name serves both schemes:
+
+```css
+--foreground: light-dark(var(--color-neutral-800), var(--color-neutral-000));
+```
+
+The page follows the reader's system setting unless you choose. The `.color-scheme-light`, `.color-scheme-dark` and `.color-scheme-light-dark` utilities set it for the page or any part of it.
+
+### Inverted regions
+
+`.color-palette-inverted` swaps each role's light and dark values for a region, so a band reads dark on a light page and light on a dark one. Everything inside it, the components included, follows.
+
+```html live cluster
+<article class="card max-w-xs">
+  <h3 class="card__title small-heading">On the page</h3>
+  <p class="text">Roles as the scheme sets them.</p>
+  <a class="button button--strong button--accent" href="#inverted-regions">Continue</a>
+</article>
+<article class="card max-w-xs color-palette-inverted">
+  <h3 class="card__title small-heading">Inverted</h3>
+  <p class="text">The same roles, swapped.</p>
+  <a class="button button--strong button--accent" href="#inverted-regions">Continue</a>
+</article>
+```
+
+## Contrast
+
+Each pairing below is measured in light and dark when the theme is built. Text needs 4.5:1 against the surfaces it sits on (WCAG 2.2 AA); a theme where any falls short fails and isn't written. Change a picked colour or a role, and the numbers here change with it.
+
+<Pairings gated={true} />
+
+Intent borders need 3:1. They are reported rather than gated, because a border never carries meaning alone: the text, icon or role beside it does.
+
+<Pairings gated={false} />
+
+### High contrast
+
+When a reader asks for more contrast (`prefers-contrast: more`), every role moves along its ramp, away from what it's paired with: text darker and surfaces lighter in light mode, the other way in dark. The build writes this from the theme, so it follows the palette, and checks that no pairing loses contrast in the move.
+
+## Using colour
+
+- **Use roles, not ramp steps.** A role survives a change of theme, scheme or contrast; a step doesn't.
+- **Never let colour carry meaning alone.** A danger Button says what it does, and a warning Banner has an icon and words (WCAG 1.4.1).
+- **Let forced colours win.** In Windows' high-contrast themes, the system replaces every colour. The library keeps borders and states visible there, so don't paint meaning in backgrounds alone.

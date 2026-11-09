@@ -78,7 +78,7 @@ html {
     font-family: var(--body-font-family);
   }
 
-  &.translated-rtl {
+  &:where(.translated-rtl) {
     direction: rtl;
   }
 }

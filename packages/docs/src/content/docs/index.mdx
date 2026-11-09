@@ -7,11 +7,17 @@ Design For Humans Components is a library of interface parts (buttons, fields, c
 
 ## What makes it different
 
-- **Accessible first.** Every part meets WCAG 2.2 AA, and AAA where it can: 48px touch targets by default, visible focus, intent never shown by colour alone, and native elements that work with a keyboard and a screen reader without extra script.
-- **Native HTML.** Dialogs are `<dialog>`, popovers use the `popover` attribute, disclosure is `<details>`. The library ships no JavaScript of its own.
+- **Accessible first.** Every part meets WCAG 2.2 AA, and AAA where it can: 48px touch targets by default, visible focus, borders and states that survive forced colours, intent never shown by colour alone, and native elements that work with a keyboard and a screen reader without extra script.
+- **Native HTML, no JavaScript.** Dialogs are `<dialog>`, popovers use the `popover` attribute, tooltips open with `interestfor`, disclosure is `<details>` and a textarea grows with `field-sizing`. The library ships no script of its own, so it works in any stack.
+- **No specificity wars.** Each part of the library sits in a cascade layer, and its selectors are wrapped in `:where()`. Your CSS in the `site` layer beats its components with no `!important` and no longer selector, and the utilities still work on it. [Customise](/docs/start/customise/) shows how.
+- **Every language, every mode.** Spacing, borders and placement use logical properties, so a right-to-left page mirrors itself and direction icons turn with it. Every colour is a light and dark pair, any region can invert, and high contrast moves each colour further from what it sits on. See [Themes and sub-brands](/docs/start/themes/).
 - **Few variants, each one meant.** Every modifier sets one thing (its size, prominence or intent), and the same names work across every component.
-- **Responsive without breakpoints where it can.** Layouts wrap on their own, type and spacing can grow with the screen or with their container, and compact regions step everything down together.
-- **One token source.** Colours, type and spacing are generated from a theme, checked for contrast and order, and exported to CSS and Figma together.
+- **Responsive without breakpoints where it can.** [Layouts](/docs/components/#layout) wrap on their own, type and spacing can grow with the screen or with their container, and compact regions step everything down together.
+- **Colour, type and shape from one theme.** [Colour ramps](/docs/foundations/colour/) are built in OKLCH, so each step looks as light as its neighbours in any hue. Type has a floor and ceilings, so small text stays readable and large text never swamps a phone. Shadows are three soft layers, as real light falls. See [Foundations](/docs/foundations/), and edit them all in the [Token Designer](/docs/tools/).
+- **Motion only where it helps.** Things move to show where they came from or that work is under way. Reduced motion stops transitions (a Spinner slows instead, so it doesn't look stuck), and reduced transparency makes translucent surfaces solid.
+- **Checked, not hoped.** Automated checks load every component and recipe in a browser: nothing out of reach at 12 screen sizes, every target big enough in touch and fine-pointer modes, every focus stop visible, nothing lost in forced colours or on paper, and axe on every docs page in light and dark. A change that fails one doesn't ship.
+- **Works off-screen too.** Pages [print](/docs/components/utilities/responsive-visibility/#choosing-what-prints) in light colours with what only works on screen left out, and [busy states](/docs/components/atoms/spinner/) say what is happening to a screen reader as well as on screen.
+- **One token source.** Colours, type and spacing are generated from a theme, checked for contrast and order, and exported to CSS, Figma Variables and Tokens Studio together.
 
 ## Four places to look
 

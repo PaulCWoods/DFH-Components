@@ -1,0 +1,43 @@
+---
+/* Every pairing the contrast gate measures, in light and dark, with a
+   sample drawn from the roles themselves */
+import { pairs } from '../../lib/theme-data.mjs';
+interface Props { gated: boolean }
+const { gated } = Astro.props;
+const list = pairs.filter((p) => p.gated === gated);
+const lowest = Math.min(...list.flatMap((p) => [p.light, p.dark]));
+---
+<details class="accordion">
+<summary>{gated ? `${list.length} text pairings, the lowest at ${lowest.toFixed(1)}:1` : `${list.length} border pairings`}</summary>
+<div class="table-container">
+  <table class="table table--compact">
+    <caption class="small-text text-start">{gated ? 'Text on the surfaces it sits on. Each must reach its minimum in light and dark, or the theme fails.' : 'Intent borders, beside text that carries the meaning. Reported, not gated.'}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Sample</th>
+        <th scope="col">{gated ? 'Text' : 'Border'}</th>
+        <th scope="col">On</th>
+        <th scope="col" class="table__cell--numeric">Light</th>
+        <th scope="col" class="table__cell--numeric">Dark</th>
+        <th scope="col" class="table__cell--numeric">Needs</th>
+      </tr>
+    </thead>
+    <tbody>
+      {list.map((p) => (
+        <tr>
+          <td>
+            {p.border
+              ? <span class="display-block size-md rounded-sm" style={`background-color: var(${p.bg}); border: var(--border-width, 1px) solid var(${p.fg})`} aria-hidden="true"></span>
+              : <span class="display-block p-xs rounded-sm font-bold text-center" style={`color: var(${p.fg}); background-color: var(${p.bg})`} aria-hidden="true">Aa</span>}
+          </td>
+          <td><code class="font-mono small-text">{p.fg}</code></td>
+          <td><code class="font-mono small-text">{p.bg}</code></td>
+          <td class="table__cell--numeric">{p.light?.toFixed(1)}:1</td>
+          <td class="table__cell--numeric">{p.dark?.toFixed(1)}:1</td>
+          <td class="table__cell--numeric">{p.min}:1</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+</details>

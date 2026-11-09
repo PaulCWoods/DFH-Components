@@ -62,7 +62,7 @@
   z-index: var(--_toast-z-index);
 
   /* A closed popover stack stays hidden */
-  &[popover]:not(:popover-open) {
+  &:where([popover]:not(:popover-open)) {
     display: none;
   }
 }
@@ -121,7 +121,7 @@
     translate: 0 var(--_toast-shift);
   }
 
-  &[hidden] {
+  &:where([hidden]) {
     opacity: 0;
     scale: var(--_toast-scale);
   }

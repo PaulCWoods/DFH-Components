@@ -131,7 +131,7 @@
       flex-grow: 1;
       gap: var(--select-option-gap, var(--spacing-sm));
 
-      small {
+      :where(small) {
         display: none;
       }
     }

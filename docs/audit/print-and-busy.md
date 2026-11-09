@@ -124,3 +124,10 @@ After print, before the release, so the release links to pages that already make
 
 - A **Foundations** section (Colour, Type, Space, Shape, Motion) follows the Token Designer's sections and the theme file.
 - The home page keeps three or four headlines; "What makes it different" in the docs index carries the full list, each point linking to where it's shown.
+
+### Progress (9 Nov)
+- **Claims checked against the code.** All held. Zero specificity had leaks: nested selectors outside `:where()` in Button (toggle icons, the icon-only `:is(kbd, …)` at 0,2,0), Tab, Select, Prose, the reset, and `&[hidden]` / `[open]` in Banner, Banner Dock, Batch Actions, Toast, Tabbed Content and Accordion. All wrapped; 52 stories checked for unchanged toggles and hidden states. States (`&:hover`, `&:has()`) keep their one pseudo-class by design, so the docs claim is "layers decide", not "zero everywhere".
+- **Start fixed:** it said your CSS sits outside the layers, against Customise; it now points at the `site` layer.
+- **Docs index:** "What makes it different" is eleven points. **Home page:** Accessible first, Built on the platform, No specificity wars, Every language, every mode.
+- **Foundations:** the overview (three tiers, from a theme) and Colour (ramps, roles, inverted regions, the contrast pairings, high contrast), read from the site theme at build time (`packages/docs/src/lib/theme-data.mjs`). Next: Type, Space, Shape, Motion.
+- **Open:** Start still says to copy `packages/css/src`; linking the published `css/<version>/` is a decision for going public.
