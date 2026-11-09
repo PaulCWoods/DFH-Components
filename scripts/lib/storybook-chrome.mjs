@@ -56,10 +56,24 @@ export async function openStorybook(name = 'check') {
   }
   const ws = new WebSocket(targets.find((t) => t.type === 'page').webSocketDebuggerUrl);
   await new Promise((r) => (ws.onopen = r));
+  /* A dropped connection fails the check at once, not after a silent wait */
+  let closing = false;
+  ws.onclose = (e) => {
+    if (closing) return;
+    console.error(`${name}: lost the connection to Chrome (${e.code}${e.reason ? ` ${e.reason}` : ''})`);
+    process.exit(1);
+  };
   let seq = 0;
   const pending = {};
   ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending[m.id]) { pending[m.id](m); delete pending[m.id]; } };
-  const send = (method, params = {}) => new Promise((r) => { const id = ++seq; pending[id] = r; ws.send(JSON.stringify({ id, method, params })); });
+  /* A reply that never comes (a lost message, a stalled renderer) fails the
+     check after a minute instead of hanging it */
+  const send = (method, params = {}) => new Promise((r) => {
+    const id = ++seq;
+    const timer = setTimeout(() => { delete pending[id]; console.error(`${method} got no reply in 60s`); process.exitCode = 1; r({}); }, 60000);
+    pending[id] = (m) => { clearTimeout(timer); r(m); };
+    ws.send(JSON.stringify({ id, method, params }));
+  });
 
   const index = JSON.parse(readFileSync(join(root, 'index.json'), 'utf8'));
 
@@ -84,6 +98,7 @@ export async function openStorybook(name = 'check') {
       await wait(settle);
     },
     close: () => {
+      closing = true;
       ws.close();
       chrome.kill();
       server.close();

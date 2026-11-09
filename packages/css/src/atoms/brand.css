@@ -17,8 +17,10 @@
    - The name is the link's name, so the mark is aria-hidden. With no
      .brand__name, name the link with .sr-only text.
    - On an <a>, it is at least the target size (the small target when
-     compact), with hover and focus states. On any other element it has
-     neither, so it can label a page or an app without looking clickable.
+     compact), with hover and focus states. On a <button> (a mark that
+     opens the app's menu) the same, named with .sr-only text for what it
+     does. On any other element it has neither, so it can label a page or
+     an app without looking clickable.
 
    Usage:
    <a href="/" class="brand">
@@ -64,24 +66,32 @@
   text-transform: var(--brand-text-transform, var(--display-title-text-transform, none));
   text-underline-offset: var(--_brand-underline-offset);
 
-  /* Only a link is a target: a brand on any other element has no states */
-  /* Wide enough too, for a mark on its own; the mark stays at the start
-     edge, so it lines up with the content below */
-  &:where(a) {
+  /* Only a link or button is a target: a brand on any other element has no
+     states. Wide enough too, for a mark on its own; the mark stays at the
+     start edge, so it lines up with the content below */
+  &:where(a, button) {
     min-block-size: var(--_brand-min-size);
     min-inline-size: var(--_brand-min-size);
   }
 
-  &:where(a):hover,
-  &:where(a):focus-visible {
+  &:where(button) {
+    appearance: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  &:where(a, button):hover,
+  &:where(a, button):focus-visible {
     color: var(--_brand-hover-color);
   }
 
-  &:where(a):active {
+  &:where(a, button):active {
     color: var(--_brand-active-color);
   }
 
-  &:where(a):focus-visible {
+  &:where(a, button):focus-visible {
     border-radius: var(--radius-sm, 2px);
     outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, currentColor);
     outline-offset: var(--focus-ring-offset, 2px);

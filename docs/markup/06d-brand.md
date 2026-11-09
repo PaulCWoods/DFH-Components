@@ -68,5 +68,5 @@ The product's mark and name, as a Link home. An atom and a whole link on its own
 | `.brand__name` | The name, in the display type |
 
 ### Further rules
-- **Target size and states:** on an `<a>`, it is at least the target size (the small target in a compact container), with hover and focus states. On any other element, such as a `<span>` that labels an app, it has neither.
+- **Target size and states:** on an `<a>`, it is at least the target size (the small target in a compact container), with hover and focus states. On a `<button>`, a mark that opens the app's menu, the same, named with `.sr-only` text for what it does ("Menu"). On any other element, such as a `<span>` that labels an app, it has neither.
 - **Tokens:** `--brand-color`, `--brand-gap`, `--brand-mark-size` and the `--brand-font-*` type tokens. Size is a product decision, so there are no size modifiers.

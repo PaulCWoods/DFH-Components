@@ -186,7 +186,8 @@
    container. The bar stays as tall as the pointer's minimum target, so the
    Buttons' hit areas stay inside the band; it shrinks only where the product
    has opted into fine-pointer targets. max-md:header--compact does it below
-   48rem only (a phone). */
+   48rem only (a phone), fine:header--compact only where the primary pointer
+   is fine (an app toolbar that stays roomy on touch). */
 :where(.header--compact) {
   --ui-sizing: compact;
   --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
@@ -195,6 +196,14 @@
 
 @media (width < 48rem) {
   :where(.max-md\:header--compact) {
+    --ui-sizing: compact;
+    --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
+    --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem));
+  }
+}
+
+@media (pointer: fine) {
+  :where(.fine\:header--compact) {
     --ui-sizing: compact;
     --_header-padding-block: var(--header-compact-padding-block, var(--spacing-xs));
     --_header-min-size: var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem));
@@ -247,6 +256,12 @@
 
 @media (width < 48rem) {
   :where(:root):has(.header--sticky.max-md\:header--compact) {
+    --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width, 1px))));
+  }
+}
+
+@media (pointer: fine) {
+  :where(:root):has(.header--sticky.fine\:header--compact) {
     --header-height: var(--header-compact-height, calc(var(--header-compact-bar-min-size, var(--spacing-target-min, 3rem)) + var(--header-compact-padding-block, var(--spacing-xs)) * 2 + var(--header-border-width, var(--app-border-width, 1px))));
   }
 }

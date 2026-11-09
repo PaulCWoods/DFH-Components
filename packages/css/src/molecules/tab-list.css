@@ -95,6 +95,7 @@
 
   @container style(--tab-list-size: sm) or style(--ui-sizing: compact) {
     --_tab-list-tab-size: var(--tab-sm-min-size, var(--spacing-target-sm, 2rem));
+    --_tab-list-indicator-width: var(--tab-sm-list-indicator-width, var(--border-width-medium, 2px));
   }
 
   @container style(--tab-list-corners: round) {

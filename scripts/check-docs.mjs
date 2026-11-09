@@ -70,7 +70,15 @@ await new Promise((r) => (ws.onopen = r));
 let seq = 0;
 const pending = {};
 ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending[m.id]) { pending[m.id](m); delete pending[m.id]; } };
-const send = (method, params = {}) => new Promise((r) => { const id = ++seq; pending[id] = r; ws.send(JSON.stringify({ id, method, params })); });
+/* A reply that never comes (a lost message, a stalled renderer) fails the
+   page after a minute instead of hanging the run */
+let current = '';
+const send = (method, params = {}) => new Promise((r) => {
+  const id = ++seq;
+  const timer = setTimeout(() => { delete pending[id]; report(`${current}: ${method} got no reply in 60s`); r({}); }, 60000);
+  pending[id] = (m) => { clearTimeout(timer); r(m); };
+  ws.send(JSON.stringify({ id, method, params }));
+});
 const evaluate = async (expression) => (await send('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true })).result?.result?.value;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 /* Colour transitions finish before contrast is measured: wait for the
@@ -123,6 +131,7 @@ const found = {};
 const started = Date.now();
 
 for (const [n, page] of pages.entries()) {
+  current = page;
   if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write(`\r${n + 1}/${pages.length} ${page}`.padEnd(80));
   await send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
   await send('Page.navigate', { url: base + page });

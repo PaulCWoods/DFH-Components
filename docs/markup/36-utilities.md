@@ -98,6 +98,7 @@ A mode class sets a flag that the components inside read; it styles nothing itse
 | Class | Flag |
 | :--- | :--- |
 | `.ui-compact`, `.fine:ui-compact` | `--ui-sizing: compact` (density), the latter only where the primary pointer is fine |
+| `.fine:targets-sm` | `--spacing-target-min: var(--spacing-target-sm)` where the primary pointer is fine: the product's opt-in to 32px targets. Goes on `<html>` |
 | `.sizing-default` | Back to the default size inside a compact region: `--ui-sizing`, the spacing roles and the type |
 | `.font-sizing-fixed`, `-fluid`, `-cq`, `-compact` | `--font-sizing` |
 | `.controls-plain`, `-subtle`, `-sm`, `-lg`, `-round` | `--controls-prominence`, `--controls-size`, `--controls-corners` |

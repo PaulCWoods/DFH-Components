@@ -106,7 +106,7 @@ Who someone is: a photo, initials or an icon in a shape. The Avatar is an atom; 
 | `.avatar-group` | `--stacked` | `--avatar-group-overlap`, `--avatar-group-ring-color` |
 
 ### Further rules
-- **Density:** a compact container steps each size down one (lg to default, default to sm).
+- **Density:** a compact container steps each size down one (lg to default, default to sm), whether the size comes from a modifier or the `--avatar-size-step` flag.
 - **Sizes:** default 48px, `--sm` 32px, `--lg` 64px. A one-off size sets `--avatar-size` (and `--avatar-font-size` for initials).
 - **Colour:** set `--avatar-bg` and `--avatar-text` together. Where `contrast-color()` is supported, a background set alone in `style` picks its own text colour.
 - **Presence intents:** online `badge--success`, away `badge--warning`, busy `badge--danger`, offline neutral. A corner Badge sits on the Avatar's curve (on the rim when round, near the corner when square), ringed in the surface colour.

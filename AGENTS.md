@@ -17,7 +17,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 
 | Axis | Applies to | Values |
 | :--- | :--- | :--- |
-| Pointer | Everything | Touch (48px targets, default), fine (32px targets, opt-in by the product via a root token only) |
+| Pointer | Everything | Touch (48px targets, default), fine (32px targets, opt-in by the product only: `.fine:targets-sm` on `<html>` sets the root token) |
 | Size | Atoms & interactive controls only | default, `--sm`, `--lg` |
 | Density | Containers & layout only | default, `--compact` (sets `--ui-sizing: compact`; nested gaps, type and controls step down). `.ui-compact` sets it on any region; `.fine:ui-compact` sets it only where the primary pointer is fine |
 | Presentation | Everything | Normal (text + icon), minimal (icon only) |
@@ -27,7 +27,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 - **Intent never relies on colour alone** (WCAG 1.4.1): pair every non-neutral intent with an icon, a role (`role="alert"`, `role="status"`) or descriptive text.
 - **A bar is never shorter than its targets:** a container that holds a row of controls (a Header bar, a tab list, batch actions, pagination) is at least `--spacing-target-min` tall, so on touch a compact one tightens its padding and type and keeps 48px. Only fine-pointer targets make it shorter.
 - **Nothing clips a hit area, and the drawn control is the target:** a container that hides its overflow leaves room for its edge controls' buffers; a native field fills the control drawn around it; an unlabelled row-selection checkbox takes its target from a `<label>` filling its cell; links stacked in a list sit at least 24px apart (block links for 48px); no hit area covers another control, since a buffer reaches at most halfway across the gap its container declares (`--target-gap-inline`, `--target-gap-block`). `npm run check:targets` checks all of it.
-- **Smaller size never shrinks the hit area:** `--sm` controls (and controls stepped down by a compact container) keep a 48px target unless the product has opted into fine-pointer targets or neighbours sit closer (a tight group gives each its own size plus the gap, accepted), and never drop below 24px (WCAG 2.5.8). Text fields can't take a buffer, so `--sm` text controls are 32px. The library never switches fine-pointer mode on automatically with `@media (pointer: fine)`; `fine:ui-compact` is the product's opt-in.
+- **Smaller size never shrinks the hit area:** `--sm` controls (and controls stepped down by a compact container) keep a 48px target unless the product has opted into fine-pointer targets or neighbours sit closer (a tight group gives each its own size plus the gap, accepted), and never drop below 24px (WCAG 2.5.8). Text fields can't take a buffer, so `--sm` text controls are 32px. The library never switches fine-pointer mode on automatically with `@media (pointer: fine)`; `.fine:targets-sm` is the product's opt-in to fine targets, and `fine:ui-compact` (or `fine:header--compact`) to density.
 
 ### Legacy → Canonical Names
 | Current class (use until migrated) | Target | Notes |

@@ -4,7 +4,8 @@
    A mode class sets a flag that the components inside read; it styles nothing
    itself. Type sizing (--font-sizing): text atoms are fixed by default, and
    these switch a region to fluid, cq or compact. Density (--ui-sizing):
-   .ui-compact, or .fine:ui-compact where the primary pointer is fine. Controls
+   .ui-compact, or .fine:ui-compact where the primary pointer is fine.
+   Targets: .fine:targets-sm opts into fine-pointer targets. Controls
    (--controls-prominence, --controls-size, --controls-corners).
 
    Elements (--elements-prominence): .elements-subtle and .elements-plain
@@ -72,6 +73,16 @@
         --app-sidebar-width: var(--app-sidebar-compact-width);
         --font-sizing: compact;
         font-size: var(--body-compact-font-size);
+    }
+}
+
+/* Fine-pointer targets (PRINCIPLES §2): 32px where the primary pointer is
+   fine, for a product whose users are on a mouse or trackpad. Goes on
+   <html>, so what reads the root token (a sticky Header's height) follows.
+   The library never switches this on itself. */
+@media (pointer: fine) {
+    :where(.fine\:targets-sm) {
+        --spacing-target-min: var(--spacing-target-sm);
     }
 }
 

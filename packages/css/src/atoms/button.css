@@ -194,6 +194,13 @@
     --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
   }
 
+  @container (style(--button-size: lg) or style(--controls-size: lg)) and style(--ui-sizing: compact) {
+    --_button-padding-block: var(--button-padding-block, var(--spacing-xs));
+    --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
+    --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
+    --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
+  }
+
   /* Type only: steps the label down without changing geometry */
   @container style(--font-sizing: compact) {
     --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));

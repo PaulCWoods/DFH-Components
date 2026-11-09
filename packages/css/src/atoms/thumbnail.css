@@ -57,6 +57,10 @@
     --_thumbnail-size: var(--thumbnail-lg-size, var(--spacing-2xl));
   }
 
+  @container style(--thumbnail-size-step: lg) and style(--ui-sizing: compact) {
+    --_thumbnail-size: var(--thumbnail-size, var(--spacing-xl));
+  }
+
   @container style(--thumbnail-corners: round) {
     --_thumbnail-radius: var(--thumbnail-round-radius, var(--radius-full));
   }
@@ -98,7 +102,7 @@
   > :where(.badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start) {
     --badge-host-radius: var(--_thumbnail-radius);
     --badge-host-size: var(--_thumbnail-size);
-    box-shadow: 0 0 0 var(--avatar-group-ring-width, var(--border-width, 2px)) var(--avatar-group-ring-color, var(--surface, Canvas));
+    box-shadow: 0 0 0 var(--border-width, 2px) var(--surface, Canvas);
   }
 }
 
@@ -140,6 +144,6 @@
    ========================================================================== */
 @media (forced-colors: active) {
   :where(.thumbnail) {
-    border: 1px solid CanvasText;
+    border: var(--border-width-thin, 1px) solid CanvasText;
   }
 }

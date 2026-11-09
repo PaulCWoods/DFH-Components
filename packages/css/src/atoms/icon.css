@@ -171,9 +171,13 @@
     --_icon-box-size: var(--icon-box-lg-min-size, var(--spacing-target-lg));
   }
 
+  @container style(--icon-box-size: lg) and style(--ui-sizing: compact) {
+    --_icon-box-size: var(--icon-box-min-size, var(--spacing-target));
+  }
+
   @container style(--icon-box-prominence: subtle) or style(--elements-prominence: subtle) {
     --_icon-box-bg: var(--_icon-box-tint);
-    --_icon-box-frame: 1px solid transparent;
+    --_icon-box-frame: var(--border-width-thin, 1px) solid transparent;
   }
 
   @container style(--icon-box-corners: round) {
@@ -222,7 +226,7 @@
   /* A subtle box keeps its shape in forced colours, where the tint is
      dropped and the transparent outline is drawn */
   outline: var(--_icon-box-frame);
-  outline-offset: -1px;
+  outline-offset: calc(var(--border-width-thin, 1px) * -1);
 }
 
 /* --------------------------------------------------------------------------
@@ -234,11 +238,15 @@
 
 :where(.icon-box--lg) {
   --_icon-box-size: var(--icon-box-lg-min-size, var(--spacing-target-lg));
+
+  @container style(--ui-sizing: compact) {
+    --_icon-box-size: var(--icon-box-min-size, var(--spacing-target));
+  }
 }
 
 :where(.icon-box--subtle) {
   --_icon-box-bg: var(--_icon-box-tint);
-  --_icon-box-frame: 1px solid transparent;
+  --_icon-box-frame: var(--border-width-thin, 1px) solid transparent;
 }
 
 :where(.icon-box--round) {
@@ -268,4 +276,17 @@
 :where(.icon-box--danger) {
   --_icon-box-tint: var(--surface-danger, transparent);
   --_icon-box-color: var(--foreground-danger, currentColor);
+}
+
+/* More contrast: a subtle box gets its edge back, as a subtle Status does */
+@media (prefers-contrast: more) {
+  :where(.icon-box--subtle) {
+    --_icon-box-frame: var(--border-width-thin, 1px) solid var(--border-color-muted, currentColor);
+  }
+
+  :where(.icon-box) {
+    @container style(--icon-box-prominence: subtle) or style(--elements-prominence: subtle) {
+      --_icon-box-frame: var(--border-width-thin, 1px) solid var(--border-color-muted, currentColor);
+    }
+  }
 }

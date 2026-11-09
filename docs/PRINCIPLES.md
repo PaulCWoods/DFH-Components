@@ -97,7 +97,7 @@ Some choices aren't about attention, consequence or size, so they aren't axes. T
 **Pointer is opt-in**
 
 - The library defaults to 48px targets on every device, which meets WCAG 2.5.5 (AAA) everywhere.
-- A product that knows its users are on mouse or trackpad may opt into fine-pointer targets (32px) with a single root token. It may set that token inside `@media (pointer: fine)` itself, but the library never does so automatically.
+- A product that knows its users are on mouse or trackpad may opt into fine-pointer targets (32px) with a single root token: `.fine:targets-sm` on `<html>` sets it where the primary pointer is fine. The library never does so automatically.
 - Fine-pointer mode changes the minimum target only. It never shrinks visual sizes on its own.
 - Pointer is a mode in Figma too (Targets: Touch, Fine), so a designer can see what a fine-pointer layout does to the bars and controls that read the minimum target.
 - To shrink visual sizes only for mouse and trackpad users, a product puts `fine:ui-compact` on a region. It applies compact density inside `@media (pointer: fine)`; touch screens keep the default size. Like the target token, it is the product's choice, never a library default.

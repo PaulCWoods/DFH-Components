@@ -61,6 +61,11 @@
     --_avatar-font-size: var(--avatar-lg-font-size, var(--typography-font-size-1));
   }
 
+  @container style(--avatar-size-step: lg) and style(--ui-sizing: compact) {
+    --_avatar-size: var(--avatar-size, var(--spacing-xl));
+    --_avatar-font-size: var(--avatar-font-size, var(--typography-font-size-0));
+  }
+
   @container style(--avatar-corners: square) {
     --_avatar-radius: var(--avatar-square-radius, var(--radius));
   }

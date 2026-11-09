@@ -43,6 +43,11 @@ export const MarkOnly: Story = {
   render: () => `<a href="#" class="brand">${mark}<span class="sr-only">Design For Humans home</span></a>`,
 };
 
+export const MenuButton: Story = {
+  name: 'As a menu button',
+  render: () => `<button type="button" class="brand">${mark}<span class="sr-only">Menu</span></button>`,
+};
+
 export const Compact: Story = {
   render: () => `<div class="ui-compact"><a href="#" class="brand">${mark}<span class="brand__name">Design For Humans</span></a></div>`,
 };

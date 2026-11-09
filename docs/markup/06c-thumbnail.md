@@ -83,7 +83,7 @@ A small picture of a thing: album art, a product shot, a file preview. An atom. 
 
 ### Further rules
 - **Size is the block size,** so a row of mixed shapes lines up; the width follows the aspect.
-- **Density:** a compact container steps each size down one.
+- **Density:** a compact container steps each size down one, whether the size comes from a modifier or the `--thumbnail-size-step` flag.
 - **Sizes:** default 48px, `--sm` 32px, `--lg` 64px (the Avatar's steps). Artwork is often bigger: a one-off size sets `--thumbnail-size` (6rem, 8rem).
 - **Aspect:** square by default. `--thumbnail-aspect: 4 / 3` or `16 / 9` for previews. Pictures are cropped to fill (`object-fit: cover`).
 - **Stretch:** `--stretch` fills the inline size of its container and keeps the aspect, so the block size follows the width: a picture in a Card's canvas or a carousel slide.
