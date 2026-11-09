@@ -29,6 +29,10 @@ const BARE_WORDS = new Set([
 // Elements a utility targets inside itself, not utility names
 const TARGETS = new Set(['ui-label', 'focus-target']);
 
+// print.css holds the library's print rules: its own names are print:hide and
+// print:keep, and every other class in it is a component it acts on
+const isComponentRule = (file, name) => file === 'print.css' && !name.startsWith('print:');
+
 const LEFT_RIGHT = /(^|[-:])(left|right)($|-)|^(m|p)[lr]-|^(border|rounded)-[lr]($|-)|^text-(left|right)$/;
 
 function tierOneNames() {
@@ -63,16 +67,18 @@ for (const file of fs.readdirSync(UTILITIES_DIR).filter((f) => f.endsWith('.css'
   const report = (index, message) => problems.push(`${file}:${lineOf(css, index)}  ${message}`);
 
   for (const match of css.matchAll(/:where\(([^()]*)\)/g)) {
-    const names = [...match[1].matchAll(/\.((?:\\3\d |\\.|[\w-])+)/g)].map((m) => unescape(m[1]));
+    const names = [...match[1].matchAll(/\.((?:\\3\d |\\.|[\w-])+)/g)]
+      .map((m) => unescape(m[1]))
+      .filter((name) => !isComponentRule(file, name));
     if (!names.length) continue;
     ruleCount += 1;
     if (names.length > 2) report(match.index, `${names.length} names for one rule: ${names.join(', ')}`);
     for (const name of names) {
       if (TARGETS.has(name)) continue;
       const word = name.replace(/^@?[\w-]+:/, '');
-      // A responsive helper's action may be a bare word after its condition (md:hide)
+      // A responsive or print helper's action may be a bare word after its condition (md:hide, print:keep)
       const conditional = word !== name;
-      if (!/[-]/.test(word) && !BARE_WORDS.has(word) && !(conditional && word === 'hide')) report(match.index, `bare word: .${name}`);
+      if (!/[-]/.test(word) && !BARE_WORDS.has(word) && !(conditional && ['hide', 'keep'].includes(word))) report(match.index, `bare word: .${name}`);
       if (LEFT_RIGHT.test(name)) report(match.index, `left/right in a name: .${name} (use start/end)`);
     }
   }

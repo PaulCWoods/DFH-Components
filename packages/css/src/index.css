@@ -124,5 +124,6 @@
 @import './utilities/layout-helpers.css' layer(utilities);
 @import './utilities/accessibility.css' layer(utilities);
 @import './utilities/responsive-helpers.css' layer(utilities);
+@import './utilities/print.css' layer(utilities);
 
 @import './overrides.css' layer(overrides);

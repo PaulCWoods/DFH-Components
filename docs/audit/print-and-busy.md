@@ -93,3 +93,34 @@ Both go in the utilities stylesheet beside the responsive helpers, documented in
 - Stories: Atoms/Spinner (Playground, Beside Text, In A Region, Reloading); Button › Busy.
 - Gates: `check:focus` and `check:targets` pass on `^atoms-(button|spinner)`.
 - Figma (9 Nov): `Icon/Loader Arc` glyph on DFH Semantics (between List and Lock); a Spinner page after Skeleton with a `spinner` set (cloned from `icon`: Size × Intent, glyph fixed, doc link); Button set gains `Busy` (False on all 156, 12 sparse True variants: Size Default × Prominence × Intent, label and icons at opacity 0, Spinner centred and absolute). Not added: the Spinner on the DFH Components overview page.
+
+**Print (9 Nov):**
+- **Changed from the plan: every print rule is in `utilities/print.css`** (imported last in the utilities layer), not in each component's file. A print hide in a component's layer loses to the layout primitives and utilities on the same element (a Header nav that's also a `.cluster`), and so would `overflow: visible` against an overflow utility. One file also shows everything print does in one place.
+- Colour: `:root` and dark bands print `color-scheme: light`; inverted regions (class or `--color-palette: inverted` flag) print `color-scheme: dark`, which shows the light values since their roles are swapped. Shadows off.
+- Targets: `--spacing-target-min` takes the small target in print, as `.fine:targets-sm` does, since nothing is tapped on paper.
+- Position and overflow: Header, Sidebar, Banner Dock, sticky and fixed utilities and every Table part (caption included) static; the app shell blocks and grows; Table containers, scrollable Card bodies and scrollable Dialogs open; carousels wrap as a grid; Tables wrap their cells, break long words, show truncated text whole, free `<col>` widths and let row actions wrap; scrollable Tab Lists wrap; Textareas grow to their text; code wraps.
+- Hidden (each kept with `print:keep`): Skip Link, Header nav, Sidebar, Banner Dock, Toast stack, Batch Actions, Pagination, docked Tab Lists, Popover, Tooltip, Combobox list; in Tabbed Content, every Tab but the selected one.
+- Breaks: Cards, Banners, Fields, Code Blocks, figures, rows and images stay whole; headings and Card headers stay with what follows; table head and foot repeat.
+- Prose prints the address of a link to another site after it.
+- `check:print` (new): print media at 720px; fails on fixed or sticky, cut off, or too wide. It turns transitions off first (a fading element would still show) and skips Storybook's own frames. `check:utilities` treats only `print:` names in `print.css` as utilities, and accepts `keep` after a condition.
+- First run: 46 problems in 484 stories, all fixed by the rules above.
+- Docs: Responsive Helpers gains "Choosing what prints", the helpers in its Options and Conditions tables, and a Do/Don't row. AGENTS.md lists `check:print`; the `composition` skill mentions print.
+
+## Next: "What makes it different" docs pass (agreed 9 Nov)
+After print, before the release, so the release links to pages that already make the case. Every claim is checked against the code before it's written.
+
+| Item | Where |
+| :--- | :--- |
+| Zero specificity | Start › Customise (why "set a token, add a class" never fights); a home page headline |
+| Logical properties | "What makes it different"; one line in Customise |
+| Light and dark | Themes; a headline with logical properties ("Every language, every mode") |
+| OKLCH ramps | New Foundations › Colour |
+| Type floors and ceilings | New Foundations › Type |
+| Layered shadows | New Foundations › Shape |
+| Animations where they add value | New Foundations › Motion (reduced motion, reduced transparency, the Spinner) |
+| Defensive CSS | "What makes it different", with the gates as proof (`check:layout`, `check:targets`, `check:focus`, `check:print`) |
+| Hand-crafted, skills | The new page on adding the shared skills to a project |
+| Prints well, busy states | "What makes it different" |
+
+- A **Foundations** section (Colour, Type, Space, Shape, Motion) follows the Token Designer's sections and the theme file.
+- The home page keeps three or four headlines; "What makes it different" in the docs index carries the full list, each point linking to where it's shown.

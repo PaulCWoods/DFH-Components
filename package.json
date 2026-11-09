@@ -22,6 +22,7 @@
     "check:utilities": "node scripts/check-utilities.js",
     "check:tokens": "node scripts/check-tokens.mjs",
     "check:layout": "node scripts/check-layout.mjs",
+    "check:print": "node scripts/check-print.mjs",
     "check:targets": "node scripts/check-targets.mjs",
     "check:focus": "node scripts/check-focus.mjs",
     "check:docs": "node scripts/check-docs.mjs",

@@ -1,0 +1,203 @@
+/* ==========================================================================
+   Design For Humans: Print
+   --------------------------------------------------------------------------
+   What the library does when a page is printed, and the two helpers that
+   change it:
+     print:hide   hides anything in print
+     print:keep   keeps something the library hides in print (the Header's
+                  navigation, a Sidebar, Pagination …)
+
+   Every print rule lives here, in the utilities layer, so a component's
+   print behaviour beats the layout primitives and utilities on it (a Header
+   nav that is also a .cluster still hides). Component rules are written
+   :where(.x):not(:where(.print\:keep)), so specificity stays zero and the
+   helper names the exception.
+
+   By default the library:
+   - prints in light colours: dark bands print light, and inverted regions
+     print as the page does;
+   - drops shadows; the browser drops backgrounds unless the reader asks
+     for them;
+   - makes sticky and fixed parts static, and opens scrolling regions so
+     nothing is cut off;
+   - hides what only works on screen;
+   - keeps Cards, Banners, figures, table rows and Fields whole, and
+     headings with what follows;
+   - prints the address of a link to another site after it, in Prose.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Helpers
+   print:keep has no declarations of its own: the rules below check for it.
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(.print\:hide) {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2. Colour
+   Paper is light. An inverted region swaps each role's light and dark
+   values, so in a dark scheme it shows the light ones: the page's own.
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(:root, .color-scheme-dark, .color-scheme-light-dark) {
+        color-scheme: light;
+    }
+
+    :where(.color-palette-inverted, .colors-inverted) {
+        color-scheme: dark;
+    }
+
+    * {
+        @container style(--color-palette: inverted) {
+            color-scheme: dark;
+        }
+    }
+
+    :where(*, *::before, *::after) {
+        box-shadow: none;
+        text-shadow: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Targets
+   Nothing is tapped on paper, so controls take the small target size, as
+   they do when a product opts into fine-pointer targets.
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(:root) {
+        --spacing-target-min: var(--spacing-target-sm, 2rem);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. Position and Overflow
+   Nothing sticks, floats or scrolls on paper: it would print once, over
+   other content, or be cut off at the edge of its box.
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(.header, .sidebar, .banner-dock, .sticky, .position-sticky, .fixed, .position-fixed),
+    :where(.table) :where(caption, thead, tfoot, th, td) {
+        position: static;
+    }
+
+    /* The shell and its panes grow to their content */
+    :where(.app, .app__workspace) {
+        display: block;
+    }
+
+    :where(.app--viewport, .app__workspace, .main, main, .main--viewport) {
+        block-size: auto;
+        overflow: visible;
+    }
+
+    :where(.table-container, .card__body--scrollable, .dialog--scrollable) {
+        max-block-size: none;
+        overflow: visible;
+    }
+
+    /* A carousel wraps into rows */
+    :where(.grid--carousel, .\@max-3xl\:grid--carousel) {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(auto-fill, minmax(min(var(--_grid-min, 12rem), 100%), 1fr));
+        overflow: visible;
+        scroll-snap-type: none;
+    }
+
+    /* A wide Table fits the page: its cells wrap, long words (an email
+       address) break, and truncated text shows whole */
+    :where(.table) :where(th, td) {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    :where(.table) :where(col) {
+        inline-size: auto;
+    }
+
+    /* Row actions stay on one line on screen, where the Table scrolls */
+    :where(.table) :where(.button-group) {
+        flex-wrap: wrap;
+    }
+
+    :where(.table__cell--truncate) {
+        max-inline-size: none;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: normal;
+    }
+
+    /* A scrolling Tab List wraps */
+    :where(.tab-list--scrollable) {
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+
+    /* A Textarea grows to its text */
+    :where(.textarea) {
+        field-sizing: content;
+        max-block-size: none;
+        overflow: visible;
+    }
+
+    /* Long lines of code wrap rather than run off the page */
+    :where(.code-block__code) {
+        overflow: visible;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   5. Hidden by Default
+   What only works on screen. print:keep brings any of it back.
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(.skip-link, .header__nav, .sidebar, .banner-dock, .toast-stack, .batch-actions, .pagination, .tab-list--docked, .popover, .tooltip, .combobox__listbox):not(:where(.print\:keep)) {
+        display: none;
+    }
+
+    /* Tabs: only the open panel prints (the others are hidden), so the Tab
+       List shows its selected Tab alone, as the panel's label */
+    :where(.tabbed-content) :where(.tab-list):not(:where(.print\:keep)) :where(.tab:not([aria-selected="true"])) {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   6. Page Breaks
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(.card, .banner, .field, .code-block, figure, tr, img, svg) {
+        break-inside: avoid;
+    }
+
+    :where(h1, h2, h3, h4, h5, h6, .display-title, .title, .heading, .subheading, .small-heading, .micro-heading, .card__header) {
+        break-after: avoid;
+    }
+
+    /* The head and foot repeat on every page once they're no longer sticky */
+    :where(thead) {
+        display: table-header-group;
+    }
+
+    :where(tfoot) {
+        display: table-footer-group;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   7. Prose Links
+   On paper a link can't be followed, so the address of a link to another
+   site prints after it. Links within the site or the page don't.
+   -------------------------------------------------------------------------- */
+@media print {
+    :where(.prose) :where(a[href^="http"]:not(.button))::after {
+        content: " (" attr(href) ")";
+        font-size: var(--body-sm-fixed-font-size, 0.875em);
+        overflow-wrap: anywhere;
+    }
+}
