@@ -778,9 +778,13 @@
       "$description": "Space between rows"
     },
     "color": {
-      "$value": "{foreground.muted}",
+      "$value": "{foreground}",
       "$type": "color",
-      "$description": "Text colour of an item that isn't current"
+      "$description": "Items that are links."
+    },
+    "muted-color": {
+      "$value": "{foreground.muted}",
+      "$description": "Items that aren't links: text in the list, or an unavailable link (aria-disabled)."
     },
     "rule-width": {
       "$value": "{rule.width}",
@@ -2748,6 +2752,10 @@
     "bg": {
       "$value": "{surface.layer}",
       "$type": "color"
+    },
+    "fill-color": {
+      "$value": "{surface.accent}",
+      "$description": "The fill drawn from --value (a percentage), at the default (accent) intent."
     },
     "subtle-bg": {
       "$value": "{surface.translucent}",

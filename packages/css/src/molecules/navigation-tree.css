@@ -9,7 +9,9 @@
    The current item is marked with aria-current ("page" for a site,
    "location" or "true" for a table of contents) and shows bold text in the
    foreground colour, a tint, and a square rail inside the button's inline
-   start. Other items are regular weight in a quieter colour.
+   start. Links are regular weight in the foreground colour; an item that
+   isn't a link (a <span class="button">, or an unavailable link with
+   aria-disabled) takes the muted colour.
 
    Everything lines up on the label's inset (the button's border and
    padding): nested lists start under their parent's label, guide lines
@@ -55,9 +57,11 @@
   --_navigation-tree-rail-width: var(--navigation-tree-rail-width, var(--spacing-xs));
   --_navigation-tree-rail-color: var(--navigation-tree-rail-color, var(--foreground-accent, currentColor));
   --_navigation-tree-heading-color: var(--navigation-tree-heading-color, var(--foreground-muted, currentColor));
+  --_navigation-tree-color: var(--navigation-tree-color, var(--foreground, CanvasText));
+  --_navigation-tree-muted-color: var(--navigation-tree-muted-color, var(--foreground-muted, currentColor));
 
-  /* Items are plain buttons in regular weight and a quieter colour; the
-     current item stands out in weight and colour */
+  /* Items are plain buttons in regular weight; the current item stands
+     out in weight, tint and rail */
   --button-prominence: plain;
   --button-font-weight: var(--font-weight-regular, 400);
   --font-sizing: fixed;
@@ -124,11 +128,16 @@
   justify-content: flex-start;
   text-align: start;
 
-  /* A quieter colour that darkens on hover; an intent class keeps its own */
+  /* Links in the foreground colour; an intent class keeps its own */
   &:where(:not(.button--accent, .button--danger)) {
-    --_button-tone: var(--navigation-tree-color, var(--foreground-muted, currentColor));
+    --_button-tone: var(--_navigation-tree-color);
     --_button-tone-hover: var(--_navigation-tree-current-color);
     --_button-tone-pressed: var(--_navigation-tree-current-color);
+  }
+
+  /* Not a link: text in the list, or a link that isn't available yet */
+  &:where(:not(a[href]), [aria-disabled="true"]):where(:not(.button--accent, .button--danger)) {
+    --_button-tone: var(--_navigation-tree-muted-color);
   }
 
   /* The label takes the room, so a trailing badge or status sits at the end */

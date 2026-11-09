@@ -22,6 +22,7 @@ A labelled value: "Uptime 99.98%". A description list, so each label is a term a
 - **Label** (\`dt\`): a text atom, with an optional leading icon.
 - **Value** (\`dd\`): a text atom; a unit is a smaller text atom inside it. Values use tabular figures so they don't jump as they change.
 - **Trend or state:** a \`.status--plain\` with an arrow icon and signed text ("+12%") in the value, so it is never colour alone.
+- **Fill:** \`--value\` (a percentage) on a telemetry fills that share of its box from the start, as a picture of a value the text gives. It is accent by default; \`--info\`, \`--success\`, \`--warning\` and \`--danger\` colour it (flag \`--telemetry-intent\`).
 - **Options:** \`--icon-start\` (the label's icon moves to a gutter at the start of the box, larger and centred; flag \`--telemetry-icon-placement: start\`), \`--inline\` (label beside value), \`--subtle\` (a tint with no border) and \`--plain\` (no surface, border or padding; flag \`--telemetry-prominence\`), \`--round\` (flag \`--telemetry-corners: round\`), \`--compact\` (or any compact container).
 - **Group:** \`.telemetry-group\` is the \`<dl>\`; \`--fill\` grows its items to share the row. A single telemetry is a \`<dl class="telemetry">\` with its \`dt\` and \`dd\` directly inside.
 - **Live values:** don't make the group a live region. If a change matters, announce it in a separate \`role="status"\`.
@@ -139,6 +140,25 @@ export const WithAState: Story = {
     { label: 'Stream', value: '', trend: { intent: 'success', arrow: 'Check', text: 'Online' } },
     { label: 'Backup', value: '', trend: { intent: 'warning', arrow: 'Warning', text: 'Degraded' } },
   ]),
+};
+
+const shares = (dir = '') => `
+  <dl class="telemetry-group telemetry-group--fill" aria-label="Server health"${dir}>
+    <div class="telemetry" style="--value: 18%;"><dt class="small-text text-muted">CPU load</dt><dd class="small-heading">18<span class="small-text">%</span></dd></div>
+    <div class="telemetry telemetry--info" style="--value: 52%;"><dt class="small-text text-muted">Memory</dt><dd class="small-heading">52<span class="small-text">%</span></dd></div>
+    <div class="telemetry telemetry--success" style="--value: 99%;"><dt class="small-text text-muted">Checks passing</dt><dd class="small-heading">99<span class="small-text">%</span></dd></div>
+    <div class="telemetry telemetry--warning" style="--value: 81%;"><dt class="small-text text-muted">Disk, nearly full</dt><dd class="small-heading">81<span class="small-text">%</span></dd></div>
+    <div class="telemetry telemetry--danger" style="--value: 97%;"><dt class="small-text text-muted">Quota, over the limit</dt><dd class="small-heading">97<span class="small-text">%</span></dd></div>
+  </dl>`;
+
+export const ShareAsAFill: Story = {
+  name: 'Share as a fill',
+  render: () => shares(),
+};
+
+export const ShareAsAFillRightToLeft: Story = {
+  name: 'Share as a fill, right to left',
+  render: () => shares(' dir="rtl"'),
 };
 
 export const RightToLeft: Story = {

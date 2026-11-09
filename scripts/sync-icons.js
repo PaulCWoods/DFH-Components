@@ -86,6 +86,11 @@ const targets = [
     path: path.resolve(ROOT_DIR, '../designforhumans-blog/web/web/symbol-defs.svg'),
     required: false,
   },
+  {
+    name: 'Design For Humans Course (WordPress content-icon-sprite.php)',
+    path: path.resolve(ROOT_DIR, '../DFH-Course-Theme/content-icon-sprite.php'),
+    required: false,
+  },
 ];
 
 console.log(`\n🎨 Design For Humans Icon Synchronizer`);

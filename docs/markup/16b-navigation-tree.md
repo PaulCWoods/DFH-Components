@@ -104,7 +104,8 @@ Nested links to the sections of a site or a page: a docs Sidebar, a table of con
 | Density | `--compact` (sets `--ui-sizing: compact`): 32px rows that keep the Button's 48px hit area unless the product opts into fine-pointer targets |
 
 ### Further rules
-- **Items** are `<a class="button">` in `<li>`, in regular weight and the muted colour (`--navigation-tree-color`). They keep the Button's targets (48px, or 32px compact or with fine-pointer targets), focus ring and wrapping. A trailing Badge or status sits at the end.
+- **Items** are `<a class="button">` in `<li>`, in regular weight and the foreground colour (`--navigation-tree-color`). They keep the Button's targets (48px, or 32px compact or with fine-pointer targets), focus ring and wrapping. A trailing Badge or status sits at the end.
+- **Items that aren't links** take the muted colour (`--navigation-tree-muted-color`): a `<span class="button">` for text in the list, such as a course plan shown to someone who can't open it yet, and an unavailable link, `<a role="link" class="button" aria-disabled="true">`, which the Button also dims. Say why it's unavailable in its text, with an icon and hidden text, or nearby.
 - **Alignment:** everything lines up on the item label's inset (the Button's border and padding). A nested list starts under its parent's label, a ruled tree draws its line there, and headings use the same inset. In a Card or Sidebar body the tree reaches out to their edges, so the rows span the full width; the inset is never more than their padding, and every item's padding follows it, so the tree never overflows them.
 - **Headings:** `<li class="navigation-tree__heading">` holding a text atom, as in the Menu, so it lines up with the item labels. A heading that names the whole tree goes there too, with `aria-labelledby` on the `<nav>`.
 

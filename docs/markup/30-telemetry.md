@@ -102,12 +102,29 @@ A trend or state is a plain status in the value, with an icon and signed text, s
 ```
 Pick the intent by meaning, not direction: a rising drop-off rate is `--danger`. Where the sign isn't enough, add hidden text: `<span class="sr-only">up</span>` or "up 12.4% on last week".
 
+## Show a share as a fill
+A value that is a share of something ("1 in 5", "16%") can fill that much of its box from the start, with `--value` as a percentage on the Telemetry. The fill is a picture of a value the text already gives, so it adds nothing for a screen reader and loses nothing in forced colours or print.
+```html live
+<dl class="telemetry-group telemetry-group--fill" aria-label="Disability">
+  <div class="telemetry" style="--value: 16%;">
+    <dt class="small-text text-muted">People with a significant disability</dt>
+    <dd class="small-heading">1 in 6</dd>
+  </div>
+  <div class="telemetry telemetry--warning" style="--value: 40%;">
+    <dt class="small-text text-muted">Over 65s with a significant disability</dt>
+    <dd class="small-heading">2 in 5</dd>
+  </div>
+</dl>
+```
+The fill is accent by default. An intent (`--info`, `--success`, `--warning`, `--danger`) colours it by meaning, so say that meaning in the text or a status as well.
+
 ## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use a description list: `dt` for the label, `dd` for the value. | Rebuild it with `div`s and label classes. |
 | Pair a trend with an icon and signed text. | Show a trend in colour alone. |
 | Pick the intent by meaning: a rising drop-off rate is `--danger`. | Pick the intent by direction. |
+| Fill a share with `--value`, and give the figure in the text. | Let the fill be the only place the value appears. |
 | Announce a change that matters in a separate `role="status"`. | Make a ticking value a live region. |
 | Put a large stat with a description in a `.card`. | Look for a KPI Card variant. |
 
@@ -117,13 +134,14 @@ A labelled value: "Uptime 99.98%". A molecule built on a description list, so ea
 ## Options
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.telemetry` | `--icon-start`, `--inline`, `--subtle`, `--plain`, `--round`, `--compact` | `--telemetry-icon-placement: start`, `--telemetry-prominence: subtle` or `plain`, `--telemetry-corners: round`, `--ui-sizing: compact` |
+| `.telemetry` | `--icon-start`, `--inline`, `--subtle`, `--plain`, `--info`, `--success`, `--warning`, `--danger`, `--round`, `--compact`; `--value` (a percentage) draws the fill | `--telemetry-icon-placement: start`, `--telemetry-prominence: subtle` or `plain`, `--telemetry-intent: info`, `success`, `warning` or `danger`, `--telemetry-corners: round`, `--ui-sizing: compact` |
 | `.telemetry-group` | `--fill` | |
 
 ### Further rules
 - **No KPI Cards.** A large stat with a description is a `.card` holding a Telemetry.
 - **Prominence:** bordered by default; `--subtle` is a tint with no border (the muted surface other subtle components use; under increased contrast and in forced colours it gains its border back); `--plain` has no surface, border or padding.
 - **One metric:** `<dl class="telemetry">` with its `dt` and `dd` directly inside.
+- **Fill:** `--value` (a percentage) fills that share of the box from its inline start, in `--telemetry-fill-color` (the accent surface) or the intent's surface. Without `--value` nothing is drawn. Intent only colours the fill.
 - **`--fill`** on the group grows each item to share the row, as a Tab List's `--fill` does. Items still wrap when the row is too narrow.
 - **`--icon-start`** moves the label's icon into a gutter at the start of the box: 24px (`--telemetry-lead-icon-size`), centred on the label and value. The markup is unchanged; the icon stays in the `dt`, because a `<dl>` item may only hold terms and descriptions. Items without an icon get no gutter. Set `--telemetry-icon-placement: start` on a group or region to do the same for every item in it.
 

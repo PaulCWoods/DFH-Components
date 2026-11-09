@@ -9,6 +9,7 @@
    | Axis       | Modifiers         | Container flag                     |
    | ---------- | ----------------- | ---------------------------------- |
    | Prominence | (bordered) --subtle --plain | --telemetry-prominence |
+   | Intent     | (accent) --info --success --warning --danger | --telemetry-intent |
    | Corners    | --round           | --telemetry-corners: round         |
    | Density    | --compact         | --ui-sizing: compact               |
    | Layout     | (label above) --inline (label beside the value)        |
@@ -16,6 +17,12 @@
 
    A trend or a state ("+12%", "Online") is a status atom in the value,
    with an icon or signed text, so it is never colour alone.
+
+   Fill: a value that is a share of something ("1 in 5") can fill that
+   much of the box from its inline start, with --value as a percentage on
+   the telemetry: style="--value: 20%". The fill is a picture of a value
+   the text already gives. Intent colours it (accent by default); say what
+   the intent means in the text or a status atom, never by colour alone.
 
    <dl class="telemetry-group" aria-label="Station">
      <div class="telemetry">
@@ -48,6 +55,9 @@
   --_telemetry-min-size: var(--telemetry-min-size, var(--spacing-48));
   /* The icon gutter: none until --icon-start and an icon are both present */
   --_telemetry-gutter: 0px;
+  /* The fill: none until --value is set on the telemetry */
+  --_telemetry-fill: var(--telemetry-fill-color, var(--surface-accent, transparent));
+  --_telemetry-fill-direction: to right;
 
   /* ------------------------------------------------------------------------
      Container flags, declared before the modifier classes
@@ -69,6 +79,22 @@
     --_telemetry-padding-inline: 0px;
   }
 
+  @container style(--telemetry-intent: info) {
+    --_telemetry-fill: var(--surface-info, transparent);
+  }
+
+  @container style(--telemetry-intent: success) {
+    --_telemetry-fill: var(--surface-success, transparent);
+  }
+
+  @container style(--telemetry-intent: warning) {
+    --_telemetry-fill: var(--surface-warning, transparent);
+  }
+
+  @container style(--telemetry-intent: danger) {
+    --_telemetry-fill: var(--surface-danger, transparent);
+  }
+
   @container style(--telemetry-corners: round) {
     --_telemetry-radius: var(--radius-full, 9999px);
   }
@@ -80,6 +106,7 @@
   }
 
   background-color: var(--_telemetry-bg);
+  background-image: linear-gradient(var(--_telemetry-fill-direction), var(--_telemetry-fill) var(--value, 0%), transparent var(--value, 0%));
   border: var(--_telemetry-border-width) solid var(--_telemetry-border-color);
   border-radius: var(--_telemetry-radius);
   box-sizing: border-box;
@@ -94,6 +121,10 @@
   padding-inline: var(--_telemetry-padding-inline);
   padding-inline-start: calc(var(--_telemetry-padding-inline) + var(--_telemetry-gutter));
   position: relative;
+
+  &:dir(rtl) {
+    --_telemetry-fill-direction: to left;
+  }
 
   /* Label: an optional icon, then the text, which wraps */
   > :where(dt) {
@@ -132,12 +163,16 @@
     > :where(.status) {
       align-self: center;
       margin-inline-start: var(--_telemetry-trend-gap);
+
+      &:first-child {
+        margin-inline-start: 0;
+      }
     }
   }
 }
 
 /* ==========================================================================
-   2. Layout, prominence, corners and density
+   2. Layout, prominence, intent, corners and density
    ========================================================================== */
 
 /* Inline: the label beside its value */
@@ -162,6 +197,22 @@
   --_telemetry-border-width: 0px;
   --_telemetry-padding-block: 0px;
   --_telemetry-padding-inline: 0px;
+}
+
+:where(.telemetry--info) {
+  --_telemetry-fill: var(--surface-info, transparent);
+}
+
+:where(.telemetry--success) {
+  --_telemetry-fill: var(--surface-success, transparent);
+}
+
+:where(.telemetry--warning) {
+  --_telemetry-fill: var(--surface-warning, transparent);
+}
+
+:where(.telemetry--danger) {
+  --_telemetry-fill: var(--surface-danger, transparent);
 }
 
 :where(.telemetry--round) {
@@ -212,7 +263,8 @@
 
 /* More contrast and forced colours: a subtle telemetry's fill may not show,
    so it gains the border */
-@media (prefers-contrast: more), (forced-colors: active) {
+@media (prefers-contrast: more),
+(forced-colors: active) {
   :where(.telemetry--subtle) {
     --_telemetry-border-width: var(--telemetry-border-width, var(--border-width-thin, 1px));
   }
