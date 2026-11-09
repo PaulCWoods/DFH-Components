@@ -1,0 +1,25 @@
+---
+/* The site theme's type scale in px: fixed, and at both ends of the fluid range */
+import { typeScale as t } from '../../lib/theme-data.mjs';
+---
+<div class="table-container" tabindex="0" role="region" aria-label="Type scale">
+  <table class="table table--compact">
+    <caption class="small-text text-start">Each step of the scale in pixels, each number set at its size. Fluid sizes run from the fixed size on a {t.viewports[0]}px screen to the larger size on a {t.viewports[1]}px one.</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="table__cell--numeric table__cell--fit">Step</th>
+        <th scope="col" class="table__cell--numeric">Fixed</th>
+        <th scope="col" class="table__cell--numeric">Fluid</th>
+      </tr>
+    </thead>
+    <tbody>
+      {t.steps.map((s) => (
+        <tr>
+          <th scope="row" class="table__cell--numeric table__cell--fit">{s.n}</th>
+          <td class="table__cell--numeric"><span style={`font-size: ${s.rem}rem; line-height: 1`}>{s.fixed}</span></td>
+          <td class="table__cell--numeric table__cell--nowrap">{s.fluid && <><span style={`font-size: ${s.fluidRem[0]}rem; line-height: 1`}>{s.fluid[0]}</span> <span class="small-text text-muted">to</span> <span style={`font-size: ${s.fluidRem[1]}rem; line-height: 1`}>{s.fluid[1]}</span></>}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

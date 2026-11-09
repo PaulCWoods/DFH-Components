@@ -43,7 +43,7 @@
   --_tooltip-offset: var(--tooltip-offset, var(--spacing-sm));
   --_tooltip-arrow-size: var(--tooltip-arrow-size, var(--spacing-6));
   --_tooltip-transition: var(--tooltip-transition, var(--duration-sm));
-  --_tooltip-timefunc: var(--tooltip-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_tooltip-timefunc: var(--tooltip-timefunc, var(--ease-in-out, ease-in-out));
 
   /* Surface */
   background-color: var(--_tooltip-bg);

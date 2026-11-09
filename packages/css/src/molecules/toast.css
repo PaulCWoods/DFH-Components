@@ -99,7 +99,7 @@
    ========================================================================== */
 :where(.toast) {
   --_toast-transition: var(--toast-transition, var(--duration-sm));
-  --_toast-timefunc: var(--toast-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_toast-timefunc: var(--toast-timefunc, var(--ease-in-out, ease-in-out));
   --_toast-shift: var(--spacing-sm, 0.5rem);
   --_toast-scale: var(--scale-enter, 0.96);
 

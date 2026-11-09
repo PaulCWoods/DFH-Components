@@ -51,7 +51,7 @@
       "$type": "duration"
     },
     "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
+      "$value": "{ease.in-out}",
       "$type": "other"
     },
     "bg": {
@@ -869,7 +869,7 @@
       "$type": "duration"
     },
     "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
+      "$value": "{ease.in-out}",
       "$type": "other"
     },
     "radius": {
@@ -1328,7 +1328,7 @@
       "$type": "duration"
     },
     "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
+      "$value": "{ease.in-out}",
       "$type": "other"
     }
   },
@@ -2002,7 +2002,7 @@
       "$description": "Entry and exit transition duration"
     },
     "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
+      "$value": "{ease.in-out}",
       "$type": "other",
       "$description": "Entry and exit timing function"
     }
@@ -2913,7 +2913,7 @@
       "$description": "Transition duration for toast entry and exit"
     },
     "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
+      "$value": "{ease.in-out}",
       "$type": "other",
       "$description": "Timing function for toast animations"
     }
@@ -2977,7 +2977,7 @@
       "$description": "Entry and exit transition duration"
     },
     "timefunc": {
-      "$value": "{timefunc.ease-in-out}",
+      "$value": "{ease.in-out}",
       "$type": "other",
       "$description": "Entry and exit timing function"
     },

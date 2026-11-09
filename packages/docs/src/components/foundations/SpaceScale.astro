@@ -1,0 +1,29 @@
+---
+/* Spacing drawn to scale from the custom properties, so a fluid role's bar
+   is its size on this screen, with its range from the site theme */
+import { fixedSpace, fluidSpace } from '../../lib/theme-data.mjs';
+interface Props { fluid?: boolean }
+const { fluid = false } = Astro.props;
+const rows = fluid ? fluidSpace : fixedSpace;
+---
+<div class="table-container" tabindex="0" role="region" aria-label={fluid ? "Fluid spacing roles" : "Fixed spacing steps"}>
+  <table class="table table--compact">
+    <caption class="small-text text-start">{fluid ? 'Each role at the smallest and largest screen, in pixels. The bar is its size on this screen.' : 'Each fixed step, in pixels, drawn to scale.'}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Token</th>
+        <th scope="col" class="table__cell--numeric">{fluid ? 'Size' : 'Pixels'}</th>
+        <th scope="col" class="w-full"><span class="sr-only">Drawn to scale</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <th scope="row" class="table__cell--nowrap"><code class="font-mono small-text whitespace-nowrap">{r.name}</code></th>
+          <td class="table__cell--numeric table__cell--nowrap">{fluid ? `${r.min} to ${r.max}` : r.px}</td>
+          <td><span class="display-block h-unit rounded-sm bg-accent-strong" style={`inline-size: var(${r.name})`} aria-hidden="true"></span></td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,18 @@
+---
+/* Each easing curve from the site theme, drawn: time runs left to right,
+   progress bottom to top. Bounce overshoots both ends of the box. */
+import { eases } from '../../lib/theme-data.mjs';
+const path = ([x1, y1, x2, y2]) => `M0 100 C${x1 * 100} ${100 - y1 * 100} ${x2 * 100} ${100 - y2 * 100} 100 0`;
+---
+<ul class="grid p-0 mb-md" role="list" style="--grid-min: 8rem">
+  {eases.map((e) => (
+    <li class="card card--compact">
+      <svg viewBox="-8 -24 116 148" overflow="visible" class="display-block w-full h-2xs" aria-hidden="true" focusable="false">
+        <rect x="0" y="0" width="100" height="100" fill="none" stroke="currentColor" stroke-opacity="0.25" vector-effect="non-scaling-stroke" />
+        <path d={path(e.points)} fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+      </svg>
+      <p class="card__title small-heading"><code class="font-mono">--ease-{e.role}</code></p>
+      <p class="small-text text-muted font-mono">{e.value}</p>
+    </li>
+  ))}
+</ul>

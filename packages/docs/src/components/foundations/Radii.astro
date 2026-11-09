@@ -1,0 +1,16 @@
+---
+/* The radius roles, drawn from their custom properties */
+import { radii } from '../../lib/theme-data.mjs';
+---
+<ul class="cluster p-0 mb-md" role="list">
+  {radii.roles.map((r) => (
+    <li class="stack gap-xs align-items-center">
+      <span class="display-block size-target border bg-muted" style={`border-radius: var(--radius-${r.role})`} aria-hidden="true"></span>
+      <span class="small-text"><code class="font-mono">--radius-{r.role}</code> {r.px}px{radii.default === r.role ? ' (default)' : ''}</span>
+    </li>
+  ))}
+  <li class="stack gap-xs align-items-center">
+    <span class="display-block size-target border bg-muted rounded-full" aria-hidden="true"></span>
+    <span class="small-text"><code class="font-mono">--radius-full</code></span>
+  </li>
+</ul>

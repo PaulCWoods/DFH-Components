@@ -97,7 +97,7 @@ const kindOf = (t) => {
   if (/hover-style$/.test(key)) return 'hoverStyle';
   if (/line-height/.test(key)) return 'lineHeight';
   if (/z-index/.test(key)) return 'zIndex';
-  if (/^\{(timefunc|ease)\b/.test(def) || /timing|easing/.test(key)) return 'easing';
+  if (/^\{ease\b/.test(def) || /timing|easing/.test(key)) return 'easing';
   /* A plain number (an icon's size in ems, a count of lines) is typed in,
      as is one that follows another (a Button's icon size, the Icon's) */
   if (t.type === 'number' && (isNumber(t.value) || NUMBER_REFS.includes(def))) return 'number';
@@ -127,7 +127,7 @@ export const tokenOptions = (token, { semantic, global }) => {
     fontSize: () => pick((r) => /(-fixed|^label|^control(-sm|-lg)?)\b.*\.font-size$/.test(r.path)),
     lineHeight: () => pick((r) => /\.line-height$/.test(r.path)),
     zIndex: () => pick((r) => /^z-index\./.test(r.path)),
-    easing: () => pick((r) => /^(timefunc|ease)\./.test(r.path)),
+    easing: () => pick((r) => /^ease\./.test(r.path)),
     space: () => [
       ...pick((r) => /^spacing\./.test(r.path) && !/^spacing\.\d/.test(r.path)),
       /* App-level sizes: the sidebar column */

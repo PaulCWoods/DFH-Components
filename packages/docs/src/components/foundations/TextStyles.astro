@@ -1,0 +1,16 @@
+---
+/* Each text style as a specimen, set by its own text atom, with its sizes
+   from the site theme */
+import { textStyles } from '../../lib/theme-data.mjs';
+const label = (name) => name.charAt(0).toUpperCase() + name.slice(1).replace('-lg', ' large').replace('-sm', ' small').replace('-xs', ' extra small').replace(/-/g, ' ');
+---
+<ul class="stack gap-md p-0 font-sizing-fixed" role="list">
+  {textStyles.map((s) => (
+    <li class="stack gap-xs border-b pb-md">
+      <p class={s.atom}>{label(s.name)}</p>
+      <p class="small-text text-muted">
+        <code class="font-mono">.{s.atom}</code> · fixed {s.fixed}px · compact {s.compact}px{s.fluid ? ` · fluid ${s.fluid[0]} to ${s.fluid[1]}px` : ' · never fluid'} · line height {s.leading}
+      </p>
+    </li>
+  ))}
+</ul>

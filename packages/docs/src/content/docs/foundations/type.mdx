@@ -1,0 +1,74 @@
+---
+title: Type
+summary: One modular scale with a floor and ceilings, text styles set by text atoms, and four sizing modes that change every size at once.
+order: 2
+---
+import TypeScale from '../../../components/foundations/TypeScale.astro';
+import TextStyles from '../../../components/foundations/TextStyles.astro';
+import { typeScale, fontRoles } from '../../../lib/theme-data.mjs';
+
+A theme sets a base size and a ratio, and the build makes a scale from them. Each text style takes a step of that scale, and a text atom (`.heading`, `.text`, `.small-text`) applies the style. Nothing else in the library sets a font size.
+
+## The scale
+
+This theme's base is {typeScale.base}px, and each step is {typeScale.ratio} times the one below it. On a large screen, fluid text grows towards a second scale, with a ratio of {typeScale.fluidRatio}, so headings pull further ahead of body text as the screen widens.
+
+<TypeScale />
+
+### A floor and two ceilings
+
+A plain scale shrinks small text until it's unreadable, and grows large text until one word fills a phone. So the scale has limits:
+
+- **The floor ({typeScale.floor}px).** No step is smaller, at any width. The steps below the base meet it rather than shrinking past it.
+- **The lower ceiling ({typeScale.ceilings.lower}px).** No step is larger at a fixed size, in compact regions, or where fluid text starts on a small screen.
+- **The upper ceiling ({typeScale.ceilings.upper}px).** No fluid step grows past it, however wide the screen.
+
+The build checks the scale before it writes it. It fails a theme whose steps are out of order, whose headings don't step down, or whose fluid text grows more than two and a half times. It reports text set at the floor in a light weight, and body text with a line height under 1.5.
+
+## Text styles
+
+Each specimen below is set by its own text atom, at its fixed size.
+
+<TextStyles />
+
+Heading styles and text styles are separate from heading levels. Pick the level that fits the page's outline (`<h2>`, `<h3>`) and the atom that fits how much it should stand out. A Card title is often an `<h2 class="small-heading">`.
+
+### Fonts
+
+Each style takes one of the theme's font roles:
+
+<div class="table-container" tabindex="0" role="region" aria-label="Font roles">
+  <table class="table table--compact">
+    <caption class="small-text text-start">The font roles and the fonts this theme gives them.</caption>
+    <thead><tr><th scope="col">Role</th><th scope="col">Font</th></tr></thead>
+    <tbody>{fontRoles.map((f) => <tr><th scope="row">{f.role}</th><td>{f.family}</td></tr>)}</tbody>
+  </table>
+</div>
+
+The library's own CSS loads no fonts and makes no request: every role starts on a system stack. A theme's fonts come with its stylesheet, and its opening comment lists the font links to add to your page head.
+
+## Sizing modes
+
+Text atoms are fixed by default: each takes one step at every width. A container picks another mode for everything inside it:
+
+| Mode | Set with | What happens |
+| :--- | :--- | :--- |
+| Fixed | (the default), `.font-sizing-fixed` | One size at every width. |
+| Fluid | `.font-sizing-fluid` | Sizes grow with the screen, between the two ends of the scale. |
+| Container | `.font-sizing-cq` on an element with `container-type: inline-size` | Sizes grow with the container instead, so a wide Card and a narrow one set their text differently. |
+| Compact | `.font-sizing-compact`, `.ui-compact`, any `--compact` component | Every style steps down, for dense screens. |
+
+This site's home page is set in fluid type. A Dialog sets container type, so its text fits the Dialog, not the screen. Some components (Cards, Menus, Tables, Banners) reset to fixed, so a fluid page doesn't inflate them.
+
+```html live width=md
+<article class="card font-sizing-compact">
+  <h3 class="card__title small-heading">Compact</h3>
+  <p class="text">Every style inside steps down one size, with no class changed on the text.</p>
+</article>
+```
+
+## Using type
+
+- **Set type with a text atom,** never `font-size`. The atom carries the size, weight, line height and spacing, and changes with the mode around it.
+- **Don't style a component's parts for type.** A Card title is a layout hook; the atom on it sets the type.
+- **Long reading goes in [Prose](/docs/components/molecules/prose/),** which spaces paragraphs, lists and headings from the size of the text.

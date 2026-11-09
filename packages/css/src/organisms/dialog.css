@@ -66,7 +66,7 @@
   --_dialog-backdrop-color: var(--dialog-backdrop-color, var(--color-backdrop, transparent));
   --_dialog-backdrop-filter: var(--dialog-backdrop-filter, var(--surface-layer-filter, none));
   --_dialog-transition: var(--dialog-transition, var(--duration-sm));
-  --_dialog-timefunc: var(--dialog-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_dialog-timefunc: var(--dialog-timefunc, var(--ease-in-out, ease-in-out));
   --_dialog-closed: scale(var(--scale-enter, 0.96)) translateY(0.5rem);
 
   /* The card inside is a floating surface */

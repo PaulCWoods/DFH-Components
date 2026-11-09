@@ -1,0 +1,54 @@
+---
+title: Space
+summary: Fixed steps for the parts of a component, fluid roles for the space between sections, touch targets, and the page and app sizes.
+order: 3
+---
+import SpaceScale from '../../../components/foundations/SpaceScale.astro';
+import { spaceRange, targets, siteWidth, app } from '../../../lib/theme-data.mjs';
+
+Space comes in two kinds. Inside a component (the padding of a Button, the gap in a row of Chips), it is fixed, so controls line up at every width. Between the sections of a page, it is fluid, so a phone isn't padded like a desktop and a desktop doesn't feel cramped.
+
+## Fixed steps
+
+Components, gaps and padding utilities (`.p-sm`, `.gap-md`) use these. The default gap of the layout primitives is `--spacing`, 16px.
+
+<SpaceScale />
+
+## Fluid roles
+
+These grow with the screen, from {spaceRange[0]}px to {spaceRange[1]}px wide. The theme picks a base and a ratio, and each role takes a step of that ratio at the large end.
+
+<SpaceScale fluid />
+
+- **Breathe** (`--spacing-breathe-sm`, `--spacing-breathe`) separates the sections inside a container: a Card's parts, the groups of a form.
+- **Cushion** (`--spacing-cushion`, `--spacing-cushion-lg`) surrounds the page: the Wrapper's gutter, the space around a hero, the gap between the sections of a page.
+
+Each role has a container version (`--spacing-cq-breathe` and so on) that grows with the container instead of the screen, for a part that can sit in a wide column or a narrow one.
+
+In a compact region (`.ui-compact` or any `--compact` component), the roles stop growing: breathe-sm becomes `--spacing-sm` and the others `--spacing`. The gaps of the layout primitives step down to `--spacing-compact`.
+
+The build checks the roles before it writes them: each must be positive, grow from the small end to the large, and be at least as large as the role before it.
+
+## Targets
+
+Everything you can tap or click has a hit area of at least `--spacing-target-min`:
+
+| Token | Size | Used for |
+| :--- | :--- | :--- |
+| <code class="whitespace-nowrap">--spacing-target</code> | {targets.default}px | The default, for touch. |
+| <code class="whitespace-nowrap">--spacing-target-sm</code> | {targets.sm}px | When a product opts into fine-pointer targets with `.fine:targets-sm` on `<html>`, or when the page is printed. |
+| <code class="whitespace-nowrap">--spacing-target-lg</code> | {targets.lg}px | Large controls. |
+
+A small Button stays small to look at, but keeps a {targets.default}px hit area around it, so it's as easy to tap as any other. The build fails a theme whose default target is under 44px, or whose smallest is under 24px (WCAG 2.5.8).
+
+## Page and app
+
+- **Site width ({siteWidth}).** The Wrapper caps content at this width and centres it, with a cushion of space on each side.
+- **App padding.** The App shell's landmarks (Header, Sidebar, main) share their inline padding, here the <code>{app.padding}</code> role, so their edges line up.
+- **Sidebar width ({app.sidebar}px, or {app.compactSidebar}px when compact).** The Sidebar and any split beside it read the same width, so the columns line up.
+
+## Using space
+
+- **Use a role or a step, never a raw length.** A role changes with the screen and the density; a length doesn't.
+- **Space with the layout primitives.** A [Stack, Inline or Cluster](/docs/components/layout/stack-inline-cluster/) sets the gap between its children, so children don't need margins.
+- **Never shrink a hit area to fit.** Make the control smaller to look at, and let the target stay.

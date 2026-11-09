@@ -121,7 +121,7 @@
   &::-webkit-progress-value {
     background-color: var(--_progress-tone);
     border-radius: var(--_bar-radius);
-    transition: inline-size var(--_bar-transition) var(--timefunc-ease-in-out, ease-in-out);
+    transition: inline-size var(--_bar-transition) var(--ease-in-out, ease-in-out);
   }
 
   /* Gecko */
@@ -137,7 +137,7 @@
     background-image: linear-gradient(to right, transparent, var(--_progress-tone), transparent);
     background-size: 50% 100%;
     background-repeat: no-repeat;
-    animation: dfh-progress-sweep var(--duration-xl, 2s) var(--timefunc-ease-in-out, ease-in-out) infinite;
+    animation: dfh-progress-sweep var(--duration-xl, 2s) var(--ease-in-out, ease-in-out) infinite;
 
     &::-webkit-progress-value {
       background: transparent;
@@ -207,7 +207,7 @@
   &::-webkit-meter-even-less-good-value {
     block-size: 100%;
     border-radius: var(--_bar-radius);
-    transition: inline-size var(--_bar-transition) var(--timefunc-ease-in-out, ease-in-out);
+    transition: inline-size var(--_bar-transition) var(--ease-in-out, ease-in-out);
   }
 
   &::-webkit-meter-optimum-value {

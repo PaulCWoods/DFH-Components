@@ -78,3 +78,6 @@ What each component pass removed and what replaced it, moved here from the publi
 
 ## Indicators
 - `.skeleton--badge` (now `.skeleton--status`: it stands in for a Status pill, and a Badge is a count or dot).
+
+## Motion
+- `--timefunc-ease-in-out`, `--timefunc-ease-in`, `--timefunc-ease-out`, `--timefunc-linear` (CSS keywords a theme couldn't change; use `--ease-in-out`, `--ease-in`, `--ease-out` from the theme's motion section, or `linear`). Component `*-timefunc` tokens keep their names and default to the `ease` roles.

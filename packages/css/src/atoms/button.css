@@ -96,7 +96,7 @@
   --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
   --_button-radius: var(--button-radius, var(--radius, 0.25rem));
   --_button-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
-  --_button-timefunc: var(--button-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_button-timefunc: var(--button-timefunc, var(--ease-in-out, ease-in-out));
   --_button-transition: var(--button-transition, var(--duration-sm, 150ms));
 
   /* Icons scale with the label: --button-icon-size is a number of ems,

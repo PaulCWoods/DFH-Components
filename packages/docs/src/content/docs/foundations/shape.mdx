@@ -1,0 +1,61 @@
+---
+title: Shape
+summary: Corner radius and border roles, the named lines every component draws, and shadows built from three soft layers.
+order: 4
+---
+import Radii from '../../../components/foundations/Radii.astro';
+import Shadows from '../../../components/foundations/Shadows.astro';
+import { radii, borders, lines } from '../../../lib/theme-data.mjs';
+
+Shape is a small set of roles. A theme gives each a size, picks which is the default, and every component follows.
+
+## Corners
+
+<Radii />
+
+Components round their corners with `--radius`, the default role. This theme's default is <code>{radii.default}</code>, so its components have {radii.default === 'none' ? 'square corners' : 'rounded corners'}. A theme that changes the default changes every Button, Card, field and Dialog at once. The `--round` option on a component (`.button--round`) makes it fully round, whatever the default.
+
+## Borders
+
+<div class="table-container" tabindex="0" role="region" aria-label="Border widths">
+  <table class="table table--compact">
+    <caption class="small-text text-start">The border widths. This theme's default is {borders.default}.</caption>
+    <thead><tr><th scope="col">Token</th><th scope="col" class="table__cell--numeric">Width</th></tr></thead>
+    <tbody>{borders.roles.map((b) => <tr><th scope="row"><code class="font-mono small-text">--border-width-{b.role}</code></th><td class="table__cell--numeric">{b.px}px</td></tr>)}</tbody>
+  </table>
+</div>
+
+### Lines
+
+Each kind of line a component draws has its own name, so a theme can change one without the others:
+
+<div class="table-container" tabindex="0" role="region" aria-label="Lines">
+  <table class="table table--compact">
+    <caption class="small-text text-start">The lines, and the width and colour this theme gives each.</caption>
+    <thead><tr><th scope="col">Line</th><th scope="col">Width</th><th scope="col">Colour</th></tr></thead>
+    <tbody>{lines.map((l) => <tr><th scope="row">{l.line}</th><td>{l.width}</td><td><code class="font-mono small-text">{l.color}</code></td></tr>)}</tbody>
+  </table>
+</div>
+
+- **Rule:** dividers, and the lines between table rows and list items.
+- **Panel:** the edge of a Card, Dialog or Popover. A theme can set it to none and let surfaces and shadows separate things instead.
+- **App:** the borders between the App shell's Header, Sidebar and main.
+- **Control:** the edge of a field. It must reach 3:1 against the page (WCAG 1.4.11), so it's never none.
+- **Underline:** links in text.
+- **Focus ring:** the outline on whatever has keyboard focus. The build fails a theme whose ring is under 2px or set to none.
+
+## Shadows
+
+A single shadow looks flat. Real light casts a sharp shadow close to an object and a soft one further out, so each level is three layers, each further and softer than the last.
+
+<Shadows />
+
+The colour comes from the theme, in light and dark. In dark mode a shadow is darker and denser, so it still shows against a dark page. In print, shadows are dropped. The build checks that each level reaches further than the one below it.
+
+To tint a shadow, set `--shadow-color` on the element. Where the browser supports CSS functions, each level is also a function: `--shadow-md(var(--color-amber-500))`.
+
+## Using shape
+
+- **Round with `--radius`,** not a step, so your parts follow the theme's default.
+- **Separate with one thing at a time.** A Card on a tinted surface needs neither a border nor a shadow; pick the one that says what you mean.
+- **Never remove the focus ring** or the edge of a field. They are how people find the control.

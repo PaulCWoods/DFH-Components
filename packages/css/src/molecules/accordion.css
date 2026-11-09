@@ -65,7 +65,7 @@
   --_accordion-font-size: var(--body-fixed-font-size, inherit);
   --_accordion-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_accordion-transition: var(--accordion-transition, var(--duration-sm, 150ms));
-  --_accordion-timefunc: var(--accordion-timefunc, var(--timefunc-ease-in-out, ease-in-out));
+  --_accordion-timefunc: var(--accordion-timefunc, var(--ease-in-out, ease-in-out));
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))

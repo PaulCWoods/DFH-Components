@@ -57,7 +57,7 @@ The CSS name is the token path joined with hyphens: `surface.card` is `--surface
 
 **Motion:**
 - **Durations:** `--duration-none`, `-sm`, `-md`, `-lg`, `-xl`. Reduced motion takes them all to none.
-- **Easing:** `--timefunc-ease-in-out`, `-ease-in`, `-ease-out`, `-linear`.
+- **Easing:** `--ease-in-out`, `--ease-in`, `--ease-out`, `--ease-bounce`, from the theme's motion section.
 
 **Elevation and stacking:**
 - **Shadows:** `--shadow-sm`, `--shadow-md`, `--shadow-lg` and `--shadow-inner`, tinted by `--shadow-color`.

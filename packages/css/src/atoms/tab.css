@@ -195,7 +195,7 @@
   border-color,
   color;
   transition-duration: var(--_tab-transition);
-  transition-timing-function: var(--timefunc-ease-in-out, ease-in-out);
+  transition-timing-function: var(--ease-in-out, ease-in-out);
 
   :where(.icon) {
     --icon-size: var(--_tab-icon-size);

@@ -153,7 +153,7 @@
   pointer-events: none;
   transition-property: inset-block-start, inset-block-end, inset-inline-start, inset-inline-end;
   transition-duration: var(--_tab-list-transition);
-  transition-timing-function: var(--timefunc-ease-out, ease-out);
+  transition-timing-function: var(--ease-out, ease-out);
 }
 
 @container style(--tab-list-prominence: plain) or style(--elements-prominence: plain) {

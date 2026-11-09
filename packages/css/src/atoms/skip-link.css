@@ -60,7 +60,7 @@
 
   transition-property: block-size, min-block-size;
   transition-duration: var(--_skip-link-transition);
-  transition-timing-function: var(--timefunc-ease-out, ease-out);
+  transition-timing-function: var(--ease-out, ease-out);
 
   &:visited {
     color: var(--_skip-link-color);

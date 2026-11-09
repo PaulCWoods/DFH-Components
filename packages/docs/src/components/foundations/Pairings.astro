@@ -9,12 +9,12 @@ const lowest = Math.min(...list.flatMap((p) => [p.light, p.dark]));
 ---
 <details class="accordion">
 <summary>{gated ? `${list.length} text pairings, the lowest at ${lowest.toFixed(1)}:1` : `${list.length} border pairings`}</summary>
-<div class="table-container">
+<div class="table-container" tabindex="0" role="region" aria-label={gated ? "Text pairings" : "Border pairings"}>
   <table class="table table--compact">
     <caption class="small-text text-start">{gated ? 'Text on the surfaces it sits on. Each must reach its minimum in light and dark, or the theme fails.' : 'Intent borders, beside text that carries the meaning. Reported, not gated.'}</caption>
     <thead>
       <tr>
-        <th scope="col">Sample</th>
+        <th scope="col table__cell--fit">Sample</th>
         <th scope="col">{gated ? 'Text' : 'Border'}</th>
         <th scope="col">On</th>
         <th scope="col" class="table__cell--numeric">Light</th>
@@ -25,9 +25,9 @@ const lowest = Math.min(...list.flatMap((p) => [p.light, p.dark]));
     <tbody>
       {list.map((p) => (
         <tr>
-          <td>
+          <td class="table__cell--fit">
             {p.border
-              ? <span class="display-block size-md rounded-sm" style={`background-color: var(${p.bg}); border: var(--border-width, 1px) solid var(${p.fg})`} aria-hidden="true"></span>
+              ? <span class="display-block size-target rounded-sm" style={`background-color: var(${p.bg}); border: var(--border-width, 1px) solid var(${p.fg})`} aria-hidden="true"></span>
               : <span class="display-block p-xs rounded-sm font-bold text-center" style={`color: var(${p.fg}); background-color: var(${p.bg})`} aria-hidden="true">Aa</span>}
           </td>
           <td><code class="font-mono small-text">{p.fg}</code></td>

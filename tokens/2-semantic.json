@@ -1296,25 +1296,6 @@
       "$description": "The scale an overlay (Dialog, Popover, Tooltip, Toast) grows from as it opens and shrinks to as it closes"
     }
   },
-  "timefunc": {
-    "$type": "other",
-    "ease-in-out": {
-      "$value": "ease-in-out",
-      "$description": "Keyword easing in and out"
-    },
-    "ease-in": {
-      "$value": "ease-in",
-      "$description": "Keyword easing in"
-    },
-    "ease-out": {
-      "$value": "ease-out",
-      "$description": "Keyword easing out"
-    },
-    "linear": {
-      "$value": "linear",
-      "$description": "No easing"
-    }
-  },
   "ease": {
     "$type": "other",
     "in-out": {

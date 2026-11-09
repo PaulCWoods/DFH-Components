@@ -73,7 +73,7 @@
   text-underline-offset: var(--_link-underline-offset);
   text-decoration-skip-ink: auto;
   cursor: pointer;
-  transition: text-decoration-thickness var(--link-transition, var(--duration-sm)) var(--timefunc-ease-out, ease-out);
+  transition: text-decoration-thickness var(--link-transition, var(--duration-sm)) var(--ease-out, ease-out);
 
   &:hover,
   &:focus-visible {
@@ -227,7 +227,7 @@
   color,
   border-color;
   transition-duration: var(--block-link-transition, var(--duration-sm));
-  transition-timing-function: var(--timefunc-ease-out, ease-out);
+  transition-timing-function: var(--ease-out, ease-out);
 
   /* Hit area: at least --spacing-target-min, whatever the visual size */
   &::after {
@@ -324,7 +324,7 @@
   }
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    transition: translate var(--block-link-transition, var(--duration-sm)) var(--timefunc-ease-out, ease-out);
+    transition: translate var(--block-link-transition, var(--duration-sm)) var(--ease-out, ease-out);
 
     :where(.block-link):hover & {
       translate: calc(var(--_block-link-arrow-shift) * var(--_block-link-arrow-direction)) 0;

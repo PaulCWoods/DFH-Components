@@ -1,0 +1,14 @@
+---
+/* Each shadow level on a Card, with its three layers from the site theme */
+import { shadows } from '../../lib/theme-data.mjs';
+---
+<ul class="grid p-0 my-md" role="list">
+  {shadows.map((s) => (
+    <li class={`card card--plain bg-card shadow-${s.level}`}>
+      <p class="card__title small-heading"><code class="font-mono">--shadow-{s.level}</code></p>
+      <ol class="small-text text-muted">
+        {s.layers.map((l) => <li>{l}</li>)}
+      </ol>
+    </li>
+  ))}
+</ul>

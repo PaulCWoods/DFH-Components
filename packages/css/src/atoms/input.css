@@ -88,7 +88,7 @@
   --_control-focus-edge-color: var(--border-color-accent, currentColor);
   --_control-invalid-edge-color: var(--input-border-color-invalid, var(--border-color-danger, currentColor));
   --_control-transition: var(--input-transition, var(--duration-sm));
-  --_control-timefunc: var(--timefunc-ease-in-out, ease-in-out);
+  --_control-timefunc: var(--ease-in-out, ease-in-out);
 
   /* ------------------------------------------------------------------------
      Container Flags (@container style(...))

@@ -1,0 +1,52 @@
+---
+title: Motion
+summary: A few durations and easing curves from the theme, used to show where things come from, and stopped for anyone who asks for less motion.
+order: 5
+---
+import EaseCurves from '../../../components/foundations/EaseCurves.astro';
+import { durations } from '../../../lib/theme-data.mjs';
+
+Things move in the library for two reasons: to show where something came from or went (a Dialog opening, an Accordion unfolding, a Toast arriving), and to show that work is under way (a Spinner, a Skeleton's shimmer). Nothing moves for decoration.
+
+## Durations
+
+<div class="table-container" tabindex="0" role="region" aria-label="Durations">
+  <table class="table table--compact">
+    <caption class="small-text text-start">The duration roles and the time this theme gives each.</caption>
+    <thead><tr><th scope="col">Token</th><th scope="col" class="table__cell--numeric">Seconds</th></tr></thead>
+    <tbody>{durations.map((d) => <tr><th scope="row"><code class="font-mono small-text whitespace-nowrap">--duration-{d.role}</code></th><td class="table__cell--numeric">{d.sec}</td></tr>)}</tbody>
+  </table>
+</div>
+
+State changes and overlays (a Button's hover, a Popover opening, a Tab being selected) use `--duration-sm`, so the interface answers at once. The longest role is for loops: a Skeleton's shimmer and an indeterminate Progress bar.
+
+## Easing
+
+<EaseCurves />
+
+Each curve runs from the start of a movement (bottom left) to its end (top right). `--ease-out` starts fast and settles, for things arriving; `--ease-in` starts slowly and leaves fast, for things going; `--ease-in-out` does both, for things moving on screen. `--ease-bounce` overshoots and settles back, and only a Switch uses it.
+
+The build checks that no duration is shorter than the one before it, and that each curve is one CSS can run.
+
+## Opening and closing
+
+Dialogs, Popovers, Tooltips and Toasts fade and grow in as they appear, and shrink and fade as they go; a dismissed Banner fades out. None of it needs a script. The browser animates them into and out of the top layer, and a Dialog's backdrop fades with it.
+
+```html live width=md
+<details class="accordion">
+  <summary>Open to see it move</summary>
+  <p class="text">The Accordion unfolds to its height and folds back, with the theme's duration and its in-and-out curve.</p>
+</details>
+```
+
+## Less motion
+
+- **Reduced motion.** When a reader asks for less motion, every duration role becomes 0, so things appear and disappear at once. A Spinner is the exception: it slows to one turn every two seconds rather than stopping, because a still Spinner looks like something broke.
+- **Reduced transparency.** Translucent, blurred surfaces become solid, so text behind glass never shows through.
+- **High contrast.** See [Colour](/docs/foundations/colour/#high-contrast).
+
+## Using motion
+
+- **Use the duration roles,** never a length in your own CSS, so reduced motion stops your transitions too.
+- **Move only to explain.** Movement should show where something came from, or that something is happening.
+- **Never move anything across the page on its own,** and never flash. Content that moves, blinks or scrolls by itself for more than five seconds needs a way to pause it (WCAG 2.2.2).
