@@ -43,6 +43,7 @@
 @import './atoms/progress.css' layer(atoms);
 @import './atoms/divider.css' layer(atoms);
 @import './atoms/skeleton.css' layer(atoms);
+@import './atoms/spinner.css' layer(atoms);
 @import './atoms/skip-link.css' layer(atoms);
 @import './atoms/tab.css' layer(atoms);
 

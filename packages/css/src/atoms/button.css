@@ -24,10 +24,19 @@
    - 1.4.1 Use of Color: pair --accent and --danger with an icon or text.
    - 2.4.7 / 2.4.13 Focus Visible: the ring uses the tone colour on filled
      states, where currentColor would match the page.
+   - 4.1.3 Status Messages: a busy Button (.is-busy with aria-disabled="true")
+     stays focusable and keeps its name; a role="status" region says what is
+     happening and how it ended.
 
    Usage:
    <button type="button" class="button button--strong button--accent">
      <span>Save changes</span>
+   </button>
+
+   Busy (the Spinner is hidden until .is-busy):
+   <button type="submit" class="button button--strong button--accent is-busy" aria-disabled="true">
+     <span>Save changes</span>
+     <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
    </button>
    ========================================================================== */
 
@@ -583,7 +592,7 @@
 }
 
 /* Container-Adaptive Presentation (labels collapse to icon-only) */
-:where(.button:not(.button--labeled):has(.icon, .button__icon)) {
+:where(.button:not(.button--labeled):has(.icon:not(.spinner), .button__icon)) {
   @container style(--ui-labels: hidden) {
     --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
@@ -612,8 +621,8 @@
   }
 }
 
-:where(.hide-labels) :where(.button:not(.button--labeled):has(.icon, .button__icon)),
-:where(.button:not(.button--labeled):has(.icon, .button__icon).hide-labels) {
+:where(.hide-labels) :where(.button:not(.button--labeled):has(.icon:not(.spinner), .button__icon)),
+:where(.button:not(.button--labeled):has(.icon:not(.spinner), .button__icon).hide-labels) {
   --_button-padding-inline: var(--_button-padding-block, 0.25rem);
 
   > :where(span:not(.button__icon, .badge, .avatar), .button__text, .ui-label) {
@@ -656,14 +665,43 @@
   padding-block: var(--_button-padding-block);
   text-box: trim-both cap alphabetic;
 
-  /* Zero specificity, so a menu or tree can align the label to the start */
-  &:where(:only-child) {
+  /* Zero specificity, so a menu or tree can align the label to the start.
+     A Spinner beside the label doesn't count. */
+  &:where(:only-child, :first-child:has(+ .spinner:last-child)) {
     text-align: center;
   }
 }
 
 /* ==========================================================================
-   9. Accessibility & User Preferences
+   9. Busy State (.button.is-busy)
+   An action in progress. A Spinner in the Button stays hidden until then,
+   so the product only toggles .is-busy and aria-disabled="true". The
+   Spinner turns over the contents, which fade out but keep their space
+   and stay in the accessibility tree, so the Button keeps its width and
+   its name.
+   ========================================================================== */
+:where(.button) > :where(.spinner) {
+  display: none;
+}
+
+:where(.button.is-busy) {
+  /* Busy isn't unavailable: full strength, with the press still blocked */
+  opacity: 1;
+
+  > :where(:not(.spinner, .badge--top-end, .badge--top-start, .badge--bottom-end, .badge--bottom-start)) {
+    opacity: 0;
+  }
+
+  > :where(.spinner) {
+    display: block;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+  }
+}
+
+/* ==========================================================================
+   10. Accessibility & User Preferences
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   :where(.button, a.button) {
@@ -691,5 +729,11 @@
   :where(.button):where(:disabled, [disabled], [aria-disabled="true"]) {
     border-color: GrayText;
     color: GrayText;
+  }
+
+  /* Busy keeps the Button's own colours */
+  :where(.button.is-busy) {
+    border-color: ButtonBorder;
+    color: ButtonText;
   }
 }

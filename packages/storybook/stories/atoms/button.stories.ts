@@ -194,6 +194,43 @@ export const States: Story = {
 };
 
 /**
+ * Busy: an action in progress. The Spinner sits in the Button's markup and
+ * shows only with `.is-busy`; `aria-disabled="true"` blocks a second press
+ * and keeps the Button focusable. The contents fade but keep their space, so
+ * the width holds, and the name stays. A `role="status"` line says what is
+ * happening.
+ */
+export const Busy: Story = {
+  render: () => {
+    const spinner = `<svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>`;
+    return `
+    <div class="sb-demo-stage stack">
+      ${PROMINENCES.map(
+        (prominence) => `
+        <div class="sb-demo-label">${prominence === 'default' ? 'Outline' : prominence}</div>
+        <div class="cluster">
+          <button type="button" class="${buttonClasses(prominence, 'accent')}"><span>Save changes</span>${spinner}</button>
+          <button type="button" class="${buttonClasses(prominence, 'accent')} is-busy" aria-disabled="true"><span>Save changes</span>${spinner}</button>
+          <button type="button" class="${buttonClasses(prominence, 'danger')} is-busy" aria-disabled="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete project</span>${spinner}</button>
+        </div>`,
+      ).join('')}
+      <div class="sb-demo-label">Sizes and icon-only</div>
+      <div class="cluster">
+        <button type="button" class="button button--sm is-busy" aria-disabled="true"><span>Refresh</span>${spinner}</button>
+        <button type="button" class="button button--lg is-busy" aria-disabled="true"><span>Refresh</span>${spinner}</button>
+        <button type="button" class="button button--icon is-busy" aria-disabled="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg><span>Refresh</span>${spinner}</button>
+      </div>
+      <div class="sb-demo-label">With its status line</div>
+      <div class="cluster">
+        <button type="submit" class="button button--strong button--accent is-busy" aria-disabled="true"><span>Send invite</span>${spinner}</button>
+        <p class="small-text" role="status">Sending invite…</p>
+      </div>
+    </div>
+  `;
+  },
+};
+
+/**
  * Size axis. The dashed boxes mark the 48px hit area that small buttons keep.
  */
 export const SizesAndTargets: Story = {

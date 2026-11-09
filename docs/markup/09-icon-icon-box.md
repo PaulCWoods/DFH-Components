@@ -4,7 +4,7 @@ tier: atom
 summary: A small glyph that helps people recognise something, on its own or in a frame.
 tokens: [icon, icon-box]
 storybook: atoms-icon
-related: [button, badge-status-chip-kbd, avatar]
+related: [button, badge-status-chip-kbd, avatar, spinner]
 ---
 
 # 9. Icon & Icon Box primitives

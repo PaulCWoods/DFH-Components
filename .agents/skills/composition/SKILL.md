@@ -73,7 +73,8 @@ Stop at the first answer that fits:
 
 Design each state, not just the full one:
 - **Empty:** an Empty State that says what's missing and how to fill it.
-- **Loading:** Skeletons in a region with `aria-busy="true"`, the Skeletons themselves `aria-hidden`, and the message in a `role="status"` line.
+- **Loading:** Skeletons in a region with `aria-busy="true"`, the Skeletons themselves `aria-hidden`, and the message in a `role="status"` line. When the layout isn't known, a Spinner (`.icon.spinner` with `#LoaderArc`, always `aria-hidden`) beside the status line. A region reloading content it already shows takes `aria-busy="true"` and recedes on its own.
+- **Busy Button:** `.is-busy` with `aria-disabled="true"`, and a Spinner inside it, hidden until then.
 - **Error:** a danger Banner. For forms, an error summary plus each Field's error.
 - **Selected, current and open:** the component's own state attributes (`aria-current`, `aria-selected`, `open`).
 - **Long and short content:** names that wrap, numbers that grow, a list of one and of a hundred.

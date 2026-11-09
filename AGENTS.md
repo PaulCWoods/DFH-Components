@@ -363,6 +363,7 @@ The markup docs also feed the docs site (`packages/docs`, plan in `docs/audit/do
 | [Empty State](docs/markup/27-empty-state.md) |
 | [Combobox](docs/markup/28-combobox.md) |
 | [Code Block](docs/markup/37-code-block.md) |
+| [Spinner](docs/markup/38-spinner.md) |
 | [Stepper](docs/markup/30-stepper.md) |
 | [Telemetry](docs/markup/30-telemetry.md) |
 | [Responsive Helpers](docs/markup/31-responsive-visibility.md) |

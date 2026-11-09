@@ -4,7 +4,7 @@ tier: atom
 summary: A bar for how far a task has got, or for a measurement within a known range.
 tokens: [progress, meter]
 storybook: [atoms-progress, atoms-meter]
-related: [skeleton, form-composition, badge-status-chip-kbd]
+related: [skeleton, spinner, form-composition, badge-status-chip-kbd]
 ---
 
 # 25. Progress & Meter primitives

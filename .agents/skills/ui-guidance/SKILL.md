@@ -56,7 +56,8 @@ A component is only as clear as the words in it and the moment it appears. The l
 - **A Toast** confirms something that happened and needs nothing back ("Plant saved. Undo"). It leaves on its own only if it holds nothing you must act on, and never carries the only copy of an error.
 - **A Banner** stays until it's dealt with: an error, a warning, a system message. Put it near what it's about: page-wide at the top, or in the Card or form it concerns.
 - **A Status** is a lasting state of one thing (Overdue, Draft, Live), not a message.
-- **Progress:** use a Progress bar when you know how much is left, Skeletons when the layout is known and the content isn't, and a short status line ("Loading 24 plants…") to announce it.
+- **Progress:** use a Progress bar when you know how much is left, Skeletons when the layout is known and the content isn't, a Spinner when neither is, and a short status line ("Loading 24 plants…") to announce it.
+- **An action in progress** keeps its Button: `.is-busy` with `aria-disabled="true"` shows the Button's Spinner over its label, so it keeps its size and name. Never swap the label for "Saving…".
 - **Success is quiet; failure is clear.** Don't celebrate routine saves. Do explain every failure and offer the way out.
 
 ## 5. Dialogs, popovers and pages

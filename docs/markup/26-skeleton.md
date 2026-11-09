@@ -4,7 +4,7 @@ tier: atom
 summary: A placeholder that holds the space of content still loading, so nothing moves when it arrives.
 tokens: skeleton
 storybook: atoms-skeleton
-related: [progress-meter, card, empty-state]
+related: [progress-meter, spinner, card, empty-state]
 ---
 
 # 26. Skeleton primitive (content loading placeholders)

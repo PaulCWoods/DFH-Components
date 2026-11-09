@@ -3102,6 +3102,20 @@
       "$description": "One cycle of the shimmer or pulse"
     }
   },
+  "spinner": {
+    "$type": "component",
+    "$description": "A turning Icon for work in progress whose result can't be shown yet. Size and colour come from the Icon.",
+    "duration": {
+      "$value": "{duration.1}",
+      "$type": "duration",
+      "$description": "One turn"
+    },
+    "reduced-duration": {
+      "$value": "{duration.2}",
+      "$type": "duration",
+      "$description": "One turn under reduced motion: slower, never still"
+    }
+  },
   "combobox": {
     "$description": "Combobox molecule: the list and its options. The field's frame comes from the input tokens.",
     "listbox-bg": {

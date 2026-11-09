@@ -4,7 +4,7 @@ tier: atom
 summary: An action on the page, such as saving a Form, opening a Dialog or changing a setting.
 tokens: button
 storybook: atoms-button
-related: [button-group, link-block-link, menu, icon-icon-box]
+related: [button-group, link-block-link, menu, icon-icon-box, spinner]
 ---
 
 # 1. Button primitive
@@ -40,6 +40,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 - **Tab** reaches it, in reading order. Don't change that with a positive `tabindex`.
 - **A toggle** says its state through `aria-pressed`, so a screen reader announces "pressed". Keep the label the same in both states.
 - **A disabled Button** can't be focused, so nobody using a keyboard can discover why it's disabled. Say why near it.
+- **A busy Button** (`.is-busy` with `aria-disabled="true"`) keeps its focus and its name; a screen reader announces it as unavailable, and the `role="status"` line says why.
 
 ## Icons
 ```html live cluster
@@ -92,6 +93,19 @@ A 48px hit area is the default at every size, because a target that's easy to re
 - **A toggle Button** takes `aria-pressed`; its label stays the same as it changes ("Bold", not "Bold on").
 - **A Checkbox or radio styled as a Button** is a `<label class="button">` around a visually hidden input. It needs no script, and the Input keeps its keyboard and screen-reader behaviour. `.icon--on` and `.icon--off` show with the state, and the label draws the focus ring while its input has focus.
 
+## Show an action in progress
+```html live cluster
+<button type="button" class="button button--strong button--accent is-busy" aria-disabled="true">
+  <span>Save changes</span>
+  <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+</button>
+<p class="small-text" role="status">Saving your changes…</p>
+```
+- **Put a [Spinner](38-spinner.md) in the Button.** It stays hidden until the Button has `.is-busy`, so the product only toggles the class and `aria-disabled="true"`.
+- **The Button keeps its size and its name.** The Spinner turns over the label, which fades but keeps its space, so nothing beside it moves and a screen reader still reads "Save changes".
+- **`aria-disabled`, not `disabled`:** a second press is blocked, but the Button keeps its focus, so a keyboard user isn't thrown back to the top of the page. Ignore presses in your script while it's busy, since a keyboard can still press it.
+- **A `role="status"` line says what's happening,** then how it ended ("Saved", or what went wrong). The Spinner says nothing.
+
 ## A Link that looks like a Button
 ```html live cluster
 <a href="/start" class="button button--strong button--accent">
@@ -110,6 +124,7 @@ It goes somewhere, so it stays a Link: no `role="button"`. Screen-reader users h
 | Give an icon-only Button a hidden text label. | Leave it to `title`, or to the icon alone. |
 | Use a Link, styled as a Button if you like, to go to another page. | Put `role="button"` on a Link, or navigate from a `<button>` with script. |
 | Explain near a disabled Button why it can't be used yet. | Disable a submit Button without saying what's missing. |
+| Keep a busy Button's label and size, with a Spinner over it. | Swap the label for "Saving…" or a Spinner, so the Button jumps. |
 
 ## Reference
 The reference implementation of the shared axes. Intent (`--accent`, `--danger`) sets a tone; prominence (`--strong`, `--subtle`, `--plain`, or the default outline) decides where the tone goes, so any pairing works from two single-axis classes.
@@ -122,6 +137,7 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 | Size | `--sm`, (default), `--lg` | `--button-size`, `--controls-size` |
 | Corners | (rounded), `--round` | `--button-corners`, `--controls-corners` |
 | Content | `--icon` (icon only), `--labeled` (keeps its text when a container hides labels), `--placeholder` (dashed, an empty slot) | |
+| State | `.is-busy` with `aria-disabled="true"` (an action in progress; shows the Button's Spinner) | |
 
 ## Prominence
 ```html live cluster

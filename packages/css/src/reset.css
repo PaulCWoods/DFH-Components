@@ -220,6 +220,14 @@ body {
   cursor: not-allowed;
 }
 
+/* A region whose content is reloading recedes until it's done. Skeletons,
+   or a Spinner outside a Button, already stand in for the content, so a
+   region holding them doesn't. */
+:where([aria-busy="true" i]:not(:has(.skeleton, :not(.button) > .spinner))) {
+  opacity: var(--opacity-muted, 0.8);
+  cursor: progress;
+}
+
 /* --------------------------------------------------------------------------
    13. Browser-Specific Fixes
    -------------------------------------------------------------------------- */

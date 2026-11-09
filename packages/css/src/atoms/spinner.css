@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Design For Humans: Spinner Primitive
+   --------------------------------------------------------------------------
+   An Icon that turns, for work in progress whose result can't be shown
+   yet. It takes the Icon's size and the text colour, so it matches the
+   text or control it sits in. Use a Skeleton instead when the layout of
+   what's coming is known, and a Progress bar when the amount left is.
+
+   No axes of its own: size and intent come from the Icon (.icon--sm,
+   .icon--lg, --icon-size, .icon--accent and so on).
+
+   Component tokens: --spinner-duration (one turn), --spinner-reduced-duration
+   (one turn under reduced motion).
+
+   Accessibility:
+   - 4.1.3 Status Messages: the Spinner says nothing. It is always
+     aria-hidden; a role="status" region says what is happening ("Saving…")
+     and how it ended ("Saved").
+   - 2.3.3 Animation from Interactions: under reduced motion it keeps
+     turning, slowly. The motion roles go to 0 there, which would freeze it,
+     and a still Spinner looks broken. It's small, turns in place and
+     never moves across the page.
+   - Forced colours: it is currentColor, so it takes the system text colour.
+
+   Usage:
+   <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Base Spinner (:where(.spinner))
+   The motion roles go to 0 under reduced motion, so the turn reads Tier 1
+   steps rather than a role.
+   ========================================================================== */
+:where(.spinner) {
+  --_spinner-duration: var(--spinner-duration, var(--duration-1, 1s));
+
+  animation: spinner-turn var(--_spinner-duration) linear infinite;
+}
+
+/* ==========================================================================
+   2. User Preferences
+   ========================================================================== */
+
+/* Reduced motion (WCAG 2.3.3): slower, never still. */
+@media (prefers-reduced-motion: reduce) {
+  :where(.spinner) {
+    --_spinner-duration: var(--spinner-reduced-duration, var(--duration-2, 2s));
+  }
+}
+
+/* ==========================================================================
+   3. Keyframes
+   Turns with the rotate property, so the Icon's mirroring (scale) still
+   applies.
+   ========================================================================== */
+@keyframes spinner-turn {
+  to {
+    rotate: 1turn;
+  }
+}
