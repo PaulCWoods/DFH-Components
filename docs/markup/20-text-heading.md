@@ -114,12 +114,13 @@ Ten type atoms, one step of the scale each, and a list atom. The class sets the 
 | `.large-text` | Lead paragraphs | 1 |
 | `.text` | Body copy | 0 |
 | `.small-text` | Hints, captions, metadata | −1 |
+| `.micro-text` | Footnotes and fine print | −2 (the bottom of the scale; compact keeps it) |
 | `.label` | Form labels and legends (bold; fixed in every mode but compact) | 0 |
 
 ### Further rules
 - Headings balance their lines; body text takes `--body-text-wrap`.
 - No literal fallbacks: if tokens fail to load, text inherits its parent's size and stays legible.
-- Colour and weight come from utilities: `.text-muted` (or `.text-color-muted`), `.font-bold`, `.font-serif`, `.font-mono`. There is no `.strong-text`, `.alt-text`, `.micro-text`, `.caption` or `.nano-*`.
+- Colour and weight come from utilities: `.text-muted` (or `.text-color-muted`), `.font-bold`, `.font-serif`, `.font-mono`. There is no `.strong-text`, `.alt-text`, `.caption` or `.nano-*`.
 
 ### Lists: markers and spacing
 - **Markers:** disc then circle for `ul`; decimal, lower-latin, lower-roman for `ol`, as in prose.
