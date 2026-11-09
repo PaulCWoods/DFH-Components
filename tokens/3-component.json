@@ -1618,12 +1618,12 @@
     "height": {
       "$value": "calc({header.bar-min-size} + {header.padding-block} * 2 + {header.border-width})",
       "$type": "dimension",
-      "$description": "Height of a one-bar header (the bar's least content height, its padding and the bottom border). Sticky headers offset scrolling and sticky sidebars by it; a product whose header is taller sets --header-height on :root."
+      "$description": "Height of a one-bar header (the bar's least content height, its padding and the bottom border). Sticky headers offset scrolling and sticky sidebars by it, and a Poster --under-header pulls up by it; a product whose header is taller sets --header-height on :root."
     },
     "compact-height": {
       "$value": "calc({header.compact-bar-min-size} + {header.compact-padding-block} * 2 + {header.border-width})",
       "$type": "dimension",
-      "$description": "Height of a one-bar compact header. --header-height takes it while a sticky header is compact."
+      "$description": "Height of a one-bar compact header. --header-height takes it while the header is compact."
     },
     "max-width": {
       "$value": "{spacing.site-width}",

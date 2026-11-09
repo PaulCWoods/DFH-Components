@@ -35,6 +35,7 @@ A picture with content laid over it: a hero, a feature, a promotion. The picture
 - **Content:** a box with padding, a width cap and its surface. A stack inside lays out what it holds.
 - **Placement:** start and centre by default; \`--inline-center\`, \`--inline-end\`, \`--block-start\`, \`--block-end\`. The inline padding lines the content up with the site width.
 - **Flush:** \`--flush\` makes the content fill the poster and take its padding, for anything you lay out yourself.
+- **Under the header:** \`--under-header\` pulls the poster up behind a \`--plain --over-poster\` (or \`--translucent\`) header by \`--header-height\` and the top safe area, and pads its content clear of it.
 - **Stretch:** \`--stretch\` drops the site-width alignment, as the header's and footer's \`--stretch\` do.
 - **Focus:** \`--poster-focus\` is where the crop centres (\`object-position\`).
 - **Height:** the content sets it; \`--poster-min-size\` (24rem) is the least.
@@ -137,6 +138,21 @@ export const Flush: Story = {
 export const Stretch: Story = {
   parameters: { docs: { description: { story: 'On a screen wider than the site width the content keeps to the padding instead of lining up with the site width. Pair it with a `--stretch` header and footer.' } } },
   render: () => poster('poster--stretch', content('A stretched poster', 'h2', 'heading')),
+};
+
+/* The header is plain and dark, over a dark scrim; the poster pulls up
+   behind it by --header-height and pads its content clear */
+export const UnderHeader: Story = {
+  parameters: { layout: 'fullscreen' },
+  render: () => `<header class="header header--plain header--over-poster color-scheme-dark">
+    <div class="header__bar">
+      <a href="#" class="brand"><span class="brand__name">Gardens of Eden</span></a>
+      <a class="button button--strong button--accent" href="#">Book a visit</a>
+    </div>
+  </header>
+  <main class="main main--flush">
+    ${poster('poster--under-header poster--subtle poster--block-end color-scheme-dark', content('Gardens worth coming home to', 'h1', 'display-title'), '--poster-min-size: 80svh;')}
+  </main>`,
 };
 
 export const Compact: Story = {

@@ -98,6 +98,20 @@ A flush Poster's content fills the whole picture and takes the Poster's padding,
 </div>
 ```
 
+## Under the Header
+A hero can run up behind the page's [Header](33-header.md). Make the Header `--plain --over-poster` and give the Poster `--under-header`: it pulls up by the Header's height and the top safe area, and adds the same to its top padding, so its content starts below the Header.
+```html
+<header class="header header--plain header--over-poster color-scheme-dark">
+  <div class="header__bar">…</div>
+</header>
+<main id="main" class="main main--flush">
+  <section class="poster poster--under-header poster--subtle color-scheme-dark" aria-labelledby="hero-title" style="--poster-min-size: 80svh;">
+    <img class="poster__media" src="hero-1600.webp" srcset="…" sizes="100vw" alt="" fetchpriority="high" />
+    <div class="poster__content">…</div>
+  </section>
+</main>
+```
+
 ## Sources for Every Screen
 A `<picture>` works as the media: the Poster lays its image out, and the browser picks the source.
 ```html
@@ -129,13 +143,14 @@ A picture with content laid over it. A molecule: a `.poster` holds a `.poster__m
 ## Options
 | Block | Options | Tokens |
 | :--- | :--- | :--- |
-| `.poster` | Prominence: default (translucent panel), `--strong` (solid panel), `--subtle` (scrim, no panel), `--plain` (neither). Placement: `--inline-center`, `--inline-end`, `--block-start`, `--block-end`. Padding: `--flush`. Width: `--stretch` (no site-width alignment). Density: `--compact` | `--poster-focus`, `--poster-min-size`, `--poster-content-max-width`, `--poster-translucency`, `--poster-scrim-translucency`, `--poster-font-sizing` |
+| `.poster` | Prominence: default (translucent panel), `--strong` (solid panel), `--subtle` (scrim, no panel), `--plain` (neither). Placement: `--inline-center`, `--inline-end`, `--block-start`, `--block-end`. Padding: `--flush`. Width: `--stretch` (no site-width alignment). Under the header: `--under-header`. Density: `--compact` | `--poster-focus`, `--poster-min-size`, `--poster-content-max-width`, `--poster-translucency`, `--poster-scrim-translucency`, `--poster-font-sizing` |
 
 ### Further rules
 - **Height:** the content sets it; `--poster-min-size` (24rem) is the least. A full-screen hero sets it on the Poster (`--poster-min-size: 80svh`).
 - **Content:** padding, a width cap and its surface only. A layout primitive inside it arranges what it holds.
 - **Padding:** the cushion step, and inline at least enough to line the content up with the site width (`max(padding + safe area, (100% - site width) / 2)`, where 100% is the width of the box the Poster sits in, so a Poster narrower than the page pads for its own box). The safe area counts once a page opts into it with `.viewport-fit-cover`, so a full-width Poster's content stays clear of a notch or rounded screen corner.
 - **Stretch:** `--stretch` drops the site-width alignment, so the inline padding is the padding and safe area alone, at any width. Use it where the Header and Footer are `--stretch` too, so the content lines up with theirs. With `--flush`, the content runs the Poster's whole width.
+- **Under the header:** `--under-header` pulls the Poster up behind the Header by `--header-height` and the top safe area, and adds the same to its top padding. It must be the first thing in a `.main--flush` (nothing between it and the Header). Make the Header `--plain --over-poster` (it turns solid when the user asks for less transparency or more contrast, as the Poster's surfaces do; a `--translucent` one already does) and give it the Poster's scheme (`.color-scheme-dark` over a dark picture) so its links and Buttons keep their contrast. A Header taller than one bar sets `--header-height` on `:root`, and the Poster follows. `--poster-min-size` counts the part behind the Header, so `100svh` fills the screen. A sticky Header that stays `--plain` loses its surface over the rest of the page; make it `--translucent`.
 - **Flush:** the content fills the Poster, with no cap or corners, and takes the Poster's padding (block and inline, safe area included) as its own.
 - **Placement:** start on the inline axis and centred on the block axis by default. Text alignment is the content's own (`.text-center`).
 - **Width of the content:** at most `--poster-content-max-width` (36rem).

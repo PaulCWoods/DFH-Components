@@ -189,8 +189,9 @@ The band at the top of a page or app that holds the Brand, the main navigation a
   </div>
 </div>
 ```
-- `--plain`: no surface and no border, for a Header over a hero or a page that draws its own edge.
+- `--plain`: no surface and a transparent border (so it stays `--header-height` tall), for a Header over a hero (a [Poster](10b-poster.md) `--under-header`) or a page that draws its own edge. The Header sits above what's drawn under it.
+- `--over-poster` (with `--plain`): over a Poster `--under-header`, the Header takes its default surface and border back when the user asks for less transparency or more contrast, as the Poster's scrim and panel turn solid then.
 - `--translucent`: the content scrolls under a see-through surface with a blur. Solid under more contrast or reduced transparency.
 - `--compact`: the bar's padding steps down, and it sets `--ui-sizing: compact`, so the Buttons and text inside step down too (an app toolbar). The bar stays at least `--header-compact-bar-min-size` tall, the pointer's minimum target, so the Buttons' 48px hit areas stay inside the band on a touch screen: 56px instead of 64px. It is shorter only where the product has opted into fine-pointer targets (`.fine:targets-sm` on `<html>`), where the band is 40px. `max-md:header--compact` does the same below 48rem only, for a Header that tightens on a phone, and `fine:header--compact` only where the primary pointer is fine, for an app toolbar that stays roomy on touch.
-- A sticky compact header sets `--header-height` to `--header-compact-height`, so scroll padding and sticky panes follow. (A product that loads its tokens in a later cascade layer than its components repeats that rule in the tokens' layer.)
+- A compact header sets `--header-height` to `--header-compact-height`, so scroll padding, sticky panes and a Poster under it follow. (A product that loads its tokens in a later cascade layer than its components repeats that rule in the tokens' layer.)
 - A dark header is `.color-scheme-dark` on the band; an inverted one is `.color-palette-inverted`.

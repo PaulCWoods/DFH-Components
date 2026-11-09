@@ -21,7 +21,9 @@
    centre by default, --block-start, --block-end), padding (--flush: the
    content fills the whole poster and takes its padding, for anything a
    product lays out itself), width (--stretch: no site-width alignment),
-   density (--compact).
+   density (--compact), under the header (--under-header: it pulls up behind
+   the page's Header, a plain or translucent one, and pads its content clear
+   of it by --header-height and the top safe area).
    Flag: --poster-font-sizing (cq by default: the content's type grows with
    its width, up to --poster-content-max-width). Colour follows the
    poster's scheme, so .color-scheme-dark or .color-palette-inverted on the
@@ -95,7 +97,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-color: var(--_poster-scrim);
+    background: var(--_poster-scrim);
     pointer-events: none;
   }
 }
@@ -184,6 +186,16 @@
 :where(.poster--stretch) {
   --_poster-padding-start: calc(var(--_poster-padding) + var(--safe-area-inset-inline-start, 0px));
   --_poster-padding-end: calc(var(--_poster-padding) + var(--safe-area-inset-inline-end, 0px));
+}
+
+/* Under the header: the poster pulls up behind the page's Header by its
+   height (--header-height, which a taller header sets on :root) and the top
+   safe area, and adds the same to its top padding, so its content starts
+   below the Header. The Header stays on top (it has a z-index). */
+:where(.poster--under-header) {
+  --_poster-header-clearance: calc(var(--header-height, calc(var(--header-bar-min-size, var(--spacing-target, 3rem)) + var(--header-padding-block, var(--spacing-sm)) * 2 + var(--header-border-width, var(--app-border-width, 1px)))) + var(--safe-area-inset-top, 0px));
+  margin-block-start: calc(-1 * var(--_poster-header-clearance));
+  padding-block-start: calc(var(--_poster-outer-block) + var(--_poster-header-clearance));
 }
 
 /* Density */
