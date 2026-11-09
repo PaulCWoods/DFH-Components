@@ -440,6 +440,14 @@
   min-inline-size: 0;
 }
 
+/* In a row card the media takes its share of the width (--card-thumb-size)
+   and the parts beside it the rest */
+@container style(--card-dir: row) {
+  :where(.card__thumb, .card__canvas) {
+    flex: 0 0 var(--card-thumb-size, 50%);
+  }
+}
+
 /* --------------------------------------------------------------------------
    Header
    -------------------------------------------------------------------------- */

@@ -34,7 +34,7 @@ Because it is only a surface with parts, Dialog and Popover are built on it. Lea
 - **Not for a message** (a [Banner](11-banner.md)) **or a modal** (a [Dialog](02-modal-dialog.md), which holds a Card).
 
 ## Rules
-- **Structure:** parts (`__thumb` or `__canvas` for media, `__header`, `__band`, `__body`, `__footer`) are direct children of `.card`, and each pads itself. `.card__content` wraps parts only beside the media in a row Card (`--card-dir: row`).
+- **Structure:** parts (`__thumb` or `__canvas` for media, `__header`, `__band`, `__body`, `__footer`) are direct children of `.card`, and each pads itself. `.card__content` wraps parts only beside the media in a row Card (`--card-dir: row`), where the media takes half the width (`--card-thumb-size`) and the parts the rest.
 - **Typography:** use text atoms on titles and body copy (`.heading`, `.text`, `.small-text`). The Card hooks never set type.
 
 - **Intent** marks a Card's state: live, selected, current, at risk. The whole border takes the intent colour and a ring outside it doubles the edge, so it reads at a glance; the ring doesn't take space, so a Card changing state doesn't move its content. Wherever the Card has a shadow (`--strong`, a linked Card on hover) the shadow takes the intent colour too, the raised stack mixed 75% towards transparent (`--card-intent-shadow-transparency`); a default Card gains no shadow, and increased contrast drops it as usual. It draws the border at any prominence or chrome (`.card--flat.card--accent` keeps square corners). It is never colour alone (WCAG 1.4.1): the Card says the state in words too, usually with a status of the same intent in the header. Intent is a state, not decoration, so it has no responsive versions.

@@ -1134,6 +1134,11 @@
       "$type": "string",
       "$description": "Aspect ratio of the media in .card__thumb"
     },
+    "thumb-size": {
+      "$value": "50%",
+      "$type": "string",
+      "$description": "Share of a row card's width the media (.card__thumb or .card__canvas) takes"
+    },
     "body-max-block-size": {
       "$value": "none",
       "$type": "string",
