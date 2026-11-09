@@ -147,6 +147,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 - **Edges.** Outline has a full 3:1 border (`--border-color-control`) and plain keeps its bottom border. Subtle has no border, a deliberate choice: WCAG 1.4.11 doesn't ask a field for a boundary. The border comes back under `prefers-contrast: more` and in forced colours.
 - **`--flush`** (text controls) drops the inline padding and the boundary. Use it only inside a bar that draws both, such as a command palette header with `.focus-within`.
 - **Hit area:** `--sm` text controls are 32px, matching small Buttons; a Field can't take a hit-area buffer, so this is also its target (above the 24px minimum). Put touch-facing forms in `fine:ui-compact` rather than using `--sm` directly. A Switch and a Range keep a hit area of at least `--spacing-target-min` whatever their visual size (a Switch's checkbox fills its control and reaches out to it). Put checkboxes and radios in a `.choice` label.
+- **Range track.** The thumb carries the 3:1 contrast a slider needs. The unfilled part of the track has a thin, light edge (`--border-color-quiet`), and the fill covers it, so the two sides read apart at every size. In forced colours the edge is CanvasText.
 - Checkboxes have no intent: a Checkbox has a state, not a Status.
 
 ## Text, Colour and File Inputs

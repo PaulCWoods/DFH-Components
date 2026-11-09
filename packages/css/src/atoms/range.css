@@ -28,9 +28,10 @@
   --_range-track-height: var(--range-track-height, var(--spacing-sm));
   --_range-track-bg: var(--range-track-bg, var(--surface-muted, transparent));
   --_range-track-radius: var(--range-track-radius, var(--radius, 0.25rem));
-  /* The track's own edge, at least 3:1 against the page (WCAG 1.4.11) */
-  --_range-track-edge-width: var(--range-track-border-width, var(--control-border-width, 1px));
-  --_range-track-edge-color: var(--range-track-border-color, var(--border-color-control, currentColor));
+  /* The unfilled track's edge: a light outline. The thumb carries the 3:1
+     a slider needs (WCAG 1.4.11) */
+  --_range-track-edge-width: var(--range-track-border-width, var(--border-width-thin, 1px));
+  --_range-track-edge-color: var(--range-track-border-color, var(--border-color-quiet, currentColor));
   --_range-thumb-size: var(--range-thumb-size, var(--spacing-24));
   --_range-thumb-radius: var(--range-thumb-radius, var(--radius-full, 9999px));
   --_range-thumb-border-width: var(--range-thumb-border-width, var(--border-width, 1px));
@@ -97,12 +98,19 @@
   /* ------------------------------------------------------------------------
      Blink & WebKit
      ------------------------------------------------------------------------ */
+  /* The edge is a background layer under the fill, not a border: the fill
+     runs the full height of the track and covers it, so a thin track's fill
+     still shows; only the unfilled part has the edge. The edge layer spans
+     the track, so a translucent track colour shows it through: a size with
+     no edge makes it transparent too */
   &::-webkit-slider-runnable-track {
+    box-sizing: border-box;
     block-size: var(--_range-track-height);
-    background: linear-gradient(var(--_range-fill-direction),
-        var(--_range-tone) var(--value, 0%),
-        var(--_range-track-bg) var(--value, 0%));
-    border: var(--_range-track-edge-width) solid var(--_range-track-edge-color);
+    padding: var(--_range-track-edge-width);
+    background:
+      linear-gradient(var(--_range-fill-direction), var(--_range-tone) var(--value, 0%), transparent var(--value, 0%)) border-box,
+      linear-gradient(var(--_range-track-bg), var(--_range-track-bg)) content-box,
+      linear-gradient(var(--_range-track-edge-color), var(--_range-track-edge-color)) border-box;
     border-radius: var(--_range-track-radius);
   }
 
@@ -111,7 +119,8 @@
     box-sizing: border-box;
     inline-size: var(--_range-thumb-size);
     block-size: var(--_range-thumb-size);
-    margin-block-start: calc((var(--_range-track-height) - var(--_range-thumb-size)) / 2);
+    /* Centred on the track: the thumb sits in the track's content box, inside the edge */
+    margin-block-start: calc((var(--_range-track-height) - var(--_range-thumb-size)) / 2 - var(--_range-track-edge-width));
     background-color: var(--_range-tone);
     border: var(--_range-thumb-border-width) solid var(--_range-thumb-border-color);
     border-radius: var(--_range-thumb-radius);
@@ -124,9 +133,12 @@
      Gecko
      ------------------------------------------------------------------------ */
   &::-moz-range-track {
+    box-sizing: border-box;
     block-size: var(--_range-track-height);
-    background-color: var(--_range-track-bg);
-    border: var(--_range-track-edge-width) solid var(--_range-track-edge-color);
+    padding: var(--_range-track-edge-width);
+    background:
+      linear-gradient(var(--_range-track-bg), var(--_range-track-bg)) content-box,
+      linear-gradient(var(--_range-track-edge-color), var(--_range-track-edge-color)) border-box;
     border-radius: var(--_range-track-radius);
   }
 
@@ -208,6 +220,14 @@
     forced-color-adjust: none;
     --_range-tone: Highlight;
     --_range-tone-pressed: Highlight;
+
+    /* Some systems' Highlight is translucent: made solid, the fill reads as
+       one colour over the edge and the track */
+    @supports (color: rgb(from red r g b)) {
+      --_range-tone: rgb(from Highlight r g b / 1);
+      --_range-tone-pressed: rgb(from Highlight r g b / 1);
+    }
+
     --_range-track-bg: Canvas;
     --_range-track-edge-color: CanvasText;
     --_range-thumb-border-color: Canvas;
@@ -285,4 +305,14 @@
   justify-content: space-between;
   inline-size: 100%;
   color: var(--foreground-muted, currentColor);
+}
+
+/* Forced colours: every size keeps its edge on the Canvas track, the small
+   one included. Last, so it beats the size flags and modifiers */
+@media (forced-colors: active) {
+  :where(.range) {
+    --_range-track-edge-width: var(--range-track-border-width, var(--border-width-thin, 1px));
+    --_range-track-edge-color: CanvasText;
+    --_range-track-bg: Canvas;
+  }
 }

@@ -2151,12 +2151,12 @@
       "$description": "Corner radius for slider track"
     },
     "track-border-width": {
-      "$value": "{control.border-width}",
+      "$value": "{border.width.thin}",
       "$type": "dimension",
       "$description": "Width of the track's edge"
     },
     "track-border-color": {
-      "$value": "{border.color.control}",
+      "$value": "{border.color.quiet}",
       "$type": "color",
       "$description": "Colour of the track's edge, at least 3:1 against the page (WCAG 1.4.11)"
     },
