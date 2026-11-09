@@ -37,6 +37,7 @@
   --icon-box-size: sm;
   --icon-box-sm-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --font-sizing: fixed;
+  --list-gap: var(--_banner-body-gap);
 
   /* Private manifest: intent tones (neutral by default) */
   --_banner-tone: var(--foreground, CanvasText);
@@ -193,7 +194,8 @@
      isn't motion, so reduced motion keeps it. */
   transition-behavior: allow-discrete;
   transition-duration: var(--_banner-transition);
-  transition-property: opacity, display;
+  transition-property: opacity,
+  display;
 
   &[hidden] {
     opacity: 0;
