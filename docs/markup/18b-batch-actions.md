@@ -111,7 +111,7 @@ The browser handles the Buttons. Filling the status element is the product's scr
 </article>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use `role="group"` with a label naming what is selected. | Use `role="toolbar"` without the arrow-key script. |
@@ -161,7 +161,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
 - Each edge of the actions fades while there is more to scroll that way (the shared scroll fade, `utilities/scroll-fade.css`). It follows the writing direction. Without scroll-driven animations the actions still scroll, without the fade.
 - Tab reaches every action and scrolls it into view; focus rings aren't clipped. Keep the most used actions first.
 
-## Strong and Round
+## Strong and round
 `.batch-actions--strong.batch-actions--round` on the bar. It floats by default; `--inline` keeps it in the page here.
 ```html live
 <div class="batch-actions batch-actions--strong batch-actions--round batch-actions--inline" role="group" aria-label="Selected photos">

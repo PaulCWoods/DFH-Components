@@ -168,7 +168,7 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
 ```
 Chips sit before the input and wrap. Each remove Button names its value. The list stays open while choosing.
 
-## The Product's Script
+## The product's script
 The library ships no script. The product's script must:
 1. Show the list (`showPopover()`) and set `aria-expanded="true"` on typing, ArrowDown or the toggle; hide it and set `false` on Escape, a single selection or leaving the field.
 2. Filter: set `hidden` on options (and on groups with none left), and put the count or "No results" in the status element. When nothing matches, hide the list and set `aria-expanded="false"`, so the input doesn't claim an open list, and show `.combobox__empty` under the field.
@@ -176,7 +176,7 @@ The library ships no script. The product's script must:
 4. Select with Enter or a click: set `aria-selected`; fill the input (single) or add a Chip (multi). Prevent `mousedown` on the whole list, and give it `tabindex="-1"`, so pressing an option, a group label or the scrollbar keeps focus in the field. A press on the field outside the input (an icon, a gap between Chips) moves focus into the input.
 5. Escape with the list closed clears the input, and in a single select its choice (`aria-selected="false"`) too; so does the clear Button. In multi-select, Backspace in an empty input removes the last Chip. After removing a Chip, return focus to the input.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use a native select or datalist when it does the job. | Reach for a Combobox for a short, known list. |
@@ -202,7 +202,7 @@ A text field that filters a list of options: single select, or multi-select with
 - **The list** is `popover="manual"`, so no Card or Dialog clips it. It anchors to its own field in CSS (no inline styles), opens below and flips above when there is no room, and is never taller than the room on its side, so every option stays in reach at high zoom.
 - **Options** are at least 48px tall (or the product's fine-pointer target). The check icon shows on selected options; the selected text takes the accent colour.
 
-## Option Content, Groups and No Results
+## Option content, groups and no results
 ```html
 <!-- Two-line option: mark the line that fills the input -->
 <li id="plant-example" class="combobox__option" role="option" aria-selected="false">
@@ -230,7 +230,7 @@ A text field that filters a list of options: single select, or multi-select with
 ```
 A rule separates groups; a separator isn't allowed inside a listbox. A list with no options left hides itself.
 
-## Static List (Command Palette)
+## Static list (command palette)
 `.combobox__listbox--static` is always shown, in flow, with no frame of its own: for a list that is the whole content of a Dialog or panel. Its input keeps `aria-expanded="true"` and `aria-controls`.
 ```html live width=md
 <div class="field">

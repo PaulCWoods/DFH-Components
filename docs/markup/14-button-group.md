@@ -86,7 +86,7 @@ In a flex container (here a Card footer) the group is only as wide as its Button
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Align the group with a `justify-*` utility or the layout around it. | Look for an alignment modifier on the group. |

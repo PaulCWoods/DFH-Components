@@ -20,7 +20,7 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 - **Narrow screens:** the Header is a container. Below `@3xl` the Tab List hides (`@max-3xl:hide`). A menu Button (`@3xl:hide`) opens the same navigation in a `.dialog--drawer.dialog--start`, and the actions drop their labels (`@max-3xl:hide-labels`).
 - **Stories:** Default, NavigationDrawer, Notifications, AccountMenu, Search, TwoRows.
 
-## B. Command Palette
+## B. Command palette
 
 `recipe-command-palette.stories.ts` and `command-palette/palette.ts`: a modal search over components, tokens and actions. It is opened with ⌘K or a Button. The docs site's `CommandPalette.astro` uses the same markup.
 
@@ -29,7 +29,7 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 - **The script** filters the options, moves `.is-active` with `aria-activedescendant` and announces the count in a `role="status"` line. It resets the palette on close. The library ships none of it.
 - **Stories:** Default, NoResults, Loading.
 
-## C. Filter Sidebar
+## C. Filter sidebar
 
 `recipe-filter-sidebar.stories.ts`: a plant catalogue with facets in a side pane and results in a Grid.
 
@@ -46,7 +46,7 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 - **The lease form** is a `form.card` in a Dialog with a Stepper. Errors show as a summary Banner, with `aria-invalid` and a `field__error` on each Field.
 - **Stories:** Default, RowsSelected, CardView, NoResults, Loading, LeaseForm, LeaseFormErrors, LeaseFormAgreement, LeaseFormFee, ToolLocker, Toast.
 
-## E. Cadence Dashboard
+## E. Cadence dashboard
 
 `recipe-cadence-dashboard.stories.ts` and `cadence/deck.css`: a radio station's live desk. It is the stress test: a full-viewport shell with two Sidebars, a sticky header inside the main area and a fixed footer.
 

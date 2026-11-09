@@ -41,7 +41,7 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 - **A responsive Stack** (`.stack.@{size}:inline`) needs a container ancestor (`.container-inline`, a Card, the Header, a Split); without one it stays a column.
 - **Lists:** a list stack, inline or cluster loses its markers, so give it `role="list"`.
 
-## Stack: a Column
+## Stack: a column
 ```html live
 <div class="stack">
   <div class="card"><p class="text">Sow in spring.</p></div>
@@ -49,7 +49,7 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 </div>
 ```
 
-## Inline: a Row Whose Last Item Can Shrink
+## Inline: a row whose last item can shrink
 ```html live
 <p class="inline gap-xs"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Light"/></svg><span>Part shade</span></p>
 
@@ -59,7 +59,7 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 </div>
 ```
 
-## Cluster: a Row That Wraps
+## Cluster: a row that wraps
 ```html live
 <ul class="cluster" role="list">
   <li><span class="chip"><span class="chip__text">Shade</span></span></li>
@@ -72,7 +72,7 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 </div>
 ```
 
-## A Column Until There Is Room
+## A column until there is room
 ```html live
 <div class="container-inline">
   <div class="stack @2xl:inline">
@@ -82,7 +82,7 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Let the flow space its children. | Set margins on the children. |

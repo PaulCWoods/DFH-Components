@@ -7,7 +7,7 @@ storybook: atoms-icon
 related: [button, badge-status-chip-kbd, avatar]
 ---
 
-# 9. Icon & Icon Box Primitives
+# 9. Icon & Icon Box primitives
 ```html playground cluster
 <span class="inline">
   <svg class="icon" data-axes width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
@@ -36,7 +36,7 @@ An Icon Box is a frame for the moments an icon needs to line up with controls or
 - Intent colours an icon but never carries meaning alone (WCAG 1.4.1). For muted icons, use the text colour utilities (`.text-color-muted`).
 - Never draw icons inline with `stroke` paths. If the sprite lacks a glyph, add it to `icons/icons.svg` and run `npm run sync:icons`.
 
-## Hide It or Name It
+## Hide it or name it
 ```html live cluster
 <!-- Decorative icon beside text -->
 <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
@@ -51,7 +51,7 @@ An Icon Box is a frame for the moments an icon needs to line up with controls or
 <svg class="icon icon--warning" width="1em" height="1em" role="img" aria-label="Warning"><use href="#Warning"/></svg>
 ```
 
-## Give an Icon More Weight
+## Give an Icon more weight
 The box is decoration, so it's hidden, and the text beside it says what it means.
 ```html playground cluster
 <span class="inline">
@@ -67,7 +67,7 @@ Corners: Rounded, Round=icon-box--round
 Intent: Neutral, Accent=icon-box--accent "New rota reminder", Danger=icon-box--danger "Rota reminder failed to send", Warning=icon-box--warning "Rota reminder is late", Success=icon-box--success "Rota reminder sent", Info=icon-box--info "Rota reminder scheduled"
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Add a missing glyph to `icons/icons.svg` and run `npm run sync:icons`. | Draw an icon inline with `stroke` paths. |

@@ -63,7 +63,7 @@ The browser provides all of this where `interestfor` is supported. There's nothi
 <div id="tip-publish" popover="hint" class="tooltip">Sends the post to all 1,204 subscribers</div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Open a Tooltip with `interestfor`. | Use `popovertarget`, which makes the Button a toggle. |

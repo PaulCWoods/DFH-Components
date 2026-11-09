@@ -7,7 +7,7 @@ storybook: atoms-skeleton
 related: [progress-meter, card, empty-state]
 ---
 
-# 26. Skeleton Primitive (Content Loading Placeholders)
+# 26. Skeleton primitive (content loading placeholders)
 ```html playground width=md
 <div class="stack" aria-busy="true">
   <p class="sr-only" role="status">Loading a summary…</p>
@@ -41,7 +41,7 @@ All of this is the product's markup and script. The library only draws the shape
 - **When loading ends,** set `aria-busy="false"` and update or remove the message.
 - **A companion control** is `disabled` (or not focusable) as well as `aria-hidden`, so Tab never lands on a placeholder.
 
-## Text Lines
+## Text lines
 ```html live width=md
 <div class="small-heading"><span class="skeleton skeleton--heading" aria-hidden="true"></span></div>
 <p class="text">
@@ -50,7 +50,7 @@ All of this is the product's markup and script. The library only draws the shape
 </p>
 ```
 
-## Reuse the Real Atom
+## Reuse the real atom
 A companion keeps the atom's own box, so nothing shifts when the real one replaces it. The Skeleton only replaces the paint.
 ```html live cluster
 <div class="avatar skeleton" aria-hidden="true"><span>AB</span></div>
@@ -83,7 +83,7 @@ A companion keeps the atom's own box, so nothing shifts when the real one replac
 </article>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Match the shape of what will arrive. | Show a generic block that jumps when content loads. |

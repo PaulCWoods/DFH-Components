@@ -115,7 +115,7 @@ The browser provides all of this for `<details>`. There's nothing to script.
 ```
 A flush Card body sets `--accordion-inset` to the Card's padding, so plain Accordions run edge to edge with their text lined up with the Card's.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use `<details>` and `<summary>`, with no script or ARIA. | Build a disclosure from a Button and a hidden panel. |
@@ -170,7 +170,7 @@ No border or radius and no inline padding, so the summary lines up with the text
 ```
 `--compact`, or any compact region (`.ui-compact`, `--ui-sizing: compact`), steps the padding (8px by 12px) and text down. The summary keeps its 48px target.
 
-## Flush Content
+## Flush content
 ```html live width=md
 <details class="accordion accordion--flush">
   <summary>Sowing record</summary>

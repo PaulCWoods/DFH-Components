@@ -75,7 +75,7 @@ In the page, beside the one `<main>`:
 </div>
 ```
 
-## On Small Screens: Stack, or a Drawer
+## On small screens: stack, or a drawer
 The Sidebar never becomes a drawer on its own. Either:
 - leave it in the workspace, where it stacks above the main below 48rem; or
 - hide it there (`max-md:hide`) and put the same navigation in a `.dialog--drawer` opened by a menu Button in the Header, with `md:hide` on the Button (left off here so that it shows at every width):
@@ -104,7 +104,7 @@ The Sidebar never becomes a drawer on its own. Either:
 ```
 The Dialog is modal, keeps focus inside and closes with Escape, with no script. Ids inside the two copies must differ.
 
-## A Rail of Icons
+## A rail of Icons
 ```html live width=md
 <nav class="sidebar sidebar--rail" aria-label="Tools, rail example">
   <div class="sidebar__body">
@@ -116,7 +116,7 @@ The Dialog is modal, keeps focus inside and closes with Escape, with no script. 
 </nav>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Label a navigation Sidebar's `<nav>` by its heading. | Nest a `<nav>` in a `<nav>`. |

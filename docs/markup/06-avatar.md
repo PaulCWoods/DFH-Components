@@ -33,7 +33,7 @@ How it's named depends on where it sits. Beside a visible name it's hidden, beca
 - **Naming follows context.** Beside a visible name, as in a [Lockup](06b-lockup.md): `aria-hidden="true"`, and an image inside takes `alt=""`. On its own with a photo: the `alt` names it. On its own with initials or an icon: `role="img"` and `aria-label`.
 - **Presence is never colour alone.** A dot Badge in the bottom corner, hidden from screen readers, with the state in the name ("Sam Rivera, online") or in visible text.
 
-## Name It for Where It Sits
+## Name it for where it sits
 ```html live cluster
 <!-- Initials on their own -->
 <span class="avatar" role="img" aria-label="Sam Rivera">SR</span>
@@ -53,7 +53,7 @@ How it's named depends on where it sits. Beside a visible name it's hidden, beca
 </span>
 ```
 
-## As a Control
+## As a control
 ```html live cluster
 <!-- The Avatar is the button -->
 <button type="button" class="avatar">
@@ -88,7 +88,7 @@ An Avatar that is the control takes a focus ring and, when it's smaller than 48p
 - **Size** comes from the Avatars: `--avatar-size-step: sm` on the group, or a modifier on each.
 - A group beside a visible list of the same names is `aria-hidden="true"` and needs no labels.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Hide the Avatar when the name is beside it. | Make a screen reader hear the name twice. |

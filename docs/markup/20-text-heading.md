@@ -7,7 +7,7 @@ storybook: atoms-text
 related: [prose, form-composition, card]
 ---
 
-# 20. Text & Heading Primitives (Typography Presets)
+# 20. Text & Heading primitives (typography presets)
 ```html playground
 <div class="stack" data-axes>
   <h2 class="heading">Shade borders</h2>
@@ -35,7 +35,7 @@ Atoms are fixed by default, because a Card's title has no reason to change with 
 - `.text` and `.large-text` stop at `--body-measure` (66ch). Set `--body-measure: none` on a container to lift it.
 - Colour and weight come from utilities: `.text-muted`, `.font-bold`, `.font-serif`, `.font-mono`.
 
-## The Element and the Look Are Separate
+## The element and the look are separate
 ```html live
 <h3 class="display-title">Display Title</h3>
 <h3 class="title">Page Title</h3>
@@ -45,7 +45,7 @@ Atoms are fixed by default, because a Card's title has no reason to change with 
 <p class="micro-heading text-muted">Category Eyebrow</p>
 ```
 
-## Sizing Modes
+## Sizing modes
 ```html live
 <!-- Fluid: headings and body grow with the viewport -->
 <article class="font-sizing-fluid">
@@ -86,7 +86,7 @@ Atoms are fixed by default, because a Card's title has no reason to change with 
 
 - **Not for** navigation, Menus or Card grids: those are components with `role="list"` and no markers. Inside `.prose`, a bare list is styled already; don't add `.list`.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Choose the element for its meaning and the class for its look. | Pick `<h4>` because it looks the right size. |

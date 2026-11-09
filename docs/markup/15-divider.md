@@ -7,7 +7,7 @@ storybook: atoms-divider
 related: [menu, button-group, stack-inline-cluster]
 ---
 
-# 15. Divider Primitive
+# 15. Divider primitive
 ```html playground
 <p class="text">Ferns and hostas</p>
 <hr class="divider" data-axes>
@@ -50,7 +50,7 @@ It's a real `<hr>`, or a `role="separator"` in a list, so the separation reaches
 </menu>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use `<li role="separator" class="divider">` in a list. | Put an `<hr>` straight inside a `<ul>`. |

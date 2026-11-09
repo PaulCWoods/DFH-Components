@@ -41,7 +41,7 @@ An Avatar beside a Lockup. The name is visible, so the Avatar is decorative.
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Put a text atom on each line. | Use `<b>` and `<small>` for the lines. |

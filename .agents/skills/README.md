@@ -10,6 +10,9 @@ There are two audiences.
 | :--- | :--- |
 | `accessibility` | Accessible markup and CSS with the library: native elements, names, forms, targets, focus, contrast and preferences |
 | `tokens` | Using and customising tokens: the roles to build with, component tokens, themes, sizing modes and fallbacks |
+| `composition` | Composing screens: which component fits, options before CSS, layout primitives, text atoms, density, narrow screens and states |
+| `ui-guidance` | Interface copy and interaction choices: Buttons and links, forms, feedback, dialogs or pages, navigation, tables |
+| `design-principles` | Grouping, hierarchy, interaction laws and usability heuristics, each tied to what the library does about it |
 
 **Repo skills** are for agents maintaining the library itself. They may point at repo files, scripts and `AGENTS.md`.
 
@@ -17,6 +20,8 @@ There are two audiences.
 | :--- | :--- |
 | `component-authoring` | Writing the library's component CSS and running a component pass |
 | `token-pipeline` | Theme files, the generators and their gates, Tier 3 defaults, the Figma export |
-| `css-commenting` | Comment banners and grouping in the library's CSS |
-| `recipe-composition` | Composing recipes from library components |
+| `css-commenting` | Comments and formatting in the library's CSS |
+| `recipe-composition` | The library's recipe stories and Real World pages |
+| `docs-style` | How the docs are written: voice, names, component page structure, examples and links |
+| `figma` | The Figma library file: pages, naming, variables and their sync, Plugin API quirks |
 | `modern-web-guidance` | Current web platform guidance (third-party) |

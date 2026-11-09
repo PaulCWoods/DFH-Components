@@ -7,7 +7,7 @@ storybook: [atoms-progress, atoms-meter]
 related: [skeleton, form-composition, badge-status-chip-kbd]
 ---
 
-# 25. Progress & Meter Primitives
+# 25. Progress & Meter primitives
 ```html playground width=md
 <div class="field">
   <div class="field__header">
@@ -45,7 +45,7 @@ A bar never works alone. It backs up the name and value in the text beside it, s
 - **A screen reader** reads the name and value when someone reaches the bar. It doesn't announce a change as it happens.
 - **Announcing progress is the product's script.** Say the moments that matter, such as "Upload complete", in a `role="status"` element, and not every percent.
 
-## When You Can't Tell How Long
+## When you can't tell how long
 ```html live width=md
 <!-- Indeterminate: aria-busy on the region being loaded -->
 <section aria-busy="true" aria-labelledby="sync-label">
@@ -56,7 +56,7 @@ A bar never works alone. It backs up the name and value in the text beside it, s
 </section>
 ```
 
-## A Meter Colours Itself
+## A Meter colours itself
 ```html live width=md
 <!-- With thresholds: colour follows the region the value falls in -->
 <div class="field">
@@ -79,7 +79,7 @@ A bar never works alone. It backs up the name and value in the text beside it, s
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | State the value as text beside the bar. | Leave the bar to say it alone. |

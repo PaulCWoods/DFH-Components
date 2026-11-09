@@ -7,7 +7,7 @@ storybook: organisms-dialog
 related: [card, popover, button, form-composition, sidebar]
 ---
 
-# 2. Dialog (Native `<dialog class="dialog">` holding a `.card`)
+# 2. Dialog (native `<dialog class="dialog">` holding a `.card`)
 ```html playground cluster
 <button type="button" class="button" commandfor="default-dialog" command="show-modal"><span>Open dialog</span></button>
 
@@ -137,7 +137,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
 </dialog>
 ```
 
-## Bottom Sheets
+## Bottom sheets
 ```html live cluster
 <button type="button" class="button" commandfor="sort-sheet" command="show-modal"><span>Sort plants</span></button>
 
@@ -204,7 +204,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
 </dialog>
 ```
 
-## Typing on a Phone
+## Typing on a phone
 iOS doesn't resize the page for its on-screen keyboard, and `dvb` ignores it, so a centred Dialog can end up behind the keyboard, and the page pans to find the field. `.dialog--top` keeps a field near the top of the screen, and the Dialog stays still as its content grows.
 
 ```html live cluster
@@ -238,7 +238,7 @@ viewport?.addEventListener('resize', () => {
 });
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Open it with `command="show-modal"` or `showModal()`. | Open a `.dialog` with `show()`; use a `.popover`. |

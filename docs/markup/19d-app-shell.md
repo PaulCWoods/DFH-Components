@@ -52,7 +52,7 @@ The shell adds no behaviour. The browser provides this from the elements in it.
 - **Reading order** follows the source. Below 48rem a side pane stacks above the main, in the same order.
 - **A scrolling main** in `.app--viewport` needs focus inside it before arrow keys scroll it. A Skip Link to a main with `tabindex="-1"` gives it that.
 
-## A Whole Page
+## A whole page
 A whole page, so it can't be shown live here. The miniature at the top uses `<div>`s and `.min-h-0` for that reason.
 
 ```html
@@ -69,7 +69,7 @@ A whole page, so it can't be shown live here. The miniature at the top uses `<di
 </body>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use one shell, one `<header>`, one `<main>` and one `<footer>` per page. | Nest a shell in a shell. |

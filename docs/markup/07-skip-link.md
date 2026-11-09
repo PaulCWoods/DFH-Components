@@ -7,7 +7,7 @@ storybook: atoms-skip-link
 related: [link-block-link, header]
 ---
 
-# 7. Skip Link Primitive (WCAG 2.4.1 Bypass Blocks)
+# 7. Skip Link primitive (WCAG 2.4.1 Bypass Blocks)
 ```html live
 <a href="#main" class="skip-link">Skip to main content</a>
 ```
@@ -32,7 +32,7 @@ The browser provides all of this. There's nothing to script.
 - **Enter** follows it. The browser moves to the target, and the next Tab carries on from there, so the target needs no `tabindex`.
 - **In a `.skip-links` group,** every Link shows while one has focus, so people can see the choices as they Tab through.
 
-## Where It Goes and What It Points At
+## Where it goes and what it points at
 The in-flow bar moves the page down while it's open. The floating one sits over the page and moves nothing. This is the floating one, shown open:
 ```html live
 <a href="#main" class="skip-link skip-link--floating">Skip to main content</a>
@@ -57,7 +57,7 @@ The in-flow bar moves the page down while it's open. The floating one sits over 
 <main id="main">…</main>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Make it the first thing in `<body>`. | Put it after the Header it is meant to skip. |

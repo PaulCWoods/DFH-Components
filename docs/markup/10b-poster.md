@@ -46,7 +46,7 @@ The content is a box with padding, a width cap and its surface, and a [Stack](22
 - **A section of the page:** a `<section>` named by its heading (`aria-labelledby`) when it's a part of the page people would look for; a `<div>` when it's a band within one.
 - **Plain has no surface:** what sits on a plain Poster brings its own (a Button, a Card). Never set bare text on one.
 
-## Keep the Subject in View
+## Keep the subject in view
 `--poster-focus` is where the crop centres (`object-position`). Set it to the subject, and it stays in view as the Poster narrows.
 ```html live
 <div class="poster poster--inline-end" style="--poster-focus: 45% 40%;">
@@ -63,7 +63,7 @@ The content is a box with padding, a width cap and its surface, and a [Stack](22
 </div>
 ```
 
-## A Dark Scrim
+## A dark scrim
 A subtle Poster lays a scrim over the whole picture instead of a panel. In a dark scheme, the scrim is dark.
 ```html live
 <div class="poster poster--subtle poster--inline-center poster--block-end color-scheme-dark">
@@ -80,7 +80,7 @@ A subtle Poster lays a scrim over the whole picture instead of a panel. In a dar
 </div>
 ```
 
-## Flush: Lay It Out Yourself
+## Flush: lay it out yourself
 A flush Poster's content fills the whole picture and takes the Poster's padding, so anything inside it still lines up with the page.
 ```html live
 <div class="poster poster--flush poster--subtle color-scheme-dark">
@@ -112,7 +112,7 @@ A hero can run up behind the page's [Header](33-header.md). Make the Header `--p
 </main>
 ```
 
-## Sources for Every Screen
+## Sources for every screen
 A `<picture>` works as the media: the Poster lays its image out, and the browser picks the source.
 ```html
 <section class="poster" aria-labelledby="hero-title">
@@ -129,7 +129,7 @@ A `<picture>` works as the media: the Poster lays its image out, and the browser
 </section>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use `alt=""` when the words on the Poster carry the message. | Describe a mood picture in its `alt`. |

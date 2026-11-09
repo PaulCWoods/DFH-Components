@@ -32,7 +32,7 @@ Most of the time it repeats what the words beside it already say, so it usually 
 - **Never interactive.** A Button or link that opens the thing contains one, and the control carries the name.
 - **Naming follows context.** Beside a visible title: `alt=""` (an icon Thumbnail takes `aria-hidden="true"`). On its own, or when the picture says what the text doesn't: a real `alt`.
 
-## Name It for What It Adds
+## Name it for what it adds
 ```html live cluster
 <!-- Beside a visible title -->
 <img class="thumbnail" src="/examples/thumb.svg" alt="" />
@@ -52,7 +52,7 @@ Most of the time it repeats what the words beside it already say, so it usually 
 </span>
 ```
 
-## In a Row
+## In a row
 ```html live
 <ul role="list">
 <li class="inline">
@@ -65,7 +65,7 @@ Most of the time it repeats what the words beside it already say, so it usually 
 </ul>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use `alt=""` when a title beside it says the same. | Repeat the title in the `alt`. |

@@ -73,7 +73,7 @@ The browser provides all of this for a Popover opened with `popovertarget`. Scri
 ```
 A Card suits a few actions that need a title. For a longer list, with headings and shortcuts, use a [Menu](03b-menu.md).
 
-## A Form Under a Title
+## A Form under a title
 ```html live cluster
 <button type="button" class="button" popovertarget="prefs" aria-haspopup="dialog"><span>Settings</span></button>
 
@@ -112,7 +112,7 @@ A Form is more than a list of actions, so this one is a labelled Dialog to assis
 ```
 The Link still goes to the profile, so someone in a browser without `interestfor`, or on a touch screen, only misses the preview.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Put a Card or a Menu in a Popover. | Put bare text or a Banner in one. |
@@ -134,7 +134,7 @@ A layer anchored to the control that opens it. It holds a [Card](10-card.md) or 
 - **Anchoring is automatic.** The invoker is the anchor: no `anchor-name` or `position-anchor`. A Popover opened by script passes its anchor with `showPopover({ source: button })`. Without anchor positioning, the Popover opens centred.
 - **Placement** is logical and flips when it doesn't fit, so it works in right-to-left text.
 
-## Placement and Width
+## Placement and width
 ```html live cluster
 <button type="button" class="button" popovertarget="place-top"><span>Above</span></button>
 <div id="place-top" popover class="popover popover--top">

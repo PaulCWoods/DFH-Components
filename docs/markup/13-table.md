@@ -68,7 +68,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 - **Enter and Space** press a sort Button.
 - **A screen reader** finds the container as a region by its name, moves from cell to cell and reads the headers from `scope`. It takes the sort order from `aria-sort` on the `<th>`.
 
-## Let a Wide Table Scroll
+## Let a wide Table scroll
 ```html live
 <div class="table-container" tabindex="0" role="region" aria-labelledby="stock">
   <table class="table">
@@ -129,7 +129,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 - Unsorted columns show `ChevronsUpDown`; the sorted column shows `ChevronDown`, which points up for `aria-sort="ascending"`. The page's script sorts the rows, sets `aria-sort` and swaps the icon.
 - Say the sort order in the caption or a `role="status"` message if it matters ("Sorted by height, ascending").
 
-## Rows with Actions
+## Rows with actions
 ```html live
 <div class="table-container" tabindex="0" role="region" aria-label="Plants to reorder">
   <table class="table table--hover">
@@ -148,7 +148,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 - `--hover` only for rows with actions or selection; a highlight on a read-only row suggests it does something. A row whose control has focus is highlighted too.
 - A control doesn't make its row taller than the control. Name each row's Buttons uniquely (hidden text with the row's name).
 
-## Select Rows
+## Select rows
 ```html live
 <div class="table-container" tabindex="0" role="region" aria-label="Plants to order">
   <table class="table table--hover">
@@ -164,7 +164,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 - A checked row takes the selected tint (`--table-row-selected-bg`) from its Checkbox, with no class to add. The tint isn't the only sign: the Checkbox says it too (WCAG 1.4.1).
 - Each Checkbox's `<label class="choice">` fills its cell, so the whole cell is the target.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Put a wide Table in a focusable, named `.table-container`. | Reflow rows into Cards, or leave a scroller keyboard users can't reach. |
@@ -193,7 +193,7 @@ Options: `--bordered` (outer frame and column rules), `--striped`, `--hover`, `-
 - **Row groups:** split the body into several `<tbody>`s, one per group; a `<tbody>` that follows another is ruled off like the head. Name a group with a first row holding `<th scope="rowgroup" colspan="…">`.
 - **Sticky parts cover what scrolls under them,** so set `scroll-padding-block` on the container to the part's height, to keep a focused control in view (WCAG 2.4.11).
 
-## Cells and Columns
+## Cells and columns
 | Class | On | Does |
 | :--- | :--- | :--- |
 | `.table__cell--numeric` | cells | End-aligned, tabular figures, no wrapping. Use for numbers and money. |
@@ -206,7 +206,7 @@ Options: `--bordered` (outer frame and column rules), `--striped`, `--hover`, `-
 | `.table__col--actions` | `<col>` or header cell | Width for row actions, end-aligned. Name the header with `<span class="sr-only">Actions</span>`. |
 | `.table__col--fill` | `<col>` or header cell | Takes the remaining width. |
 
-## Sticky Edges
+## Sticky edges
 ```html live
 <div class="table-container" tabindex="0" role="region" aria-labelledby="stock-sticky" style="max-block-size: 12rem;">
   <table class="table table--sticky-head table--sticky-first-column">

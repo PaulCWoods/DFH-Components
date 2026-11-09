@@ -32,14 +32,14 @@ The name stays in the markup on every screen. On the narrowest ones it can give 
 - **The name names the Link,** so the mark takes `aria-hidden="true"`.
 - **Narrow screens:** beside a mark, at 20em and under, the name is hidden visually and still names the Link. A name with no mark always shows.
 
-## Name Only
+## Name only
 ```html live
 <a href="#main" class="brand">
   <span class="brand__name">Woodland Plants</span>
 </a>
 ```
 
-## Mark Only
+## Mark only
 ```html live
 <a href="#main" class="brand">
   <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
@@ -47,7 +47,7 @@ The name stays in the markup on every screen. On the narrowest ones it can give 
 </a>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Set `--brand-color` for another colour | Add `.link` or `.button` classes to it |

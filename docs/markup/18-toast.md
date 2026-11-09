@@ -7,7 +7,7 @@ storybook: molecules-toast
 related: [banner, banner-dock, popover, modal-dialog]
 ---
 
-# 18. Toast (Banners in a Live Stack)
+# 18. Toast (Banners in a live stack)
 ```html live width=md
 <!-- Shown in the page here; a real toast sits in a stack -->
 <div class="banner banner--success banner--round toast">
@@ -82,7 +82,7 @@ The browser keeps the stack in the top layer and announces what's added to it. T
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Put the stack in the page from the start and add Toasts to it. | Create the live region with the message, when it may not be announced. |

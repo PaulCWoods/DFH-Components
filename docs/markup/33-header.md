@@ -69,7 +69,7 @@ The Header adds no behaviour of its own. Links, Buttons and landmarks do this na
 - **A menu built with a script** is the product's to make: it sets `aria-expanded` and `aria-controls` on the Button, and manages its own focus and Escape.
 - **A screen reader** finds the Header as the banner, names the navigation from its `aria-label` and announces the current page from `aria-current="page"`.
 
-## The Whole Page's Header
+## The whole page's Header
 A real `<header>`, so it can't be shown live on this page, which has its own.
 
 ```html
@@ -92,7 +92,7 @@ A real `<header>`, so it can't be shown live on this page, which has its own.
 <main id="main">…</main>
 ```
 
-## Two Rows
+## Two rows
 ```html live
 <div class="header">
   <div class="header__bar">
@@ -118,7 +118,7 @@ A real `<header>`, so it can't be shown live on this page, which has its own.
 ```
 Two bars in one `<header>`, with a rule between them. One landmark, one band.
 
-## Three Columns over a Sidebar
+## Three columns over a Sidebar
 ```html live
 <div class="header header--flush header--stretch">
   <div class="header__bar">
@@ -136,7 +136,7 @@ Two bars in one `<header>`, with a rule between them. One landmark, one band.
 ```
 In an app with a [Sidebar](34-sidebar.md), the ends of the bar can be as wide as the Sidebar and the centre as wide as the main, so the search or navigation sits over the content it serves. `--flush` takes away the band's inline padding (the safe areas stay) and the bar's block padding (its height stays), and the [Split](19c-split.md)'s end panes pad like the Sidebar instead, so the Brand lines up with the Sidebar's content. `@3xl:split--sidebar` gives the ends the app's sidebar column from 48em, where the Sidebar sits beside the main; narrower, the Split wraps as usual. A compact region narrows the Sidebar and the ends together, so put the density on the region (`.fine:ui-compact` on the app), not `--compact` on the Header alone.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use one `<header>` per page, with the Skip Link before it. | Label the banner with `aria-label`. |
@@ -166,7 +166,7 @@ The band at the top of a page or app that holds the Brand, the main navigation a
 - `--sticky` pins the Header to the top of the scrolling page. Its shadow shows only while it is stuck (a scroll-state query); browsers without one keep the border.
 - A gallery of headers on one page uses `<div class="header">` so there is still only one banner.
 
-## Prominence, Density and Colour
+## Prominence, density and colour
 ```html live
 <div class="header header--plain">
   <div class="header__bar">

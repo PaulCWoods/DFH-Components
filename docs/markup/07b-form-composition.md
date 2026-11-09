@@ -7,7 +7,7 @@ storybook: [molecules-field, molecules-fieldset, molecules-choices, organisms-fo
 related: [form-controls, button, button-group]
 ---
 
-# 7b. Form Composition: Field, Fieldset, Choices & Form
+# 7b. Form composition: Field, Fieldset, Choices & Form
 ```html playground
 <form class="form" data-axes>
   <div class="field">
@@ -171,7 +171,7 @@ Each `.choice` is a `<label>` holding the box and its text; the whole row is the
 ```
 - The actions are a Button Group; align them with a `justify-*` utility. In an aligned form they line up with the controls.
 
-## Summarise Errors at the Top
+## Summarise errors at the top
 After a failed submit, a summary at the top of the Form says how many things need fixing and links to each one. Focus moves to it, so a screen reader reads it out and a keyboard user starts from it. Each error is also shown beside its Field, in the same words.
 ```html live width=md
 <form class="form" novalidate>
@@ -203,7 +203,7 @@ After a failed submit, a summary at the top of the Form says how many things nee
 - On submit, the product's script fills the summary, shows it, sets `document.title` to start with "Error: " and calls `focus()` on it. Server-rendered pages do the same on load.
 - Each link's `href` is the control's `id`, so following it moves focus into the Field.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Keep a visible label on every control. | Use the placeholder as the label; it vanishes as people type. |

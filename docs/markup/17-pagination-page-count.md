@@ -75,7 +75,7 @@ The links behave as links, so there's nothing to script.
 </nav>
 ```
 
-## Previous and Next with Text
+## Previous and next with text
 ```html live
 <nav class="pagination button-group justify-between" aria-label="Previous and next pagination">
   <a role="link" class="button" aria-disabled="true"><span>Previous</span></a>
@@ -99,7 +99,7 @@ There is no page-count component: it is a Cluster with small text and a jump for
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Mark the current page with `aria-current="page"`. | Add `.is-active` as well. |

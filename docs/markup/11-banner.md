@@ -86,7 +86,7 @@ A title is `.text.font-bold`, because the Banner sets no type. Mark the main But
 
 Several actions in the body sit under the message, where they can wrap and the message keeps its width on a small screen. At the side, with `.banner__action`, suits one action, a dismiss Button, or a short message with a pair of icon Buttons.
 
-## A Live Message
+## A live message
 ```html live
 <!-- In the page from the start -->
 <div role="status" aria-label="Upload status" id="upload-status"></div>
@@ -99,7 +99,7 @@ Several actions in the body sit under the message, where they can wrap and the m
 ```
 Both parts are shown here at once. In use, the script inserts the Banner into the region.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Put several actions in the body when the Banner can reach a small screen. | Line several text Buttons up at the side, where they squeeze the message. |
@@ -136,7 +136,7 @@ One message with an intent, in one row: an optional icon, the body and optional 
 </div>
 ```
 
-## Prominence, Density, Corners and Material
+## Prominence, density, corners and material
 ```html live
 <div class="banner banner--subtle banner--info">
   <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>

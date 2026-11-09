@@ -7,7 +7,7 @@ storybook: [atoms-tab, molecules-tab-list, organisms-tabbed-content]
 related: [button, badge-status-chip-kbd, sidebar, card]
 ---
 
-# 24. Tabs (Tab Atom, Tab List Molecule & Tabbed Content Organism)
+# 24. Tabs (Tab atom, Tab List molecule & Tabbed Content organism)
 ```html playground
 <div class="tabbed-content">
   <div class="tab-list" data-axes role="tablist" aria-label="Plant details">
@@ -144,7 +144,7 @@ Segmented Tabs suit a few short panels that sit side by side, such as two views 
 
 A choice that switches no panel, such as a billing period or an editor view, isn't a set of Tabs. It is a joined [Button Group](14-button-group.md) of radio inputs, which needs no script and gets arrow keys from the browser.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Mark the selected tab with `aria-selected` or `aria-current`. | Add a selected class. |
@@ -176,7 +176,7 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
 - **Size:** Tabs are 48px in every orientation. `--sm` is 32px with a 48px hit area, unless the product opts into fine-pointer targets. A horizontal list's band is never shorter than the pointer's minimum target, so those hit areas stay inside it: underline Tabs stretch to the band (the indicator still meets the rule), and segmented Tabs sit centred in it. With fine-pointer targets the band is 32px too.
 - **Flush:** in a flush Card body or flush Sidebar, `--flush` runs Tabs edge to edge and lines their labels up with the content through `--tab-list-inset`, which those containers set.
 
-## Container Flags
+## Container flags
 ```html live
 <!-- Every tab list inside follows; a modifier on a list beats the flag -->
 <div style="--tab-list-style: segmented; --tab-list-size: sm;">
@@ -218,7 +218,7 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
 </nav>
 ```
 
-## Flush and Docked
+## Flush and docked
 ```html
 <!-- Vertical, flush in a flush sidebar body -->
 <div class="sidebar">

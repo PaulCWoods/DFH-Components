@@ -7,7 +7,7 @@ storybook: molecules-banner-dock
 related: [banner, toast, wrapper]
 ---
 
-# 21. Banner Dock (Site Announcements Pinned to the Page Edge)
+# 21. Banner Dock (site announcements pinned to the page edge)
 ```html live
 <aside class="banner-dock" aria-label="Library notice">
   <div class="banner banner--info">
@@ -38,7 +38,7 @@ It is a labelled `<aside>`, which makes it a landmark people can find. It isn't 
 - **With a sticky [Header](33-header.md),** keep the dock in flow above it: it scrolls away and the Header sticks. Both sticky would cover each other. A notice that must stay in view goes in a `--fixed-bottom` dock.
 - **A fixed dock sits over the page,** so leave room for it, or a focused element can end up behind it (WCAG 2.4.11). `scroll-padding-block` on the scroller keeps focus clear.
 
-## Sticky Notice
+## Sticky notice
 ```html live
 <aside class="banner-dock banner-dock--sticky" aria-label="Site notice">
   <div class="wrapper">
@@ -56,7 +56,7 @@ It is a labelled `<aside>`, which makes it a landmark people can find. It isn't 
 </aside>
 ```
 
-## Consent Bar
+## Consent bar
 ```html
 <aside class="banner-dock banner-dock--fixed-bottom" aria-label="Cookie preferences">
   <div class="wrapper">
@@ -73,7 +73,7 @@ It is a labelled `<aside>`, which makes it a landmark people can find. It isn't 
 </aside>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use an `<aside>` with an `aria-label`. | Put a role on the Banner inside. |

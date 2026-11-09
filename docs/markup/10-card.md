@@ -42,7 +42,7 @@ Because it is only a surface with parts, Dialog and Popover are built on it. Lea
 - **Scrolling:** `.card__body--scrollable` scrolls the body between a pinned header and footer (the Card fills a definite container height). `.card--scrollable` scrolls the whole Card. Make the scroll region focusable (`tabindex="0"`) and name it.
 - **Loading:** a Card with `aria-busy="true"`, a `role="status"` message and [Skeleton shapes](26-skeleton.md).
 
-## Linked Card with Media
+## Linked Card with media
 ```html live width=md
 <article class="card">
   <div class="card__thumb">
@@ -72,7 +72,7 @@ Because it is only a surface with parts, Dialog and Popover are built on it. Lea
 - **A scrolling part** (`__body--scrollable`, `--scrollable`) takes `tabindex="0"` and a name, so keyboard users can reach it and scroll it with the arrow keys.
 - **A Card in a list** is an `<li>` or an `<article>` in one, so a screen reader says how many there are.
 
-## Status and Action in the header
+## Status and action in the header
 The title takes the space and pushes what follows it to the end. A one-line title sits on the centre line of a taller action beside it; a longer title or a heading group lines up with the top of the action.
 
 ```html live width=md
@@ -96,7 +96,7 @@ The title takes the space and pushes what follows it to the end. A one-line titl
 
 The title takes the free space but never shrinks below its longest word. In a narrow Card the Status or action wraps to the next line instead of running over the title. A `.truncate` title keeps shrinking.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Make the whole Card the Link with one stretched link in the title. | Wrap the Card in an `<a>`, or add a second "Read more" link to the same place. |
@@ -129,7 +129,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 - **Responsive:** `@max-2xl:` (below 42rem) and `@max-md:` (below 28rem) versions of `--plain`, `--flat`, `--bordered` and `--flush` apply while the nearest size container is narrow: `@max-md:card--flat @max-md:card--flush` lets a Card run edge to edge on a phone. They need an ancestor with `container-type: inline-size`: `.main`, `.app__workspace`, `.split`, `.sidebar` or `.container-inline`. Without one the Card keeps its look.
 - **Sticky header and footer:** in a `.card--scrollable.container-inline-scroll`, `.sticky-shadow` on `__header` and `__footer` pins them, with a shadow only while there is content behind them. It can't work with `.card__body--scrollable`: those parts sit beside the scroller, and a query can't see a sibling's scroll position. Set `scroll-padding-block` on the Card to the parts' height, so a focused element isn't hidden behind them (WCAG 2.4.11).
 
-## Prominence, Chrome, Intent, Padding, Density and Material
+## Prominence, chrome, intent, padding, density and material
 ```html
 <article class="card">…</article>
 <article class="card card--strong">…</article>
@@ -181,7 +181,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 </article>
 ```
 
-## Header with a Second Line
+## Header with a second line
 ```html live width=md
 <article class="card">
   <header class="card__header">
@@ -198,7 +198,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 </article>
 ```
 
-## Panel with a Scrolling Body
+## Panel with a scrolling body
 ```html
 <!-- The card fills a definite height (a grid cell, a split pane); only the body scrolls -->
 <article class="card card--ruled">
@@ -210,7 +210,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 </article>
 ```
 
-## Media Row
+## Media row
 ```html
 <article class="card" style="--card-dir: row;">
   <div class="card__thumb"><img src="/examples/thumb.svg" alt="" /></div>

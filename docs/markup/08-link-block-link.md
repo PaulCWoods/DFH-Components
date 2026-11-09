@@ -7,7 +7,7 @@ storybook: atoms-link
 related: [button, breadcrumb, skip-link]
 ---
 
-# 8. Link & Block Link Primitives
+# 8. Link & Block Link primitives
 ```html playground cluster
 <a href="#when-to-use" class="link" data-axes>Read the planting guide</a>
 ---
@@ -37,7 +37,7 @@ Links take no intent and no size. Something that deletes or saves is an action, 
 - **A screen reader** can list a page's Links out of context, so each one's text has to make sense on its own.
 - **A Link that opens a new tab** says so, in hidden text, because the back button won't work there.
 
-## Which Link Where
+## Which Link where
 ```html live
 <!-- In running text -->
 <p>Read the <a href="/accessibility" class="link">accessibility standards</a> first.</p>
@@ -59,7 +59,7 @@ Links take no intent and no size. Something that deletes or saves is an action, 
 </section>
 ```
 
-## A Link That Stands Alone
+## A Link that stands alone
 A Block Link is the main thing in its row. Its label can run to several lines.
 ```html playground width=md
 <a href="#when-to-use" class="block-link" data-axes>
@@ -71,7 +71,7 @@ Prominence: Default, Strong=block-link--strong, Subtle=block-link--subtle, Plain
 Size: Default, Small=block-link--sm
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Keep an underline in running text. | Use `--plain` in a sentence, where nothing else marks the Link. |

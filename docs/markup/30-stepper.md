@@ -89,7 +89,7 @@ The browser provides all of this. Moving between wizard steps is the product's s
 </ol>
 ```
 
-## Say Which Step Needs Attention
+## Say which step needs attention
 ```html live
 <ol class="stepper" aria-label="Plot agreement">
   <li class="stepper__item is-complete">
@@ -116,7 +116,7 @@ The browser provides all of this. Moving between wizard steps is the product's s
 </ol>
 ```
 
-## Link Only the Steps People Can Revisit
+## Link only the steps people can revisit
 ```html live
 <nav aria-label="Checkout">
   <ol class="stepper" aria-label="Checkout steps">
@@ -142,7 +142,7 @@ The browser provides all of this. Moving between wizard steps is the product's s
 </nav>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Start each title with its state in hidden text. | Leave state to colour or the hidden indicator. |
@@ -165,7 +165,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 - **Structure:** `<ol class="stepper">` > `<li class="stepper__item">` > `.stepper__step`, which holds `__indicator`, `__title` and an optional `__description`.
 - **Narrow rows** (below 34rem) hide the descriptions; the titles keep the state. Density never hides content.
 
-## Vertical, Compact and Plain
+## Vertical, compact and plain
 ```html live
 <ol class="stepper stepper--vertical" aria-label="Set-up guide">
   <li class="stepper__item is-complete">

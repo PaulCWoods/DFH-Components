@@ -40,7 +40,7 @@ The links behave as links, so there's nothing to script.
 - **Tab** moves through the links in order, and **Enter** follows one. A current page in plain text isn't a stop.
 - **A screen reader** finds the `<nav>` by its `aria-label`, hears "current page" from `aria-current`, and skips the separators.
 
-## Current Page as a Link
+## Current page as a Link
 ```html live
 <nav class="breadcrumb" aria-label="Breadcrumb with a linked current page">
   <ol class="small-text">
@@ -52,7 +52,7 @@ The links behave as links, so there's nothing to script.
 ```
 A page that links to itself keeps the same `aria-current`, and gives people a way to reload it. It takes the current page's foreground colour, not the link colour, so it reads as the current page and not as one more link back; in forced colours it is text-coloured for the same reason.
 
-## Another Separator
+## Another separator
 ```html live
 <nav class="breadcrumb" aria-label="Breadcrumb with another separator" style="--breadcrumb-separator: '›';">
   <ol class="small-text">
@@ -62,7 +62,7 @@ A page that links to itself keeps the same `aria-current`, and gives people a wa
 </nav>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Mark the last item with `aria-current="page"`. | Show the current page in bold. |

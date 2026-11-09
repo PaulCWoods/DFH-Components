@@ -89,7 +89,7 @@ Everything inside `.prose-end` is outside prose: no element type, no margins, an
 ```
 Prose has no mode of its own. It follows the mode on itself or around it: fixed on a plain page, cq in a Dialog, compact in a compact region. The rhythm follows the same mode.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Put components and widgets in a `.prose-end`. | Leave a `ul.cluster`, `.table` or Card in the prose, which styles it too. |

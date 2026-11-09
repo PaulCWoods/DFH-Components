@@ -32,7 +32,7 @@ They stop where a component's job begins. There's no utility for a type size, fo
 - **Scrolling regions** (`overflow-*-auto`) need something focusable inside, or `tabindex="0"`, a role and a label (WCAG 2.1.1).
 - **Text on dark backgrounds:** pair a dark `bg-*` with `text-inverted` or `text-on-dark`, or put `.color-scheme-dark` on the region.
 
-## One-Off Adjustments
+## One-off adjustments
 ```html live
 <div class="border border-dashed border-muted rounded-md p-md">A dashed plot boundary</div>
 <p class="small-text text-muted text-balance">Bed 3 is resting this year.</p>
@@ -40,7 +40,7 @@ They stop where a component's job begins. There's no utility for a type size, fo
 <button type="button" class="button button--icon"><span class="sr-only">Remove Bed 3</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use the shorthand in markup: `.p-sm`, `.mx-auto`. | Use a left or right name, or a third name. |

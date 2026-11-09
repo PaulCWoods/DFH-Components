@@ -33,7 +33,7 @@ There's one direction only: every class hides, and there is no `show`. To show s
 - **Prefer a container condition** inside a component, so it adapts wherever it is placed. A container condition needs an ancestor with `container-type: inline-size` (`.container-inline`, `.split`, `.sidebar`, `.header`, `.footer`); without one it never matches.
 - **Show by hiding:** there is no `show`. To show something only below 48rem, hide it from 48rem: `md:hide`.
 
-## Shorten, Swap, or Keep for Screen Readers
+## Shorten, swap, or keep for screen readers
 ```html live
 <!-- Icons only below 48rem; the text stays the buttons' accessible names -->
 <div class="button-group max-md:hide-labels" role="group" aria-label="Bed actions">
@@ -60,7 +60,7 @@ There's one direction only: every class hides, and there is no `show`. To show s
 <p>Harvest <span class="max-md:sr-only">(rhubarb, chard and kale)</span> due this week</p>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Show something only below 48rem with `md:hide`. | Look for a `show` class. |

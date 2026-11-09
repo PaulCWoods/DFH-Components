@@ -7,7 +7,7 @@ storybook: [atoms-input, atoms-select, atoms-textarea, atoms-checkbox-radio, ato
 related: [form-composition, button, combobox]
 ---
 
-# 7. Input & Form Control Primitives
+# 7. Input & form control primitives
 ```html playground width=md
 <div class="field">
   <label for="default-name" class="field__label label">Your name</label>
@@ -50,7 +50,7 @@ The browser provides the keys, so don't add key handlers. The exact keys for a S
 - **An `<output>`** is a live region, so a screen reader announces a Range's new value as it changes.
 - **Errors and hints** are read with the control through `aria-describedby`. The browser never sets `aria-invalid`: server-rendered or scripted errors must set it themselves.
 
-## Say What's Wrong Beside the Field
+## Say what's wrong beside the field
 An error colour says something is wrong, and the message says what. The icon and the words mean it never relies on colour alone.
 ```html live width=md
 <div class="field">
@@ -60,7 +60,7 @@ An error colour says something is wrong, and the message says what. The icon and
 </div>
 ```
 
-## Put Checkboxes and Radios in a Label
+## Put Checkboxes and Radios in a label
 A Checkbox or radio goes in a `.choice` label, so the whole row is the target; a set of them is `.choices` in a [Fieldset](07b-form-composition.md).
 ```html live width=md
 <label class="choice">
@@ -75,7 +75,7 @@ A Checkbox or radio goes in a `.choice` label, so the whole row is the target; a
 </label>
 ```
 
-## A Switch Acts at Once
+## A Switch acts at once
 Use a Switch when flipping it changes the setting straight away. If nothing happens until someone submits a form, it's a Checkbox.
 ```html live width=md
 <div class="switch">
@@ -105,7 +105,7 @@ Use a Switch when flipping it changes the setting straight away. If nothing happ
 
 Only the control and its label toggle it. The row and the hint don't, so a stray tap while scrolling can't change a setting. The hint is read with the Switch through `aria-describedby`, and the Off and On text is hidden, because the role already says on or off.
 
-## Show a Range's Value
+## Show a Range's value
 A slider shows roughly where it is, and an `<output>` beside it gives the number.
 ```html live width=md
 <div class="field">
@@ -117,7 +117,7 @@ A slider shows roughly where it is, and an `<output>` beside it gives the number
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Give every control a visible label. | Rely on a placeholder as the label. |
@@ -150,7 +150,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 - **Range track.** The thumb carries the 3:1 contrast a slider needs. The unfilled part of the track has a thin, light edge (`--border-color-quiet`), and the fill covers it, so the two sides read apart at every size. In forced colours the edge is CanvasText.
 - Checkboxes have no intent: a Checkbox has a state, not a Status.
 
-## Text, Colour and File Inputs
+## Text, colour and file inputs
 ```html live width=md
 <div class="field">
   <label for="user-email" class="field__label label">Email address</label>

@@ -31,7 +31,7 @@ It won't reorder its panes. The order in the source is the order a keyboard and 
 - **Source order is reading order.** Put the side pane first only when it is read first (navigation, filters); use `--end` otherwise. Don't reorder with CSS.
 - **A Split can't be a pane of another split.** A pane is sized from its Split's side width, but a pane that is itself a Split reads its own instead (CSS can't read a parent's custom property past a redeclaration until `inherit()` is widely supported). Wrap the inner split in a plain `<div>`, which becomes the pane.
 
-## The Side Pane First, or Last
+## The side pane first, or last
 ```html live
 <div class="split split--xs">
   <nav class="card" aria-label="Plant groups">
@@ -54,7 +54,7 @@ It won't reorder its panes. The order in the source is the order a keyboard and 
 </div>
 ```
 
-## A Wider Side Pane with More Room
+## A wider side pane with more room
 A container variant changes the side pane's width once the Split's container reaches a size: here 16rem, and 24rem from 64rem up. The panes still wrap on their own below that.
 ```html live
 <div class="split split--xs @5xl:split--sm">
@@ -63,7 +63,7 @@ A container variant changes the side pane's width once the Split's container rea
 </div>
 ```
 
-## Three Panes
+## Three panes
 ```html live
 <div class="split split--three">
   <div class="card"><p class="text">Start</p></div>
@@ -72,7 +72,7 @@ A container variant changes the side pane's width once the Split's container rea
 </div>
 ```
 
-## Columns That Line Up with the Sidebar
+## Columns that line up with the Sidebar
 `--sidebar` sizes the side pane, or both ends of `--three`, to the app's sidebar column, so a row above or below the workspace lines up with the [Sidebar](34-sidebar.md): a [Header](33-header.md) split into three, with the brand over the Sidebar and the search over the main. The width is a token, `--app-sidebar-width`, which the Sidebar reads too, and a compact region (`.ui-compact`, `.fine:ui-compact`) narrows both. The panes keep one row with the ends at the width exactly. Use the container variant, so where the Sidebar is hidden the Split wraps as usual.
 ```html live
 <div class="container-inline">
@@ -84,7 +84,7 @@ A container variant changes the side pane's width once the Split's container rea
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Let the Split wrap on its own. | Add breakpoints, or look for an `--auto` variant. |

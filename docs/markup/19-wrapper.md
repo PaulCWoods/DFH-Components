@@ -34,7 +34,7 @@ It holds a page's content and nothing smaller. A Card that needs a narrower widt
 - **No doubled inset:** a Wrapper inside a Wrapper has no gutter of its own, and a `.main` whose child is a Wrapper drops its own inline padding.
 - **Don't pad it.** The gutter is already there: `padding-inline` utilities on a Wrapper double it.
 
-## A Page, or a Form Centred on the Screen
+## A page, or a Form centred on the screen
 Both of these hold the page's one `<main>`.
 
 ```html
@@ -53,7 +53,7 @@ Both of these hold the page's one `<main>`.
 </main>
 ```
 
-## A Narrower Cap, to One Side
+## A narrower cap, to one side
 ```html live
 <div class="wrapper wrapper--xs wrapper--start">
   <div class="card"><p class="text">16rem, at the start</p></div>
@@ -68,7 +68,7 @@ Both of these hold the page's one `<main>`.
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Rely on the Wrapper's own gutter. | Add `padding-inline` utilities to it. |

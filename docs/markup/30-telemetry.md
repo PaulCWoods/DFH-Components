@@ -38,7 +38,7 @@ It stays small on purpose. A large stat with a description is a [Card](10-card.m
 - **Label** (`dt`): a text atom, with an optional leading icon.
 - **Value** (`dd`): a text atom; a unit is a smaller atom inside it. Values use tabular figures.
 
-## Label Each Value
+## Label each value
 ```html live
 <dl class="telemetry-group" aria-label="Station">
   <div class="telemetry">
@@ -84,7 +84,7 @@ It stays small on purpose. A large stat with a description is a [Card](10-card.m
 </dl>
 ```
 
-## Trends and States
+## Trends and states
 A trend or state is a plain status in the value, with an icon and signed text, so it is never colour alone. It sits a little apart from the figure (`--telemetry-trend-gap`); a unit stays against it.
 ```html live
 <dl class="telemetry-group" aria-label="Listening">
@@ -102,7 +102,7 @@ A trend or state is a plain status in the value, with an icon and signed text, s
 ```
 Pick the intent by meaning, not direction: a rising drop-off rate is `--danger`. Where the sign isn't enough, add hidden text: `<span class="sr-only">up</span>` or "up 12.4% on last week".
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use a description list: `dt` for the label, `dd` for the value. | Rebuild it with `div`s and label classes. |
@@ -127,7 +127,7 @@ A labelled value: "Uptime 99.98%". A molecule built on a description list, so ea
 - **`--fill`** on the group grows each item to share the row, as a Tab List's `--fill` does. Items still wrap when the row is too narrow.
 - **`--icon-start`** moves the label's icon into a gutter at the start of the box: 24px (`--telemetry-lead-icon-size`), centred on the label and value. The markup is unchanged; the icon stays in the `dt`, because a `<dl>` item may only hold terms and descriptions. Items without an icon get no gutter. Set `--telemetry-icon-placement: start` on a group or region to do the same for every item in it.
 
-## Prominence and Corners
+## Prominence and corners
 ```html live
 <dl class="telemetry-group" aria-label="Prominence and corners">
   <div class="telemetry telemetry--subtle">

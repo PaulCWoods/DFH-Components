@@ -7,7 +7,7 @@ storybook: [atoms-badge, atoms-status, atoms-chip, atoms-kbd]
 related: [button, avatar, icon-icon-box, form-controls]
 ---
 
-# 5. Badge, Status, Chip & Kbd Primitives
+# 5. Badge, Status, Chip & Kbd primitives
 ```html live cluster
 <span class="badge"><span class="badge__text">3</span></span>
 <span class="status status--success"><span class="status__text">Passed</span></span>
@@ -40,7 +40,7 @@ Each takes only the axes its job needs. A Badge is always solid, because it has 
 - **A `.kbd` only shows a key.** The product scripts the shortcut itself, and mirrors it in `aria-keyshortcuts` on its control.
 - **A Status that changes** while someone is on the page isn't announced on its own. Say the change in a `role="status"` element.
 
-## A Count Belongs to Its Host
+## A count belongs to its host
 The host's name carries the count, and the Badge is hidden from screen readers so it isn't read twice.
 ```html live cluster
 <button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
@@ -54,7 +54,7 @@ The host's name carries the count, and the Badge is hidden from screen readers s
 </a>
 ```
 
-## A State Is Said in Words
+## A state is said in words
 The text carries the state, and intent backs it up. Choose the prominence for how much the state matters on this page.
 ```html playground cluster
 <span class="status" data-axes><span class="status__text" data-label>Queued</span></span>
@@ -65,7 +65,7 @@ Size: Default, Small=status--sm
 Corners: Rounded, Round=status--round
 ```
 
-## A Value Someone Chose
+## A value someone chose
 A static tag, and a token someone can remove.
 ```html live cluster
 <span class="chip"><span class="chip__text">TypeScript</span></span>
@@ -78,14 +78,14 @@ A static tag, and a token someone can remove.
 <span class="chip chip--plain"><span class="chip__text">Lesson 04</span></span>
 ```
 
-## A Key to Press
+## A key to press
 A single key and a combination. Mirror the shortcut in `aria-keyshortcuts` on its control.
 ```html live cluster
 <kbd class="kbd">Esc</kbd>
 <kbd class="kbd"><kbd>⌘</kbd><kbd>K</kbd></kbd>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Choose the atom for its job. | Use a Badge as a label because it looks right. |

@@ -83,7 +83,7 @@ The browser provides all of this. Script only what each item does.
 ```
 A Popover makes its Menu strong through a flag, so it floats with a shadow and needs no modifier.
 
-## Checkable Items
+## Checkable items
 ```html live width=sm
 <menu class="menu" aria-label="View">
   <li>
@@ -113,7 +113,7 @@ The check keeps its space while it's off, so the labels don't shift.
 ```
 `--plain` drops the Menu's own surface where a Card or Sidebar already draws one.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use `<menu>`, `<li>` and `.button`, and let Tab move through it. | Add `role="menu"`, `menuitem` or `aria-haspopup="menu"`. |

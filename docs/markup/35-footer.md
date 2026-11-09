@@ -39,7 +39,7 @@ The arrangement is a choice about what comes first. One row suits a short Footer
 ## Rules
 - **Landmark:** a `<footer>` directly in `<body>` (or `.app`) is the contentinfo landmark: one per page, no `aria-label`. A `<footer>` inside `<article>` or `<section>` isn't a landmark. Site link lists are a `<nav>` labelled by their heading.
 
-## The Whole Page's Footer
+## The whole page's Footer
 On a real page the band is a `<footer>`. It is a `<div>` in these demos so that this page keeps one contentinfo landmark.
 
 ```html
@@ -56,7 +56,7 @@ On a real page the band is a `<footer>`. It is a `<div>` in these demos so that 
 </footer>
 ```
 
-## Site Links First
+## Site links first
 The parts in a column, in source order.
 
 ```html live
@@ -73,7 +73,7 @@ The parts in a column, in source order.
 </div>
 ```
 
-## Link Lists, Then Legal Text
+## Link lists, then legal text
 Group the links under headings in a bar of their own, and put the legal text in the bar after them.
 ```html live
 <div class="footer">
@@ -108,7 +108,7 @@ Group the links under headings in a bar of their own, and put the legal text in 
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Use one `<footer>` directly in `<body>` or `.app`. | Label the contentinfo landmark with `aria-label`. |

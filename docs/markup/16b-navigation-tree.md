@@ -51,7 +51,7 @@ The links behave as links, so the browser provides all of this.
 - **A screen reader** finds the `<nav>` by its name, hears the nested lists as levels, and hears `aria-current` as the current page or location.
 - **`aria-current` doesn't move by itself.** The product sets it on the page it renders, or by script if a table of contents follows the scroll.
 
-## Table of Contents
+## Table of contents
 The links in a real table of contents are fragments on the same page (`href="#overview"`).
 ```html live width=md
 <nav class="navigation-tree navigation-tree--ruled navigation-tree--compact" aria-labelledby="example-toc-heading">
@@ -85,7 +85,7 @@ Use `location` here because every link goes to a place on one page, and `page` w
 ```
 The Badge is hidden from screen readers, so the count is said in hidden text as well.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Mark the current item with `aria-current` on its Link. | Add an active class. |
@@ -108,7 +108,7 @@ Nested links to the sections of a site or a page: a docs Sidebar, a table of con
 - **Alignment:** everything lines up on the item label's inset (the Button's border and padding). A nested list starts under its parent's label, a ruled tree draws its line there, and headings use the same inset. In a Card or Sidebar body the tree reaches out to their edges, so the rows span the full width; the inset is never more than their padding, and every item's padding follows it, so the tree never overflows them.
 - **Headings:** `<li class="navigation-tree__heading">` holding a text atom, as in the Menu, so it lines up with the item labels. A heading that names the whole tree goes there too, with `aria-labelledby` on the `<nav>`.
 
-## Site Navigation
+## Site navigation
 ```html live width=md
 <nav class="navigation-tree" aria-label="Site navigation example">
   <ol>

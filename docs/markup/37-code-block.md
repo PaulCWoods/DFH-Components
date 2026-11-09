@@ -41,7 +41,7 @@ It is a dark band in both themes, which marks it off from the page without anoth
 - **Copying is the product's script.** The library ships none. Hide the Button until the script has run, and say that it worked in a `role="status"` element.
 - **Code stays left to right,** in a right-to-left page too.
 
-## In a Disclosure
+## In a disclosure
 ```html live
 <details class="accordion accordion--plain accordion--flush">
   <summary class="small-text">Code</summary>
@@ -53,7 +53,7 @@ It is a dark band in both themes, which marks it off from the page without anoth
 ```
 A flush [Accordion](04-accordion.md) with a flush block keeps code out of the way until it's asked for. This site does the same under every example.
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Name the language in the bar. | Leave people to work it out from the code. |

@@ -7,7 +7,7 @@ storybook: atoms-button
 related: [button-group, link-block-link, menu, icon-icon-box]
 ---
 
-# 1. Button Primitive
+# 1. Button primitive
 ```html playground cluster
 <button type="button" class="button" data-axes><span data-label>Save changes</span></button>
 ---
@@ -92,7 +92,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 - **A toggle Button** takes `aria-pressed`; its label stays the same as it changes ("Bold", not "Bold on").
 - **A Checkbox or radio styled as a Button** is a `<label class="button">` around a visually hidden input. It needs no script, and the Input keeps its keyboard and screen-reader behaviour. `.icon--on` and `.icon--off` show with the state, and the label draws the focus ring while its input has focus.
 
-## A Link that Looks Like a Button
+## A Link that looks like a Button
 ```html live cluster
 <a href="/start" class="button button--strong button--accent">
   <span>Read the guide</span>
@@ -101,7 +101,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ```
 It goes somewhere, so it stays a Link: no `role="button"`. Screen-reader users hear "link" and expect a new page; keyboard users open it with Enter (a Button also takes Space).
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Start the label with a verb: "Save changes", "Delete project". | Use "OK", "Submit" or "Click here" when a verb would say what happens. |
@@ -145,7 +145,7 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 - **Accent** is the Brand action; **danger** something that destroys or can't be undone.
 - **Never colour alone** (WCAG 1.4.1): the label says what happens ("Delete project"), or an icon does.
 
-## Size and Corners
+## Size and corners
 ```html live cluster
 <button type="button" class="button button--sm"><span>Small</span></button>
 <button type="button" class="button"><span>Default</span></button>
@@ -161,7 +161,7 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 - **`aria-disabled="true"`** keeps it in the Tab order and announced as unavailable, so people can find it and the reason nearby. The library stops pointer clicks, but Enter and Space still fire: the product's script must ignore them.
 - **A Link can't be disabled.** Leave out `href` and add `role="link" aria-disabled="true"` while it goes nowhere.
 
-## Set on a Container
+## Set on a container
 ```html live cluster
 <div class="cluster buttons-subtle buttons-sm" role="group" aria-label="Formatting">
   <button type="button" class="button"><span>Bold</span></button>
@@ -173,7 +173,7 @@ The reference implementation of the shared axes. Intent (`--accent`, `--danger`)
 - The shared `--controls-prominence`, `--controls-size` and `--controls-corners` flags (and `.controls-*` classes) reach Buttons and [form controls](07-form-controls.md) together.
 - **Colour tokens:** `--button-color`, `--button-color-hover`, `--button-color-pressed` and `--button-color-border` colour the neutral Button at every prominence, set on a Button, a container or the theme. Intents keep their own colours. `--button-on-color` is the text on every fill.
 
-## Default Background and Hover
+## Default background and hover
 ```html live cluster
 <div class="cluster" style="--button-bg: var(--surface-muted); --button-hover-style: tint;">
   <button type="button" class="button"><span>Tinted hover</span></button>

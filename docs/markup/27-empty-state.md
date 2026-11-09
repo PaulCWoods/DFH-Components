@@ -48,7 +48,7 @@ It isn't a live region. One that arrives along with its content isn't reliably a
 - When a search or filter empties a list, put the news in a `role="status"` element that is on the page from the start ("No plants match", or the result count). The Empty State isn't a live region: one added with its content isn't reliably announced, and a whole block would be read out.
 - **`hidden`** works on it, as on anything: show it with `hidden = false`, not an inline `display`.
 
-## Say What's Empty and What to Do
+## Say what's empty and what to do
 ```html live width=md
 <div class="empty-state">
   <div class="empty-state__visual">
@@ -71,7 +71,7 @@ It isn't a live region. One that arrives along with its content isn't reliably a
 - At most one primary action. A first-use state shows the action that fills it.
 - An error that leaves a region empty can be a `--danger` Empty State with a "Try again" Button. A page-level error is a Banner with [`role="alert"`](11-banner.md).
 
-## Say What Happened with Intent
+## Say what happened with intent
 ```html live width=md
 <div class="empty-state empty-state--success">
   <div class="empty-state__visual">
@@ -127,7 +127,7 @@ Intent tints the Icon Box and colours its icon (it sets `--icon-box-intent`). Co
 </div>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Say what is empty: "No plants match “fern”". | Write "No results". |

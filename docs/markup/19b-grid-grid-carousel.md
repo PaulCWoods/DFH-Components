@@ -34,7 +34,7 @@ The carousel is the same list in one row, scrolled by the browser. It adds no sc
 - **Carousel:** scrolls by trackpad, touch, or the keyboard as focus moves through its items. If the items hold nothing focusable, give the Grid `tabindex="0"` and an `aria-label` so keyboard users can scroll it. Smooth scrolling only without reduced motion.
 - **Container variants** need a container ancestor (`.container-inline`, a Card, the Header, a Split); without one they never apply.
 
-## As Many Columns as Fit
+## As many columns as fit
 As many columns as fit, each at least 16rem.
 
 ```html live
@@ -44,7 +44,7 @@ As many columns as fit, each at least 16rem.
 </ul>
 ```
 
-## At Most a Number of Columns
+## At most a number of columns
 At most three columns, each at least 16rem.
 
 ```html live
@@ -67,7 +67,7 @@ One column, three once its container is 48rem wide.
 </div>
 ```
 
-## One Row That Scrolls
+## One row that scrolls
 Each Card holds a Link, so focus scrolls the row.
 
 ```html live
@@ -81,7 +81,7 @@ Each Card holds a Link, so focus scrolls the row.
 </ul>
 ```
 
-## Do and Don't
+## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Give the Grid a maximum column count and let it reflow. | Set columns at viewport breakpoints. |
