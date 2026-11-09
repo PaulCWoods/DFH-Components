@@ -458,6 +458,17 @@
   > :where(h1, h2, h3, h4, h5, h6, hgroup, .card__title, .card__hgroup) {
     flex: 1;
   }
+
+  /* ...and fills the row's height with its text centred, so a one-line
+     title sits on the centre line of a taller action beside it. A taller
+     title or group is the row's height already. A truncated title stays a
+     block: an ellipsis doesn't reach text inside a flex container */
+  > :where(h1, h2, h3, h4, h5, h6, hgroup, .card__title, .card__hgroup):where(:not(.truncate)) {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 :where(.card__hgroup) {

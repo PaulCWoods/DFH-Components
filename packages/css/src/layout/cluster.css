@@ -30,7 +30,9 @@
     --_gap: var(--gap, var(--spacing, 1rem));
     --_justify: var(--justify-content, normal);
     /* Controls inside reach at most halfway across the gap to the next in
-       the row (their hit areas) */
+       the row (their hit areas). Not across the gap between rows: CSS can't
+       tell which items wrapped, and a row with nothing above or below needs
+       its full reach */
     --target-gap-inline: var(--_gap);
 
     @container style(--ui-sizing: compact) {

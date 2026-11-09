@@ -100,7 +100,7 @@ const menuSidebar = `
 const menuDrawer = `
   <dialog id="menu-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="menu-drawer-title">
     <article class="card fine:ui-compact">
-      <header class="card__header align-items-center">
+      <header class="card__header">
         <h2 id="menu-drawer-title" class="card__title heading">Broadcast</h2>
         <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
       </header>

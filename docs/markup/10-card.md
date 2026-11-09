@@ -66,6 +66,8 @@ Because it is only a surface with parts, Dialog and Popover are built on it. Lea
 ```
 
 ## Status and Action in the header
+The title takes the space and pushes what follows it to the end. A one-line title sits on the centre line of a taller action beside it; a longer title or a heading group lines up with the top of the action.
+
 ```html live width=md
 <article class="card">
   <header class="card__header">

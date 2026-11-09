@@ -525,25 +525,60 @@
     --_carousel-peek: var(--grid-carousel-peek, 2rem);
     --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_grid-min)));
     --_carousel-snap-align: var(--grid-carousel-snap-align, center);
+    --_carousel-focus-room: calc(var(--focus-ring-width, 2px) + var(--focus-ring-offset, 2px));
 
     grid-auto-columns: var(--_carousel-item-width);
     grid-auto-flow: column;
     grid-template-columns: none;
     overflow-x: auto;
     overflow-y: hidden;
-    overscroll-behavior-x: contain;
+    overscroll-behavior-inline: contain;
     scroll-padding-inline: var(--_gap);
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: inline mandatory;
     scrollbar-gutter: stable;
     scrollbar-width: thin;
+    /* A scroller clips what spills past it: room above and below for the
+       items' focus rings, taken back with a margin so the row doesn't move.
+       Not at the sides, where the margin would widen the page */
+    padding-block: var(--_carousel-focus-room);
+    margin-block: calc(var(--_carousel-focus-room) * -1);
 
     > :where(*) {
         scroll-snap-align: var(--_carousel-snap-align);
     }
 }
 
+/* A carousel only in a container narrower than 48rem */
+@container (width < 48rem) {
+    :where(.\@max-3xl\:grid--carousel) {
+        --_carousel-peek: var(--grid-carousel-peek, 2rem);
+        --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_grid-min)));
+        --_carousel-snap-align: var(--grid-carousel-snap-align, start);
+        --_carousel-focus-room: calc(var(--focus-ring-width, 2px) + var(--focus-ring-offset, 2px));
+
+        grid-auto-columns: var(--_carousel-item-width);
+        grid-auto-flow: column;
+        grid-template-columns: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-inline: contain;
+        padding-block: var(--_carousel-focus-room);
+        margin-block: calc(var(--_carousel-focus-room) * -1);
+        scroll-padding-inline: var(--_gap);
+        scroll-snap-type: inline mandatory;
+        scrollbar-gutter: stable;
+        scrollbar-width: thin;
+
+        > :where(*) {
+            scroll-snap-align: var(--_carousel-snap-align);
+        }
+    }
+}
+
+/* Smooth scrolling, unless motion is reduced. After both carousels, and the
+   bleed after them too, so it beats their padding */
 @media (prefers-reduced-motion: no-preference) {
-    :where(.grid--carousel) {
+    :where(.grid--carousel, .\@max-3xl\:grid--carousel) {
         scroll-behavior: smooth;
     }
 }
@@ -553,28 +588,4 @@
     margin-inline: calc(var(--spacing-cushion) * -1);
     padding-inline: var(--spacing-cushion);
     scroll-padding-inline: var(--spacing-cushion);
-}
-
-/* A carousel only in a container narrower than 48rem */
-@container (width < 48rem) {
-    :where(.\@max-3xl\:grid--carousel) {
-        --_carousel-peek: var(--grid-carousel-peek, 2rem);
-        --_carousel-item-width: var(--grid-carousel-item-width, min(calc(100% - var(--_carousel-peek)), var(--_grid-min)));
-        --_carousel-snap-align: var(--grid-carousel-snap-align, start);
-
-        grid-auto-columns: var(--_carousel-item-width);
-        grid-auto-flow: column;
-        grid-template-columns: none;
-        overflow-x: auto;
-        overflow-y: hidden;
-        overscroll-behavior-x: contain;
-        padding-block-end: var(--spacing-compact, 0.5rem);
-        scroll-padding-inline: var(--_gap);
-        scroll-snap-type: x mandatory;
-        scrollbar-width: thin;
-
-        > :where(*) {
-            scroll-snap-align: var(--_carousel-snap-align);
-        }
-    }
 }

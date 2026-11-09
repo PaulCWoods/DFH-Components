@@ -40,7 +40,7 @@ It decides nothing about small-screen navigation. Moving a Sidebar into a drawer
 - **Not for panes inside the content:** that is a [Split](19c-split.md).
 
 ## Rules
-- **Landmarks:** one shell per page. Its `<header>` is the Banner, its `<footer>` the contentinfo, and there is one `<main>`. The Skip Link comes first; it is fixed, so it takes no row.
+- **Landmarks:** one shell per page. Its `<header>` is the Banner, its `<footer>` the contentinfo, and there is one `<main>`. The Skip Link comes first, in a row of its own that has no height until the link is focused.
 - **Small screens:** nothing becomes a drawer on its own. A Sidebar stacks above the main, or the product hides it (`max-md:hide`) and puts the same navigation in a `.dialog--drawer` opened from the Header; see [Sidebar](34-sidebar.md).
 - **Never clip a locked region.** The shell and workspace hide overflow because their rows and panes are sized to fit; anything holding content (the main, a pane) scrolls instead, so no screen size can strand content out of reach.
 - **Viewport:** in `.app--viewport` the main scrolls; give it `tabindex="-1"` if it holds nothing focusable near the top, so keyboard users can scroll it after the Skip Link.
@@ -73,7 +73,7 @@ A whole page, so it can't be shown live here. The miniature at the top uses `<di
 | Do | Don't |
 | :--- | :--- |
 | Use one shell, one `<header>`, one `<main>` and one `<footer>` per page. | Nest a shell in a shell. |
-| Put the Skip Link first. | Give the Skip Link a row. |
+| Put the Skip Link first, as a direct child of `.app`. | Put the Skip Link inside the Header. |
 | Put side panes in `.app__workspace`. | Add an `aside` as a direct child of `.app`. |
 | Let the main scroll when its content outgrows a locked shell. | Clip anything that holds content. |
 | Give a scrolling main `tabindex="-1"` if nothing near its top takes focus. | Leave keyboard users unable to scroll it. |
