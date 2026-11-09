@@ -17,7 +17,7 @@ import { typeScale as t } from '../../lib/theme-data.mjs';
         <tr>
           <th scope="row" class="table__cell--numeric table__cell--fit">{s.n}</th>
           <td class="table__cell--numeric"><span style={`font-size: ${s.rem}rem; line-height: 1`}>{s.fixed}</span></td>
-          <td class="table__cell--numeric table__cell--nowrap">{s.fluid && <><span style={`font-size: ${s.fluidRem[0]}rem; line-height: 1`}>{s.fluid[0]}</span> <span class="small-text text-muted">to</span> <span style={`font-size: ${s.fluidRem[1]}rem; line-height: 1`}>{s.fluid[1]}</span></>}</td>
+          <td class="table__cell--numeric table__cell--nowrap">{s.fluid && <><span style={`vertical-align: middle; font-size: ${s.fluidRem[0]}rem; line-height: 1`}>{s.fluid[0]}</span> <span class="small-text text-muted" style="vertical-align: middle">to</span> <span style={`vertical-align: middle; font-size: ${s.fluidRem[1]}rem; line-height: 1`}>{s.fluid[1]}</span></>}</td>
         </tr>
       ))}
     </tbody>
