@@ -2,19 +2,24 @@
   "$description": "Design For Humans - Tier 2 Semantic UI Design Tokens (W3C DTCG Standard)",
   "translucency": {
     "default": {
-      "$value": "{translucency.50}"
+      "$value": "{translucency.50}",
+      "$description": "How much of a translucent colour shows through, by default"
     },
     "subtle": {
-      "$value": "{translucency.10}"
+      "$value": "{translucency.10}",
+      "$description": "The faintest translucency: a colour barely tinting what is under it"
     },
     "quiet": {
-      "$value": "{translucency.33}"
+      "$value": "{translucency.33}",
+      "$description": "A light translucency, for quiet tints"
     },
     "strong": {
-      "$value": "{translucency.70}"
+      "$value": "{translucency.70}",
+      "$description": "A strong translucency: mostly the colour, a little of what is under it"
     },
     "stronger": {
-      "$value": "{translucency.90}"
+      "$value": "{translucency.90}",
+      "$description": "The strongest translucency, nearly solid; reduced transparency goes solid"
     },
     "faint": {
       "$value": "{translucency.95}",
@@ -23,19 +28,24 @@
   },
   "blur": {
     "sm": {
-      "$value": "blur(2px)"
+      "$value": "blur(2px)",
+      "$description": "A slight backdrop blur"
     },
     "md": {
-      "$value": "blur(4px)"
+      "$value": "blur(4px)",
+      "$description": "A medium backdrop blur"
     },
     "lg": {
-      "$value": "blur(8px)"
+      "$value": "blur(8px)",
+      "$description": "A strong backdrop blur, for translucent materials"
     },
     "xl": {
-      "$value": "blur(16px)"
+      "$value": "blur(16px)",
+      "$description": "The strongest backdrop blur"
     },
     "default": {
-      "$value": "{blur.md}"
+      "$value": "{blur.md}",
+      "$description": "The backdrop blur translucent surfaces use by default"
     }
   },
   "color": {
@@ -82,7 +92,7 @@
     },
     "subtle": {
       "$value": "light-dark({color.neutral.000}, {color.neutral.1000})",
-      "$description": "Default canvas / page viewport background"
+      "$description": "A barely tinted page background, for a section that should sit apart quietly"
     },
     "muted": {
       "$value": "light-dark({color.neutral.100}, {color.neutral.900})",
@@ -158,7 +168,7 @@
     },
     "warning": {
       "$value": "light-dark({color.amber.100}, {color.amber.900})",
-      "$description": "Cautionary or pending review alert banner background"
+      "$description": "Warning banner and callout background: something needs attention"
     },
     "warning-strong": {
       "$value": "light-dark({color.amber.700}, {color.amber.300})",
@@ -174,7 +184,7 @@
     },
     "info": {
       "$value": "light-dark({color.teal.100}, {color.teal.900})",
-      "$description": "Cautionary or pending review alert banner background"
+      "$description": "Information banner and callout background: neutral news"
     },
     "info-strong": {
       "$value": "light-dark({color.teal.700}, {color.teal.300})",
@@ -202,11 +212,11 @@
     },
     "on-dark": {
       "$value": "{color.neutral.000}",
-      "$description": "Light text on dark hero sections"
+      "$description": "Text on a dark band or media that stays dark in both modes"
     },
     "white": {
       "$value": "{color.white}",
-      "$description": "Light text on dark hero sections"
+      "$description": "White text, for a surface that is dark in both modes"
     },
     "muted": {
       "$value": "light-dark({color.neutral.600}, {color.neutral.400})",
@@ -230,7 +240,7 @@
     },
     "complementary-hover": {
       "$value": "light-dark({color.purple.600}, {color.purple.200})",
-      "$description": "Complementary state for links and accent buttons"
+      "$description": "Complementary hover state for links and buttons"
     },
     "complementary-pressed": {
       "$value": "light-dark({color.purple.800}, {color.purple.100})",
@@ -274,15 +284,15 @@
     },
     "info": {
       "$value": "light-dark({color.teal.600}, {color.teal.300})",
-      "$description": "info callout text and pending status icons"
+      "$description": "Information callout text and icons"
     },
     "info-hover": {
       "$value": "light-dark({color.teal.700}, {color.teal.200})",
-      "$description": "info hover state"
+      "$description": "Information hover state"
     },
     "info-pressed": {
       "$value": "light-dark({color.teal.800}, {color.teal.100})",
-      "$description": "info pressed state"
+      "$description": "Information pressed state"
     }
   },
   "border": {
@@ -327,7 +337,7 @@
       },
       "info": {
         "$value": "{color.teal.500}",
-        "$description": "info field border"
+        "$description": "Information border colour"
       }
     },
     "width": {
@@ -367,10 +377,12 @@
   "opacity": {
     "$type": "number",
     "muted": {
-      "$value": "{opacity.80}"
+      "$value": "{opacity.80}",
+      "$description": "Opacity for content that should recede"
     },
     "disabled": {
-      "$value": "{opacity.50}"
+      "$value": "{opacity.50}",
+      "$description": "Opacity for disabled controls"
     }
   },
   "spacing": {
@@ -525,29 +537,32 @@
     },
     "bold": {
       "$value": "{typography.font-weight.700}",
-      "$description": "Bold heading and action weight"
+      "$description": "Bold: headings, labels and actions"
     },
     "heavy": {
       "$value": "{typography.font-weight.800}",
-      "$description": "Bold heading and action weight"
+      "$description": "Heavier than bold: titles"
     },
     "black": {
       "$value": "{typography.font-weight.900}",
-      "$description": "Bold heading and action weight"
+      "$description": "The heaviest weight: display titles in fonts that have it"
     }
   },
   "body": {
     "font-family": {
       "$value": "{typography.font-family.sans}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "The body font: running text and interface copy"
     },
     "font-weight": {
       "$value": "{font-weight.regular}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "The body weight"
     },
     "line-height": {
       "$value": "{typography.line-height.0}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Line height for running text"
     },
     "measure": {
       "$value": "66ch",
@@ -559,446 +574,485 @@
     "font-size": {
       "$value": "{typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+      "$description": "Body text size (.text): the same at every width"
     }
   },
   "body-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+      "$description": "Body text size in a compact region"
     }
   },
   "body-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.0}",
       "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+      "$description": "Body text size growing with its container (.font-sizing-cq)"
     }
   },
   "body-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Standard readable body typography size (fluid step 0: 16px Mobile to 24px Desktop)"
+      "$description": "Body text size growing with the screen (.font-sizing-fluid)"
     }
   },
   "body-alt": {
     "font-family": {
       "$value": "{typography.font-family.serif}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "The alternative body font (.font-serif)"
     }
   },
   "body-strong": {
     "font-weight": {
       "$value": "{font-weight.bold}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Weight for strong body text (.font-bold)"
     }
   },
   "body-sm": {
     "line-height": {
       "$value": "{typography.line-height.minus-1}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Line height for small text"
     }
   },
   "body-sm-fixed": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Small text: footnotes, hints and metadata (step -1; compact steps to -2)"
+      "$description": "Small text size (.small-text): hints, captions, metadata; the same at every width"
     }
   },
   "body-sm-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -1; compact steps to -2)"
+      "$description": "Small text size in a compact region"
     }
   },
   "body-sm-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.-1}",
       "$type": "dimension",
-      "$description": "Small text size (step -1; compact steps to -2)"
+      "$description": "Small text size growing with its container"
     }
   },
   "body-sm-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Small text size (step -1; compact steps to -2)"
+      "$description": "Small text size growing with the screen"
     }
   },
   "body-xs": {
     "line-height": {
       "$value": "{typography.line-height.minus-2}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Line height for micro text"
     }
   },
   "body-xs-fixed": {
     "font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text: footnotes, hints and metadata (step -2, the bottom of the scale; compact keeps it)"
+      "$description": "Micro text size (.micro-text): footnotes and fine print, the bottom of the scale"
     }
   },
   "body-xs-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -2, the bottom of the scale; compact keeps it)"
+      "$description": "Micro text size in a compact region (it stays at the bottom of the scale)"
     }
   },
   "body-xs-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -2, the bottom of the scale; compact keeps it)"
+      "$description": "Micro text size in a container-sized region"
     }
   },
   "body-xs-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Small text size (step -2, the bottom of the scale; compact keeps it)"
+      "$description": "Micro text size in a fluid region"
     }
   },
   "body-lg-fixed": {
     "font-size": {
       "$value": "{typography.font-size.1}",
       "$type": "dimension",
-      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+      "$description": "Large text size (.large-text): lead paragraphs; the same at every width"
     }
   },
   "body-lg-compact": {
     "font-size": {
       "$value": "{typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+      "$description": "Large text size in a compact region"
     }
   },
   "body-lg-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.1}",
       "$type": "dimension",
-      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+      "$description": "Large text size growing with the screen"
     }
   },
   "body-lg-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.1}",
       "$type": "dimension",
-      "$description": "Lead paragraph typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+      "$description": "Large text size growing with its container"
     }
   },
   "label": {
     "font-family": {
       "$value": "{body.font-family}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Font for form labels and legends (.label)"
     },
     "font-size": {
       "$value": "{typography.font-size.0}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Label size: fixed in every mode but compact"
     },
     "font-weight": {
       "$value": "{font-weight.bold}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Label weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-1}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Label line height"
     }
   },
   "label-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Label and legend size in compact regions (Step -1)"
+      "$description": "Label size in a compact region"
     }
   },
   "heading": {
     "font-family": {
       "$value": "{body.font-family}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Heading font (.heading: section headings)"
     },
     "font-weight": {
       "$value": "{font-weight.bold}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Heading weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-3}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Heading line height"
     },
     "letter-spacing": {
       "$value": "{typography.spacing.normal}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Heading letter spacing"
     },
     "text-transform": {
       "$value": "none",
-      "$type": "other"
+      "$type": "other",
+      "$description": "Heading case"
     },
     "word-spacing": {
       "$value": "0em",
-      "$type": "other"
+      "$type": "other",
+      "$description": "Heading word spacing"
     }
   },
   "heading-fixed": {
     "font-size": {
       "$value": "{typography.font-size.2}",
       "$type": "dimension",
-      "$description": "Heading typography size (Step 3)"
+      "$description": "Heading size: the same at every width"
     }
   },
   "heading-compact": {
     "font-size": {
       "$value": "{typography.font-size.1}",
       "$type": "dimension",
-      "$description": "Heading typography size (Step 3)"
+      "$description": "Heading size in a compact region"
     }
   },
   "heading-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.2}",
       "$type": "dimension",
-      "$description": "Container-fluid heading typography size using cqi units (Step 3)"
+      "$description": "Heading size growing with its container"
     }
   },
   "heading-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.2}",
       "$type": "dimension",
-      "$description": "Section title and major heading typography size (fluid step 2: 23px Mobile to 38px Desktop)"
+      "$description": "Heading size growing with the screen"
     }
   },
   "subheading": {
     "font-family": {
       "$value": "{heading.font-family}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Subheading font (.subheading: headings inside a section)"
     },
     "font-weight": {
       "$value": "{heading.font-weight}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Subheading weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-2}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Subheading line height"
     },
     "letter-spacing": {
       "$value": "{heading.letter-spacing}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Subheading letter spacing"
     }
   },
   "subheading-fixed": {
     "font-size": {
       "$value": "{typography.font-size.1}",
       "$type": "dimension",
-      "$description": "Subheading typography size (Step 1)"
+      "$description": "Subheading size: the same at every width"
     }
   },
   "subheading-compact": {
     "font-size": {
       "$value": "{typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Heading typography size (Step 3)"
+      "$description": "Subheading size in a compact region"
     }
   },
   "subheading-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.1}",
       "$type": "dimension",
-      "$description": "Container-fluid subheading typography size using cqi units (Step 1)"
+      "$description": "Subheading size growing with its container"
     }
   },
   "subheading-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.1}",
       "$type": "dimension",
-      "$description": "Subsection subtitle typography size (fluid step 1: 19px Mobile to 30px Desktop)"
+      "$description": "Subheading size growing with the screen"
     }
   },
   "small-heading": {
     "font-family": {
       "$value": "{heading.font-family}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Small heading font (.small-heading: card, dialog and panel titles)"
     },
     "font-weight": {
       "$value": "{heading.font-weight}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Small heading weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-1}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Small heading line height"
     },
     "letter-spacing": {
       "$value": "{heading.letter-spacing}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Small heading letter spacing"
     },
     "text-transform": {
       "$value": "none",
-      "$type": "other"
+      "$type": "other",
+      "$description": "Small heading case"
     }
   },
   "small-heading-fixed": {
     "font-size": {
       "$value": "{typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Small heading typography size (Step 0)"
+      "$description": "Small heading size: the same at every width"
     }
   },
   "small-heading-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
       "$type": "dimension",
-      "$description": "Small heading typography size (Step 0)"
+      "$description": "Small heading size in a compact region"
     }
   },
   "small-heading-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.0}",
       "$type": "dimension",
-      "$description": "Container-fluid small heading typography size using cqi units (Step 0)"
+      "$description": "Small heading size growing with its container"
     }
   },
   "small-heading-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.0}",
       "$type": "dimension",
-      "$description": "Viewport-fluid small heading size (step 0)"
+      "$description": "Small heading size growing with the screen"
     }
   },
   "micro-heading": {
     "font-family": {
       "$value": "{body.font-family}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Micro heading font (.micro-heading: the uppercase eyebrow)"
     },
     "font-weight": {
       "$value": "{body-strong.font-weight}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Micro heading weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-3}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Micro heading line height"
     },
     "letter-spacing": {
       "$value": "{heading.letter-spacing}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Micro heading letter spacing"
     },
     "text-transform": {
       "$value": "uppercase",
-      "$type": "other"
+      "$type": "other",
+      "$description": "Micro heading case"
     }
   },
   "micro-heading-fixed": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Micro heading size: the same at every width"
     }
   },
   "micro-heading-compact": {
     "font-size": {
       "$value": "{typography.font-size.minus-2}",
       "$type": "dimension",
-      "$description": "Compact typography for footnotes and metadata (fluid step -1: 13px Mobile to 19px Desktop)"
+      "$description": "Micro heading size in a compact region"
     }
   },
   "title": {
     "font-family": {
       "$value": "{typography.font-family.display}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Title font (.title: page titles)"
     },
     "font-weight": {
       "$value": "{font-weight.heavy}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Title weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-4}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Title line height"
     },
     "letter-spacing": {
       "$value": "{heading.letter-spacing}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Title letter spacing"
     },
     "text-transform": {
       "$value": "none",
-      "$type": "other"
+      "$type": "other",
+      "$description": "Title case"
     }
   },
   "title-fixed": {
     "font-size": {
       "$value": "{typography.font-size.5}",
       "$type": "dimension",
-      "$description": "Title typography size (Step 5)"
+      "$description": "Title size: the same at every width"
     }
   },
   "title-compact": {
     "font-size": {
       "$value": "{typography.font-size.4}",
       "$type": "dimension",
-      "$description": "Title typography size (Step 4)"
+      "$description": "Title size in a compact region"
     }
   },
   "title-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.5}",
       "$type": "dimension",
-      "$description": "Title typography size (fluid step 4 to 7: 33px Mobile to 114px Desktop)"
+      "$description": "Title size growing with the screen"
     }
   },
   "title-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.5}",
       "$type": "dimension",
-      "$description": "Container-fluid display title typography size using cqi units (Step 4 to 7)"
+      "$description": "Title size growing with its container"
     }
   },
   "display-title": {
     "font-family": {
       "$value": "{title.font-family}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Display title font (.display-title: hero and cover titles)"
     },
     "font-weight": {
       "$value": "{font-weight.heavy}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Display title weight"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-4}",
-      "$type": "number"
+      "$type": "number",
+      "$description": "Display title line height"
     },
     "letter-spacing": {
       "$value": "{typography.spacing.tight}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Display title letter spacing"
     },
     "text-transform": {
       "$value": "none",
-      "$type": "other"
+      "$type": "other",
+      "$description": "Display title case"
     }
   },
   "display-title-fixed": {
     "font-size": {
       "$value": "{typography.font-size.8}",
       "$type": "dimension",
-      "$description": "Title typography size (Step 5)"
+      "$description": "Display title size: the same at every width"
     }
   },
   "display-title-compact": {
     "font-size": {
       "$value": "{typography.font-size.7}",
       "$type": "dimension",
-      "$description": "Title typography size (Step 4)"
+      "$description": "Display title size in a compact region"
     }
   },
   "display-title-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.8}",
       "$type": "dimension",
-      "$description": "Hero display title typography size (fluid step 7: 57px Mobile to 114px Desktop)"
+      "$description": "Display title size growing with the screen"
     }
   },
   "display-title-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.8}",
       "$type": "dimension",
-      "$description": "Container-fluid display title size using cqi units (steps 5 to 8)"
+      "$description": "Display title size growing with its container"
     }
   },
   "control": {
@@ -1010,15 +1064,17 @@
     "line-height": {
       "$value": "{typography.line-height.minus-2}",
       "$type": "number",
-      "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+      "$description": "Line height inside single-line controls"
     },
     "border-width": {
       "$value": "{border.width}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "A control's edge width"
     },
     "border-color": {
       "$value": "{border.color.control}",
-      "$type": "color"
+      "$type": "color",
+      "$description": "A control's edge colour: 3:1 against its background (WCAG 1.4.11)"
     }
   },
   "control-sm": {
@@ -1030,7 +1086,7 @@
     "line-height": {
       "$value": "{typography.line-height.minus-2}",
       "$type": "number",
-      "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+      "$description": "Line height inside small single-line controls"
     }
   },
   "control-lg": {
@@ -1042,7 +1098,7 @@
     "line-height": {
       "$value": "{typography.line-height.minus-2}",
       "$type": "number",
-      "$description": "Tight line-height for single-line controls to prevent baseline overflow"
+      "$description": "Line height inside large single-line controls"
     }
   },
   "app": {
@@ -1080,34 +1136,40 @@
   "panel": {
     "border-width": {
       "$value": "{border.width.thin}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Edge width of panels: cards, tables, menus"
     },
     "border-color": {
       "$value": "{border.color.quiet}",
-      "$type": "color"
+      "$type": "color",
+      "$description": "Edge colour of panels: cards, tables, menus"
     },
     "border-style": {
       "$value": "solid",
-      "$type": "strokeStyle"
+      "$type": "strokeStyle",
+      "$description": "Edge style of panels"
     },
     "radius": {
       "$value": "{radius.md}",
       "$type": "dimension",
-      "$description": "Standard border radius for UI components and interactive controls"
+      "$description": "Corner radius of panels: cards, tables, menus"
     }
   },
   "rule": {
     "width": {
       "$value": "{border.width.thin}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Width of dividers and rules between items"
     },
     "color": {
       "$value": "{border.color.quiet}",
-      "$type": "color"
+      "$type": "color",
+      "$description": "Colour of dividers and rules between items"
     },
     "style": {
       "$value": "solid",
-      "$type": "strokeStyle"
+      "$type": "strokeStyle",
+      "$description": "Style of dividers and rules (solid, dashed)"
     }
   },
   "radius": {
@@ -1118,23 +1180,27 @@
     "default": {
       "$value": "{radius.md}",
       "$type": "dimension",
-      "$description": "Standard border radius for UI components and interactive controls"
+      "$description": "Corner radius for controls and small components"
     },
     "sm": {
       "$value": "{radius.2}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Small corner radius"
     },
     "md": {
       "$value": "{radius.4}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Medium corner radius"
     },
     "lg": {
       "$value": "{radius.8}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Large corner radius, for larger surfaces"
     },
     "xl": {
       "$value": "{radius.12}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Extra large corner radius"
     },
     "full": {
       "$value": "{radius.9999}",
@@ -1145,37 +1211,44 @@
   "underline": {
     "offset": {
       "$value": "{border.width.thick}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Gap between text and its link underline"
     },
     "thickness": {
       "$value": "{border.width.thin}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Link underline thickness"
     },
     "color": {
       "$value": "{color.muted}",
-      "$type": "color"
+      "$type": "color",
+      "$description": "Link underline colour at rest"
     }
   },
   "code": {
     "font-family": {
       "$value": "{typography.font-family.mono}",
-      "$type": "fontFamilies"
+      "$type": "fontFamilies",
+      "$description": "Font for code and readouts (.font-mono)"
     },
     "font-weight": {
       "$value": "{body.font-weight}",
-      "$type": "fontWeight"
+      "$type": "fontWeight",
+      "$description": "Weight for code"
     }
   },
   "script": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Size for superscript and subscript"
     }
   },
   "focus-ring": {
     "width": {
       "$value": "{border.width.medium}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Focus ring thickness (at least 2px)"
     },
     "color": {
       "$value": "{color.focus}",
@@ -1184,29 +1257,36 @@
     },
     "offset": {
       "$value": "{border.width.medium}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Gap between a control and its focus ring"
     },
     "clearance": {
       "$value": "calc({focus-ring.width} + {border.width.2})",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Room a focus ring needs outside a control, so containers do not clip it"
     }
   },
   "duration": {
     "$type": "duration",
     "none": {
-      "$value": "{duration.0}"
+      "$value": "{duration.0}",
+      "$description": "No transition; reduced motion takes every duration here"
     },
     "sm": {
-      "$value": "{duration.02}"
+      "$value": "{duration.02}",
+      "$description": "Short transitions: hover and press"
     },
     "md": {
-      "$value": "{duration.05}"
+      "$value": "{duration.05}",
+      "$description": "Medium transitions: opening and closing small parts"
     },
     "lg": {
-      "$value": "{duration.1}"
+      "$value": "{duration.1}",
+      "$description": "Long transitions: dialogs, drawers and larger movement"
     },
     "xl": {
-      "$value": "{duration.2}"
+      "$value": "{duration.2}",
+      "$description": "The longest transitions"
     }
   },
   "scale": {
@@ -1219,31 +1299,39 @@
   "timefunc": {
     "$type": "other",
     "ease-in-out": {
-      "$value": "ease-in-out"
+      "$value": "ease-in-out",
+      "$description": "Keyword easing in and out"
     },
     "ease-in": {
-      "$value": "ease-in"
+      "$value": "ease-in",
+      "$description": "Keyword easing in"
     },
     "ease-out": {
-      "$value": "ease-out"
+      "$value": "ease-out",
+      "$description": "Keyword easing out"
     },
     "linear": {
-      "$value": "linear"
+      "$value": "linear",
+      "$description": "No easing"
     }
   },
   "ease": {
     "$type": "other",
     "in-out": {
-      "$value": "cubic-bezier(0.4, 0.0, 0.2, 1)"
+      "$value": "cubic-bezier(0.4, 0.0, 0.2, 1)",
+      "$description": "Easing for movement that starts and stops on screen"
     },
     "in": {
-      "$value": "cubic-bezier(0.4, 0.0, 1.0, 1.0)"
+      "$value": "cubic-bezier(0.4, 0.0, 1.0, 1.0)",
+      "$description": "Easing for things leaving the screen"
     },
     "out": {
-      "$value": "cubic-bezier(0.0, 0.0, 0.2, 1)"
+      "$value": "cubic-bezier(0.0, 0.0, 0.2, 1)",
+      "$description": "Easing for things arriving on screen"
     },
     "bounce": {
-      "$value": "cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+      "$value": "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
+      "$description": "An overshooting ease, for playful emphasis; use sparingly"
     }
   },
   "shadow": {
@@ -1504,28 +1592,36 @@
   "z-index": {
     "$type": "number",
     "deep": {
-      "$value": "{z-index.minus-1}"
+      "$value": "{z-index.minus-1}",
+      "$description": "Below the page: backgrounds behind content"
     },
     "base": {
-      "$value": "{z-index.0}"
+      "$value": "{z-index.0}",
+      "$description": "The page itself"
     },
     "sticky": {
-      "$value": "{z-index.100}"
+      "$value": "{z-index.100}",
+      "$description": "Sticky headers, bars and sidebars"
     },
     "overlay": {
-      "$value": "{z-index.300}"
+      "$value": "{z-index.300}",
+      "$description": "Overlays above sticky parts"
     },
     "dialog": {
-      "$value": "{z-index.400}"
+      "$value": "{z-index.400}",
+      "$description": "Dialogs outside the top layer"
     },
     "popover": {
-      "$value": "{z-index.500}"
+      "$value": "{z-index.500}",
+      "$description": "Popovers outside the top layer"
     },
     "toast": {
-      "$value": "{z-index.600}"
+      "$value": "{z-index.600}",
+      "$description": "Toasts outside the top layer"
     },
     "tooltip": {
-      "$value": "{z-index.700}"
+      "$value": "{z-index.700}",
+      "$description": "Tooltips: above everything"
     }
   },
   "$media": {
@@ -1734,13 +1830,15 @@
   "micro-heading-fluid": {
     "font-size": {
       "$value": "{fluid.typography.font-size.minus-1}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Micro heading size growing with the screen"
     }
   },
   "micro-heading-cq": {
     "font-size": {
       "$value": "{typography.font-size.cq.-1}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "Micro heading size growing with its container"
     }
   }
 }

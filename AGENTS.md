@@ -149,13 +149,15 @@ DFH-Components/
 │   └── icons.html             # Auto-synchronized standalone HTML preview
 ├── scripts/
 │   └── sync-icons.js          # Synchronizer script (npm run sync:icons)
-└── .agents/                   # Agent & developer skills and workflow guides
+└── .agents/                   # Agent skills (README.md says which are shared and which are for this repo)
     └── skills/
-        ├── modern-web-guidance/   # Chrome web standard best practices
-        ├── tokens/SKILL.md        # Detailed token system specification & naming conventions
-        ├── accessibility/SKILL.md # WCAG 2.2 compliance & auditing rules
-        ├── recipe-composition/    # Decision-making heuristics & composite pattern guide
-        └── css-commenting/        # CSS maintenance and block (/* */) commenting guide
+        ├── accessibility/         # Shared: accessible markup and CSS with the library
+        ├── tokens/                # Shared: using and customising tokens
+        ├── component-authoring/   # Repo: writing component CSS and running a component pass
+        ├── token-pipeline/        # Repo: themes, generators, gates, Tier 3 defaults, Figma export
+        ├── css-commenting/        # Repo: CSS block commenting guide
+        ├── recipe-composition/    # Repo: composing recipes
+        └── modern-web-guidance/   # Third-party web platform guidance
 ```
 
 ---
@@ -440,6 +442,6 @@ The markup docs also feed the docs site (`packages/docs`, plan in `docs/audit/do
 
 ## Component Authoring Workflow
 1. **Check Tokens:** Verify required tokens exist in `tokens/3-component.json`. If missing, add them and run `npm run build:tokens`.
-2. **Author CSS:** Create `packages/css/src/{atoms,molecules,organisms}/<component>.css` based on the component's Atomic Design tier. Use `:where()` for low specificity, local private variables manifest (`--_<component>-*`) with state contract (`--_<component>-hover-*`, `--_<component>-active-*`), container style queries (`@container style(...)`), native CSS nesting with explicit `&` for states (`&:hover`, `&:active`, `&:focus-visible`), logical properties (`inline-size`, `block-size`, `padding-inline`, `padding-block`), and standardized section comments. Consult `.agents/skills/tokens/SKILL.md` (Section 4) and `.agents/skills/css-commenting/SKILL.md` for full guidelines.
+2. **Author CSS:** Create `packages/css/src/{atoms,molecules,organisms}/<component>.css` based on the component's Atomic Design tier. Use `:where()` for low specificity, local private variables manifest (`--_<component>-*`) with state contract (`--_<component>-hover-*`, `--_<component>-active-*`), container style queries (`@container style(...)`), native CSS nesting with explicit `&` for states (`&:hover`, `&:active`, `&:focus-visible`), logical properties (`inline-size`, `block-size`, `padding-inline`, `padding-block`), and standardized section comments. Consult `.agents/skills/component-authoring/SKILL.md` and `.agents/skills/css-commenting/SKILL.md` for full guidelines.
 3. **Register in Entrypoint:** Add `@import './{atoms,molecules,organisms}/<component>.css';` into the appropriate Atomic tier in `packages/css/src/index.css`.
 4. **Author Storybook Stories:** Create `packages/storybook/stories/{atoms,molecules,organisms,layout,utilities,recipes}/<component>.stories.ts` with matching `title: '{Atoms,Molecules,Organisms,Layout,Utilities,Recipes}/...'`, covering all variants, sizes, states (`hover`, `active`, `disabled`, `aria-disabled`), and verify with `npm run build-storybook --workspace=@design-for-humans/storybook`.
