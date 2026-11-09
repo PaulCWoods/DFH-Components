@@ -2183,7 +2183,7 @@
     "track-border-color": {
       "$value": "{border.color.quiet}",
       "$type": "color",
-      "$description": "Colour of the track's edge, at least 3:1 against the page (WCAG 1.4.11)"
+      "$description": "Colour of the unfilled track's light edge; the thumb carries the 3:1 a slider needs (WCAG 1.4.11)"
     },
     "thumb-size": {
       "$value": "{spacing.24}",

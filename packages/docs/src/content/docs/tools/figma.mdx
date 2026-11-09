@@ -39,8 +39,8 @@ Figma limits how many modes a variable collection can have: 1 on Starter, 10 on 
 | You want | Import | Plan |
 | :--- | :--- | :--- |
 | One brand, one mode: light, fixed type | `dfh-unified.json` | Any, including Starter |
-| One brand, with light and dark, font sizing and spacing modes | `01-color.json`, `02-structure.json`, `03-font-sizing.json`, `04-spacing.json` | Professional and above |
-| A brand and its sub-brands, switchable on any frame | The same four files from `<name>-modes/` | Its README says which plan; usually Organization |
+| One brand, with light and dark, font sizing, spacing and pointer modes | `01-color.json`, `02-structure.json`, `03-font-sizing.json`, `04-spacing.json`, `05-pointer.json` | Professional and above |
+| A brand and its sub-brands, switchable on any frame | The same five files from `<name>-modes/` | Its README says which plan; usually Organization |
 
 The `-modes` README counts the modes in each collection and names the smallest plan that holds them. When your plan is too small, import each brand's own folder into its own file instead.
 
@@ -50,10 +50,10 @@ The `-modes` README counts the modes in each collection and names the smallest p
 2. Go to the **Import** tab.
 3. Import the files from the `native-variables/` folder of your choice:
    - For one collection, choose `dfh-unified.json`. It makes a collection called Design For Humans with one mode: light colours, fixed type, and spacing at the large end of its range.
-   - For four collections, import `01-color.json`, `02-structure.json`, `03-font-sizing.json` and `04-spacing.json`, in that order, as each one points at variables in the ones before it.
+   - For five collections, import `01-color.json`, `02-structure.json`, `03-font-sizing.json`, `04-spacing.json` and `05-pointer.json`, in that order, as each one points at variables in the ones before it.
 4. Open **Local variables** and check the collections are there, each grouped into `01 Global`, `02 Semantic` and `03 Component`.
 
-The four collections each do one job:
+The five collections each do one job:
 
 | Collection | Modes | Holds |
 | :--- | :--- | :--- |
@@ -61,6 +61,7 @@ The four collections each do one job:
 | Structure | One | Fixed spacing, radii, border widths, the fixed type steps and each fluid step's large end, weights and families, shadow sizes and component sizes |
 | Font sizing | Fixed, Fluid Large, Compact | Each text role's size and line height in pixels (`body/font-size`, `body/line-height`), and the component tokens that read them. Components that keep one size at every width, like Badge and Chip, stay in Structure |
 | Spacing | Fixed, Fluid Large | The spacing roles (`breathe`, `cushion`) and the component tokens that read them |
+| Pointer | Touch, Fine | The hit area every control keeps (`spacing/target-min`) and the component tokens that read it, such as a compact Header bar's height |
 
 To set a frame's modes, select it and pick one for each collection under **Appearance** in the right-hand panel. Everything inside follows until a frame inside picks its own. With a `-modes` set, the Color menu switches brand too: course Light, course Dark and so on.
 
@@ -83,13 +84,15 @@ Spacing grows with the screen whatever the type does, so it has modes of its own
 | Fixed | The small end of the spacing range | A phone-width frame, and any compact frame |
 | Fluid Large | The large end | A desktop-width frame |
 
+Pointer matches the targets the product chooses. Touch is the default: every control keeps a 48px hit area, and a bar of controls is never shorter. Fine matches `.fine:targets-sm`, a product that has opted into 32px targets for a mouse, and lets compact bars shrink to match. Leave it on Touch unless the product makes that choice.
+
 So a phone mock-up is Fixed and Fixed, and a desktop one is Fixed type with Fluid Large spacing. An article inside the desktop frame takes Fluid Large type. Container sizes (`.font-sizing-cq`) grow the same way as fluid ones, by the container's width rather than the screen's: give the container's frame the mode it would have at that width.
 
 ## 4b. Import with Tokens Studio
 
 1. Install **Tokens Studio for Figma** and open it in your file.
 2. Choose **Tools**, then **Load from file**, and pick `tokens-studio/figma-tokens.json` from your theme's folder.
-3. Under **Themes**, pick a theme from each group: **Color** (Light or Dark), **Font sizing** (Fixed, Fluid Large or Compact) and **Spacing** (Fixed or Fluid Large). Theme groups may need Tokens Studio's paid plan. On the free plan, switch the token sets on and off instead: `semantic-light` or `semantic-dark`, one `font-` set and one `spacing-` set.
+3. Under **Themes**, pick a theme from each group: **Color** (Light or Dark), **Font sizing** (Fixed, Fluid Large or Compact) and **Spacing** (Fixed or Fluid Large) and **Pointer** (Touch or Fine). Theme groups may need Tokens Studio's paid plan. On the free plan, switch the token sets on and off instead: `semantic-light` or `semantic-dark`, one `font-` set, one `spacing-` set and one `pointer-` set.
 4. Choose **Styles & Variables**, then **Export styles** to create the text styles and shadow effects, or **Export variables** for variables.
 
 The text styles come from the same type theme as the CSS. Each one reads its role's size, so it follows the Font sizing you pick, and a copy under `compact/` keeps the compact size for files without themes. Line heights are percentages, so they stay right at every size. A variable can't hold a percentage of the size, so if you build a style from the Variables collections instead, bind its line height to the role's `line-height` in Font sizing, which is in pixels for each mode.
