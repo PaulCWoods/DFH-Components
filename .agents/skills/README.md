@@ -13,6 +13,7 @@ There are two audiences.
 | `composition` | Composing screens: which component fits, options before CSS, layout primitives, text atoms, density, narrow screens and states |
 | `ui-guidance` | Interface copy and interaction choices: Buttons and links, forms, feedback, dialogs or pages, navigation, tables |
 | `design-principles` | Grouping, hierarchy, interaction laws and usability heuristics, each tied to what the library does about it |
+| `site-css` | A product's own CSS beside the library: when to write any, layers, selectors, Tier 2 values, its own tokens, comments and formatting |
 
 **Repo skills** are for agents maintaining the library itself. They may point at repo files, scripts and `AGENTS.md`.
 

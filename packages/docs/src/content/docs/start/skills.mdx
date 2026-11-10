@@ -1,12 +1,12 @@
 ---
 title: Skills for AI agents
-summary: Five skills that teach a coding agent to build with the library the way its docs do, versioned with the CSS.
+summary: Six skills that teach a coding agent to build with the library the way its docs do, versioned with the CSS.
 order: 20
 ---
 import pkg from '../../../../../css/package.json';
 export const version = pkg.version;
 export const install = `v=${pkg.version}
-for s in accessibility tokens composition ui-guidance design-principles; do
+for s in accessibility tokens composition ui-guidance design-principles site-css; do
   mkdir -p .claude/skills/$s
   curl -fsSL https://components.designforhumans.blog/skills/$v/$s/SKILL.md -o .claude/skills/$s/SKILL.md
 done`;
@@ -22,6 +22,7 @@ A coding agent that hasn't read these docs writes generic markup: a `div` that s
 | `composition` | Composing screens: which component fits, options before CSS, layout primitives, text atoms, density, narrow screens and states. |
 | `ui-guidance` | Interface copy and interaction choices: Buttons and links, forms, feedback, dialogs or pages, navigation, tables. |
 | `design-principles` | Grouping, hierarchy, interaction laws and usability heuristics, each tied to what the library does about it. |
+| `site-css` | Your own CSS beside the library: when to write any, layers, selectors, Tier 2 values, your own tokens, comments and formatting. |
 
 Each is one `SKILL.md` file: a name, a description that tells the agent when to load it, and the guidance. They link to these docs rather than repeating them.
 

@@ -157,6 +157,7 @@ DFH-Components/
         ├── composition/           # Shared: composing screens from the library
         ├── ui-guidance/           # Shared: interface copy and interaction choices
         ├── design-principles/     # Shared: grouping, hierarchy, interaction laws, heuristics
+        ├── site-css/              # Shared: a product's own CSS beside the library
         ├── component-authoring/   # Repo: writing component CSS and running a component pass
         ├── token-pipeline/        # Repo: themes, generators, gates, Tier 3 defaults, Figma export
         ├── css-commenting/        # Repo: comments and formatting in library CSS

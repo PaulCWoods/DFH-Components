@@ -33,7 +33,7 @@ Stop at the first answer that fits:
    - `.ui-compact` on a dense panel.
 4. **A token sets it.** Use the component's own token (`--card-radius`, `--dialog-width`, `--avatar-bg`), on the element, a region or the theme. Load the `tokens` skill.
 5. **Layout or a utility places it** (section 2).
-6. **Only then is it your own component.** Build it from semantic tokens, text atoms and layout primitives, in the `site` layer. Don't copy a library component's CSS to make a variant; set its tokens under a class of your own.
+6. **Only then is it your own component.** Build it from semantic tokens, text atoms and layout primitives, in the `site` layer. Don't copy a library component's CSS to make a variant; set its tokens under a class of your own. Load the `site-css` skill before writing it.
 
 ## 2. Layout
 
