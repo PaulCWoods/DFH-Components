@@ -72,6 +72,16 @@ Patterns the deck needed that the library lacks. Each waits for its component's 
 - **Range scale labels:** start and end labels under a slider (elapsed and remaining time, a price range, 0 to 100). Range lockup shows one value only.
 - **Three-zone bar:** start, a true centre and end, for a media player, an editor toolbar or a wizard footer. Header bars and between-clusters don't centre the middle part. Cadence uses `.deck-dock`, a `1fr auto 1fr` grid.
 
+### Found in the Course rebuild (10 November 2026)
+
+To fix before v1; the Blog rebuild will likely meet them too.
+
+- **Card collapses when aligned:** a Card is an inline-size container, so it has no width of its own. With `self-start` in a column Stack it shrank to 0 (the cart totals vanished). Keep it stretched in the inline axis when it's aligned, and document it in §10.
+- **Password field with a show button:** none in the library. The Course styles WooCommerce's toggle (`.password-input`, `.show-password-input`) for now. Any login or account form needs it.
+- **Prose and wrapped blocks:** Prose spaces only the elements it lists (`p`, `table`, `ul` …). A `div` gets no margin, and its last child drops its own as `:last-child`, so the block after a `.table-container` or any plain `div` sits against it (measured: 0px, where everything else gets 16px). `.prose-end` blocks are spaced correctly. Prose should space any direct child, and test it with a wrapped Table, a `div` and a `.prose-end` block.
+- **A Tab's labels without `.tab__text`:** a Tab with no `.tab__text` is treated as icon-only and loses its gap, so a visible label with a Badge beside it touched the Badge (the Course's Cart tab). Decide icon-only by a visually hidden label (`.sr-only`) instead, so visible text needs no extra wrapper.
+- **Choice with the input beside its label:** §7b documents only `label.choice` around its input. WooCommerce's payment scripts left a radio inside its label unchecked, for a reason not found; `div.choice` holding the input and a `label for` works. Document the sibling form as supported (and check the CSS styles it the same: the hit area must still cover the label).
+
 ### Colour palette tool
 
 Build a tool that generates the Tier 1 colour ramps from OKLCH, so every ramp behaves the same way. It must also check contrast at build time and write the ramps out as hex for Figma.

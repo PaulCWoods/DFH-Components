@@ -54,7 +54,7 @@ What each component pass removed and what replaced it, moved here from the publi
 - `.app__footer`; the footer's own padding (the bars have it); `padding-0` and border utilities on it.
 
 ## Utilities
-- every third name and synonym; `font-size-*`, `line-height-*`, `fs-*`, `fw-*`; numeric weights and z-indexes; `width-dialog`, `-popover`, `-sidebar`, `-prose`, `-shell`, `-wide`, `block-*`, `height-*`, `size-grow`; `bg-effect-*`, `bg-blurred-*`, palette shadow colours; `.backdrop`, `.focus-none`, `.outline-none`; `ui-dense`, `ui-default`, `spacing-mode-*`; the left/right names. `border-muted` and `border-quiet` now set the colour only, `.border` is 1px, and `.text-nowrap` sets `text-wrap`.
+- every third name and synonym; `font-size-*`, `line-height-*`, `fs-*`, `fw-*`; numeric weights and z-indexes; `width-dialog`, `-popover`, `-sidebar`, `-prose`, `-shell`, `-wide`, `block-*`, `height-*`, `size-grow`; `bg-effect-*`, `bg-blurred-*`, palette shadow colours; `.backdrop`, `.focus-none`, `.outline-none`; `ui-dense`, `ui-default`, `spacing-mode-*`; the left/right names. `border-muted` and `border-quiet` now set the colour only, `.text-nowrap` sets `text-wrap`. Later: `.border-md` and `.border-lg` (use `.border-width-medium` or `-thick` with `.border` or a side); `.border` draws the theme's `--border-width` (medium in both themes), not 1px (`.border-width-thin` for 1px).
 
 ## Stack, Inline and Cluster
 - `.inline-responsive`, `--{size}`, `--between`, `--end`, `--tight`, `--cushioned`, `--ruled`: `.stack` with `@{size}:inline`, `.stack--tight`, `--cushioned`, `--ruled`, and the `--justify-content` hook.

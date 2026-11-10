@@ -2,24 +2,30 @@
    Design For Humans: Border, Radius & Rule Utilities
    --------------------------------------------------------------------------
    Borders on logical properties, from Tier 2 border tokens.
-   .border draws a 1px solid border in --border-color; the style and colour
-   classes change one part of it, so they combine: .border.border-dashed.border-muted.
+   .border and the sides draw the theme's border: --border-width, solid,
+   --border-color. The width, style and colour classes change one part of it
+   on their own element, so they combine with .border or a side:
+   .border-t.border-dashed.border-width-thin.border-muted.
+   The width and style classes set private hooks that don't inherit, so a
+   border inside the element keeps the theme's.
    ========================================================================== */
+
+@property --_border-width {
+    syntax: "*";
+    inherits: false;
+}
+
+@property --_border-style {
+    syntax: "*";
+    inherits: false;
+}
 
 /* --------------------------------------------------------------------------
    1. Borders
    -------------------------------------------------------------------------- */
 
 :where(.border) {
-    border: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
-}
-
-:where(.border-md) {
-    border: var(--border-width-medium, 2px) solid var(--border-color, currentColor);
-}
-
-:where(.border-lg) {
-    border: var(--border-width-thick, 4px) solid var(--border-color, currentColor);
+    border: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 :where(.border-none, .border-0) {
@@ -32,27 +38,27 @@
    -------------------------------------------------------------------------- */
 
 :where(.border-block, .border-y) {
-    border-block: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+    border-block: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 :where(.border-inline, .border-x) {
-    border-inline: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+    border-inline: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 :where(.border-block-start, .border-t) {
-    border-block-start: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+    border-block-start: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 :where(.border-block-end, .border-b) {
-    border-block-end: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+    border-block-end: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 :where(.border-inline-start, .border-s) {
-    border-inline-start: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+    border-inline-start: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 :where(.border-inline-end, .border-e) {
-    border-inline-end: var(--border-width-thin, 1px) solid var(--border-color, currentColor);
+    border-inline-end: var(--_border-width, var(--border-width, 1px)) var(--_border-style, solid) var(--border-color, currentColor);
 }
 
 
@@ -60,25 +66,42 @@
    3. Style
    -------------------------------------------------------------------------- */
 
-:where(.border-style-solid, .border-solid) {
-    border-style: solid;
+:where(.border-style-solid) {
+    --_border-style: solid;
 }
 
 :where(.border-style-dashed, .border-dashed) {
-    border-style: dashed;
+    --_border-style: dashed;
 }
 
 :where(.border-style-dotted, .border-dotted) {
-    border-style: dotted;
+    --_border-style: dotted;
 }
 
 :where(.border-style-double, .border-double) {
-    border-style: double;
+    --_border-style: double;
 }
 
 
 /* --------------------------------------------------------------------------
-   4. Colour
+   4. Widths
+   -------------------------------------------------------------------------- */
+
+:where(.border-width-thin) {
+    --_border-width: var(--border-width-thin, 1px);
+}
+
+:where(.border-width-medium) {
+    --_border-width: var(--border-width-medium, 2px);
+}
+
+:where(.border-width-thick) {
+    --_border-width: var(--border-width-thick, 4px);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Colour
    Colour only: pair with .border or a side.
    -------------------------------------------------------------------------- */
 
@@ -108,7 +131,7 @@
 
 
 /* --------------------------------------------------------------------------
-   5. Corner radius
+   6. Corner radius
    -------------------------------------------------------------------------- */
 
 :where(.rounded) {

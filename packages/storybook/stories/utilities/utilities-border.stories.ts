@@ -11,17 +11,17 @@ const meta: Meta = {
 Borders, corner radius and rules, on logical properties. Defined in \`utilities/border.css\`.
 
 ### Borders
-\`.border\` draws a 1px solid border in \`--border-color\` (the text colour unless set). The style and colour classes change one part of it, so they combine:
+\`.border\` draws the theme's border: \`--border-width\` (the medium width in both themes), solid, in \`--border-color\` (the text colour unless set). The width, style and colour classes change one part of it on their own element, so they combine, and a border nested inside keeps the theme's:
 
 \`\`\`html
 <div class="border border-dashed border-muted rounded-md p-md">…</div>
-<div class="border-b border-quiet">…</div>
+<div class="border-b border-width-thin border-quiet">…</div>
 \`\`\`
 
 | Verbose | Shorthand | Sets |
 | :--- | :--- | :--- |
-| \`.border\` | – | a 1px border on every side |
-| \`.border-md\`, \`.border-lg\` | – | 2px and 4px |
+| \`.border\` | – | the theme's border on every side |
+| \`.border-width-thin\` | – | the width (also medium, thick) |
 | \`.border-none\` | \`.border-0\` | no border |
 | \`.border-block-start\` | \`.border-t\` | the block-start side only (also \`-b\`, \`-s\`, \`-e\`, \`-x\`, \`-y\`) |
 | \`.border-style-dashed\` | \`.border-dashed\` | the style (also solid, dotted, double) |
@@ -47,7 +47,7 @@ const box = (cls: string, label = `.${cls.split(' ').join('.')}`) =>
 export const Playground: Story = {
   args: { width: 'border', style: 'solid', colour: 'default', radius: 'md' },
   argTypes: {
-    width: { control: 'inline-radio', options: ['border', 'border-md', 'border-lg'] },
+    width: { control: 'inline-radio', options: ['border', 'border border-width-thin', 'border border-width-medium', 'border border-width-thick'] },
     style: { control: 'inline-radio', options: ['solid', 'dashed', 'dotted', 'double'] },
     colour: { control: 'select', options: ['default', 'muted', 'quiet', 'accent', 'success', 'warning', 'danger'] },
     radius: { control: 'select', options: ['none', 'sm', 'md', 'lg', 'xl', 'full'] },
@@ -61,11 +61,12 @@ export const Playground: Story = {
 };
 
 export const WidthsAndStyles: Story = {
-  parameters: { docs: { description: { story: 'Three widths and four styles.' } } },
+  parameters: { docs: { description: { story: 'The theme width, three widths and four styles; a width or style class changes its own element only, so the border nested in the last box keeps the theme\'s.' } } },
   render: () => `
     <div class="grid grid--2xs">
-      ${['border', 'border-md', 'border-lg'].map((c) => box(`${c} rounded-md`)).join('')}
-      ${['dashed', 'dotted', 'double'].map((s) => box(`border-md border-${s} rounded-md`)).join('')}
+      ${['border', 'border border-width-thin', 'border border-width-medium', 'border border-width-thick'].map((c) => box(`${c} rounded-md`)).join('')}
+      ${['dashed', 'dotted', 'double'].map((s) => box(`border border-${s} rounded-md`)).join('')}
+      <div class="border border-width-thick border-dashed rounded-md p-md"><div class="border-t pt-sm"><p class="small-text font-mono">.border-t inside</p></div></div>
     </div>`,
 };
 
@@ -89,10 +90,10 @@ export const Colours: Story = {
     <div class="grid grid--2xs">
       ${box('border border-muted rounded-md')}
       ${box('border border-quiet rounded-md')}
-      ${box('border-md border-accent rounded-md', 'Accent: featured')}
-      ${box('border-md border-success rounded-md', 'Success: watered')}
-      ${box('border-md border-warning rounded-md', 'Warning: dry soil')}
-      ${box('border-md border-danger rounded-md', 'Danger: frost tonight')}
+      ${box('border border-accent rounded-md', 'Accent: featured')}
+      ${box('border border-success rounded-md', 'Success: watered')}
+      ${box('border border-warning rounded-md', 'Warning: dry soil')}
+      ${box('border border-danger rounded-md', 'Danger: frost tonight')}
     </div>`,
 };
 
