@@ -102,7 +102,7 @@ Columns that fill the width. Items are never narrower than a minimum width, so t
 | `@xs:` … `@7xl:` + `grid--N-col` | The column count once the nearest container reaches the size (Tailwind's container scale: `xs` 20rem, `sm` 24, `md` 28, `lg` 32, `xl` 36, `2xl` 42, `3xl` 48, `4xl` 56, `5xl` 64, `6xl` 72, `7xl` 80); one column below |
 | `--carousel` | One row that scrolls and snaps, with a peek of the next item |
 | `@max-3xl:grid--carousel` | A carousel only in a container narrower than 48rem |
-| `--carousel-bleed` | The carousel runs into the page's cushion, to the screen edge |
+| `--carousel-bleed` | The carousel runs into the page's cushion, to the screen edge. A carousel straight inside a Wrapper does this on its own, into the Wrapper's gutter |
 | `--tight`, `--cushioned`, `--ruled` | No gap, the cushion step, a rule in each gap |
 
 ### Further rules

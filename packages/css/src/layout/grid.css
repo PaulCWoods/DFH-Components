@@ -546,6 +546,14 @@
     > :where(*) {
         scroll-snap-align: var(--_carousel-snap-align);
     }
+
+    /* Straight inside a Wrapper, it runs into the gutter, to the screen edge
+       (a flush or nested Wrapper's gutter is 0) */
+    :where(.wrapper) > & {
+        margin-inline: calc(var(--_wrapper-gutter, 0px) * -1);
+        padding-inline: var(--_wrapper-gutter, 0px);
+        scroll-padding-inline: var(--_wrapper-gutter, 0px);
+    }
 }
 
 /* A carousel only in a container narrower than 48rem */
@@ -571,6 +579,12 @@
 
         > :where(*) {
             scroll-snap-align: var(--_carousel-snap-align);
+        }
+
+        :where(.wrapper) > & {
+            margin-inline: calc(var(--_wrapper-gutter, 0px) * -1);
+            padding-inline: var(--_wrapper-gutter, 0px);
+            scroll-padding-inline: var(--_wrapper-gutter, 0px);
         }
     }
 }
