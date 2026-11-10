@@ -560,7 +560,7 @@ const resolveRef = (ref, files, prefix) => {
 
 /* --------------------------------------------------------------------------
    Preview: the custom properties a theme sets, for a live page
-   Same names and clamp() maths as compile-tokens.js, so a page that loads
+   Same names and clamp() maths as build-tokens.js, so a page that loads
    the library and then these values shows the theme without a rebuild.
    -------------------------------------------------------------------------- */
 export const fluidClamp = (min, max, [minVp, maxVp], unit = 'vi') => {

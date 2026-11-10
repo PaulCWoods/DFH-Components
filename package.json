@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepare": "husky || true",
-    "build:tokens": "node packages/figma-sync/compile-tokens.js",
+    "build:tokens": "node packages/theme-engine/bin/build-tokens.js",
     "export:figma": "node packages/figma-sync/export-figma-tokens.js",
     "build:palette": "node packages/theme-engine/bin/build-palette.js",
     "build:type": "node packages/theme-engine/bin/build-type.js",

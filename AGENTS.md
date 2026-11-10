@@ -122,10 +122,9 @@ DFH-Components/
 │   │   │   ├── lib/nav.ts     # Sections and pages from the collection
 │   │   │   └── pages/         # Routes: the home page and /docs/[...slug]
 │   │   └── public/            # Public assets (icons.svg)
-│   ├── theme-engine/          # Builds the tokens from the theme files and gates Tier 2 contrast (core of the future Token Designer)
+│   ├── theme-engine/          # @design-for-humans/theme-engine (MIT): builds the tokens from the theme files, runs the gates, compiles variables.css (bin/build-tokens.js), the theme format and sub-brands
 │   ├── token-designer/        # Token Designer prototype (Vite app): edit a theme in tokens/themes visually, with live ramps, contrast and preview
-│   ├── figma-sync/            # Token compilation & Figma export tooling
-│   │   ├── compile-tokens.js      # Node token compiler (W3C DTCG -> CSS variables)
+│   ├── figma-sync/            # Figma export tooling
 │   │   ├── export-figma-tokens.js # Figma exporter (Tokens Studio & Honza Toman Variables)
 │   │   └── dist/
 │   │       ├── tokens-studio/     # Tokens Studio format (figma-tokens.json)
@@ -410,7 +409,7 @@ The markup docs also feed the docs site (`packages/docs`, plan in `docs/audit/do
 - **Semantic Fallbacks in CSS:** When using component tokens, always supply semantic fallbacks: `var(--component-x, var(--<domain>-x, <basic-terminal-fallback>))`.
 - **Dual-Bridge Strategy (Web & Figma):**
   - Token source (`1-global.json`) contains the pure modular scale (`-2` to `8`) without web math or `fluid-N` clutter.
-  - Web compiler (`compile-tokens.js`) writes fluid sizes three ways, oldest first so each newer one wins where it's supported: `clamp()` in `:root`, then `progress()` in `@supports (opacity: progress(1px, 0px, 1px))`, then the `@function`s in `@supports at-rule(@function) and (opacity: progress(1px, 0px, 1px))`. When a method becomes Baseline Widely Available, drop the one before it. A theme's CSS (`build:themes`) repeats a changed token in every `:root` block that sets it, in the same order, so a theme linked after the library keeps all three.
+  - Web compiler (`theme-engine/bin/build-tokens.js`) writes fluid sizes three ways, oldest first so each newer one wins where it's supported: `clamp()` in `:root`, then `progress()` in `@supports (opacity: progress(1px, 0px, 1px))`, then the `@function`s in `@supports at-rule(@function) and (opacity: progress(1px, 0px, 1px))`. When a method becomes Baseline Widely Available, drop the one before it. A theme's CSS (`build:themes`) repeats a changed token in every `:root` block that sets it, in the same order, so a theme linked after the library keeps all three.
   - Figma exporter (`export-figma-tokens.js`) converts all tokens to static pixel floats/dimensions and native shadows for $0 free-tier Tokens Studio and Figma Variables.
 - **Token Editing:** To add or update tokens, edit `tokens/1-global.json`, `tokens/2-semantic.json`, or `tokens/3-component.json` (with its fallback in the CSS), then execute:
   ```bash

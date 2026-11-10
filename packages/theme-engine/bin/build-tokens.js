@@ -1,11 +1,22 @@
-const fs = require('fs');
-const path = require('path');
+#!/usr/bin/env node
+/* ==========================================================================
+   npm run build:tokens
+   --------------------------------------------------------------------------
+   Compiles Tier 1 and Tier 2 of tokens/*.json (W3C DTCG) into CSS custom
+   properties in packages/css/src/variables.css.
+   ========================================================================== */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const here = path.dirname(fileURLToPath(import.meta.url));
 
 // Paths configuration: the library's tokens and variables.css, or another
 // theme's with --tokens <dir> --out <file> (build:themes)
 const arg = (name) => { const i = process.argv.indexOf(name); return i > 0 ? path.resolve(process.argv[i + 1]) : null; };
-const TOKENS_DIR = arg('--tokens') ?? path.join(__dirname, '../../tokens');
-const OUTPUT_FILE = arg('--out') ?? path.join(__dirname, '../css/src/variables.css');
+const TOKENS_DIR = arg('--tokens') ?? path.join(here, '../../../tokens');
+const OUTPUT_FILE = arg('--out') ?? path.join(here, '../../css/src/variables.css');
 
 /**
  * Resolves token references inside any string expression.

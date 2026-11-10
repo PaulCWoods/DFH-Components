@@ -27,7 +27,7 @@ const src = join(root, 'packages/css/src');
 
 /* Tier 3 names and values, from the JSON */
 const tier3 = new Map();
-/* A token's custom property name, as compile-tokens.js writes it */
+/* A token's custom property name, as build-tokens.js writes it */
 const nameOf = (path) => `--${path.replace(/\./g, '-').replace(/minus-(\d+)/g, '-$1').replace(/-default(-|$)/, '$1')}`;
 const weights = { thin: '100', light: '300', regular: '400', normal: '400', medium: '500', semibold: '600', bold: '700', black: '900' };
 const walk = (node, path) => {

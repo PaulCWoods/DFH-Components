@@ -7,8 +7,8 @@
    ========================================================================== */
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { buildPalette, check, withFixed, tokenVar, scaleSteps, fluidSteps, styleSizes, styleLeading, minSize, ceilingSize, spaceSteps } from '../../../theme-engine/src/index.js';
-import { readTheme, themeConfig } from '../../../theme-engine/src/theme-files.js';
+import { buildPalette, check, withFixed, tokenVar, scaleSteps, fluidSteps, styleSizes, styleLeading, minSize, ceilingSize, spaceSteps } from '@design-for-humans/theme-engine';
+import { readTheme, themeConfig } from '@design-for-humans/theme-engine/theme-files';
 
 /* The repo root: the nearest folder above the build that holds the themes */
 const findRoot = (dir = process.cwd()) => (existsSync(resolve(dir, 'tokens/themes.json')) || dir === dirname(dir) ? dir : findRoot(dirname(dir)));

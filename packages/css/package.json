@@ -2,7 +2,25 @@
   "name": "@design-for-humans/components-css",
   "version": "0.5.3",
   "private": true,
+  "description": "Design For Humans: an accessible, token-driven CSS component library. Native HTML, cascade layers, container queries and no JavaScript.",
+  "license": "MIT",
+  "author": "Paul Charles Woods",
+  "homepage": "https://components.designforhumans.blog/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulCWoods/DFH-Components.git",
+    "directory": "packages/css"
+  },
+  "style": "src/index.css",
+  "exports": {
+    ".": "./src/index.css",
+    "./*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ],
   "scripts": {
-    "build:tokens": "node ../figma-sync/compile-tokens.js"
+    "build:tokens": "node ../theme-engine/bin/build-tokens.js"
   }
 }

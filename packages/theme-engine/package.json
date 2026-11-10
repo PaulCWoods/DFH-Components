@@ -1,12 +1,30 @@
 {
   "name": "@design-for-humans/theme-engine",
-  "version": "0.1.0",
+  "version": "0.5.3",
   "private": true,
-  "description": "Builds the Tier 1 colour ramps from a theme file and checks every Tier 2 pairing for contrast; builds the type scale and text styles. The core of the Token Designer.",
+  "description": "Builds a Design For Humans theme into design tokens: colour ramps and roles, the type scale, spacing, shape and motion, each checked by its gate (contrast, order, targets), and sub-brands scoped to a class. Also the theme format's schema and checker.",
+  "license": "MIT",
+  "author": "Paul Charles Woods",
+  "homepage": "https://components.designforhumans.blog/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulCWoods/DFH-Components.git",
+    "directory": "packages/theme-engine"
+  },
   "type": "module",
   "main": "src/index.js",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./src/index.js",
+    "./theme-files": "./src/theme-files.js",
+    "./font-files": "./src/font-files.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=22.12"
   },
   "bin": {
     "build-palette": "bin/build-palette.js",

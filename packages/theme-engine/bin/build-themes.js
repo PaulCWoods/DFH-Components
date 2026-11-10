@@ -30,7 +30,7 @@ const write = (p, data) => {
   mkdirSync(dirname(at(p)), { recursive: true });
   writeFileSync(at(p), typeof data === 'string' ? data : JSON.stringify(data, null, 2));
 };
-const compile = (tokens, out) => execFileSync('node', [at('packages/figma-sync/compile-tokens.js'), ...(tokens ? ['--tokens', tokens, '--out', out] : [])], { stdio: 'ignore' });
+const compile = (tokens, out) => execFileSync('node', [at('packages/theme-engine/bin/build-tokens.js'), ...(tokens ? ['--tokens', tokens, '--out', out] : [])], { stdio: 'ignore' });
 
 const config = themeConfig(root);
 /* Every theme file, read and checked against the format before anything is built */

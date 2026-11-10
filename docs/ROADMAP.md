@@ -18,11 +18,10 @@ Sizes are rough: **S** fits in an afternoon, **M** is a component pass, **L** is
 
 Decisions and loose ends to settle before calling it v1.
 
-- **Repo split and licence (L):** split by what's paid, before the repo goes public.
+- **Repo split and licence (L):** split by what's paid, before the repo goes public. The plan is in [audit/repo-split.md](audit/repo-split.md).
   - **Public, MIT:** `packages/css`, the docs, Storybook, the shared skills, the theme format, and the engine core (palette, type, space, shape, motion, the gates, and `compile-tokens.js` moved out of `figma-sync`).
-  - **Private, in DFH-Components-Private:** the Pro server function, the Figma export, sub-brand and multi-theme builds, AI theme generation, the accessibility report and the Token Designer app.
+  - **Private, in DFH-Components-Private:** the Pro server function, the Figma export, AI theme generation, the accessibility report and the Token Designer app. Sub-brand builds stay public: the library's own themes are sub-brands. Pro gates making them in the hosted Designer.
 - **Licence files and a "What's free" page (S):** say plainly what's MIT, what the Figma kit costs, and what Pro adds.
-- **Figma, for the latest batch (M):** an Input Frame set (password and search) and italic placeholders. The sibling form of a choice may need nothing. Card stretch, Prose spacing and the Tab change are CSS only.
 - **Docs links to missing pages (S):** check the sidebar's `/components/atoms/badge`, `/components/layout/*` and `/recipes/*` links. Build each page or link to Storybook.
 
 ## Library candidates

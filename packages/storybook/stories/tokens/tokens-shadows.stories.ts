@@ -20,7 +20,7 @@ Designed in full compliance with **WCAG 2.2 Level AA / AAA** standards:
 - **1.4.11 Non-Text Contrast:** Multi-layer shadows provide depth and container boundary definition without requiring heavy solid borders on light and dark canvases.
 - **Forced Colors Mode:** In high-contrast or Windows High Contrast mode, shadows collapse cleanly to 0, ensuring no synthetic silhouettes obscure high-contrast content.
 
-Defined across \`tokens/2-semantic.json\` and compiled via \`packages/figma-sync/compile-tokens.js\` into \`packages/css/src/variables.css\`.
+Defined across \`tokens/2-semantic.json\` and compiled via \`packages/theme-engine/bin/build-tokens.js\` into \`packages/css/src/variables.css\`.
 
 ---
 

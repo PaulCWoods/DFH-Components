@@ -16,7 +16,7 @@
   - `1-global.json` (Tier 1: Global palettes, modular type scale `-2` to `8`, unit scales)
   - `2-semantic.json` (Tier 2: Functional UI roles using native `light-dark()`, surface, foreground, border, focus, shadows)
   - `3-component.json` (Tier 3: Component-specific tokens like button, dialog, popover, table)
-- **Token Compiler (`packages/figma-sync/compile-tokens.js`):**
+- **Token Compiler (`packages/theme-engine/bin/build-tokens.js`):**
   - Compiles tokens to `packages/css/src/variables.css`.
   - Generates fluid typography clamps, CSS Level 5 `@function` parameterized shadows, and light-dark variables.
 - **Figma Exporter (`packages/figma-sync/export-figma-tokens.js`):**
