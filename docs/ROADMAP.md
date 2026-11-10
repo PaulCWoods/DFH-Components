@@ -19,7 +19,6 @@ Sizes are rough: **S** fits in an afternoon, **M** is a component pass, **L** is
 Decisions and loose ends to settle before calling it v1.
 
 - **A README and a "What's free" page (S):** say plainly what's MIT, what the Figma kit costs, and what Pro adds. The `LICENSE` files are in place.
-- **Docs links to missing pages (S):** check the sidebar's `/components/atoms/badge`, `/components/layout/*` and `/recipes/*` links. Build each page or link to Storybook.
 
 ## Library candidates
 
