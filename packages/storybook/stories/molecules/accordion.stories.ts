@@ -152,6 +152,22 @@ export const Compact: Story = {
     </div>`,
 };
 
+export const IconStart: Story = {
+  name: 'Icon at the start',
+  parameters: {
+    docs: {
+      description: {
+        story: '`--icon-start` puts the state icon before the summary text, and the content lines up with the text. `--accordion-icon-position: start` on a container sets it for every accordion inside.',
+      },
+    },
+  },
+  render: () => `
+    <div class="stack max-w-md">
+      <div class="accordion-group">${three('accordion--icon-start')}</div>
+      <div class="accordion-group" style="--accordion-icon-position: start;">${three('accordion--plain')}</div>
+    </div>`,
+};
+
 export const ContainerFlags: Story = {
   name: 'Container flags',
   render: () => `

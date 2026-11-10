@@ -133,6 +133,7 @@ One disclosure: a native `<details>` whose `<summary>` names a section and whose
 | Prominence | default (a border, no surface of its own, the same open or closed), `--plain` (a rule above and below, no inline padding) | `--accordion-prominence: plain` |
 | Padding | default, `--flush` (no padding around the content) | |
 | Density | default, `--compact` | `--ui-sizing: compact` |
+| Icon | end (default), `--icon-start` (the state icon before the summary's text; the content lines up with the text) | `--accordion-icon-position: start` |
 
 Groups: `.accordion-group`, `.accordion-group--joined`.
 
@@ -169,6 +170,15 @@ No border or radius and no inline padding, so the summary lines up with the text
 </details>
 ```
 `--compact`, or any compact region (`.ui-compact`, `--ui-sizing: compact`), steps the padding (8px by 12px) and text down. The summary keeps its 48px target.
+
+## Icon at the start
+```html live width=md
+<details class="accordion accordion--icon-start">
+  <summary>Watering</summary>
+  <p class="text">Water at the base in the morning.</p>
+</details>
+```
+`--icon-start` puts the state icon before the summary's text, and the content lines up with the text after it. `--accordion-icon-position: start` on a container sets it for every Accordion inside.
 
 ## Flush content
 ```html live width=md

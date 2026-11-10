@@ -11,10 +11,14 @@
    | Prominence  | default, --plain       | --accordion-prominence: plain  |
    | Density     | default, --compact     | --ui-sizing: compact           |
    | Padding     | default, --flush       | none                           |
+   | Icon        | end, --icon-start      | --accordion-icon-position: start |
 
    Default is a bordered frame with no surface of its own, the same open or
    closed. --plain has no frame: a rule above and below, no inline padding,
    so the summary lines up with the text around it.
+
+   Icon: the state icon sits at the summary's end; --icon-start puts it
+   before the text, and the content lines up with the text after it.
 
    Groups: .accordion-group stacks accordions; --joined shares their borders.
    Plain accordions in a group sit one rule apart. name="…" on the <details>
@@ -62,6 +66,9 @@
   --_accordion-hover-bg: var(--accordion-hover-bg, var(--surface-translucent, transparent));
   --_accordion-icon-size: var(--accordion-icon-size, 1em);
   --_accordion-icon-stroke: var(--border-width, 2px);
+  --_accordion-icon-order: 0;
+  --_accordion-icon-push: auto;
+  --_accordion-content-indent: 0px;
   --_accordion-font-size: var(--body-fixed-font-size, inherit);
   --_accordion-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_accordion-transition: var(--accordion-transition, var(--duration-sm, 150ms));
@@ -87,6 +94,12 @@
     --_accordion-inset: var(--accordion-inset, 0px);
     --_accordion-bleed: max(0px, calc(var(--spacing, 1rem) / 2 - var(--_accordion-inset)));
     --_accordion-summary-radius: var(--radius-sm, 0.25rem);
+  }
+
+  @container style(--accordion-icon-position: start) {
+    --_accordion-icon-order: -1;
+    --_accordion-icon-push: 0px;
+    --_accordion-content-indent: calc(var(--_accordion-icon-size) + var(--_accordion-padding-inline));
   }
 
   /* Fixed type, whatever the page's mode */
@@ -150,7 +163,8 @@
     flex: none;
     inline-size: var(--_accordion-icon-size);
     block-size: var(--_accordion-icon-size);
-    margin-inline-start: auto;
+    order: var(--_accordion-icon-order);
+    margin-inline-start: var(--_accordion-icon-push);
     background:
       linear-gradient(currentColor, currentColor) center / 100% var(--_accordion-icon-stroke) no-repeat,
       linear-gradient(currentColor, currentColor) center / var(--_accordion-icon-stroke) 100% no-repeat;
@@ -193,7 +207,8 @@
 }
 
 :where(.accordion)::details-content {
-  padding-inline: var(--_accordion-content-inset);
+  padding-inline-start: calc(var(--_accordion-content-inset) + var(--_accordion-content-indent));
+  padding-inline-end: var(--_accordion-content-inset);
 }
 
 @supports (interpolate-size: allow-keywords) {
@@ -228,12 +243,21 @@
   --_accordion-summary-radius: var(--radius-sm, 0.25rem);
 }
 
+/* The state icon before the summary's text; the content lines up with the
+   text */
+:where(.accordion--icon-start) {
+  --_accordion-icon-order: -1;
+  --_accordion-icon-push: 0px;
+  --_accordion-content-indent: calc(var(--_accordion-icon-size) + var(--_accordion-padding-inline));
+}
+
 /* The content meets the frame, for what brings its own padding: a code block,
    a table, an image. Clipped so it keeps the frame's corners; a plain
    summary doesn't bleed past the clip. */
 :where(.accordion--flush) {
   --_accordion-bleed: 0px;
   --_accordion-content-inset: 0px;
+  --_accordion-content-indent: 0px;
   --_accordion-content-padding-end: 0px;
   overflow: clip;
 }

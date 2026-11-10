@@ -21,6 +21,14 @@
    rows; the button keeps its 48px hit area unless the product opts into
    fine-pointer targets).
 
+   Dividers: <li role="separator" class="divider"> between groups of items;
+   the tree places it across its width.
+
+   Collapsible groups: a nested list inside a <details> in the item. Its
+   <summary class="button"> is the group's own item, with the state icon at
+   its end; after a link to the group's page, it is the toggle alone, at the
+   end of the link's row, named in hidden text.
+
    <nav class="navigation-tree" aria-label="Documentation">
      <ol>
        <li class="navigation-tree__heading"><h2 class="micro-heading">Guides</h2></li>
@@ -106,8 +114,8 @@
     position: relative;
   }
 
-  /* A nested list starts under its parent's label */
-  :where(li)> :where(ol, ul) {
+  /* A nested list starts under its parent's label, in a group too */
+  :where(li, li > details) > :where(ol, ul) {
     margin-block-start: var(--_navigation-tree-gap);
     margin-inline-start: var(--_navigation-tree-inset);
   }
@@ -121,7 +129,7 @@
 /* ==========================================================================
    2. Items: buttons, full width, content at the start
    ========================================================================== */
-:where(.navigation-tree) :where(li)> :where(.button) {
+:where(.navigation-tree) :where(li, li > details) > :where(.button) {
   --_button-padding-inline: var(--_navigation-tree-padding);
   border-radius: 0;
   inline-size: 100%;
@@ -136,7 +144,7 @@
   }
 
   /* Not a link: text in the list, or a link that isn't available yet */
-  &:where(:not(a[href]), [aria-disabled="true"]):where(:not(.button--accent, .button--danger)) {
+  &:where(:not(a[href], summary), [aria-disabled="true"]):where(:not(.button--accent, .button--danger)) {
     --_button-tone: var(--_navigation-tree-muted-color);
   }
 
@@ -181,7 +189,7 @@
    ========================================================================== */
 /* The line drops from the parent's label; the children's rows start right
    after it */
-:where(.navigation-tree--ruled) :where(li)> :where(ol, ul) {
+:where(.navigation-tree--ruled) :where(li, li > details) > :where(ol, ul) {
   border-inline-start: var(--_navigation-tree-rule);
 }
 
@@ -209,7 +217,89 @@
 }
 
 /* ==========================================================================
-   5. Forced colours: the current item is Highlight (the Button's own
+   5. Dividers: the tree places the Divider atom between groups of items,
+   across its width
+   ========================================================================== */
+:where(.navigation-tree) :where(li.divider) {
+  margin-block: calc(var(--_navigation-tree-inset) / 2);
+}
+
+/* ==========================================================================
+   6. Collapsible groups (<details>)
+   The summary is a Button like the other items, with a plus whose upright
+   bar closes into a minus, as in the Accordion. Its ::after is the Button's
+   hit area, so the icon is ::before, moved to the end.
+   ========================================================================== */
+:where(.navigation-tree) :where(li > details) > :where(summary) {
+  --_navigation-tree-icon-size: var(--navigation-tree-icon-size, 1em);
+  --_navigation-tree-icon-stroke: var(--border-width, 2px);
+
+  list-style: none;
+  cursor: pointer;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    flex: none;
+    order: 1;
+    inline-size: var(--_navigation-tree-icon-size);
+    block-size: var(--_navigation-tree-icon-size);
+    margin-inline-start: auto;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% var(--_navigation-tree-icon-stroke) no-repeat,
+      linear-gradient(currentColor, currentColor) center / var(--_navigation-tree-icon-stroke) 100% no-repeat;
+    transition: background-size var(--duration-sm, 150ms) var(--ease-in-out, ease-in-out);
+  }
+
+  /* Forced colours drop gradients, so the icon keeps its own colours */
+  @media (forced-colors: active) {
+    &::before {
+      forced-color-adjust: none;
+    }
+  }
+}
+
+:where(.navigation-tree) :where(li > details[open]) > :where(summary)::before {
+  background-size: 100% var(--_navigation-tree-icon-stroke), var(--_navigation-tree-icon-stroke) 0%;
+}
+
+/* After a link to the group's page, the summary is the toggle alone, at
+   the end of the link's row, which the link leaves room for. It is a full
+   target wide (or the Button's own size, if larger), so its hit area never
+   reaches over the link, with its icon in the item's padding. Both read the
+   size where the Button's own minimum is set. */
+:where(.navigation-tree) :where(li:has(> .button + details)) {
+  > :where(.button),
+  > :where(details) > :where(summary) {
+    --_navigation-tree-toggle-size: max(var(--_button-min-size), var(--spacing-target-min, var(--spacing-target, 3rem)));
+  }
+
+  > :where(.button) {
+    inline-size: calc(100% - var(--_navigation-tree-toggle-size));
+  }
+
+  > :where(details) > :where(summary) {
+    --target-gap-inline: 0px;
+
+    /* The icon keeps the item's padding, in line with a summary item's */
+    justify-content: flex-end;
+    inline-size: var(--_navigation-tree-toggle-size);
+    padding-inline: var(--_navigation-tree-padding);
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+
+    &::before {
+      margin-inline-start: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. Forced colours: the current item is Highlight (the Button's own
    forced-colours rule), so the rail is drawn in HighlightText on it
    ========================================================================== */
 @media (forced-colors: active) {
@@ -233,14 +323,14 @@
     --target-gap-block-start: 100vmax;
   }
 
-  > :where(ol, ul) > :where(li:last-child:not(:has(> ol, > ul)), li:has(+ .navigation-tree__heading):not(:has(> ol, > ul))) {
+  > :where(ol, ul) > :where(li:last-child:not(:has(> ol, > ul, > details[open])), li:has(+ .navigation-tree__heading):not(:has(> ol, > ul, > details[open]))) {
     --target-gap-inline-end: 100vmax;
     --target-gap-block-end: 100vmax;
   }
 }
 
 /* A nested list starts afresh too: its items have neighbours on every side */
-:where(.navigation-tree) :where(li) > :where(ol, ul) {
+:where(.navigation-tree) :where(li, li > details) > :where(ol, ul) {
   --target-gap-inline-start: initial;
   --target-gap-inline-end: initial;
   --target-gap-block-start: initial;

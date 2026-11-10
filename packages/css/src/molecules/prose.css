@@ -20,6 +20,10 @@
    .prose--body-alt sets paragraphs and lists in the alternate body family
    (--body-alt-font-family, a serif in both themes); headings keep theirs.
 
+   .prose--lead gives the first paragraph the large text's type, for an
+   article whose lead comes from a CMS and can't carry .large-text (its
+   type rule is with the Prose Elements in atoms/text.css).
+
    WCAG: 1.4.8 (text blocks held to --body-measure; no justified text),
    1.4.12 (spacing in em and tokens; no fixed heights), 1.4.10 (code blocks
    wrap rather than scroll).

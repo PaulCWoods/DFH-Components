@@ -33,7 +33,7 @@ It styles everything in its scope, whatever classes an element has, because CMSs
 
 ## Rules
 - **Which elements:** every element in the prose takes the prose look, whatever classes it has (a CMS's, such as WordPress's `wp-block-list`; a text atom on an element still wins for type). Components (`ul.cluster`, `.table`, `.divider`, a Card) and widgets go in a `.prose-end`. Links are the exception: a Link with a class is left alone.
-- **Anchors:** an element with an `id` keeps `--prose-scroll-margin` above it when scrolled to. A product with a sticky header adds the header height to that token.
+- **Anchors:** an element with an `id` keeps `--prose-scroll-margin` above it when scrolled to, below a sticky Header, which the page already clears.
 
 ## Article
 A real article starts at `<h1>`; this one starts at `<h3>` to fit the page around it.
@@ -104,7 +104,7 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 ## Options
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.prose` | `--body-serif`; it follows the sizing mode around it | `--font-sizing`, `--ui-sizing: compact`, `--link-prominence: subtle` |
+| `.prose` | `--body-alt`, `--lead`; it follows the sizing mode around it | `--font-sizing`, `--ui-sizing: compact`, `--link-prominence: subtle` |
 | `.prose-end` | | |
 
 ### Further rules
@@ -113,7 +113,8 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 - **Measure:** text blocks stop at `--body-measure` (66ch). Paragraphs wrap with `text-wrap: pretty`, headings with `balance`. Hyphenation is `--prose-hyphens` (`none`). The column width belongs to the Wrapper the prose sits in.
 - **Numerals:** oldstyle figures and hanging punctuation in paragraphs, lining figures elsewhere, tabular figures in Tables, a slashed zero in code.
 - **Links:** a bare link (no class) is a `.link`. `--link-prominence: subtle` on the prose or a region makes links body-coloured; the underline still marks them.
-- **Body serif:** `--body-serif` sets paragraphs, lists and description lists in the alternate body family (`--body-alt-font-family`, as `.font-serif` does); headings, captions, tables and code keep theirs.
+- **Body serif:** `--body-alt` sets paragraphs, lists and description lists in the alternate body family (`--body-alt-font-family`, as `.font-serif` does); headings, captions, tables and code keep theirs.
+- **Lead:** `--lead` gives the first paragraph that is a direct child of the prose the type of `.large-text`, in every sizing mode, for an article whose first paragraph comes from a CMS and can't carry a class. Where you write the markup, put `.large-text` on the paragraph instead.
 - **Lists:** lists are indented by `--prose-indent`. Nested ordered lists step decimal, lower-latin, lower-roman. In a `<dl>`, `dt` is strong and `dd` is indented.
 - **Rules and quotes:** an `hr` uses the Divider tokens. A `blockquote` has an inline-start rule (`--prose-blockquote-border-width`).
 - **Figures:** the caption is small text in `--prose-figcaption-color`, half a rhythm below the media.

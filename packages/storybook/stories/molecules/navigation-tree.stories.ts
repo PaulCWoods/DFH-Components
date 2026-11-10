@@ -27,7 +27,7 @@ Nested links to the sections of a site or a page: a docs sidebar, a table of con
 \`\`\`
 
 - **Current location:** \`aria-current\` on the link (\`page\` for a site, \`location\` or \`true\` for a table of contents). It shows bold text in the foreground colour, a tint and a square rail inside the button's start edge; other items are regular weight in a quieter colour. Nested lists, guide lines and headings all line up on the item label.
-- **Nesting** is nested lists inside the item. **Headings** are \`<li class="navigation-tree__heading">\` with a text atom.
+- **Nesting** is nested lists inside the item; in a \`<details>\`, the group collapses. **Dividers** are \`<li role="separator" class="divider">\`. **Headings** are \`<li class="navigation-tree__heading">\` with a text atom.
 - **Options:** \`--ruled\` (guide lines beside nested lists), \`--compact\` (32px rows; the button keeps its 48px hit area unless the product opts into fine-pointer targets).
 - **Not a menu:** a menu is actions in a popover; a tree is navigation with depth and a current location. **Not a tab list:** tabs switch views of one thing.
         `,
@@ -121,6 +121,78 @@ export const InACard: Story = {
         ])}
       </div>
     </article>`,
+};
+
+export const CollapsibleGroups: Story = {
+  name: 'Collapsible groups and dividers',
+  parameters: {
+    docs: {
+      description: {
+        story: 'A nested list in a `<details>` collapses. After a link to the group\'s page, the summary is the toggle alone, named in hidden text; a group without a page uses its summary as its item. `<li role="separator" class="divider">` separates groups.',
+      },
+    },
+  },
+  render: () => `
+    <article class="card" style="max-inline-size: 20rem;">
+      <header class="card__header"><h3 class="card__title heading">Lessons</h3></header>
+      <div class="card__body">
+        <nav class="navigation-tree navigation-tree--compact" aria-label="Course lessons">
+          <ol>
+            <li>
+              <a href="/lessons/basics" class="button"><span>Basics</span></a>
+              <details open>
+                <summary class="button"><span class="sr-only">Lessons in Basics</span></summary>
+                <ol>
+                  <li><a href="/lessons/basics/headings" class="button" aria-current="page"><span>Headings</span></a></li>
+                  <li><a href="/lessons/basics/links" class="button"><span>Links</span></a></li>
+                </ol>
+              </details>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <details>
+                <summary class="button"><span>Forms</span></summary>
+                <ol>
+                  <li><a href="/lessons/forms/labels" class="button"><span>Labels</span></a></li>
+                  <li><a href="/lessons/forms/errors" class="button"><span>Errors</span></a></li>
+                </ol>
+              </details>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </article>`,
+};
+
+export const RuledGroups: Story = {
+  name: 'Collapsible groups, ruled',
+  render: () => `
+    <div style="max-inline-size: 18rem;">
+      <nav class="navigation-tree navigation-tree--ruled" aria-label="Documentation, collapsible">
+        <ol>
+          <li>
+            <a href="#start" class="button"><span>Getting started</span></a>
+            <details>
+              <summary class="button"><span class="sr-only">Pages in Getting started</span></summary>
+              <ol>
+                <li><a href="#install" class="button"><span>Installation</span></a></li>
+              </ol>
+            </details>
+          </li>
+          <li>
+            <details open>
+              <summary class="button"><span>Components</span></summary>
+              <ol>
+                <li><a href="#atoms" class="button" aria-current="page"><span>Atoms</span></a></li>
+                <li><a href="#molecules" class="button"><span>Molecules</span></a></li>
+              </ol>
+            </details>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#accessibility" class="button"><span>Accessibility</span></a></li>
+        </ol>
+      </nav>
+    </div>`,
 };
 
 export const LongLabels: Story = {

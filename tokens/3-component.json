@@ -823,6 +823,11 @@
       "$value": "{foreground.muted}",
       "$type": "color",
       "$description": "Colour of a group heading"
+    },
+    "icon-size": {
+      "$value": "1em",
+      "$type": "dimension",
+      "$description": "The plus/minus state icon on a collapsible group's summary; follows the item text"
     }
   },
   "button": {
@@ -2070,7 +2075,7 @@
     "scroll-margin": {
       "$value": "{spacing.scroll-margin}",
       "$type": "dimension",
-      "$description": "Space kept above an anchored element when it is scrolled to. A product with a sticky header adds the header height here"
+      "$description": "Space kept above an anchored element when it is scrolled to, on top of a sticky Header, which the page already clears"
     }
   },
   "meter": {

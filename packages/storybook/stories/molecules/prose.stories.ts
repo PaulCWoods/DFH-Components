@@ -63,8 +63,13 @@ export const Playground: Story = {
 
 export const BodySerif: Story = {
   name: 'Body serif',
-  parameters: { docs: { description: { story: '`--body-serif`: paragraphs and lists in the alternate body family; headings keep theirs.' } } },
+  parameters: { docs: { description: { story: '`--body-alt`: paragraphs and lists in the alternate body family; headings keep theirs.' } } },
   render: () => `<div style="container-type: inline-size;"><article class="prose prose--body-alt">${article}</article></div>`,
+};
+
+export const Lead: Story = {
+  parameters: { docs: { description: { story: '`--lead`: the first paragraph takes the type of `.large-text`, for a lead that comes from a CMS and can\'t carry a class.' } } },
+  render: () => `<div style="container-type: inline-size;"><article class="prose prose--lead prose--body-alt font-sizing-fluid">${article}</article></div>`,
 };
 
 export const TextAndHeadings: Story = {

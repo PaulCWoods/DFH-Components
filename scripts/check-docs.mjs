@@ -122,8 +122,11 @@ const layoutProbe = `(() => {
 })()`;
 
 /* Standards decide, not the tool. Off: an <aside> in <main> is valid HTML and
-   ARIA (complementary is allowed there); only axe's best-practice rule objects */
-const axeRun = `axe.run(document, { resultTypes: ['violations'], rules: { 'landmark-complementary-is-top-level': { enabled: false } } }).then((r) => r.violations.map((v) => v.id + ' (' + v.nodes.length + '): ' + v.nodes.slice(0, 2).map((n) => n.target.join(' ') + (n.any[0]?.data?.contrastRatio ? ' ' + n.any[0].data.contrastRatio + ':1 ' + n.any[0].data.fgColor + ' on ' + n.any[0].data.bgColor : '')).join(', ')))`;
+   ARIA (complementary is allowed there); only axe's best-practice rule objects.
+   Off: a Divider in a list is <li role="separator">, which HTML (an <ol> holds
+   <li>s) and ARIA in HTML (separator is allowed on <li>) both permit; axe's
+   list rule wants every child to stay a list item */
+const axeRun = `axe.run(document, { resultTypes: ['violations'], rules: { 'landmark-complementary-is-top-level': { enabled: false }, list: { enabled: false } } }).then((r) => r.violations.map((v) => v.id + ' (' + v.nodes.length + '): ' + v.nodes.slice(0, 2).map((n) => n.target.join(' ') + (n.any[0]?.data?.contrastRatio ? ' ' + n.any[0].data.contrastRatio + ':1 ' + n.any[0].data.fgColor + ' on ' + n.any[0].data.bgColor : '')).join(', ')))`;
 
 const problems = [];
 const report = (line) => { problems.push(line); console.log(line); };

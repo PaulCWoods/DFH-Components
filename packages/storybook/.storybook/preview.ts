@@ -110,6 +110,13 @@ const preview: Preview = {
             id: 'landmark-complementary-is-top-level',
             enabled: false,
           },
+          // A Divider in a list is <li role="separator">: HTML (a list holds
+          // <li>s) and ARIA in HTML (separator is allowed on <li>) permit it;
+          // axe's list rule wants every child to stay a list item
+          {
+            id: 'list',
+            enabled: false,
+          },
         ],
       },
     },

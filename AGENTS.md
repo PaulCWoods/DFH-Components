@@ -435,7 +435,7 @@ The markup docs also feed the docs site (`packages/docs`, plan in `docs/audit/do
 - **Target Sizes:** Primary buttons and touch targets must meet `--button-min-size: var(--spacing-target)` (`3rem` / `48px`, exceeding WCAG 2.5.5). Small variants must meet at least `24x24px` (WCAG 2.5.8), and on coarse pointers keep a 48px hit area via a transparent `::after` or padding buffer.
 - **Intent Is Never Colour Alone (WCAG 1.4.1):** Every danger, warning, success, info or accent variant must also carry an icon, role or descriptive text.
 - **Automated Axe Audits:** Every Storybook story must pass `@storybook/addon-a11y` without contrast, labeling, or keyboard violations.
-- **Standards Decide, Not the Tool:** When axe fails something, check it against the HTML and ARIA specs. If they allow it, keep the markup and turn the rule off in `scripts/check-docs.mjs` and `.storybook/preview.ts` with the reason (an `<aside>` in `<main>` is the case so far).
+- **Standards Decide, Not the Tool:** When axe fails something, check it against the HTML and ARIA specs. If they allow it, keep the markup and turn the rule off in `scripts/check-docs.mjs` and `.storybook/preview.ts` with the reason (so far: an `<aside>` in `<main>`, and `<li role="separator">` in a list).
 - Consult `.agents/skills/accessibility/SKILL.md` for specific ARIA patterns.
 
 ### 5. Local Private Variables Manifest & State Variable Contract
