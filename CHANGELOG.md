@@ -4,10 +4,13 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
-## Unreleased
+## 1.0.0 (10 November 2026)
+
+The first public version: the source is on GitHub under the MIT licence, and the docs are open to search engines. Nothing a site links has changed since 0.5.3: raising the version is all a site needs.
 
 ### Added
 - **The theme format:** every theme file names its format with `"$schema"` and `"version": 1`, and the schema is published at `components.designforhumans.blog/schema/theme-v1.schema.json` (MIT, like the library). Editors check and complete theme files against it. The build and the Token Designer check every theme before using it, and name each problem's place (`type.scale.ration isn't part of type.scale`). A file without a version is read as version 1; a file from a newer version is refused, not guessed at.
+- **What's free:** a page in Start that says what's free under the MIT licence and what's planned (the Token Designer, a Figma kit and Pro), and a README for the repository.
 
 ### Changed
 - **Packages:** `@design-for-humans/components-css` and `@design-for-humans/theme-engine` name their licence (MIT), their exports and their files, and the engine now holds the token compiler (`npm run build:tokens` is unchanged). The engine's version follows the library's. Nothing a site links changes.

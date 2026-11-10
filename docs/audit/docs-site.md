@@ -206,4 +206,4 @@ The site is static: `npm run build:site` writes the docs and Storybook to `packa
 
 **Staying out of search engines:** every docs and Storybook page has `<meta name="robots" content="noindex">`, and the Nginx header covers the rest. There is deliberately no `robots.txt` block: a crawler that can't fetch a page can't see its noindex.
 
-**At the public launch:** set `PUBLIC_INDEXABLE=true` in the deploy environment, remove the `noindex` line from `.storybook/manager-head.html` and `preview-head.html` if Storybook should be indexed, and remove the Nginx header.
+**At the public launch** (1.0.0, 10 November 2026; Storybook's tags are gone, the Forge steps are Paul's): set `PUBLIC_INDEXABLE=true` in the deploy environment, remove the `noindex` line from `.storybook/manager-head.html` and `preview-head.html` if Storybook should be indexed, and remove the Nginx header.

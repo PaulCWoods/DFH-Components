@@ -1,6 +1,6 @@
 {
   "name": "@design-for-humans/components-css",
-  "version": "0.5.3",
+  "version": "1.0.0",
   "private": true,
   "description": "Design For Humans: an accessible, token-driven CSS component library. Native HTML, cascade layers, container queries and no JavaScript.",
   "license": "MIT",

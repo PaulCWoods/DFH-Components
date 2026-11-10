@@ -9,7 +9,7 @@ An accessible, token-driven CSS component library: native HTML, cascade layers, 
 Link the published stylesheet (and a theme's stylesheet after it, if you use one), then write native HTML with the library's classes:
 
 ```html
-<link rel="stylesheet" href="https://components.designforhumans.blog/css/0.5.3/dfh-components.css">
+<link rel="stylesheet" href="https://components.designforhumans.blog/css/1.0.0/dfh-components.css">
 <button type="button" class="button button--strong button--accent">Save changes</button>
 ```
 

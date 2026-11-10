@@ -12,13 +12,7 @@ Sizes are rough: **S** fits in an afternoon, **M** is a component pass, **L** is
 
 ## Next release
 
-- **Theme JSON format (M):** a versioned, validated format for importing and exporting themes. Free and Pro both build on it. *Built; ships with the next version.*
-
-## Before v1
-
-Decisions and loose ends to settle before calling it v1.
-
-- **Prices on the "What's free" page (S):** the page describes the Figma kit and Pro without prices. Add them when each one launches.
+Nothing picked yet.
 
 ## Library candidates
 
@@ -51,6 +45,7 @@ Things the library lacks or could do better. Each waits for a second use, or for
 The Token Designer, the Figma export and the other tools are planned in the private repo's roadmap. The library's side of any tool (an engine feature, a token, the theme format) is planned here.
 
 ## Docs site
+- **Prices on the "What's free" page (S):** the page describes the Figma kit and Pro without prices. Add them when each one launches.
 - **Brochure home page (M):** the home page as the product's front door, with Designer, Figma and Real World screenshots side by side.
 - **Recipe pages (M):** a page per recipe built from its stories, or links to Storybook.
 
