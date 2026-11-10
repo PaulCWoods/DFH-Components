@@ -30,6 +30,9 @@ For using tokens in CSS, load the `tokens` skill. This skill covers how they're 
 | `packages/css/src/component-theme.css`, `fonts.css`, `themes/*.css` | Never | `build:themes` |
 | `packages/figma-sync/dist/**` | Never | `export:figma` |
 | `packages/docs/public/css/<version>/` | Never; a published version never changes | `build:css` |
+| `packages/docs/public/schema/theme-v<n>.schema.json` | Never | `build:themes`, from `theme-schema.js` |
+
+A theme file starts with `"$schema"` (the theme format's address, so editors check and complete it) and `"version": 1`. The format is `packages/theme-engine/src/theme-schema.js`; `build:themes` publishes it as `packages/docs/public/schema/theme-v1.schema.json`. Every theme is checked against it when it's read, before any gate: a misspelt key, a wrong kind of value or a newer version fails with the place named. The schema checks shape, the gates check meaning. To change the format, raise `THEME_VERSION` and add an upgrade step to `upgradeTheme()` (`validate.js`), so saved themes keep working.
 
 A theme file's sections:
 - **Colour:** `curve`, `ends`, `chroma`, `fixed`, `hues`, `roles`, `mixes`, `contrast`.

@@ -1,0 +1,883 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "title": "Design For Humans theme",
+  "description": "A theme for the Design For Humans component library: its colours, type, spacing, shape, motion and component tokens. A sub-brand (\"extends\") holds only what differs from its parent.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "the address of this schema"
+    },
+    "$description": {
+      "type": "string",
+      "description": "what the theme is for"
+    },
+    "$comment": {
+      "type": "string"
+    },
+    "version": {
+      "const": 1,
+      "description": "the theme format's version (1)"
+    },
+    "extends": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "the theme this sub-brand changes"
+    },
+    "curve": {
+      "$ref": "#/$defs/curve"
+    },
+    "ends": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "an OKLCH lightness from 0 to 1"
+        },
+        "dark": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "an OKLCH lightness from 0 to 1"
+        }
+      },
+      "additionalProperties": false,
+      "description": "the lightness of steps 100 and 900"
+    },
+    "chroma": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "type": "number",
+          "minimum": 0
+        },
+        "dark": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "description": "how much of each hue's chroma steps 100 and 900 keep"
+    },
+    "fixed": {
+      "type": "object",
+      "properties": {
+        "white": {
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$",
+          "description": "a hex colour, such as #0055ff"
+        },
+        "black": {
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$",
+          "description": "a hex colour, such as #0055ff"
+        }
+      },
+      "additionalProperties": false,
+      "description": "the theme's white and black"
+    },
+    "hues": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/hue"
+      },
+      "description": "each colour ramp, by name"
+    },
+    "roles": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "light": {
+            "type": "string",
+            "description": "a palette step (neutral.900), white or black"
+          },
+          "dark": {
+            "type": "string",
+            "description": "a palette step (neutral.900), white or black"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "each colour role's palette step in light and dark"
+    },
+    "mixes": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "light": {
+            "$ref": "#/$defs/mix"
+          },
+          "dark": {
+            "$ref": "#/$defs/mix"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "colours made from another colour"
+    },
+    "contrast": {
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "how many steps each role moves under high contrast"
+        },
+        "extra": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+          },
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "description": "other tokens high contrast changes"
+        }
+      },
+      "additionalProperties": false,
+      "description": "high contrast (prefers-contrast: more)"
+    },
+    "type": {
+      "$ref": "#/$defs/type"
+    },
+    "space": {
+      "$ref": "#/$defs/space"
+    },
+    "shape": {
+      "$ref": "#/$defs/shape"
+    },
+    "motion": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "description": "seconds"
+          },
+          "description": "the durations, in seconds"
+        },
+        "ease": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "description": "linear or a cubic-bezier()"
+          },
+          "description": "the easing curves"
+        }
+      },
+      "additionalProperties": false
+    },
+    "components": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)*$"
+      },
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ],
+        "description": "a token reference such as {radius}, a keyword, or a plain number"
+      },
+      "description": "Tier 3 component tokens the theme changes"
+    }
+  },
+  "required": [
+    "version"
+  ],
+  "if": {
+    "required": [
+      "extends"
+    ]
+  },
+  "else": {
+    "required": [
+      "hues",
+      "roles"
+    ]
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "curve": {
+      "type": "string",
+      "description": "linear, a preset (soft-s) or a cubic-bezier()"
+    },
+    "hue": {
+      "type": "object",
+      "properties": {
+        "seed": {
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$",
+          "description": "a hex colour, such as #0055ff"
+        },
+        "curve": {
+          "$ref": "#/$defs/curve"
+        },
+        "ends": {
+          "type": "object",
+          "properties": {
+            "light": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "an OKLCH lightness from 0 to 1"
+            },
+            "dark": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "an OKLCH lightness from 0 to 1"
+            }
+          },
+          "additionalProperties": false
+        },
+        "chroma": {
+          "type": "object",
+          "properties": {
+            "light": {
+              "type": "number",
+              "minimum": 0
+            },
+            "dark": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "outside": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^\\d+$"
+          },
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "extra steps beyond the ends (000, 1000): how much lighter or darker"
+        },
+        "exact": {
+          "type": "boolean",
+          "description": "keep the seed exactly at its step"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "seed"
+      ]
+    },
+    "mix": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "currentColor, white, black, a palette step or a role"
+        },
+        "transparent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "a translucency step, in per cent"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "color"
+      ]
+    },
+    "font": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "enum": [
+            "google",
+            "adobe",
+            "local",
+            "system"
+          ]
+        },
+        "family": {
+          "type": "string"
+        },
+        "fallback": {
+          "type": "string",
+          "description": "the stack used until the font loads, ending in a generic family"
+        },
+        "figma": {
+          "type": "string",
+          "description": "the family as Figma names it"
+        },
+        "kit": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+$",
+          "description": "an Adobe Fonts kit id"
+        },
+        "weights": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          }
+        },
+        "axes": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9]{4}$"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "description": "a variable font's axes, each as [lowest, highest]"
+        },
+        "italic": {
+          "type": "boolean",
+          "description": "load the italics too (Google)"
+        },
+        "italicAxes": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Za-z0-9]{4}$"
+          },
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "what the font's italic sets, such as { \"ital\": 1, \"slnt\": -10 }"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "from the repository root"
+              },
+              "weight": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "style": {
+                "enum": [
+                  "normal",
+                  "italic",
+                  "oblique"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "path"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source"
+      ]
+    },
+    "family": {
+      "type": "object",
+      "properties": {
+        "font": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "one of the theme's fonts"
+        },
+        "system": {
+          "enum": [
+            "sans-serif",
+            "serif",
+            "monospace"
+          ]
+        },
+        "use": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "another family, to share its font"
+        }
+      },
+      "additionalProperties": false
+    },
+    "style": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "weight": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "a weight name, such as bold"
+        },
+        "size": {
+          "type": "integer",
+          "description": "a step on the scale (a whole number)"
+        },
+        "compact": {
+          "type": "integer",
+          "description": "a step on the scale (a whole number)"
+        },
+        "growTo": {
+          "type": "integer",
+          "description": "a step on the scale (a whole number)"
+        },
+        "leading": {
+          "type": "integer",
+          "description": "a step on the scale (a whole number)"
+        },
+        "lineHeight": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "letterSpacing": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "case": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "capitalize"
+          ]
+        },
+        "fluid": {
+          "type": "boolean"
+        },
+        "sizeOnStyle": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "fonts": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/font"
+          },
+          "description": "the fonts, by token name"
+        },
+        "families": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/family"
+          },
+          "description": "each font role (sans, serif, mono, display) and its font"
+        },
+        "scale": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "string",
+              "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+              "description": "a length in rem, px, em or ch, such as 1rem"
+            },
+            "ratio": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "description": "a step on the scale (a whole number)"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "min": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+                  "description": "a length in rem, px, em or ch, such as 1rem"
+                },
+                {
+                  "const": ""
+                }
+              ],
+              "description": "the smallest size (a length), or empty for none"
+            },
+            "ceiling": {
+              "type": "object",
+              "properties": {
+                "lower": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+                      "description": "a length in rem, px, em or ch, such as 1rem"
+                    },
+                    {
+                      "const": 0
+                    }
+                  ]
+                },
+                "upper": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+                      "description": "a length in rem, px, em or ch, such as 1rem"
+                    },
+                    {
+                      "const": 0
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "description": "the largest sizes; 0 lifts one"
+            }
+          },
+          "additionalProperties": false
+        },
+        "leading": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "ratio": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "description": "a step on the scale (a whole number)"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        "fluid": {
+          "type": "object",
+          "properties": {
+            "max": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+                  "description": "a length in rem, px, em or ch, such as 1rem"
+                },
+                "ratio": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "viewports": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+                "description": "a length in rem, px, em or ch, such as 1rem"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "additionalProperties": false
+        },
+        "styles": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/style"
+          },
+          "description": "each text style"
+        },
+        "controls": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "size": {
+                "type": "integer",
+                "description": "a step on the scale (a whole number)"
+              },
+              "leading": {
+                "type": "integer",
+                "description": "a step on the scale (a whole number)"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "the type inside controls at each size"
+        }
+      },
+      "additionalProperties": false
+    },
+    "space": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "string",
+          "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+          "description": "a length in rem, px, em or ch, such as 1rem"
+        },
+        "ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "roles": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "pattern": "^-?(\\d+\\.?\\d*|\\.\\d+)(rem|px|em|ch)$",
+                "description": "a length in rem, px, em or ch, such as 1rem"
+              },
+              "step": {
+                "type": "integer",
+                "description": "a step on the scale (a whole number)"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "step"
+            ]
+          },
+          "description": "the fluid spacing roles"
+        },
+        "site-width": {
+          "type": "string"
+        },
+        "targets": {
+          "type": "object",
+          "properties": {
+            "sm": {
+              "type": "number"
+            },
+            "default": {
+              "type": "number"
+            },
+            "lg": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "description": "target sizes, in px"
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "padding-inline": {
+              "type": [
+                "string",
+                "number"
+              ],
+              "description": "a spacing role, or a step in px"
+            },
+            "sidebar-width": {
+              "type": "number",
+              "description": "px"
+            },
+            "sidebar-compact-width": {
+              "type": "number",
+              "description": "px"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "line": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        },
+        "radius": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "offset": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "shadowLevel": {
+      "type": "object",
+      "properties": {
+        "inset": {
+          "type": "boolean"
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "y": {
+                "type": "number"
+              },
+              "blur": {
+                "type": "number",
+                "minimum": 0
+              },
+              "spread": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "shape": {
+      "type": "object",
+      "properties": {
+        "radius": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "description": "radius roles: a size in px, or another role"
+        },
+        "border": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "description": "border widths: a size in px, or another role"
+        },
+        "lines": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/line"
+          },
+          "description": "each line: rule, panel, control, focus ring"
+        },
+        "shadow": {
+          "type": "object",
+          "properties": {
+            "color": {
+              "type": "object",
+              "properties": {
+                "light": {
+                  "$ref": "#/$defs/mix"
+                },
+                "dark": {
+                  "$ref": "#/$defs/mix"
+                }
+              },
+              "additionalProperties": false
+            },
+            "color-light": {
+              "type": "object",
+              "properties": {
+                "light": {
+                  "$ref": "#/$defs/mix"
+                },
+                "dark": {
+                  "$ref": "#/$defs/mix"
+                }
+              },
+              "additionalProperties": false
+            },
+            "levels": {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/shadowLevel"
+              },
+              "description": "each shadow level"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

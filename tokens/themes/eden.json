@@ -1,4 +1,6 @@
 {
+  "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "version": 1,
   "$description": "A theme, copied from starter: link themes/eden.css after the library.",
   "curve": "soft-s",
   "ends": {

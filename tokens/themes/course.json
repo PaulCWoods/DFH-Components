@@ -1,4 +1,6 @@
 {
+  "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "version": 1,
   "$description": "The Design for Humans course: DFH with a blue accent. A sub-brand: class=\"theme-course\".",
   "extends": "dfh",
   "roles": {

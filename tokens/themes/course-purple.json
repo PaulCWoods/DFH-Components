@@ -1,4 +1,6 @@
 {
+  "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "version": 1,
   "$description": "A course lesson in purple. A sub-brand of the course: class=\"theme-course-purple\".",
   "extends": "course",
   "roles": {

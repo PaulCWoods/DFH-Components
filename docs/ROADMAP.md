@@ -12,17 +12,17 @@ Sizes are rough: **S** fits in an afternoon, **M** is a component pass, **L** is
 
 ## Next release
 
-Nothing picked yet.
+- **Theme JSON format (M):** a versioned, validated format for importing and exporting themes. Free and Pro both build on it. *Built; ships with the next version.*
 
 ## Before v1
 
 Decisions and loose ends to settle before calling it v1.
 
-- **Repo split and licence (decision, L):** MIT for `packages/css`, the docs, Storybook and the theme JSON format. `theme-engine`, `token-designer` and `figma-sync` move to a private repo. This has to happen before the repo goes public.
-- **Theme JSON format (M):** a versioned, validated format for importing and exporting themes. Free and Pro both build on it.
+- **Repo split and licence (L):** split by what's paid, before the repo goes public.
+  - **Public, MIT:** `packages/css`, the docs, Storybook, the shared skills, the theme format, and the engine core (palette, type, space, shape, motion, the gates, and `compile-tokens.js` moved out of `figma-sync`).
+  - **Private, in DFH-Components-Private:** the Pro server function, the Figma export, sub-brand and multi-theme builds, AI theme generation, the accessibility report and the Token Designer app.
 - **Licence files and a "What's free" page (S):** say plainly what's MIT, what the Figma kit costs, and what Pro adds.
 - **Figma, for the latest batch (M):** an Input Frame set (password and search) and italic placeholders. The sibling form of a choice may need nothing. Card stretch, Prose spacing and the Tab change are CSS only.
-- **Blog home page on `prose--headings-up` (S):** once the blog pins the release, drop the copied heading CSS in `home-page.css`.
 - **Docs links to missing pages (S):** check the sidebar's `/components/atoms/badge`, `/components/layout/*` and `/recipes/*` links. Build each page or link to Storybook.
 
 ## Library candidates

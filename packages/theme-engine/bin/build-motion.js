@@ -11,11 +11,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyMotion, DURATION_ROLES, EASE_ROLES, motionGate, motionGlobal } from '../src/index.js';
-import { themePath } from '../src/theme-files.js';
+import { readTheme } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
-const { motion } = JSON.parse(readFileSync(themePath(root), 'utf8'));
+const { motion } = readTheme(root);
 
 console.log(`\nDurations: ${DURATION_ROLES.map((r) => `${r} ${motion.duration[r]}s`).join(', ')}.`);
 EASE_ROLES.forEach((r) => console.log(`Ease ${r.padEnd(7)} ${motion.ease[r]}`));

@@ -21,6 +21,8 @@ The theme editor. It edits a theme visually: colour ramps and roles with their c
 
 Themes live in `tokens/themes`, one file each. The default, the starter theme, builds the library's own tokens. Every other theme builds a stylesheet in `packages/css/src/themes` holding only what it changes. Pick the one to edit from the menu under the logo, then one of its [sub-brands](/docs/start/themes/#sub-brands), or start a new one.
 
+Each theme file names its format with `"$schema"` and `"version"`, so an editor that reads JSON Schema checks and completes it as you type. The [theme schema](/schema/theme-v1.schema.json) is public: other tools can read and write themes too. Every theme is checked against it before it's built, and a problem names where it is: `type.scale.ration isn't part of type.scale`.
+
 **Publish** writes the theme, rebuilds every theme's CSS and exports to Figma. It is blocked while any check fails. `npm run build:themes` does the same from the command line.
 
 ```sh

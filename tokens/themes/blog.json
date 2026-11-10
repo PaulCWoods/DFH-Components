@@ -1,4 +1,6 @@
 {
+  "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "version": 1,
   "$description": "The Design For Humans blog: the site theme with its aqua accent. A sub-brand of dfh: class=\"theme-blog\".",
   "extends": "dfh",
   "hues": {

@@ -4,6 +4,11 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
+## Unreleased
+
+### Added
+- **The theme format:** every theme file names its format with `"$schema"` and `"version": 1`, and the schema is published at `components.designforhumans.blog/schema/theme-v1.schema.json` (MIT, like the library). Editors check and complete theme files against it. The build and the Token Designer check every theme before using it, and name each problem's place (`type.scale.ration isn't part of type.scale`). A file without a version is read as version 1; a file from a newer version is refused, not guessed at.
+
 ## 0.5.3 (10 November 2026)
 
 ### Added

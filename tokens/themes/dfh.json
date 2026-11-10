@@ -1,4 +1,6 @@
 {
+  "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "version": 1,
   "$description": "The theme the colour tokens are built from. Edit this (or use npm run designer), then run npm run build:palette; add -- --write to update tokens/1-global.json and tokens/2-semantic.json. Each hue starts from a picked colour: its hue and chroma make the 500 step, and a lightness curve (a CSS easing: linear, s, soft-s, reverse-s, ease-in, ease-out or cubic-bezier(x1, y1, x2, y2)) runs from the light end (100) to the dark end (900). A hue may set its own curve, ends and chroma, and exact: true keeps its picked colour itself as its 500, bending the curve through that colour's lightness (off by default, so the 500 follows the curve); outside adds steps beyond the ends (neutral's 000 is that much lighter than its 100, its 1000 that much darker than its 900), so they follow the ends. fixed sets white and black, which aren't ramps. neutral, red, amber and green are required; other hues take any lower-case name. roles gives each Tier 2 colour role a palette colour for light mode and one for dark (hue.step, white or black).",
   "curve": "soft-s",
   "ends": {

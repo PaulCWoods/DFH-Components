@@ -1,4 +1,6 @@
 {
+  "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
+  "version": 1,
   "$description": "A sub-brand of starter: class=\"theme-eden\".",
   "extends": "starter"
 }

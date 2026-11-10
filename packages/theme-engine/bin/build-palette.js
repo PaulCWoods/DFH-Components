@@ -12,13 +12,13 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildPalette, check, colorBlock, applyRoles, applyMixes, applyContrast, contrastGate, contrastRoles, mixGate, withFixed } from '../src/index.js';
-import { themePath } from '../src/theme-files.js';
+import { readTheme } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
 const args = new Set(process.argv.slice(2));
 
-const theme = JSON.parse(readFileSync(themePath(root), 'utf8'));
+const theme = readTheme(root);
 const global = withFixed(read('tokens/1-global.json'), theme);
 const semantic = read('tokens/2-semantic.json');
 

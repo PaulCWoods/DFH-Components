@@ -15,3 +15,5 @@ export * from './components.js';
 export * from './build.js';
 export * from './css-diff.js';
 export * from './sub-brand.js';
+export * from './theme-schema.js';
+export * from './validate.js';

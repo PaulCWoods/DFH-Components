@@ -10,14 +10,16 @@
    sub-brand: merged over its parent, checked whole, and written as the
    difference from its parent, scoped to .theme-<name> (sub-brand.js). A
    theme that fails a gate writes nothing, and the command fails. The page
-   heads load the site theme's fonts.
+   heads load the site theme's fonts. Every theme file is checked against
+   the theme format first, and the format's schema is published with the
+   docs (packages/docs/public/schema/), where a theme's $schema points.
    ========================================================================== */
 
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildTheme, changedTokens, componentCss, componentValue, cssDiff, fontLinks, fontsCss, resolveTheme, scopeCss, scopeClass } from '../src/index.js';
+import { buildTheme, themeSchema, validate, THEME_VERSION, changedTokens, componentCss, componentValue, cssDiff, fontLinks, fontsCss, resolveTheme, scopeCss, scopeClass } from '../src/index.js';
 import { readTheme, themeConfig, themeNames } from '../src/theme-files.js';
 import { writeHeadLinks } from '../src/font-files.js';
 
@@ -31,10 +33,23 @@ const write = (p, data) => {
 const compile = (tokens, out) => execFileSync('node', [at('packages/figma-sync/compile-tokens.js'), ...(tokens ? ['--tokens', tokens, '--out', out] : [])], { stdio: 'ignore' });
 
 const config = themeConfig(root);
+/* Every theme file, read and checked against the format before anything is built */
+const files = {};
+for (const name of themeNames(root)) {
+  try {
+    files[name] = readTheme(root, name);
+  } catch (error) {
+    console.error(`✖ ${error.message}\nNothing written.`);
+    process.exit(1);
+  }
+}
 const component = read('tokens/3-component.json');
 let failed = false;
 const build = (name, base, theme = readTheme(root, name)) => {
   try {
+    /* A sub-brand's file was checked as a partial; the theme it makes is checked whole */
+    const problems = validate(theme, themeSchema);
+    if (problems.length) throw new Error(`the theme it makes doesn't match the theme format:\n${problems.map((p) => `  - ${p.message}`).join('\n')}\n `);
     return buildTheme(theme, { ...base, component });
   } catch (error) {
     console.error(`✖ ${name}: ${error.message}. Nothing written for it.`);
@@ -44,8 +59,8 @@ const build = (name, base, theme = readTheme(root, name)) => {
 };
 
 /* The default: the library's own tokens */
-const defaultTheme = readTheme(root, config.default);
-const base = build(config.default, { global: read('tokens/1-global.json'), semantic: read('tokens/2-semantic.json') });
+const defaultTheme = files[config.default];
+const base = build(config.default, { global: read('tokens/1-global.json'), semantic: read('tokens/2-semantic.json') }, defaultTheme);
 if (!base) process.exit(1);
 write('tokens/1-global.json', base.global);
 write('tokens/2-semantic.json', base.semantic);
@@ -56,7 +71,6 @@ const variables = readFileSync(at('packages/css/src/variables.css'), 'utf8');
 console.log(`✔ ${config.default} (the default): tokens/*.json and variables.css`);
 
 /* Every other theme, parents before their sub-brands */
-const files = Object.fromEntries(themeNames(root).map((name) => [name, readTheme(root, name)]));
 const readFile = (name) => {
   if (!files[name]) throw new Error(`there's no theme called ${name}`);
   return files[name];
@@ -156,6 +170,7 @@ for (const name of order.filter((n) => n !== config.default)) {
   console.log(`✔ ${name}: packages/css/src/themes/${name}.css (${css.split('\n').length} lines${parent ? `, a sub-brand of ${parent}` : ''})`);
 }
 
-const heads = writeHeadLinks(root, readTheme(root, config.site).type);
+const heads = writeHeadLinks(root, files[config.site].type);
+write(`packages/docs/public/schema/theme-v${THEME_VERSION}.schema.json`, JSON.stringify(themeSchema, null, 2) + '\n');
 if (heads.length) console.log(`  Page heads now load ${config.site}'s fonts: ${heads.join(', ')}`);
 process.exit(failed ? 1 : 0);
