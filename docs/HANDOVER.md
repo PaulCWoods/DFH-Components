@@ -7,7 +7,7 @@
 1. Usage inventory and audit (`docs/audit/<component>.md`), with questions for a decision.
 2. Implement: tokens, CSS, migration of every usage, stories, its `docs/markup/` file (plus AGENTS.md if a project-wide rule changes).
 3. Verify: Storybook build, axe in light and dark, screenshots.
-4. Mirror to the blog: SCSS port, Tier 3 tokens.
+4. Mirror to the sites: their CSS, Tier 3 tokens.
 
 ## Passes
 
