@@ -18,7 +18,7 @@ Sizes are rough: **S** fits in an afternoon, **M** is a component pass, **L** is
 
 Decisions and loose ends to settle before calling it v1.
 
-- **A README and a "What's free" page (S):** say plainly what's MIT, what the Figma kit costs, and what Pro adds. The `LICENSE` files are in place.
+- **Prices on the "What's free" page (S):** the page describes the Figma kit and Pro without prices. Add them when each one launches.
 
 ## Library candidates
 
