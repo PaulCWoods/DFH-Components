@@ -5,7 +5,7 @@ description: |
 
   Trigger immediately for:
   - Authoring or refactoring packages/storybook/stories/recipes/*.stories.ts.
-  - The Token Designer's Real World pages (packages/token-designer/src/real-world/*.html), which follow the same rules.
+  - The Token Designer's Real World pages (in the private repo), which follow the same rules.
   - Finding that a recipe needs something the library doesn't have.
 ---
 

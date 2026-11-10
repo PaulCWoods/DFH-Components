@@ -74,7 +74,7 @@ if (args.has('--write')) {
   global.color = colorBlock(palette, global.color);
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
   writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyContrast(applyMixes(applyRoles(semantic, theme.roles, { palette, global }), theme.mixes), theme, { palette, global }), null, 2));
-  console.log('\nWrote the color block of tokens/1-global.json and the roles in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
+  console.log('\nWrote the color block of tokens/1-global.json and the roles in tokens/2-semantic.json. Run npm run build:tokens.');
 }
 
 process.exit(failures.length ? 1 : 0);

@@ -9,7 +9,6 @@
   "scripts": {
     "prepare": "husky || true",
     "build:tokens": "node packages/theme-engine/bin/build-tokens.js",
-    "export:figma": "node packages/figma-sync/export-figma-tokens.js",
     "build:palette": "node packages/theme-engine/bin/build-palette.js",
     "build:type": "node packages/theme-engine/bin/build-type.js",
     "build:space": "node packages/theme-engine/bin/build-space.js",
@@ -33,7 +32,6 @@
     "build:css": "node scripts/build-css.mjs",
     "build:skills": "node scripts/build-skills.mjs",
     "build:site": "npm run build:docs && npm run build:storybook && rm -rf packages/docs/dist/storybook && cp -R packages/storybook/storybook-static packages/docs/dist/storybook",
-    "designer": "npm run dev --workspace=@design-for-humans/token-designer",
     "images": "node scripts/optimise-images.mjs"
   },
   "devDependencies": {

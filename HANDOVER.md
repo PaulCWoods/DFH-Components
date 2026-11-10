@@ -19,7 +19,7 @@
 - **Token Compiler (`packages/theme-engine/bin/build-tokens.js`):**
   - Compiles tokens to `packages/css/src/variables.css`.
   - Generates fluid typography clamps, CSS Level 5 `@function` parameterized shadows, and light-dark variables.
-- **Figma Exporter (`packages/figma-sync/export-figma-tokens.js`):**
+- **Figma Exporter and Token Designer:** in the private repo, DFH-Components-Private, which works on a checkout of this one.
   - Exports tokens for Tokens Studio ($0 free tier) and native Figma Variables.
   - Generates static pixel values, flattened colors, and native drop shadows.
 

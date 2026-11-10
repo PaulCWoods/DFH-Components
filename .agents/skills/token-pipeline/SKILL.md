@@ -1,14 +1,14 @@
 ---
 name: token-pipeline
 description: |
-  Maintaining the Design For Humans token pipeline in this repo: theme files, the build:* generators and their gates, generated files, Tier 3 defaults and check:tokens, sub-brands, and the Figma export.
+  Maintaining the Design For Humans token pipeline in this repo: theme files, the build:* generators and their gates, generated files, Tier 3 defaults and check:tokens, sub-brands, and parity with Figma.
 
   Trigger immediately for:
   - Editing tokens/themes/*.json, tokens/1-global.json, tokens/2-semantic.json or tokens/3-component.json.
   - Adding, renaming or removing a token at any tier.
-  - Running or debugging build:themes, build:palette, build:type, build:space, build:shape, build:motion, build:components, build:tokens, build:css or export:figma.
+  - Running or debugging build:themes, build:palette, build:type, build:space, build:shape, build:motion, build:components, build:tokens or build:css.
   - A gate failure (contrast, type, space, shape, motion, component, check:tokens).
-  - Changing the Figma exporter (packages/figma-sync) or the theme engine (packages/theme-engine).
+  - Changing the theme engine (packages/theme-engine).
 ---
 
 # The token pipeline
@@ -21,14 +21,13 @@ For using tokens in CSS, load the `tokens` skill. This skill covers how they're 
 
 | File | Edit by hand? | Written by |
 | :--- | :--- | :--- |
-| `tokens/themes/<name>.json` | **Yes**: one theme per file | Hand or the Token Designer (`npm run designer`) |
+| `tokens/themes/<name>.json` | **Yes**: one theme per file | Hand or the Token Designer (in the private repo) |
 | `tokens/themes.json` | Yes | Names the `default` theme (builds the library's tokens), the `site` theme (docs and Storybook fonts) and the theme Storybook starts on |
 | `tokens/1-global.json` | Only groups no theme section owns | The `build:*` generators (colour ramps, type steps, fluid spacing, new spacing and duration steps) |
 | `tokens/2-semantic.json` | Only roles no theme section owns | The generators (colour roles and mixes, high contrast, text styles, spacing roles, shape, motion) |
 | `tokens/3-component.json` | **Yes**, with the CSS fallback | Hand: the Tier 3 values Figma gets |
 | `packages/css/src/variables.css` | Never | `build:tokens` (Tier 1 and 2) |
 | `packages/css/src/component-theme.css`, `fonts.css`, `themes/*.css` | Never | `build:themes` |
-| `packages/figma-sync/dist/**` | Never | `export:figma` |
 | `packages/docs/public/css/<version>/` | Never; a published version never changes | `build:css` |
 | `packages/docs/public/schema/theme-v<n>.schema.json` | Never | `build:themes`, from `theme-schema.js` |
 
@@ -50,7 +49,7 @@ A sub-brand has `"extends": "<parent>"` and only what it changes; `null` removes
 2. **Build every theme:** `npm run build:themes`. Every gate runs on every theme, and a theme that fails writes nothing.
    - The default theme rewrites `1-global.json`, `2-semantic.json`, `component-theme.css`, `fonts.css` and `variables.css`.
    - Each other theme writes `packages/css/src/themes/<name>.css`.
-3. **Export to Figma:** `npm run export:figma`.
+3. **Export to Figma** from the private repo (DFH-Components-Private), which reads this repo's tokens: its `export:figma`.
 4. **Check Tier 3:** `npm run check:tokens`.
 5. **Run the story gates** if anything visible changed: `build:storybook`, then `check:targets`, `check:focus` and `check:layout`, run one at a time, each under `timeout`.
 
@@ -82,24 +81,8 @@ Every gate fails rather than writes. Fix the theme, never the generated value:
 - **Shadows** are 3-layer stacks with `@function --shadow-*` versions. Firefox has no `@function`, so it always gets the `var(--shadow-md)` fallback first.
 - **Colours** are generated in OKLCH and stored as hex, because Figma can't hold OKLCH. Never hand-edit a hex value.
 
-## Figma export
+## Figma
 
-`export:figma` writes, for each theme:
-- **Tokens Studio:** one file, with theme groups Color, Font sizing, Spacing and Pointer.
-- **Native Variables:** one unified collection, or five modular ones:
-  - **Color:** Light, Dark.
-  - **Structure:** one mode.
-  - **Font sizing:** Fixed, Fluid Large, Compact.
-  - **Spacing:** Fixed, Fluid Large.
-  - **Pointer:** Touch, Fine.
-
-  The collections are built in `packages/figma-sync/modes.js`. A theme with sub-brands also gets a `-modes` set, with a mode per brand.
-
-Every variable gets:
-- **WEB code syntax:** `var(--css-name)`, found by checking the name against the library's CSS. Figma-only parts (shadow layers, sm/lg line heights) get none.
-- **Scopes for where it applies:** no variable keeps "all scopes".
-- **Publishing:** the Tier 1 colour steps are hidden from publishing.
-
-`finishForFigma` in `export-figma-tokens.js` sets all three. Weights export as numbers scoped to font weight, never as style names.
+The Figma export lives in the private repo, with the `figma` skill for the Figma file. It imports the engine from this repo, so a token or axis it can't represent is a problem here: PRINCIPLES asks that every tier exports cleanly to Figma Variables and Tokens Studio, or has a documented reason. A token's CSS name becomes its Figma variable's code syntax, so renaming a token renames it in Figma at the next export.
 
 A change that the sites (the blog, the course) should get is a new version: raise `packages/css/package.json`, run `build:themes` then `build:css`, commit, then raise each site's pinned version.

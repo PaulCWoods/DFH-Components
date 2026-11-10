@@ -18,10 +18,7 @@ Sizes are rough: **S** fits in an afternoon, **M** is a component pass, **L** is
 
 Decisions and loose ends to settle before calling it v1.
 
-- **Repo split and licence (L):** split by what's paid, before the repo goes public. The plan is in [audit/repo-split.md](audit/repo-split.md).
-  - **Public, MIT:** `packages/css`, the docs, Storybook, the shared skills, the theme format, and the engine core (palette, type, space, shape, motion, the gates, and `compile-tokens.js` moved out of `figma-sync`).
-  - **Private, in DFH-Components-Private:** the Pro server function, the Figma export, AI theme generation, the accessibility report and the Token Designer app. Sub-brand builds stay public: the library's own themes are sub-brands. Pro gates making them in the hosted Designer.
-- **Licence files and a "What's free" page (S):** say plainly what's MIT, what the Figma kit costs, and what Pro adds.
+- **A README and a "What's free" page (S):** say plainly what's MIT, what the Figma kit costs, and what Pro adds. The `LICENSE` files are in place.
 - **Docs links to missing pages (S):** check the sidebar's `/components/atoms/badge`, `/components/layout/*` and `/recipes/*` links. Build each page or link to Storybook.
 
 ## Library candidates
@@ -52,22 +49,7 @@ Things the library lacks or could do better. Each waits for a second use, or for
 
 ## Tools
 
-The Token Designer is the product. These follow the agreed tiers: the library and solo tools are free, the full Figma kit is a one-off purchase, and Pro is a subscription.
-
-### Free
-- **Hosted Designer, local-first (L):** edit one full theme in the browser, with its gates and Real World pages, and export its CSS. Work in progress lives in IndexedDB, the JSON file is the real save, and a theme can be shared in the URL.
-- **Import a theme from JSON (M):** needs the theme JSON format above.
-- **Delete a theme, downloading it first (S):** full deletion, saving the theme's JSON for the person to keep. Today a theme can only be archived.
-- **Archive full themes (S):** only sub-brands can be archived today.
-- **OKLCH ramp builder (M):** the colour generator on its own, ending in "Open in Designer".
-- **Icon sprite builder (L):** a replacement for IcoMoon that writes the sprite the library uses. It would also fix the id shift seen in the last two exports.
-
-### Pro
-- **Sub-brands and multiple themes (M):** they work today in the dev Designer; they need gating in the hosted one.
-- **Figma export (M):** Figma Variables with modes, and Tokens Studio. It runs in a stateless server function: a theme and a licence key go in, files come out, nothing is stored.
-- **AI theme generation (L):** a theme drafted from a brief or a brand, then checked by the gates.
-- **Accessibility report (M):** a report on a theme's gates that a client can sign off.
-- **Team sync (L):** only if people ask for it.
+The Token Designer, the Figma export and the other tools are planned in the private repo's roadmap. The library's side of any tool (an engine feature, a token, the theme format) is planned here.
 
 ## Docs site
 - **Brochure home page (M):** the home page as the product's front door, with Designer, Figma and Real World screenshots side by side.

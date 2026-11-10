@@ -11,24 +11,17 @@ There are two ways in. Pick one per file:
 - **Figma variables**, with the free Export/Import Variables plugin by Honza Toman. Variables you bind straight to fills, strokes, gaps and padding.
 - **Tokens Studio**, with the Tokens Studio for Figma plugin. Tokens you apply through the plugin, and the only route to the library's text styles and shadow effects.
 
-## 1. Build the files
+## 1. Get the files
 
-The files are built on your machine, not stored in the repository. From the repository's root:
-
-```sh
-npm run build:themes
-npm run export:figma
-```
-
-`build:themes` compiles every theme and `export:figma` writes them into `packages/figma-sync/dist/`. Run both again after any change to a theme. **Publish** in the [Token Designer](/docs/tools/) runs both for you.
+The files come from the [Token Designer](/docs/tools/)'s Figma export, which builds them from your theme each time. The Token Designer isn't released yet, so this page describes what the export makes and how to use it.
 
 ## 2. Find your theme
 
 | Folder | What it holds |
 | :--- | :--- |
-| `dist/native-variables/`, `dist/tokens-studio/` | The default, the starter theme |
-| `dist/themes/<name>/` | One other theme or sub-brand, complete on its own |
-| `dist/themes/<name>-modes/` | A theme and all its sub-brands together, a mode per brand |
+| `native-variables/`, `tokens-studio/` | The default theme |
+| `themes/<name>/` | One other theme or sub-brand, complete on its own |
+| `themes/<name>-modes/` | A theme and all its sub-brands together, a mode per brand |
 
 Every theme's folder has both forms: `native-variables/` and `tokens-studio/`. A sub-brand's own folder is complete, with its parent's tokens included, so it imports without the parent.
 
@@ -109,8 +102,8 @@ Re-import after a change, with the same plugin and the same files. Variables wit
 
 ## When something looks wrong
 
-- **A colour or size isn't what the CSS shows.** Run `build:themes` and `export:figma` again: the files only change when both run.
-- **A theme is missing from `dist/themes/`.** It hasn't been built. `export:figma` names any theme it skipped.
+- **A colour or size isn't what the CSS shows.** The files are older than the theme. Export them again.
+- **A theme is missing from `themes/`.** It hasn't been built: a theme that fails a check isn't exported, and the export names any theme it skipped.
 - **An import stops part way.** The plan may not allow that many modes. Use the unified file, or each brand's own folder.
 - **Text styles show the wrong font.** Figma doesn't know the font by that name, or it isn't installed. Set its **Name in Figma** in the Token Designer, and install it.
 - **An import stops on an unloaded font.** The importer changes a font family without loading the new font, which Figma needs before it can redraw the text that uses it, so a font your file doesn't use yet keeps its old name. Everything else imports. In the Variables panel, under Structure, type the new name into each `font-family` variable that still shows the old one: Figma loads the font itself. The Token Designer's Figma tab lists the names to check. It only happens the first time a font reaches a file.

@@ -89,7 +89,7 @@ if (args.has('--write')) {
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
   writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyTypeStyles(semantic, type, { global }), null, 2));
   const fontFiles = writeFontFiles(root, type, readTheme(root, themeConfig(root).site).type);
-  console.log(`\nWrote the typography of tokens/1-global.json, the text styles in tokens/2-semantic.json and ${fontFiles.join(', ')}. Run npm run build:tokens and npm run export:figma.`);
+  console.log(`\nWrote the typography of tokens/1-global.json, the text styles in tokens/2-semantic.json and ${fontFiles.join(', ')}. Run npm run build:tokens.`);
 }
 
 process.exit(failures.length ? 1 : 0);

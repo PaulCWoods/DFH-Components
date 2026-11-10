@@ -6,7 +6,7 @@ Oct 26, 2026 · @Paul Woods · Updated Nov 7, 2026
 
 These principles decide what belongs in the library, how it is built, and when a component is ready for version 1. The library is pre-v1, so rewrites are expected and welcome; a principle outranks existing code.
 
-The library serves two audiences from one source of truth. Developers consume the CSS; designers consume the same tokens as Figma Variables and Tokens Studio sets through `packages/figma-sync/`. A change to token tiers, axis names or variant values is not done until it has clean parity in both.
+The library serves two audiences from one source of truth. Developers consume the CSS; designers consume the same tokens as Figma Variables and Tokens Studio sets, made from the same themes by the Token Designer's Figma export. A change to token tiers, axis names or variant values is not done until it has clean parity in both.
 
 Each section ends in rules that can be tested. **Must** means a component fails review without it, **should** means a documented exception is needed to skip it, and **may** is optional. Section 11 turns the rules into the checklist for the refinement pass.
 

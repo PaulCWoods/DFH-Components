@@ -51,6 +51,6 @@ if (process.argv.includes('--write')) {
   global.fluid = { ...global.fluid, spacing: spaceFluidBlock(space) };
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
   writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applySpaceRoles(semantic, space), null, 2));
-  console.log('\nWrote fluid.spacing in tokens/1-global.json and the spacing roles, site width, targets and app sizes in tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
+  console.log('\nWrote fluid.spacing in tokens/1-global.json and the spacing roles, site width, targets and app sizes in tokens/2-semantic.json. Run npm run build:tokens.');
 }
 process.exit(failures.length ? 1 : 0);

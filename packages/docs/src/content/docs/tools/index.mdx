@@ -1,6 +1,6 @@
 ---
 title: Tools
-summary: Storybook, the Token Designer and the Figma export, and when to use each.
+summary: Storybook, the Token Designer and Figma, and when to use each.
 ---
 
 The library comes with three tools beside these docs. Each one works from the same tokens.
@@ -23,16 +23,14 @@ Themes live in `tokens/themes`, one file each. The default, the starter theme, b
 
 Each theme file names its format with `"$schema"` and `"version"`, so an editor that reads JSON Schema checks and completes it as you type. The [theme schema](/schema/theme-v1.schema.json) is public: other tools can read and write themes too. Every theme is checked against it before it's built, and a problem names where it is: `type.scale.ration isn't part of type.scale`.
 
-**Publish** writes the theme, rebuilds every theme's CSS and exports to Figma. It is blocked while any check fails. `npm run build:themes` does the same from the command line.
+**Publish** writes the theme and rebuilds every theme's CSS. It is blocked while any check fails. From the command line, `npm run build:themes` builds every theme and runs every check:
 
 ```sh
-npm run designer         # http://localhost:5180
+npm run build:themes     # packages/css/src/themes/<name>.css
 ```
+
+The Token Designer isn't released yet. A hosted version is planned.
 
 ## Figma
 
-`npm run export:figma` writes the tokens for Figma in two forms: Tokens Studio (free tier), and native Figma variables in light and dark modes, with text styles generated from the same type theme as the CSS. [Using the Figma exports](/docs/tools/figma/) walks through importing them and which set suits each Figma plan.
-
-```sh
-npm run export:figma     # packages/figma-sync/dist/
-```
+The Token Designer exports a theme's tokens for Figma in two forms: Tokens Studio (free tier), and native Figma variables in light and dark modes, with text styles generated from the same type theme as the CSS. [Using the Figma exports](/docs/tools/figma/) walks through importing them and which set suits each Figma plan.

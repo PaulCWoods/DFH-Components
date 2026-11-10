@@ -24,5 +24,4 @@ There are two audiences.
 | `css-commenting` | Comments and formatting in the library's CSS |
 | `recipe-composition` | The library's recipe stories and Real World pages |
 | `docs-style` | How the docs are written: voice, names, component page structure, examples and links |
-| `figma` | The Figma library file: pages, naming, variables and their sync, Plugin API quirks |
 | `modern-web-guidance` | Current web platform guidance (third-party: from GoogleChrome/modern-web-guidance under Apache 2.0, with its `LICENSE` in its folder; the rest of this repo is MIT) |

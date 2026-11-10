@@ -33,6 +33,6 @@ if (process.argv.includes('--write')) {
   }
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(motionGlobal(read('tokens/1-global.json'), motion), null, 2));
   writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applyMotion(read('tokens/2-semantic.json'), motion), null, 2));
-  console.log('\nWrote the motion tokens to tokens/1-global.json and tokens/2-semantic.json. Run npm run build:tokens and npm run export:figma.');
+  console.log('\nWrote the motion tokens to tokens/1-global.json and tokens/2-semantic.json. Run npm run build:tokens.');
 }
 process.exit(failures.length ? 1 : 0);
