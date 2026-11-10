@@ -54,6 +54,8 @@ Molecules are audited in groups that share a job, so overlapping components are 
 
 ## Backlog
 
+Open work is now planned in [ROADMAP.md](ROADMAP.md), and each release is recorded in [CHANGELOG.md](../CHANGELOG.md). The notes below are the history of how items were found and settled.
+
 ### Menu and batch actions ARIA (found in the divider pass)
 
 - Menu stories and AGENTS examples put `role="menuitem"` on items in a `<menu>` that has no `role="menu"`, so axe reports a missing parent. Decide in the menu pass: a real `role="menu"` (with arrow-key handling) or plain buttons in a list.
@@ -74,7 +76,7 @@ Patterns the deck needed that the library lacks. Each waits for its component's 
 
 ### Found in the Course rebuild (10 November 2026)
 
-To fix before v1; the Blog rebuild will likely meet them too.
+All five are done (10 November 2026), for the release after 0.5.2.
 
 - **Card collapses when aligned:** a Card is an inline-size container, so it has no width of its own. With `self-start` in a column Stack it shrank to 0 (the cart totals vanished). Keep it stretched in the inline axis when it's aligned, and document it in §10.
 - **Password field with a show button:** none in the library. The Course styles WooCommerce's toggle (`.password-input`, `.show-password-input`) for now. Any login or account form needs it.

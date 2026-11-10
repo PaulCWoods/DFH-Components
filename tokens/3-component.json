@@ -1780,6 +1780,11 @@
     }
   },
   "input": {
+    "placeholder-font-style": {
+      "$value": "italic",
+      "$type": "string",
+      "$description": "Sets a placeholder apart from a value by more than colour (it keeps 4.5:1 contrast)"
+    },
     "background-color": {
       "$value": "{surface.card}",
       "$type": "color"
@@ -3132,6 +3137,15 @@
       "$value": "{duration.2}",
       "$type": "duration",
       "$description": "One turn under reduced motion: slower, never still"
+    }
+  },
+  "input-frame": {
+    "$type": "component",
+    "$description": "A text field with buttons beside it inside one control (show a password, clear a search). The frame is the shared text-control base.",
+    "gap": {
+      "$value": "{spacing}",
+      "$type": "dimension",
+      "$description": "Space between the field and its buttons; half in a compact region"
     }
   },
   "combobox": {

@@ -314,12 +314,14 @@
 
 /* ==========================================================================
    3. Icon-Only Tabs (.tab--icon) & Responsive Label Collapsing
-   A tab whose only text is visually hidden is icon-only too. A tab with a
-   visible .tab__text is not, even if it also carries hidden text (such as
-   a badge count spelled out for screen readers).
+   A tab holding only icons and hidden text is icon-only too. One with a
+   visible .tab__text, a Badge or any other visible element is not, even if
+   it also carries hidden text (a count spelled out for screen readers).
+   CSS can't see bare text, so visible text beside an icon and hidden text
+   alone needs .tab__text.
    ========================================================================== */
 :where(.tab--icon),
-:where(.tab:not(:has(.tab__text)):has(:where(.visually-hidden, .sr-only))) {
+:where(.tab:not(:has(.tab__text)):has(> :where(.visually-hidden, .sr-only)):not(:has(> :not(svg, .icon, .visually-hidden, .sr-only)))) {
   --_tab-icon-size: calc(var(--icon-size, calc(var(--icon-base-size, 1) * 1em)) * 1.25);
   --_tab-inner-gap: 0px;
   --_tab-padding-inline: var(--_tab-padding-block);

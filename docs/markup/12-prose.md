@@ -104,17 +104,18 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 ## Options
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.prose` | `--body-alt`, `--lead`; it follows the sizing mode around it | `--font-sizing`, `--ui-sizing: compact`, `--link-prominence: subtle` |
+| `.prose` | `--body-alt`, `--lead`, `--headings-up`; it follows the sizing mode around it | `--font-sizing`, `--ui-sizing: compact`, `--link-prominence: subtle` |
 | `.prose-end` | | |
 
 ### Further rules
 - **Type:** each element takes the type of the text atom it stands for: `h1` `.title`, `h2` `.heading`, `h3` `.subheading`, `h4`–`h6` `.small-heading`, `p`, lists, description lists and Tables `.text`, `small`, `figcaption` and `caption` `.small-text`. The rules live with the atoms (`atoms/text.css`) in a layer under the atom classes, so a text atom on an element wins (`<p class="small-text">`) and any other class keeps the prose look.
-- **Rhythm:** the space between blocks follows the sizing mode: `--prose-space` (fixed), `--prose-space-fluid`, `--prose-space-cq`, and half the fixed space when compact. Headings take `1.5em` above, except first or straight after another heading.
+- **Rhythm:** the space between blocks follows the sizing mode: `--prose-space` (fixed), `--prose-space-fluid`, `--prose-space-cq`, and half the fixed space when compact. Headings take `1.5em` above, except first or straight after another heading. Every block straight inside the prose is in the rhythm, a wrapper `div` (around a Table, or a CMS's block) included, so the block after it never sits against it.
 - **Measure:** text blocks stop at `--body-measure` (66ch). Paragraphs wrap with `text-wrap: pretty`, headings with `balance`. Hyphenation is `--prose-hyphens` (`none`). The column width belongs to the Wrapper the prose sits in.
 - **Numerals:** oldstyle figures and hanging punctuation in paragraphs, lining figures elsewhere, tabular figures in Tables, a slashed zero in code.
 - **Links:** a bare link (no class) is a `.link`. `--link-prominence: subtle` on the prose or a region makes links body-coloured; the underline still marks them.
 - **Body serif:** `--body-alt` sets paragraphs, lists and description lists in the alternate body family (`--body-alt-font-family`, as `.font-serif` does); headings, captions, tables and code keep theirs.
 - **Lead:** `--lead` gives the first paragraph that is a direct child of the prose the type of `.large-text`, in every sizing mode, for an article whose first paragraph comes from a CMS and can't carry a class. Where you write the markup, put `.large-text` on the paragraph instead.
+- **Headings up:** `--headings-up` gives every heading the style a step up: `h1` a display title, `h2` a title, `h3` a heading, `h4` a subheading (`h5` and `h6` stay small headings). It's for a page whose sections come from a CMS and should read larger, such as a home page. Keep the levels in order; it changes only how they look.
 - **Lists:** lists are indented by `--prose-indent`. Nested ordered lists step decimal, lower-latin, lower-roman. In a `<dl>`, `dt` is strong and `dd` is indented.
 - **Rules and quotes:** an `hr` uses the Divider tokens. A `blockquote` has an inline-start rule (`--prose-blockquote-border-width`).
 - **Figures:** the caption is small text in `--prose-figcaption-color`, half a rhythm below the media.

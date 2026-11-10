@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Design For Humans: Input Frame
+   --------------------------------------------------------------------------
+   A text field with buttons beside it inside one control: show a password,
+   clear a search, copy a value. A molecule: the frame is the shared
+   text-control base (atoms/input.css), so it takes the Input's modifiers
+   and flags (--sm, --lg, --subtle, --plain, --round, --flush; --input-size,
+   --input-prominence, --input-corners, --controls-*), and the buttons are
+   plain icon .button atoms.
+
+   The frame draws the border and the focus ring, and takes its states
+   from the input inside it: focus, invalid and disabled.
+
+   The library ships no script. To show a password, the product's script
+   switches the input's type between password and text and sets the
+   button's aria-pressed (and its hidden name says what it does: "Show
+   password"). Swap the icon (View, Hide) with the state.
+
+   WCAG 2.2:
+   - 2.5.5 / 2.5.8 Target Size: the buttons fit inside the field and keep a
+     48px hit area (or the product's fine-pointer target); the field takes
+     the rest of the frame, so a tap anywhere else lands in it.
+   - 2.4.7 Focus Visible: the frame shows the ring while its input has
+     focus; a button shows its own.
+   - 3.3.8 Accessible Authentication: a show button lets people check what
+     they typed instead of retyping it. Never block paste.
+
+   Usage:
+   <div class="input-frame">
+     <input type="password" id="password" class="input-frame__input" autocomplete="current-password" />
+     <button type="button" class="button button--plain button--icon"
+             aria-controls="password" aria-pressed="false">
+       <svg class="icon" …><use href="#View" /></svg>
+       <span class="sr-only">Show password</span>
+     </button>
+   </div>
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Frame
+   ========================================================================== */
+:where(.input-frame) {
+  --_input-frame-gap: var(--input-frame-gap, var(--spacing, 1rem));
+
+  @container style(--ui-sizing: compact) {
+    --_input-frame-gap: calc(var(--input-frame-gap, var(--spacing, 1rem)) / 2);
+  }
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  column-gap: var(--_input-frame-gap);
+  /* The field and the buttons beside it each take half the gap */
+  --target-gap-inline: var(--_input-frame-gap);
+  cursor: text;
+
+  /* Buttons in the field fit inside it; their hit area stays 48px */
+  --_input-frame-button-size: max(1.5rem, calc(var(--_control-min-size) - var(--_control-border-width) * 2 - var(--_control-padding-block) * 2));
+  --button-min-size: var(--_input-frame-button-size);
+  --button-sm-min-size: var(--_input-frame-button-size);
+  --button-lg-min-size: var(--_input-frame-button-size);
+
+  /* A small button's padding keeps its usual ratio, not this size's */
+  --button-sm-padding-block: calc(var(--spacing-target-sm) / var(--spacing-target) * var(--button-padding-block, var(--spacing-xs)));
+  --button-sm-padding-inline: calc(var(--spacing-target-sm) / var(--spacing-target) * var(--button-padding-inline, var(--spacing-md)));
+
+  /* Hit areas: the first and last things in the field reach freely over
+     its padding and border, which do nothing when tapped */
+  --target-gap-inline-start: initial;
+  --target-gap-inline-end: initial;
+  --target-gap-block-start: initial;
+  --target-gap-block-end: initial;
+
+  > :where(:first-child) {
+    --target-gap-inline-start: 100vmax;
+  }
+
+  > :where(:last-child) {
+    --target-gap-inline-end: 100vmax;
+  }
+
+  > :where(.button) {
+    flex: none;
+    cursor: pointer;
+  }
+
+  /* The last button sits as far from the end as from the top and bottom */
+  > :where(.button:last-child) {
+    margin-inline-end: calc((var(--_control-padding-inline) - var(--_control-padding-block)) * -1);
+  }
+}
+
+/* ==========================================================================
+   2. Input
+   ========================================================================== */
+:where(.input-frame__input) {
+  /* Inline, the field reaches halfway into the gap beside its neighbours
+     (their hit areas take the other half), or the frame's padding at
+     either end */
+  --_input-frame-reach-start: calc(var(--_input-frame-gap) / 2);
+  --_input-frame-reach-end: calc(var(--_input-frame-gap) / 2);
+
+  &:first-child {
+    --_input-frame-reach-start: var(--_control-padding-inline, 0px);
+  }
+
+  &:last-child {
+    --_input-frame-reach-end: var(--_control-padding-inline, 0px);
+  }
+
+  flex: 1 1 5rem;
+  /* The drawn control is the target: the field reaches under the frame's
+     padding and border, so a tap anywhere on it lands in the field. The
+     frame still draws the border. */
+  align-self: stretch;
+  min-inline-size: 3ch;
+  min-block-size: 0;
+  margin-block: calc((var(--_control-padding-block, 0px) + var(--_control-border-width, 0px)) * -1);
+  margin-inline: calc(var(--_input-frame-reach-start) * -1) calc(var(--_input-frame-reach-end) * -1);
+  padding-block: calc(var(--_control-padding-block, 0px) + var(--_control-border-width, 0px));
+  padding-inline: var(--_input-frame-reach-start) var(--_input-frame-reach-end);
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--_control-placeholder-color);
+    font-style: var(--_control-placeholder-font-style);
+    font-variation-settings: var(--_control-placeholder-font-variation);
+    opacity: 1;
+  }
+
+  /* The frame's own button replaces the browser's reveal and clear */
+  &::-ms-reveal,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-decoration {
+    display: none;
+  }
+}

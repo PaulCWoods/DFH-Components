@@ -41,7 +41,8 @@
    Inside .prose, bare elements take the type of the atom they stand for:
    h1 a title, h2 a heading, h3 a subheading, h4 to h6 a small heading, text
    blocks body text, small and captions small text, and in .prose--lead the
-   first paragraph large text. The rules sit in a nested
+   first paragraph large text. .prose--headings-up moves each heading a
+   step up (h1 a display title … h4 a subheading). The rules sit in a nested
    layer below the atom classes, so an atom on an element wins
    (<p class="small-text">) and any other class keeps the prose look.
    Spacing, lists, quotes, code, figures and tables are in molecules/prose.css.
@@ -129,6 +130,94 @@
 
       @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
         font-size: var(--small-heading-compact-font-size);
+      }
+    }
+
+    /* .prose--headings-up: each heading takes the style a step up (h1 a
+       display title, h2 a title, h3 a heading, h4 a subheading) */
+    :where(:scope.prose--headings-up h1) {
+      font-family: var(--display-title-font-family);
+      font-size: var(--display-title-fixed-font-size);
+      font-weight: var(--display-title-font-weight);
+      letter-spacing: var(--display-title-letter-spacing);
+      line-height: var(--display-title-line-height);
+      text-transform: var(--display-title-text-transform);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--display-title-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--display-title-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--display-title-compact-font-size);
+      }
+    }
+
+    :where(:scope.prose--headings-up h2) {
+      font-family: var(--title-font-family);
+      font-size: var(--title-fixed-font-size);
+      font-weight: var(--title-font-weight);
+      letter-spacing: var(--title-letter-spacing);
+      line-height: var(--title-line-height);
+      text-transform: var(--title-text-transform);
+      word-spacing: normal;
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--title-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--title-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--title-compact-font-size);
+      }
+    }
+
+    :where(:scope.prose--headings-up h3) {
+      font-family: var(--heading-font-family);
+      font-size: var(--heading-fixed-font-size);
+      font-weight: var(--heading-font-weight);
+      letter-spacing: var(--heading-letter-spacing);
+      line-height: var(--heading-line-height);
+      text-transform: var(--heading-text-transform);
+      word-spacing: var(--heading-word-spacing);
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--heading-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--heading-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--heading-compact-font-size);
+      }
+    }
+
+    :where(:scope.prose--headings-up h4) {
+      font-family: var(--subheading-font-family);
+      font-size: var(--subheading-fixed-font-size);
+      font-weight: var(--subheading-font-weight);
+      letter-spacing: var(--subheading-letter-spacing);
+      line-height: var(--subheading-line-height);
+      text-transform: none;
+
+      @container style(--font-sizing: fluid) {
+        font-size: var(--subheading-fluid-font-size);
+      }
+
+      @container style(--font-sizing: cq) {
+        font-size: var(--subheading-cq-font-size);
+      }
+
+      @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
+        font-size: var(--subheading-compact-font-size);
       }
     }
 

@@ -1,0 +1,103 @@
+# Changelog
+
+What changed in each published version of the library (`dfh-components.css`, the theme stylesheets and the shared skills), newest first. Sites link a version from `components.designforhumans.blog/css/<version>/`; a published version never changes.
+
+Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
+
+## 0.5.3 (10 November 2026)
+
+### Added
+- **Input Frame:** a text field with buttons inside one control, for showing a password or clearing a search. It takes the Input's sizes, looks and states, and its buttons keep a 48px hit area. The library ships no script: the product switches the field's type and the button's `aria-pressed`.
+- **Prose `--headings-up`:** Prose headings set one step up the scale (`h2` as a title, `h3` as a heading), for a page whose headings lead.
+- **Italic through a font's axes:** a theme can give a variable font its `italicAxes` (Adapter PE's are `ital 1, slnt -10`). The library sets them wherever it sets italic, so a font whose host declares only an upright face (an Adobe kit) still draws its real italic. The DFH themes use it.
+- **Choices with the input beside the label:** a `div.choice` holding the input and a `label for` is supported, styled and hit-tested like `label.choice`.
+- **Token Designer:** an italic axes field for variable fonts.
+
+### Changed
+- **Placeholders are italic** (`--input-placeholder-font-style`), so they don't read as a value. They keep 4.5:1 contrast in the muted colour.
+- **Prose spaces every direct child,** so a wrapper (a `div` around a Table, a CMS block) no longer sits against the block after it.
+- **A Card stays full width in a Stack when it's aligned** (`self-start` in a column), and sizes to its content once the Stack becomes a row.
+- **Icon-only Tabs are decided by a visually hidden label** (`.sr-only`), so a visible label needs no `.tab__text` wrapper to keep its gap.
+- **The button at the end of a Combobox** sits as far from the end as from the top and bottom.
+
+## 0.5.2 (10 November 2026)
+
+### Added
+- **Prose lead:** `prose--lead` sets the first paragraph as a lead.
+- **Navigation Tree:** collapsible groups and dividers between them.
+- **Accordion:** the state icon can sit at the start.
+- **Shared skills:** `site-css`, for a product's own CSS beside the library.
+
+### Changed
+- Navigation Tree toggles take the tree's own inline padding.
+
+## 0.5.1 (10 November 2026)
+
+### Changed
+- **A Grid carousel straight inside a Wrapper** bleeds into the Wrapper's gutter, to the screen edge, with its first item still in line with the text. A flush or nested Wrapper has no gutter, so nothing changes there.
+
+## 0.5.0 (10 November 2026)
+
+### Added
+- **Row Cards size their media** with `--card-thumb-size` (half the width by default).
+- **Telemetry fill with intents.**
+
+### Changed
+- **Border utilities draw the theme's border width;** width and style classes adjust one side or all.
+- Navigation Tree links use the foreground colour.
+- Lighter accent surfaces in the DFH themes and sub-brands.
+
+### Removed
+- `.border-md` and `.border-lg`: use `.border-width-medium` and `.border-width-thick`.
+
+## 0.4.0 (9 November 2026)
+
+### Added
+- **Busy states:** the Spinner atom, busy Buttons and busy regions.
+- **Print:** `utilities/print.css`, with `print:hide` and `print:keep`.
+- **Easing from the theme:** components take the theme's motion roles (`--ease-in-out`, `--ease-in`, `--ease-out`).
+- **Fine-pointer targets** (`.fine:targets-sm`) and a compact Header for fine pointers (`fine:header--compact`).
+- **Brand** on a `<button>`.
+- **Shared skills,** published per version at `components.designforhumans.blog/skills/<version>/`: accessibility, tokens, composition, UI guidance, design principles.
+
+### Changed
+- Every component audited by group (actions, forms, navigation, surfaces, messages, indicators, content, identity, layout) against the Principles, for zero specificity, target sizes, hit areas that never cover a neighbour, forced colours and reduced transparency.
+- Subtle fields have no border; it returns under `prefers-contrast: more` and forced colours.
+- Pagination collapses below a 30rem row to Previous, current and Next.
+- A Switch's row doesn't toggle it; its label does.
+- Prose inline code wraps.
+
+### Removed
+- `--timefunc-ease-in-out`, `--timefunc-ease-in`, `--timefunc-ease-out`, `--timefunc-linear`: use the theme's motion roles, or `linear`.
+- `.header__skip-link`: put a `.skip-link` before the Header.
+- `.range-lockup--sm`, `--lg`, `--bordered`, `--round`: use `.controls-sm` or `.controls-lg` on the lockup.
+
+## 0.3.0 (6 November 2026)
+
+### Added
+- **`.card__canvas`:** media of any kind where a thumb sits (a carousel, a demo, a chart), padded on the card's surface.
+- `.thumbnail--stretch` fills the inline size and keeps its aspect.
+- `.focus-ring--inset`, and overscroll utilities on each axis (`overscroll-y-*`, `overscroll-x-*`).
+- Icon sizes in ems: `--icon-base-size` and the Button's `--button-icon-size`.
+- The Eden theme (Gardens of Eden).
+
+### Changed
+- Grid carousels keep a stable scrollbar gutter.
+
+## 0.2.1 (3 November 2026)
+
+### Changed
+- Updated icons.
+
+## 0.2.0 (3 November 2026)
+
+### Added
+- **Poster.**
+- New icons and layout additions.
+
+### Changed
+- `prose--body-serif` is `prose--body-alt`.
+
+## 0.1.0 (2 November 2026)
+
+The first published version: the library, the DFH theme and its blog and docs sub-brands, linked by the blog and the course.

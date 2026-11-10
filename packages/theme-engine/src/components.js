@@ -13,10 +13,10 @@ import { resolver } from './gate.js';
 /* Logical groups for the designer. A new component must join one (a test checks) */
 export const COMPONENT_GROUPS = {
   Actions: ['button', 'button-group', 'link', 'block-link', 'menu', 'batch-actions', 'skip-link'],
-  Forms: ['input', 'textarea', 'select', 'check', 'switch', 'range', 'range-lockup', 'combobox', 'field', 'fieldset', 'choice', 'choices', 'form'],
+  Forms: ['input', 'textarea', 'select', 'check', 'switch', 'range', 'range-lockup', 'input-frame', 'combobox', 'field', 'fieldset', 'choice', 'choices', 'form'],
   Surfaces: ['card', 'poster', 'dialog', 'popover', 'tooltip', 'accordion', 'divider'],
   Messages: ['banner', 'banner-dock', 'toast', 'empty-state'],
-  Indicators: ['status', 'badge', 'progress', 'meter', 'skeleton'],
+  Indicators: ['status', 'badge', 'progress', 'meter', 'skeleton', 'spinner'],
   Navigation: ['header', 'footer', 'sidebar', 'navigation-tree', 'breadcrumb', 'pagination', 'stepper', 'tab', 'tab-list', 'tabbed-content'],
   Content: ['prose', 'list', 'table', 'code-block', 'telemetry', 'kbd', 'chip', 'wrapper'],
   Identity: ['avatar', 'thumbnail', 'brand', 'lockup', 'icon', 'icon-box'],

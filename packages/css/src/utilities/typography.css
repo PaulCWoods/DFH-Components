@@ -54,10 +54,12 @@
 
 :where(.font-style-italic, .italic) {
     font-style: italic;
+    font-variation-settings: var(--typography-font-italic-settings, normal);
 }
 
 :where(.font-style-normal, .not-italic) {
     font-style: normal;
+    font-variation-settings: normal;
 }
 
 

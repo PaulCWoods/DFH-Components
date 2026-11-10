@@ -266,6 +266,10 @@
             900
           ]
         },
+        "italicAxes": {
+          "ital": 1,
+          "slnt": -10
+        },
         "kit": "lrj6kun",
         "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",
         "figma": "Adapter PE Variable"

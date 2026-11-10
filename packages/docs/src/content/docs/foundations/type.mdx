@@ -47,6 +47,8 @@ Each style takes one of the theme's font roles:
 
 The library's own CSS loads no fonts and makes no request: every role starts on a system stack. A theme's fonts come with its stylesheet, and its opening comment lists the font links to add to your page head.
 
+Some variable fonts keep their italic on axes the browser can't reach with `font-style` alone: it sets either the italic axis or the slant, never both, and only when the font's host says the font has an italic. When italic text shows upright, give the font its italic axes in the theme (Adapter PE's are `ital 1, slnt -10`). The library sets them wherever it sets italic: emphasis, citations, the `.italic` utility and placeholders.
+
 ## Sizing modes
 
 Text atoms are fixed by default: each takes one step at every width. A container picks another mode for everything inside it:

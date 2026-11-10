@@ -121,6 +121,7 @@ export const States: Story = {
 
 /**
  * What a tab can hold: an icon, a count badge, a status, or only an icon.
+ * The last tab's label is bare text beside a Badge: it keeps its gap.
  */
 export const Content: Story = {
   render: () =>
@@ -141,6 +142,7 @@ export const Content: Story = {
             <span class="status status--sm"><span class="status__text">Beta</span></span>
           </a>
           <a href="#" class="tab tab--icon">${icon('Settings')}<span class="tab__text">Settings</span></a>
+          <a href="#" class="tab">Cart <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">2</span></span><span class="sr-only">, 2 items</span></a>
         </nav>`
         )
         .join('')}

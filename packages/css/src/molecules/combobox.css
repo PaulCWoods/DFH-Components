@@ -148,7 +148,8 @@
 
   > :where(.button) {
     flex: none;
-    margin-inline-end: calc(var(--_control-padding-inline) / -2);
+    /* As far from the end as from the top and bottom */
+    margin-inline-end: calc((var(--_control-padding-inline) - var(--_control-padding-block)) * -1);
     margin-inline-start: auto;
   }
 }
@@ -188,6 +189,8 @@
 
   &::placeholder {
     color: var(--_control-placeholder-color);
+    font-style: var(--_control-placeholder-font-style);
+    font-variation-settings: var(--_control-placeholder-font-variation);
     opacity: 1;
   }
 

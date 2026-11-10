@@ -229,3 +229,32 @@ export const RightToLeft: Story = {
       <pre><code>:where(textarea) { field-sizing: content; }</code></pre>
     </article>`,
 };
+
+export const WrappedBlocks: Story = {
+  name: 'Wrapped blocks',
+  parameters: { docs: { description: { story: 'Every block straight inside the prose is in the rhythm: a `div` around a table and a plain `div` keep the space after them, like a `.prose-end` block.' } } },
+  render: () => `
+    <article class="prose">
+      <p>Before the wrapped table.</p>
+      <div class="table-container"><table><caption>Sowing times</caption><thead><tr><th scope="col">Crop</th><th scope="col">Month</th></tr></thead><tbody><tr><td>Beans</td><td>May</td></tr></tbody></table></div>
+      <p>After the wrapped table.</p>
+      <div><p>A paragraph in a plain div.</p></div>
+      <p>After the plain div.</p>
+      <div class="prose-end"><div class="card"><div class="card__body"><p class="text">A card, outside prose.</p></div></div></div>
+      <p>After the .prose-end block.</p>
+    </article>`,
+};
+
+export const HeadingsUp: Story = {
+  name: 'Headings up',
+  parameters: { docs: { description: { story: '`--headings-up`: each heading takes the style a step up (h2 a title, h3 a heading), for sections from a CMS that should read larger, such as a home page.' } } },
+  render: () => `
+    <article class="prose prose--headings-up">
+      <h2>Latest from the blog</h2>
+      <p>Notes from the plot, the shed and the potting bench.</p>
+      <h3>This week</h3>
+      <p>Earthing up the potatoes before the late frost.</p>
+      <h4>Tools</h4>
+      <p>A draw hoe and a long-handled fork.</p>
+    </article>`,
+};

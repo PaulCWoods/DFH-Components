@@ -176,8 +176,10 @@ body {
   font-weight: bold;
 }
 
-:where(em, i) {
+/* A theme font whose italic is on its axes (italicAxes) sets them too */
+:where(em, i, cite, dfn, var, address) {
   font-style: italic;
+  font-variation-settings: var(--typography-font-italic-settings, normal);
 }
 
 :where(small) {

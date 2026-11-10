@@ -165,3 +165,19 @@ test('a style at the floor in a regular or lighter weight is reported, a heavier
   const bold = floorWeight((t) => (t.styles['body-xs'].weight = 'bold'));
   assert.ok(!bold.includes('body-xs'));
 });
+
+test('italic axes need a variable font and tags with numbers; a different value is reported', () => {
+  const font = (extra) => ({ source: 'adobe', family: 'pe', kit: 'abc', fallback: 'sans-serif', ...extra });
+  let { failures } = edit((t) => (t.fonts.x = font({ weights: [400], italicAxes: { slnt: -10 } })));
+  assert.ok(failures.some((f) => f.rule === 'reference' && f.style === 'x' && /variable/.test(f.message)));
+  ({ failures } = edit((t) => (t.fonts.x = font({ axes: { wght: [100, 900] }, italicAxes: { slant: '-10' } }))));
+  assert.ok(failures.some((f) => f.rule === 'reference' && f.style === 'x'));
+  const { failures: none, reports } = edit((t) => {
+    t.fonts.x = font({ axes: { wght: [100, 900] }, italicAxes: { ital: 1, slnt: -10 } });
+    t.fonts.y = font({ family: 'mono-pe', axes: { wght: [100, 900] }, italicAxes: { slnt: -13 } });
+    t.families.sans = { font: 'x' };
+    t.families.mono = { font: 'y' };
+  });
+  assert.deepEqual(none, []);
+  assert.ok(reports.some((r) => r.rule === 'italic' && r.style === 'y'));
+});

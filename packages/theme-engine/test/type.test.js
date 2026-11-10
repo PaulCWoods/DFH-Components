@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { leadingSteps, SYSTEM_STACKS, fontsCss, roleFont, roleStack, applyTypeStyles, evalCalc, figmaTextStyles, fontCovers, pickWeights, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
+import { leadingSteps, SYSTEM_STACKS, fontsCss, italicSettings, roleFont, roleStack, applyTypeStyles, evalCalc, figmaTextStyles, fontCovers, pickWeights, fluidBlock, fluidSteps, fontFaces, fontLinks, fontStack, migrateType, refVar, scaleSteps, styleTokens, typeCssVars, typeGlobal } from '../src/index.js';
 import { useFixtureFonts } from './fonts-fixture.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(`../../../tokens/${p}`, import.meta.url)));
@@ -130,6 +130,8 @@ test('the preview properties match the compiled CSS', () => {
        (heading's family is var(--body-font-family) in the CSS) but must exist */
     /* A role on a web font is a system stack in the CSS; fonts.css gives the preview's value */
     if (/^--typography-font-family-(sans|serif|mono|display)$/.test(name)) assert.ok(compiled(name) !== undefined, name);
+    /* Italic axes come only from fonts.css; the library falls back to normal */
+    else if (name === '--typography-font-italic-settings') assert.equal(value, 'normal');
     else if (name.startsWith('--typography-') || name.startsWith('--fluid-')) assert.equal(compiled(name), value, name);
     else assert.ok(compiled(name) !== undefined, `${name} is compiled`);
   }
@@ -191,6 +193,22 @@ test('a variable Google font asks for its axes as ranges, in Google\'s order', (
 test('a variable stored font gets a weight range in @font-face', () => {
   const faces = fontFaces({ fonts: { v: { source: 'local', family: 'House', axes: { wght: [200, 800] }, files: [{ path: 'fonts/house.woff2' }] } } });
   assert.match(faces, /font-weight: 200 800;/);
+});
+
+test('a font\'s italic axes become one setting, body text\'s font first', () => {
+  const type = {
+    fonts: {
+      sans: { source: 'adobe', family: 'sans-pe', axes: { wght: [100, 900] }, italicAxes: { ital: 1, slnt: -10 } },
+      mono: { source: 'adobe', family: 'mono-pe', axes: { wght: [100, 900] }, italicAxes: { slnt: -13, BORD: 300 } },
+      unused: { source: 'adobe', family: 'unused-pe', axes: { wght: [100, 900] }, italicAxes: { wdth: 90 } },
+    },
+    families: { mono: { font: 'mono' }, sans: { font: 'sans' } },
+    styles: { body: { family: 'sans' } },
+  };
+  assert.equal(italicSettings(type), '"ital" 1, "slnt" -10, "BORD" 300');
+  assert.match(fontsCss(type), /--typography-font-italic-settings: "ital" 1, "slnt" -10, "BORD" 300;/);
+  assert.equal(italicSettings({ fonts: { sans: { source: 'system', family: '' } }, families: { sans: { font: 'sans' } } }), '');
+  assert.doesNotMatch(fontsCss({ fonts: {}, families: {} }), /italic/);
 });
 
 test('the first weights ticked are those nearest 400 and 700', () => {

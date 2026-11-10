@@ -109,3 +109,17 @@ export const Responsive: Story = {
         </div>`).join('')}
     </div>`,
 };
+
+export const AlignedCard: Story = {
+  name: 'Aligned Card',
+  parameters: { docs: { description: { story: 'A Card in a column Stack stays full width even when it is aligned (`self-start`): it has no width of its own, so it would shrink to nothing. `max-inline-size` narrows it.' } } },
+  render: () => `
+    <div class="stack">
+      <div class="card self-start">
+        <div class="card__body"><p class="text">Order total: £24.00</p></div>
+      </div>
+      <div class="card self-end max-w-sm">
+        <div class="card__body"><p class="text">Narrowed with max-inline-size, at the end</p></div>
+      </div>
+    </div>`,
+};

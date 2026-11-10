@@ -188,14 +188,43 @@ export const roleOverrides = (type) =>
       .map(([role, f]) => [role, fontStack(type.fonts[f.font])]),
   );
 
+/* --------------------------------------------------------------------------
+   Italic through axes. font-style: italic sets a variable font's ital axis
+   and oblique its slnt axis, one or the other, and only when the font's
+   @font-face says it covers that style. A font whose italic needs both, or
+   whose host declares only an upright face (an Adobe kit), lists the axes
+   its italic sets: "italicAxes": { "ital": 1, "slnt": -10 }. The library
+   sets them, with font-style, wherever it sets italic. One value serves every
+   font on the page: an axis a font lacks does nothing to it, and a value
+   past its range stops at the end. Body text's font comes first.
+   -------------------------------------------------------------------------- */
+export const italicAxes = (type) => {
+  const roles = Object.keys(type.families ?? {});
+  const body = type.styles?.body?.family;
+  const order = [...new Set([body, 'sans', ...roles].filter((r) => roles.includes(r)))];
+  const axes = {};
+  for (const key of new Set(order.map((r) => roleFontKey(type, r)))) {
+    const font = type.fonts?.[key];
+    if (!isWeb(font)) continue;
+    for (const [tag, value] of Object.entries(font.italicAxes ?? {})) if (!(tag in axes)) axes[tag] = value;
+  }
+  return axes;
+};
+export const italicSettings = (type) =>
+  Object.entries(italicAxes(type))
+    .map(([tag, value]) => `"${tag}" ${value}`)
+    .join(', ');
+
 /* fonts.css: what a page links (with the font <link>s) to use the theme's fonts */
 export const fontsCss = (type, { base = '' } = {}) => {
-  const overrides = Object.entries(roleOverrides(type));
+  const overrides = Object.entries(roleOverrides(type)).map(([role, stack]) => [`typography-font-family-${role}`, stack]);
+  const italic = italicSettings(type);
+  if (italic) overrides.push(['typography-font-italic-settings', italic]);
   const faces = fontFaces(type, { base });
   return [
     "/* Generated from the default theme by npm run build:themes (or Publish). Not imported by index.css:\n   a page that loads the theme's fonts links this too. Without it, the font tokens use system stacks. */",
     faces,
-    overrides.length ? `:root {\n${overrides.map(([role, stack]) => `  --typography-font-family-${role}: ${stack};`).join('\n')}\n}` : '',
+    overrides.length ? `:root {\n${overrides.map(([name, value]) => `  --${name}: ${value};`).join('\n')}\n}` : '',
   ]
     .filter(Boolean)
     .join('\n\n') + '\n';
@@ -548,6 +577,7 @@ export const typeCssVars = (type) => {
     else if (family.system) vars[`--typography-font-family-${role}`] = SYSTEM_STACKS[family.system] ?? '';
     else if (family.font) vars[`--typography-font-family-${role}`] = `var(--typography-font-family-${family.font})`;
   }
+  vars['--typography-font-italic-settings'] = italicSettings(type) || 'normal';
   for (const [name, { size, leading }] of Object.entries(type.controls ?? {})) {
     vars[`--${name}-font-size`] = `${scaleSteps(type)[size]}rem`;
     vars[`--${name}-line-height`] = String(leadingSteps(type)[leading]);

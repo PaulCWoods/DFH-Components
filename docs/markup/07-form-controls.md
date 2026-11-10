@@ -2,8 +2,8 @@
 title: Form Controls
 tier: atom
 summary: The parts people fill in or set, such as text inputs, selects, checkboxes, switches and sliders.
-tokens: [input, select, textarea, check, switch, range, range-lockup]
-storybook: [atoms-input, atoms-select, atoms-textarea, atoms-checkbox-radio, atoms-switch, atoms-range]
+tokens: [input, input-frame, select, textarea, check, switch, range, range-lockup]
+storybook: [atoms-input, molecules-input-frame, atoms-select, atoms-textarea, atoms-checkbox-radio, atoms-switch, atoms-range]
 related: [form-composition, button, combobox]
 ---
 
@@ -38,6 +38,7 @@ Styling is opt-in through classes. A bare `<input>` keeps its browser rendering,
 - **Validation:** invalid styling follows `:user-invalid` and `aria-invalid="true"`; always pair it with a `.field__error` message. Valid fields are not recoloured.
 - **One way to validate.** Either let the browser validate (`required`, `type`, `pattern`, and its own messages), or put `novalidate` on the form and show the library's errors with an [error summary](07b-form-composition.md). Never both: people get the browser's bubble and then a second, different message.
 - **Hit area:** `--sm` text controls are 32px, and a field can't take a hit-area buffer, so that is also its target. Put touch-facing forms in `fine:ui-compact` rather than using `--sm` directly. Put checkboxes and radios in a `.choice` label.
+- **Placeholders:** avoid them. A hint or an example format goes in the Field's hint, where it stays as people type. Where one is needed (a search field's "Search plants"), it keeps 4.5:1 contrast and is italic, so it reads as a placeholder, not a value (`--input-placeholder-font-style`).
 - **Range fill:** `--value` drives the fill in Blink and WebKit, so a script must update it on `input`.
 
 ## Keyboard and screen readers
@@ -117,18 +118,35 @@ A slider shows roughly where it is, and an `<output>` beside it gives the number
 </div>
 ```
 
+## Show a password
+```html live width=md
+<div class="field">
+  <label for="example-password" class="field__label label">Password</label>
+  <div class="input-frame">
+    <input type="password" id="example-password" class="input-frame__input" autocomplete="current-password" />
+    <button type="button" class="button button--plain button--icon" aria-controls="example-password" aria-pressed="false">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#View" /></svg>
+      <span class="sr-only">Show password</span>
+    </button>
+  </div>
+</div>
+```
+An Input Frame holds a field and the buttons that act on it in one control. It draws the border and focus ring, and takes the Input's sizes and looks. The button is yours to script: switch the field's `type` between `password` and `text`, set `aria-pressed`, and swap the icon (`View`, `Hide`). Seeing what they typed spares people retyping it, so never block paste either.
+
 ## Do and don't
 | Do | Don't |
 | :--- | :--- |
 | Give every control a visible label. | Rely on a placeholder as the label. |
+| Put a hint or example format in the Field's hint. | Put it in a placeholder, where it looks like a value and vanishes as people type. |
 | Use `:user-invalid` or `aria-invalid="true"` with a `.field__error`. | Show an error colour with no message. |
 | Set the right `type` and `autocomplete`. | Make people retype what the browser already knows. |
 | Put checkboxes and radios in a `.choice` label. | Leave a 20px box as the whole target. |
 | Use `.ui-compact` on a dense region. | Add `--sm` to every control in it. |
 | Choose browser validation or `novalidate` with library errors. | Show the browser's message and the library's for the same field. |
+| Put a field's buttons in an Input Frame, with a hidden name each. | Position a button over a bare `.input`. |
 
 ## Reference
-Six atoms: input (with colour and file), select, textarea, checkbox and radio, switch, range. What goes around them (field, Fieldset, choices, form) is in [form composition](07b-form-composition.md).
+Six atoms: input (with colour and file), select, textarea, checkbox and radio, switch, range. The Input Frame is a molecule that holds an input and the buttons that act on it. What goes around them (field, Fieldset, choices, form) is in [form composition](07b-form-composition.md).
 
 ## Options
 | Atom | Axes | Container flags |
@@ -138,6 +156,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 | `.switch` | Size (`--sm`, `--lg`), prominence (`--subtle`, no border until high contrast or forced colours), intent (`--danger`), corners | `--switch-size`, `--switch-prominence`, `--switch-intent`, `--switch-corners` |
 | `.color-input` | Size (`--sm`, `--lg`, `--stretch` to fill its container) | |
 | `.range` | Size, intent (`--info`, `--success`, `--warning`, `--danger`) | `--range-size`, `--range-intent` |
+| `.input-frame` (a molecule: `.input-frame__input` and plain icon Buttons) | The Input's: size, prominence, corners, `--flush` | `--input-*`, `--controls-*` |
 | `.range-lockup` | Size from `.controls-sm` or `.controls-lg` on it; `--fill` to take the full width | `--range-size`, `--controls-size` |
 
 ### Further rules

@@ -9,6 +9,8 @@
            a minimum size that isn't a rem or px length, or is larger than
            the base; a ceiling that isn't a length, a lower ceiling below
            the base or the floor, an upper ceiling below the lower one;
+           italic axes that aren't tags with numbers, or on a font that
+           isn't variable;
            a hierarchy out of order in any mode; a compact size larger than
            the fixed one; a fluid size whose largest value is more
            than 2.5 times its smallest (zoom to 200% couldn't double it,
@@ -20,10 +22,12 @@
            (WCAG 1.4.8; small text is captions and labels, not paragraphs); a heading line height above body's; a style a
            ceiling holds down, with its size without the ceiling; two styles of the same kind that
            differ only in weight or case at the same size; a style whose
-           weight its font doesn't load (the browser fakes it or falls back).
+           weight its font doesn't load (the browser fakes it or falls back);
+           fonts whose italics set the same axis differently (the page uses
+           the first).
    ========================================================================== */
 
-import { MIN_LENGTH, SYSTEM_STACKS, ceilingSize, unlimitedSteps, fluidSteps, fontCovers, fontWeights, leadingSteps, minSize, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
+import { MIN_LENGTH, SYSTEM_STACKS, ceilingSize, unlimitedSteps, fluidSteps, fontCovers, fontWeights, italicAxes, leadingSteps, minSize, resolveToken, roleFont, scaleSteps, styleLeading } from './type.js';
 
 export const HIERARCHY = ['display-title', 'title', 'heading', 'subheading', 'small-heading'];
 export const HEADINGS = [...HIERARCHY, 'micro-heading'];
@@ -86,6 +90,20 @@ export const typeGate = (type, { semantic = {}, global = {} } = {}) => {
         seen.add(r);
       }
     }
+  }
+  /* Italic axes: four-character tags with numbers, on a variable font. One
+     setting serves every font, so fonts that differ take body text's. */
+  const italic = italicAxes(type);
+  for (const [name, font] of Object.entries(type.fonts ?? {})) {
+    const axes = font.italicAxes;
+    if (axes == null) continue;
+    if (typeof axes !== 'object' || Array.isArray(axes) || !Object.keys(axes).length) fail('reference', name, `${name}: italicAxes isn't a list of axes, such as { "ital": 1, "slnt": -10 }`);
+    else if (!font.axes) fail('reference', name, `${name}: italicAxes needs a variable font`);
+    else
+      for (const [tag, value] of Object.entries(axes)) {
+        if (!/^[A-Za-z0-9]{4}$/.test(tag) || !Number.isFinite(value)) fail('reference', name, `${name}: italic axis ${tag} ${value} isn't a four-character tag with a number`);
+        else if (tag in italic && italic[tag] !== value) report('italic', name, `${name}'s italic sets ${tag} ${value}, but the page uses ${italic[tag]}, from body text's font or the first`);
+      }
   }
   const families = names(type.families);
   const weights = names(semantic['font-weight']);

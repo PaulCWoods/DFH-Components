@@ -57,7 +57,7 @@ To work on one part of the default theme alone, each generator prints its result
 
 Every gate fails rather than writes. Fix the theme, never the generated value:
 - **Palette:** every Tier 2 pairing in light, dark and high contrast. A control edge or focus ring needs 3:1, text 4.5:1. It reports text under 7:1.
-- **Type:** the scale in order, a floor and ceilings, fluid growth no more than 2.5×, compact no larger than fixed. It reports sizes under 12px and line heights under 1.5.
+- **Type:** the scale in order, a floor and ceilings, fluid growth no more than 2.5×, compact no larger than fixed, a font's `italicAxes` (tags with numbers, on a variable font). It reports sizes under 12px, line heights under 1.5 and fonts whose italic axes differ (the page uses one setting, body text's font first).
 - **Space:** roles growing in order, each target a Tier 1 step and at least 24px (the default target at least 44px), and the app sizes.
 - **Shape:** sizes on the Tier 1 spacing steps, roles in order, a focus ring of at least 2px.
 - **Motion:** durations in order, and curves CSS can run.

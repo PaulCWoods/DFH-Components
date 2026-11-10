@@ -74,6 +74,7 @@
 @import './molecules/prose.css' layer(molecules);
 @import './molecules/accordion.css' layer(molecules);
 @import './molecules/code-block.css' layer(molecules);
+@import './molecules/input-frame.css' layer(molecules);
 @import './molecules/combobox.css' layer(molecules);
 @import './molecules/empty-state.css' layer(molecules);
 /* After anything a fieldset can hold: its gap is a margin on their zero-specificity roots */

@@ -50,7 +50,7 @@ Every axis sits on the list, because Tabs in a row should match each other. The 
 ## Rules
 - **Selected state is ARIA only:** `aria-selected="true"` in a tablist, `aria-current` (any value but `"false"`) in navigation. No class.
 - **Underline is for navigation and sections; segmented suits a few short panels.** A choice with no panel is a joined [Button Group](14-button-group.md) of radio inputs, not Tabs.
-- **Icon-only Tabs:** `.tab--icon`, with the label kept in `.tab__text`. `.hide-labels` on the list, or `--ui-labels: hidden` on a container, collapses labels to icons.
+- **Icon-only Tabs:** `.tab--icon`, with the label kept in `.tab__text`. A Tab holding only an icon and hidden text (`.sr-only`) is icon-only without the class. A visible label can be bare text beside a Badge, but beside an icon and hidden text alone it needs `.tab__text`, since CSS can't see bare text. `.hide-labels` on the list, or `--ui-labels: hidden` on a container, collapses labels to icons.
 - **Counts:** hide a Badge from assistive technology and spell the count out in visually hidden text.
 
 ## Keyboard and screen readers

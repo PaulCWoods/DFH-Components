@@ -38,7 +38,7 @@ A component is only as clear as the words in it and the moment it appears. The l
 ## 3. Forms
 
 - **Ask only for what you need,** in the order people think of it. Group related fields in a Fieldset with a legend.
-- **One column.** Labels sit above their fields (or beside them in an aligned form on wide screens). A placeholder never replaces a label.
+- **One column.** Labels sit above their fields (or beside them in an aligned form on wide screens). A placeholder never replaces a label, and a hint or example format goes in the Field's hint, not a placeholder: a placeholder looks like a value and vanishes as people type. Use one only where nothing else fits (a search field), and the library sets it in italic so it reads as a placeholder.
 - **Mark the less common case:** usually "(optional)" in the label, written by you.
 - **Help people type less:**
   - The right `type` and `inputmode`.

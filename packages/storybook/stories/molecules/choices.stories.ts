@@ -141,3 +141,23 @@ export const RightToLeft: Story = {
   name: 'Right to left',
   render: () => `<div dir="rtl" style="max-inline-size: 28rem;">${group('What will you grow?', choices('rtl', crops))}</div>`,
 };
+
+/**
+ * The input beside its label: a div.choice holding the input and a
+ * <label for>, for a script that needs the input outside its label. The
+ * label covers the row, so the whole row is still the target.
+ */
+export const InputBesideLabel: Story = {
+  name: 'Input beside its label',
+  render: () => group('Payment', `
+    <div class="choices">
+      <div class="choice">
+        <input type="radio" class="radio-input" id="pay-card" name="payment" value="card" checked />
+        <label for="pay-card" class="choice__label">Card</label>
+      </div>
+      <div class="choice">
+        <input type="radio" class="radio-input" id="pay-transfer" name="payment" value="transfer" />
+        <label for="pay-transfer" class="choice__label">Bank transfer<span class="small-text text-muted">Two to three working days</span></label>
+      </div>
+    </div>`),
+};

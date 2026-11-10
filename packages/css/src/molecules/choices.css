@@ -17,6 +17,10 @@
    match the compact fields around them. Like a small text control, the row is its
    own target: above the 24px minimum (WCAG 2.5.8), below 48px.
 
+   Where a script needs the input outside its label, a div.choice holds
+   the input and a <label for> (as .choice__label); the label covers the
+   row, so the target is the same.
+
    Options: --inline (flag --choices-layout: inline).
 
    <fieldset class="fieldset">
@@ -119,6 +123,29 @@
   > :where(.checkbox-input, .radio-input) {
     font: inherit;
     margin-block: calc((1lh - var(--_check-size, 1lh)) / 2);
+  }
+
+  /* The sibling form: a div holding the input and a label for it (some
+     scripts need the input outside its label). The label's ::before covers
+     the row, so the whole row is still the target. */
+  &:where(:not(label)) {
+    cursor: default;
+    position: relative;
+
+    > :where(label) {
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+    }
+
+    > :where(.checkbox-input, .radio-input) {
+      position: relative;
+      z-index: 1;
+    }
   }
 
   /* A disabled choice dims, unless a disabled fieldset already does */

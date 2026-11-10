@@ -256,6 +256,14 @@ What goes around the [form controls](07-form-controls.md).
 ```
 - **Size** follows the box: `checkbox-input--lg` / `radio-input--lg`, or the `--check-size: lg` flag, widens the gap beside it.
 - **Text** matches the text controls beside it (`--choice-font-size`, from `--control-font-size`). The choice sets it because the row is part of the control; a description takes `.small-text`.
+- **Input beside its label:** where a script needs the input outside its label (a payment provider's, say), a `div.choice` holds the input and a `<label for>` with `.choice__label`. It looks the same, and the label covers the whole row, so the target is too.
+
+```html
+<div class="choice">
+  <input type="radio" class="radio-input" id="pay-card" name="payment" value="card" />
+  <label for="pay-card" class="choice__label">Card</label>
+</div>
+```
 - **Compact:** in a compact form, Fieldset or `.ui-compact` region, rows are 32px, the text steps to the small-control size and the box to 16px, so choices sit with the compact fields around them. Like a small text control, the row is its own target: above 24px (WCAG 2.5.8), below 48px.
 
 ## Form: aligned, and in rows
