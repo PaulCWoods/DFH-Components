@@ -1,6 +1,6 @@
 {
   "name": "@design-for-humans/components-css",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "scripts": {
     "build:tokens": "node ../figma-sync/compile-tokens.js"

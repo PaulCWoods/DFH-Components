@@ -1,0 +1,36 @@
+{
+  "library": "Design For Humans Components",
+  "version": "0.5.2",
+  "skills": [
+    {
+      "name": "accessibility",
+      "description": "How to build accessible interfaces with the Design For Humans component library: WCAG 2.2 AA as the floor, native HTML before ARIA, the library's markup for each pattern, target sizes, focus, contrast, forced colours and motion.",
+      "path": "accessibility/SKILL.md"
+    },
+    {
+      "name": "tokens",
+      "description": "Using and customising Design For Humans design tokens: the three tiers, the semantic roles to build with (surface, foreground, border, spacing, radius, type, motion, elevation), component tokens, themes, sizing modes and the fallback rules for CSS written against the library.",
+      "path": "tokens/SKILL.md"
+    },
+    {
+      "name": "composition",
+      "description": "Composing screens, pages and flows from Design For Humans components: deciding whether a need is an existing component, an option, a container setting, a token or layout, laying out with the layout primitives, setting type with text atoms, density, narrow screens and states.",
+      "path": "composition/SKILL.md"
+    },
+    {
+      "name": "ui-guidance",
+      "description": "Content and interaction guidance for interfaces built with Design For Humans: what buttons, links, headings, errors and empty states should say; when to use a Button or a link, a Dialog or a page, a Toast or a Banner; forms that are quick to fill in; feedback, confirmation and undo; navigation, tables and numbers.",
+      "path": "ui-guidance/SKILL.md"
+    },
+    {
+      "name": "design-principles",
+      "description": "Visual and interaction design principles applied with Design For Humans: Gestalt grouping (proximity, similarity, common region, continuity, figure and ground), hierarchy and emphasis, usability heuristics, and laws such as Fitts's, Hick's and Jakob's, each tied to what the library already does about it.",
+      "path": "design-principles/SKILL.md"
+    },
+    {
+      "name": "site-css",
+      "description": "Writing a product's own CSS beside the Design For Humans library: when to write any, one file per component in the site layer, selectors that leave the library's text atoms and utilities in charge, Tier 2 values only, your own tokens, comments and formatting.",
+      "path": "site-css/SKILL.md"
+    }
+  ]
+}
