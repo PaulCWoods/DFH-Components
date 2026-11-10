@@ -21,6 +21,9 @@ const { title, description, nav, current, header = true } = Astro.props;
 /* Out of search engines until the public launch sets PUBLIC_INDEXABLE=true */
 const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
 const fullTitle = title === 'Design For Humans Components' ? title : `${title} Â· Design For Humans Components`;
+const url = new URL(Astro.url.pathname, Astro.site);
+/* The picture a link shows when it's shared: the home page's opening view */
+const image = new URL('/og-image.png', Astro.site);
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -30,7 +33,18 @@ const fullTitle = title === 'Design For Humans Components' ? title : `${title} Â
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {!indexable && <meta name="robots" content="noindex" />}
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Design For Humans Components" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Design For Humans: CMPNTS. An accessible, token-driven component library on native HTML and modern CSS." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
     <link rel="icon" href="/favicons/favicon.ico" sizes="32x32 48x48" />
     <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />

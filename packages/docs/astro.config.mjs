@@ -14,6 +14,8 @@ export default defineConfig({
   /* Code takes the library's prose styling; no highlighter colours of its own */
   markdown: { syntaxHighlight: false, remarkPlugins: [remarkDocs], rehypePlugins: [rehypeDocs] },
   vite: {
+    /* Forge writes the deploy's .env (PUBLIC_INDEXABLE) at the repo root */
+    envDir: path.resolve(__dirname, '../..'),
     build: {
       cssMinify: 'esbuild',
     },
