@@ -22,8 +22,8 @@ const { title, description, nav, current, header = true } = Astro.props;
 const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
 const fullTitle = title === 'Design For Humans Components' ? title : `${title} · Design For Humans Components`;
 const url = new URL(Astro.url.pathname, Astro.site);
-/* The picture a link shows when it's shared: the home page's opening view */
-const image = new URL('/og-image.png', Astro.site);
+/* The picture a link shows when it's shared: the share card */
+const image = new URL('/og-image.jpg', Astro.site);
 ---
 <!doctype html>
 <html lang="en-GB">
