@@ -50,7 +50,10 @@ const image = new URL('/og-image.jpg', Astro.site);
     <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <!-- theme fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" />
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" />
+    <link rel="preload" as="style" href="https://use.typekit.net/lrj6kun.css" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" /></noscript>
     <!-- /theme fonts -->
     <script is:inline>
       /* The remembered colour scheme, before the first paint (SchemeToggle) */

@@ -111,7 +111,11 @@ test('font sources give the page-head links and @font-face rules', () => {
   };
   const links = fontLinks(type);
   assert.ok(links.some((l) => l.includes('family=Plus+Jakarta+Sans:wght@400;700')));
-  assert.ok(links.includes('<link rel="stylesheet" href="https://use.typekit.net/abc1234.css" />'));
+  const kit = links.findIndex((l) => l.startsWith('<link rel="preload" as="style" href="https://use.typekit.net/abc1234.css"'));
+  assert.ok(kit > links.indexOf('<link rel="preconnect" href="https://use.typekit.net" crossorigin />'));
+  assert.equal(links[kit + 1], '<noscript><link rel="stylesheet" href="https://use.typekit.net/abc1234.css" /></noscript>');
+  assert.ok(!links.some((l) => l.startsWith('<link rel="stylesheet"')));
+  assert.equal(links.filter((l) => l.includes('p.typekit.net')).length, 1);
   const faces = fontFaces(type, { base: '/' });
   assert.match(faces, /font-family: "House Serif";/);
   assert.match(faces, /src: url\("\/fonts\/house-400\.woff2"\) format\("woff2"\);/);

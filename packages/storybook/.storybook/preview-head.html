@@ -3,7 +3,10 @@
      theme's stylesheet (applied in preview.ts) points them at these. Written
      by npm run build:themes and the designer's Publish from the site theme. -->
 <!-- theme fonts -->
-<link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" />
+<link rel="preconnect" href="https://use.typekit.net" crossorigin />
+<link rel="preconnect" href="https://p.typekit.net" />
+<link rel="preload" as="style" href="https://use.typekit.net/lrj6kun.css" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" /></noscript>
 <!-- /theme fonts -->
 
 <style>

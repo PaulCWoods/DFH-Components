@@ -4,6 +4,11 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
+## Unreleased
+
+### Changed
+- **Font links don't hold up the first paint:** the head links a theme's stylesheet header lists now preload a Google or Adobe font stylesheet and apply it when it arrives, with a `<noscript>` link for pages without JavaScript, and an Adobe kit gets preconnects to `use.typekit.net` and `p.typekit.net`. Text shows in the fallback font until the fonts arrive, as it already did with `font-display: swap`. Copy the new lines into your page head.
+
 ## 1.0.0 (10 November 2026)
 
 The first public version: the source is on GitHub under the MIT licence, and the docs are open to search engines. Nothing a site links has changed since 0.5.3: raising the version is all a site needs.

@@ -3,7 +3,8 @@
    Its fonts also need, in the page head:
    <link rel="preconnect" href="https://fonts.googleapis.com" />
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400..700&family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" /> */
+   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400..700&family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400..700&family=Cabin:ital,wght@0,400..700;1,400..700&display=swap" /></noscript> */
 @layer tokens {
   :root {
     --color-neutral-100: #efede2;

@@ -249,6 +249,14 @@ export const pickWeights = (available, want = [400, 700]) => {
   return rest.length ? [first, nearest(want[1], rest)].sort((a, b) => a - b) : [first];
 };
 
+/* A font stylesheet that doesn't hold up the first paint: preloaded at high
+   priority and applied when it arrives (the fonts swap in, as they would
+   anyway), with a plain link for pages without JavaScript */
+const fontStylesheet = (href) => [
+  `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'" />`,
+  `<noscript><link rel="stylesheet" href="${href}" /></noscript>`,
+];
+
 /* The <link> a product puts in its page head for the web fonts, by source */
 export const fontLinks = (type) => {
   const fonts = loadedFonts(type);
@@ -259,9 +267,14 @@ export const fontLinks = (type) => {
     const families = google.map(googleFamily).join('&');
     links.push('<link rel="preconnect" href="https://fonts.googleapis.com" />');
     links.push('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
-    links.push(`<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${families}&display=swap" />`);
+    links.push(...fontStylesheet(`https://fonts.googleapis.com/css2?${families}&display=swap`));
   }
-  for (const kit of adobe) links.push(`<link rel="stylesheet" href="https://use.typekit.net/${kit}.css" />`);
+  if (adobe.length) {
+    /* The kit's font files come from use.typekit.net in CORS mode, and its CSS imports p.typekit.net */
+    links.push('<link rel="preconnect" href="https://use.typekit.net" crossorigin />');
+    links.push('<link rel="preconnect" href="https://p.typekit.net" />');
+  }
+  for (const kit of adobe) links.push(...fontStylesheet(`https://use.typekit.net/${kit}.css`));
   return links;
 };
 

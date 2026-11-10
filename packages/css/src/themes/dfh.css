@@ -1,7 +1,10 @@
 /* dfh: generated from tokens/themes/dfh.json by npm run build:themes. Do not edit.
    Link it after the library's CSS. It holds only what the theme changes.
    Its fonts also need, in the page head:
-   <link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" /> */
+   <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+   <link rel="preconnect" href="https://p.typekit.net" />
+   <link rel="preload" as="style" href="https://use.typekit.net/lrj6kun.css" onload="this.onload=null;this.rel='stylesheet'" />
+   <noscript><link rel="stylesheet" href="https://use.typekit.net/lrj6kun.css" /></noscript> */
 @layer tokens {
   :root {
     --color-black: #181716;
