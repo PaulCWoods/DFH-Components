@@ -4,6 +4,11 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
+## Unreleased
+
+### Fixed
+- **Switch taps on iPhone and Safari:** only the label toggled a Switch, because Safari doesn't stretch a form control between its insets, so the invisible checkbox that fills the control had no size. The checkbox now has an explicit size, so tapping the control itself toggles it again, with the same hit area as before.
+
 ## 1.1.0 (11 November 2026)
 
 ### Added

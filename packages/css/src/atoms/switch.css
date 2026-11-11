@@ -158,16 +158,26 @@
   }
 
   /* The checkbox fills the control, invisibly, and reaches the target size
-     when the control is smaller: a tap anywhere on it toggles the switch */
+     when the control is smaller: a tap anywhere on it toggles the switch.
+     It is sized as well as placed, since Safari doesn't stretch a form
+     control between its insets: it stayed 0 by 0 and only the label worked */
   :where(.switch__control > input) {
+    --_switch-reach-block-start: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-block-start, var(--target-gap-block, 100vmax)) / -2));
+    --_switch-reach-block-end: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-block-end, var(--target-gap-block, 100vmax)) / -2));
+    --_switch-reach-inline-start: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-inline-start, var(--target-gap-inline, 100vmax)) / -2));
+    --_switch-reach-inline-end: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-inline-end, var(--target-gap-inline, 100vmax)) / -2));
+
     appearance: none;
     position: absolute;
-    inset-block-start: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-block-start, var(--target-gap-block, 100vmax)) / -2));
-    inset-block-end: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-block-end, var(--target-gap-block, 100vmax)) / -2));
-    inset-inline-start: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-inline-start, var(--target-gap-inline, 100vmax)) / -2));
-    inset-inline-end: min(0px, max(calc((100% - var(--spacing-target-min, 3rem)) / 2), var(--target-gap-inline-end, var(--target-gap-inline, 100vmax)) / -2));
+    inset-block-start: var(--_switch-reach-block-start);
+    inset-inline-start: var(--_switch-reach-inline-start);
+    box-sizing: border-box;
+    inline-size: calc(100% - var(--_switch-reach-inline-start) - var(--_switch-reach-inline-end));
+    block-size: calc(100% - var(--_switch-reach-block-start) - var(--_switch-reach-block-end));
     z-index: 2;
     margin: 0;
+    padding: 0;
+    border: 0;
     cursor: pointer;
     opacity: 0;
     touch-action: manipulation;
