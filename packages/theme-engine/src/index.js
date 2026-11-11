@@ -17,3 +17,5 @@ export * from './css-diff.js';
 export * from './sub-brand.js';
 export * from './theme-schema.js';
 export * from './validate.js';
+export * from './compile.js';
+export * from './theme-css.js';

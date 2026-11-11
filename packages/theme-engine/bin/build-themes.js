@@ -15,11 +15,10 @@
    docs (packages/docs/public/schema/), where a theme's $schema points.
    ========================================================================== */
 
-import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildTheme, themeSchema, validate, THEME_VERSION, changedTokens, componentCss, componentValue, cssDiff, fontLinks, fontsCss, resolveTheme, scopeCss, scopeClass } from '../src/index.js';
+import { buildTheme, compileTokens, themeSchema, validate, THEME_VERSION, fontsCss, resolveTheme, themeStylesheet } from '../src/index.js';
 import { readTheme, themeConfig, themeNames } from '../src/theme-files.js';
 import { writeHeadLinks } from '../src/font-files.js';
 
@@ -30,7 +29,9 @@ const write = (p, data) => {
   mkdirSync(dirname(at(p)), { recursive: true });
   writeFileSync(at(p), typeof data === 'string' ? data : JSON.stringify(data, null, 2));
 };
-const compile = (tokens, out) => execFileSync('node', [at('packages/theme-engine/bin/build-tokens.js'), ...(tokens ? ['--tokens', tokens, '--out', out] : [])], { stdio: 'ignore' });
+/* variables.css from a theme's built tokens (src/compile.js), and its
+   global tokens with the type scale worked out */
+const compile = (built) => compileTokens({ global: built.global, semantic: built.semantic, component });
 
 const config = themeConfig(root);
 /* Every theme file, read and checked against the format before anything is built */
@@ -66,8 +67,9 @@ write('tokens/1-global.json', base.global);
 write('tokens/2-semantic.json', base.semantic);
 write('packages/css/src/component-theme.css', base.componentCss);
 write('packages/css/src/fonts.css', fontsCss(defaultTheme.type));
-compile();
-const variables = readFileSync(at('packages/css/src/variables.css'), 'utf8');
+const { css: variables, global: scaled, scaleChanged } = compile(base);
+if (scaleChanged) write('tokens/1-global.json', JSON.stringify(scaled, null, 2) + '\n');
+write('packages/css/src/variables.css', variables);
 console.log(`✔ ${config.default} (the default): tokens/*.json and variables.css`);
 
 /* Every other theme, parents before their sub-brands */
@@ -87,29 +89,6 @@ const visit = (name, seen = []) => {
 };
 Object.keys(files).forEach((name) => visit(name));
 
-const stripComment = (css) => css.replace(/^\/\*[\s\S]*?\*\/\s*/, '');
-/* A Tier 3 token the default customises and this theme doesn't goes back to its own default */
-const tier3Default = (path) => path.split('.').reduce((node, key) => node[key], component).$value;
-const effectiveComponents = (theme) => {
-  const reset = Object.fromEntries(
-    Object.keys(defaultTheme.components ?? {})
-      .filter((path) => !(path in (theme.components ?? {})))
-      .map((path) => [path, tier3Default(path)]),
-  );
-  return { ...reset, ...(theme.components ?? {}) };
-};
-const themeComponents = (theme) => stripComment(componentCss(effectiveComponents(theme), component));
-/* A sub-brand's: only what differs from its parent, or reads a token the
-   sub-brand changes (the parent's value was worked out on :root) */
-const subBrandComponents = (theme, parentTheme, changedNames) => {
-  const own = effectiveComponents(theme);
-  const parent = effectiveComponents(parentTheme);
-  const reads = (value) => [...componentValue(value).matchAll(/var\((--[\w-]+)/g)].some(([, name]) => changedNames.has(name));
-  const paths = [...new Set([...Object.keys(own), ...Object.keys(parent)])];
-  const value = (set, path) => set[path] ?? tier3Default(path);
-  const differs = Object.fromEntries(paths.filter((p) => value(own, p) !== value(parent, p) || reads(value(own, p))).map((p) => [p, value(own, p)]));
-  return stripComment(componentCss(differs, component));
-};
 const compiled = { [config.default]: variables };
 const resolvedThemes = { [config.default]: defaultTheme };
 
@@ -130,42 +109,32 @@ for (const name of order.filter((n) => n !== config.default)) {
   }
   const built = build(name, { global: base.global, semantic: base.semantic }, theme);
   if (!built) continue;
+  const { css: themeVariables, global: themeGlobal, scaleChanged: themeScaled } = compile(built);
+  compiled[name] = themeVariables;
+  resolvedThemes[name] = theme;
+  /* The Figma export (private) reads each theme's tokens and CSS from here */
   const dir = at(`node_modules/.cache/dfh-themes/${name}`);
   mkdirSync(dir, { recursive: true });
-  writeFileSync(resolve(dir, '1-global.json'), JSON.stringify(built.global, null, 2));
+  writeFileSync(resolve(dir, '1-global.json'), JSON.stringify(themeGlobal, null, 2) + (themeScaled ? '\n' : ''));
   writeFileSync(resolve(dir, '2-semantic.json'), JSON.stringify(built.semantic, null, 2));
   copyFileSync(at('tokens/3-component.json'), resolve(dir, '3-component.json'));
-  compile(dir, resolve(dir, 'variables.css'));
-  compiled[name] = readFileSync(resolve(dir, 'variables.css'), 'utf8');
-  resolvedThemes[name] = theme;
-  const components = themeComponents(theme);
-  const fonts = stripComment(fontsCss(theme.type));
-  const links = fontLinks(theme.type);
-  const fontNote = links.length ? `\n   Its fonts also need, in the page head:\n${links.map((l) => `   ${l}`).join('\n')}` : '';
-  let body, head;
-  if (!parent) {
-    const diff = cssDiff(variables, compiled[name]);
-    head = `/* ${name}: generated from tokens/themes/${name}.json by npm run build:themes. Do not edit.\n   Link it after the library's CSS. It holds only what the theme changes.${fontNote} */`;
-    /* The font faces, and the roles pointed at them, come after the diff so they win */
-    body = [diff, fonts, components];
-  } else {
-    /* Its fonts, when they differ from its parent's: the faces are global, the roles scoped */
-    const ownFonts = fonts === stripComment(fontsCss(resolvedThemes[parent].type)) ? '' : fonts;
-    const faces = (ownFonts.match(/@font-face\s*\{[^}]*\}/g) ?? []).join('\n');
-    const roles = ownFonts.replace(/@font-face\s*\{[^}]*\}/g, '');
-    let scoped;
-    try {
-      const ownComponents = subBrandComponents(theme, resolvedThemes[parent], changedTokens(compiled[parent], compiled[name], roles));
-      scoped = scopeCss(name, compiled[parent], compiled[name], `${roles}\n${ownComponents}`);
-    } catch (error) {
-      console.error(`✖ ${name}: ${error.message}. Nothing written for it.`);
-      failed = true;
-      continue;
-    }
-    head = `/* ${name}: a sub-brand of ${parent}, generated from tokens/themes/${name}.json by npm run build:themes. Do not edit.\n   Link it after ${parent === config.default ? "the library's CSS" : `themes/${parent}.css`}, and put class="${scopeClass(name).slice(1)}" on a region, or on <html> for a whole page.\n   It holds only what the sub-brand changes.${ownFonts ? fontNote : ''} */`;
-    body = [faces, scoped];
+  writeFileSync(resolve(dir, 'variables.css'), compiled[name]);
+  let css;
+  try {
+    css = themeStylesheet({
+      name,
+      theme,
+      compiled: compiled[name],
+      parent: parent && { name: parent, theme: resolvedThemes[parent], compiled: compiled[parent], isDefault: parent === config.default },
+      defaultTheme,
+      libraryCss: variables,
+      component,
+    });
+  } catch (error) {
+    console.error(`✖ ${name}: ${error.message}. Nothing written for it.`);
+    failed = true;
+    continue;
   }
-  const css = [head, '@layer tokens {', body.filter((s) => s.trim()).join('\n\n').replace(/^(?=.)/gm, '  '), '}', ''].join('\n');
   write(`packages/css/src/themes/${name}.css`, css);
   console.log(`✔ ${name}: packages/css/src/themes/${name}.css (${css.split('\n').length} lines${parent ? `, a sub-brand of ${parent}` : ''})`);
 }
