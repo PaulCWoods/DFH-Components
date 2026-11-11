@@ -269,8 +269,7 @@
           ]
         },
         "italicAxes": {
-          "ital": 1,
-          "slnt": -10
+          "ital": 1
         },
         "kit": "lrj6kun",
         "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif",

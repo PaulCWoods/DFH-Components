@@ -315,7 +315,7 @@
     --typography-font-family-serif: "mencken-std-text", Cambria, "Times New Roman", Times, serif;
     --typography-font-family-mono: "adapter-mono-pe-variable", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --typography-font-family-display: "avory-i-pe", "Inter", system-ui, -apple-system, sans-serif;
-    --typography-font-italic-settings: "ital" 1, "slnt" -10;
+    --typography-font-italic-settings: "ital" 1;
   }
 
 
