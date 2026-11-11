@@ -149,24 +149,25 @@
     }
   }
 
-  /* Value: the figure, an optional unit and trend, on one baseline */
+  /* Value: the figure, an optional unit and trend, on one baseline. The
+     figure is usually bare text, which no selector can see, so the gap
+     spaces every item (a trend that wraps starts its line flush) and a
+     unit is pulled back against the figure. */
   > :where(dd) {
     align-items: baseline;
-    column-gap: var(--_telemetry-gap);
+    column-gap: var(--_telemetry-trend-gap);
     display: flex;
     flex-wrap: wrap;
     font-variant-numeric: tabular-nums lining-nums;
     margin: 0;
     min-inline-size: 0;
 
-    /* A trend after the figure; a unit stays against it */
+    > :where(:not(.status)) {
+      margin-inline-start: calc(var(--_telemetry-trend-gap) * -1);
+    }
+
     > :where(.status) {
       align-self: center;
-      margin-inline-start: var(--_telemetry-trend-gap);
-
-      &:first-child {
-        margin-inline-start: 0;
-      }
     }
   }
 }

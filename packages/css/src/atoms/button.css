@@ -664,6 +664,7 @@
 :where(.button > span:not(.button__icon, .badge, .status, .chip, .avatar), .button__text) {
   padding-block: var(--_button-padding-block);
   text-box: trim-both cap alphabetic;
+  text-wrap: balance;
 
   /* Zero specificity, so a menu or tree can align the label to the start.
      A Spinner beside the label doesn't count. */
