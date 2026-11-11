@@ -4,14 +4,15 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
-## Unreleased
+## 1.1.0 (11 November 2026)
 
 ### Added
+- **22 brand icons** in the sprite, from Simple Icons: Apple, Apple Pay, Discord, Dropbox, Facebook, Figma, GitHub, Google, Google Pay, Instagram, Mastercard, Notion, PayPal, Reddit, Shopify, Stripe, Telegram, TikTok, Visa, WhatsApp, X and YouTube (`#BrandApple` … `#BrandYouTube`). A brand's own guidelines still apply to how its logo is used.
 - **The theme engine compiles in the browser:** `compileTokens()` turns the token tiers into `variables.css`, `compileTheme()` builds a theme and compiles it, and `themeStylesheet()` writes a theme's stylesheet (a full theme as what it changes from the library, a sub-brand scoped to its class). They read and write no files, and `build:tokens` and `build:themes` now use them, with the same output as before. The Token Designer uses them for its Stylesheet export.
 
 ### Changed
 - **Font links don't hold up the first paint:** the head links a theme's stylesheet header lists now preload a Google or Adobe font stylesheet and apply it when it arrives, with a `<noscript>` link for pages without JavaScript, and an Adobe kit gets preconnects to `use.typekit.net` and `p.typekit.net`. Text shows in the fallback font until the fonts arrive, as it already did with `font-display: swap`. Copy the new lines into your page head.
-- **Controls in the starter theme get a looser line height:** `--control-line-height` and `--control-sm-line-height` are one step up the line-height scale, so text in default and small Buttons, Inputs and Selects has a little more room. The DFH and Eden themes keep the tighter one.
+- **Controls in the starter and DFH themes get a looser line height:** `--control-line-height` and `--control-sm-line-height` are one step up the line-height scale, so text in default and small Buttons, Inputs and Selects has a little more room. The Eden theme keeps the tighter one.
 - **Button labels that wrap are balanced** (`text-wrap: balance`), so a two-line label splits into lines of similar length instead of leaving one word alone.
 
 ### Fixed
