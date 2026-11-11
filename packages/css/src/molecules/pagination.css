@@ -30,11 +30,17 @@
   /* Private manifest */
   --_pagination-gap-color: var(--pagination-gap-color, var(--foreground-muted, currentColor));
 
-  /* Its own width decides how many pages show */
-  container-type: inline-size;
-
   /* A tighter gap than other button groups */
   --button-group-gap: var(--pagination-gap, var(--spacing-xs));
+
+  /* Its own width decides how many pages show. Size containment gives it
+     no width from its pages, so in a row that sizes to content (a Card
+     footer) it takes the room left, and never less than its narrow form
+     (Previous, the current page, Next, as icons): it wraps to its own
+     line before it collapses. */
+  container-type: inline-size;
+  flex-grow: 1;
+  min-inline-size: min(100%, calc(var(--spacing-target-min, 3rem) * 3 + var(--button-group-gap) * 2));
 
   /* Page numbers are square: the inline padding matches the block padding.
      Text Previous and Next links, at the ends, keep theirs. */

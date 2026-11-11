@@ -74,7 +74,7 @@ How it's named depends on where it sits. Beside a visible name it's hidden, beca
   Sam Rivera
 </button>
 ```
-An Avatar that is the control takes a focus ring and, when it's smaller than 48px, a hit area that reaches 48px. It has no hover look: the face is the affordance. Inside a Button, an Avatar follows the Button's corners, so a round Button keeps it round.
+An Avatar that is the control takes a focus ring and, when it's smaller than 48px, a hit area that reaches 48px. It has no hover look: the face is the affordance. Beside Buttons, give it the same size as them: the default Avatar is a default Button's 48px, and in a compact region (`fine:ui-compact`) both step down to 32px together, where `avatar--sm` would stay 32px on touch screens too. Inside a Button, an Avatar follows the Button's corners, so a round Button keeps it round.
 
 ## Avatar Group
 ```html live

@@ -4,6 +4,11 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
+## Unreleased
+
+### Fixed
+- **Pagination beside other things in a row:** in a row that sizes to its content (a Card footer next to "Showing 1 to 8 of 214"), Pagination had no width and collapsed. It now takes the room left, never less than Previous, the current page and Next, and wraps to its own line when even those don't fit. Add `justify-end` to put its Buttons at the end of the row.
+
 ## 1.1.1 (11 November 2026)
 
 ### Fixed
