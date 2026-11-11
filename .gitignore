@@ -18,3 +18,5 @@ storybook-static/
 
 # Figma sync temporary files
 *.tmp
+# Editor workspaces: each person's own folder layout
+*.code-workspace
