@@ -109,6 +109,8 @@
     --display-title-compact-font-size: var(--typography-font-size-5);
     --display-title-fluid-font-size: var(--typography-font-size-fluid-6-8);
     --display-title-cq-font-size: var(--typography-font-size-cq-6-8);
+    --control-line-height: var(--typography-line-height--2);
+    --control-sm-line-height: var(--typography-line-height--2);
     --app-border-width: var(--border-width-thin);
     --radius: var(--radius-lg);
     --body-lg-line-height: var(--typography-line-height--1);

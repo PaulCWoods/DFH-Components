@@ -401,11 +401,11 @@
     "controls": {
       "control": {
         "size": 0,
-        "leading": -2
+        "leading": -1
       },
       "control-sm": {
         "size": -1,
-        "leading": -2
+        "leading": -1
       },
       "control-lg": {
         "size": 2,

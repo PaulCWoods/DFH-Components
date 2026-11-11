@@ -1062,7 +1062,7 @@
       "$description": "Standard font size for interactive control elements like buttons and inputs"
     },
     "line-height": {
-      "$value": "{typography.line-height.minus-2}",
+      "$value": "{typography.line-height.minus-1}",
       "$type": "number",
       "$description": "Line height inside single-line controls"
     },
@@ -1084,7 +1084,7 @@
       "$description": "Small control typography font size"
     },
     "line-height": {
-      "$value": "{typography.line-height.minus-2}",
+      "$value": "{typography.line-height.minus-1}",
       "$type": "number",
       "$description": "Line height inside small single-line controls"
     }

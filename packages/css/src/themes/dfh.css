@@ -146,6 +146,8 @@
     --display-title-letter-spacing: var(--typography-spacing-xtight);
     --display-title-text-transform: uppercase;
     --display-title-compact-font-size: var(--typography-font-size-6);
+    --control-line-height: var(--typography-line-height--2);
+    --control-sm-line-height: var(--typography-line-height--2);
     --panel-border-width: var(--border-width-none);
     --panel-radius: var(--radius);
     --radius: var(--radius-none);
