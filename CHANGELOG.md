@@ -6,6 +6,9 @@ Each entry lists what a site using the library would notice: new components and 
 
 ## Unreleased
 
+### Changed
+- **Small underline Tabs look small on touch screens too:** a `tab-list--sm` (or a Tab List in a compact region) was a 48px band on touch, with its Tabs stretched to fill it, so it looked larger than a small Button beside it. The band keeps its 48px for the hit areas, but the Tabs now sit in it at 32px with the rule and indicator at their foot, as they do with fine-pointer targets.
+
 ### Fixed
 - **Pagination beside other things in a row:** in a row that sizes to its content (a Card footer next to "Showing 1 to 8 of 214"), Pagination had no width and collapsed. It now takes the room left, never less than Previous, the current page and Next, and wraps to its own line when even those don't fit. Add `justify-end` to put its Buttons at the end of the row.
 

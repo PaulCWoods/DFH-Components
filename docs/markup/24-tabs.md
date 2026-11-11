@@ -173,7 +173,7 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
 ### Further rules
 - **Every variant marks the selected tab at 3:1 or more** with a line (underline) or a fill (segmented), plus bold. Plain lists have no rule or border, so the selected tab also takes the accent colour.
 - **Hover changes the surface, never the text colour.**
-- **Size:** Tabs are 48px in every orientation. `--sm` is 32px with a 48px hit area, unless the product opts into fine-pointer targets. A horizontal list's band is never shorter than the pointer's minimum target, so those hit areas stay inside it: underline Tabs stretch to the band (the indicator still meets the rule), and segmented Tabs sit centred in it. With fine-pointer targets the band is 32px too.
+- **Size:** Tabs are 48px in every orientation. `--sm` is 32px with a 48px hit area, unless the product opts into fine-pointer targets. A horizontal list's band is never shorter than the pointer's minimum target, so those hit areas stay inside it: small Tabs sit in room above and below, with the rule at their foot, so they look 32px on any pointer, like a small Button in a Header. With fine-pointer targets the band is 32px too.
 - **Flush:** in a flush Card body or flush Sidebar, `--flush` runs Tabs edge to edge and lines their labels up with the content through `--tab-list-inset`, which those containers set.
 
 ## Container flags

@@ -57,6 +57,7 @@
   /* Room around tabs smaller than the target, so their hit areas stay
      inside the list (none at the default size, or with fine targets) */
   --_tab-list-target-room: max(0px, (var(--spacing-target-min, 3rem) - var(--_tab-list-tab-size)) / 2);
+  --_tab-list-padding-block: var(--_tab-list-target-room);
   --_tab-list-floating-padding-inline: var(--_tab-list-gap);
 
   /* Geometry & Colour */
@@ -112,8 +113,10 @@
   --target-gap-inline: var(--_tab-list-gap);
   min-inline-size: 0;
   /* A bar is never shorter than its targets: small tabs keep their 48px
-     hit areas inside the list on touch. Underline tabs stretch to the band,
-     so the indicator still meets the rule; segmented tabs sit centred with
+     hit areas inside the list on touch, in room above and below them, as a
+     small Button does in a Header. The tabs stretch to the band between,
+     and the rule is drawn at its foot, so the indicator meets it and small
+     tabs look small whatever the pointer. Segmented tabs sit centred with
      room around them, however many rows they wrap to. */
   align-items: var(--_tab-list-align, stretch);
   box-sizing: border-box;
@@ -124,8 +127,12 @@
   list-style: none;
   scroll-padding: var(--_tab-list-gap);
 
-  /* Rule: under the list; none when segmented or plain */
-  box-shadow: inset 0 calc(var(--_tab-list-rule) * -1) 0 var(--_tab-list-rule-color);
+  /* Rule: under the tabs, above the room; none when segmented or plain */
+  background-image: linear-gradient(var(--_tab-list-rule-color), var(--_tab-list-rule-color));
+  background-origin: content-box;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 100% var(--_tab-list-rule);
 
   /* Semantic <ul>/<li> navigation: the tabs stay flex items */
   :where(ul, li) {
@@ -273,6 +280,7 @@
   flex-shrink: 0;
   align-items: stretch;
   min-block-size: 0;
+  background-image: none;
   box-shadow: inset calc(var(--_tab-list-rule) * var(--_tab-list-rule-sign) * var(--_tab-list-dir)) 0 0 var(--_tab-list-rule-color);
 }
 
