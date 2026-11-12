@@ -12,6 +12,7 @@ Each entry lists what a site using the library would notice: new components and 
 
 ### Changed
 - **The page behind a Dialog doesn't bounce:** while a modal Dialog is open, the page can no longer be pulled past its ends on a touch screen (`overscroll-behavior: none`), on top of the scroll lock it already had.
+- **Inline Choices wrap evenly:** when `choices--inline` runs onto more lines, browsers that support `flex-wrap: balance` share the options out across the lines instead of leaving one on its own; others wrap as before.
 
 ## 1.2.0 (12 November 2026)
 
