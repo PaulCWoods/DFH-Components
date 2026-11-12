@@ -21,7 +21,6 @@ Things the library lacks or could do better. Each waits for a second use, or for
 ### Components and options
 - **Range scale labels (M):** start and end labels under a slider: elapsed and remaining time, a price range, 0 to 100. The Range Lockup shows one value only. *From the Cadence recipe.*
 - **Three-zone bar (M):** start, a true centre and end, for a media player, an editor toolbar or a wizard footer. Header bars and between-clusters don't centre the middle part. Cadence uses its own `1fr auto 1fr` grid. *From the Cadence recipe.*
-- **Footer compact density (S):** the Footer has no `--compact`. *Deferred from the component audit.*
 - **Tooltip typography (S):** the Tooltip sets its own type rather than taking a text atom. Decide whether it should. *Deferred from the component audit.*
 - **Badge, Status and Chip literals (S):** values in their CSS that could be tokens. *Deferred from the component audit.*
 - **A motion token for the press scale (S):** the 0.96 scale on press is a literal. *Deferred from the component audit.*

@@ -24,6 +24,7 @@ The band at the bottom of a page or app: site links, legal text, contact details
 
 - **\`.footer\`** is the band: surface, top border, safe-area padding. Always full width.
 - **\`.footer__bar\`** is a row, capped at \`--footer-max-width\` (the site width) and centred, so it lines up with \`.wrapper\`. The last part sits at the end. Two rows are two bars, with a rule between them.
+- **\`--compact\`** (or \`max-md:footer--compact\`, \`fine:footer--compact\`) sets \`--ui-sizing: compact\`: the bars' padding and gap tighten and the atoms step down.
 - **\`--stacked\`** sets each bar's parts in a column, in source order, at the start: the site links above the legal line.
 - **Landmark:** a \`<footer>\` directly in \`<body>\` (or \`.app\`) is the contentinfo: one per page, no \`aria-label\`. Link lists that navigate the site are a \`<nav aria-label>\`.
 - **Tokens:** \`--footer-bg\`, \`--footer-border-*\`, \`--footer-padding-block\`, \`--footer-padding-inline\`, \`--footer-gap\`, \`--footer-max-width\`.
@@ -113,6 +114,21 @@ export const Stretch: Story = {
             <li><a href="#" class="link">About</a></li>
           </ul>
         </nav>
+      </div>
+    </footer>`,
+};
+
+export const Compact: Story = {
+  parameters: { docs: { description: { story: '`--compact`: the bars\' padding and gap tighten, and the Buttons and text step down. An app\'s action bar.' } } },
+  render: () => `
+    <main id="main" class="main"><div class="wrapper"><p class="text">Page content.</p></div></main>
+    <footer class="footer footer--compact footer--stretch">
+      <div class="footer__bar">
+        <p class="small-text text-muted">All changes saved</p>
+        <div class="button-group">
+          <button type="button" class="button">Export</button>
+          <button type="button" class="button button--strong button--accent">Save</button>
+        </div>
       </div>
     </footer>`,
 };

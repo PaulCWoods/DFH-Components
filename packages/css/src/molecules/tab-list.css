@@ -335,7 +335,8 @@
 
   flex-wrap: nowrap;
   max-inline-size: 100%;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
 
@@ -369,6 +370,8 @@
 
 :where(.tab-list--scrollable):where(.tab-list--vertical, .tab-list--end) {
   --_scroll-fade-to: to bottom;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @supports (animation-timeline: scroll()) {
     animation-timeline: scroll(self block);

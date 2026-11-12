@@ -4,12 +4,17 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
-## Unreleased
+## 1.2.0 (12 November 2026)
+
+### Added
+- **Compact Footer:** `footer--compact` tightens each bar's padding and gap and steps the Buttons and text in it down, for an app's action bar. `max-md:footer--compact` does it on a phone only, and `fine:footer--compact` only where the pointer is fine, as the Header's do.
 
 ### Changed
 - **Small underline Tabs look small on touch screens too:** a `tab-list--sm` (or a Tab List in a compact region) was a 48px band on touch, with its Tabs stretched to fill it, so it looked larger than a small Button beside it. The band keeps its 48px for the hit areas, but the Tabs now sit in it at 32px with the rule and indicator at their foot, as they do with fine-pointer targets.
 
 ### Fixed
+- **Italics in the DFH theme:** Adapter's italics were both italic and slanted, which looked wrong. The theme now sets the italic axis only.
+- **Scrolling Tab Lists scroll one way only:** a `tab-list--scrollable` row could also scroll a little up and down, and a vertical one sideways. Each now scrolls only along its own direction.
 - **Pagination beside other things in a row:** in a row that sizes to its content (a Card footer next to "Showing 1 to 8 of 214"), Pagination had no width and collapsed. It now takes the room left, never less than Previous, the current page and Next, and wraps to its own line when even those don't fit. Add `justify-end` to put its Buttons at the end of the row.
 
 ## 1.1.1 (11 November 2026)

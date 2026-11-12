@@ -10,8 +10,10 @@
    width) and centred, so it lines up with .wrapper. The last part sits at
    the end. Two rows are two bars, with a rule between them.
 
-   Density: a compact region (--ui-sizing: compact) tightens each bar's
-   padding and gap.
+   Density: --compact (or a compact region, --ui-sizing: compact) tightens
+   each bar's padding and gap, and steps the atoms in it down.
+   max-md:footer--compact does it below 48rem only, fine:footer--compact
+   only where the primary pointer is fine.
 
    Modifiers: --stacked sets each bar's parts in a column, in source order,
    at the start (site links above the legal line). --stretch drops the
@@ -113,6 +115,25 @@
 
 :where(.footer--stretch) {
   --_footer-max-width: none;
+}
+
+/* Density: the bars read --ui-sizing, so the modifier only sets it. A
+   compact bar's padding still leaves its Buttons' hit areas inside the band
+   (32px Buttons and 8px each side make 48px). */
+:where(.footer--compact) {
+  --ui-sizing: compact;
+}
+
+@media (width < 48rem) {
+  :where(.max-md\:footer--compact) {
+    --ui-sizing: compact;
+  }
+}
+
+@media (pointer: fine) {
+  :where(.fine\:footer--compact) {
+    --ui-sizing: compact;
+  }
 }
 
 /* ==========================================================================

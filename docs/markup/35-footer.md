@@ -22,6 +22,7 @@ related: [header, app-shell, grid-grid-carousel, stack-inline-cluster]
 </div>
 ---
 Arrangement: One row, Stacked=footer--stacked
+Density: Default, Compact=footer--compact
 ```
 
 ## Purpose
@@ -124,11 +125,12 @@ The band at the bottom of a page or app: site links, legal text, contact details
 | :--- | :--- |
 | Arrangement | one row (default), `--stacked` (each bar's parts in a column) |
 | Width | bars capped at the site width (default), `--stretch` (no cap) |
-| Density | default, compact in a compact region (`.ui-compact` on the Footer or around it): each bar's padding and gap tighten |
+| Density | default, `--compact`, `max-md:footer--compact`, `fine:footer--compact`; or a compact region (`.ui-compact` on the Footer or around it) |
 
 ### Further rules
 - **`.footer`** is the band: surface, top border, and inline padding (`--footer-padding-inline`, by default the app's `--app-padding-inline`, plus the safe-area insets), so it lines up with the Header. Always full width.
 - **`.footer__bar`** is a row, capped at `--footer-max-width` (the site width) and centred, so its content lines up with a `.wrapper`'s and the Header's. The last part sits at the end; a single part fills the row. Two rows are two bars, with a rule between them.
 - **`--stacked`** sets each bar's parts in a column, in source order, at the start: the site links above the legal line. One line suits a short footer on a docs or app page; stacked suits a site whose links come first.
 - **`--stretch`** drops the width cap.
+- **`--compact`** sets `--ui-sizing: compact`: each bar's padding and gap tighten, and the Buttons and text in it step down (an app's action bar). A compact bar's padding still keeps its Buttons' hit areas inside the band on a touch screen. `max-md:footer--compact` does it below 48rem only, for a Footer that tightens on a phone, and `fine:footer--compact` only where the primary pointer is fine, as the [Header](33-header.md)'s do.
 - **Tokens:** `footer.bg`, `border-width`, `border-color`, `border-style`, `padding-block`, `padding-inline`, `gap`, `max-width`, `compact-padding-block`, `compact-gap`.
