@@ -123,6 +123,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 - **Flush** drops the padding at the Card's edges for content that brings its own (a Table, an image, a nested layout). The gaps between parts stay. A single part can go flush instead with `__body--flush` and the like.
 - **Material:** `--translucent` combines with any prominence that has a fill. It turns solid when the user asks for more contrast or reduced transparency.
 - **Canvas:** `.card__canvas` takes `.card__thumb`'s place for media that isn't one image: a carousel, a demo, a chart. It sits on the Card's surface with the Card's padding, so its content needs no frame of its own; `p-0` lets the content run to the edge. Put a carousel's own label and keyboard access on the scrolling element inside it.
+- **Bleed:** `.card__bleed`, a direct child of `__header`, `__band`, `__body` or `__footer`, or of the Card itself (with or without parts), runs a row to the Card's edges while its content starts in line with the rest of the Card (it takes the Card's padding out at each side and puts it back inside). Add `--scrollable` for a row that scrolls sideways (filters, swatches, thumbnails): it scrolls with the shared scroll fade, and pads itself above and below so small controls' hit areas aren't clipped. A scrolling row of things that can't take focus is a `role="region"` with `tabindex="0"` and a name, so keyboard users can scroll it. Put a list inside the bleed rather than the class on the list: a list in a [Cluster](22-stack-inline-cluster.md) resets its own margin and padding, which would cancel the bleed. In print the row wraps. In a flush part it does nothing, since there's no padding to reach past.
 - **Rules and bands:** `--ruled` rules between parts, bands included. `.card__band` is a full-width strip between parts; `--subtle` tints it.
 - **Flush parts:** `__header--flush`, `__body--flush`, `__footer--flush` drop the part's padding. A flush body hands the Card's padding to a flush Tab List.
 - **Flags** are set on a container, never on the Card. Dialog and Popover set `--card-prominence: strong`; `--card-chrome: flat` or `bordered` sets the edge of every Card inside, `--card-intent` their intent. A Card resets the flags for Cards nested inside it. A modifier on the Card beats a flag on its own axis only: `--card-intent: danger` still draws its border on a `.card--plain`. `--card-scroll: all` scrolls every Card inside, as `--scrollable` does one.
@@ -179,6 +180,26 @@ A surface with named parts. The Card draws its frame and the geometry of its par
   <div class="card__body">
     <p class="text">Body copy below the band.</p>
   </div>
+</article>
+```
+
+## Bleed
+A row that scrolls sideways runs to the Card's edges, so it's clear there's more, while its first item lines up with the title.
+
+```html live width=sm
+<article class="card">
+  <header class="card__header">
+    <h3 class="card__title heading">Plants</h3>
+    <div class="card__bleed card__bleed--scrollable cluster flex-nowrap buttons-sm" role="group" aria-label="Filter plants">
+      <button type="button" class="button" aria-pressed="true"><span>All</span></button>
+      <button type="button" class="button" aria-pressed="false"><span>Perennials</span></button>
+      <button type="button" class="button" aria-pressed="false"><span>Ferns</span></button>
+      <button type="button" class="button" aria-pressed="false"><span>Grasses</span></button>
+      <button type="button" class="button" aria-pressed="false"><span>Climbers</span></button>
+      <button type="button" class="button" aria-pressed="false"><span>Bulbs</span></button>
+    </div>
+  </header>
+  <div class="card__body"><p class="text">214 plants in stock.</p></div>
 </article>
 ```
 

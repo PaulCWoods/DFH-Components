@@ -206,6 +206,55 @@ export const FormDialog: Story = {
   play: openOnLoad,
 };
 
+/* The header's leading action: Cancel in words with a centred title, or an
+   icon-only back arrow beside a title at the start */
+const noteDialog = (id: string, placement: string, back = false) => `
+    <dialog id="${id}" class="dialog ${placement}" aria-labelledby="${id}-title">
+      <form method="dialog" class="card card--ruled">
+        <header class="card__header">
+          ${back
+            ? `<button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowLeft"/></svg><span class="sr-only">Cancel</span></button>`
+            : `<button type="button" class="button button--plain" commandfor="${id}" command="close"><span>Cancel</span></button>`}
+          <h2 id="${id}-title" class="card__title heading${back ? '' : ' text-center'}">Add a note</h2>
+          <button type="submit" value="save" class="button button--strong button--accent"><span>Save</span></button>
+        </header>
+        <div class="card__body card__body--scrollable stack">
+          <div class="field">
+            <label for="${id}-bed" class="field__label label">Bed</label>
+            <input id="${id}-bed" name="bed" class="input" value="Bed 7" />
+          </div>
+          <div class="field">
+            <label for="${id}-text" class="field__label label">Note</label>
+            <textarea id="${id}-text" name="note" class="textarea" rows="4"></textarea>
+          </div>
+        </div>
+      </form>
+    </dialog>`;
+
+export const FullOnAPhone: Story = {
+  name: 'Full screen on a phone',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`max-md:dialog--full`: below 48rem the Dialog fills the screen, clear of the safe areas, and slides up; above it, it is centred. For a form with several fields or a text area. Cancel and Save sit in the header, so the on-screen keyboard never covers them; the body scrolls.',
+      },
+    },
+  },
+  render: () => `
+    <div>${opener('note-dialog', 'Add a note')}</div>
+    ${noteDialog('note-dialog', 'max-md:dialog--full')}`,
+  play: openOnLoad,
+};
+
+export const Full: Story = {
+  parameters: { docs: { description: { story: '`.dialog--full` fills the screen at every size. Here Cancel is an icon-only back arrow (`icon--dir` turns it round in right-to-left text), named Cancel for screen readers, with the title beside it.' } } },
+  render: () => `
+    <div>${opener('full-dialog', 'Add a note')}</div>
+    ${noteDialog('full-dialog', 'dialog--full', true)}`,
+  play: openOnLoad,
+};
+
 export const ScrollingBody: Story = {
   parameters: {
     docs: {

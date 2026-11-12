@@ -12,6 +12,8 @@
    | Axis      | Values                                                     |
    | :-------- | :--------------------------------------------------------- |
    | Placement | centred (default); .dialog--top; .dialog--bottom;          |
+   |           | .dialog--full (the whole screen; max-md:dialog--full on a  |
+   |           | phone only);                                               |
    |           | .dialog--drawer (inline end),                              |
    |           | .dialog--drawer.dialog--start (inline start),              |
    |           | .dialog--drawer.dialog--bottom (a bottom sheet)            |
@@ -152,9 +154,11 @@
   }
 }
 
-/* The page behind a modal neither scrolls nor shifts sideways */
+/* The page behind a modal neither scrolls, bounces past its ends (iOS pulls
+   it otherwise) nor shifts sideways */
 :where(:root:has(.dialog:modal)) {
   overflow: hidden;
+  overscroll-behavior: none;
   scrollbar-gutter: stable;
 }
 
@@ -244,6 +248,65 @@
     border-block-start-width: var(--_card-border-width);
     padding-block: var(--_card-self-padding, 0px) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-bottom, 0px));
     padding-inline: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-start, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-end, 0px));
+  }
+}
+
+/* Full: the whole screen, for a form or a task that needs room (Apple's
+   full-height sheet). It slides up from the bottom. max-md:dialog--full does
+   it below 48rem only, a centred dialog elsewhere. */
+:where(.dialog--full) {
+  --_dialog-closed: translateY(100%);
+
+  block-size: 100dvb;
+  inline-size: 100dvi;
+  inset: 0;
+  margin: 0;
+  max-block-size: 100dvb;
+
+  > :where(.card) {
+    --card-radius: 0;
+    border-width: 0;
+
+    block-size: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* It runs to every screen edge: its content stays clear of a notch */
+    padding-block: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-top, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-bottom, 0px));
+    padding-inline: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-start, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-end, 0px));
+  }
+
+  &:where(:not(:has(> .card))) {
+    border-radius: 0;
+    border-width: 0;
+  }
+}
+
+@media (width < 48rem) {
+  :where(.max-md\:dialog--full) {
+    --_dialog-closed: translateY(100%);
+
+    block-size: 100dvb;
+    inline-size: 100dvi;
+    inset: 0;
+    margin: 0;
+    max-block-size: 100dvb;
+
+    > :where(.card) {
+      --card-radius: 0;
+      border-width: 0;
+
+      block-size: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      /* It runs to every screen edge: its content stays clear of a notch */
+      padding-block: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-top, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-bottom, 0px));
+      padding-inline: calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-start, 0px)) calc(var(--_card-self-padding, 0px) + var(--safe-area-inset-inline-end, 0px));
+    }
+
+    &:where(:not(:has(> .card))) {
+      border-radius: 0;
+      border-width: 0;
+    }
   }
 }
 

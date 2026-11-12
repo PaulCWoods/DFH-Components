@@ -130,6 +130,12 @@
         white-space: normal;
     }
 
+    /* A Card's scrolling bleed wraps, and so does the row inside it */
+    :where(.card__bleed--scrollable, .card__bleed--scrollable > *) {
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+
     /* A scrolling Tab List wraps */
     :where(.tab-list--scrollable) {
         flex-wrap: wrap;

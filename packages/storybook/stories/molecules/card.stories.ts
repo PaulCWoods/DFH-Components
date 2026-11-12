@@ -414,6 +414,47 @@ export const CardWithBand: Story = {
   `,
 };
 
+const filters = (label: string) => `
+  <div class="card__bleed card__bleed--scrollable cluster flex-nowrap buttons-sm" role="group" aria-label="${label}">
+    ${['All', 'Perennials', 'Ferns', 'Grasses', 'Climbers', 'Bulbs', 'Shrubs'].map((f, i) => `<button type="button" class="button" aria-pressed="${i === 0}"><span>${f}</span></button>`).join('')}
+  </div>`;
+
+export const Bleed: Story = {
+  parameters: { docs: { description: { story: '`.card__bleed` runs a row to the Card\'s edges, its first item in line with the title; `--scrollable` scrolls it sideways with the scroll fade, padded above and below for small controls\' hit areas. A row with nothing to focus is a region with `tabindex="0"` and a name; a list goes inside the bleed, since its own reset would cancel it. It also sits straight in a Card, with or without parts. In a compact Card it follows the smaller padding.' } } },
+  render: () => `
+    <div class="stack max-w-md">
+      <article class="card">
+        <header class="card__header">
+          <h3 class="card__title heading">Plants</h3>
+          ${filters('Filter plants')}
+        </header>
+        <div class="card__body"><p class="text">214 plants in stock.</p></div>
+      </article>
+      <article class="card">
+        <header class="card__header"><h3 class="card__title heading">This week's colour</h3></header>
+        <div class="card__body">
+          <div class="card__bleed card__bleed--scrollable" role="region" tabindex="0" aria-label="Plants in flower">
+            <ul class="cluster flex-nowrap" role="list">
+              ${['Hellebore', 'Snowdrop', 'Crocus', 'Winter aconite', 'Witch hazel', 'Cyclamen'].map((p) => `<li><span class="status status--subtle status--success"><span class="status__text">${p}</span></span></li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </article>
+      <section class="card stack" aria-labelledby="bleed-ramps">
+        <h3 id="bleed-ramps" class="heading">Straight in the Card</h3>
+        <p class="text">A Card with no parts pads itself; a bleed in it reaches past that padding.</p>
+        ${filters('Filter ramps')}
+      </section>
+      <article class="card card--compact">
+        <header class="card__header">
+          <h3 class="card__title heading">Compact</h3>
+          ${filters('Filter compact plants')}
+        </header>
+      </article>
+    </div>
+  `,
+};
+
 export const Loading: Story = {
   render: () => `
     <article class="card" aria-busy="true" aria-labelledby="loading-card-title" style="max-inline-size: 26rem;">

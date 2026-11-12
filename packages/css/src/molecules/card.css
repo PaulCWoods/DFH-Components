@@ -8,7 +8,9 @@
    Structure: parts (__thumb, __canvas, __header, __band, __body, __footer)
    are direct children of .card. __canvas takes __thumb's place for media
    of any kind (a carousel, a demo, a chart). .card__content wraps parts
-   only where they sit beside the media in a row card.
+   only where they sit beside the media in a row card. .card__bleed, in a
+   header, band, body or footer or straight in the card, runs a row to the
+   card's edges (a row that scrolls sideways, with --scrollable).
 
    Axes: prominence (default, --strong, --subtle, --plain), chrome (the
    frame's edge: default, --flat, --bordered), intent (neutral, --accent,
@@ -404,6 +406,65 @@
 
 :where(.card__header--flush, .card__body--flush, .card__footer--flush) {
   padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Bleed: a row inside a part, or straight in the card, that runs to the
+   card's edges, its content still in line with the rest of the card. --scrollable scrolls it
+   sideways with the shared scroll fade (utilities/scroll-fade.css), and
+   pads it above and below so the hit areas of small controls in it aren't
+   clipped (none where the product has fine-pointer targets).
+   -------------------------------------------------------------------------- */
+:where(.card__bleed) {
+  /* How far it reaches past its container's padding, and how far in its
+     content starts */
+  --_card-bleed: var(--_card-padding);
+  --_card-bleed-inset: var(--_card-bleed);
+
+  box-sizing: border-box;
+  /* Wider than its container by that padding, so it reaches both edges
+     and, in a header that wraps, takes a line of its own */
+  flex-shrink: 0;
+  inline-size: calc(100% + var(--_card-bleed) * 2);
+  margin-inline: calc(var(--_card-bleed) * -1);
+  min-inline-size: 0;
+  padding-inline: var(--_card-bleed-inset);
+  scroll-padding-inline: var(--_card-bleed-inset);
+}
+
+/* A flush part has no padding to reach past */
+:where(.card__header--flush, .card__body--flush, .card__footer--flush) > :where(.card__bleed) {
+  --_card-bleed: 0px;
+}
+
+/* Straight in the card: it reaches past the card's own padding (none
+   beside parts, which pad themselves) and starts where the parts' content
+   does, or the card's content where it has no parts */
+:where(.card) > :where(.card__bleed) {
+  --_card-bleed: var(--_card-self-padding);
+  --_card-bleed-inset: max(var(--_card-self-padding), var(--_card-padding));
+}
+
+:where(.card__bleed--scrollable) {
+  --_scroll-fade-size: var(--scroll-fade-size, 3rem);
+  --_scroll-fade-to: to right;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  padding-block: max(0px, (var(--spacing-target-min, 3rem) - var(--spacing-target-sm, 2rem)) / 2);
+  scrollbar-width: thin;
+
+  &:where(:dir(rtl)) {
+    --_scroll-fade-to: to left;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    animation: --scroll-fade-start linear both, --scroll-fade-end linear both;
+    animation-range: 0 var(--_scroll-fade-size), calc(100% - var(--_scroll-fade-size)) 100%;
+    animation-timeline: scroll(self inline);
+    mask-image: linear-gradient(var(--_scroll-fade-to), transparent, black calc(var(--scroll-fade-start) * var(--_scroll-fade-size)), black calc(100% - var(--scroll-fade-end) * var(--_scroll-fade-size)), transparent);
+  }
 }
 
 /* --------------------------------------------------------------------------

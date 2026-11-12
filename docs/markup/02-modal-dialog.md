@@ -26,7 +26,7 @@ related: [card, popover, button, form-composition, sidebar]
   </article>
 </dialog>
 ---
-Placement: Centred, Top=dialog--top, Bottom=dialog--bottom, Drawer at the end=dialog--drawer, Drawer at the start=dialog--drawer dialog--start, Bottom sheet=dialog--drawer dialog--bottom
+Placement: Centred, Top=dialog--top, Bottom=dialog--bottom, Full screen=dialog--full, Drawer at the end=dialog--drawer, Drawer at the start=dialog--drawer dialog--start, Bottom sheet=dialog--drawer dialog--bottom
 ```
 
 ## Purpose
@@ -39,6 +39,7 @@ The Dialog is only the shell: placement, backdrop and motion. The surface is a C
 ## When to use
 - **To interrupt for a decision** the page can't go on without, such as a confirmation.
 - **For a short, focused task** that keeps the page behind it, such as renaming something.
+- **Full screen on a phone** for a form with several fields or a text area (`max-md:dialog--full`).
 - **As a drawer** for settings, details or [navigation on a small screen](34-sidebar.md).
 - **As a bottom sheet** for a short choice on a phone, such as a sort order or a picker, within reach of a thumb.
 - **Not for a non-modal floating panel:** that is a [Popover](03-popover.md).
@@ -204,8 +205,10 @@ if (!('command' in HTMLButtonElement.prototype)) {
 </dialog>
 ```
 
-## Typing on a phone
-iOS doesn't resize the page for its on-screen keyboard, and `dvb` ignores it, so a centred Dialog can end up behind the keyboard, and the page pans to find the field. `.dialog--top` keeps a field near the top of the screen, and the Dialog stays still as its content grows.
+## Forms on a phone
+iOS doesn't resize the page for its on-screen keyboard, and `dvb` ignores it, so a centred Dialog can end up behind the keyboard while the page pans to find the field. Choose the placement by how much there is to type.
+
+**One field,** such as search: `.dialog--top` keeps the field near the top of the screen, above the keyboard, and the Dialog stays still as its content grows.
 
 ```html live cluster
 <button type="button" class="button" commandfor="find-dialog" command="show-modal"><span>Find a plant</span></button>
@@ -229,7 +232,34 @@ iOS doesn't resize the page for its on-screen keyboard, and `dvb` ignores it, so
 </dialog>
 ```
 
-If the Dialog can grow taller than the space above the keyboard, as search results do, the product also fits it to what is visible. Multiplying by the scale keeps pinch zoom from squashing it.
+
+**A form with several fields, a text area or several steps:** `max-md:dialog--full` makes the Dialog fill the screen on a phone, as Apple's full-height sheets do for writing, and leaves it centred on a larger screen. Put Cancel and the main action in the header, so the keyboard never covers them, and let the body scroll. They can be text or icon Buttons, either side of the title or both after it, as suits the product. `.dialog--full` fills the screen at every size.
+
+```html live cluster
+<button type="button" class="button" commandfor="note-dialog" command="show-modal"><span>Add a note</span></button>
+
+<dialog id="note-dialog" class="dialog max-md:dialog--full" aria-labelledby="note-title">
+  <form method="dialog" class="card card--ruled">
+    <header class="card__header">
+      <button type="button" class="button button--plain" commandfor="note-dialog" command="close"><span>Cancel</span></button>
+      <h3 id="note-title" class="card__title heading text-center">Add a note</h3>
+      <button type="submit" value="save" class="button button--strong button--accent"><span>Save</span></button>
+    </header>
+    <div class="card__body card__body--scrollable stack">
+      <div class="field">
+        <label for="note-bed" class="field__label label">Bed</label>
+        <input id="note-bed" name="bed" class="input" value="Bed 7" />
+      </div>
+      <div class="field">
+        <label for="note-text" class="field__label label">Note</label>
+        <textarea id="note-text" name="note" class="textarea" rows="4"></textarea>
+      </div>
+    </div>
+  </form>
+</dialog>
+```
+
+If a Dialog that isn't full screen can grow taller than the space above the keyboard, as search results do, the product also fits it to what is visible. Multiplying by the scale keeps pinch zoom from squashing it.
 
 ```js
 const viewport = window.visualViewport;
@@ -237,6 +267,7 @@ viewport?.addEventListener('resize', () => {
   dialog.style.setProperty('--dialog-max-height', `calc(${viewport.height * viewport.scale}px - var(--dialog-cushion, var(--spacing-cushion)) * 2)`);
 });
 ```
+
 
 ## Do and don't
 | Do | Don't |
@@ -254,7 +285,7 @@ A modal shell: top-layer placement, size, backdrop, motion and the page's scroll
 ## Options
 | Axis | Values |
 | :--- | :--- |
-| Placement | centred (default); `.dialog--top`; `.dialog--bottom`; `.dialog--drawer` (inline end); `.dialog--drawer.dialog--start` (inline start); `.dialog--drawer.dialog--bottom` (a bottom sheet) |
+| Placement | centred (default); `.dialog--top`; `.dialog--bottom`; `.dialog--full` (the whole screen), `max-md:dialog--full` (on a phone only); `.dialog--drawer` (inline end); `.dialog--drawer.dialog--start` (inline start); `.dialog--drawer.dialog--bottom` (a bottom sheet) |
 | Scroll | `.card__body--scrollable` (the body scrolls between a pinned header and footer); `.dialog--scrollable` (the whole Card scrolls, with a plain `.card__body`) |
 
 Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one Dialog or a region; `--dialog-cushion` (the space kept from the screen edge) and `--dialog-max-height`. There are no size modifiers.
@@ -262,13 +293,14 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
 ### Further rules
 - **Safe areas:** under `.viewport-fit-cover` a drawer's Card keeps its content clear of the insets on the edges it touches, while its surface still runs to the edge.
 - **Classes only.** A bare `<dialog>` keeps its browser rendering; put `.dialog` on it.
-- **Scroll lock.** While a modal is open the page neither scrolls nor shifts sideways (`:root:has(.dialog:modal)`).
+- **Scroll lock.** While a modal is open the page neither scrolls, bounces past its ends nor shifts sideways (`:root:has(.dialog:modal)`). iOS can still scroll the page while its keyboard is up; only a script that fixes the page in place stops that.
+- **`.dialog--full`** fills the screen with no cushion, corners or border, keeps its content clear of the safe areas, and slides up from the bottom (it fades instead under reduced motion). The Card scrolls, or its body with `.card__body--scrollable`. `max-md:dialog--full` does it below 48rem only. Use it for a form with several fields or a text area; one field stays `.dialog--top`.
 - **Drawers** are full height and follow the text direction. Use the end side for settings and details and the start side for navigation. On a narrow screen a drawer leaves a 3rem strip of the page beside it.
 - **`.dialog--bottom`** pins a floating Dialog near the bottom, within reach of a thumb, keeping the cushion below it. An on-screen keyboard can cover it, so use `.dialog--top` for anything with a field.
 - **Bottom sheets** (`.dialog--drawer.dialog--bottom`) are full width and flush with the bottom edge, as tall as their content, up to the screen less a 3rem strip, and the body scrolls beyond that. There's no drag to dismiss, since that needs a script: give it a close button, and `closedby="any"` if tapping outside should close it.
 - **Motion.** It fades and moves in over `--duration-sm`, and exit mirrors entry. Reduced motion keeps the fade only; more contrast and reduced transparency drop the backdrop blur.
 - **Without a Card** (an image, a video), the Dialog draws a Card's surface itself.
-- **Combining modifiers.** Pick one placement: centred, `--top`, `--bottom`, or a drawer. `--start` and `--bottom` change a drawer's edge only when paired with `--drawer`; `--start` alone does nothing, and `--top` on a drawer does nothing. `--scrollable` works with any placement. Use one scroll at a time: `--scrollable` or `.card__body--scrollable`, not both.
+- **Combining modifiers.** Pick one placement: centred, `--top`, `--bottom`, `--full`, or a drawer (`max-md:dialog--full` pairs with any of the first three, which apply above 48rem). `--start` and `--bottom` change a drawer's edge only when paired with `--drawer`; `--start` alone does nothing, and `--top` on a drawer does nothing. `--scrollable` works with any placement. Use one scroll at a time: `--scrollable` or `.card__body--scrollable`, not both.
 
 ## Dialog
 ```html live cluster

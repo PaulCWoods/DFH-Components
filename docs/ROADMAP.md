@@ -18,15 +18,6 @@ Nothing picked yet.
 
 Picked from the planning sheet on 12 November 2026. Each needs its open questions settled before it's built.
 
-### Card inner bands (S)
-A part inside a Card's header, body, footer or band that runs to the Card's edges, so a row that scrolls sideways (ramps, chips, a table, thumbnails) reaches the edge instead of stopping at the padding. It takes a negative inline margin of the Card's padding and pads its inside by the same amount, so its content still starts in line with the rest of the Card. The Designer's ramps need it.
-- **Name:** `.card__bleed`, after the Grid Carousel's `--carousel-bleed`, which does the same for a carousel.
-- **How:** reads `--_card-padding`, so compact, flush and plain Cards follow on their own (a flush Card's bleed does nothing).
-- **Scrolling:** it doesn't scroll by itself; pair it with `overflow-x-auto` and the scroll fade. A scrolling bleed must leave room for its controls' hit areas above and below (nothing clips a hit area), so it gets block padding of half the gap between target and control, as the Tab List's bar does.
-- **Where:** a direct child of `.card__header`, `.card__band`, `.card__body` or `.card__footer`. Not of `.card__content`, which always holds those parts rather than a bleed.
-- **Open question:** should a Sidebar body get the same?
-- **Also:** markup doc (§10), a story, Figma (a slot frame in card/body, card/header and card/footer, with the negative margin described, since Figma can't draw it), `check:layout` and `check:targets`.
-
 ### Column layouts (S)
 Text and short items in newspaper columns with CSS multi-column, for long lists (a glossary, an index of links, a sitemap footer) and print. The Grid sets items in rows; this flows content down and across.
 - **Primitive:** `.columns` in `layout/`, with `--columns-width` (the narrowest a column gets; `column-width`, default about 18rem) and `--columns-count` (the most columns; default `auto`), and `--gap` for the gap between columns, stepping down under `--ui-sizing: compact` like the other primitives. A `--ruled` modifier draws `column-rule` from the rule tokens.

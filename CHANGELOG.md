@@ -4,6 +4,15 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
+## Unreleased
+
+### Added
+- **Full-screen Dialog:** `dialog--full` fills the screen, clear of the safe areas, and slides up like an iOS sheet; `max-md:dialog--full` does it on a phone only and leaves the Dialog centred on larger screens. Use it for a form with several fields or a text area, with Cancel and the main action in the header, so the on-screen keyboard never covers them.
+- **Card bleed:** `.card__bleed` in a Card's header, band, body or footer, or straight in the Card, runs a row to the Card's edges, its first item still in line with the title. `card__bleed--scrollable` makes it a row that scrolls sideways with the scroll fade (filters, tags, thumbnails), with room above and below for small controls' hit areas. It wraps in print.
+
+### Changed
+- **The page behind a Dialog doesn't bounce:** while a modal Dialog is open, the page can no longer be pulled past its ends on a touch screen (`overscroll-behavior: none`), on top of the scroll lock it already had.
+
 ## 1.2.0 (12 November 2026)
 
 ### Added
