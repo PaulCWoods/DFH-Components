@@ -37,7 +37,7 @@ They stop where a component's job begins. There's no utility for a type size, fo
 <div class="border border-dashed border-muted rounded-md p-md">A dashed plot boundary</div>
 <p class="small-text text-muted text-balance">Bed 3 is resting this year.</p>
 <div class="card max-inline-size-sm mx-auto"><p class="text">Centred and capped at 24rem.</p></div>
-<button type="button" class="button button--icon"><span class="sr-only">Remove Bed 3</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
+<button type="button" class="button button--icon"><span class="sr-only">Remove Bed 3</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>
 ```
 
 ## Do and don't

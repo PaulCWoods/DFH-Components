@@ -10,7 +10,7 @@ related: [header, footer, link-block-link, icon-icon-box]
 # 6d. Brand
 ```html live
 <a href="#main" class="brand">
-  <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
+  <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#brand-design-for-humans"/></svg>
   <span class="brand__name">Design For Humans</span>
 </a>
 ```
@@ -42,7 +42,7 @@ The name stays in the markup on every screen. On the narrowest ones it can give 
 ## Mark only
 ```html live
 <a href="#main" class="brand">
-  <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
+  <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#brand-design-for-humans"/></svg>
   <span class="sr-only">Design For Humans home</span>
 </a>
 ```

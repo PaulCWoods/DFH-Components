@@ -62,7 +62,7 @@ const nav = (id = 'main', label = 'Main') => `
   </nav>`;
 
 const menuButton = (id = 'main') => `
-  <button type="button" class="button button--plain button--icon @3xl:hide" popovertarget="${id}-menu" aria-label="Menu">${icon('Navigation')}</button>
+  <button type="button" class="button button--plain button--icon @3xl:hide" popovertarget="${id}-menu" aria-label="Menu">${icon('menu')}</button>
   <div id="${id}-menu" popover class="popover popover--end-aligned">
     <menu class="menu" aria-label="Main">
       <li><a href="#" class="button" aria-current="page">Plants</a></li>
@@ -74,7 +74,7 @@ const menuButton = (id = 'main') => `
 
 const actions = (id = 'main') => `
   <div class="cluster gap-xs">
-    <button type="button" class="button button--plain button--icon" aria-label="Search">${icon('Search')}</button>
+    <button type="button" class="button button--plain button--icon" aria-label="Search">${icon('search')}</button>
     <button type="button" class="button button--strong button--accent @max-3xl:hide">Sign in</button>
     ${menuButton(id)}
   </div>`;
@@ -137,7 +137,7 @@ export const TwoRows: Story = {
             <li aria-current="page">Brunnera</li>
           </ol>
         </nav>
-        <button type="button" class="button button--sm">${icon('Edit')}<span>Edit</span></button>
+        <button type="button" class="button button--sm">${icon('square-pen')}<span>Edit</span></button>
       </div>
     </header>
     ${content(1)}`,
@@ -195,8 +195,8 @@ export const CompactAppHeader: Story = {
           <span class="small-text text-muted">Saved 2 minutes ago</span>
         </span>
         <div class="cluster gap-xs">
-          <button type="button" class="button button--plain button--icon" aria-label="Undo">${icon('ArrowStart')}</button>
-          <button type="button" class="button">${icon('Share')}<span>Share</span></button>
+          <button type="button" class="button button--plain button--icon" aria-label="Undo">${icon('arrow-left-to-line')}</button>
+          <button type="button" class="button">${icon('share-2')}<span>Share</span></button>
           <button type="button" class="button button--strong button--accent">Publish</button>
         </div>
       </div>
@@ -248,7 +248,7 @@ const overSidebar = (id: string, density = '') => `
             <input type="search" class="input input--subtle inline-size-full" placeholder="Search plants" aria-label="Search plants, ${id}">
           </form>
           <div class="cluster cluster--end gap-xs">
-            <button type="button" class="button button--plain button--icon">${icon('Bell')}<span class="sr-only">Notifications</span></button>
+            <button type="button" class="button button--plain button--icon">${icon('bell')}<span class="sr-only">Notifications</span></button>
             <button type="button" class="button">Sign in</button>
           </div>
         </div>
@@ -259,8 +259,8 @@ const overSidebar = (id: string, density = '') => `
         <div class="sidebar__body">
           <nav class="navigation-tree" aria-label="Sections, ${id}">
             <ol>
-              <li><a href="#" class="button" aria-current="page">${icon('Home')}<span>Borders</span></a></li>
-              <li><a href="#" class="button">${icon('Calendar')}<span>Calendar</span></a></li>
+              <li><a href="#" class="button" aria-current="page">${icon('house')}<span>Borders</span></a></li>
+              <li><a href="#" class="button">${icon('calendar')}<span>Calendar</span></a></li>
             </ol>
           </nav>
         </div>

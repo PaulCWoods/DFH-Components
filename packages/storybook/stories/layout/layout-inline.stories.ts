@@ -49,7 +49,7 @@ export const Playground: Story = {
     return `
       <div class="inline${cls ? ` ${cls}` : ''}">
         <h2 class="small-heading">Shade border</h2>
-        <button type="button" class="button">${icon('Edit')}<span>Edit</span></button>
+        <button type="button" class="button">${icon('square-pen')}<span>Edit</span></button>
       </div>`;
   },
 };
@@ -72,8 +72,8 @@ export const IconAndText: Story = {
   parameters: { docs: { description: { story: 'The commonest use: an icon beside a line of text, centred on it.' } } },
   render: () => `
     <ul class="stack" role="list">
-      <li class="inline gap-xs">${icon('Light')}<span class="text">Part shade</span></li>
-      <li class="inline gap-xs">${icon('Info')}<span class="text">Flowers in April</span></li>
+      <li class="inline gap-xs">${icon('sun')}<span class="text">Part shade</span></li>
+      <li class="inline gap-xs">${icon('info')}<span class="text">Flowers in April</span></li>
     </ul>`,
 };
 

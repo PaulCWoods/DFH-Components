@@ -16,7 +16,7 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
 <header class="header header--sticky header--stretch">
   <div class="header__bar">
     <a href="/" class="brand">
-      <Icon name="BrandDesignForHumans" class="brand__mark" />
+      <Icon name="brand-design-for-humans" class="brand__mark" />
       <span class="brand__name" aria-hidden="true">Cmpnts</span>
       <span class="sr-only">Design for Humans: Components</span>
     </a>
@@ -29,11 +29,11 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
     </nav>
     <div class="cluster gap-xs fine:ui-compact">
       <button type="button" class="button button--plain button--icon" commandfor="search" command="show-modal" title="Search the documentation">
-        <Icon name="Search" /><span class="sr-only">Search</span>
+        <Icon name="search" /><span class="sr-only">Search</span>
       </button>
       <SchemeToggle class="max-lg:hide" />
       <button type="button" class="button button--plain button--icon lg:hide" commandfor="site-nav" command="show-modal" title="Menu">
-        <Icon name="Navigation" /><span class="sr-only">Menu</span>
+        <Icon name="menu" /><span class="sr-only">Menu</span>
       </button>
     </div>
   </div>
@@ -44,7 +44,7 @@ const inSection = (s: Section) => s.pages.some((p) => p.href === current);
     <header class="card__header">
       <h2 id="drawer-title" class="card__title heading">Documentation</h2>
       <button type="button" class="button button--plain button--icon" commandfor="site-nav" command="close">
-        <span class="sr-only">Close</span><Icon name="Close" />
+        <span class="sr-only">Close</span><Icon name="x" />
       </button>
     </header>
     <div class="card__body card__body--scrollable" tabindex="0" aria-label="Menu">

@@ -14,10 +14,10 @@ Pins a banner to the page edge: site announcements, maintenance notices, consent
 <aside class="banner-dock banner-dock--sticky" aria-label="Site notice">
   <div class="wrapper">
     <div class="banner banner--warning">
-      <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+      <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg></span>
       <div class="banner__body"><p class="text">Maintenance on Sunday from 02:00 to 04:00 UTC.</p></div>
       <button type="button" class="button button--icon banner__action">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
         <span class="sr-only">Dismiss notice</span>
       </button>
     </div>
@@ -51,7 +51,7 @@ const iconBox = (name: string) => `<span class="icon-box" aria-hidden="true">${i
 
 const dismiss = `
   <button type="button" class="button button--icon banner__action" onclick="this.closest('.banner-dock').hidden = true">
-    ${icon('Close')}
+    ${icon('x')}
     <span class="sr-only">Dismiss notice</span>
   </button>`;
 
@@ -81,7 +81,7 @@ export const Playground: Story = {
       args.placement !== 'none' ? `banner-dock--${args.placement}` : '',
       args.floating ? 'banner-dock--floating' : '',
     ].filter(Boolean).join(' ');
-    const iconName = { info: 'Info', success: 'Check', warning: 'Warning', danger: 'Error' }[args.intent as string];
+    const iconName = { info: 'info', success: 'check', warning: 'triangle-exclamation-point', danger: 'circle-exclamation-point' }[args.intent as string];
     const dock = `
       <aside class="${classes}" aria-label="Site notice">
         <div class="banner banner--${args.intent}">
@@ -99,11 +99,11 @@ export const Placements: Story = {
     <div class="stack max-w-lg">
       ${frame(`
         <aside class="banner-dock" aria-label="Release notice">
-          <div class="banner banner--info">${iconBox('Info')}<div class="banner__body"><p class="text">In flow: scrolls away with the page.</p></div>${dismiss}</div>
+          <div class="banner banner--info">${iconBox('info')}<div class="banner__body"><p class="text">In flow: scrolls away with the page.</p></div>${dismiss}</div>
         </aside>${page}`, 'In flow (.banner-dock)')}
       ${frame(`
         <aside class="banner-dock banner-dock--sticky" aria-label="Maintenance notice">
-          <div class="banner banner--warning">${iconBox('Warning')}<div class="banner__body"><p class="text">Sticky: stays at the top on scroll.</p></div>${dismiss}</div>
+          <div class="banner banner--warning">${iconBox('triangle-exclamation-point')}<div class="banner__body"><p class="text">Sticky: stays at the top on scroll.</p></div>${dismiss}</div>
         </aside>${page}`, '.banner-dock--sticky')}
       ${frame(`${page}
         <aside class="banner-dock banner-dock--fixed-bottom" aria-label="Cookie preferences">
@@ -121,8 +121,8 @@ export const Placements: Story = {
         </aside>`, '.banner-dock--fixed-bottom with a wrapper')}
       ${frame(`${page}
         <aside class="banner-dock banner-dock--fixed-bottom banner-dock--floating" aria-label="Update available">
-          <div class="banner banner--accent banner--round">${iconBox('Info')}<div class="banner__body"><p class="text">A new version is available.</p></div>
-            <button type="button" class="button button--strong button--accent banner__action">${icon('Refresh')}<span>Reload</span></button>
+          <div class="banner banner--accent banner--round">${iconBox('info')}<div class="banner__body"><p class="text">A new version is available.</p></div>
+            <button type="button" class="button button--strong button--accent banner__action">${icon('rotate-ccw')}<span>Reload</span></button>
           </div>
         </aside>`, '.banner-dock--fixed-bottom.banner-dock--floating')}
     </div>
@@ -134,7 +134,7 @@ export const Dismissal: Story = {
     <div class="stack max-w-lg">
       ${frame(`
         <aside class="banner-dock banner-dock--sticky" aria-label="Outage notice" id="dock-dismiss-demo">
-          <div class="banner banner--strong banner--danger">${iconBox('Error')}<div class="banner__body"><p class="text"><strong>Partial outage:</strong> payments are degraded.</p></div>${dismiss}</div>
+          <div class="banner banner--strong banner--danger">${iconBox('circle-exclamation-point')}<div class="banner__body"><p class="text"><strong>Partial outage:</strong> payments are degraded.</p></div>${dismiss}</div>
         </aside>${page}`, 'Dismiss sets hidden')}
       <button type="button" class="button button--sm" onclick="document.getElementById('dock-dismiss-demo').hidden = false"><span>Show again</span></button>
     </div>

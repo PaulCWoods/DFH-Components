@@ -12,7 +12,7 @@ related: [card, banner, icon-icon-box, button]
 <div class="empty-state" data-axes>
   <div class="empty-state__visual">
     <span class="icon-box" aria-hidden="true">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
     </span>
   </div>
   <div class="empty-state__content">
@@ -53,7 +53,7 @@ It isn't a live region. One that arrives along with its content isn't reliably a
 <div class="empty-state">
   <div class="empty-state__visual">
     <span class="icon-box" aria-hidden="true">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
     </span>
   </div>
   <div class="empty-state__content">
@@ -75,7 +75,7 @@ It isn't a live region. One that arrives along with its content isn't reliably a
 ```html live width=md
 <div class="empty-state empty-state--success">
   <div class="empty-state__visual">
-    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
   </div>
   <div class="empty-state__content">
     <h3 class="empty-state__title subheading">All caught up</h3>
@@ -97,7 +97,7 @@ Intent tints the Icon Box and colours its icon (it sets `--icon-box-intent`). Co
   <div class="card__body">
     <div class="empty-state empty-state--compact">
       <div class="empty-state__visual">
-        <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg></span>
+        <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg></span>
       </div>
       <div class="empty-state__content">
         <h3 class="empty-state__title small-heading">No reminders</h3>
@@ -110,7 +110,7 @@ Intent tints the Icon Box and colours its icon (it sets `--icon-box-intent`). Co
 <!-- A slot or drop zone -->
 <div class="empty-state empty-state--subtle">
   <div class="empty-state__visual">
-    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Upload"/></svg></span>
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#upload"/></svg></span>
   </div>
   <div class="empty-state__content">
     <h3 class="empty-state__title subheading">No photos of this bed</h3>

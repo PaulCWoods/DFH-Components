@@ -30,7 +30,7 @@
 
    Usage:
    <button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
-     <svg class="icon" aria-hidden="true"><use href="#Bell"/></svg>
+     <svg class="icon" aria-hidden="true"><use href="#bell"/></svg>
      <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
    </button>
    ========================================================================== */

@@ -65,9 +65,9 @@ const PLOTS: Plot[] = [
 
 const feeStatus = (fee: Fee) =>
   ({
-    Paid: `<span class="status status--success">${icon('Check')}<span class="status__text">Paid</span></span>`,
-    Due: `<span class="status status--warning">${icon('Warning')}<span class="status__text">Due</span></span>`,
-    Overdue: `<span class="status status--danger">${icon('Error')}<span class="status__text">Overdue</span></span>`,
+    Paid: `<span class="status status--success">${icon('check')}<span class="status__text">Paid</span></span>`,
+    Due: `<span class="status status--warning">${icon('triangle-exclamation-point')}<span class="status__text">Due</span></span>`,
+    Overdue: `<span class="status status--danger">${icon('circle-exclamation-point')}<span class="status__text">Overdue</span></span>`,
     Exempt: `<span class="status"><span class="status__text">Exempt</span></span>`,
   })[fee];
 
@@ -92,11 +92,11 @@ const header = `
       </div>
       <div class="cluster gap-xs max-md:hide-labels">
         <button type="button" class="button button--subtle" commandfor="tool-locker" command="show-modal" aria-haspopup="dialog">
-          ${icon('Settings')}<span>Tool locker</span><span class="sr-only">, 2 overdue</span>
+          ${icon('cog')}<span>Tool locker</span><span class="sr-only">, 2 overdue</span>
           <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">2</span></span>
         </button>
         <button type="button" class="button button--strong button--accent" commandfor="lease-dialog" command="show-modal" aria-haspopup="dialog">
-          ${icon('Plus')}<span>New lease</span>
+          ${icon('plus')}<span>New lease</span>
         </button>
       </div>
     </div>
@@ -106,11 +106,11 @@ const frostNotice = `
   <aside class="banner-dock" aria-label="Frost warning">
     <div class="wrapper">
       <div class="banner banner--warning">
-        <span class="icon-box" aria-hidden="true">${icon('Warning')}</span>
+        <span class="icon-box" aria-hidden="true">${icon('triangle-exclamation-point')}</span>
         <div class="banner__body">
           <p class="text"><span class="font-bold">Late frost:</span> −2°C forecast between 02:00 and 06:00 on Wednesday. Cover seedlings in ground beds with fleece.</p>
         </div>
-        <button type="button" class="button button--icon banner__action">${icon('Close')}<span class="sr-only">Dismiss notice</span></button>
+        <button type="button" class="button button--icon banner__action">${icon('x')}<span class="sr-only">Dismiss notice</span></button>
       </div>
     </div>
   </aside>`;
@@ -133,8 +133,8 @@ const metrics = `
     <h2 id="metrics-title" class="sr-only">This season</h2>
     <div class="grid grid--xs">
       ${metric('Occupancy', `<span class="status status--success"><span class="status__text">88% let</span></span>`, '42 / 48', '6 plots resting this season')}
-      ${metric('Renewals', `<span class="status status--warning">${icon('Warning')}<span class="status__text">To check</span></span>`, '7', 'Requests waiting for a residency check')}
-      ${metric('Tool locker', `<span class="status status--danger">${icon('Error')}<span class="status__text">2 overdue</span></span>`, '5 out', '12 of 17 tools in the shed')}
+      ${metric('Renewals', `<span class="status status--warning">${icon('triangle-exclamation-point')}<span class="status__text">To check</span></span>`, '7', 'Requests waiting for a residency check')}
+      ${metric('Tool locker', `<span class="status status--danger">${icon('circle-exclamation-point')}<span class="status__text">2 overdue</span></span>`, '5 out', '12 of 17 tools in the shed')}
       ${metric('Rainwater', '', '7,850 L', '78% of 10,000 L, about 18 days', '<progress class="progress" value="78" max="100" aria-label="Rainwater tank"></progress>')}
     </div>
   </section>`;
@@ -144,8 +144,8 @@ const metrics = `
    -------------------------------------------------------------------------- */
 const viewSwitch = (view: 'table' | 'cards') => `
   <div class="button-group button-group--joined buttons-sm max-sm:hide-labels" role="radiogroup" aria-label="View">
-    <label class="button">${icon('List')}<input type="radio" name="view" value="table" class="sr-only"${view === 'table' ? ' checked' : ''} /><span>Table</span></label>
-    <label class="button">${icon('Grid')}<input type="radio" name="view" value="cards" class="sr-only"${view === 'cards' ? ' checked' : ''} /><span>Cards</span></label>
+    <label class="button">${icon('list')}<input type="radio" name="view" value="table" class="sr-only"${view === 'table' ? ' checked' : ''} /><span>Table</span></label>
+    <label class="button">${icon('grid-3x3')}<input type="radio" name="view" value="cards" class="sr-only"${view === 'cards' ? ' checked' : ''} /><span>Cards</span></label>
   </div>`;
 
 const toolbar = (query: string, count: string) => `
@@ -185,7 +185,7 @@ const row = (p: Plot, selected: string[], expanded: string[]) => {
     <td class="table__cell--nowrap">${p.ends}</td>
     <td class="table__col--actions">
       <button type="button" class="button button--plain button--icon button--sm" aria-expanded="${open}" aria-controls="plot-${p.id}-details">
-        ${icon(open ? 'ChevronUp' : 'ChevronDown')}<span class="sr-only">Soil details for plot ${p.id}</span>
+        ${icon(open ? 'chevron-up' : 'chevron-down')}<span class="sr-only">Soil details for plot ${p.id}</span>
       </button>
     </td>
   </tr>
@@ -246,15 +246,15 @@ const batchActions = (n: number) => `
   <div class="batch-actions batch-actions--docked" role="group" aria-label="Selected plots">
     <p class="batch-actions__summary small-heading">${n} plots selected</p>
     <div class="batch-actions__actions button-group buttons-subtle max-sm:hide-labels">
-      <button type="button" class="button">${icon('Email')}<span>Email notice</span></button>
-      <button type="button" class="button">${icon('Download')}<span>Export</span></button>
+      <button type="button" class="button">${icon('mail')}<span>Email notice</span></button>
+      <button type="button" class="button">${icon('download')}<span>Export</span></button>
     </div>
-    <button type="button" class="button button--plain button--icon batch-actions__dismiss">${icon('Close')}<span class="sr-only">Clear selection</span></button>
+    <button type="button" class="button button--plain button--icon batch-actions__dismiss">${icon('x')}<span class="sr-only">Clear selection</span></button>
   </div>`;
 
 const emptyResults = (query: string) => `
   <div class="empty-state p-lg">
-    <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('Search')}</span></div>
+    <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('search')}</span></div>
     <div class="empty-state__content">
       <h3 class="empty-state__title small-heading">No plots match “${query}”</h3>
       <p class="empty-state__description small-text">Check the plot number or name, or clear the search and filters.</p>
@@ -317,7 +317,7 @@ const registry = ({ view = 'table', selected = [], expanded = [], query = '', lo
 const stepItem = (n: number, title: string, desc: string, state: 'done' | 'current' | 'todo' | 'invalid') => {
   const cls = state === 'done' ? ' is-complete' : state === 'invalid' ? ' is-invalid' : '';
   const ind =
-    state === 'done' ? icon('Check') : state === 'invalid' ? icon('Warning') : `${n}`;
+    state === 'done' ? icon('check') : state === 'invalid' ? icon('triangle-exclamation-point') : `${n}`;
   const prefix = state === 'done' ? 'Completed: ' : state === 'current' ? 'Current: ' : state === 'invalid' ? 'Needs attention: ' : '';
   return `
   <li class="stepper__item${cls}"${state === 'current' || state === 'invalid' ? ' aria-current="step"' : ''}>
@@ -341,7 +341,7 @@ const stepper = (step: number, invalid = false) => {
 
 const errorSummary = `
   <div class="banner banner--danger" tabindex="-1" aria-labelledby="lease-errors-title">
-    <span class="icon-box" aria-hidden="true">${icon('Error')}</span>
+    <span class="icon-box" aria-hidden="true">${icon('circle-exclamation-point')}</span>
     <div class="banner__body">
       <p id="lease-errors-title" class="text font-bold">Two answers need fixing</p>
       <ul class="small-text list">
@@ -352,7 +352,7 @@ const errorSummary = `
   </div>`;
 
 const fieldError = (id: string, text: string) =>
-  `<p id="${id}" class="field__error small-text">${icon('Warning')}${text}</p>`;
+  `<p id="${id}" class="field__error small-text">${icon('triangle-exclamation-point')}${text}</p>`;
 
 const step1 = (errors: boolean) => `
   ${errors ? errorSummary : ''}
@@ -431,7 +431,7 @@ const leaseDialog = (step = 1, errors = false) => `
     <form method="dialog" class="card card--ruled" novalidate>
       <header class="card__header">
         <h2 id="lease-title" class="card__title small-heading">New lease</h2>
-        <button type="button" class="button button--plain button--icon" commandfor="lease-dialog" command="close"><span class="sr-only">Close</span>${icon('Close')}</button>
+        <button type="button" class="button button--plain button--icon" commandfor="lease-dialog" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
       </header>
       <div class="card__band">${stepper(step, errors)}</div>
       <div class="card__body card__body--scrollable form" tabindex="0" aria-label="Step ${step} of 3">
@@ -439,7 +439,7 @@ const leaseDialog = (step = 1, errors = false) => `
       </div>
       <footer class="card__footer">
         <div class="button-group grow">
-          ${step > 1 ? `<button type="button" class="button button--plain">${icon('ArrowStart', 'icon icon--dir')}<span>Back</span></button>` : ''}
+          ${step > 1 ? `<button type="button" class="button button--plain">${icon('arrow-left-to-line', 'icon icon--dir')}<span>Back</span></button>` : ''}
           <button type="button" class="button button-group__end" commandfor="lease-dialog" command="close">Cancel</button>
           ${step < 3 ? '<button type="button" class="button button--strong button--accent">Continue</button>' : '<button type="submit" value="register" class="button button--strong button--accent">Register lease</button>'}
         </div>
@@ -467,18 +467,18 @@ const toolLocker = `
           <h2 id="tool-locker-title" class="card__title small-heading">Tool locker</h2>
           <p class="card__subtitle small-text text-muted">Shared tools and who has them</p>
         </hgroup>
-        <button type="button" class="button button--plain button--icon" commandfor="tool-locker" command="close"><span class="sr-only">Close</span>${icon('Close')}</button>
+        <button type="button" class="button button--plain button--icon" commandfor="tool-locker" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
       </header>
       <div class="card__body card__body--scrollable stack" tabindex="0" aria-label="Tools">
         <div class="banner banner--info">
-          <span class="icon-box" aria-hidden="true">${icon('Info')}</span>
+          <span class="icon-box" aria-hidden="true">${icon('info')}</span>
           <div class="banner__body"><p class="text">Shed code this spring: <span class="font-mono font-bold">4812</span>. Scramble the dial when you leave.</p></div>
         </div>
         <ul class="stack gap-sm" role="list">
-          ${tool('Broadfork', `<span class="status status--success">${icon('Check')}<span class="status__text">In shed</span></span>`, 'Bay 1, left-hand rack.')}
-          ${tool('Wheelbarrow 2', `<span class="status">${icon('User')}<span class="status__text">Out</span></span>`, 'With plot A-04, back today by 17:00.')}
-          ${tool('Push seeder', `<span class="status status--danger">${icon('Error')}<span class="status__text">2 days overdue</span></span>`, 'With plot C-02 since Monday.', `<button type="button" class="button button--sm">${icon('Email')}<span>Send a reminder</span></button>`)}
-          ${tool('Soil sieve', `<span class="status status--success">${icon('Check')}<span class="status__text">In shed</span></span>`, 'At the east compost bays.')}
+          ${tool('Broadfork', `<span class="status status--success">${icon('check')}<span class="status__text">In shed</span></span>`, 'Bay 1, left-hand rack.')}
+          ${tool('Wheelbarrow 2', `<span class="status">${icon('user')}<span class="status__text">Out</span></span>`, 'With plot A-04, back today by 17:00.')}
+          ${tool('Push seeder', `<span class="status status--danger">${icon('circle-exclamation-point')}<span class="status__text">2 days overdue</span></span>`, 'With plot C-02 since Monday.', `<button type="button" class="button button--sm">${icon('mail')}<span>Send a reminder</span></button>`)}
+          ${tool('Soil sieve', `<span class="status status--success">${icon('check')}<span class="status__text">In shed</span></span>`, 'At the east compost bays.')}
         </ul>
       </div>
     </article>
@@ -491,12 +491,12 @@ const toasts = (show: boolean) => `
   <div id="toasts" class="toast-stack toast-stack--bottom-end" popover="manual" role="status" aria-label="Notifications">
     ${show
     ? `<div class="banner banner--success banner--round toast">
-      <span class="icon-box" aria-hidden="true">${icon('Check')}</span>
+      <span class="icon-box" aria-hidden="true">${icon('check')}</span>
       <div class="banner__body">
         <p class="text font-bold">Notice sent</p>
         <p class="small-text">Emailed the holders of plots B-04 and B-07.</p>
       </div>
-      <button type="button" class="button button--icon banner__action">${icon('Close')}<span class="sr-only">Dismiss</span></button>
+      <button type="button" class="button button--icon banner__action">${icon('x')}<span class="sr-only">Dismiss</span></button>
     </div>`
     : ''
   }

@@ -6,7 +6,7 @@ interface SpinnerArgs {
 }
 
 const spinner = (extra = '') =>
-  `<svg class="icon spinner${extra ? ` ${extra}` : ''}" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>`;
+  `<svg class="icon spinner${extra ? ` ${extra}` : ''}" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>`;
 
 const meta: Meta<SpinnerArgs> = {
   title: 'Atoms/Spinner',
@@ -19,7 +19,7 @@ An Icon that turns, for work in progress whose result can't be shown yet.
 
 | Use | Markup |
 | :--- | :--- |
-| Spinner | \`<svg class="icon spinner" aria-hidden="true"><use href="#LoaderArc"/></svg>\` |
+| Spinner | \`<svg class="icon spinner" aria-hidden="true"><use href="#loader-circle"/></svg>\` |
 | Size and colour | The Icon's: \`.icon--sm\`, \`.icon--lg\`, \`--icon-size\`, an intent, or the text around it |
 | In a Button | Put it in the Button; it shows only with \`.is-busy\` (see Button › Busy) |
 | Speed | \`--spinner-duration\` (one turn), \`--spinner-reduced-duration\` (under reduced motion) |

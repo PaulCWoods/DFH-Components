@@ -26,7 +26,7 @@
 
    <dl class="telemetry-group" aria-label="Station">
      <div class="telemetry">
-       <dt class="small-text text-muted"><svg class="icon" …><use href="#Clock"/></svg>Uptime</dt>
+       <dt class="small-text text-muted"><svg class="icon" …><use href="#clock"/></svg>Uptime</dt>
        <dd class="small-heading">99.98<span class="small-text">%</span></dd>
      </div>
      …

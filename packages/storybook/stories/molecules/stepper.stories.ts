@@ -14,7 +14,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 <ol class="stepper" aria-label="Registration">
   <li class="stepper__item is-complete">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" …><use href="#check"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
       <span class="stepper__description small-text">Verified</span>
     </div>
@@ -54,8 +54,8 @@ const icon = (name: string) =>
 const said = { complete: 'Completed: ', current: 'Current: ', invalid: 'Needs attention: ' };
 
 const indicator = (s: Step, n: number) =>
-  s.state === 'complete' ? `<span class="stepper__indicator" aria-hidden="true">${icon('Check')}</span>`
-    : s.state === 'invalid' ? `<span class="stepper__indicator" aria-hidden="true">${icon('Warning')}</span>`
+  s.state === 'complete' ? `<span class="stepper__indicator" aria-hidden="true">${icon('check')}</span>`
+    : s.state === 'invalid' ? `<span class="stepper__indicator" aria-hidden="true">${icon('triangle-exclamation-point')}</span>`
       : `<span class="stepper__indicator micro-heading" aria-hidden="true">${n}</span>`;
 
 const item = (s: Step, n: number, tag = 'div', href = '') => {

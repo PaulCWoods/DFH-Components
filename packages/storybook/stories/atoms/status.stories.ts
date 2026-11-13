@@ -25,12 +25,12 @@ const LABEL: Record<Intent, string> = {
 };
 
 const ICON: Record<Intent, string> = {
-  neutral: 'Edit',
-  accent: 'Star',
-  info: 'Info',
-  success: 'Check',
-  warning: 'Warning',
-  danger: 'Error',
+  neutral: 'square-pen',
+  accent: 'star',
+  info: 'info',
+  success: 'check',
+  warning: 'triangle-exclamation-point',
+  danger: 'circle-exclamation-point',
 };
 
 const statusClasses = (prominence: Prominence, intent: Intent, small = false, round = false) =>
@@ -71,7 +71,7 @@ The **state of a thing**: text with an optional dot or icon, in tables, lists, c
 <span class="status status--success"><span class="status__text">Passed</span></span>
 <span class="status status--plain status--danger"><span class="status__text">Failed</span></span>
 <span class="status status--strong status--warning status--round">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>
   <span class="status__text">Action required</span>
 </span>
 \`\`\`

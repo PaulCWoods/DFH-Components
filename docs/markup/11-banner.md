@@ -10,12 +10,12 @@ related: [banner-dock, toast, card, icon-icon-box]
 # 11. Banner
 ```html playground
 <div class="banner" data-axes>
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
   <div class="banner__body">
     <p class="text" data-label>Your changes are saved automatically.</p>
   </div>
   <button type="button" class="button button--icon banner__action">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Dismiss</span>
   </button>
 </div>
@@ -56,12 +56,12 @@ A Banner is static, so the browser has nothing to do until a message arrives or 
 ## An intent and a way to dismiss it
 ```html live
 <div class="banner banner--warning">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg></span>
   <div class="banner__body">
     <p class="text">Scheduled maintenance begins tonight at 22:00 UTC.</p>
   </div>
   <button type="button" class="button button--icon banner__action">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Dismiss</span>
   </button>
 </div>
@@ -71,7 +71,7 @@ The icon carries the warning for anyone who can't rely on the colour, and the Di
 ## A title and more than one action
 ```html live
 <div class="banner banner--accent">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
   <div class="banner__body">
     <p class="text font-bold">Design system v2.4 is available</p>
     <p class="small-text">Updated tokens and native anchor positioning.</p>
@@ -93,7 +93,7 @@ Several actions in the body sit under the message, where they can wrap and the m
 
 <!-- Inserted when the upload finishes -->
 <div class="banner banner--success">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
   <div class="banner__body"><p class="text">Upload complete.</p></div>
 </div>
 ```
@@ -139,22 +139,22 @@ One message with an intent, in one row: an optional icon, the body and optional 
 ## Prominence, density, corners and material
 ```html live
 <div class="banner banner--subtle banner--info">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
   <div class="banner__body"><p class="text">Subtle: a tint with no border.</p></div>
 </div>
 <div class="banner banner--strong banner--danger">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Error"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#circle-exclamation-point"/></svg></span>
   <div class="banner__body"><p class="text">Strong: payment failed, and this needs attention.</p></div>
 </div>
 
 <!-- Plain: inside a card or form -->
 <div class="banner banner--plain banner--warning">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg></span>
   <div class="banner__body"><p class="text">Plain: icon and text only.</p></div>
 </div>
 
 <div class="banner banner--compact banner--info">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
   <div class="banner__body"><p class="text">Compact: less padding and smaller text.</p></div>
 </div>
 <div class="banner banner--round">
@@ -162,14 +162,14 @@ One message with an intent, in one row: an optional icon, the body and optional 
   <button type="button" class="button banner__action"><span>Undo</span></button>
 </div>
 <div class="banner banner--translucent banner--info">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
   <div class="banner__body"><p class="text">Translucent: the page shows through the fill.</p></div>
 </div>
 
 <!-- Every banner in a region, set once -->
 <div class="stack" style="--banner-prominence: subtle; --banner-intent: info;">
   <div class="banner">
-    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
     <div class="banner__body"><p class="text">Subtle and info, from the flags on the region.</p></div>
   </div>
 </div>

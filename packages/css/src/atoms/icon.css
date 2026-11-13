@@ -27,8 +27,8 @@
      this stylesheet fails to load.
 
    Usage:
-   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-   <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+   <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
+   <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
    ========================================================================== */
 
 /* ==========================================================================

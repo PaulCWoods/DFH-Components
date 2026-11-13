@@ -21,7 +21,7 @@ related: [brand, tabs, breadcrumb, skip-link, footer, app-shell, responsive-visi
     <div class="cluster gap-xs">
       <button type="button" class="button button--strong button--accent @max-3xl:hide">Sign in</button>
       <button type="button" class="button button--plain button--icon @3xl:hide" popovertarget="default-header-menu" aria-label="Open site menu">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#menu"/></svg>
       </button>
       <div id="default-header-menu" popover class="popover">
         <menu class="menu" aria-label="Site menu">

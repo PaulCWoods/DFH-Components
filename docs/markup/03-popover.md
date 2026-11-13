@@ -11,7 +11,7 @@ related: [menu, card, tooltip, modal-dialog]
 ```html playground cluster
 <button type="button" class="button" popovertarget="default-popover">
   <span>Delivery details</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
 </button>
 
 <div id="default-popover" popover class="popover" data-axes>
@@ -57,7 +57,7 @@ The browser provides all of this for a Popover opened with `popovertarget`. Scri
 ```html live cluster
 <button type="button" class="button" popovertarget="doc-actions">
   <span>Actions</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
 </button>
 
 <div id="doc-actions" popover class="popover">

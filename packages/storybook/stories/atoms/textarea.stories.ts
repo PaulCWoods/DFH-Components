@@ -73,7 +73,7 @@ Also \`--one-line\`: starts at one line and grows. No round corners: a full radi
     <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="textarea-playground" class="field__label label">${args.label}</label>
-        ${args.invalid ? '<p id="textarea-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>' : ''}
+        ${args.invalid ? '<p id="textarea-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Tell us at least one thing.</p>' : ''}
         <textarea
           id="textarea-playground"
           class="${textareaClasses(args.size, args.prominence, args.oneLine)}"
@@ -137,7 +137,7 @@ export const States: Story = {
     <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div class="field">
         <label for="textarea-invalid" class="field__label label">Invalid</label>
-        <p id="textarea-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Tell us at least one thing.</p>
+        <p id="textarea-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Tell us at least one thing.</p>
         <textarea id="textarea-invalid" class="textarea" aria-invalid="true" aria-describedby="textarea-invalid-error"></textarea>
       </div>
       ${field('Delivery note', (id) => `<textarea id="${id}" class="textarea" readonly>Submitted on 3 March.</textarea>`)}

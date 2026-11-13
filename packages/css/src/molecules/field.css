@@ -26,7 +26,7 @@
      <label for="email" class="field__label label">Email address</label>
      <p id="email-hint" class="field__hint small-text">We only use it to reply.</p>
      <p id="email-error" class="field__error small-text">
-       <svg class="icon" …><use href="#Warning"/></svg>
+       <svg class="icon" …><use href="#triangle-exclamation-point"/></svg>
        Enter an email address in the correct format, like name@example.com
      </p>
      <input id="email" type="email" class="input" aria-describedby="email-hint email-error" aria-invalid="true" />

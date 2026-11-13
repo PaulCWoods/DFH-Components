@@ -134,7 +134,7 @@ export const Rail: Story = {
       <nav class="sidebar sidebar--rail" aria-label="Main">
         <div class="sidebar__body">
           <ul class="stack" role="list">
-            ${[['Home', 'Home'], ['Search', 'Search'], ['Bookmark', 'Saved plants'], ['Settings', 'Settings']].map(([i, label], n) => `
+            ${[['house', 'Home'], ['search', 'Search'], ['bookmark', 'Saved plants'], ['cog', 'Settings']].map(([i, label], n) => `
               <li><a href="#" class="button button--plain button--icon" ${n === 0 ? 'aria-current="page"' : ''} aria-label="${label}">${icon(i)}</a></li>`).join('')}
           </ul>
         </div>
@@ -156,7 +156,7 @@ export const SmallScreens: Story = {
         <div class="header__bar">
           <a href="#" class="brand"><span class="brand__name">Woodland Plants</span></a>
           <button type="button" class="button button--plain button--icon md:hide" commandfor="plant-nav" command="show-modal" aria-haspopup="dialog">
-            <span class="sr-only">Plant groups</span>${icon('Navigation')}
+            <span class="sr-only">Plant groups</span>${icon('menu')}
           </button>
         </div>
       </header>
@@ -168,7 +168,7 @@ export const SmallScreens: Story = {
         <article class="card">
           <header class="card__header">
             <h2 id="drawer-groups" class="card__title small-heading">Plant groups</h2>
-            <button type="button" class="button button--plain button--icon" commandfor="plant-nav" command="close"><span class="sr-only">Close</span>${icon('Close')}</button>
+            <button type="button" class="button button--plain button--icon" commandfor="plant-nav" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
           </header>
           <div class="card__body card__body--scrollable">${tree('drawer-groups')}</div>
         </article>

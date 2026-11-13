@@ -10,7 +10,7 @@ related: [button, badge-status-chip-kbd, avatar, spinner]
 # 9. Icon & Icon Box primitives
 ```html playground cluster
 <span class="inline">
-  <svg class="icon" data-axes width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+  <svg class="icon" data-axes width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
   <span class="text" data-label>Rota reminder</span>
 </span>
 ---
@@ -39,16 +39,16 @@ An Icon Box is a frame for the moments an icon needs to line up with controls or
 ## Hide it or name it
 ```html live cluster
 <!-- Decorative icon beside text -->
-<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
 
 <!-- Directional icon: mirrors in right-to-left text -->
-<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 
 <!-- Size and intent -->
-<svg class="icon icon--lg icon--success" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+<svg class="icon icon--lg icon--success" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
 
 <!-- Meaningful standalone icon -->
-<svg class="icon icon--warning" width="1em" height="1em" role="img" aria-label="Warning"><use href="#Warning"/></svg>
+<svg class="icon icon--warning" width="1em" height="1em" role="img" aria-label="Warning"><use href="#triangle-exclamation-point"/></svg>
 ```
 
 ## Give an Icon more weight
@@ -56,7 +56,7 @@ The box is decoration, so it's hidden, and the text beside it says what it means
 ```html playground cluster
 <span class="inline">
   <span class="icon-box" data-axes aria-hidden="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
   </span>
   <span class="text" data-label>Rota reminder</span>
 </span>
@@ -88,11 +88,11 @@ An icon is a glyph from the sprite (`icons/icons.svg`, one filled family), sized
 ```html live cluster
 <!-- Icon box -->
 <span class="icon-box icon-box--subtle icon-box--round" aria-hidden="true">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
 </span>
 
 <!-- Icon box with an intent: the icon and the text beside it say what it means -->
 <span class="icon-box icon-box--subtle icon-box--round icon-box--success" aria-hidden="true">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
 </span>
 ```

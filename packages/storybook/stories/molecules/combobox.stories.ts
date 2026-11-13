@@ -24,13 +24,13 @@ A text field that filters a list of options: single select, or multi-select with
       <input id="plant" class="combobox__input" role="combobox" aria-expanded="false"
              aria-controls="plant-list" aria-autocomplete="list" autocomplete="off" />
       <button type="button" class="button button--plain button--icon combobox__toggle" tabindex="-1" aria-label="Show plants">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
       </button>
     </div>
     <ul id="plant-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Plants">
       <li id="plant-1" class="combobox__option" role="option" aria-selected="false">
         <span>Epimedium</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
     </ul>
     <p class="sr-only" role="status"></p>
@@ -70,10 +70,10 @@ const icon = (name: string, cls = 'icon') =>
 const plants = ['Epimedium', 'Brunnera', 'Pulmonaria', 'Geranium macrorrhizum', 'Hellebore', 'Hosta', 'Astilbe', 'Heuchera', 'Tiarella', 'Polystichum'];
 
 const option = (id: string, text: string, selected = false, extra = '') =>
-  `<li id="${id}" class="combobox__option" role="option" aria-selected="${selected}"${extra}>${text}${icon('Check', 'icon combobox__check')}</li>`;
+  `<li id="${id}" class="combobox__option" role="option" aria-selected="${selected}"${extra}>${text}${icon('check', 'icon combobox__check')}</li>`;
 
 const toggle = (label: string) =>
-  `<button type="button" class="button button--plain button--icon combobox__toggle" tabindex="-1" aria-label="${label}">${icon('ChevronDown')}</button>`;
+  `<button type="button" class="button button--plain button--icon combobox__toggle" tabindex="-1" aria-label="${label}">${icon('chevron-down')}</button>`;
 
 interface Opts {
   id: string;
@@ -99,7 +99,7 @@ const combobox = (o: Opts) => `
       ${o.multi ? '<span class="combobox__tags"></span>' : ''}
       <input id="${o.id}" class="combobox__input" role="combobox" aria-expanded="false" aria-controls="${o.id}-list"
         aria-autocomplete="list" autocomplete="off"${o.value ? ` value="${o.value}"` : ''}${o.placeholder ? ` placeholder="${o.placeholder}"` : ''}${o.inputAttrs ?? ''} />
-      ${o.clear ? `<button type="button" class="button button--plain button--icon combobox__clear" tabindex="-1" aria-label="Clear">${icon('Close')}</button>` : ''}
+      ${o.clear ? `<button type="button" class="button button--plain button--icon combobox__clear" tabindex="-1" aria-label="Clear">${icon('x')}</button>` : ''}
       ${toggle(`Show ${o.label.toLowerCase()}`)}
     </div>
     <${o.listTag ?? 'ul'} id="${o.id}-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="${o.label}"${o.multi ? ' aria-multiselectable="true"' : ''}${o.listAttrs ?? ''}>
@@ -225,7 +225,7 @@ export const StaticList: Story = {
       <label for="static" class="field__label label">Find a plant</label>
       <div class="combobox">
         <div class="combobox__control">
-          ${icon('Search', 'icon combobox__icon-start')}
+          ${icon('search', 'icon combobox__icon-start')}
           <input id="static" class="combobox__input" role="combobox" aria-expanded="true" aria-controls="static-list" aria-autocomplete="list" autocomplete="off" />
         </div>
         <ul id="static-list" class="combobox__listbox combobox__listbox--static" role="listbox" aria-label="Matching plants">
@@ -279,7 +279,7 @@ export const InvalidAndDisabled: Story = {
     <div class="stack max-w-sm">
       ${field(
         { id: 'invalid', label: 'Plant', value: 'Rose', inputAttrs: ' aria-invalid="true" aria-describedby="invalid-error"' },
-        `<p id="invalid-error" class="field__error small-text">${icon('Warning')} Choose a plant from the list</p>`,
+        `<p id="invalid-error" class="field__error small-text">${icon('triangle-exclamation-point')} Choose a plant from the list</p>`,
       )}
       ${field({ id: 'disabled', label: 'Plant (locked)', value: 'Brunnera', inputAttrs: ' disabled' })}
     </div>`),
@@ -308,7 +308,7 @@ export const RightToLeft: Story = {
       ${field({
         id: 'rtl',
         label: 'النبات',
-        start: 'Search',
+        start: 'search',
         multi: true,
         list: ['إبيميديوم', 'برونيرا', 'خربق', 'هوستا'].map((p, i) => option(`rtl-${i}`, `<span>${p}</span>`, i === 1)).join(''),
       })}

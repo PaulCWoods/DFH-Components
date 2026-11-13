@@ -10,7 +10,7 @@ related: [popover, button, icon-icon-box]
 # 23. Tooltip
 ```html playground cluster
 <button type="button" class="button button--icon" interestfor="tip-default">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Copy"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#copy"/></svg>
   <span class="sr-only">Copy</span>
 </button>
 <div id="tip-default" popover="hint" class="tooltip" data-axes aria-hidden="true">Copy</div>
@@ -49,7 +49,7 @@ The browser provides all of this where `interestfor` is supported. There's nothi
 ## Label
 ```html live cluster
 <button type="button" class="button button--icon" interestfor="tip-bold" aria-keyshortcuts="Meta+B">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#letter-b"/></svg>
   <span class="sr-only">Bold</span>
 </button>
 <div id="tip-bold" popover="hint" class="tooltip" aria-hidden="true">Bold ⌘B</div>
@@ -100,12 +100,12 @@ A short line of plain text about a control, shown while the control is hovered o
 <!-- Every tooltip in a region, set once -->
 <div class="cluster" role="group" aria-label="Formatting" style="--tooltip-placement: bottom;">
   <button type="button" class="button button--icon" interestfor="tip-italic">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Italic"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#italic"/></svg>
     <span class="sr-only">Italic</span>
   </button>
   <div id="tip-italic" popover="hint" class="tooltip" aria-hidden="true">Italic</div>
   <button type="button" class="button button--icon" interestfor="tip-underline">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Underline"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#underline"/></svg>
     <span class="sr-only">Underline</span>
   </button>
   <div id="tip-underline" popover="hint" class="tooltip" aria-hidden="true">Underline</div>

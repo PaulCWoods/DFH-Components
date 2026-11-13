@@ -89,7 +89,7 @@ A single-line text field. Input, select and textarea share one base (\`atoms/inp
     <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="input-playground" class="field__label label">${args.label}</label>
-        ${args.invalid ? '<p id="input-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter an email address in the form name@example.com.</p>' : ''}
+        ${args.invalid ? '<p id="input-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Enter an email address in the form name@example.com.</p>' : ''}
         <input
           id="input-playground"
           type="${args.type}"
@@ -171,7 +171,7 @@ export const States: Story = {
       ${field('Author', (id) => `<input id="${id}" type="text" class="input" value="Ada Lovelace" />`)}
       <div class="field">
         <label for="input-invalid" class="field__label label">Invalid</label>
-        <p id="input-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter an email address in the form name@example.com.</p>
+        <p id="input-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Enter an email address in the form name@example.com.</p>
         <input id="input-invalid" type="email" class="input" value="ada@" aria-invalid="true" aria-describedby="input-invalid-error" />
       </div>
       ${field('Invoice number', (id) => `<input id="${id}" type="text" class="input" value="INV-2048" readonly />`)}
@@ -213,7 +213,7 @@ export const Flush: Story = {
     <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="card">
         <div class="card__header inline gap-sm focus-within">
-          <svg class="icon text-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+          <svg class="icon text-muted" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
           <input type="search" class="input input--flush grow" aria-label="Search commands" placeholder="Search commands" />
         </div>
       </div>

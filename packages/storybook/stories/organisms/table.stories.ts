@@ -174,10 +174,10 @@ export const Sorting: Story = {
         <caption id="sort" class="small-heading">Sorted by height, ascending</caption>
         <thead>
           <tr>
-            <th scope="col"><button type="button" class="table__sort-button">Plant${icon('ChevronsUpDown')}</button></th>
+            <th scope="col"><button type="button" class="table__sort-button">Plant${icon('chevrons-up-down')}</button></th>
             <th scope="col">Light</th>
-            <th scope="col" class="table__cell--numeric" aria-sort="ascending"><button type="button" class="table__sort-button">Height (cm)${icon('ChevronDown')}</button></th>
-            <th scope="col" class="table__cell--numeric"><button type="button" class="table__sort-button">In stock${icon('ChevronsUpDown')}</button></th>
+            <th scope="col" class="table__cell--numeric" aria-sort="ascending"><button type="button" class="table__sort-button">Height (cm)${icon('chevron-down')}</button></th>
+            <th scope="col" class="table__cell--numeric"><button type="button" class="table__sort-button">In stock${icon('chevrons-up-down')}</button></th>
           </tr>
         </thead>
         <tbody>${plants.map((p) => `
@@ -216,7 +216,7 @@ export const Columns: Story = {
             <td class="table__cell--center">1</td>
             <td class="table__cell--nowrap font-mono">ORD-1042</td>
             <td><span class="table__cell--truncate" style="display: block;">Leave by the side gate, behind the water butt, next to the greenhouse</span></td>
-            <td class="table__cell--center"><span class="status status--success">${icon('Check')}<span class="status__text">Sent</span></span></td>
+            <td class="table__cell--center"><span class="status status--success">${icon('check')}<span class="status__text">Sent</span></span></td>
             <td class="table__cell--numeric">£48.20</td>
             <td class="table__col--actions"><button type="button" class="button button--subtle button--sm">View<span class="sr-only"> order ORD-1042</span></button></td>
           </tr>
@@ -224,7 +224,7 @@ export const Columns: Story = {
             <td class="table__cell--center">2</td>
             <td class="table__cell--nowrap font-mono">ORD-1043</td>
             <td>Gift wrap</td>
-            <td class="table__cell--center"><span class="status">${icon('Progress')}<span class="status__text">Packing</span></span></td>
+            <td class="table__cell--center"><span class="status">${icon('circle-dashed-check')}<span class="status__text">Packing</span></span></td>
             <td class="table__cell--numeric">£1,206.00</td>
             <td class="table__col--actions"><button type="button" class="button button--subtle button--sm">View<span class="sr-only"> order ORD-1043</span></button></td>
           </tr>
@@ -249,7 +249,7 @@ export const CellContent: Story = {
               </div>
             </th>
             <td><span class="text">Head gardener</span></td>
-            <td><span class="status status--accent">${icon('Star')}<span class="status__text">Owner</span></span></td>
+            <td><span class="status status--accent">${icon('star')}<span class="status__text">Owner</span></span></td>
             <td class="table__col--actions">
               <div class="button-group">
                 <button type="button" class="button button--subtle button--sm">Edit<span class="sr-only"> Marcus Chen</span></button>
@@ -265,7 +265,7 @@ export const CellContent: Story = {
               </div>
             </th>
             <td><span class="text">Volunteer</span></td>
-            <td><span class="status">${icon('User')}<span class="status__text">Member</span></span></td>
+            <td><span class="status">${icon('user')}<span class="status__text">Member</span></span></td>
             <td class="table__col--actions">
               <div class="button-group">
                 <button type="button" class="button button--subtle button--sm">Edit<span class="sr-only"> Aisha Rahman</span></button>
@@ -305,7 +305,7 @@ export const RightToLeft: Story = {
       <div class="table-container" tabindex="0" role="region" aria-labelledby="rtl">
         <table class="table table--bordered">
           <caption id="rtl" class="small-heading">النباتات</caption>
-          <thead><tr><th scope="col">النبات</th><th scope="col" class="table__cell--numeric" aria-sort="descending"><button type="button" class="table__sort-button">الارتفاع${icon('ChevronDown')}</button></th></tr></thead>
+          <thead><tr><th scope="col">النبات</th><th scope="col" class="table__cell--numeric" aria-sort="descending"><button type="button" class="table__sort-button">الارتفاع${icon('chevron-down')}</button></th></tr></thead>
           <tbody>
             <tr><th scope="row">هوستا</th><td class="table__cell--numeric">60</td></tr>
             <tr><th scope="row">برونيرا</th><td class="table__cell--numeric">45</td></tr>

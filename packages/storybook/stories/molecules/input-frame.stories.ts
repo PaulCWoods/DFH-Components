@@ -14,7 +14,7 @@ A text field with buttons beside it inside one control: show a password, clear a
 <div class="input-frame">
   <input type="password" id="password" class="input-frame__input" autocomplete="current-password" />
   <button type="button" class="button button--plain button--icon" aria-controls="password" aria-pressed="false">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#View" /></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#eye" /></svg>
     <span class="sr-only">Show password</span>
   </button>
 </div>
@@ -40,10 +40,10 @@ const password = (id: string, o: { cls?: string; shown?: boolean; invalid?: bool
     <div class="input-frame ${o.cls ?? ''}">
       <input type="${o.shown ? 'text' : 'password'}" id="${id}" class="input-frame__input" autocomplete="current-password" value="${o.shown ? 'hunter2-potatoes' : ''}"${o.invalid ? ` aria-invalid="true" aria-describedby="${id}-error"` : ''}${o.disabled ? ' disabled' : ''} />
       <button type="button" class="button button--plain button--icon" aria-controls="${id}" aria-pressed="${o.shown ? 'true' : 'false'}"${o.disabled ? ' disabled' : ''}>
-        ${icon(o.shown ? 'Hide' : 'View')}<span class="sr-only">Show password</span>
+        ${icon(o.shown ? 'eye-off' : 'eye')}<span class="sr-only">Show password</span>
       </button>
     </div>
-    ${o.invalid ? `<p id="${id}-error" class="field__error small-text">${icon('Warning')}Enter your password</p>` : ''}
+    ${o.invalid ? `<p id="${id}-error" class="field__error small-text">${icon('triangle-exclamation-point')}Enter your password</p>` : ''}
   </div>`;
 
 export const Password: Story = {
@@ -79,8 +79,8 @@ export const Search: Story = {
       <label for="search-plants" class="sr-only">Search plants</label>
       <div class="input-frame input--round">
         <input type="search" id="search-plants" class="input-frame__input" value="Hellebore" />
-        <button type="button" class="button button--plain button--icon" aria-controls="search-plants">${icon('Close')}<span class="sr-only">Clear search</span></button>
-        <button type="submit" class="button button--plain button--icon">${icon('Search')}<span class="sr-only">Search</span></button>
+        <button type="button" class="button button--plain button--icon" aria-controls="search-plants">${icon('x')}<span class="sr-only">Clear search</span></button>
+        <button type="submit" class="button button--plain button--icon">${icon('search')}<span class="sr-only">Search</span></button>
       </div>
     </form>`,
 };

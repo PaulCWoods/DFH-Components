@@ -20,7 +20,7 @@ const tab = (args: TabArgs) => {
     : `type="button" role="tab" aria-selected="${args.selected}" tabindex="${args.selected ? 0 : -1}"`;
   const disabled = args.disabled ? (args.asLink ? ' aria-disabled="true"' : ' disabled') : '';
   const content = [
-    args.hasIcon || args.iconOnly ? icon('Home') : '',
+    args.hasIcon || args.iconOnly ? icon('house') : '',
     `<span class="tab__text">${args.label}</span>`,
     args.hasBadge ? '<span class="badge badge--sm" aria-hidden="true"><span class="badge__text">3</span></span><span class="sr-only">, 3 new</span>' : '',
   ].join('');
@@ -132,7 +132,7 @@ export const Content: Story = {
           (style) => `
         <span class="sb-demo-tag">${style}</span>
         <nav class="${listClasses({ style })}" aria-label="${style} content">
-          <a href="#" class="tab" aria-current="page">${icon('Home')}<span class="tab__text">Icon</span></a>
+          <a href="#" class="tab" aria-current="page">${icon('house')}<span class="tab__text">Icon</span></a>
           <a href="#" class="tab">
             <span class="tab__text">Badge</span>
             <span class="badge badge--accent badge--sm" aria-hidden="true"><span class="badge__text">14</span></span><span class="sr-only">, 14 open</span>
@@ -141,7 +141,7 @@ export const Content: Story = {
             <span class="tab__text">Status</span>
             <span class="status status--sm"><span class="status__text">Beta</span></span>
           </a>
-          <a href="#" class="tab tab--icon">${icon('Settings')}<span class="tab__text">Settings</span></a>
+          <a href="#" class="tab tab--icon">${icon('cog')}<span class="tab__text">Settings</span></a>
           <a href="#" class="tab">Cart <span class="badge badge--sm" aria-hidden="true"><span class="badge__text">2</span></span><span class="sr-only">, 2 items</span></a>
         </nav>`
         )
@@ -158,14 +158,14 @@ export const HiddenLabels: Story = {
   render: () => `
     <div class="sb-demo-stage stack">
       <nav class="tab-list hide-labels" aria-label="Collapsed navigation">
-        <a href="#" class="tab" aria-current="page">${icon('Home')}<span class="tab__text">Feed</span></a>
-        <a href="#" class="tab">${icon('Search')}<span class="tab__text">Explore</span></a>
-        <a href="#" class="tab">${icon('Bell')}<span class="tab__text">Alerts</span></a>
+        <a href="#" class="tab" aria-current="page">${icon('house')}<span class="tab__text">Feed</span></a>
+        <a href="#" class="tab">${icon('search')}<span class="tab__text">Explore</span></a>
+        <a href="#" class="tab">${icon('bell')}<span class="tab__text">Alerts</span></a>
       </nav>
       <nav class="tab-list tab-list--segmented" style="--ui-labels: hidden;" aria-label="Collapsed segmented navigation">
-        <a href="#" class="tab" aria-current="page">${icon('Home')}<span class="tab__text">Feed</span></a>
-        <a href="#" class="tab">${icon('Search')}<span class="tab__text">Explore</span></a>
-        <a href="#" class="tab">${icon('Bell')}<span class="tab__text">Alerts</span></a>
+        <a href="#" class="tab" aria-current="page">${icon('house')}<span class="tab__text">Feed</span></a>
+        <a href="#" class="tab">${icon('search')}<span class="tab__text">Explore</span></a>
+        <a href="#" class="tab">${icon('bell')}<span class="tab__text">Alerts</span></a>
       </nav>
     </div>
   `,

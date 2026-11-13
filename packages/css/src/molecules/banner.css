@@ -17,7 +17,7 @@
 
    <div class="banner banner--warning">
      <span class="icon-box" aria-hidden="true">
-       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+       <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>
      </span>
      <div class="banner__body">
        <p class="text">Scheduled maintenance begins tonight at 22:00.</p>

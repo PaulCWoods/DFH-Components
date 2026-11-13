@@ -9,7 +9,7 @@ related: [icon-icon-box, button, skeleton, progress-meter]
 
 # 38. Spinner
 ```html playground cluster
-<svg class="icon spinner" data-axes width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+<svg class="icon spinner" data-axes width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
 <p class="text" role="status">Loading plants…</p>
 ---
 Size: Small=icon--sm, Default*, Large=icon--lg
@@ -43,7 +43,7 @@ It's an [Icon](09-icon-icon-box.md) that turns, so it takes the size and colour 
     <h2 id="results-title" class="small-heading">Search results</h2>
   </header>
   <div class="card__body cluster">
-    <svg class="icon icon--lg spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+    <svg class="icon icon--lg spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
     <p class="text" role="status">Searching the catalogue…</p>
   </div>
 </section>
@@ -54,7 +54,7 @@ The content stays in place and recedes; the status line, outside the busy region
 
 ```html live width=md
 <p class="small-text cluster">
-  <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+  <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
   <span role="status">Updating watering times…</span>
 </p>
 <section class="card" aria-busy="true" aria-labelledby="watering-title">
@@ -76,7 +76,7 @@ The content stays in place and recedes; the status line, outside the busy region
 | Set `aria-busy="false"` and update the status when it's done. | Leave a region busy, or a status that still says "Loading…". |
 
 ## Reference
-An atom: `.spinner` on an [Icon](09-icon-icon-box.md) holding the `LoaderArc` symbol.
+An atom: `.spinner` on an [Icon](09-icon-icon-box.md) holding the `loader-circle` symbol.
 
 ## Options
 | Block | Options | Tokens |

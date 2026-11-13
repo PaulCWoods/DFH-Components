@@ -17,7 +17,7 @@ related: [card, popover, button, form-composition, sidebar]
       <h2 id="default-dialog-title" class="card__title heading">Watering rota</h2>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="default-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body">
@@ -100,7 +100,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
       <form method="dialog" class="button-group">
         <button type="submit" value="cancel" class="button" autofocus><span>Keep plot</span></button>
         <button type="submit" value="delete" class="button button--strong button--danger">
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg>
           <span>Delete plot</span>
         </button>
       </form>
@@ -119,7 +119,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
       <h3 id="rename-title" class="card__title heading">Rename plot</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="rename-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body">
@@ -148,7 +148,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
       <h3 id="sort-title" class="card__title heading">Sort plants</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="sort-sheet" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body card__body--scrollable" tabindex="0" aria-label="Sort order">
@@ -169,7 +169,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
       <h3 id="settings-title" class="card__title heading">Settings</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="settings-drawer" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body card__body--scrollable" tabindex="0" aria-label="Settings">
@@ -181,7 +181,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
 <!-- Navigation: inline start, opened by a menu button -->
 <button type="button" class="button button--plain button--icon button--sm" commandfor="nav-drawer" command="show-modal" aria-haspopup="dialog">
   <span class="sr-only">Open allotment navigation</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#menu"/></svg>
 </button>
 
 <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-title">
@@ -190,7 +190,7 @@ if (!('command' in HTMLButtonElement.prototype)) {
       <h3 id="nav-title" class="card__title heading">Allotment</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="nav-drawer" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body card__body--scrollable">
@@ -219,7 +219,7 @@ iOS doesn't resize the page for its on-screen keyboard, and `dvb` ignores it, so
       <h3 id="find-title" class="card__title heading">Find a plant</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="find-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body">
@@ -314,7 +314,7 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
       <h3 id="rules-title" class="card__title heading">Site rules</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="rules-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body card__body--scrollable" tabindex="0" aria-label="Site rules">
@@ -340,7 +340,7 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
       <h3 id="terms-title" class="card__title heading">Terms</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="terms-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body">
@@ -357,7 +357,7 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
       <h3 id="rota-title" class="card__title heading">Rota</h3>
       <button type="button" class="button button--plain button--icon button--sm" commandfor="rota-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body">
@@ -374,7 +374,7 @@ Hooks: `--dialog-width` (36rem) and `--dialog-drawer-width` (24rem), set on one 
       <span id="plan-title" class="small-heading">Site plan</span>
       <button type="button" class="button button--plain button--icon" commandfor="plan-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </figcaption>
     <img src="/examples/cover.svg" alt="Abstract artwork standing in for the plan of the plots" />

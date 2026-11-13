@@ -46,19 +46,19 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ```html live cluster
 <button type="button" class="button button--strong button--accent">
   <span>Get started</span>
-  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 </button>
 <button type="button" class="button">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#plus"/></svg>
   <span>Add record</span>
 </button>
 <button type="button" class="button button--icon">
   <span class="sr-only">Search site</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
 </button>
 <button type="button" class="button button--plain button--icon button--round">
   <span class="sr-only">More actions</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#More"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ellipsis"/></svg>
 </button>
 ```
 - **Icon-only Buttons** keep a text label in `.sr-only`, so screen readers, translation and voice control ("click Search site") all have a name. The icon is `aria-hidden`. Anything with `.button__icon` (an icon, a Status, a Kbd) stays visible when the label is hidden, so it can stand in for the icon; it's decoration, so the hidden label still names the Button.
@@ -73,20 +73,20 @@ A 48px hit area is the default at every size, because a target that's easy to re
 <button type="button" class="button" aria-pressed="true"><span>Bold</span></button>
 <label class="button">
   <input type="checkbox" class="sr-only" />
-  <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-  <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+  <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
+  <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
   <span>Notifications</span>
 </label>
 <div class="cluster" role="radiogroup" aria-label="Delivery">
   <label class="button">
     <input type="radio" name="delivery-demo" class="sr-only" checked />
     <span>Standard</span>
-    <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+    <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
   </label>
   <label class="button">
     <input type="radio" name="delivery-demo" class="sr-only" />
     <span>Express</span>
-    <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+    <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
   </label>
 </div>
 ```
@@ -97,7 +97,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ```html live cluster
 <button type="button" class="button button--strong button--accent is-busy" aria-disabled="true">
   <span>Save changes</span>
-  <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+  <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
 </button>
 <p class="small-text" role="status">Saving your changes…</p>
 ```
@@ -110,7 +110,7 @@ A 48px hit area is the default at every size, because a target that's easy to re
 ```html live cluster
 <a href="/start" class="button button--strong button--accent">
   <span>Read the guide</span>
-  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+  <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 </a>
 ```
 It goes somewhere, so it stays a Link: no `role="button"`. Screen-reader users hear "link" and expect a new page; keyboard users open it with Enter (a Button also takes Space).

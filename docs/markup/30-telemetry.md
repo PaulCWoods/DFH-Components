@@ -43,7 +43,7 @@ It stays small on purpose. A large stat with a description is a [Card](10-card.m
 <dl class="telemetry-group" aria-label="Station">
   <div class="telemetry">
     <dt class="small-text text-muted">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#user"/></svg>
       Listeners
     </dt>
     <dd class="small-heading">14,820</dd>
@@ -76,7 +76,7 @@ It stays small on purpose. A large stat with a description is a [Card](10-card.m
 <dl class="telemetry-group" aria-label="Audience">
   <div class="telemetry telemetry--icon-start">
     <dt class="small-text text-muted">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#user"/></svg>
       Followers
     </dt>
     <dd class="small-heading">2,310</dd>
@@ -93,7 +93,7 @@ A trend or state is a plain status in the value, with an icon and signed text, s
     <dd class="heading">
       128,450
       <span class="status status--plain status--success">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#TrendUp"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trending-up"/></svg>
         +18.2%
       </span>
     </dd>

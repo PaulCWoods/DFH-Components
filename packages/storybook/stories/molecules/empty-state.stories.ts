@@ -14,7 +14,7 @@ The block shown where content would be when there is none: a search or filter mi
 <div class="empty-state">
   <div class="empty-state__visual">
     <span class="icon-box" aria-hidden="true">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
     </span>
   </div>
   <div class="empty-state__content">
@@ -61,7 +61,7 @@ interface Parts {
   titleCls?: string;
 }
 
-const emptyState = ({ cls = '', glyph = 'Search', title, description, actions = '', tag = 'h3', titleCls = 'subheading' }: Parts) => `
+const emptyState = ({ cls = '', glyph = 'search', title, description, actions = '', tag = 'h3', titleCls = 'subheading' }: Parts) => `
   <div class="empty-state${cls ? ` ${cls}` : ''}">
     <div class="empty-state__visual">
       <span class="icon-box" aria-hidden="true">${icon(glyph)}</span>
@@ -103,7 +103,7 @@ export const Playground: Story = {
     ]
       .filter(Boolean)
       .join(' ');
-    const glyph = { neutral: 'Search', accent: 'Star', info: 'Info', success: 'Check', warning: 'Warning', danger: 'Error' }[args.intent as string];
+    const glyph = { neutral: 'search', accent: 'star', info: 'info', success: 'check', warning: 'triangle-exclamation-point', danger: 'circle-exclamation-point' }[args.intent as string];
     return `<div class="max-w-md">${emptyState({
       cls,
       glyph,
@@ -179,14 +179,14 @@ export const FirstUse: Story = {
   render: () => `
     <div class="max-w-md">
       ${emptyState({
-        glyph: 'Plus',
+        glyph: 'plus',
         cls: 'empty-state--accent',
         tag: 'h2',
         title: 'Plan your first border',
         description: 'Add plants to a border to see when it flowers and what it needs through the year.',
         actions: `
-          <button type="button" class="button button--strong button--accent">${icon('Plus')}<span>New border</span></button>
-          <button type="button" class="button">${icon('Upload')}<span>Import a plant list</span></button>`,
+          <button type="button" class="button button--strong button--accent">${icon('plus')}<span>New border</span></button>
+          <button type="button" class="button">${icon('upload')}<span>Import a plant list</span></button>`,
       })}
     </div>`,
 };
@@ -201,12 +201,12 @@ export const Intents: Story = {
   },
   render: () => `
     <div class="grid grid--auto-fit grid--2xs gap-lg">
-      ${emptyState({ cls: 'empty-state--success', glyph: 'Check', title: 'All caught up', description: 'No plants need watering today.' })}
-      ${emptyState({ cls: 'empty-state--info', glyph: 'Info', title: 'Nothing scheduled', description: 'Tasks you add for this week appear here.' })}
-      ${emptyState({ cls: 'empty-state--warning', glyph: 'Warning', title: 'No recent readings', description: 'The soil sensor last reported 3 days ago.' })}
+      ${emptyState({ cls: 'empty-state--success', glyph: 'check', title: 'All caught up', description: 'No plants need watering today.' })}
+      ${emptyState({ cls: 'empty-state--info', glyph: 'info', title: 'Nothing scheduled', description: 'Tasks you add for this week appear here.' })}
+      ${emptyState({ cls: 'empty-state--warning', glyph: 'triangle-exclamation-point', title: 'No recent readings', description: 'The soil sensor last reported 3 days ago.' })}
       ${emptyState({
         cls: 'empty-state--danger',
-        glyph: 'Error',
+        glyph: 'circle-exclamation-point',
         title: 'Couldn’t load your plants',
         description: 'The connection dropped. Your list is safe.',
         actions: '<button type="button" class="button">Try again</button>',
@@ -227,7 +227,7 @@ export const Subtle: Story = {
     <div class="max-w-md">
       ${emptyState({
         cls: 'empty-state--subtle',
-        glyph: 'Upload',
+        glyph: 'upload',
         title: 'Add photos of this border',
         description: 'Drop JPEG or PNG files here, up to 10MB each.',
         actions: '<button type="button" class="button">Choose files</button>',
@@ -249,13 +249,13 @@ export const InACard: Story = {
       <article class="card">
         <header class="card__header"><h3 class="card__title small-heading">Watering</h3></header>
         <div class="card__body">
-          ${emptyState({ cls: 'empty-state--success', glyph: 'Check', tag: 'h4', title: 'All caught up', description: 'Nothing needs watering until Thursday.' })}
+          ${emptyState({ cls: 'empty-state--success', glyph: 'check', tag: 'h4', title: 'All caught up', description: 'Nothing needs watering until Thursday.' })}
         </div>
       </article>
       <article class="card">
         <header class="card__header"><h3 class="card__title small-heading">Recent activity</h3></header>
         <div class="card__body">
-          ${emptyState({ cls: 'empty-state--compact', glyph: 'Bell', tag: 'h4', titleCls: 'small-heading', title: 'No activity yet', description: 'Changes to your borders show here.' })}
+          ${emptyState({ cls: 'empty-state--compact', glyph: 'bell', tag: 'h4', titleCls: 'small-heading', title: 'No activity yet', description: 'Changes to your borders show here.' })}
         </div>
       </article>
     </div>`,
@@ -328,7 +328,7 @@ export const RightToLeft: Story = {
       })}
       ${emptyState({
         cls: 'empty-state--start empty-state--subtle',
-        glyph: 'Upload',
+        glyph: 'upload',
         title: 'أضف صوراً',
         description: 'اسحب الملفات وأفلتها هنا.',
         actions: '<button type="button" class="button">اختر ملفات</button>',

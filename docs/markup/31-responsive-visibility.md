@@ -9,8 +9,8 @@ related: [utilities, header, button, grid-grid-carousel]
 # 31. Responsive Helpers
 ```html live
 <div class="button-group max-md:hide-labels" role="group" aria-label="Bed actions, shown by default">
-  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg><span>Add plant</span></button>
-  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg><span>Share</span></button>
+  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#plus"/></svg><span>Add plant</span></button>
+  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#share-2"/></svg><span>Share</span></button>
 </div>
 ```
 
@@ -38,8 +38,8 @@ There's one direction only: every class hides, and there is no `show`. To show s
 ```html live
 <!-- Icons only below 48rem; the text stays the buttons' accessible names -->
 <div class="button-group max-md:hide-labels" role="group" aria-label="Bed actions">
-  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg><span>Add plant</span></button>
-  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Share"/></svg><span>Share</span></button>
+  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#plus"/></svg><span>Add plant</span></button>
+  <button type="button" class="button"><svg class="button__icon icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#share-2"/></svg><span>Share</span></button>
 </div>
 
 <!-- A menu button in a narrow header, the navigation in a wide one -->

@@ -85,7 +85,7 @@ export const OnControls: Story = {
   render: () => `
     <div class="sb-demo-stage stack">
       <button type="button" class="button" aria-keyshortcuts="Meta+K">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
         <span>Search</span>
         ${kbd('⌘ + K', true)}
       </button>

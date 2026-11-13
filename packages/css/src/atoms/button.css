@@ -36,7 +36,7 @@
    Busy (the Spinner is hidden until .is-busy):
    <button type="submit" class="button button--strong button--accent is-busy" aria-disabled="true">
      <span>Save changes</span>
-     <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+     <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
    </button>
    ========================================================================== */
 

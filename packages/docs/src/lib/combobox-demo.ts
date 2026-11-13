@@ -67,7 +67,7 @@ export const enhance = (root: HTMLElement) => {
       const c = document.createElement('span');
       c.className = 'chip chip--subtle';
       c.dataset.for = o.id;
-      c.innerHTML = `<span class="chip__text">${label(o)}</span><button type="button" class="chip__remove" aria-label="Remove ${label(o)}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>`;
+      c.innerHTML = `<span class="chip__text">${label(o)}</span><button type="button" class="chip__remove" aria-label="Remove ${label(o)}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>`;
       return c;
     };
     const select = (o: HTMLElement) => {

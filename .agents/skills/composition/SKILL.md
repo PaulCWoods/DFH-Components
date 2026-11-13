@@ -73,7 +73,7 @@ Stop at the first answer that fits:
 
 Design each state, not just the full one:
 - **Empty:** an Empty State that says what's missing and how to fill it.
-- **Loading:** Skeletons in a region with `aria-busy="true"`, the Skeletons themselves `aria-hidden`, and the message in a `role="status"` line. When the layout isn't known, a Spinner (`.icon.spinner` with `#LoaderArc`, always `aria-hidden`) beside the status line. A region reloading content it already shows takes `aria-busy="true"` and recedes on its own.
+- **Loading:** Skeletons in a region with `aria-busy="true"`, the Skeletons themselves `aria-hidden`, and the message in a `role="status"` line. When the layout isn't known, a Spinner (`.icon.spinner` with `#loader-circle`, always `aria-hidden`) beside the status line. A region reloading content it already shows takes `aria-busy="true"` and recedes on its own.
 - **Busy Button:** `.is-busy` with `aria-disabled="true"`, and a Spinner inside it, hidden until then.
 - **Print:** the library prints light, unsticks and opens everything, and hides on-screen-only parts (Skip Link, Header nav, Sidebar, Pagination, Toasts, Popovers). Add `print:hide` to actions that mean nothing on paper; `print:keep` brings back one of the library's hidden parts. Don't write a print stylesheet of your own first.
 - **Error:** a danger Banner. For forms, an error summary plus each Field's error.

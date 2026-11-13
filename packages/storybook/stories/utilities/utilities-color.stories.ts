@@ -76,7 +76,7 @@ export const TextColours: Story = {
         <p class="text text-muted">.text-muted: Supporting detail</p>
       </div>
       <ul class="stack" role="list">
-        ${[['accent', 'Info', 'Featured: new for spring'], ['success', 'Check', 'Watered this morning'], ['warning', 'Warning', 'Soil drying out'], ['danger', 'Error', 'Frost expected tonight']]
+        ${[['accent', 'info', 'Featured: new for spring'], ['success', 'check', 'Watered this morning'], ['warning', 'triangle-exclamation-point', 'Soil drying out'], ['danger', 'circle-exclamation-point', 'Frost expected tonight']]
           .map(([c, icon, t]) => `
           <li class="inline text text-${c}">
             <svg class="icon" aria-hidden="true"><use href="#${icon}"></use></svg>

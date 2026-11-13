@@ -23,7 +23,7 @@ const chip = (label: string, classes: string, removable = false) =>
     ? `<span class="${classes}">
         <span class="chip__text">${label}</span>
         <button type="button" class="chip__remove" aria-label="Remove ${label}">
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
         </button>
       </span>`
     : `<span class="${classes}"><span class="chip__text">${label}</span></span>`;
@@ -54,7 +54,7 @@ A token that **represents a value**: a selected option in a combobox, an active 
 <span class="chip chip--subtle">
   <span class="chip__text">TypeScript</span>
   <button type="button" class="chip__remove" aria-label="Remove TypeScript">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
   </button>
 </span>
 \`\`\`

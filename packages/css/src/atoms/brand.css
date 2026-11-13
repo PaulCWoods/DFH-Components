@@ -24,7 +24,7 @@
 
    Usage:
    <a href="/" class="brand">
-     <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
+     <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#brand-design-for-humans"/></svg>
      <span class="brand__name">Design For Humans</span>
    </a>
    ========================================================================== */

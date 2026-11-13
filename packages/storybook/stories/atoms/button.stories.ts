@@ -21,8 +21,8 @@ const INTENTS: Intent[] = ['neutral', 'accent', 'danger'];
 
 const INTENT_ICON: Record<Intent, string> = {
   neutral: '',
-  accent: '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>',
-  danger: '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>',
+  accent: '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>',
+  danger: '<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg>',
 };
 
 const buttonClasses = (prominence: Prominence, intent: Intent, size: Size = 'default', round = false) =>
@@ -63,14 +63,14 @@ Selected states (\`.is-active\`, \`aria-current\`, a checked input inside a \`<l
 
 <!-- Danger: always pair intent with an icon or text (WCAG 1.4.1) -->
 <button type="button" class="button button--danger">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg>
   <span>Delete item</span>
 </button>
 
 <!-- Icon-only: keep an accessible name -->
 <button type="button" class="button button--icon">
   <span class="sr-only">Search site</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
 </button>
 \`\`\`
 
@@ -106,7 +106,7 @@ Native \`<button>\`: Tab to focus, Enter or Space to activate. Links styled as b
     const content = `
       ${INTENT_ICON[args.intent]}
       <span>${args.label || 'Action'}</span>
-      ${args.hasIcon ? '<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>' : ''}
+      ${args.hasIcon ? '<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>' : ''}
     `;
 
     const control = args.isLink
@@ -159,7 +159,7 @@ export const ProminenceAndIntent: Story = {
       <hr class="divider" />
       <div class="sb-demo-label">Placeholder (dashed, for "add" affordances)</div>
       <div class="cluster">
-        <button type="button" class="button button--placeholder">${'<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Plus"/></svg>'}<span>Add a section</span></button>
+        <button type="button" class="button button--placeholder">${'<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#plus"/></svg>'}<span>Add a section</span></button>
       </div>
     </div>
   `,
@@ -202,7 +202,7 @@ export const States: Story = {
  */
 export const Busy: Story = {
   render: () => {
-    const spinner = `<svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>`;
+    const spinner = `<svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>`;
     return `
     <div class="sb-demo-stage stack">
       ${PROMINENCES.map(
@@ -211,14 +211,14 @@ export const Busy: Story = {
         <div class="cluster">
           <button type="button" class="${buttonClasses(prominence, 'accent')}"><span>Save changes</span>${spinner}</button>
           <button type="button" class="${buttonClasses(prominence, 'accent')} is-busy" aria-disabled="true"><span>Save changes</span>${spinner}</button>
-          <button type="button" class="${buttonClasses(prominence, 'danger')} is-busy" aria-disabled="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete project</span>${spinner}</button>
+          <button type="button" class="${buttonClasses(prominence, 'danger')} is-busy" aria-disabled="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg><span>Delete project</span>${spinner}</button>
         </div>`,
       ).join('')}
       <div class="sb-demo-label">Sizes and icon-only</div>
       <div class="cluster">
         <button type="button" class="button button--sm is-busy" aria-disabled="true"><span>Refresh</span>${spinner}</button>
         <button type="button" class="button button--lg is-busy" aria-disabled="true"><span>Refresh</span>${spinner}</button>
-        <button type="button" class="button button--icon is-busy" aria-disabled="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg><span>Refresh</span>${spinner}</button>
+        <button type="button" class="button button--icon is-busy" aria-disabled="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#rotate-ccw"/></svg><span>Refresh</span>${spinner}</button>
       </div>
       <div class="sb-demo-label">With its status line</div>
       <div class="cluster">
@@ -247,7 +247,7 @@ export const SizesAndTargets: Story = {
 
       <div class="sb-demo-label">Small icon buttons keep a 48px hit area (dashed outline shows it)</div>
       <div class="cluster">
-        ${['Search', 'Edit', 'Delete']
+        ${['search', 'square-pen', 'trash']
           .map(
             (icon) => `
           <span style="display: inline-grid; place-items: center; inline-size: var(--spacing-target); block-size: var(--spacing-target); outline: 1px dashed var(--border-color-muted);">
@@ -267,7 +267,7 @@ export const SizesAndTargets: Story = {
         <button type="button" class="button button--sm"><span>Small</span></button>
         <button type="button" class="button button--subtle button--icon button--sm">
           <span class="sr-only">Search</span>
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
         </button>
       </div>
     </div>
@@ -290,8 +290,8 @@ export const ContainerFlags: Story = {
 
       <div class="sb-demo-label">Parent: style="--button-intent: danger;" (one child overrides with .button--strong)</div>
       <div class="cluster" style="--button-intent: danger;">
-        <button type="button" class="button"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Remove</span></button>
-        <button type="button" class="button button--strong"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete all files</span></button>
+        <button type="button" class="button"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg><span>Remove</span></button>
+        <button type="button" class="button button--strong"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg><span>Delete all files</span></button>
       </div>
 
       <div class="sb-demo-label">Parent: style="--ui-sizing: compact;" (density steps controls to --sm; --lg steps to default)</div>
@@ -305,7 +305,7 @@ export const ContainerFlags: Story = {
       <div class="cluster buttons-subtle buttons-sm">
         <button type="button" class="button"><span>Copy</span></button>
         <button type="button" class="button"><span>Paste</span></button>
-        <button type="button" class="button button--danger"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg><span>Delete</span></button>
+        <button type="button" class="button button--danger"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg><span>Delete</span></button>
       </div>
     </div>
   `,
@@ -319,15 +319,15 @@ export const IconOnlyAndShapes: Story = {
     <div class="sb-demo-stage cluster">
       <button type="button" class="button button--icon">
         <span class="sr-only">Search records</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
       </button>
       <button type="button" class="button button--icon button--round button--subtle">
         <span class="sr-only">Notifications</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell-filled"/></svg>
       </button>
       <button type="button" class="button button--strong button--accent button--round">
         <span>Get started</span>
-        <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+        <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
       </button>
       <button type="button" class="button button--plain button--icon button--round" aria-label="Alex Morgan profile, online"><span class="avatar avatar--sm" aria-hidden="true"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80" alt="" /><span class="badge badge--dot badge--success badge--bottom-end" aria-hidden="true"></span></span></button>
     </div>
@@ -347,21 +347,21 @@ export const CornerBadge: Story = {
     <div class="sb-demo-stage cluster">
       <button type="button" class="button button--icon">
         <span class="sr-only">Notifications, 3 unread</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
         <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
       </button>
       <button type="button" class="button button--icon button--round">
         <span class="sr-only">Notifications, 3 unread</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
         <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
       </button>
       <button type="button" class="button button--icon button--round button--subtle">
         <span class="sr-only">Messages, new</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
         <span class="badge badge--dot badge--accent badge--top-end" aria-hidden="true"></span>
       </button>
       <button type="button" class="button button--round">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
         <span>Inbox</span>
         <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">12</span></span>
         <span class="sr-only">, 12 unread</span>
@@ -375,8 +375,8 @@ export const Toggles: Story = {
     <div class="sb-demo-stage cluster">
       <label class="button">
         <input type="checkbox" class="sr-only" />
-        <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
-        <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon icon--off" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
+        <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
         <span>Notifications</span>
       </label>
       <fieldset class="cluster" style="border: 0; margin: 0; padding: 0;">
@@ -384,12 +384,12 @@ export const Toggles: Story = {
         <label class="button">
           <input type="radio" name="button-toggle-demo" class="sr-only" checked />
           <span>Grid</span>
-          <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+          <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
         </label>
         <label class="button">
           <input type="radio" name="button-toggle-demo" class="sr-only" />
           <span>List</span>
-          <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+          <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
         </label>
       </fieldset>
     </div>
@@ -406,15 +406,15 @@ export const ContainerAdaptive: Story = {
       <div class="container-inline" style="resize: horizontal; overflow: auto; inline-size: 34rem; min-inline-size: 10rem; max-inline-size: 100%; padding: var(--spacing-default); outline: 1px dashed var(--border-color-muted);">
         <div class="cluster @max-3xl:hide-labels">
           <button type="button" class="button">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
             <span class="button__text">Search</span>
           </button>
           <button type="button" class="button button--strong button--accent">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
             <span class="button__text">Create</span>
           </button>
           <button type="button" class="button button--subtle">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#download"/></svg>
             <span class="button__text">Export</span>
           </button>
         </div>

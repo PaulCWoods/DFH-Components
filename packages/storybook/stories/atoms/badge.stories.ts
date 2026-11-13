@@ -50,7 +50,7 @@ Placement: inline by default; \`--top-end\`, \`--top-start\`, \`--bottom-end\`, 
 \`\`\`html
 <!-- Corner count on an icon button -->
 <button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
   <span class="badge badge--danger badge--sm badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
 </button>
 
@@ -83,7 +83,7 @@ Placement: inline by default; \`--top-end\`, \`--top-start\`, \`--bottom-end\`, 
     const host =
       args.placement === 'inline'
         ? `<button type="button" class="button" aria-label="${name}"><span>Messages</span>${badge}</button>`
-        : `<button type="button" class="button button--icon" aria-label="${name}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Email"/></svg>${badge}</button>`;
+        : `<button type="button" class="button button--icon" aria-label="${name}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#mail"/></svg>${badge}</button>`;
     return `<div class="sb-demo-stage">${host}</div>`;
   },
 };
@@ -122,7 +122,7 @@ export const IntentsAndSizes: Story = {
         ${INTENTS.map(
           (intent) => `
           <button type="button" class="button button--icon" aria-label="Updates, new">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bell"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell"/></svg>
             <span class="${badgeClasses(intent, false, true, 'top-end')}" aria-hidden="true"></span>
           </button>`
         ).join('')}
@@ -141,7 +141,7 @@ export const Placement: Story = {
         .map(
           (p) => `
         <button type="button" class="button button--icon" aria-label="Notifications, 99 or more unread">
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell-filled"/></svg>
           <span class="badge badge--danger badge--sm badge--${p}" aria-hidden="true"><span class="badge__text">99+</span></span>
         </button>`
         )

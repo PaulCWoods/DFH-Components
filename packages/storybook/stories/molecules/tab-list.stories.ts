@@ -208,10 +208,10 @@ export const Floating: Story = {
     <div class="sb-demo-stage stack">
       ${navList('Floating', ['Overview', 'Analytics', 'Reports'], { extra: ['tab-list--floating'] })}
       <nav class="${listClasses({ style: 'segmented', round: true, extra: ['tab-list--floating'] })}" aria-label="App">
-        <a href="#" class="tab tab--icon" aria-current="page">${icon('Home')}<span class="tab__text">Home</span></a>
-        <a href="#" class="tab tab--icon">${icon('Search')}<span class="tab__text">Search</span></a>
-        <a href="#" class="tab tab--icon">${icon('Bell')}<span class="tab__text">Notifications</span></a>
-        <a href="#" class="tab tab--icon">${icon('User')}<span class="tab__text">Profile</span></a>
+        <a href="#" class="tab tab--icon" aria-current="page">${icon('house')}<span class="tab__text">Home</span></a>
+        <a href="#" class="tab tab--icon">${icon('search')}<span class="tab__text">Search</span></a>
+        <a href="#" class="tab tab--icon">${icon('bell')}<span class="tab__text">Notifications</span></a>
+        <a href="#" class="tab tab--icon">${icon('user')}<span class="tab__text">Profile</span></a>
       </nav>
     </div>
   `),
@@ -226,8 +226,8 @@ export const Docked: Story = {
     withTabBehaviour(`
     <div class="sb-demo-stage min-h-2xs">
       <nav class="${listClasses({ style: 'segmented', round: true, extra: ['tab-list--floating', 'tab-list--docked'] })}" aria-label="App">
-        <a href="#" class="tab tab--icon" aria-current="page">${icon('Home')}<span class="tab__text">Home</span></a>
-        <a href="#" class="tab tab--icon">${icon('Search')}<span class="tab__text">Search</span></a>
+        <a href="#" class="tab tab--icon" aria-current="page">${icon('house')}<span class="tab__text">Home</span></a>
+        <a href="#" class="tab tab--icon">${icon('search')}<span class="tab__text">Search</span></a>
       </nav>
     </div>
   `),

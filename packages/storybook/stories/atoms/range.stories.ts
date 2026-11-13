@@ -170,7 +170,7 @@ export const RangeLockup: Story = {
           return `
         <div class="range-lockup${mods}">
           <button type="button" class="button button--subtle button--icon" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true')">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg><span class="sr-only">Mute ${track.toLowerCase()}</span>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#volume-2"/></svg><span class="sr-only">Mute ${track.toLowerCase()}</span>
           </button>
           <input id="${id}" type="range" class="range" min="0" max="100" value="70" style="--value: 70%;" aria-label="${track} volume" ${SYNC} />
           <output for="${id}" class="range-lockup__output small-text font-mono">70%</output>

@@ -57,11 +57,11 @@ The browser provides all of this. Script only what a Button does, including flip
 ```html live
 <div class="button-group button-group--joined" role="group" aria-label="Text style">
   <button type="button" class="button button--icon" aria-pressed="true">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#letter-b"/></svg>
     <span class="sr-only">Bold</span>
   </button>
   <button type="button" class="button button--icon" aria-pressed="false">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Italic"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#italic"/></svg>
     <span class="sr-only">Italic</span>
   </button>
 </div>

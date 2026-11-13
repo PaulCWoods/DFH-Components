@@ -16,8 +16,8 @@ const text = (node) => (node.type === 'text' ? node.value : (node.children ?? []
 const element = (tagName, properties, children = []) => ({ type: 'element', tagName, properties, children });
 const row = (section) => section?.children.filter((n) => n.tagName === 'tr').map((tr) => tr.children.filter((n) => n.tagName === 'td' || n.tagName === 'th'));
 const points = [
-  { label: 'Do', icon: 'Check', intent: 'icon--success' },
-  { label: "Don't", icon: 'Close', intent: 'icon--danger' },
+  { label: 'Do', icon: 'check', intent: 'icon--success' },
+  { label: "Don't", icon: 'x', intent: 'icon--danger' },
 ];
 const part = (table, name) => table.children.find((n) => n.tagName === name);
 

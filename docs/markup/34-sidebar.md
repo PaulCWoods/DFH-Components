@@ -82,14 +82,14 @@ The Sidebar never becomes a drawer on its own. Either:
 
 ```html live cluster
 <button type="button" class="button button--plain button--icon" commandfor="plant-nav" command="show-modal" aria-haspopup="dialog">
-  <span class="sr-only">Plant groups</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Navigation"/></svg>
+  <span class="sr-only">Plant groups</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#menu"/></svg>
 </button>
 
 <dialog id="plant-nav" class="dialog dialog--drawer dialog--start" aria-labelledby="drawer-groups">
   <article class="card">
     <header class="card__header">
       <h3 id="drawer-groups" class="card__title small-heading">Plant groups</h3>
-      <button type="button" class="button button--plain button--icon" commandfor="plant-nav" command="close"><span class="sr-only">Close</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg></button>
+      <button type="button" class="button button--plain button--icon" commandfor="plant-nav" command="close"><span class="sr-only">Close</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>
     </header>
     <div class="card__body card__body--scrollable">
       <nav class="navigation-tree" aria-labelledby="drawer-groups">
@@ -109,8 +109,8 @@ The Dialog is modal, keeps focus inside and closes with Escape, with no script. 
 <nav class="sidebar sidebar--rail" aria-label="Tools, rail example">
   <div class="sidebar__body">
     <ul class="stack gap-xs" role="list">
-      <li><a href="/home" class="button button--plain button--icon" aria-current="page"><span class="sr-only">Home</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg></a></li>
-      <li><a href="/settings" class="button button--plain button--icon"><span class="sr-only">Settings</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Settings"/></svg></a></li>
+      <li><a href="/home" class="button button--plain button--icon" aria-current="page"><span class="sr-only">Home</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#house"/></svg></a></li>
+      <li><a href="/settings" class="button button--plain button--icon"><span class="sr-only">Settings</span><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#cog"/></svg></a></li>
     </ul>
   </div>
 </nav>

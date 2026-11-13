@@ -122,7 +122,7 @@ export const Invalid: Story = {
   render: () => `
     <fieldset class="fieldset" aria-describedby="terms-error">
       <legend class="fieldset__legend label">Plot agreement</legend>
-      <p id="terms-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Agree to the plot terms to continue</p>
+      <p id="terms-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Agree to the plot terms to continue</p>
       <div class="choices">
         <label class="choice"><input type="checkbox" class="checkbox-input" name="terms" aria-invalid="true" /><span>I agree to the plot terms</span></label>
       </div>

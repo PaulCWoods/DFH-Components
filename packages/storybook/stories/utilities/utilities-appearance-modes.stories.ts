@@ -39,7 +39,7 @@ const sample = (mode: string, label: string) => `
         <button type="button" class="button button--accent"><span>Accent</span></button>
         <span class="chip"><span class="chip__text">Chip</span></span>
         <kbd class="kbd">Esc</kbd>
-        <span class="icon-box" aria-hidden="true">${icon('Bell')}</span>
+        <span class="icon-box" aria-hidden="true">${icon('bell')}</span>
       </div>
       <div class="field">
         <label for="search-${label}" class="field__label label">Search</label>

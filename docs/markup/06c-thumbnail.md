@@ -42,7 +42,7 @@ Most of the time it repeats what the words beside it already say, so it usually 
 
 <!-- No picture: an icon for the kind of thing -->
 <span class="thumbnail" aria-hidden="true">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Music"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#eighth-notes"/></svg>
 </span>
 
 <!-- A count on a corner: the span holds the picture and the name -->

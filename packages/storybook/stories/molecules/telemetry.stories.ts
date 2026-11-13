@@ -13,7 +13,7 @@ A labelled value: "Uptime 99.98%". A description list, so each label is a term a
 \`\`\`html
 <dl class="telemetry-group" aria-label="Station">
   <div class="telemetry">
-    <dt class="small-text text-muted"><svg class="icon" …><use href="#Progress"/></svg>Uptime</dt>
+    <dt class="small-text text-muted"><svg class="icon" …><use href="#circle-dashed-check"/></svg>Uptime</dt>
     <dd class="small-heading">99.98<span class="small-text">%</span></dd>
   </div>
 </dl>
@@ -50,16 +50,16 @@ const group = (label: string, items: Metric[], o: { cls?: string; item?: string;
   `<dl class="telemetry-group${o.cls ? ` ${o.cls}` : ''}" aria-label="${label}">${items.map((m) => metric(m, { cls: o.item, value: o.value })).join('')}</dl>`;
 
 const station: Metric[] = [
-  { label: 'Listeners', value: '14,820', icon: 'User' },
-  { label: 'Peak today', value: '28,450', icon: 'Progress' },
-  { label: 'Latency', value: '42', unit: 'ms', icon: 'Settings' },
+  { label: 'Listeners', value: '14,820', icon: 'user' },
+  { label: 'Peak today', value: '28,450', icon: 'circle-dashed-check' },
+  { label: 'Latency', value: '42', unit: 'ms', icon: 'cog' },
 ];
 
 const server: Metric[] = [
   { label: 'CPU load', value: '18.4', unit: '%' },
   { label: 'Memory', value: '4.2', unit: 'GB' },
-  { label: 'Network in', value: '142', unit: 'MB/s', icon: 'ArrowDown' },
-  { label: 'Network out', value: '318', unit: 'MB/s', icon: 'ArrowUp' },
+  { label: 'Network in', value: '142', unit: 'MB/s', icon: 'arrow-down' },
+  { label: 'Network out', value: '318', unit: 'MB/s', icon: 'arrow-up' },
 ];
 
 export const Playground: Story = {
@@ -93,9 +93,9 @@ export const Fill: Story = {
 
 export const Trends: Story = {
   render: () => group('This month', [
-    { label: 'Listen hours', value: '128,450', trend: { intent: 'success', arrow: 'TrendUp', text: '+18.2%' } },
-    { label: 'Drop-off', value: '3.1', unit: '%', trend: { intent: 'danger', arrow: 'TrendUp', text: '+0.4 pts' } },
-    { label: 'Bandwidth', value: '14.8', unit: 'TB', trend: { intent: 'neutral', arrow: 'ArrowRight', text: 'Flat' } },
+    { label: 'Listen hours', value: '128,450', trend: { intent: 'success', arrow: 'trending-up', text: '+18.2%' } },
+    { label: 'Drop-off', value: '3.1', unit: '%', trend: { intent: 'danger', arrow: 'trending-up', text: '+0.4 pts' } },
+    { label: 'Bandwidth', value: '14.8', unit: 'TB', trend: { intent: 'neutral', arrow: 'arrow-right', text: 'Flat' } },
   ], { value: 'heading' }),
 };
 
@@ -129,7 +129,7 @@ export const InACompactRegion: Story = {
 export const Single: Story = {
   render: () => `
     <dl class="telemetry">
-      <dt class="small-text text-muted">${icon('User')}Listeners</dt>
+      <dt class="small-text text-muted">${icon('user')}Listeners</dt>
       <dd class="small-heading">14,820</dd>
     </dl>`,
 };
@@ -137,8 +137,8 @@ export const Single: Story = {
 export const WithAState: Story = {
   name: 'With a state',
   render: () => group('Encoder', [
-    { label: 'Stream', value: '', trend: { intent: 'success', arrow: 'Check', text: 'Online' } },
-    { label: 'Backup', value: '', trend: { intent: 'warning', arrow: 'Warning', text: 'Degraded' } },
+    { label: 'Stream', value: '', trend: { intent: 'success', arrow: 'check', text: 'Online' } },
+    { label: 'Backup', value: '', trend: { intent: 'warning', arrow: 'triangle-exclamation-point', text: 'Degraded' } },
   ]),
 };
 

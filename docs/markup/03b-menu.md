@@ -51,7 +51,7 @@ The browser provides all of this. Script only what each item does.
 ```html live cluster
 <button type="button" class="button" popovertarget="doc-menu">
   <span>Options</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
 </button>
 
 <div id="doc-menu" popover class="popover">
@@ -59,14 +59,14 @@ The browser provides all of this. Script only what each item does.
     <li class="menu__heading"><h3 class="micro-heading">Document</h3></li>
     <li>
       <button type="button" class="button">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Duplicate"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#copy-plus"/></svg>
         <span>Duplicate</span>
         <kbd class="kbd">⌘D</kbd>
       </button>
     </li>
     <li>
       <button type="button" class="button">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#download"/></svg>
         <span>Export JSON</span>
         <kbd class="kbd">⇧⌘E</kbd>
       </button>
@@ -74,7 +74,7 @@ The browser provides all of this. Script only what each item does.
     <li role="separator" class="divider"></li>
     <li>
       <button type="button" class="button button--danger">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg>
         <span>Delete document</span>
       </button>
     </li>
@@ -88,13 +88,13 @@ A Popover makes its Menu strong through a flag, so it floats with a shadow and n
 <menu class="menu" aria-label="View">
   <li>
     <button type="button" class="button" aria-pressed="true">
-      <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       <span>Line numbers</span>
     </button>
   </li>
   <li>
     <button type="button" class="button" aria-pressed="false">
-      <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+      <svg class="icon icon--on" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       <span>Word wrap</span>
     </button>
   </li>

@@ -16,24 +16,24 @@ const groups: { label: string; items: Item[] }[] = [
   {
     label: 'Components',
     items: [
-      { label: 'Button', desc: 'Actions, with prominence, intent and size', icon: 'Point' },
-      { label: 'Combobox', desc: 'A field that filters a list', icon: 'Search' },
-      { label: 'Dialog', desc: 'Modal panels and drawers', icon: 'Expand' },
-      { label: 'Table', desc: 'Data with sorting, selection and sticky parts', icon: 'Grid' },
+      { label: 'Button', desc: 'Actions, with prominence, intent and size', icon: 'pointer' },
+      { label: 'Combobox', desc: 'A field that filters a list', icon: 'search' },
+      { label: 'Dialog', desc: 'Modal panels and drawers', icon: 'maximize-2' },
+      { label: 'Table', desc: 'Data with sorting, selection and sticky parts', icon: 'grid-3x3' },
     ],
   },
   {
     label: 'Tokens',
     items: [
-      { label: 'Colour', desc: 'Surfaces, foregrounds and borders in light and dark', icon: 'LightDark' },
-      { label: 'Spacing', desc: 'The spacing steps and the target size', icon: 'Columns' },
+      { label: 'Colour', desc: 'Surfaces, foregrounds and borders in light and dark', icon: 'contrast' },
+      { label: 'Spacing', desc: 'The spacing steps and the target size', icon: 'columns-3' },
     ],
   },
   {
     label: 'Actions',
     items: [
-      { label: 'Export Figma variables', desc: 'Write the tokens for Tokens Studio and Figma', icon: 'Upload', kbd: '⇧⌘E' },
-      { label: 'Switch colour scheme', desc: 'Light, dark or the system setting', icon: 'Moon', kbd: '⇧⌘L' },
+      { label: 'Export Figma variables', desc: 'Write the tokens for Tokens Studio and Figma', icon: 'upload', kbd: '⇧⌘E' },
+      { label: 'Switch colour scheme', desc: 'Light, dark or the system setting', icon: 'moon', kbd: '⇧⌘L' },
     ],
   },
 ];
@@ -101,11 +101,11 @@ export const palette = ({ id = 'cmd-palette', state = 'results' as PaletteState,
     <article class="card card--ruled card--compact combobox combobox--flush">
       <header class="card__header">
         <div class="combobox__control">
-          ${icon('Search', 'icon combobox__icon-start')}
+          ${icon('search', 'icon combobox__icon-start')}
           <input id="${id}-input" type="search" class="combobox__input" role="combobox" aria-label="Search"
             aria-expanded="true" aria-controls="${id}-list" aria-autocomplete="list" autocomplete="off" spellcheck="false"
             placeholder="Search components, tokens and actions" value="${q}"${firstId && !q ? ` aria-activedescendant="${firstId}"` : ''} autofocus />
-          <button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><span class="sr-only">Close</span>${icon('Close')}</button>
+          <button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
         </div>
       </header>
       <div class="card__body card__body--scrollable" tabindex="0" aria-label="Results"${state === 'loading' ? ' aria-busy="true"' : ''}>
@@ -133,7 +133,7 @@ export const palette = ({ id = 'cmd-palette', state = 'results' as PaletteState,
 /* The button that opens it, with its shortcut. */
 export const paletteOpener = (id = 'cmd-palette', cls = 'button button--subtle') => `
   <button type="button" class="${cls}" commandfor="${id}" command="show-modal" aria-haspopup="dialog" aria-keyshortcuts="Meta+K">
-    ${icon('Search')}<span>Search</span><kbd class="kbd max-md:hide">⌘K</kbd>
+    ${icon('search')}<span>Search</span><kbd class="kbd max-md:hide">⌘K</kbd>
   </button>`;
 
 /* The product's script (§28 E): filtering, arrow keys, the active option and

@@ -44,7 +44,7 @@ Each takes only the axes its job needs. A Badge is always solid, because it has 
 The host's name carries the count, and the Badge is hidden from screen readers so it isn't read twice.
 ```html live cluster
 <button type="button" class="button button--icon" aria-label="Notifications, 3 unread">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BellFilled"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#bell-filled"/></svg>
   <span class="badge badge--danger badge--sm badge--top-end" aria-hidden="true"><span class="badge__text">3</span></span>
 </button>
 <a href="#when-to-use" class="tab">
@@ -72,7 +72,7 @@ A static tag, and a token someone can remove.
 <span class="chip chip--subtle">
   <span class="chip__text">TypeScript</span>
   <button type="button" class="chip__remove" aria-label="Remove TypeScript">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
   </button>
 </span>
 <span class="chip chip--plain"><span class="chip__text">Lesson 04</span></span>
@@ -121,7 +121,7 @@ The text carries the state (WCAG 1.4.1).
 <span class="status status--subtle status--accent status--round"><span class="status__text">New</span></span>
 <span class="status status--plain status--warning"><span class="status__text">Degraded</span></span>
 <span class="status status--strong status--warning status--round">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>
   <span class="status__text">Action required</span>
 </span>
 ```

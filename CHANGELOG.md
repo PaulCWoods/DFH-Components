@@ -6,7 +6,11 @@ Each entry lists what a site using the library would notice: new components and 
 
 ## Unreleased
 
+### Renamed
+- **Icons take Lucide's names:** every symbol in the sprite is renamed to the name of the Lucide icon it is drawn from, in kebab-case: `#Close` is `#x`, `#ArrowRight` `#arrow-right`, `#Delete` `#trash`, `#Warning` `#triangle-exclamation-point`. Filled icons end in `-filled` and brands start with `brand-` (`#brand-github`). The old names still work in this version, each pointing at its new one, and are removed in the next; the full list is in `docs/audit/icon-names.md`. `#ChevronStart` and `#ChevronEnd` were drawn the wrong way round: `#chevron-first` is now `|<` and `#chevron-last` `>|`.
+
 ### Added
+- **An outline Play icon:** `#play`. The filled one is `#play-filled`.
 - **Full-screen Dialog:** `dialog--full` fills the screen, clear of the safe areas, and slides up like an iOS sheet; `max-md:dialog--full` does it on a phone only and leaves the Dialog centred on larger screens. Use it for a form with several fields or a text area, with Cancel and the main action in the header, so the on-screen keyboard never covers them.
 - **Card bleed:** `.card__bleed` in a Card's header, band, body or footer, or straight in the Card, runs a row to the Card's edges, its first item still in line with the title. `card__bleed--scrollable` makes it a row that scrolls sideways with the scroll fade (filters, tags, thumbnails), with room above and below for small controls' hit areas. It wraps in print.
 

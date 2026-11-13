@@ -33,7 +33,7 @@ Press <kbd>Tab</kbd> through the examples to see the rings.
 export default meta;
 type Story = StoryObj;
 
-const searchIcon = `<svg class="icon text-muted" aria-hidden="true"><use href="#Search"></use></svg>`;
+const searchIcon = `<svg class="icon text-muted" aria-hidden="true"><use href="#search"></use></svg>`;
 
 export const ContainerRing: Story = {
   parameters: { docs: { description: { story: 'A search box: the input, the clear button and the submit button share one ring on the container.' } } },
@@ -42,7 +42,7 @@ export const ContainerRing: Story = {
       ${searchIcon}
       <input type="search" class="input input--plain" placeholder="Search plants" aria-label="Search plants" />
       <button type="button" class="button button--plain button--icon" aria-label="Clear">
-        <svg class="icon" aria-hidden="true"><use href="#Close"></use></svg>
+        <svg class="icon" aria-hidden="true"><use href="#x"></use></svg>
       </button>
       <button type="submit" class="button button--strong button--accent">Search</button>
     </form>`,
@@ -56,7 +56,7 @@ export const InputOnly: Story = {
       <div class="inline border rounded-md bg-surface ps-sm focus-within--input">
         <input id="share-link" type="text" class="input input--plain" value="https://example.com/beds/3" readonly />
         <button type="button" class="button button--plain">
-          <svg class="icon" aria-hidden="true"><use href="#Copy"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="#copy"></use></svg>
           <span>Copy</span>
         </button>
       </div>

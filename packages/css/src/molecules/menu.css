@@ -20,7 +20,7 @@
      <li class="menu__heading"><h3 class="micro-heading">Document</h3></li>
      <li>
        <button type="button" class="button">
-         <svg class="icon" …><use href="#Duplicate"/></svg>
+         <svg class="icon" …><use href="#copy-plus"/></svg>
          <span>Duplicate</span>
          <kbd class="kbd">⌘D</kbd>
        </button>

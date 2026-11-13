@@ -13,7 +13,7 @@ A layer anchored to the control that opens it. It holds a card or a menu and dra
 \`\`\`html
 <button type="button" class="button" popovertarget="doc-actions">
   <span>Actions</span>
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
 </button>
 
 <div id="doc-actions" popover class="popover">
@@ -40,7 +40,7 @@ const icon = (name: string) =>
   `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
 const trigger = (id: string, label: string, extra = '') =>
-  `<button type="button" class="button" popovertarget="${id}"${extra}><span>${label}</span>${icon('ChevronDown')}</button>`;
+  `<button type="button" class="button" popovertarget="${id}"${extra}><span>${label}</span>${icon('chevron-down')}</button>`;
 
 const noteCard = (title: string, text: string) => `
   <article class="card">
@@ -52,9 +52,9 @@ const actionsCard = (id: string) => `
   <article class="card card--compact card--ruled">
     <header class="card__header"><h3 class="card__title heading">Document</h3></header>
     <div class="card__body stack" style="--button-prominence: subtle;">
-      <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
-      <button type="button" class="button">${icon('Download')}<span>Export JSON</span></button>
-      <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>
+      <button type="button" class="button">${icon('copy-plus')}<span>Duplicate</span></button>
+      <button type="button" class="button">${icon('download')}<span>Export JSON</span></button>
+      <button type="button" class="button button--danger">${icon('trash')}<span>Delete</span></button>
     </div>
     <footer class="card__footer">
       <button type="button" class="button button--subtle button--sm" popovertarget="${id}" popovertargetaction="hide"><span>Close</span></button>
@@ -107,7 +107,7 @@ export const Content: Story = {
     ${trigger('ct-actions', 'Actions')}
     <div id="ct-actions" popover class="popover">${actionsCard('ct-actions')}</div>
 
-    <button type="button" class="button" popovertarget="ct-settings" aria-haspopup="dialog">${icon('Settings')}<span>Settings</span></button>
+    <button type="button" class="button" popovertarget="ct-settings" aria-haspopup="dialog">${icon('cog')}<span>Settings</span></button>
     <div id="ct-settings" popover class="popover" role="dialog" aria-labelledby="ct-settings-title">
       <article class="card card--compact card--ruled">
         <header class="card__header"><h3 class="card__title heading" id="ct-settings-title">Preferences</h3></header>

@@ -51,7 +51,7 @@ Links take no intent and no size. Something that deletes or saves is an action, 
 </nav>
 
 <!-- External: no space between text and icon; say it opens a new tab -->
-<a href="https://www.w3.org" class="link" target="_blank" rel="noopener noreferrer">W3C guidelines<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a>
+<a href="https://www.w3.org" class="link" target="_blank" rel="noopener noreferrer">W3C guidelines<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-up-right"/></svg></a>
 
 <!-- On a dark band -->
 <section class="color-scheme-dark bg-surface p-md">
@@ -64,7 +64,7 @@ A Block Link is the main thing in its row. Its label can run to several lines.
 ```html playground width=md
 <a href="#when-to-use" class="block-link" data-axes>
   <span class="block-link__text">Colour contrast beyond 4.5:1</span>
-  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 </a>
 ---
 Prominence: Default, Strong=block-link--strong, Subtle=block-link--subtle, Plain=block-link--plain
@@ -102,17 +102,17 @@ Size: Default, Small=block-link--sm
 ```html live
 <a href="/case-studies/contrast" class="block-link">
   <span class="block-link__text">Colour contrast beyond 4.5:1</span>
-  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 </a>
 
 <!-- Prominence and size -->
 <a href="/start" class="block-link block-link--strong">
   <span class="block-link__text">Start here</span>
-  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 </a>
 <a href="/topics/wcag" class="block-link block-link--subtle block-link--sm">
   <span class="block-link__text">WCAG 2.2 guidelines</span>
-  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+  <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 </a>
 
 <!-- A list of block links, set once on the container -->
@@ -120,7 +120,7 @@ Size: Default, Small=block-link--sm
   <li>
     <a href="/topics/wcag" class="block-link">
       <span class="block-link__text">WCAG 2.2 guidelines</span>
-      <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+      <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
     </a>
   </li>
 </ul>

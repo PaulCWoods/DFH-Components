@@ -37,7 +37,7 @@ const navLinks = [
 
 const brand = `
   <a href="#" class="brand">
-    ${icon('BrandDesignForHumans', 'brand__mark icon')}<span class="brand__name">Design For Humans</span>
+    ${icon('brand-design-for-humans', 'brand__mark icon')}<span class="brand__name">Design For Humans</span>
   </a>`;
 
 const tabNav = `
@@ -49,7 +49,7 @@ const tabNav = `
 
 const notifications = `
   <button type="button" class="button button--plain button--icon" popovertarget="notifications">
-    ${icon('Bell')}<span class="sr-only">Notifications, 2 unread</span>
+    ${icon('bell')}<span class="sr-only">Notifications, 2 unread</span>
     <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">2</span></span>
   </button>
   <div id="notifications" popover class="popover popover--end-aligned">
@@ -57,8 +57,8 @@ const notifications = `
       <header class="card__header"><h2 id="notifications-title" class="card__title small-heading">Notifications</h2></header>
       <div class="card__body card__body--flush">
         <menu class="menu menu--plain" aria-label="Unread">
-          <li><button type="button" class="button">${icon('Upload')}<span class="lockup grow"><span class="small-heading">Figma variables exported</span><span class="small-text text-muted">547 variables, 2 minutes ago</span></span></button></li>
-          <li><button type="button" class="button">${icon('Warning')}<span class="lockup grow"><span class="small-heading">Contrast check failed</span><span class="small-text text-muted">Warning text on its tint, 1 hour ago</span></span></button></li>
+          <li><button type="button" class="button">${icon('upload')}<span class="lockup grow"><span class="small-heading">Figma variables exported</span><span class="small-text text-muted">547 variables, 2 minutes ago</span></span></button></li>
+          <li><button type="button" class="button">${icon('triangle-exclamation-point')}<span class="lockup grow"><span class="small-heading">Contrast check failed</span><span class="small-text text-muted">Warning text on its tint, 1 hour ago</span></span></button></li>
         </menu>
       </div>
       <footer class="card__footer"><a href="#" class="link small-text">All notifications</a></footer>
@@ -76,16 +76,16 @@ const account = `
       <li class="menu__heading">
         <span class="lockup"><span class="small-heading">Alex Bennett</span><span class="small-text text-muted">alex@example.com</span></span>
       </li>
-      <li><a href="#" class="button">${icon('User')}<span>Profile</span></a></li>
-      <li><a href="#" class="button">${icon('Settings')}<span>Preferences</span><kbd class="kbd">⌘,</kbd></a></li>
+      <li><a href="#" class="button">${icon('user')}<span>Profile</span></a></li>
+      <li><a href="#" class="button">${icon('cog')}<span>Preferences</span><kbd class="kbd">⌘,</kbd></a></li>
       <li role="separator" class="divider"></li>
-      <li><button type="button" class="button button--danger">${icon('ArrowEnd')}<span>Sign out</span></button></li>
+      <li><button type="button" class="button button--danger">${icon('arrow-right-to-line')}<span>Sign out</span></button></li>
     </menu>
   </div>`;
 
 const menuButton = `
   <button type="button" class="button button--plain button--icon @3xl:hide" commandfor="nav-drawer" command="show-modal" aria-haspopup="dialog">
-    ${icon('Navigation')}<span class="sr-only">Menu</span>
+    ${icon('menu')}<span class="sr-only">Menu</span>
   </button>`;
 
 const drawer = `
@@ -93,7 +93,7 @@ const drawer = `
     <article class="card">
       <header class="card__header">
         <h2 id="nav-drawer-title" class="card__title small-heading">Design For Humans</h2>
-        <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
+        <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="close"><span class="sr-only">Close menu</span>${icon('x')}</button>
       </header>
       <div class="card__body card__body--scrollable">
         <nav class="navigation-tree" aria-labelledby="nav-drawer-title">
@@ -194,8 +194,8 @@ export const TwoRows: Story = {
           <li><span class="avatar avatar--sm avatar--count" role="img" aria-label="3 others">+3</span></li>
         </ul>
         <div class="cluster gap-xs">
-          <button type="button" class="button button--sm">${icon('Duplicate')}<span>Duplicate</span></button>
-          <button type="button" class="button button--sm button--strong button--accent">${icon('Download')}<span>Export</span></button>
+          <button type="button" class="button button--sm">${icon('copy-plus')}<span>Duplicate</span></button>
+          <button type="button" class="button button--sm button--strong button--accent">${icon('download')}<span>Export</span></button>
         </div>
       </div>
     </div>`)}${page('Combobox')}`,

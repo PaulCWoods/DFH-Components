@@ -31,7 +31,7 @@ const icon = (name: string) =>
   `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
 const chip = (label: string) =>
-  `<li><span class="chip chip--subtle"><span class="chip__text">${label}</span><button type="button" class="chip__remove" aria-label="Remove ${label}">${icon('Close')}</button></span></li>`;
+  `<li><span class="chip chip--subtle"><span class="chip__text">${label}</span><button type="button" class="chip__remove" aria-label="Remove ${label}">${icon('x')}</button></span></li>`;
 
 const choice = (name: string, value: string, label: string, checked = false) =>
   `<label class="choice"><input type="checkbox" class="checkbox-input" name="${name}" value="${value}"${checked ? ' checked' : ''} /><span>${label}</span></label>`;
@@ -68,13 +68,13 @@ const filters = (selected: { light: string[]; colours: string[] }) => `
           `<div class="combobox">
             <div class="combobox__control">
               <span class="combobox__tags">
-                ${selected.colours.map((c) => `<span class="chip chip--subtle"><span class="chip__text">${c}</span><button type="button" class="chip__remove" aria-label="Remove ${c}">${icon('Close')}</button></span>`).join('')}
+                ${selected.colours.map((c) => `<span class="chip chip--subtle"><span class="chip__text">${c}</span><button type="button" class="chip__remove" aria-label="Remove ${c}">${icon('x')}</button></span>`).join('')}
               </span>
               <input class="combobox__input" role="combobox" aria-label="Flower colour" aria-expanded="false"
                 aria-controls="colour-list" aria-autocomplete="list" autocomplete="off" placeholder="Add a colour" />
             </div>
             <ul id="colour-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Colours" aria-multiselectable="true">
-              ${colours.map((c, i) => `<li id="colour-${i}" class="combobox__option" role="option" aria-selected="${selected.colours.includes(c)}"><span>${c}</span>${icon('Check').replace('class="icon"', 'class="icon combobox__check"')}</li>`).join('')}
+              ${colours.map((c, i) => `<li id="colour-${i}" class="combobox__option" role="option" aria-selected="${selected.colours.includes(c)}"><span>${c}</span>${icon('check').replace('class="icon"', 'class="icon combobox__check"')}</li>`).join('')}
             </ul>
           </div>`,
         )}
@@ -119,7 +119,7 @@ const plantCard = ([name, desc, inStock]: (typeof plants)[number]) => `
       <div class="card__body"><p class="small-text">${desc}</p></div>
       <footer class="card__footer inline inline--between">
         <span class="small-text font-bold">£8.50</span>
-        ${inStock ? '<span class="status status--success">' + icon('Check') + '<span class="status__text">In stock</span></span>' : '<span class="status"><span class="status__text">Pre-order</span></span>'}
+        ${inStock ? '<span class="status status--success">' + icon('check') + '<span class="status__text">In stock</span></span>' : '<span class="status"><span class="status__text">Pre-order</span></span>'}
       </footer>
     </article>
   </li>`;
@@ -187,7 +187,7 @@ export const NoResults: Story = {
       <div class="card">
         <div class="card__body">
           <div class="empty-state">
-            <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('Search')}</span></div>
+            <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('search')}</span></div>
             <div class="empty-state__content">
               <h2 class="empty-state__title small-heading">No plants match these filters</h2>
               <p class="empty-state__description small-text">Few yellow-flowered shade plants like full sun. Remove a filter, or clear them all.</p>

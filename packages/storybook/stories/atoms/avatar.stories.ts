@@ -43,7 +43,7 @@ const photo = (id: string) => `https://images.unsplash.com/photo-${id}?auto=form
 const sam = photo('1507003211169-0a1dd7228f2d');
 const ade = photo('1534528741775-53994a69daeb');
 
-const user = `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>`;
+const user = `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#user"/></svg>`;
 const dot = (intent: string) => `<span class="badge badge--dot${intent ? ` badge--${intent}` : ''} badge--bottom-end" aria-hidden="true"></span>`;
 
 export const Playground: Story = {

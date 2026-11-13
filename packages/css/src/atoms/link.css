@@ -29,7 +29,7 @@
    <a href="/guide" class="link">Accessibility guide</a>
    <a href="/post" class="block-link">
      <span class="block-link__text">Read the full article</span>
-     <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+     <svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
    </a>
    ========================================================================== */
 

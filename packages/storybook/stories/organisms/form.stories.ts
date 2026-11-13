@@ -44,7 +44,7 @@ const registration = (id: string, cls = '', error = false) => `
     <div class="field">
       <label for="${id}-email" class="field__label label">Email address</label>
       <p id="${id}-email-hint" class="field__hint small-text">We only use it for plot news.</p>
-      ${error ? `<p id="${id}-email-error" class="field__error small-text">${icon('Warning')}Enter an email address in the correct format, like name@example.com</p>` : ''}
+      ${error ? `<p id="${id}-email-error" class="field__error small-text">${icon('triangle-exclamation-point')}Enter an email address in the correct format, like name@example.com</p>` : ''}
       <input id="${id}-email" type="email" class="input" autocomplete="email" required aria-describedby="${id}-email-hint${error ? ` ${id}-email-error" aria-invalid="true" value="sam@` : ''}" />
     </div>
     <div class="field">

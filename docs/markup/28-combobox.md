@@ -16,29 +16,29 @@ related: [form-controls, form-composition, badge-status-chip-kbd, lockup]
       <input id="default-plant" class="combobox__input" role="combobox" aria-expanded="false"
              aria-controls="default-plant-list" aria-autocomplete="list" autocomplete="off" />
       <button type="button" class="button button--plain button--icon combobox__toggle" tabindex="-1" aria-label="Show plants">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
       </button>
     </div>
     <ul id="default-plant-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Plants">
       <li id="default-plant-1" class="combobox__option" role="option" aria-selected="false">
         <span>Epimedium</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="default-plant-2" class="combobox__option" role="option" aria-selected="false">
         <span>Brunnera</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="default-plant-3" class="combobox__option" role="option" aria-selected="false">
         <span>Pulmonaria</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="default-plant-4" class="combobox__option" role="option" aria-selected="false">
         <span>Hellebore</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="default-plant-5" class="combobox__option" role="option" aria-selected="false">
         <span>Heuchera</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
     </ul>
     <p class="sr-only" role="status"></p>
@@ -86,36 +86,36 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
   <label for="plant" class="field__label label">Plant</label>
   <div class="combobox">
     <div class="combobox__control">
-      <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+      <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
       <input id="plant" class="combobox__input" role="combobox" aria-expanded="false"
              aria-controls="plant-list" aria-autocomplete="list" autocomplete="off" />
       <button type="button" class="button button--plain button--icon combobox__clear" tabindex="-1" aria-label="Clear">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
       <button type="button" class="button button--plain button--icon combobox__toggle" tabindex="-1" aria-label="Show plants">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
       </button>
     </div>
     <ul id="plant-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Plants">
       <li id="plant-1" class="combobox__option" role="option" aria-selected="false">
         <span>Epimedium</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plant-2" class="combobox__option" role="option" aria-selected="false">
         <span>Brunnera</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plant-3" class="combobox__option" role="option" aria-selected="false">
         <span>Pulmonaria</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plant-4" class="combobox__option" role="option" aria-selected="false">
         <span>Hellebore</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plant-5" class="combobox__option" role="option" aria-selected="false">
         <span>Heuchera</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
     </ul>
     <p class="sr-only" role="status"></p>
@@ -133,7 +133,7 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
         <span class="chip chip--subtle">
           <span class="chip__text">Brunnera</span>
           <button type="button" class="chip__remove" aria-label="Remove Brunnera">
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
           </button>
         </span>
       </span>
@@ -143,23 +143,23 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
     <ul id="plants-multi-list" class="combobox__listbox" role="listbox" popover="manual" aria-multiselectable="true" aria-label="Plants to add">
       <li id="plants-multi-1" class="combobox__option" role="option" aria-selected="true">
         <span>Brunnera</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plants-multi-2" class="combobox__option" role="option" aria-selected="false">
         <span>Epimedium</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plants-multi-3" class="combobox__option" role="option" aria-selected="false">
         <span>Pulmonaria</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plants-multi-4" class="combobox__option" role="option" aria-selected="false">
         <span>Hellebore</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="plants-multi-5" class="combobox__option" role="option" aria-selected="false">
         <span>Heuchera</span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
     </ul>
     <p class="sr-only" role="status"></p>
@@ -210,7 +210,7 @@ A text field that filters a list of options: single select, or multi-select with
     <span class="small-heading" data-label>Brunnera</span>
     <span class="small-text text-muted">Part shade, 40cm</span>
   </span>
-  <svg class="icon combobox__check" …><use href="#Check"/></svg>
+  <svg class="icon combobox__check" …><use href="#check"/></svg>
 </li>
 
 <!-- Disabled option: say why -->
@@ -237,7 +237,7 @@ A rule separates groups; a separator isn't allowed inside a listbox. A list with
   <label for="palette-input" class="field__label label">Find a plant</label>
   <div class="combobox">
     <div class="combobox__control">
-      <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+      <svg class="icon combobox__icon-start" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
       <input id="palette-input" class="combobox__input" role="combobox" aria-expanded="true"
              aria-controls="palette-list" aria-autocomplete="list" autocomplete="off" />
     </div>
@@ -247,14 +247,14 @@ A rule separates groups; a separator isn't allowed inside a listbox. A list with
           <span class="small-heading" data-label>Brunnera</span>
           <span class="small-text text-muted">Part shade, 40cm</span>
         </span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
       <li id="palette-2" class="combobox__option" role="option" aria-selected="false">
         <span class="lockup">
           <span class="small-heading" data-label>Epimedium</span>
           <span class="small-text text-muted">Full shade, 30cm</span>
         </span>
-        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon combobox__check" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </li>
     </ul>
     <p class="sr-only" role="status">2 plants</p>

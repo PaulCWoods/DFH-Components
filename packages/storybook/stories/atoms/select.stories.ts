@@ -86,7 +86,7 @@ A native \`<select>\`. It shares the text control base with input and textarea (
     <div class="sb-demo-stage sb-demo-constrained--md">
       <div class="field">
         <label for="select-playground" class="field__label label">${args.label}</label>
-        ${args.invalid ? '<p id="select-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>' : ''}
+        ${args.invalid ? '<p id="select-playground-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Choose a role.</p>' : ''}
         <select
           id="select-playground"
           class="${selectClasses(args.size, args.prominence, args.round, args.custom)}"
@@ -146,7 +146,7 @@ export const States: Story = {
     <div class="sb-demo-stage sb-demo-constrained--md stack">
       <div class="field">
         <label for="select-invalid" class="field__label label">Invalid</label>
-        <p id="select-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Choose a role.</p>
+        <p id="select-invalid-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Choose a role.</p>
         <select id="select-invalid" class="select" aria-invalid="true" aria-describedby="select-invalid-error">${OPTIONS}</select>
       </div>
       ${field('Plan', (id) => `<select id="${id}" class="select" disabled>${OPTIONS}</select>`)}

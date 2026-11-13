@@ -14,12 +14,12 @@ const SIZES: Size[] = ['sm', 'default', 'lg'];
 const INTENTS: Intent[] = ['neutral', 'accent', 'info', 'success', 'warning', 'danger'];
 
 const INTENT_ICON: Record<Intent, string> = {
-  neutral: 'Edit',
-  accent: 'Star',
-  info: 'Info',
-  success: 'Check',
-  warning: 'Warning',
-  danger: 'Error',
+  neutral: 'square-pen',
+  accent: 'star',
+  info: 'info',
+  success: 'check',
+  warning: 'triangle-exclamation-point',
+  danger: 'circle-exclamation-point',
 };
 
 const iconClasses = (size: Size = 'default', intent: Intent = 'neutral', directional = false) =>
@@ -35,8 +35,9 @@ const iconClasses = (size: Size = 'default', intent: Intent = 'neutral', directi
 const icon = (glyph: string, classes = 'icon') =>
   `<svg class="${classes}" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${glyph}"/></svg>`;
 
-/** Every symbol id in the sprite that Storybook inlines into the page. */
-const spriteIds = () => Array.from(document.querySelectorAll('svg symbol[id]')).map((s) => s.id);
+/** Every symbol id in the sprite that Storybook inlines into the page,
+    less the deprecated names that point at another */
+const spriteIds = () => Array.from(document.querySelectorAll('svg symbol[id]:not([data-deprecated])')).map((s) => s.id);
 
 const meta: Meta<IconArgs> = {
   title: 'Atoms/Icon',
@@ -55,8 +56,8 @@ A glyph from the sprite (\`icons/icons.svg\`, one filled family). It is sized in
 Also \`--dir\` (mirrors in right-to-left text) and \`--disclosure\` (rotates with the nearest \`[aria-expanded]\`).
 
 \`\`\`html
-<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
-<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>
+<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
+<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>
 \`\`\`
 
 ### Icon box
@@ -92,7 +93,7 @@ type Story = StoryObj<IconArgs>;
  * Interactive sandbox.
  */
 export const Playground: Story = {
-  args: { glyph: 'ArrowRight', size: 'default', intent: 'neutral', directional: true },
+  args: { glyph: 'arrow-right', size: 'default', intent: 'neutral', directional: true },
 };
 
 /**
@@ -126,7 +127,7 @@ export const SizesWithText: Story = {
         .map(
           (preset) => `
         <p class="${preset} m-0">
-          ${SIZES.map((s) => icon('Bell', iconClasses(s))).join(' ')}
+          ${SIZES.map((s) => icon('bell', iconClasses(s))).join(' ')}
           <span class="sb-demo-tag">${preset}</span>
         </p>`
         )
@@ -159,9 +160,9 @@ export const Direction: Story = {
           (dir) => `
         <div dir="${dir}" class="cluster">
           <span class="sb-demo-tag">${dir}</span>
-          <a href="#next" class="link"><span>${dir === 'rtl' ? 'التالي' : 'Next'}</span> ${icon('ArrowRight', 'icon icon--dir')}</a>
-          <span>${icon('ChevronRight', 'icon icon--dir')} ${icon('ArrowEnd', 'icon icon--dir')}</span>
-          <span>${icon('Search')} ${icon('Check')}</span>
+          <a href="#next" class="link"><span>${dir === 'rtl' ? 'التالي' : 'Next'}</span> ${icon('arrow-right', 'icon icon--dir')}</a>
+          <span>${icon('chevron-right', 'icon icon--dir')} ${icon('arrow-right-to-line', 'icon icon--dir')}</span>
+          <span>${icon('search')} ${icon('check')}</span>
         </div>`
         )
         .join('')}
@@ -180,14 +181,14 @@ export const IconBox: Story = {
           (mods) => `
         <div class="cluster">
           ${['icon-box--sm', '', 'icon-box--lg']
-            .map((size) => `<span class="${['icon-box', size, mods].filter(Boolean).join(' ')}" aria-hidden="true">${icon('Bell')}</span>`)
+            .map((size) => `<span class="${['icon-box', size, mods].filter(Boolean).join(' ')}" aria-hidden="true">${icon('bell')}</span>`)
             .join('')}
           <span class="sb-demo-tag">${mods || 'plain'}</span>
         </div>`
         )
         .join('')}
       <div class="cluster" style="--ui-sizing: compact;">
-        <span class="icon-box icon-box--subtle" aria-hidden="true">${icon('Bell')}</span>
+        <span class="icon-box icon-box--subtle" aria-hidden="true">${icon('bell')}</span>
         <span class="sb-demo-tag">--ui-sizing: compact</span>
       </div>
     </div>
@@ -204,7 +205,7 @@ export const IconBoxIntents: Story = {
       ${INTENTS.map(
         (intent) => `
         <div class="inline">
-          <span class="${['icon-box', 'icon-box--subtle', intent === 'neutral' ? '' : `icon-box--${intent}`].filter(Boolean).join(' ')}" aria-hidden="true">${icon('Bell')}</span>
+          <span class="${['icon-box', 'icon-box--subtle', intent === 'neutral' ? '' : `icon-box--${intent}`].filter(Boolean).join(' ')}" aria-hidden="true">${icon('bell')}</span>
           <span class="text">Reminder, ${intent}</span>
         </div>`
       ).join('')}
@@ -219,8 +220,8 @@ export const IconBoxIntents: Story = {
 export const Disclosure: Story = {
   render: () => `
     <div class="sb-demo-stage cluster">
-      <button type="button" class="button" aria-expanded="false">${icon('ChevronDown', 'icon icon--disclosure')}<span>Closed</span></button>
-      <button type="button" class="button" aria-expanded="true">${icon('ChevronDown', 'icon icon--disclosure')}<span>Open</span></button>
+      <button type="button" class="button" aria-expanded="false">${icon('chevron-down', 'icon icon--disclosure')}<span>Closed</span></button>
+      <button type="button" class="button" aria-expanded="true">${icon('chevron-down', 'icon icon--disclosure')}<span>Open</span></button>
     </div>
   `,
 };
@@ -231,13 +232,13 @@ export const Disclosure: Story = {
 export const Accessibility: Story = {
   render: () => `
     <div class="sb-demo-stage stack">
-      <p class="text">${icon('Check', 'icon icon--success')} Saved. <span class="sb-demo-tag">decorative: the text carries the meaning</span></p>
+      <p class="text">${icon('check', 'icon icon--success')} Saved. <span class="sb-demo-tag">decorative: the text carries the meaning</span></p>
       <p class="text">
-        <button type="button" class="button button--icon" aria-label="Search">${icon('Search')}</button>
+        <button type="button" class="button button--icon" aria-label="Search">${icon('search')}</button>
         <span class="sb-demo-tag">decorative: the button carries the name</span>
       </p>
       <p class="text">
-        <svg class="icon icon--warning" width="1em" height="1em" role="img" aria-label="Warning"><use href="#Warning"/></svg>
+        <svg class="icon icon--warning" width="1em" height="1em" role="img" aria-label="Warning"><use href="#triangle-exclamation-point"/></svg>
         Disk 92% full
         <span class="sb-demo-tag">meaningful: role="img" with a label</span>
       </p>

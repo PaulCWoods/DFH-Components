@@ -21,7 +21,7 @@ A native \`<dialog class="dialog">\` opened as a modal: top-layer placement, siz
       <h2 id="rename-title" class="card__title heading">Rename plot</h2>
       <button type="button" class="button button--plain button--icon" commandfor="rename-dialog" command="close">
         <span class="sr-only">Close</span>
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       </button>
     </header>
     <div class="card__body">…</div>
@@ -63,7 +63,7 @@ const opener = (id: string, label: string, cls = 'button') =>
   `<button type="button" class="${cls}" commandfor="${id}" command="show-modal" aria-haspopup="dialog"><span>${label}</span></button>`;
 
 const closeButton = (id: string, label = 'Close') =>
-  `<button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><span class="sr-only">${label}</span>${icon('Close')}</button>`;
+  `<button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><span class="sr-only">${label}</span>${icon('x')}</button>`;
 
 const actions = (cancel = 'Cancel', confirm = 'Save', value = 'save') => `
   <footer class="card__footer justify-end">
@@ -159,7 +159,7 @@ export const Confirmation: Story = {
         <footer class="card__footer justify-end">
           <form method="dialog" class="button-group">
             <button type="submit" value="cancel" class="button" autofocus><span>Keep plot</span></button>
-            <button type="submit" value="delete" class="button button--strong button--danger">${icon('Delete')}<span>Delete plot</span></button>
+            <button type="submit" value="delete" class="button button--strong button--danger">${icon('trash')}<span>Delete plot</span></button>
           </form>
         </footer>
       </article>
@@ -213,7 +213,7 @@ const noteDialog = (id: string, placement: string, back = false) => `
       <form method="dialog" class="card card--ruled">
         <header class="card__header">
           ${back
-            ? `<button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowLeft"/></svg><span class="sr-only">Cancel</span></button>`
+            ? `<button type="button" class="button button--plain button--icon" commandfor="${id}" command="close"><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-left"/></svg><span class="sr-only">Cancel</span></button>`
             : `<button type="button" class="button button--plain" commandfor="${id}" command="close"><span>Cancel</span></button>`}
           <h2 id="${id}-title" class="card__title heading${back ? '' : ' text-center'}">Add a note</h2>
           <button type="submit" value="save" class="button button--strong button--accent"><span>Save</span></button>
@@ -413,7 +413,7 @@ export const DrawerStart: Story = {
   },
   render: () => `
     <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="show-modal" aria-haspopup="dialog">
-      <span class="sr-only">Menu</span>${icon('Navigation')}
+      <span class="sr-only">Menu</span>${icon('menu')}
     </button>
     <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-drawer-title">
       <article class="card">
@@ -439,7 +439,7 @@ export const RightToLeft: Story = {
   render: () => `
     <div dir="rtl" lang="ar">
       <button type="button" class="button button--plain button--icon" commandfor="rtl-drawer" command="show-modal" aria-haspopup="dialog">
-        <span class="sr-only">القائمة</span>${icon('Navigation')}
+        <span class="sr-only">القائمة</span>${icon('menu')}
       </button>
       <dialog id="rtl-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="rtl-drawer-title">
         <article class="card">

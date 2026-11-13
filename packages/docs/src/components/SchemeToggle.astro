@@ -10,9 +10,9 @@ import Icon from './Icon.astro';
 interface Props { class?: string }
 const { class: cls } = Astro.props;
 const options = [
-  { value: 'system', label: 'Match system', icon: 'LightDark' },
-  { value: 'light', label: 'Light', icon: 'Light' },
-  { value: 'dark', label: 'Dark', icon: 'Moon' },
+  { value: 'system', label: 'Match system', icon: 'contrast' },
+  { value: 'light', label: 'Light', icon: 'sun' },
+  { value: 'dark', label: 'Dark', icon: 'moon' },
 ];
 ---
 <div class:list={['button-group button-group--joined', cls]} role="group" aria-label="Colour scheme" data-scheme-toggle>

@@ -18,7 +18,7 @@ A list of actions, usually opened from a button in a popover: buttons and links 
     <li class="menu__heading"><h3 class="micro-heading">Document</h3></li>
     <li>
       <button type="button" class="button">
-        <svg class="icon" …><use href="#Duplicate"/></svg>
+        <svg class="icon" …><use href="#copy-plus"/></svg>
         <span>Duplicate</span>
         <kbd class="kbd">⌘D</kbd>
       </button>
@@ -57,11 +57,11 @@ const kbd = (k: string) => `<kbd class="kbd">${k}</kbd>`;
 
 const documentItems = `
   <li class="menu__heading"><h3 class="micro-heading">Document</h3></li>
-  ${item('Edit', 'Rename', kbd('⌘R'))}
-  ${item('Duplicate', 'Duplicate', kbd('⌘D'))}
-  ${item('Download', 'Export JSON', kbd('⇧⌘E'))}
+  ${item('square-pen', 'Rename', kbd('⌘R'))}
+  ${item('copy-plus', 'Duplicate', kbd('⌘D'))}
+  ${item('download', 'Export JSON', kbd('⇧⌘E'))}
   <li role="separator" class="divider"></li>
-  ${item('Delete', 'Delete document', kbd('⌫'), 'button--danger')}`;
+  ${item('trash', 'Delete document', kbd('⌫'), 'button--danger')}`;
 
 export const Playground: Story = {
   args: { prominence: 'default', compact: false, translucent: false, ruled: false },
@@ -85,17 +85,17 @@ export const InAPopover: Story = {
   name: 'In a popover',
   render: () => `
     <div class="cluster" style="justify-content: center; min-block-size: 24rem; align-items: start; padding-block: 2rem;">
-      <button type="button" class="button" popovertarget="mn-actions"><span>Actions</span>${icon('ChevronDown')}</button>
+      <button type="button" class="button" popovertarget="mn-actions"><span>Actions</span>${icon('chevron-down')}</button>
       <div id="mn-actions" popover class="popover">
         <menu class="menu" aria-label="Document options">${documentItems}</menu>
       </div>
 
-      <button type="button" class="button" popovertarget="mn-glass"><span>Translucent</span>${icon('ChevronDown')}</button>
+      <button type="button" class="button" popovertarget="mn-glass"><span>Translucent</span>${icon('chevron-down')}</button>
       <div id="mn-glass" popover class="popover popover--end-aligned">
         <menu class="menu menu--translucent menu--compact" aria-label="Quick actions">
-          ${item('Copy', 'Copy link', kbd('⌘C'))}
-          ${item('Share', 'Share', kbd('⇧⌘S'))}
-          <li><button type="button" class="button" disabled>${icon('Lock')}<span>Lock editing</span></button></li>
+          ${item('copy', 'Copy link', kbd('⌘C'))}
+          ${item('share-2', 'Share', kbd('⇧⌘S'))}
+          <li><button type="button" class="button" disabled>${icon('lock')}<span>Lock editing</span></button></li>
         </menu>
       </div>
     </div>`,
@@ -107,9 +107,9 @@ export const Prominence: Story = {
       <div class="stack" style="gap: 0.5rem;">
         <h3 class="small-heading">${label}</h3>
         <menu class="${cls}" aria-label="${label}">
-          ${link('User', 'Profile', '', 'page')}
-          ${link('Bell', 'Notifications', '<span class="status"><span class="status__text">3 new</span></span>')}
-          ${link('Settings', 'Settings', kbd('⌘,'))}
+          ${link('user', 'Profile', '', 'page')}
+          ${link('bell', 'Notifications', '<span class="status"><span class="status__text">3 new</span></span>')}
+          ${link('cog', 'Settings', kbd('⌘,'))}
         </menu>
       </div>`;
     return `
@@ -127,9 +127,9 @@ export const CheckableItems: Story = {
     <div style="max-inline-size: 18rem;">
       <menu class="menu" aria-label="View">
         <li class="menu__heading"><h3 class="micro-heading">View</h3></li>
-        <li><button type="button" class="button" aria-pressed="true" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')">${icon('Check', 'icon--on')}<span>Line numbers</span></button></li>
-        <li><button type="button" class="button" aria-pressed="true" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')">${icon('Check', 'icon--on')}<span>Word wrap</span></button></li>
-        <li><button type="button" class="button" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')">${icon('Check', 'icon--on')}<span>Minimap</span></button></li>
+        <li><button type="button" class="button" aria-pressed="true" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')">${icon('check', 'icon--on')}<span>Line numbers</span></button></li>
+        <li><button type="button" class="button" aria-pressed="true" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')">${icon('check', 'icon--on')}<span>Word wrap</span></button></li>
+        <li><button type="button" class="button" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')">${icon('check', 'icon--on')}<span>Minimap</span></button></li>
       </menu>
     </div>`,
 };
@@ -141,9 +141,9 @@ export const LinksInACard: Story = {
       <header class="card__header"><h3 class="card__title heading">Account</h3></header>
       <nav class="card__body" aria-label="Account">
         <menu class="menu menu--plain menu--ruled">
-          <li><a href="#profile" class="button" aria-current="page">${icon('User')}<span>Profile</span></a></li>
-          <li><a href="#billing" class="button">${icon('Clipboard')}<span>Billing</span><span class="status status--warning status--plain"><span class="status__text">Due</span></span></a></li>
-          <li><a href="#security" class="button">${icon('Lock')}<span>Security</span></a></li>
+          <li><a href="#profile" class="button" aria-current="page">${icon('user')}<span>Profile</span></a></li>
+          <li><a href="#billing" class="button">${icon('clipboard')}<span>Billing</span><span class="status status--warning status--plain"><span class="status__text">Due</span></span></a></li>
+          <li><a href="#security" class="button">${icon('lock')}<span>Security</span></a></li>
         </menu>
       </nav>
     </article>`,

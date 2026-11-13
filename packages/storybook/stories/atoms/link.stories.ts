@@ -14,7 +14,7 @@ const BLOCK_PROMINENCES: BlockProminence[] = ['default', 'strong', 'subtle', 'pl
 const linkClasses = (prominence: Prominence = 'default') =>
   ['link', prominence !== 'default' ? `link--${prominence}` : ''].filter(Boolean).join(' ');
 
-const arrow = `<svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowRight"/></svg>`;
+const arrow = `<svg class="block-link__arrow icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-right"/></svg>`;
 
 const blockLink = (label: string, mods: string[] = []) => `
   <a href="#" class="${['block-link', ...mods.filter(Boolean)].join(' ')}">
@@ -98,7 +98,7 @@ export const Prominence: Story = {
 export const External: Story = {
   render: () => `
     <div class="sb-demo-stage sb-demo-constrained--md">
-      <p class="text">Review the official <a href="https://www.w3.org/TR/WCAG22/" class="link" target="_blank" rel="noopener noreferrer">WCAG 2.2 standard<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ArrowUpRight"/></svg></a> for the full list.</p>
+      <p class="text">Review the official <a href="https://www.w3.org/TR/WCAG22/" class="link" target="_blank" rel="noopener noreferrer">WCAG 2.2 standard<span class="sr-only"> (opens in a new tab)</span><svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#arrow-up-right"/></svg></a> for the full list.</p>
     </div>
   `,
 };
@@ -112,7 +112,7 @@ export const LeadingIcon: Story = {
     <div class="sb-demo-stage stack max-w-sm">
       <div>
         <a href="#" class="link link--plain inline gap-xs">
-          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
+          <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#house"/></svg>
           <span>All courses</span>
         </a>
       </div>

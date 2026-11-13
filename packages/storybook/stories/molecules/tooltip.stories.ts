@@ -13,7 +13,7 @@ A short line of plain text about a control, shown while the control is hovered o
 \`\`\`html
 <!-- Label: the tooltip repeats the button's name -->
 <button type="button" class="button button--icon" interestfor="tip-bold" aria-keyshortcuts="Meta+B">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Bold"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#letter-b"/></svg>
   <span class="sr-only">Bold</span>
 </button>
 <div id="tip-bold" popover="hint" class="tooltip" aria-hidden="true">Bold ⌘B</div>
@@ -68,7 +68,7 @@ export const Playground: Story = {
   render: (args) => {
     const cls = [args.placement !== 'default' ? `tooltip--${args.placement}` : '', args.arrow ? '' : 'tooltip--no-arrow'].filter(Boolean).join(' ');
     return stage(args.kind === 'label'
-      ? iconTip('pg-tip', 'Duplicate', 'Duplicate', 'Duplicate', cls)
+      ? iconTip('pg-tip', 'copy-plus', 'Duplicate', 'Duplicate', cls)
       : textTip('pg-tip', 'Publish', 'Sends the post to all 1,204 subscribers', cls));
   },
 };
@@ -80,9 +80,9 @@ export const LabelAndDescription: Story = {
       <h3 class="small-heading">Label: icon buttons</h3>
       <p class="small-text">The tooltip repeats the name, so it is hidden from screen readers. Shortcuts go in <code>aria-keyshortcuts</code>.</p>
       <div class="cluster" role="group" aria-label="Formatting" style="padding-block: 2.5rem 0;">
-        ${iconTip('lb-bold', 'Bold', 'Bold', 'Bold ⌘B', '', 'Meta+B')}
-        ${iconTip('lb-italic', 'Italic', 'Italic', 'Italic ⌘I', '', 'Meta+I')}
-        ${iconTip('lb-link', 'Link', 'Insert link', 'Insert link ⌘K', '', 'Meta+K')}
+        ${iconTip('lb-bold', 'letter-b', 'Bold', 'Bold ⌘B', '', 'Meta+B')}
+        ${iconTip('lb-italic', 'italic', 'Italic', 'Italic ⌘I', '', 'Meta+I')}
+        ${iconTip('lb-link', 'link', 'Insert link', 'Insert link ⌘K', '', 'Meta+K')}
       </div>
       <h3 class="small-heading">Description: extra information</h3>
       <p class="small-text">The button points <code>aria-describedby</code> at the tooltip, so the text reaches screen readers in every browser.</p>
@@ -122,7 +122,7 @@ export const InContext: Story = {
           <p class="small-text">Tokens grant full access to your workspace. The tooltip adds detail; the text here already says what matters.</p>
           <div class="cluster">
             ${textTip('ctx-rotate', 'Rotate token', 'Issues a new token; the old one stops working in 24 hours')}
-            ${iconTip('ctx-copy', 'Copy', 'Copy token', 'Copy token')}
+            ${iconTip('ctx-copy', 'copy', 'Copy token', 'Copy token')}
           </div>
         </div>
       </article>

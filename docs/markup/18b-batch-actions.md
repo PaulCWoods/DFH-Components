@@ -15,17 +15,17 @@ related: [button-group, button, divider, card, table]
   <hr class="divider" aria-hidden="true">
   <div class="batch-actions__actions button-group buttons-subtle">
     <button type="button" class="button">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#download"/></svg>
       <span>Export</span>
     </button>
     <button type="button" class="button button--danger">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg>
       <span>Delete</span>
     </button>
   </div>
   <hr class="divider" aria-hidden="true">
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Clear selection</span>
   </button>
 </div>
@@ -69,17 +69,17 @@ The browser handles the Buttons. Filling the status element is the product's scr
   <hr class="divider" aria-hidden="true">
   <div class="batch-actions__actions button-group buttons-subtle">
     <button type="button" class="button">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Download"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#download"/></svg>
       <span>Export</span>
     </button>
     <button type="button" class="button button--danger">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Delete"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#trash"/></svg>
       <span>Delete</span>
     </button>
   </div>
   <hr class="divider" aria-hidden="true">
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Clear selection</span>
   </button>
 </div>
@@ -152,7 +152,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
   </div>
   <hr class="divider" aria-hidden="true">
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Clear selection</span>
   </button>
 </div>
@@ -170,7 +170,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
     <button type="button" class="button"><span>Share</span></button>
   </div>
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Clear selection</span>
   </button>
 </div>

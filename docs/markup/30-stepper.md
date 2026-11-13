@@ -12,7 +12,7 @@ related: [breadcrumb, pagination-page-count, navigation-tree, progress-meter]
 <ol class="stepper" data-axes aria-label="Plot application">
   <li class="stepper__item is-complete">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
     </div>
   </li>
@@ -66,7 +66,7 @@ The browser provides all of this. Moving between wizard steps is the product's s
   <li class="stepper__item is-complete">
     <div class="stepper__step">
       <span class="stepper__indicator" aria-hidden="true">
-        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg>
+        <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg>
       </span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
       <span class="stepper__description small-text">Verified</span>
@@ -94,14 +94,14 @@ The browser provides all of this. Moving between wizard steps is the product's s
 <ol class="stepper" aria-label="Plot agreement">
   <li class="stepper__item is-complete">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
       <span class="stepper__description small-text">Verified</span>
     </div>
   </li>
   <li class="stepper__item is-invalid">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Needs attention: </span>Soil agreement</span>
       <span class="stepper__description small-text">Signature missing</span>
     </div>
@@ -122,7 +122,7 @@ The browser provides all of this. Moving between wizard steps is the product's s
   <ol class="stepper" aria-label="Checkout steps">
     <li class="stepper__item is-complete">
       <a class="stepper__step" href="/checkout/shipping">
-        <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+        <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
         <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Shipping</span>
       </a>
     </li>
@@ -170,7 +170,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 <ol class="stepper stepper--vertical" aria-label="Set-up guide">
   <li class="stepper__item is-complete">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Create an account</span>
     </div>
   </li>
@@ -191,7 +191,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 <ol class="stepper stepper--compact" aria-label="Registration steps">
   <li class="stepper__item is-complete">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
     </div>
   </li>
@@ -212,7 +212,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 <ol class="stepper stepper--plain" aria-label="Renewal steps">
   <li class="stepper__item is-complete">
     <div class="stepper__step">
-      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+      <span class="stepper__indicator" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
       <span class="stepper__title small-heading"><span class="sr-only">Completed: </span>Details</span>
     </div>
   </li>

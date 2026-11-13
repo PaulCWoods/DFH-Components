@@ -16,7 +16,7 @@
 
    <div class="toast-stack toast-stack--bottom-end" popover="manual" role="status" aria-label="Notifications">
      <div class="banner banner--success toast">
-       <span class="icon-box" aria-hidden="true"><svg class="icon" …><use href="#Check"/></svg></span>
+       <span class="icon-box" aria-hidden="true"><svg class="icon" …><use href="#check"/></svg></span>
        <div class="banner__body"><p class="text">Settings saved.</p></div>
        <button type="button" class="button button--icon banner__action">…</button>
      </div>

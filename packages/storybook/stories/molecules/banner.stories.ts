@@ -12,12 +12,12 @@ One message with an intent, in one row: an optional icon, the body and optional 
 ### Markup
 \`\`\`html
 <div class="banner banner--warning">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>
   <div class="banner__body">
     <p class="text">Scheduled maintenance begins tonight at 22:00 UTC.</p>
   </div>
   <button type="button" class="button button--icon banner__action">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Dismiss</span>
   </button>
 </div>
@@ -52,16 +52,16 @@ const icon = (name: string) =>
 const iconBox = (name: string) => `<span class="icon-box" aria-hidden="true">${icon(name)}</span>`;
 
 const intentIcon: Record<string, string> = {
-  accent: 'Info',
-  info: 'Info',
-  success: 'Check',
-  warning: 'Warning',
-  danger: 'Error',
+  accent: 'info',
+  info: 'info',
+  success: 'check',
+  warning: 'triangle-exclamation-point',
+  danger: 'circle-exclamation-point',
 };
 
 const dismiss = `
   <button type="button" class="button button--icon banner__action" onclick="this.closest('.banner').hidden = true">
-    ${icon('Close')}
+    ${icon('x')}
     <span class="sr-only">Dismiss</span>
   </button>`;
 
@@ -117,7 +117,7 @@ export const Anatomy: Story = {
   render: () => `
     <div class="stack" style="max-inline-size: 40rem;">
       <div class="banner banner--info">
-        ${iconBox('Info')}
+        ${iconBox('info')}
         <div class="banner__body">
           <span class="sb-demo-tag"><span>.banner__body</span></span>
           <p class="text font-bold">Title (.text.font-bold)</p>
@@ -185,8 +185,8 @@ export const DensityAndCorners: Story = {
       </div>
       ${banner('banner--round', '<p class="text font-bold">Continue?</p>', {
     action: `<div class="cluster banner__action">
-          <button type="button" class="button button--icon">${icon('Close')}<span class="sr-only">Cancel</span></button>
-          <button type="button" class="button button--icon button--strong button--accent">${icon('Check')}<span class="sr-only">Continue</span></button>
+          <button type="button" class="button button--icon">${icon('x')}<span class="sr-only">Cancel</span></button>
+          <button type="button" class="button button--icon button--strong button--accent">${icon('check')}<span class="sr-only">Continue</span></button>
         </div>`,
   })}
       ${banner('banner--round', '<p class="text">A round banner keeps concentric corners when its message wraps onto a second line, because it never becomes a pill.</p>', { intent: 'warning', action: dismiss })}
@@ -206,7 +206,7 @@ export const SeveralActions: Story = {
   name: 'Several actions',
   render: () => `
     <div class="banner banner--accent">
-      <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Info"/></svg></span>
+      <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
       <div class="banner__body">
         <p class="text font-bold">Design system v2.4 is available</p>
         <p class="small-text">Updated tokens and native anchor positioning.</p>

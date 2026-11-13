@@ -107,13 +107,13 @@ The browser provides all of this, given a real `<table>` and a focusable contain
         <th scope="col">
           <button type="button" class="table__sort-button">
             Plant
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronsUpDown"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevrons-up-down"/></svg>
           </button>
         </th>
         <th scope="col" class="table__cell--numeric" aria-sort="ascending">
           <button type="button" class="table__sort-button">
             Height (cm)
-            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronDown"/></svg>
+            <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-down"/></svg>
           </button>
         </th>
       </tr>
@@ -126,7 +126,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 </div>
 ```
 - `aria-sort` goes on the `<th>`, on one column at a time. The Button is named by its visible text; don't replace it with an `aria-label`.
-- Unsorted columns show `ChevronsUpDown`; the sorted column shows `ChevronDown`, which points up for `aria-sort="ascending"`. The page's script sorts the rows, sets `aria-sort` and swaps the icon.
+- Unsorted columns show `chevrons-up-down`; the sorted column shows `chevron-down`, which points up for `aria-sort="ascending"`. The page's script sorts the rows, sets `aria-sort` and swaps the icon.
 - Say the sort order in the caption or a `role="status"` message if it matters ("Sorted by height, ascending").
 
 ## Rows with actions

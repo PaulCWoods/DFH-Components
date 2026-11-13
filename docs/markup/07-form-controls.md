@@ -56,7 +56,7 @@ An error colour says something is wrong, and the message says what. The icon and
 ```html live width=md
 <div class="field">
   <label for="account-id" class="field__label label">Account ID</label>
-  <p id="account-id-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Account ID must start with "DFH-" followed by 6 digits.</p>
+  <p id="account-id-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Account ID must start with "DFH-" followed by 6 digits.</p>
   <input id="account-id" type="text" class="input" aria-invalid="true" aria-describedby="account-id-error" value="INVALID-ID" />
 </div>
 ```
@@ -125,13 +125,13 @@ A slider shows roughly where it is, and an `<output>` beside it gives the number
   <div class="input-frame">
     <input type="password" id="example-password" class="input-frame__input" autocomplete="current-password" />
     <button type="button" class="button button--plain button--icon" aria-controls="example-password" aria-pressed="false">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#View" /></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#eye" /></svg>
       <span class="sr-only">Show password</span>
     </button>
   </div>
 </div>
 ```
-An Input Frame holds a field and the buttons that act on it in one control. It draws the border and focus ring, and takes the Input's sizes and looks. The button is yours to script: switch the field's `type` between `password` and `text`, set `aria-pressed`, and swap the icon (`View`, `Hide`). Seeing what they typed spares people retyping it, so never block paste either.
+An Input Frame holds a field and the buttons that act on it in one control. It draws the border and focus ring, and takes the Input's sizes and looks. The button is yours to script: switch the field's `type` between `password` and `text`, set `aria-pressed`, and swap the icon (`eye`, `eye-off`). Seeing what they typed spares people retyping it, so never block paste either.
 
 ## Do and don't
 | Do | Don't |
@@ -180,7 +180,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 <!-- Error state -->
 <div class="field">
   <label for="account-id" class="field__label label">Account ID</label>
-  <p id="account-id-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Account ID must start with "DFH-" followed by 6 digits.</p>
+  <p id="account-id-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Account ID must start with "DFH-" followed by 6 digits.</p>
   <input id="account-id" type="text" class="input" aria-invalid="true" aria-describedby="account-id-error" value="INVALID-ID" />
 </div>
 
@@ -282,7 +282,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 <!-- Range lockup (molecule): button + range + readout; size it with .controls-sm or .controls-lg -->
 <div class="range-lockup controls-sm">
   <button type="button" class="button button--subtle button--icon" aria-pressed="false">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#VolumeOn"/></svg><span class="sr-only">Mute</span>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#volume-2"/></svg><span class="sr-only">Mute</span>
   </button>
   <input id="lockup-vol" type="range" class="range" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume" />
   <output for="lockup-vol" class="range-lockup__output small-text font-mono">85%</output>

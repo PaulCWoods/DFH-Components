@@ -50,9 +50,9 @@ type Story = StoryObj;
 
 const tools = (cls: string) => `
   <div class="button-group ${cls}" role="group" aria-label="Bed actions">
-    <button type="button" class="button"><svg class="button__icon icon" aria-hidden="true"><use href="#Plus"></use></svg><span>Add plant</span></button>
-    <button type="button" class="button"><svg class="button__icon icon" aria-hidden="true"><use href="#Edit"></use></svg><span>Rename</span></button>
-    <button type="button" class="button"><svg class="button__icon icon" aria-hidden="true"><use href="#Share"></use></svg><span>Share</span></button>
+    <button type="button" class="button"><svg class="button__icon icon" aria-hidden="true"><use href="#plus"></use></svg><span>Add plant</span></button>
+    <button type="button" class="button"><svg class="button__icon icon" aria-hidden="true"><use href="#square-pen"></use></svg><span>Rename</span></button>
+    <button type="button" class="button"><svg class="button__icon icon" aria-hidden="true"><use href="#share-2"></use></svg><span>Share</span></button>
   </div>`;
 
 export const Viewport: Story = {
@@ -84,7 +84,7 @@ export const VisuallyHidden: Story = {
   parameters: { docs: { description: { story: 'Text read by screen readers but not shown: always, and below 48rem.' } } },
   render: () => `
     <div class="stack">
-      <button type="button" class="button button--icon"><svg class="icon" aria-hidden="true"><use href="#Delete"></use></svg><span class="sr-only">Remove Bed 3</span></button>
+      <button type="button" class="button button--icon"><svg class="icon" aria-hidden="true"><use href="#trash"></use></svg><span class="sr-only">Remove Bed 3</span></button>
       <p class="text">Harvest <span class="max-md:sr-only">(rhubarb, chard and kale)</span> due this week</p>
     </div>`,
 };
@@ -94,6 +94,6 @@ export const Labels: Story = {
   render: () => `
     <div class="stack">
       ${tools('hide-labels')}
-      <p class="hide-labels small-text inline"><svg class="icon" aria-hidden="true"><use href="#Bell"></use></svg><span class="ui-label">Reminders on</span></p>
+      <p class="hide-labels small-text inline"><svg class="icon" aria-hidden="true"><use href="#bell"></use></svg><span class="ui-label">Reminders on</span></p>
     </div>`,
 };

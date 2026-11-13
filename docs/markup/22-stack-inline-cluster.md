@@ -51,7 +51,7 @@ They take no sizes or surfaces, and their settings stay on the element they're s
 
 ## Inline: a row whose last item can shrink
 ```html live
-<p class="inline gap-xs"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Light"/></svg><span>Part shade</span></p>
+<p class="inline gap-xs"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#sun"/></svg><span>Part shade</span></p>
 
 <div class="inline inline--between">
   <h3 class="small-heading">Shade border</h3>

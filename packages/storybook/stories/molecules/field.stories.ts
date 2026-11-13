@@ -15,7 +15,7 @@ One control with its label, and optionally a hint, an error and an output. The f
   <label for="email" class="field__label label">Email address</label>
   <p id="email-hint" class="field__hint small-text">We only use it to reply.</p>
   <p id="email-error" class="field__error small-text">
-    <svg class="icon" …><use href="#Warning"/></svg>
+    <svg class="icon" …><use href="#triangle-exclamation-point"/></svg>
     Enter an email address in the correct format, like name@example.com
   </p>
   <input id="email" type="email" class="input" aria-describedby="email-hint email-error" aria-invalid="true" />
@@ -50,7 +50,7 @@ const field = (id: string, o: FieldOpts) => {
     <div class="field${o.cls ? ` ${o.cls}` : ''}">
       <label for="${id}" class="field__label label">${o.label}${o.optional ? ' <span class="text-muted">(optional)</span>' : ''}</label>
       ${o.hint ? `<p id="${id}-hint" class="field__hint small-text">${o.hint}</p>` : ''}
-      ${o.error ? `<p id="${id}-error" class="field__error small-text">${icon('Warning')}${o.error}</p>` : ''}
+      ${o.error ? `<p id="${id}-error" class="field__error small-text">${icon('triangle-exclamation-point')}${o.error}</p>` : ''}
       ${control}
     </div>`;
 };

@@ -43,7 +43,7 @@ How it's named depends on where it sits. Beside a visible name it's hidden, beca
 
 <!-- An icon -->
 <span class="avatar" role="img" aria-label="Guest">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#User"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#user"/></svg>
 </span>
 
 <!-- Presence: a photo inside a span so the badge can sit on it -->

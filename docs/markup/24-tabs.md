@@ -208,11 +208,11 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
 <!-- Floating bar -->
 <nav class="tab-list tab-list--segmented tab-list--round tab-list--floating" aria-label="App sections">
   <a href="/" class="tab tab--icon" aria-current="page">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#house"/></svg>
     <span class="tab__text">Home</span>
   </a>
   <a href="/search" class="tab tab--icon">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
     <span class="tab__text">Search</span>
   </a>
 </nav>
@@ -230,11 +230,11 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
 <!-- Floating bar docked to the bottom of the viewport -->
 <nav class="tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked md:hide" aria-label="App">
   <a href="/" class="tab tab--icon" aria-current="page">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Home"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#house"/></svg>
     <span class="tab__text">Home</span>
   </a>
   <a href="/search" class="tab tab--icon">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Search"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#search"/></svg>
     <span class="tab__text">Search</span>
   </a>
 </nav>

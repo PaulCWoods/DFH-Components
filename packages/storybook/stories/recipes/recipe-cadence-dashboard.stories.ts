@@ -40,11 +40,11 @@ const icon = (name: string, cls = 'icon') =>
    Navigation
    -------------------------------------------------------------------------- */
 const sections = [
-  ['Radio', 'Broadcast', true],
-  ['Calendar', 'Schedule', false],
-  ['Folder', 'Library', false],
-  ['BarChart', 'Analytics', false],
-  ['Settings', 'Station settings', false],
+  ['radio', 'Broadcast', true],
+  ['calendar', 'Schedule', false],
+  ['folder', 'Library', false],
+  ['chart-no-axes-column-increasing', 'Analytics', false],
+  ['cog', 'Station settings', false],
 ] as const;
 
 const avatar = `
@@ -57,7 +57,7 @@ const avatar = `
 const rail = `
   <div class="sidebar sidebar--rail color-scheme-dark max-md:hide">
     <div class="sidebar__header">
-      <a href="#" class="button button--plain button--icon">${icon('BrandDesignForHumans', 'icon icon--stretch')}<span class="sr-only">Cadence home</span></a>
+      <a href="#" class="button button--plain button--icon">${icon('brand-design-for-humans', 'icon icon--stretch')}<span class="sr-only">Cadence home</span></a>
     </div>
     <div class="sidebar__body">
       <nav class="tab-list tab-list--vertical tab-list--segmented tab-list--sm tab-list--subtle" aria-label="Sections">
@@ -102,7 +102,7 @@ const menuDrawer = `
     <article class="card fine:ui-compact">
       <header class="card__header">
         <h2 id="menu-drawer-title" class="card__title heading">Broadcast</h2>
-        <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="close"><span class="sr-only">Close menu</span>${icon('Close')}</button>
+        <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="close"><span class="sr-only">Close menu</span>${icon('x')}</button>
       </header>
       <div class="card__body card__body--scrollable">${menuTree('menu-drawer-title')}</div>
     </article>
@@ -112,7 +112,7 @@ const mobileBar = `
   <header class="header header--compact color-scheme-dark md:hide">
     <div class="header__bar">
       <div class="inline">
-        <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="show-modal" aria-haspopup="dialog">${icon('Navigation')}<span class="sr-only">Menu</span></button>
+        <button type="button" class="button button--plain button--icon button--sm" commandfor="menu-drawer" command="show-modal" aria-haspopup="dialog">${icon('menu')}<span class="sr-only">Menu</span></button>
         <a href="#" class="link link--plain small-heading">Cadence</a>
       </div>
       ${avatar}
@@ -139,18 +139,18 @@ const stationHeader = (buffering: boolean) => `
           <option>Cadence Chill</option>
         </select>
         ${buffering
-    ? `<span class="status status--plain status--warning">${icon('Warning')}<span class="status__text">Reconnecting</span></span>`
+    ? `<span class="status status--plain status--warning">${icon('triangle-exclamation-point')}<span class="status__text">Reconnecting</span></span>`
     : `<span class="status status--plain status--success">${icon('Record')}<span class="status__text">Live, 320k AAC</span></span>`
   }
       </div>
       <dl class="telemetry-group @max-3xl:hide" aria-label="Station">
-        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">${icon('User')}Listeners</dt><dd class="small-heading">${buffering ? '—' : '14,820'}</dd></div>
+        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">${icon('user')}Listeners</dt><dd class="small-heading">${buffering ? '—' : '14,820'}</dd></div>
         <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">Peak</dt><dd class="small-heading">28,450</dd></div>
         <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">Latency</dt><dd class="small-heading">${buffering ? '250' : '42'}<span class="small-text">ms</span></dd></div>
       </dl>
       <div class="cluster gap-xs @max-6xl:hide-labels">
-        <button type="button" class="button button--danger" aria-pressed="false">${icon('Muted')}<span>Mute all</span></button>
-        <button type="button" class="button" commandfor="settings" command="show-modal" aria-haspopup="dialog">${icon('Settings')}<span>Stream settings</span></button>
+        <button type="button" class="button button--danger" aria-pressed="false">${icon('volume-x')}<span>Mute all</span></button>
+        <button type="button" class="button" commandfor="settings" command="show-modal" aria-haspopup="dialog">${icon('cog')}<span>Stream settings</span></button>
       </div>
     </div>
   </header>`;
@@ -159,7 +159,7 @@ const stationHeader = (buffering: boolean) => `
    Deck
    -------------------------------------------------------------------------- */
 const trackInfo = (id: string) => `
-  <button type="button" class="button button--plain button--icon button--sm" popovertarget="${id}-info">${icon('Info')}<span class="sr-only">Track details</span></button>
+  <button type="button" class="button button--plain button--icon button--sm" popovertarget="${id}-info">${icon('info')}<span class="sr-only">Track details</span></button>
   <div id="${id}-info" popover class="popover popover--end-aligned">
     <article class="card card--compact">
       <header class="card__header"><h3 class="card__title small-heading">Celestial Horizon</h3></header>
@@ -181,9 +181,9 @@ const trackInfo = (id: string) => `
 
 const transport = (label: string, size = ' button--lg') => `
   <div class="button-group justify-center" role="group" aria-label="${label}">
-    <button type="button" class="button button--plain button--icon">${icon('ChevronStart', 'icon icon--dir')}<span class="sr-only">Back to start</span></button>
-    <button type="button" class="button button--strong button--accent button--icon button--round${size}">${icon('Pause')}<span class="sr-only">Pause</span></button>
-    <button type="button" class="button button--plain button--icon">${icon('ChevronEnd', 'icon icon--dir')}<span class="sr-only">Next track</span></button>
+    <button type="button" class="button button--plain button--icon">${icon('chevron-first', 'icon icon--dir')}<span class="sr-only">Back to start</span></button>
+    <button type="button" class="button button--strong button--accent button--icon button--round${size}">${icon('pause')}<span class="sr-only">Pause</span></button>
+    <button type="button" class="button button--plain button--icon">${icon('chevron-last', 'icon icon--dir')}<span class="sr-only">Next track</span></button>
   </div>`;
 
 const position = (id: string) => `
@@ -194,7 +194,7 @@ const position = (id: string) => `
 
 const volume = (id: string) => `
   <div class="range-lockup controls-sm">
-    <button type="button" class="button button--plain button--icon" aria-pressed="false">${icon('VolumeOn')}<span class="sr-only">Mute</span></button>
+    <button type="button" class="button button--plain button--icon" aria-pressed="false">${icon('volume-2')}<span class="sr-only">Mute</span></button>
     <input id="${id}-volume" type="range" class="range" min="0" max="100" value="85" style="--value: 85%;" aria-label="Volume" />
     <output for="${id}-volume" class="range-lockup__output small-text font-mono">85%</output>
   </div>`;
@@ -215,7 +215,7 @@ const deck = (id: string, name: string, state: 'on-air' | 'cue') => `
       <div class="inline grow">
         ${state === 'on-air'
     ? `<span class="status status--success">${icon('Record')}<span class="status__text">On air</span></span>`
-    : `<span class="status status--warning">${icon('Pause')}<span class="status__text">Cued</span></span>`
+    : `<span class="status status--warning">${icon('pause')}<span class="status__text">Cued</span></span>`
   }
         <h2 id="${id}-title" class="micro-heading">${name}</h2>
       </div>
@@ -259,7 +259,7 @@ const QUEUE: Item[] = [
   { id: 'q5', time: '11:33', title: 'Midnight Resonator', artist: 'Solar Fields', type: 'Music', length: '5:44', status: 'Queued', loudness: '−14.4 LUFS', format: 'FLAC 24-bit' },
 ];
 
-const typeIcon = { Music: 'Music', 'Station ID': 'Radio', Ad: 'Star' } as const;
+const typeIcon = { Music: 'eighth-notes', 'Station ID': 'radio', Ad: 'star' } as const;
 
 const queueStatus = (s: Item['status']) =>
   s === 'On air'
@@ -282,7 +282,7 @@ const queueRow = (q: Item, expanded: boolean) => `
     <td class="table__cell--nowrap">${queueStatus(q.status)}</td>
     <td class="table__col--actions">
       <button type="button" class="button button--plain button--icon button--sm" aria-expanded="${expanded}" aria-controls="${q.id}-details">
-        ${icon(expanded ? 'ChevronUp' : 'ChevronDown')}<span class="sr-only">Details for ${q.title}</span>
+        ${icon(expanded ? 'chevron-up' : 'chevron-down')}<span class="sr-only">Details for ${q.title}</span>
       </button>
     </td>
   </tr>
@@ -329,8 +329,8 @@ const queue = (buffering: boolean) => `
         <p class="card__subtitle small-text text-muted" role="status">${buffering ? 'Resynchronising…' : '5 items, 14 minutes 31 seconds'}</p>
       </hgroup>
       <div class="cluster gap-xs max-lg:hide-labels">
-        <button type="button" class="button button--sm">${icon('Sortable')}<span>Balance</span></button>
-        <button type="button" class="button button--sm button--strong button--accent">${icon('Plus')}<span>Add</span></button>
+        <button type="button" class="button button--sm">${icon('arrow-down-up')}<span>Balance</span></button>
+        <button type="button" class="button button--sm button--strong button--accent">${icon('plus')}<span>Add</span></button>
       </div>
     </header>
     <div class="card__band">
@@ -385,7 +385,7 @@ const settingsDialog = `
     <article class="card card--ruled">
       <header class="card__header">
         <h2 id="settings-title" class="card__title small-heading">Stream settings</h2>
-        <button type="button" class="button button--plain button--icon" commandfor="settings" command="close"><span class="sr-only">Close</span>${icon('Close')}</button>
+        <button type="button" class="button button--plain button--icon" commandfor="settings" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
       </header>
       <div class="card__body card__body--scrollable form" tabindex="0" aria-label="Settings">
         <div class="field">
@@ -417,12 +417,12 @@ const settingsDialog = `
 
 const outage = `
   <div class="banner banner--warning">
-    <span class="icon-box" aria-hidden="true">${icon('Warning')}</span>
+    <span class="icon-box" aria-hidden="true">${icon('triangle-exclamation-point')}</span>
     <div class="banner__body">
       <p class="text font-bold">The stream has stalled</p>
       <p class="small-text">The studio uplink passed 250 ms. The emergency cart starts in 12 seconds.</p>
     </div>
-    <button type="button" class="button banner__action">${icon('Refresh')}<span>Retry now</span></button>
+    <button type="button" class="button banner__action">${icon('rotate-ccw')}<span>Retry now</span></button>
   </div>`;
 
 const page = (buffering = false) => `

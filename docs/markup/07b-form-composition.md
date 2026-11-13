@@ -75,7 +75,7 @@ Order: label, hint, error, control. The error comes before the control, so a scr
 <div class="field">
   <label for="plot" class="field__label label">Plot number</label>
   <p id="plot-error" class="field__error small-text">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>
     Enter a plot number, like A-14
   </p>
   <input id="plot" class="input" aria-describedby="plot-error" aria-invalid="true" />
@@ -176,7 +176,7 @@ After a failed submit, a summary at the top of the Form says how many things nee
 ```html live width=md
 <form class="form" novalidate>
   <div id="plot-errors" class="banner banner--danger" tabindex="-1" aria-labelledby="plot-errors-title">
-    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg></span>
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg></span>
     <div class="banner__body">
       <h2 id="plot-errors-title" class="text font-bold">There are 2 problems with your application</h2>
       <ul class="list">
@@ -187,12 +187,12 @@ After a failed submit, a summary at the top of the Form says how many things nee
   </div>
   <div class="field">
     <label for="plot-name" class="field__label label">Full name</label>
-    <p id="plot-name-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter your full name</p>
+    <p id="plot-name-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Enter your full name</p>
     <input id="plot-name" class="input" autocomplete="name" aria-invalid="true" aria-describedby="plot-name-error" />
   </div>
   <div class="field">
     <label for="plot-number" class="field__label label">Plot number</label>
-    <p id="plot-number-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Warning"/></svg>Enter a plot number, like A-14</p>
+    <p id="plot-number-error" class="field__error small-text"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#triangle-exclamation-point"/></svg>Enter a plot number, like A-14</p>
     <input id="plot-number" class="input" aria-invalid="true" aria-describedby="plot-number-error" value="14" />
   </div>
   <div class="form__actions button-group">

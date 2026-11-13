@@ -30,7 +30,7 @@
      <input type="password" id="password" class="input-frame__input" autocomplete="current-password" />
      <button type="button" class="button button--plain button--icon"
              aria-controls="password" aria-pressed="false">
-       <svg class="icon" …><use href="#View" /></svg>
+       <svg class="icon" …><use href="#eye" /></svg>
        <span class="sr-only">Show password</span>
      </button>
    </div>

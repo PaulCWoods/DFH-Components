@@ -16,7 +16,7 @@ A small picture of a thing: album art, a product shot, a file preview. People ta
 
 <!-- No picture: an icon for the kind of thing -->
 <span class="thumbnail" aria-hidden="true">
-  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Music"/></svg>
+  <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#eighth-notes"/></svg>
 </span>
 
 <!-- A count on its corner: the span holds the picture and the name -->
@@ -71,7 +71,7 @@ export const Playground: Story = {
       args.round ? 'thumbnail--round' : '',
     ].filter(Boolean).join(' ');
     const style = args.aspect !== '1' ? ` style="--thumbnail-aspect: ${args.aspect};"` : '';
-    const body = args.content === 'picture' ? `<img src="${dusk}" alt="" />` : icon('Music');
+    const body = args.content === 'picture' ? `<img src="${dusk}" alt="" />` : icon('eighth-notes');
     const badge = args.badge ? dot('success') : '';
     const name = `Celestial Horizon, album art${args.badge ? ', playing' : ''}`;
     return `<div class="${args.compact ? 'ui-compact' : ''}"><span class="${cls}"${style} role="img" aria-label="${name}">${body}${badge}</span></div>`;
@@ -82,9 +82,9 @@ export const Content: Story = {
   render: () => `
     <div class="cluster">
       <img class="thumbnail" src="${dusk}" alt="Celestial Horizon, album art" />
-      <span class="thumbnail" role="img" aria-label="No artwork">${icon('Music')}</span>
-      <span class="thumbnail" role="img" aria-label="Product photo coming soon">${icon('Cart')}</span>
-      <span class="thumbnail" role="img" aria-label="Source file">${icon('Code')}</span>
+      <span class="thumbnail" role="img" aria-label="No artwork">${icon('eighth-notes')}</span>
+      <span class="thumbnail" role="img" aria-label="Product photo coming soon">${icon('shopping-cart')}</span>
+      <span class="thumbnail" role="img" aria-label="Source file">${icon('code-xml')}</span>
     </div>`,
 };
 
@@ -120,7 +120,7 @@ export const Round: Story = {
   render: () => `
     <div class="cluster">
       <img class="thumbnail thumbnail--lg thumbnail--round" src="${ember}" alt="Ember, single" />
-      <span class="thumbnail thumbnail--lg thumbnail--round" role="img" aria-label="No artwork">${icon('Disc')}</span>
+      <span class="thumbnail thumbnail--lg thumbnail--round" role="img" aria-label="No artwork">${icon('disc')}</span>
     </div>`,
 };
 
@@ -155,7 +155,7 @@ export const InAList: Story = {
         </div>
       </li>
       <li class="inline">
-        <span class="thumbnail" aria-hidden="true">${icon('Music')}</span>
+        <span class="thumbnail" aria-hidden="true">${icon('eighth-notes')}</span>
         <div class="lockup">
           <span class="small-heading">Midnight Resonator</span>
           <span class="small-text text-muted">Solar Fields</span>

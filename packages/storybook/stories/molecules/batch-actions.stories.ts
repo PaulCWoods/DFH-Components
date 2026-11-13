@@ -20,7 +20,7 @@ The bar shown while items are selected: how many, the actions on them, and a way
   </div>
   <hr class="divider" aria-hidden="true">
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    <svg class="icon" …><use href="#Close"/></svg>
+    <svg class="icon" …><use href="#x"/></svg>
     <span class="sr-only">Clear selection</span>
   </button>
 </div>
@@ -47,17 +47,17 @@ const icon = (name: string) =>
 
 const actions = (cls = 'buttons-subtle', more = false) => `
   <div class="batch-actions__actions button-group ${cls}">
-    <button type="button" class="button">${icon('Download')}<span>Export</span></button>
-    <button type="button" class="button">${icon('Folder')}<span>Move</span></button>${more ? `
-    <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
-    <button type="button" class="button">${icon('Share')}<span>Share</span></button>
-    <button type="button" class="button">${icon('Print')}<span>Print</span></button>` : ''}
-    <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>
+    <button type="button" class="button">${icon('download')}<span>Export</span></button>
+    <button type="button" class="button">${icon('folder')}<span>Move</span></button>${more ? `
+    <button type="button" class="button">${icon('copy-plus')}<span>Duplicate</span></button>
+    <button type="button" class="button">${icon('share-2')}<span>Share</span></button>
+    <button type="button" class="button">${icon('printer')}<span>Print</span></button>` : ''}
+    <button type="button" class="button button--danger">${icon('trash')}<span>Delete</span></button>
   </div>`;
 
 const dismiss = `
   <button type="button" class="button button--plain button--icon batch-actions__dismiss">
-    ${icon('Close')}<span class="sr-only">Clear selection</span>
+    ${icon('x')}<span class="sr-only">Clear selection</span>
   </button>`;
 
 const bar = (cls: string, label: string, count = '3 selected', attrs = '', more = false) => `
@@ -108,7 +108,7 @@ export const Selection: Story = {
           ${actions()}
           <hr class="divider" aria-hidden="true">
           <button type="button" class="button button--plain button--icon batch-actions__dismiss" onclick="${clear}">
-            ${icon('Close')}<span class="sr-only">Clear selection</span>
+            ${icon('x')}<span class="sr-only">Clear selection</span>
           </button>
         </div>
       </div>`;

@@ -58,9 +58,9 @@ export const Playground: Story = {
     return `
       <div style="max-inline-size: 32rem;">
         <div class="${cls}" role="group" aria-label="Document">
-          <button type="button" class="button">${icon('Duplicate')}<span>Duplicate</span></button>
-          <button type="button" class="button">${icon('Download')}<span>Export</span></button>
-          <button type="button" class="button">${icon('Share')}<span>Share</span></button>
+          <button type="button" class="button">${icon('copy-plus')}<span>Duplicate</span></button>
+          <button type="button" class="button">${icon('download')}<span>Export</span></button>
+          <button type="button" class="button">${icon('share-2')}<span>Share</span></button>
         </div>
       </div>`;
   },
@@ -74,9 +74,9 @@ export const Joined: Story = {
 
       <h3 class="small-heading">Toggles: aria-pressed</h3>
       <div class="button-group button-group--joined" role="group" aria-label="Text style">
-        <button type="button" class="button button--icon" aria-pressed="true">${icon('Bold')}<span class="sr-only">Bold</span></button>
-        <button type="button" class="button button--icon" aria-pressed="false">${icon('Italic')}<span class="sr-only">Italic</span></button>
-        <button type="button" class="button button--icon" aria-pressed="false">${icon('Link')}<span class="sr-only">Link</span></button>
+        <button type="button" class="button button--icon" aria-pressed="true">${icon('letter-b')}<span class="sr-only">Bold</span></button>
+        <button type="button" class="button button--icon" aria-pressed="false">${icon('italic')}<span class="sr-only">Italic</span></button>
+        <button type="button" class="button button--icon" aria-pressed="false">${icon('link')}<span class="sr-only">Link</span></button>
       </div>
 
       <h3 class="small-heading">Subtle, round and compact</h3>
@@ -99,8 +99,8 @@ export const Layout: Story = {
     <div class="stack max-w-md">
       <h3 class="small-heading">Vertical: full-width buttons, content centred</h3>
       <div class="button-group button-group--vertical" style="max-inline-size: 20rem;">
-        <button type="button" class="button button--strong button--accent">${icon('Email')}<span>Continue with email</span></button>
-        <button type="button" class="button">${icon('Lock')}<span>Continue with a passkey</span></button>
+        <button type="button" class="button button--strong button--accent">${icon('mail')}<span>Continue with email</span></button>
+        <button type="button" class="button">${icon('lock')}<span>Continue with a passkey</span></button>
         <button type="button" class="button button--plain"><span>Other options</span></button>
       </div>
 
@@ -133,7 +133,7 @@ export const Layout: Story = {
         <button type="button" class="button"><span>Rename</span></button>
         <button type="button" class="button"><span>Share</span></button>
         <hr class="divider" aria-orientation="vertical">
-        <button type="button" class="button button--danger">${icon('Delete')}<span>Delete</span></button>
+        <button type="button" class="button button--danger">${icon('trash')}<span>Delete</span></button>
       </div>
     </div>`,
 };

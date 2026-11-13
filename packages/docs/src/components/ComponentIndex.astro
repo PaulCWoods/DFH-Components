@@ -12,7 +12,7 @@ const pages = (await getComponents()).filter((c) => c.tier === tier);
       <li>
         <a href={p.href} class="block-link">
           <span class="block-link__text"><span class="small-heading">{p.title}</span><br /><span class="small-text text-muted">{p.summary}</span></span>
-          <Icon name="ArrowRight" class="block-link__arrow icon--dir" />
+          <Icon name="arrow-right" class="block-link__arrow icon--dir" />
         </a>
       </li>
     ))}

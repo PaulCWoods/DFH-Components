@@ -13,7 +13,7 @@ Moves between the pages of one list: a button group of page links. Pagination ma
 \`\`\`html
 <nav class="pagination button-group buttons-subtle" aria-label="Pagination">
   <a class="button button--icon" href="/page/1">
-    <svg class="icon icon--dir" …><use href="#ChevronLeft"/></svg>
+    <svg class="icon icon--dir" …><use href="#chevron-left"/></svg>
     <span class="sr-only">Previous page</span>
   </a>
   <a class="button" href="/page/1"><span>1</span></a>
@@ -42,12 +42,12 @@ const icon = (name: string) =>
   `<svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
 
 const prev = (current: number) => current > 1
-  ? `<a class="button button--icon" href="#page-${current - 1}">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`
-  : `<a role="link" class="button button--icon" aria-disabled="true">${icon('ChevronLeft')}<span class="sr-only">Previous page</span></a>`;
+  ? `<a class="button button--icon" href="#page-${current - 1}">${icon('chevron-left')}<span class="sr-only">Previous page</span></a>`
+  : `<a role="link" class="button button--icon" aria-disabled="true">${icon('chevron-left')}<span class="sr-only">Previous page</span></a>`;
 
 const next = (current: number, total: number) => current < total
-  ? `<a class="button button--icon" href="#page-${current + 1}">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`
-  : `<a role="link" class="button button--icon" aria-disabled="true">${icon('ChevronRight')}<span class="sr-only">Next page</span></a>`;
+  ? `<a class="button button--icon" href="#page-${current + 1}">${icon('chevron-right')}<span class="sr-only">Next page</span></a>`
+  : `<a role="link" class="button button--icon" aria-disabled="true">${icon('chevron-right')}<span class="sr-only">Next page</span></a>`;
 
 const page = (n: number, current: number) =>
   `<a class="button" href="#page-${n}"${n === current ? ' aria-current="page"' : ''}><span>${n}</span></a>`;
@@ -92,9 +92,9 @@ export const PreviousAndNext: Story = {
   name: 'Previous and next with text',
   render: () => `
     <nav class="pagination button-group justify-between" aria-label="Pagination, previous and next">
-      <a class="button" href="#page-1">${icon('ArrowLeft')}<span>Previous</span></a>
+      <a class="button" href="#page-1">${icon('arrow-left')}<span>Previous</span></a>
       <span class="small-text">Page 2 of 10</span>
-      <a class="button" href="#page-3"><span>Next</span>${icon('ArrowRight')}</a>
+      <a class="button" href="#page-3"><span>Next</span>${icon('arrow-right')}</a>
     </nav>`,
 };
 

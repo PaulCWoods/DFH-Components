@@ -23,7 +23,7 @@
    - Forced colours: it is currentColor, so it takes the system text colour.
 
    Usage:
-   <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#LoaderArc"/></svg>
+   <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
    ========================================================================== */
 
 /* ==========================================================================

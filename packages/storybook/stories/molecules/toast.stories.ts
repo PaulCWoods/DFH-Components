@@ -16,10 +16,10 @@ Banners floated in a corner of the viewport. A toast is a banner with \`.toast\`
 
 <!-- Added to the stack when something happens -->
 <div class="banner banner--success toast">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
   <div class="banner__body"><p class="text">Settings saved.</p></div>
   <button type="button" class="button button--icon banner__action">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Dismiss</span>
   </button>
 </div>
@@ -44,7 +44,7 @@ const icon = (name: string) =>
 
 const iconBox = (name: string) => `<span class="icon-box" aria-hidden="true">${icon(name)}</span>`;
 
-const intentIcon: Record<string, string> = { info: 'Info', success: 'Check', warning: 'Warning', danger: 'Error' };
+const intentIcon: Record<string, string> = { info: 'info', success: 'check', warning: 'triangle-exclamation-point', danger: 'circle-exclamation-point' };
 
 const toast = (intent: string, title: string, text: string, action = '') => `
   <div class="banner banner--${intent} banner--round toast">
@@ -55,7 +55,7 @@ const toast = (intent: string, title: string, text: string, action = '') => `
     </div>
     ${action}
     <button type="button" class="button button--icon banner__action" onclick="this.closest('.toast').remove()">
-      ${icon('Close')}
+      ${icon('x')}
       <span class="sr-only">Dismiss</span>
     </button>
   </div>`;
@@ -133,10 +133,10 @@ export const Dismissal: Story = {
   render: () => frame(`
     <div class="toast-stack" role="status" aria-label="Notifications">
       <div class="banner banner--success banner--round toast" id="toast-dismiss-demo">
-        ${iconBox('Check')}
+        ${iconBox('check')}
         <div class="banner__body"><p class="text">Setting <code>hidden</code> fades a toast out.</p></div>
         <button type="button" class="button button--icon banner__action" onclick="this.closest('.toast').hidden = true">
-          ${icon('Close')}
+          ${icon('x')}
           <span class="sr-only">Dismiss</span>
         </button>
       </div>

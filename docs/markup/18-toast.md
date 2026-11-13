@@ -11,13 +11,13 @@ related: [banner, banner-dock, popover, modal-dialog]
 ```html live width=md
 <!-- Shown in the page here; a real toast sits in a stack -->
 <div class="banner banner--success banner--round toast">
-  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
   <div class="banner__body">
     <p class="text font-bold">Settings saved</p>
     <p class="small-text">Your preferences have been updated.</p>
   </div>
   <button type="button" class="button button--icon banner__action">
-    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
     <span class="sr-only">Dismiss</span>
   </button>
 </div>
@@ -54,13 +54,13 @@ The browser keeps the stack in the top layer and announces what's added to it. T
 ```html
 <div class="toast-stack toast-stack--bottom-end" popover="manual" role="status" aria-label="Notifications" id="toasts">
   <div class="banner banner--success banner--round toast">
-    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Check"/></svg></span>
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
     <div class="banner__body">
       <p class="text font-bold">Settings saved</p>
       <p class="small-text">Your preferences have been updated.</p>
     </div>
     <button type="button" class="button button--icon banner__action">
-      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Close"/></svg>
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
       <span class="sr-only">Dismiss</span>
     </button>
   </div>
@@ -75,9 +75,9 @@ The browser keeps the stack in the top layer and announces what's added to it. T
 ```html
 <div class="toast-stack toast-stack--top-center" popover="manual" role="alert" aria-label="Urgent notifications">
   <div class="banner banner--strong banner--danger banner--round toast">
-    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Error"/></svg></span>
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#circle-exclamation-point"/></svg></span>
     <div class="banner__body"><p class="text">Connection lost. Changes are not being saved.</p></div>
-    <button type="button" class="button banner__action"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#Refresh"/></svg><span>Retry</span></button>
+    <button type="button" class="button banner__action"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#rotate-ccw"/></svg><span>Retry</span></button>
   </div>
 </div>
 ```

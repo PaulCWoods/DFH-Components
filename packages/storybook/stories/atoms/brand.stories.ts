@@ -12,7 +12,7 @@ The product's mark and name, as a link home. A whole link on its own: it takes n
 ### Markup
 \`\`\`html
 <a href="/" class="brand">
-  <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>
+  <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#brand-design-for-humans"/></svg>
   <span class="brand__name">Design For Humans</span>
 </a>
 \`\`\`
@@ -29,7 +29,7 @@ The product's mark and name, as a link home. A whole link on its own: it takes n
 export default meta;
 type Story = StoryObj;
 
-const mark = `<svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#BrandDesignForHumans"/></svg>`;
+const mark = `<svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#brand-design-for-humans"/></svg>`;
 
 export const MarkAndName: Story = {
   render: () => `<a href="#" class="brand">${mark}<span class="brand__name">Design For Humans</span></a>`,

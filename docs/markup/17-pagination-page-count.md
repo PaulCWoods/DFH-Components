@@ -11,14 +11,14 @@ related: [button-group, button, breadcrumb, table]
 ```html playground
 <nav class="pagination button-group" data-axes aria-label="Pagination">
   <a class="button button--icon" href="/page/1">
-    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronLeft"/></svg>
+    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-left"/></svg>
     <span class="sr-only">Previous page</span>
   </a>
   <a class="button" href="/page/1"><span>1</span></a>
   <a class="button" href="/page/2" aria-current="page"><span>2</span></a>
   <a class="button" href="/page/3"><span>3</span></a>
   <a class="button button--icon" href="/page/3">
-    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronRight"/></svg>
+    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-right"/></svg>
     <span class="sr-only">Next page</span>
   </a>
 </nav>
@@ -58,7 +58,7 @@ The links behave as links, so there's nothing to script.
 ```html live
 <nav class="pagination button-group buttons-subtle" aria-label="Numbered pagination">
   <a class="button button--icon" href="/page/4">
-    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronLeft"/></svg>
+    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-left"/></svg>
     <span class="sr-only">Previous page</span>
   </a>
   <a class="button" href="/page/1"><span>1</span></a>
@@ -69,7 +69,7 @@ The links behave as links, so there's nothing to script.
   <span class="pagination__gap" aria-hidden="true">…</span>
   <a class="button" href="/page/12"><span>12</span></a>
   <a class="button button--icon" href="/page/6">
-    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#ChevronRight"/></svg>
+    <svg class="icon icon--dir" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#chevron-right"/></svg>
     <span class="sr-only">Next page</span>
   </a>
 </nav>
