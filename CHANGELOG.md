@@ -2,14 +2,16 @@
 
 What changed in each published version of the library (`dfh-components.css`, the theme stylesheets and the shared skills), newest first. Sites link a version from `components.designforhumans.blog/css/<version>/`; a published version never changes.
 
-Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in [docs/ROADMAP.md](docs/ROADMAP.md).
+Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
 
 ## Unreleased
 
 ### Renamed
-- **Icons take Lucide's names:** every symbol in the sprite is renamed to the name of the Lucide icon it is drawn from, in kebab-case: `#Close` is `#x`, `#ArrowRight` `#arrow-right`, `#Delete` `#trash`, `#Warning` `#triangle-exclamation-point`. Filled icons end in `-filled` and brands start with `brand-` (`#brand-github`). The old names still work in this version, each pointing at its new one, and are removed in the next; the full list is in `docs/audit/icon-names.md`. `#ChevronStart` and `#ChevronEnd` were drawn the wrong way round: `#chevron-first` is now `|<` and `#chevron-last` `>|`.
+- **Icons take Lucide's names:** every symbol in the sprite is renamed to the name of the Lucide icon it is drawn from, in kebab-case: `#Close` is `#x`, `#ArrowRight` `#arrow-right`, `#Delete` `#trash`, `#Warning` `#triangle-exclamation-point`. Filled icons end in `-filled` and brands start with `brand-` (`#brand-github`). The old names still work in this version, each pointing at its new one, and are removed in the next; the [full list](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/audit/icon-names.md) is on GitHub. `#ChevronStart` and `#ChevronEnd` were drawn the wrong way round: `#chevron-first` is now `|<` and `#chevron-last` `>|`.
 
 ### Added
+- **The icon sprite is published with each version:** `components.designforhumans.blog/css/<version>/icons.svg`, beside the CSS, so a site can download the icons that match the version it links. A sprite only works from the page's own domain, so serve your copy yourself.
+- **Licence notices in the sprite:** a comment at the top of `icons.svg` credits Lucide (ISC), Feather (MIT) and Simple Icons (CC0), with Lucide's and Feather's notices, which their licences ask to travel with every copy. Keep it in yours.
 - **An outline Play icon:** `#play`. The filled one is `#play-filled`.
 - **Full-screen Dialog:** `dialog--full` fills the screen, clear of the safe areas, and slides up like an iOS sheet; `max-md:dialog--full` does it on a phone only and leaves the Dialog centred on larger screens. Use it for a form with several fields or a text area, with Cancel and the main action in the header, so the on-screen keyboard never covers them.
 - **Card bleed:** `.card__bleed` in a Card's header, band, body or footer, or straight in the Card, runs a row to the Card's edges, its first item still in line with the title. `card__bleed--scrollable` makes it a row that scrolls sideways with the scroll fade (filters, tags, thumbnails), with room above and below for small controls' hit areas. It wraps in print.

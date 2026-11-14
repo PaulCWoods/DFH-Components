@@ -7,6 +7,9 @@
      minified file, with the cascade layers as index.css declares them
    - themes/<name>.css: each theme's and sub-brand's stylesheet, minified
    - fonts.css: the default theme's stored fonts, when it has any
+   - icons.svg: the icon sprite at that version, with its licence notices,
+     for sites to download and serve themselves (a sprite works only from
+     the page's own origin)
    The version is packages/css/package.json's. A published version never
    changes, so a site pinned to it keeps what it was tested with: when the
    files would differ from what's already there, the build stops and asks
@@ -61,6 +64,7 @@ for (const name of readdirSync(join(src, 'themes')).filter((f) => f.endsWith('.c
 }
 const fonts = minify(join(src, 'fonts.css'));
 if (fonts.trim()) files['fonts.css'] = `${head('the default theme\'s fonts')}${fonts}`;
+files['icons.svg'] = readFileSync(join(root, 'icons/icons.svg'), 'utf8');
 
 /* A published version never changes */
 const changed = working ? [] : Object.entries(files).filter(([file, css]) => existsSync(join(out, file)) && readFileSync(join(out, file), 'utf8') !== css);

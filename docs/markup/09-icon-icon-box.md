@@ -36,6 +36,13 @@ An Icon Box is a frame for the moments an icon needs to line up with controls or
 - Intent colours an icon but never carries meaning alone (WCAG 1.4.1). For muted icons, use the text colour utilities (`.text-color-muted`).
 - Never draw icons inline with `stroke` paths. If the sprite lacks a glyph, add it to `icons/icons.svg` and run `npm run sync:icons`.
 
+## Finding an icon
+Icons take [Lucide](https://lucide.dev)'s names, so search there for the word you want and use the name it gives: `#search`, `#arrow-right`, `#triangle-exclamation-point`. A filled icon ends in `-filled` (`#star-filled`), and a brand's logo starts with `brand-` (`#brand-github`). The sprite holds a chosen set, not all of Lucide: the Icon stories in Storybook show every one.
+
+The names changed in version 1.3.0. That version still answers to the old ones, and the version after removes them; [Releases](/docs/start/releases/) has the details.
+
+Most icons are drawn from Lucide (ISC licence), some of them by way of Feather (MIT licence), and the brand icons come from Simple Icons (CC0). The comment at the top of the sprite holds their notices: keep it in your copy. A brand's logo remains its owner's trademark, and its guidelines say how it may be used.
+
 ## Hide it or name it
 ```html live cluster
 <!-- Decorative icon beside text -->
