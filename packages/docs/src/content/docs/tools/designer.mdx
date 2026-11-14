@@ -1,0 +1,60 @@
+---
+title: Working with the Token Designer
+summary: Where the Token Designer fits in a project. Shape a theme, pass its checks, keep its file with your code, link its stylesheet, and change it later.
+order: 10
+---
+import pkg from '../../../../../css/package.json';
+export const links = `<link rel="stylesheet" href="https://components.designforhumans.blog/css/${pkg.version}/dfh-components.css" />\n<link rel="stylesheet" href="/css/starter.css" />`;
+
+The [Token Designer](https://designer.designforhumans.blog/) is where a theme is made: its colours, type, spacing, shape, motion and component tokens. Your site never runs it. Your site links what it makes, a stylesheet, and your designers can bring the same theme into Figma.
+
+One file sits behind both: the theme file. Keep it with your code, and everything else can be made again from it.
+
+## The round trip
+
+1. **Open the [Token Designer](https://designer.designforhumans.blog/).** It starts from the starter theme, which the library wears out of the box.
+2. **Make it yours.** Work through its sections: **Colors**, **Typography**, **Spacing**, **Shape**, **Motion** and **Components**. The preview shows real components as you go, and **Real world** opens whole example pages in another tab, which follow your edits live.
+3. **Pass the checks.** The Designer runs the same checks as the library's own build: the contrast of every colour pair in light, dark and high contrast, the order of the type scale and its floor, spacing that grows in order, target sizes, focus rings. A failure says what failed and where. Fix every one before you export: the library's accessibility promises hold only for a theme that passes.
+4. **Save.** Save keeps the theme in this browser, so you can close the tab and come back.
+5. **Download the theme file.** Choose **Export**, then **Theme**, then **Download**. Commit the `.json` file to your project's repository. The browser's copy is lost if its site data is cleared, and only the file moves between computers and people.
+6. **Download the stylesheet.** In **Export**, choose **Stylesheet** and download it. Put it in your project and link it after the library. It holds only what your theme changes, and the comment at its top lists the font links your page head needs:
+
+   <div class="code-block">
+     <pre class="code-block__code" tabindex="0" role="group" aria-label="HTML"><code>{links}</code></pre>
+   </div>
+
+7. **Check your pages** in light and dark, at a phone's width and at a desktop's. The checks cover the theme's tokens, not your content.
+
+## Changing the theme later
+
+Open the Designer, choose **Open a theme file** from the menu under the logo, and pick the file from your repository. Make the change, then download the theme file and the stylesheet again and commit them together. The theme file is plain JSON, so the change reads in a review like any other.
+
+## Moving to a new version of the library
+
+The Designer always builds with the newest version of the library. When you raise the version your site links, open your theme file and download the stylesheet again, so the two match. Until then, the stylesheet you have keeps working with the version you link.
+
+## Who does what
+
+| Step | Who | What it makes |
+| :--- | :--- | :--- |
+| Shape the theme | A designer, or a developer | The theme file |
+| Build the pages | A developer | Pages that link the library and the theme's stylesheet |
+| Draw in Figma | A designer | Frames from the [Figma kit](/docs/tools/figma/), in the theme's variables with Pro |
+
+Make every change to the theme in the Designer and nowhere else, not in the stylesheet and not in Figma. Then the CSS and the Figma file stay in step.
+
+## The theme file
+
+Each theme file names its format with `"$schema"` and `"version"`, and the [theme schema](/schema/theme-v1.schema.json) is public. An editor that reads JSON Schema, such as VS Code, checks the file and completes it as you type, and other tools can read and write themes too.
+
+## With Pro
+
+[Pro](/docs/start/free/#pro) adds what agencies and multi-brand teams need. Enter the licence key from your receipt in the Pro section of the Designer's menu.
+
+- **Several themes.** **New theme**, under the theme choice, starts another full theme from a copy of one you have.
+- **Sub-brands.** A sub-brand keeps its parent's theme and changes only what differs, such as an accent colour for one product. Its stylesheet is scoped to a class: link it after its parent's, and put `class="theme-<name>"` on the page or on a region. **Changes and how to use it**, in the menu, lists what it overrides and the links it needs. See [Themes and sub-brands](/docs/start/themes/#sub-brands).
+- **Figma.** **Export**, then **Figma**, turns the open theme into Figma variables and Tokens Studio files. [Figma](/docs/tools/figma/) says how to import them.
+
+## Without the Designer
+
+The theme engine is free and in the [repository](https://github.com/PaulCWoods/DFH-Components). Put a theme file in `tokens/themes` and run `npm run build:themes`. It runs every check and writes the theme's stylesheet to `packages/css/src/themes`, the same file the Designer exports. Use it to build the stylesheet from the committed theme file in your own build pipeline.

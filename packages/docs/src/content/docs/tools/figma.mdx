@@ -1,19 +1,41 @@
 ---
 title: Figma
-summary: Bring a theme's tokens into Figma as variables or as Tokens Studio tokens, and pick the set that suits your Figma plan.
+summary: Design with the Figma kit, and bring your own theme into Figma as variables or as Tokens Studio tokens.
 order: 30
 ---
 
-The Figma export turns every theme into files Figma can import, from the same tokens as the CSS. Colours, spacing, radii, borders, type and shadows keep the names they have in code, so a designer's `surface/card` is a developer's `--surface-card`.
+There are two ways to design with Design For Humans in Figma, and they work together:
+
+- **The [Figma kit](/docs/start/free/#the-figma-kit)** is every component, built on the library's tokens as Figma variables, with whole example pages. You buy it once.
+- **The Figma export** turns your own theme into Figma variables, or tokens for Tokens Studio, from the same tokens as your CSS. It's part of [Pro](/docs/start/free/#pro).
+
+Colours, spacing, radii, borders, type and shadows keep the names they have in code, so a designer's `surface/card` is a developer's `--surface-card`.
+
+## The Figma kit
+
+After paying, download the kit as a `.fig` file from your receipt. In Figma, choose **Import** from the file browser and pick it. Updates are new downloads in the same place.
+
+The kit wears the starter theme. Its main pages:
+
+- **DFH Semantics:** the colour roles, type, spacing and shapes as swatches and specimens.
+- **DFH Components:** every component, with its variants, ready to copy.
+- **Gardens of Eden:** whole pages built from the components, as examples.
+- **One page per component,** in Atoms, Molecules and Organisms. These hold the main components. Change them only to change every copy.
+
+Publish the file as a team library to use the components in your other files. Each one links to its page in these docs, and its description says which markup it stands for.
+
+To give the kit your own theme, import your theme's variables into it, as below. Variables with the same names are updated in place, so every component follows, and so do the kit's text styles and shadow effects, which are bound to the same variables.
+
+## The Figma export
 
 There are two ways in. Pick one per file:
 
-- **Figma variables**, with the free Export/Import Variables plugin by Honza Toman. Variables you bind straight to fills, strokes, gaps and padding.
-- **Tokens Studio**, with the Tokens Studio for Figma plugin. Tokens you apply through the plugin, and the only route to the library's text styles and shadow effects.
+- **Figma variables**, with the free Export/Import Variables plugin by Honza Toman. Variables you bind straight to fills, strokes, gaps and padding. Use these with the kit.
+- **Tokens Studio**, with the Tokens Studio for Figma plugin. Tokens you apply through the plugin, and the only route to the library's text styles and shadow effects for a file of your own.
 
 ## 1. Get the files
 
-The files come from the [Token Designer](/docs/tools/)'s Figma export, which builds them from your theme each time. The Token Designer isn't released yet, so this page describes what the export makes and how to use it.
+In the [Token Designer](/docs/tools/designer/), open your theme and choose **Export**, then **Figma**. It builds the files from the theme as it is, saved or not, and lists them to download one at a time, or all together with **Download all (.zip)**. The zip keeps the folders below, with a README that says what each set is for, which Figma plan it needs, and which fonts to check after importing. The export needs a Pro licence key.
 
 ## 2. Find your theme
 

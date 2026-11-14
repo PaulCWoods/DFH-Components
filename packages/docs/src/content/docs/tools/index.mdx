@@ -9,28 +9,14 @@ The library comes with three tools beside these docs. Each one works from the sa
 
 The workbench. Every component has stories for each variant, size, state and edge case (right-to-left text, compact regions, long content), and each story runs axe accessibility checks as it renders.
 
-Use it to see everything a component can do, or to check a change. These docs show the common cases and link to Storybook for the rest.
-
-```sh
-npm run storybook        # http://localhost:6006
-```
+Use it to see everything a component can do, or to check a change. These docs show the common cases and link to [Storybook](/storybook/) for the rest. In a clone of the repository, `npm run storybook` runs it on your own computer.
 
 ## Token Designer
 
-The theme editor. It edits a theme visually: colour ramps and roles with their contrast, high contrast, the type scale and text styles, spacing, shape, motion and each component's tokens. A preview shows the result, and each change runs the same checks as the build.
+The theme editor, free in your browser at [designer.designforhumans.blog](https://designer.designforhumans.blog/). It edits a theme visually: colour ramps and roles with their contrast, high contrast, the type scale and text styles, spacing, shape, motion and each component's tokens. A preview shows the result, and each change runs the same checks as the library's build.
 
-Themes live in `tokens/themes`, one file each. The default, the starter theme, builds the library's own tokens. Every other theme builds a stylesheet in `packages/css/src/themes` holding only what it changes. Pick the one to edit from the menu under the logo, then one of its [sub-brands](/docs/start/themes/#sub-brands), or start a new one.
-
-Each theme file names its format with `"$schema"` and `"version"`, so an editor that reads JSON Schema checks and completes it as you type. The [theme schema](/schema/theme-v1.schema.json) is public: other tools can read and write themes too. Every theme is checked against it before it's built, and a problem names where it is: `type.scale.ration isn't part of type.scale`.
-
-**Publish** writes the theme and rebuilds every theme's CSS. It is blocked while any check fails. From the command line, `npm run build:themes` builds every theme and runs every check:
-
-```sh
-npm run build:themes     # packages/css/src/themes/<name>.css
-```
-
-Use it free at [designer.designforhumans.blog](https://designer.designforhumans.blog/). It starts from the starter theme and keeps your work in your browser; Export downloads the theme file and its tokens, and **Open a theme file** brings one back. More themes, sub-brands and the Figma export are part of [Pro](/docs/start/free/#pro).
+It exports the theme as a file to keep with your code and a stylesheet to link after the library. [Working with the Token Designer](/docs/tools/designer/) walks through the round trip. More themes, sub-brands and the Figma export are part of [Pro](/docs/start/free/#pro).
 
 ## Figma
 
-The Token Designer exports a theme's tokens for Figma in two forms: Tokens Studio (free tier), and native Figma variables in light and dark modes, with text styles generated from the same type theme as the CSS. [Using the Figma exports](/docs/tools/figma/) walks through importing them and which set suits each Figma plan.
+The [Figma kit](/docs/start/free/#the-figma-kit) has every component, built on the library's tokens as Figma variables, with light and dark, type sizing, spacing and pointer modes. With Pro, the Token Designer exports your own theme to Figma variables and Tokens Studio, so the kit wears your theme. [Figma](/docs/tools/figma/) walks through both.

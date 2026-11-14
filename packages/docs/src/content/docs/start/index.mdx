@@ -1,36 +1,43 @@
 ---
 title: Start
-summary: From the CSS files to a first page. Link the styles, add the icons and build with native HTML.
+summary: From nothing to a first page. Link the published styles, add the icons and build with native HTML.
 ---
 
-The library is CSS, one icon sprite and no JavaScript. You write ordinary HTML and add its classes. It takes three steps, and none of them needs a build tool.
+import pkg from '../../../../../css/package.json';
+export const version = pkg.version;
+export const link = `<link rel="stylesheet" href="https://components.designforhumans.blog/css/${pkg.version}/dfh-components.css" />`;
+export const themed = `${link}\n<link rel="stylesheet" href="/css/my-theme.css" />`;
+export const icons = `https://components.designforhumans.blog/css/${pkg.version}/icons.svg`;
 
-The library is before its first release and isn't published as a package yet, so these steps start from a copy of its files.
+The library is CSS, one icon sprite and no JavaScript. You write ordinary HTML and add its classes. It takes three steps, and none of them needs a build tool or a package manager.
 
 ## 1. Link the styles
 
-Copy `packages/css/src` into your project and link its entry file:
+Each version of the library is published as one file. Link it in your page head. The newest version is <code>{version}</code>:
 
-```html
-<link rel="stylesheet" href="/css/index.css" />
-```
+<div class="code-block">
+  <pre class="code-block__code" tabindex="0" role="group" aria-label="HTML"><code>{link}</code></pre>
+</div>
 
-That file brings in the reset, the tokens, every component and the utilities, each in its own cascade layer. Put your own CSS in the `site` layer and it wins over the library's components without any fight over specificity, while the utilities still work on it. [Customise](/docs/start/customise/) shows how.
+That file holds the reset, the tokens, every component and the utilities, each in its own cascade layer. Put your own CSS in the `site` layer and it wins over the library's components without any fight over specificity, while the utilities still work on it. [Customise](/docs/start/customise/) shows how.
 
-Out of the box the library wears its starter theme: system fonts and a blue accent. To wear another theme, link its stylesheet after the entry file. Each one holds only what that theme changes, and its header comment lists any font links it needs in your page head:
+A published version never changes, so your site looks the same until you choose to move. To move up, read what changed in [Releases](/docs/start/releases/), change the number in the link, and check your pages.
 
-```html
-<link rel="stylesheet" href="/css/index.css" />
-<link rel="stylesheet" href="/css/themes/dfh.css" />
-```
+**Serving it yourself.** Download the same file and link your own copy, if you'd rather not depend on another domain. To work from the source instead, clone the [repository](https://github.com/PaulCWoods/DFH-Components) and link `packages/css/src/index.css`. It imports each part separately, which is fine while you build; bundle it into one file before you ship.
 
-You make your own theme, or a sub-brand for one part of a site, in the [Token Designer](/docs/tools/). [Themes and sub-brands](/docs/start/themes/) has the details.
+### Your theme
 
-The entry file imports each component separately. That's fine while you build. Before you ship, bundle it into one file with the tool you already use.
+Out of the box the library wears its starter theme: system fonts and a blue accent. To make it yours, edit a theme in the [Token Designer](/docs/tools/designer/), export its stylesheet and link it after the library. It holds only what your theme changes, and its header comment lists any font links it needs in your page head:
+
+<div class="code-block">
+  <pre class="code-block__code" tabindex="0" role="group" aria-label="HTML"><code>{themed}</code></pre>
+</div>
+
+[Working with the Token Designer](/docs/tools/designer/) covers the whole round trip, and [Themes and sub-brands](/docs/start/themes/) how themes work.
 
 ## 2. Add the icons
 
-Copy `icons/icons.svg` to your site, then point at a symbol by name. The icon takes its size and colour from the text around it.
+Each version publishes its icon sprite beside its CSS, at <code>{icons}</code>. Download it and serve it from your own site: a browser only draws sprite icons from the page's own domain. Then point at a symbol by name:
 
 ```html
 <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false">
@@ -38,9 +45,11 @@ Copy `icons/icons.svg` to your site, then point at a symbol by name. The icon ta
 </svg>
 ```
 
+The icon takes its size and colour from the text around it. Icons take [Lucide](https://lucide.dev)'s names, so you can find one by name there; see [Icon](/docs/components/atoms/icon-icon-box/) for the rest. Keep the comment at the top of the file: it holds the licence notices the icons come with.
+
 ## 3. Build a page
 
-The bones of a page are native landmarks. A [Skip Link](/docs/components/atoms/skip-link/) comes first, then the [Header](/docs/components/organisms/header/), the main content and the [Footer](/docs/components/organisms/footer/). The [App Shell](/docs/components/layout/app-shell/) keeps the Footer at the bottom of a short page.
+The bones of a page are native landmarks. A [Skip Link](/docs/components/atoms/skip-link/) comes first, then the [Header](/docs/components/organisms/header/), the main content and the [Footer](/docs/components/organisms/footer/). The [App Shell](/docs/components/layout/app-shell/) keeps the Footer at the bottom of a short page. This one serves its own copies of the files:
 
 ```html
 <!doctype html>
@@ -49,7 +58,7 @@ The bones of a page are native landmarks. A [Skip Link](/docs/components/atoms/s
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Woodland Plants</title>
-    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/dfh-components.css" />
   </head>
   <body class="app">
     <a href="#main" class="skip-link">Skip to main content</a>
@@ -95,7 +104,7 @@ From there, each part is a class or two on the element you'd use anyway. Here is
 ## What you get without asking
 
 - **Light and dark.** Colours follow the visitor's setting. To fix one, add `.color-scheme-light` or `.color-scheme-dark` to the page or to a region.
-- **System fonts.** The library loads no fonts and makes no outside requests. To use your own, give your theme its fonts in the [Token Designer](/docs/tools/), and link the faces in your page head.
+- **System fonts.** The library's CSS loads no fonts and makes no requests of its own. To use your own, give your theme its fonts in the [Token Designer](/docs/tools/designer/), and add the font links its stylesheet lists to your page head.
 - **Touch-sized targets.** Controls have a 48px target unless your product opts into smaller ones for a fine pointer.
 
 ## Browsers
@@ -107,4 +116,5 @@ Anything a component needs to work uses features that are [Baseline widely avail
 - [Components](/docs/components/): every part, why it exists and when to use it.
 - [Storybook](/storybook/): every variant and state.
 - [Your own styles](/docs/start/customise/): change a component, or add your own.
-- [Tools](/docs/tools/): the Token Designer for your own theme, and the export to Figma.
+- [Working with the Token Designer](/docs/tools/designer/): your own theme, from first edit to a stylesheet in your project.
+- [Figma](/docs/tools/figma/): the Figma kit, and your theme as Figma variables.
