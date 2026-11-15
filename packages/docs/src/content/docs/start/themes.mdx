@@ -4,6 +4,8 @@ summary: Give the library your brand with a theme, and give one part of a site i
 order: 5
 ---
 
+import Screenshot from '../../../components/Screenshot.astro';
+
 A theme sets everything the library's look depends on: the colour ramps and what each role takes from them, the type, spacing, shape, motion and any component tokens. You make one in the [Token Designer](/docs/tools/), and every change runs the same contrast and consistency checks as the build.
 
 ## The starter theme
@@ -43,6 +45,8 @@ Put the class on `<html>` to give a whole page the sub-brand. Link each sub-bran
 
 Sub-brands can nest: a lesson can start from the course. Put the inner class inside the outer one, and link the inner stylesheet last.
 
+<Screenshot name="theme-sub-brand" alt="The same card twice. On the left, in the theme, its button, link and New status are purple. On the right, in a region with the class theme-course, they are blue; the text, spacing and shapes are the same.">The same card in the theme and inside a region with `class="theme-course"`. Only what the sub-brand changes is different.</Screenshot>
+
 Everything built from what a sub-brand changes comes with it. If it changes the accent, then focus rings, inverted regions and high contrast inside the region follow the new accent too.
 
 A sub-brand can't change the type scale or the shadows, which are shared by the whole page. Change those in the theme it starts from.
@@ -52,6 +56,8 @@ A sub-brand can't change the type scale or the shadows, which are shared by the 
 In the Token Designer, open the menu under the logo and choose **New sub-brand**. Give it a name and the theme it starts from; the name becomes lower case with hyphens, so "Spring Sale" is `spring-sale` and its class `theme-spring-sale`. Then edit it like any theme. **Changes and how to use it**, in the menu, lists every value it changes beside its parent's, to revert one at a time or all at once, and shows the stylesheets and class it needs. Save writes only the changes.
 
 The menu's two lists choose what you edit: a theme, then one of its sub-brands.
+
+<Screenshot name="designer-new-sub-brand" alt="The New sub-brand dialog: a Starts from choice set to starter, a Name field, and Cancel and Create buttons." />
 
 ## In Figma
 

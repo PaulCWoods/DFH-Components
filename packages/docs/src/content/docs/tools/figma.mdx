@@ -4,6 +4,8 @@ summary: Design with the Figma kit, and bring your own theme into Figma as varia
 order: 30
 ---
 
+import Screenshot from '../../../components/Screenshot.astro';
+
 There are two ways to design with Design For Humans in Figma, and they work together:
 
 - **The [Figma kit](/docs/start/free/#the-figma-kit)** is every component, built on the library's tokens as Figma variables, with whole example pages. You buy it once.
@@ -22,6 +24,8 @@ The kit wears the starter theme. Its main pages:
 - **Gardens of Eden:** whole pages built from the components, as examples.
 - **One page per component,** in Atoms, Molecules and Organisms. These hold the main components. Change them only to change every copy.
 
+<Screenshot name="figma-pages-list-1" alt="The kit open in Figma. The page list shows DFH Semantics, DFH Components and Gardens of Eden, then the Atoms pages from Avatar to Thumbnail and the start of the Molecules. The canvas shows the kit's cover, its icons and its colours, and the text styles are listed on the right." />
+
 Publish the file as a team library to use the components in your other files. Each one links to its page in these docs, and its description says which markup it stands for.
 
 To give the kit your own theme, import your theme's variables into it, as below. Variables with the same names are updated in place, so every component follows, and so do the kit's text styles and shadow effects, which are bound to the same variables.
@@ -36,6 +40,8 @@ There are two ways in. Pick one per file:
 ## 1. Get the files
 
 In the [Token Designer](/docs/tools/designer/), open your theme and choose **Export**, then **Figma**. It builds the files from the theme as it is, saved or not, and lists them to download one at a time, or all together with **Download all (.zip)**. The zip keeps the folders below, with a README that says what each set is for, which Figma plan it needs, and which fonts to check after importing. The export needs a Pro licence key.
+
+<Screenshot name="designer-figma" alt="The Export dialog on its Figma tab: Build the Figma files and Download all (.zip) buttons, when it was last built, and the files to download, grouped as Tokens Studio, Variables in one collection and Variables in five collections." />
 
 ## 2. Find your theme
 
@@ -68,6 +74,10 @@ The `-modes` README counts the modes in each collection and names the smallest p
    - For five collections, import `01-color.json`, `02-structure.json`, `03-font-sizing.json`, `04-spacing.json` and `05-pointer.json`, in that order, as each one points at variables in the ones before it.
 4. Open **Local variables** and check the collections are there, each grouped into `01 Global`, `02 Semantic` and `03 Component`.
 
+<Screenshot name="figma-pages-import-export-with-files" alt="The Export/Import Variables plugin after importing the five files. It lists Color with 288 variables in Light and Dark modes, Structure with 624, Font sizing with 22 in Fixed, Fluid Large and Compact, Spacing with 23 in Fixed and Fluid Large, and Pointer. A message reads: Collection Font sizing imported successfully." />
+
+<Screenshot name="figma-variables-color" alt="Figma's Variables table for the Color collection: the five collections listed on the left, the groups 01 Global, 02 Semantic and 03 Component below them, and each colour with a Light and a Dark value.">Each collection keeps the library's tiers as groups, and its modes as columns.</Screenshot>
+
 The five collections each do one job:
 
 | Collection | Modes | Holds |
@@ -87,6 +97,8 @@ To set a frame's modes, select it and pick one for each collection under **Appea
 On the web, a fluid size slides between two screen widths. Figma can't slide, so each frame picks a size for its type and for its spacing, the way a region of a page picks a sizing class.
 
 Fluid type starts at the fixed size and grows to a larger one on wide screens. A fluid region on a narrow screen is the same as fixed, so Figma needs only its other end: Fluid Large.
+
+<Screenshot name="figma-variables-font-sizing" alt="The Font sizing collection, with a font size and line height for each text style in three modes. Body text is 16 on 26 when Fixed, 24 on 38 when Fluid Large, and 13 on 21 when Compact." />
 
 | Font sizing | Matches | Use it on |
 | :--- | :--- | :--- |
@@ -111,6 +123,8 @@ So a phone mock-up is Fixed and Fixed, and a desktop one is Fixed type with Flui
 2. Choose **Tools**, then **Load from file**, and pick `tokens-studio/figma-tokens.json` from your theme's folder.
 3. Under **Themes**, pick a theme from each group: **Color** (Light or Dark), **Font sizing** (Fixed, Fluid Large or Compact) and **Spacing** (Fixed or Fluid Large) and **Pointer** (Touch or Fine). Theme groups may need Tokens Studio's paid plan. On the free plan, switch the token sets on and off instead: `semantic-light` or `semantic-dark`, one `font-` set, one `spacing-` set and one `pointer-` set.
 4. Choose **Styles & Variables**, then **Export styles** to create the text styles and shadow effects, or **Export variables** for variables.
+
+<Screenshot name="figma-variables-token-studio-with-variables" alt="Tokens Studio after loading the file. The token sets are listed on the left: global, semantic, semantic-light and semantic-dark, the font, spacing and pointer sets, and component. The global set is open, showing the spacing steps and the colour ramps." />
 
 The text styles come from the same type theme as the CSS. Each one reads its role's size, so it follows the Font sizing you pick, and a copy under `compact/` keeps the compact size for files without themes. Line heights are percentages, so they stay right at every size. A variable can't hold a percentage of the size, so if you build a style from the Variables collections instead, bind its line height to the role's `line-height` in Font sizing, which is in pixels for each mode.
 

@@ -1,0 +1,82 @@
+---
+/* A screenshot from public/screens, made by capture:docs (the Designer) or
+   by hand (Figma) and optimised to AVIF, WebP and JPEG at each width.
+   A shot taken in light and dark (<name>-light-<width>, <name>-dark-<width>)
+   shows the one that matches the page's scheme, the toggle's choice
+   included: the hidden one is lazy, so it never loads. The caption is the
+   slot; the alt text says what the shot shows.
+   Shots are taken at 2x (density), so the largest file's width over the
+   density is the shot's natural size: it never shows wider than that, so
+   a small shot (a dialog, a panel) stays sharp rather than stretched to
+   the column. */
+import { existsSync, readdirSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import sharp from 'sharp';
+
+interface Props { name: string; alt: string; density?: number }
+const { name, alt, density = 2 } = Astro.props;
+
+/* The build runs from a bundle, so find the docs package from where it runs */
+const findDocs = (d = process.cwd()): string => (existsSync(resolve(d, 'public/screens')) || d === dirname(d) ? d : existsSync(resolve(d, 'packages/docs/public/screens')) ? resolve(d, 'packages/docs') : findDocs(dirname(d)));
+const dir = resolve(findDocs(), 'public/screens') + '/';
+const files = readdirSync(dir);
+
+const variant = async (suffix: string) => {
+  const re = new RegExp(`^${name}${suffix}-(\\d+)\\.jpg$`);
+  const widths = files.map((f) => f.match(re)?.[1]).filter(Boolean).map(Number).sort((a, b) => a - b);
+  if (!widths.length) return null;
+  const base = `${name}${suffix}`;
+  const largest = `${base}-${widths.at(-1)}.jpg`;
+  const { width, height } = await sharp(dir + largest).metadata();
+  const set = (ext: string) => widths.map((w) => `/screens/${base}-${w}.${ext} ${w}w`).join(', ');
+  const natural = Math.round(width! / density);
+  const sizes = `(min-width: 64rem) min(48rem, ${natural}px), min(100vw, ${natural}px)`;
+  return { avif: set('avif'), webp: set('webp'), jpg: set('jpg'), src: `/screens/${base}-${widths[0]}.jpg`, width, height, natural, sizes };
+};
+
+const light = await variant('-light');
+const dark = light && await variant('-dark');
+const single = light ? null : await variant('');
+if (!light && !single) throw new Error(`Screenshot: no images for "${name}" in public/screens`);
+const shots = light ? [['light', light], ...(dark ? [['dark', dark]] : [])] as const : [['all', single!]] as const;
+---
+<figure class="screenshot">
+  {shots.map(([scheme, s]) => (
+    <picture class={`screenshot__${scheme}`}>
+      <source type="image/avif" srcset={s.avif} sizes={s.sizes} />
+      <source type="image/webp" srcset={s.webp} sizes={s.sizes} />
+      <img class="border rounded-md" src={s.src} srcset={s.jpg} sizes={s.sizes} width={s.width} height={s.height} style={`max-inline-size: ${s.natural}px`} alt={alt} loading="lazy" decoding="async" />
+    </picture>
+  ))}
+  {Astro.slots.has('default') && <figcaption><slot /></figcaption>}
+</figure>
+
+<style>
+  .screenshot img {
+    block-size: auto;
+    inline-size: 100%;
+  }
+
+  .screenshot__dark {
+    display: none;
+  }
+
+  /* The toggle's choice first, then the system's */
+  :global(html.color-scheme-dark) .screenshot__light:has(+ .screenshot__dark) {
+    display: none;
+  }
+
+  :global(html.color-scheme-dark) .screenshot__dark {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(html:not(.color-scheme-light)) .screenshot__light:has(+ .screenshot__dark) {
+      display: none;
+    }
+
+    :global(html:not(.color-scheme-light)) .screenshot__dark {
+      display: block;
+    }
+  }
+</style>

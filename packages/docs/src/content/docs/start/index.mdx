@@ -5,11 +5,14 @@ summary: From nothing to a first page. Link the published styles, add the icons 
 
 import pkg from '../../../../../css/package.json';
 export const version = pkg.version;
+import Screenshot from '../../../components/Screenshot.astro';
 export const link = `<link rel="stylesheet" href="https://components.designforhumans.blog/css/${pkg.version}/dfh-components.css" />`;
 export const themed = `${link}\n<link rel="stylesheet" href="/css/my-theme.css" />`;
 export const icons = `https://components.designforhumans.blog/css/${pkg.version}/icons.svg`;
 
 The library is CSS, one icon sprite and no JavaScript. You write ordinary HTML and add its classes. It takes three steps, and none of them needs a build tool or a package manager.
+
+<Screenshot name="real-world" alt="A garden designer's home page built with the library: a header with navigation and a Book a visit button, a hero over a photo of flowers with two buttons and three figures, and a services section below.">A whole page built from the library's components, in its starter theme.</Screenshot>
 
 ## 1. Link the styles
 
