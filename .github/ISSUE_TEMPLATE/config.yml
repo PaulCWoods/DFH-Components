@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Ask a question
+    url: https://github.com/PaulCWoods/DFH-Components/discussions/categories/q-a
+    about: How to do something, or why it works the way it does. Ask in Q&A, so the answer is there for the next person.
+  - name: Suggest an idea
+    url: https://github.com/PaulCWoods/DFH-Components/discussions/categories/ideas
+    about: A component, option or token you'd like, and the problem it solves for you.

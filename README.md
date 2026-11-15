@@ -38,6 +38,8 @@ npm run test:theme       # the theme engine's tests
 
 `AGENTS.md` has every command, the gates and the rules for changing the library. `docs/PRINCIPLES.md` outranks it.
 
+Questions and ideas go to [Discussions](https://github.com/PaulCWoods/DFH-Components/discussions), bugs to [Issues](https://github.com/PaulCWoods/DFH-Components/issues). `CONTRIBUTING.md` says more.
+
 ## Licence
 
 MIT, © 2026 Paul Charles Woods: see `LICENSE`. The third-party `modern-web-guidance` skill keeps its Apache 2.0 licence, in its folder. [What's free](https://components.designforhumans.blog/docs/start/free/) explains what's free and what's planned.
