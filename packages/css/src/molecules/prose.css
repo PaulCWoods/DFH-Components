@@ -186,12 +186,15 @@
      never needs a scrolling region. Code reads left to right in every
      direction.
      ========================================================================== */
-  /* A long name or address breaks rather than widen the page (1.4.10) */
+  /* A long name or address breaks rather than widen the page (1.4.10).
+     break-word, not anywhere: it breaks a word only when nothing else
+     fits, and leaves the word whole when a table sizes its columns, so a
+     column of code is never squeezed to a few letters a line */
   :where(:not(pre) > code) {
     background-color: var(--prose-code-bg, var(--surface-translucent, transparent));
     border-radius: var(--radius-sm, 0);
     box-decoration-break: clone;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     padding-inline: 0.25em;
   }
 
@@ -221,7 +224,52 @@
      --------------------------------------------------------------------------
      A light ruled look for a bare table. A wide table needs a .table in a
      scroll wrapper (§13).
+
+     A table in a scroll wrapper (a .table-container, or the figure a CMS
+     puts around a table, which scrolls here) is at least
+     --prose-table-column-min wide for each of its columns. On a narrow
+     screen it scrolls rather than squeeze its columns to a word a line,
+     and the columns still share the width by their content. Print lets it
+     fit the page again.
      ========================================================================== */
+  :where(figure:has(> table)) {
+    overflow-x: auto;
+
+    @media print {
+      overflow-x: visible;
+    }
+  }
+
+  :where(.table-container, figure) > :where(table) {
+    --_prose-table-columns: 1;
+
+    min-inline-size: calc(var(--_prose-table-columns) * var(--prose-table-column-min, 10em));
+
+    &:where(:has(tr > :nth-child(2))) {
+      --_prose-table-columns: 2;
+    }
+
+    &:where(:has(tr > :nth-child(3))) {
+      --_prose-table-columns: 3;
+    }
+
+    &:where(:has(tr > :nth-child(4))) {
+      --_prose-table-columns: 4;
+    }
+
+    &:where(:has(tr > :nth-child(5))) {
+      --_prose-table-columns: 5;
+    }
+
+    &:where(:has(tr > :nth-child(6))) {
+      --_prose-table-columns: 6;
+    }
+
+    @media print {
+      min-inline-size: 0;
+    }
+  }
+
   :where(table) {
     > :where(caption) {
       caption-side: top;

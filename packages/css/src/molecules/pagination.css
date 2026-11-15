@@ -28,10 +28,11 @@
 
 :where(.pagination) {
   /* Private manifest */
+  --_pagination-gap: var(--pagination-gap, var(--spacing-xs));
   --_pagination-gap-color: var(--pagination-gap-color, var(--foreground-muted, currentColor));
 
   /* A tighter gap than other button groups */
-  --button-group-gap: var(--pagination-gap, var(--spacing-xs));
+  --button-group-gap: var(--_pagination-gap);
 
   /* Its own width decides how many pages show. Size containment gives it
      no width from its pages, so in a row that sizes to content (a Card
@@ -40,7 +41,7 @@
      line before it collapses. */
   container-type: inline-size;
   flex-grow: 1;
-  min-inline-size: min(100%, calc(var(--spacing-target-min, 3rem) * 3 + var(--button-group-gap) * 2));
+  min-inline-size: min(100%, calc(var(--spacing-target-min, 3rem) * 3 + var(--_pagination-gap) * 2));
 
   /* Page numbers are square: the inline padding matches the block padding.
      Text Previous and Next links, at the ends, keep theirs. */

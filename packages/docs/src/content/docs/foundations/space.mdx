@@ -35,9 +35,9 @@ Everything you can tap or click has a hit area of at least `--spacing-target-min
 
 | Token | Size | Used for |
 | :--- | :--- | :--- |
-| <code class="whitespace-nowrap">--spacing-target</code> | {targets.default}px | The default, for touch. |
-| <code class="whitespace-nowrap">--spacing-target-sm</code> | {targets.sm}px | When a product opts into fine-pointer targets with `.fine:targets-sm` on `<html>`, or when the page is printed. |
-| <code class="whitespace-nowrap">--spacing-target-lg</code> | {targets.lg}px | Large controls. |
+| `--spacing-target` | {targets.default}px | The default, for touch. |
+| `--spacing-target-sm` | {targets.sm}px | When a product opts into fine-pointer targets with `.fine:targets-sm` on `<html>`, or when the page is printed. |
+| `--spacing-target-lg` | {targets.lg}px | Large controls. |
 
 A small Button stays small to look at, but keeps a {targets.default}px hit area around it, so it's as easy to tap as any other. The build fails a theme whose default target is under 44px, or whose smallest is under 24px (WCAG 2.5.8).
 

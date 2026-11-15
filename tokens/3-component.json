@@ -2077,6 +2077,11 @@
       "$type": "color",
       "$description": "Text colour of a code block"
     },
+    "table-column-min": {
+      "$value": "10em",
+      "$type": "dimension",
+      "$description": "Width per column below which a table in a scroll wrapper scrolls: the table is at least this times its number of columns wide"
+    },
     "scroll-margin": {
       "$value": "{spacing.scroll-margin}",
       "$type": "dimension",

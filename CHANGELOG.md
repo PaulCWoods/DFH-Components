@@ -20,6 +20,10 @@ Each entry lists what a site using the library would notice: new components and 
 - **The page behind a Dialog doesn't bounce:** while a modal Dialog is open, the page can no longer be pulled past its ends on a touch screen (`overscroll-behavior: none`), on top of the scroll lock it already had.
 - **Inline Choices wrap evenly:** when `choices--inline` runs onto more lines, browsers that support `flex-wrap: balance` share the options out across the lines instead of leaving one on its own; others wrap as before.
 
+### Fixed
+- **Code in a Prose table keeps its words:** inline code in Prose could break after any letter, so a table squeezed a column of names or tokens to a few letters a line. It now breaks between words, after a hyphen or a dot, and mid-word only when a word can't fit at all, so a table's columns are sized to keep each word whole.
+- **Prose tables scroll rather than squeeze:** a table in a scroll wrapper in Prose (a `.table-container`, or the `figure` a CMS puts round a table, which now scrolls) is at least `--prose-table-column-min` (10em) wide for each column. On a phone it scrolls instead of narrowing its columns to a word a line; print still fits it to the page.
+
 ## 1.2.0 (12 November 2026)
 
 ### Added

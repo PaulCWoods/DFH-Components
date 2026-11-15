@@ -119,7 +119,7 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
 - **Lists:** lists are indented by `--prose-indent`. Nested ordered lists step decimal, lower-latin, lower-roman. In a `<dl>`, `dt` is strong and `dd` is indented.
 - **Rules and quotes:** an `hr` uses the Divider tokens. A `blockquote` has an inline-start rule (`--prose-blockquote-border-width`).
 - **Figures:** the caption is small text in `--prose-figcaption-color`, half a rhythm below the media.
-- **Code:** a `pre` is a dark band in both themes (`--prose-code-block-bg`, `--prose-code-block-text`). Long lines wrap, so it is never a scrolling region. Code reads left to right in every direction. Inline `code` has a subtle tint (`--prose-code-bg`), and a long name or address in it breaks rather than widen the page. A Code Block placed straight in the prose keeps its own styles and takes the prose rhythm around it.
+- **Code:** a `pre` is a dark band in both themes (`--prose-code-block-bg`, `--prose-code-block-text`). Long lines wrap, so it is never a scrolling region. Code reads left to right in every direction. Inline `code` has a subtle tint (`--prose-code-bg`), and a long name or address in it breaks rather than widen the page: between words, after a hyphen or a dot, and mid-word only when a word can't fit at all. A Code Block placed straight in the prose keeps its own styles and takes the prose rhythm around it.
 - Put every component and widget in prose inside a `.prose-end`.
 - Write emoji in the text. There are no emoji classes.
 
@@ -137,4 +137,15 @@ Styles bare HTML (CMS and Markdown output) so it reads like the rest of the libr
   </table>
 </div>
 ```
-A Table in prose gets a light ruled look from the Table tokens. A wide Table is a `.table` in a [scroll wrapper](13-table.md).
+A Table in prose gets a light ruled look from the Table tokens.
+
+A Table with three or more columns, or long cells, goes in a scroll wrapper: a `div.table-container` with `tabindex="0"`, `role="region"` and a name, as for a [Table](13-table.md). Prose also scrolls the `figure` a CMS puts round a table (WordPress's `wp-block-table`). In a wrapper the table is at least `--prose-table-column-min` (10em) wide for each column, so on a narrow screen it scrolls rather than squeeze its columns to a word a line. Give a CMS's figure a name and `tabindex="0"` where you can: Safari doesn't let a keyboard reach a scrolling box without one.
+
+```html
+<div class="table-container" tabindex="0" role="region" aria-labelledby="sizes-caption">
+  <table>
+    <caption id="sizes-caption">Target sizes</caption>
+    …
+  </table>
+</div>
+```
