@@ -1,6 +1,5 @@
 {
-  "$description": "Which theme builds the library defaults (variables.css), which one the docs and Storybook load (site: its fonts go in their page heads), and which theme or sub-brand Storybook starts on. Every other file in tokens/themes builds packages/css/src/themes/<name>.css.",
+  "$description": "Which theme builds the library defaults (variables.css), and which one the docs and Storybook load (site: its fonts go in their page heads, and Storybook starts on it). Every other file in tokens/themes builds packages/css/src/themes/<name>.css.",
   "default": "starter",
-  "site": "dfh",
-  "storybook": "docs"
+  "site": "dfh"
 }

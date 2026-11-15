@@ -22,13 +22,15 @@ const preview: Preview = {
   globalTypes: {
     brand: {
       name: 'Theme',
-      description: 'The theme: the library default, a theme from tokens/themes, or a sub-brand (its class goes on <html>)',
-      defaultValue: themeConfig.storybook ?? themeConfig.site,
+      /* Full themes only: Storybook is public, and the sub-brands are the
+         blog's, the course's and the docs' own */
+      description: 'The theme: the library default, or a theme from tokens/themes',
+      defaultValue: themeConfig.site,
       toolbar: {
         icon: 'paintbrush',
-        items: [themeConfig.default, ...Object.keys(THEMES)].map((name) => ({
+        items: [themeConfig.default, ...Object.keys(THEMES).filter((name) => !PARENT[name])].map((name) => ({
           value: name,
-          title: `${name}${name === themeConfig.default ? ' (default)' : ''}${name === themeConfig.site ? ' (site)' : ''}${PARENT[name] ? ` (sub-brand of ${PARENT[name]})` : ''}`,
+          title: `${name}${name === themeConfig.default ? ' (default)' : ''}${name === themeConfig.site ? ' (site)' : ''}`,
         })),
         dynamicTitle: true,
       },

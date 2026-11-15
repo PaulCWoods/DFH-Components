@@ -22,7 +22,7 @@ For using tokens in CSS, load the `tokens` skill. This skill covers how they're 
 | File | Edit by hand? | Written by |
 | :--- | :--- | :--- |
 | `tokens/themes/<name>.json` | **Yes**: one theme per file | Hand or the Token Designer (in the private repo) |
-| `tokens/themes.json` | Yes | Names the `default` theme (builds the library's tokens), the `site` theme (docs and Storybook fonts) and the theme Storybook starts on |
+| `tokens/themes.json` | Yes | Names the `default` theme (builds the library's tokens), and the `site` theme (docs and Storybook fonts, and the theme Storybook starts on; Storybook's Theme menu lists full themes only) |
 | `tokens/1-global.json` | Only groups no theme section owns | The `build:*` generators (colour ramps, type steps, fluid spacing, new spacing and duration steps) |
 | `tokens/2-semantic.json` | Only roles no theme section owns | The generators (colour roles and mixes, high contrast, text styles, spacing roles, shape, motion) |
 | `tokens/3-component.json` | **Yes**, with the CSS fallback | Hand: the Tier 3 values Figma gets |
