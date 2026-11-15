@@ -168,6 +168,8 @@
   /* ==========================================================================
      5. Figures
      ========================================================================== */
+  /* A CMS's caption often holds paragraphs: they take the caption's type
+     and balanced lines, whatever a text atom on the caption sets */
   :where(figcaption) {
     break-before: avoid;
     color: var(--prose-figcaption-color, var(--foreground-muted, inherit));
@@ -176,6 +178,7 @@
 
     :where(p) {
       font: inherit;
+      text-wrap: inherit;
     }
   }
 
@@ -343,6 +346,11 @@
     ol,
     dl) {
     font-family: var(--body-alt-font-family, serif);
+  }
+
+  /* A paragraph in a caption keeps the caption's family */
+  :where(figcaption p) {
+    font-family: inherit;
   }
 }
 

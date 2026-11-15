@@ -23,6 +23,7 @@ Each entry lists what a site using the library would notice: new components and 
 ### Fixed
 - **Code in a Prose table keeps its words:** inline code in Prose could break after any letter, so a table squeezed a column of names or tokens to a few letters a line. It now breaks between words, after a hyphen or a dot, and mid-word only when a word can't fit at all, so a table's columns are sized to keep each word whole.
 - **Prose tables scroll rather than squeeze:** a table in a scroll wrapper in Prose (a `.table-container`, or the `figure` a CMS puts round a table, which now scrolls) is at least `--prose-table-column-min` (10em) wide for each column. On a phone it scrolls instead of narrowing its columns to a word a line; print still fits it to the page.
+- **Captions with paragraphs in Prose:** a CMS often puts a caption's text in a `<p>`. With `prose--body-alt` that paragraph took the serif, and it never balanced its lines. It now keeps the caption's family and type, a text atom on the caption included (`<figcaption class="text">`), and balances its lines.
 
 ## 1.2.0 (12 November 2026)
 
