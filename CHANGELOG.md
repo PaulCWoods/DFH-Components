@@ -4,6 +4,11 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
 
+## 1.3.1 (16 November 2026)
+
+### Fixed
+- **A smaller jump when the DFH theme's display face loads:** until Avory arrives, display text now falls back to a condensed face (Impact, Haettenschweiler or Arial Narrow Bold) instead of Inter, so headings change less in width when it swaps in.
+
 ## 1.3.0 (16 November 2026)
 
 ### Renamed
