@@ -1,0 +1,4 @@
+/* docs: a sub-brand of dfh, generated from tokens/themes/docs.json by npm run build:themes. Do not edit.
+   Link it after themes/dfh.css, and put class="theme-docs" on a region, or on <html> for a whole page.
+   It holds only what the sub-brand changes. */
+@layer tokens{.theme-docs{--title-letter-spacing:var(--heading-letter-spacing);--title-text-transform:none;--panel-border-width:var(--border-width-thin);--panel-radius:var(--radius);--radius:var(--radius-md);--radius-sm:var(--radius-2);--accordion-radius:var(--radius)}}

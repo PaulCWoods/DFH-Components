@@ -30,6 +30,10 @@
    No literal fallbacks: if tokens fail to load, text inherits its parent's
    size, weight and family, and stays legible.
 
+   A style reads every field a theme can set. A field the theme leaves unset
+   has no token: body-lg, body-sm and body-xs then take body's family and
+   weight, and letter spacing and case are inherited.
+
    WCAG: 1.4.4 (sizes in rem, follow the user's font size), 1.4.8 (reading
    text is held to a comfortable measure, --body-measure), 1.4.12 (no fixed
    heights; line height set per step and overridable).
@@ -98,6 +102,7 @@
       font-weight: var(--subheading-font-weight);
       letter-spacing: var(--subheading-letter-spacing);
       line-height: var(--subheading-line-height);
+      text-transform: var(--subheading-text-transform);
 
       @container style(--font-sizing: fluid) {
         font-size: var(--subheading-fluid-font-size);
@@ -206,7 +211,7 @@
       font-weight: var(--subheading-font-weight);
       letter-spacing: var(--subheading-letter-spacing);
       line-height: var(--subheading-line-height);
-      text-transform: none;
+      text-transform: var(--subheading-text-transform, none);
 
       @container style(--font-sizing: fluid) {
         font-size: var(--subheading-fluid-font-size);
@@ -230,7 +235,9 @@
       font-family: var(--body-font-family);
       font-size: var(--body-fixed-font-size);
       font-weight: var(--body-font-weight);
+      letter-spacing: var(--body-letter-spacing);
       line-height: var(--body-line-height);
+      text-transform: var(--body-text-transform);
 
       @container style(--font-sizing: fluid) {
         font-size: var(--body-fluid-font-size);
@@ -247,8 +254,12 @@
 
     /* .prose--lead: the first paragraph takes the large text's type */
     :where(:scope.prose--lead > p:first-of-type) {
+      font-family: var(--body-lg-font-family, var(--body-font-family));
       font-size: var(--body-lg-fixed-font-size);
+      font-weight: var(--body-lg-font-weight, var(--body-font-weight));
+      letter-spacing: var(--body-lg-letter-spacing, var(--body-letter-spacing));
       line-height: var(--body-lg-line-height);
+      text-transform: var(--body-lg-text-transform, var(--body-text-transform));
 
       @container style(--font-sizing: fluid) {
         font-size: var(--body-lg-fluid-font-size);
@@ -270,10 +281,12 @@
     }
 
     :where(small, figcaption, caption) {
-      font-family: var(--body-font-family);
+      font-family: var(--body-sm-font-family, var(--body-font-family));
       font-size: var(--body-sm-fixed-font-size);
-      font-weight: var(--body-font-weight);
+      font-weight: var(--body-sm-font-weight, var(--body-font-weight));
+      letter-spacing: var(--body-sm-letter-spacing, var(--body-letter-spacing));
       line-height: var(--body-sm-line-height);
+      text-transform: var(--body-sm-text-transform, var(--body-text-transform));
       text-wrap: var(--body-text-wrap, wrap);
 
       @container style(--font-sizing: fluid) {
@@ -405,6 +418,7 @@
   font-weight: var(--subheading-font-weight);
   letter-spacing: var(--subheading-letter-spacing);
   line-height: var(--subheading-line-height);
+  text-transform: var(--subheading-text-transform);
   text-wrap: balance;
 
   @container style(--font-sizing: fluid) {
@@ -474,10 +488,12 @@
    7. Large Text (lead paragraph)
    ========================================================================== */
 :where(.large-text) {
-  font-family: var(--body-font-family);
+  font-family: var(--body-lg-font-family, var(--body-font-family));
   font-size: var(--body-lg-fixed-font-size);
-  font-weight: var(--body-font-weight);
+  font-weight: var(--body-lg-font-weight, var(--body-font-weight));
+  letter-spacing: var(--body-lg-letter-spacing, var(--body-letter-spacing));
   line-height: var(--body-lg-line-height);
+  text-transform: var(--body-lg-text-transform, var(--body-text-transform));
 
   @container style(--font-sizing: fluid) {
     font-size: var(--body-lg-fluid-font-size);
@@ -499,7 +515,9 @@
   font-family: var(--body-font-family);
   font-size: var(--body-fixed-font-size);
   font-weight: var(--body-font-weight);
+  letter-spacing: var(--body-letter-spacing);
   line-height: var(--body-line-height);
+  text-transform: var(--body-text-transform);
 
   @container style(--font-sizing: fluid) {
     font-size: var(--body-fluid-font-size);
@@ -518,10 +536,12 @@
    9. Small Text (hints, captions, metadata)
    ========================================================================== */
 :where(.small-text) {
-  font-family: var(--body-font-family);
+  font-family: var(--body-sm-font-family, var(--body-font-family));
   font-size: var(--body-sm-fixed-font-size);
-  font-weight: var(--body-font-weight);
+  font-weight: var(--body-sm-font-weight, var(--body-font-weight));
+  letter-spacing: var(--body-sm-letter-spacing, var(--body-letter-spacing));
   line-height: var(--body-sm-line-height);
+  text-transform: var(--body-sm-text-transform, var(--body-text-transform));
   text-wrap: var(--body-text-wrap, wrap);
 
   @container style(--font-sizing: fluid) {
@@ -541,10 +561,12 @@
    10. Micro Text (smaller hints, captions, metadata)
    ========================================================================== */
 :where(.micro-text) {
-  font-family: var(--body-font-family);
+  font-family: var(--body-xs-font-family, var(--body-font-family));
   font-size: var(--body-xs-fixed-font-size);
-  font-weight: var(--body-font-weight);
+  font-weight: var(--body-xs-font-weight, var(--body-font-weight));
+  letter-spacing: var(--body-xs-letter-spacing, var(--body-letter-spacing));
   line-height: var(--body-xs-line-height);
+  text-transform: var(--body-xs-text-transform, var(--body-text-transform));
   text-wrap: var(--body-text-wrap, wrap);
 
   @container style(--font-sizing: fluid) {
@@ -567,7 +589,9 @@
   font-family: var(--label-font-family);
   font-size: var(--label-font-size);
   font-weight: var(--label-font-weight);
+  letter-spacing: var(--label-letter-spacing);
   line-height: var(--label-line-height);
+  text-transform: var(--label-text-transform);
 
   @container style(--font-sizing: compact) or style(--ui-sizing: compact) {
     font-size: var(--label-compact-font-size);

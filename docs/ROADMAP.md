@@ -38,6 +38,12 @@ A theme can add colour roles of its own (a second brand colour, a category colou
 - **`complementary` keeps its name** and stays built in: the existing extra colour role, beside the custom ones. No rename.
 - **Open questions:** how many custom roles a theme may have; whether sub-brands can add them or only change them.
 
+## Version 2.0
+
+Removals and renames that can need work on a site, so they wait for the next major version.
+
+- **Remove the old icon names (S):** the names from before 1.3.0 (`#Close`, `#ArrowRight` and the rest) still point at the Lucide names. Delete the aliases from the sprite and say so in the changelog. The [full list](audit/icon-names.md) is what sites search for.
+
 ## Library candidates
 
 Things the library lacks or could do better. Each waits for a second use, or for its component's next pass.

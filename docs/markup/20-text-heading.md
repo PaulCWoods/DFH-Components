@@ -120,6 +120,7 @@ Ten type atoms, one step of the scale each, and a list atom. The class sets the 
 ### Further rules
 - Headings balance their lines; body text takes `--body-text-wrap`.
 - No literal fallbacks: if tokens fail to load, text inherits its parent's size and stays legible.
+- Large, small and micro text take body text's family and weight unless the theme gives them their own. Letter spacing and case apply only where the theme sets them; otherwise they're inherited.
 - Colour and weight come from utilities: `.text-muted` (or `.text-color-muted`), `.font-bold`, `.font-serif`, `.font-mono`. There is no `.strong-text`, `.alt-text`, `.caption` or `.nano-*`.
 
 ### Lists: markers and spacing

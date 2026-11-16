@@ -2,7 +2,20 @@
 
 What changed in each published version of the library (`dfh-components.css`, the theme stylesheets and the shared skills), newest first. Sites link a version from `components.designforhumans.blog/css/<version>/`; a published version never changes.
 
-Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
+Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead).
+
+The version number says how much checking an upgrade needs. What it covers is everything a site writes or links: class names and the markup each component expects, tokens (the custom properties), icon names, the theme file format, the published file paths and the shared skills' names.
+
+- **A patch (1.3.2)** fixes something, or corrects a value in a theme. Upgrading never needs a change to your markup or CSS.
+- **A minor version (1.4.0)** adds: new components, options, tokens, icons and utilities. It may change how a default looks, but your markup stays valid. A name that's replaced keeps working until the next major version, and the entry says what to use instead.
+- **A major version (2.0.0)** can need work when you upgrade: a class, token, icon or option removed or renamed with nothing left in its place, markup that must change, a new theme file format, or new file paths. It removes the names the minor versions replaced.
+
+Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
+
+## 1.3.2 (16 November 2026)
+
+### Fixed
+- **Every text style takes what its theme sets:** a theme could give large, small and micro text their own family and weight, letter spacing and case to body text and Label, and case to Subheading, but the CSS never read them. They now apply, to the text atoms and to the same elements in Prose (the lead paragraph, `small` and captions). Large, small and micro text still take body text's family and weight when the theme leaves theirs unset, and letter spacing and case are still inherited, so nothing changes until a theme sets one.
 
 ## 1.3.1 (16 November 2026)
 
@@ -12,7 +25,7 @@ Each entry lists what a site using the library would notice: new components and 
 ## 1.3.0 (16 November 2026)
 
 ### Renamed
-- **Icons take Lucide's names:** every symbol in the sprite is renamed to the name of the Lucide icon it is drawn from, in kebab-case: `#Close` is `#x`, `#ArrowRight` `#arrow-right`, `#Delete` `#trash`, `#Warning` `#triangle-exclamation-point`. Filled icons end in `-filled` and brands start with `brand-` (`#brand-github`). The old names still work in this version, each pointing at its new one, and are removed in the next; the [full list](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/audit/icon-names.md) is on GitHub. `#ChevronStart` and `#ChevronEnd` were drawn the wrong way round: `#chevron-first` is now `|<` and `#chevron-last` `>|`.
+- **Icons take Lucide's names:** every symbol in the sprite is renamed to the name of the Lucide icon it is drawn from, in kebab-case: `#Close` is `#x`, `#ArrowRight` `#arrow-right`, `#Delete` `#trash`, `#Warning` `#triangle-exclamation-point`. Filled icons end in `-filled` and brands start with `brand-` (`#brand-github`). The old names still work, each pointing at its new one, until version 2.0; the [full list](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/audit/icon-names.md) is on GitHub. `#ChevronStart` and `#ChevronEnd` were drawn the wrong way round: `#chevron-first` is now `|<` and `#chevron-last` `>|`.
 
 ### Added
 - **The icon sprite is published with each version:** `components.designforhumans.blog/css/<version>/icons.svg`, beside the CSS, so a site can download the icons that match the version it links. A sprite only works from the page's own domain, so serve your copy yourself.
