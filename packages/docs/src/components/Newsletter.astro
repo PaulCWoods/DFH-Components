@@ -1,0 +1,22 @@
+---
+/* The email list's sign-up (Buttondown). Its form posts to Buttondown,
+   which confirms the address by email; the page needs no script.
+   id keeps the field's id unique where it's used twice; heading sets the
+   level so it fits the page's outline. */
+interface Props { id?: string; heading?: 'h2' | 'h3' }
+const { id = 'newsletter', heading: Heading = 'h2' } = Astro.props;
+---
+<section class="card stack" aria-labelledby={`${id}-title`}>
+  <header class="lockup gap-sm">
+    <Heading id={`${id}-title`} class="heading">Hear about each release</Heading>
+    <p class="text text-muted max-w-md">New versions, what changed in them, and new posts about the decisions behind the library. A few emails a month at most.</p>
+  </header>
+  <form class="cluster align-items-end" action="https://buttondown.com/api/emails/embed-subscribe/designforhumans" method="post">
+    <div class="field grow">
+      <label for={`${id}-email`} class="field__label label">Email address</label>
+      <input id={`${id}-email`} type="email" name="email" class="input" autocomplete="email" required />
+    </div>
+    <button type="submit" class="button button--strong button--accent"><span>Subscribe</span></button>
+  </form>
+  <p class="small-text text-muted">You'll get an email to confirm, and every email has a link to unsubscribe. Sent with <a class="link" href="https://buttondown.com/refer/designforhumans">Buttondown</a>.</p>
+</section>

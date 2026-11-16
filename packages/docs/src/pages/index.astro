@@ -3,6 +3,7 @@
    then, a short introduction and the way into the docs. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import Newsletter from '../components/Newsletter.astro';
 import { getNav } from '../lib/nav';
 /* The brand frame around the title: a DFH site component, from DFH Shared
    Styles, not the library */
@@ -145,6 +146,9 @@ const points = [
       </ul>
       <p><a href="/docs/" class="block-link block-link--subtle">What makes this different <Icon name="arrow-right" /></a></p>
       </section>
+      <div class="wrapper pb-cushion">
+        <Newsletter />
+      </div>
     </article>
   </main>
 </BaseLayout>
