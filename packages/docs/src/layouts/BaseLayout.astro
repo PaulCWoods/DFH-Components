@@ -24,6 +24,11 @@ const fullTitle = title === 'Design For Humans Components' ? title : `${title} Â
 const url = new URL(Astro.url.pathname, Astro.site);
 /* The picture a link shows when it's shared: the share card */
 const image = new URL('/og-image.jpg', Astro.site);
+/* Umami visitor counts: no cookies, nothing stored on the device. The
+   website id is public (it's in every page). data-domains counts the live
+   site only, so local builds and the docs checks never send a visit.
+   Buttons count as events through data-umami-event (What's free). */
+const umamiWebsiteId = '7584a422-4fbc-49ae-86e8-c549eb817998';
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -62,6 +67,7 @@ const image = new URL('/og-image.jpg', Astro.site);
         if (s === 'light' || s === 'dark') document.documentElement.classList.add('color-scheme-' + s);
       } catch {}
     </script>
+    {umamiWebsiteId && <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id={umamiWebsiteId} data-domains="components.designforhumans.blog"></script>}
   </head>
   <body class="app">
     <a href="#main" class="skip-link">Skip to content</a>
