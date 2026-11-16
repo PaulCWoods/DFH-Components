@@ -11,7 +11,7 @@ const { id = 'newsletter', heading: Heading = 'h2' } = Astro.props;
     <Heading id={`${id}-title`} class="heading">Sign up to the newsletter</Heading>
     <p class="text text-muted max-w-md">Get the latest updates and release notes. A few emails a month at most.</p>
   </header>
-  <form class="cluster align-items-end" action="https://buttondown.com/api/emails/embed-subscribe/designforhumans" method="post">
+  <form class="cluster align-items-end max-w-md" action="https://buttondown.com/api/emails/embed-subscribe/designforhumans" method="post">
     <div class="field grow">
       <label for={`${id}-email`} class="field__label label">Email address</label>
       <input id={`${id}-email`} type="email" name="email" class="input" autocomplete="email" required />

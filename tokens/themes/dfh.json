@@ -305,7 +305,7 @@
           800
         ],
         "kit": "lrj6kun",
-        "fallback": "\"Inter\", system-ui, -apple-system, sans-serif",
+        "fallback": "\"Impact\", \"Haettenschweiler\", \"Arial Narrow Bold\", sans-serif-condensed, system-ui, -apple-system, sans-serif",
         "figma": "Avory I PE"
       }
     },
