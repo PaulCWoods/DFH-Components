@@ -4,7 +4,7 @@ What changed in each published version of the library (`dfh-components.css`, the
 
 Each entry lists what a site using the library would notice: new components and options, changed behaviour, and anything removed or renamed (with what to use instead). Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
 
-## Unreleased
+## 1.3.0 (16 November 2026)
 
 ### Renamed
 - **Icons take Lucide's names:** every symbol in the sprite is renamed to the name of the Lucide icon it is drawn from, in kebab-case: `#Close` is `#x`, `#ArrowRight` `#arrow-right`, `#Delete` `#trash`, `#Warning` `#triangle-exclamation-point`. Filled icons end in `-filled` and brands start with `brand-` (`#brand-github`). The old names still work in this version, each pointing at its new one, and are removed in the next; the [full list](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/audit/icon-names.md) is on GitHub. `#ChevronStart` and `#ChevronEnd` were drawn the wrong way round: `#chevron-first` is now `|<` and `#chevron-last` `>|`.

@@ -8,8 +8,8 @@ const { id = 'newsletter', heading: Heading = 'h2' } = Astro.props;
 ---
 <section class="card stack" aria-labelledby={`${id}-title`}>
   <header class="lockup gap-sm">
-    <Heading id={`${id}-title`} class="heading">Hear about each release</Heading>
-    <p class="text text-muted max-w-md">New versions, what changed in them, and new posts about the decisions behind the library. A few emails a month at most.</p>
+    <Heading id={`${id}-title`} class="heading">Sign up to the newsletter</Heading>
+    <p class="text text-muted max-w-md">Get the latest updates and release notes. A few emails a month at most.</p>
   </header>
   <form class="cluster align-items-end" action="https://buttondown.com/api/emails/embed-subscribe/designforhumans" method="post">
     <div class="field grow">
