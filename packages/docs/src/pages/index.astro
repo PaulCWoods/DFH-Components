@@ -46,6 +46,7 @@ const features = [
     title: 'Figma Sync',
     href: '/docs/tools/figma/',
     text: 'CSS and Figma share the same token system, so designers and developers are always in sync.',
+    more: { text: 'Get the Figma kit', href: '/docs/start/free/#the-figma-kit' },
     label: 'Figma screenshots',
     shots: [
       ['figma-dfh-components', 'The Figma file’s components page: Banners in each intent and prominence, documented beside each other'],
@@ -119,7 +120,10 @@ const points = [
               </figure>
               <div class="card__content">
                 <header class="card__header"><h3 class="heading"><a href={f.href} class="link link--plain">{f.title}</a></h3></header>
-                <div class="card__body"><p class="text max-w-md text-balance">{f.text}</p></div>
+                <div class="card__body stack gap-sm">
+                  <p class="text max-w-md text-balance">{f.text}</p>
+                  {f.more && <p><a href={f.more.href} class="link">{f.more.text}</a></p>}
+                </div>
               </div>
             </article>
           </li>
