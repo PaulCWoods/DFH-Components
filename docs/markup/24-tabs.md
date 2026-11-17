@@ -168,7 +168,7 @@ Three tiers that work as one.
 | Size | (default), `--sm` | `--tab-list-size`; a compact container steps to `--sm` |
 | Corners | (default), `--round` | `--tab-list-corners` |
 
-Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scrollable` (one row that scrolls, each edge fading while there is more that way; lists wrap by default. The fade is the shared scroll fade, `utilities/scroll-fade.css`, and needs scroll-driven animations; without them the row still scrolls), `--fill`, `--floating` (a layered bar whose corners are concentric with its Tabs: the Tab's corner plus the bar's padding and border; with `--round`, half the Tab height plus the padding and border, never a full pill, so a tall, wrapped or vertical bar keeps gentle corners), `--docked` (fixed to the bottom of the viewport), `--flush`, `--tight`. Organism: `.tabbed-content--vertical` and `--end` put the list beside the panels and make it vertical.
+Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scrollable` (one row that scrolls, each edge fading while there is more that way; lists wrap by default. The fade is the shared scroll fade, `utilities/scroll-fade.css`, and needs scroll-driven animations; without them the row still scrolls), `--fill`, `--floating` (a layered bar whose corners are concentric with its Tabs: the Tab's corner plus the bar's padding and border; with `--round`, half the Tab height plus the padding and border, never a full pill, so a tall, wrapped or vertical bar keeps gentle corners), `--docked` (fixed to the bottom of the viewport; as a Main's last child it's sticky instead, so it sits below the content at the end rather than covering it), `--flush`, `--tight`. Organism: `.tabbed-content--vertical` and `--end` put the list beside the panels and make it vertical.
 
 ### Further rules
 - **Every variant marks the selected tab at 3:1 or more** with a line (underline) or a fill (segmented), plus bold. Plain lists have no rule or border, so the selected tab also takes the accent colour.
@@ -227,7 +227,8 @@ Layout modifiers: `--vertical`, `--end` (vertical, on the inline end), `--scroll
   </div>
 </div>
 
-<!-- Floating bar docked to the bottom of the viewport -->
+<!-- Floating bar docked to the bottom of the viewport. Make it the Main's
+     last child, so the end of the content scrolls clear of it -->
 <nav class="tab-list tab-list--segmented tab-list--round tab-list--floating tab-list--docked md:hide" aria-label="App">
   <a href="/" class="tab tab--icon" aria-current="page">
     <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#house"/></svg>

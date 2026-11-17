@@ -381,7 +381,8 @@
 /* --------------------------------------------------------------------------
    3.6 Floating (.tab-list--floating) and Docked (.tab-list--docked)
    Floating: a layered bar with corners concentric with its tabs.
-   Docked: fixed to the bottom of the viewport, centred.
+   Docked: fixed to the bottom of the viewport, centred; sticky as a Main's
+   last child, so it leaves room for the content's end.
    -------------------------------------------------------------------------- */
 :where(.tab-list--floating) {
   --_tab-list-rule-style: 0;
@@ -412,6 +413,14 @@
   inline-size: fit-content;
   max-inline-size: calc(100% - var(--tab-list-docked-offset, var(--spacing-24)) * 2);
   margin-inline: auto;
+}
+
+/* The last child of a Main: sticky, not fixed. It rides over the content
+   while it scrolls and sits below it at the end, so it never covers the last
+   row. In a viewport Main it drops to the foot when the content is short */
+:where(.main) > :where(.tab-list--docked) {
+  position: sticky;
+  margin-block: auto calc(var(--tab-list-docked-offset, var(--spacing-24)) + var(--safe-area-inset-bottom, 0px));
 }
 
 /* ==========================================================================
