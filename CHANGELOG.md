@@ -23,6 +23,9 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 - **Bar:** `.bar` lays out one row in three zones, a start, a centre and an end, with the centre in the middle of the row whatever the ends hold: a Dialog's header (Back, the title, Close), a media player, a wizard's footer, an app header with search in the middle. Short of room the ends keep their width, the centre moves off-centre only as far as it must and then wraps, and nothing overlaps. Put it on a `card__header` or a `header__bar` to lay out their row. Hooks: `--gap`, `--align-items`.
 - **Break utilities:** `break-inside-avoid`, `break-after-avoid` and `column-span-all`, for Columns and for print.
 
+### Fixed
+- **Labels in a Popover or Dialog opened from an icon-only bar:** `hide-labels` no longer reaches into a Popover or Dialog inside the region, so a menu opened from a Header whose Buttons show only their icons keeps its labels.
+
 ## 1.3.3 (17 November 2026)
 
 ### Fixed

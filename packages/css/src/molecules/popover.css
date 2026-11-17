@@ -40,6 +40,10 @@
   --target-gap-block-start: initial;
   --target-gap-block-end: initial;
 
+  /* Nor does a hide-labels region around the invoker hide its labels: a
+     menu opened from an icon-only bar still names its items */
+  --ui-labels: initial;
+
   /* The card or menu inside floats */
   --card-prominence: strong;
   --menu-prominence: strong;
