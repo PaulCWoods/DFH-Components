@@ -13,13 +13,14 @@ A radio station's live desk: an icon rail and a section menu, the station header
 
 **Composes:** app shell (§19d), sidebar and rail (§34), navigation tree (§16b), header (§33), telemetry (§30), split (§19c), table (§13), status and chip (§5), lockup (§6b), button group (§14), range and range lockup (§7), meter (§25), popover (§3), dialog and drawer (§2), banner (§11), skeleton (§26), tab list (§24), footer (§35).
 
-**The deck** is a card. \`cadence/deck.css\` is this recipe's own CSS, not a library component: it adds the card's on-air or cued edge, the record artwork and the docked player's layout. Everything else is a library part.
+**The deck** is a card. \`cadence/deck.css\` is this recipe's own CSS, not a library component: it adds the record artwork. Everything else is a library part.
 
 **Decisions:**
 - **\`.app--viewport\`** locks the shell to the screen; the main area and the queue scroll on their own.
-- **Two sidebars on wide screens:** the rail (\`.sidebar--rail\`) for sections and the section's menu. Below 48em both hide (\`max-md:hide\`); a compact header with a menu button takes over, and the menu opens in a **start-side drawer** holding the same navigation tree. The section links move to a floating tab bar of links at the foot, and the docked player hides, because the deck is already in view.
+- **Two sidebars on wide screens:** the rail (\`.sidebar--rail\`) for sections and the section's menu. Below 48em both hide (\`max-md:hide\`); a compact header with a menu button takes over, and the menu opens in a **start-side drawer** holding the same navigation tree. The section links move to a floating tab bar of links at the foot, the Main's last child, so it rides over the content and sits below the queue at the end; and the docked player hides, because the deck is already in view.
 - **Navigation is links** with \`aria-current="page"\`, in the rail, the menu and the tab bar.
-- **The docked player** is one row under a position slider that runs its full width: the track at the start, the transport in the true centre, the time and volume at the end.
+- **The docked player** is a Bar under a position slider that runs its full width: the track at the start, the transport in the true centre, the time and volume at the end.
+- **The queue's columns** are the time, the item, its length and status: the type is in the item's second line beside its icon, and the deck is the Split's narrower side (\`split--xs\`), so the titles keep one line.
 - **The transport** is a button group of icon buttons, with play as a round, strong accent button; every button is named. The position slider says the time in \`aria-valuetext\`.
 - **The queue** is a card holding a sticky-head table; row details open under the row, as in Tally & Sprout.
 - **Levels** are \`<meter>\`s with low, high and optimum set, so the browser colours them, and each is named.
@@ -274,10 +275,9 @@ const queueRow = (q: Item, expanded: boolean) => `
     <th scope="row">
       <div class="inline">
         ${icon(typeIcon[q.type], 'icon text-muted')}
-        <span class="lockup"><span class="small-heading">${q.title}</span><span class="small-text text-muted">${q.artist}</span></span>
+        <span class="lockup"><span class="small-heading">${q.title}</span><span class="small-text text-muted">${q.type}, ${q.artist}</span></span>
       </div>
     </th>
-    <td class="table__cell--nowrap">${q.type}</td>
     <td class="table__cell--numeric font-mono">${q.length}</td>
     <td class="table__cell--nowrap">${queueStatus(q.status)}</td>
     <td class="table__col--actions">
@@ -287,7 +287,7 @@ const queueRow = (q: Item, expanded: boolean) => `
     </td>
   </tr>
   <tr id="${q.id}-details"${expanded ? '' : ' hidden'}>
-    <td colspan="6">
+    <td colspan="5">
       <dl class="telemetry-group" aria-label="${q.title}">
         <div class="telemetry"><dt class="small-text text-muted">Loudness</dt><dd class="small-heading font-mono">${q.loudness}</dd></div>
         <div class="telemetry"><dt class="small-text text-muted">Format</dt><dd class="small-heading">${q.format}</dd></div>
@@ -299,8 +299,7 @@ const queueHead = `
   <thead>
     <tr>
       <th scope="col">Time</th>
-      <th scope="col">Item</th>
-      <th scope="col">Type</th>
+      <th scope="col" class="table__col--fill">Item</th>
       <th scope="col" class="table__cell--numeric">Length</th>
       <th scope="col">Status</th>
       <th scope="col" class="table__col--actions"><span class="sr-only">Actions</span></th>
@@ -314,7 +313,6 @@ const skeletonQueue = () =>
   <tr aria-hidden="true">
     <td><span class="skeleton skeleton--text"></span></td>
     <td><span class="skeleton skeleton--text skeleton--w-75"></span></td>
-    <td><span class="skeleton skeleton--text"></span></td>
     <td><span class="skeleton skeleton--text"></span></td>
     <td><span class="skeleton skeleton--status"></span></td>
     <td></td>
@@ -362,8 +360,8 @@ const dock = (buffering: boolean) => `
   <footer class="footer footer--stretch max-md:hide">
     <section aria-labelledby="dock-title">
       <h2 id="dock-title" class="sr-only">Player</h2>
-      <input type="range" class="range range--sm deck-dock__position" min="0" max="232" value="134" style="--value: 58%;" aria-label="Position" aria-valuetext="2 minutes 14 seconds of 3 minutes 52 seconds" />
-      <div class="footer__bar deck-dock">
+      <input type="range" class="range range--sm" min="0" max="232" value="134" style="--value: 58%;" aria-label="Position" aria-valuetext="2 minutes 14 seconds of 3 minutes 52 seconds" />
+      <div class="footer__bar bar">
         <div class="inline">
           ${art(!buffering)}
           <div class="lockup">
@@ -437,15 +435,15 @@ const page = (buffering = false) => `
         <div class="stack p-cushion">
           <h1 class="sr-only">Live desk</h1>
           ${buffering ? outage : ''}
-          <div class="split split--sm">
+          <div class="split split--xs">
             ${deck('deck-a', 'Deck A', 'on-air')}
             ${queue(buffering)}
           </div>
         </div>
+        ${tabBar}
       </main>
     </div>
     ${dock(buffering)}
-    ${tabBar}
     ${menuDrawer}
     ${settingsDialog}
   </div>`;

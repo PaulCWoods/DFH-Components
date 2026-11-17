@@ -42,8 +42,9 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 
 `recipe-tally-sprout.stories.ts`: a community garden's plot registry and lease workflow.
 
-- **Composes:** header, Banner Dock, Telemetry, Card, Button group of radios, Table with expandable rows, Batch Actions, Empty State, Skeleton, Dialog with a Stepper and form, drawer, Toast.
+- **Composes:** app shell, header, Brand, Banner Dock, Telemetry, Card, Button group of radios, Table with expandable rows, Batch Actions, Empty State, Skeleton, Dialog with a Stepper and form, drawer, Toast.
 - **The registry** switches between Table and Card views with a joined group of native radios, so it needs no script. Selecting rows docks the Batch Actions in the Card. The loading Table keeps its column names and puts Skeletons in the body cells only.
+- **The page:** the frost warning is a Banner Dock in the app shell, which places it under the Header. The garden picker sits beside the page heading, so it stays on a phone, and the four figures are a `grid--2xs grid--4-col`: four across on a wide screen, two on a phone.
 - **The lease form** is a `form.card` in a Dialog with a Stepper. Errors show as a summary Banner, with `aria-invalid` and a `field__error` on each Field.
 - **Stories:** Default, RowsSelected, CardView, NoResults, Loading, LeaseForm, LeaseFormErrors, LeaseFormAgreement, LeaseFormFee, ToolLocker, Toast.
 
@@ -52,6 +53,6 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 `recipe-cadence-dashboard.stories.ts` and `cadence/deck.css`: a radio station's live desk. It is the stress test: a full-viewport shell with two Sidebars, a sticky header inside the main area and a fixed footer.
 
 - **Composes:** App Shell, Sidebar and rail, Navigation Tree, header, Telemetry, split, Table, status, Lockup, Button Group, range and Range Lockup, Meter, Popover, Dialog and drawer, Banner, Skeleton, Tab List, footer.
-- **Narrow screens:** below 48em the rail and the section Menu hide (`max-md:hide`). A compact header's menu Button opens the same Navigation Tree in a `.dialog--drawer.dialog--start`. The sections move to a floating tab bar of links, which takes the docked player's place.
-- **The deck** is a Card. `cadence/deck.css` adds only its on-air or cued edge, the record artwork and the docked player's layout. The docked player is one row under a full-width position slider: track at the start, transport in the true centre, time and volume at the end. Its transport is a Button Group with a round, strong accent play Button. Its levels are named `<meter>`s with thresholds.
+- **Narrow screens:** below 48em the rail and the section Menu hide (`max-md:hide`). A compact header's menu Button opens the same Navigation Tree in a `.dialog--drawer.dialog--start`. The sections move to a floating tab bar of links, which takes the docked player's place. It is the Main's last child, so the queue's end scrolls clear of it. The queue drops its Type column for the type beside the artist, and the deck takes the Split's narrower side, so the titles keep one line.
+- **The deck** is a Card. `cadence/deck.css` adds only the record artwork. The docked player is a [Bar](19f-bar.md) under a full-width position slider: track at the start, transport in the true centre, time and volume at the end. Its transport is a Button Group with a round, strong accent play Button. Its levels are named `<meter>`s with thresholds.
 - **Stories:** Live, Buffering, MenuDrawer, StreamSettings, Deck.

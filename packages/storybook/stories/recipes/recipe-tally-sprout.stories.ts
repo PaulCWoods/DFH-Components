@@ -13,6 +13,9 @@ An admin dashboard for a community garden: plot occupancy at a glance, a registr
 **Composes:** app shell (§19d), header (§33), banner dock (§21), card (§10), grid (§19b), status and chip (§5), avatar and lockup (§6, §6b), progress (§25), table (§13), telemetry (§30), button group (§14), batch actions (§18b), empty state (§27), skeleton (§26), dialog and drawer (§2), stepper (§30), field, fieldset and choices (§7b), switch and range (§7), banner (§11), toast (§18).
 
 **Decisions:**
+- **The frost warning** is a banner dock in the app shell, which puts it under the header, where a notice about the whole site belongs.
+- **The garden picker** sits beside the page heading, the garden's name, so it stays on a phone; the header keeps only the brand and the two actions, which show only their icons below 48rem.
+- **The four figures** are a grid of at most four columns at the smallest width (\`grid--2xs grid--4-col\`): four across on a wide screen, two on a phone.
 - **The registry is one card.** Its header holds the title and the view switch; a band holds the search and filters; the flush body holds the table, the card grid or the empty state. The result count is a \`role="status"\` line.
 - **The view switch** is a joined button group of native radios (§14 C): arrow keys work with no script.
 - **Selection** is a checkbox per row, named after the plot. While rows are selected, docked batch actions appear at the foot of the card, their summary a status.
@@ -76,21 +79,9 @@ const feeStatus = (fee: Fee) =>
    -------------------------------------------------------------------------- */
 const header = `
   <header class="header header--sticky">
-    <div class="header__bar">
-      <div class="cluster">
-        <a href="#" class="link link--plain lockup">
-          <span class="small-heading">Tally &amp; Sprout</span>
-          <span class="small-text text-muted">Plot registry</span>
-        </a>
-        <div class="max-sm:hide">
-          <label for="site" class="sr-only">Garden</label>
-          <select id="site" class="select select--sm select--subtle">
-            <option selected>Oakridge Commons</option>
-            <option>Riverside Meadows</option>
-          </select>
-        </div>
-      </div>
-      <div class="cluster gap-xs max-md:hide-labels">
+    <div class="header__bar max-md:hide-labels">
+      <a href="#" class="brand"><span class="brand__name">Tally &amp; Sprout</span></a>
+      <div class="cluster gap-xs">
         <button type="button" class="button button--subtle" commandfor="tool-locker" command="show-modal" aria-haspopup="dialog">
           ${icon('cog')}<span>Tool locker</span><span class="sr-only">, 2 overdue</span>
           <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">2</span></span>
@@ -131,7 +122,7 @@ const metric = (title: string, status: string, value: string, note: string, extr
 const metrics = `
   <section aria-labelledby="metrics-title" class="stack">
     <h2 id="metrics-title" class="sr-only">This season</h2>
-    <div class="grid grid--xs">
+    <div class="grid grid--2xs grid--4-col">
       ${metric('Occupancy', `<span class="status status--success"><span class="status__text">88% let</span></span>`, '42 / 48', '6 plots resting this season')}
       ${metric('Renewals', `<span class="status status--warning">${icon('triangle-exclamation-point')}<span class="status__text">To check</span></span>`, '7', 'Requests waiting for a residency check')}
       ${metric('Tool locker', `<span class="status status--danger">${icon('circle-exclamation-point')}<span class="status__text">2 overdue</span></span>`, '5 out', '12 of 17 tools in the shed')}
@@ -151,9 +142,9 @@ const viewSwitch = (view: 'table' | 'cards') => `
 const toolbar = (query: string, count: string) => `
   <div class="card__band">
     <div class="cluster">
-      <div>
+      <div class="grow">
         <label for="plot-search" class="sr-only">Search plots</label>
-        <input id="plot-search" type="search" class="input input--sm" placeholder="Plot or name" value="${query}" />
+        <input id="plot-search" type="search" class="input input--sm w-full" size="20" placeholder="Plot or name" value="${query}" />
       </div>
       <div>
         <label for="filter-type" class="sr-only">Plot type</label>
@@ -172,7 +163,7 @@ const row = (p: Plot, selected: string[], expanded: string[]) => {
   return `
   <tr>
     <td class="table__col--index"><label class="choice"><input type="checkbox" class="checkbox-input" aria-label="Select plot ${p.id}"${selected.includes(p.id) ? ' checked' : ''} /></label></td>
-    <th scope="row" class="font-mono">${p.id}</th>
+    <th scope="row" class="font-mono table__cell--nowrap">${p.id}</th>
     <td>${p.type}</td>
     <td>
       <div class="inline">
@@ -318,7 +309,7 @@ const stepItem = (n: number, title: string, desc: string, state: 'done' | 'curre
   const cls = state === 'done' ? ' is-complete' : state === 'invalid' ? ' is-invalid' : '';
   const ind =
     state === 'done' ? icon('check') : state === 'invalid' ? icon('triangle-exclamation-point') : `${n}`;
-  const prefix = state === 'done' ? 'Completed: ' : state === 'current' ? 'Current: ' : state === 'invalid' ? 'Needs attention: ' : '';
+  const prefix = state === 'done' ? 'Completed: ' : state === 'current' ? 'Current: ' : state === 'invalid' ? 'Current, needs attention: ' : '';
   return `
   <li class="stepper__item${cls}"${state === 'current' || state === 'invalid' ? ' aria-current="step"' : ''}>
     <div class="stepper__step">
@@ -517,8 +508,17 @@ const page = (o: PageOpts = {}) => `
     ${header}
     ${frostNotice}
     <main id="main" class="main">
-      <div class="wrapper py-lg stack">
-        <h1 class="heading">Oakridge Commons</h1>
+      <div class="wrapper stack">
+        <div class="cluster cluster--between">
+          <h1 class="heading">Oakridge Commons</h1>
+          <div class="field field--inline">
+            <label for="site" class="field__label label">Garden</label>
+            <select id="site" class="select select--sm">
+              <option selected>Oakridge Commons</option>
+              <option>Riverside Meadows</option>
+            </select>
+          </div>
+        </div>
         ${o.loading ? '' : metrics}
         ${registry(o)}
       </div>
