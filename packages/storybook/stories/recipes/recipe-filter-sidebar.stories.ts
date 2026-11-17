@@ -1,4 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/html';
+import epimedium from './filter-sidebar/epimedium.jpg';
+import brunnera from './filter-sidebar/brunnera.jpg';
+import pulmonaria from './filter-sidebar/pulmonaria.jpg';
+import tiarella from './filter-sidebar/tiarella.jpg';
+import geranium from './filter-sidebar/geranium.jpg';
+import polystichum from './filter-sidebar/polystichum.jpg';
 
 const meta: Meta = {
   title: 'Recipes/Filter Sidebar',
@@ -17,7 +23,7 @@ A catalogue page: filters in a side pane, results in a grid, with the active fil
 - **On a wide screen the filters are a side pane;** they come first in the source because they're read first. **Below 48rem they move into a start-side drawer** (\`.dialog--drawer.dialog--start\`), opened by a Filters Button beside the count that says how many are on, so the results come straight after the heading. The drawer's footer shows the results and closes it. The pane and the drawer are two copies of the form, so each has its own ids.
 - **The results have a heading** (\`sr-only\`, "Results"), so the Card titles sit under an \`h2\` at every width, with the pane hidden too.
 - **Active filters** are a list of removable chips, each remove button naming its value. The result count is a \`role="status"\` line, so a change is announced.
-- **Result cards** link from the title, stretched over the card (\`.link--stretched\`), and fill their grid cell (\`h-full\`), so a row's cards line up. The title is a subtle link, so the accent is saved for actions. Stock is a status with text, never colour alone: \`status--plain\` for in stock, and the boxed status for the exception, Pre-order.
+- **Result cards** open with a photo of the plant (\`card__thumb\`, at 3:2 through \`--card-thumb-aspect-ratio\` on the grid). The photos are from Wikimedia Commons, credited in the page's footer with links to each source and licence. Cards link from the title, stretched over the card (\`.link--stretched\`), and fill their grid cell (\`h-full\`), so a row's cards line up. The title is a subtle link, so the accent is saved for actions. Stock is a status with text, never colour alone: \`status--plain\` for in stock, and the boxed status for the exception, Pre-order.
 - **No results** keeps the filters and the chips, and offers to clear them. **Loading** marks the grid \`aria-busy\` with skeleton cards and says so in the status line.
         `,
       },
@@ -123,18 +129,25 @@ const drawer = (selected: Selected, count: string) => `
     </form>
   </dialog>`;
 
+/* Photos from Wikimedia Commons; filter-sidebar/CREDITS.md lists them */
+type Credit = { by: string; licence: string; licenceUrl: string; source: string };
+const BYSA4 = ['CC BY-SA 4.0', 'https://creativecommons.org/licenses/by-sa/4.0/'];
+const CC0 = ['CC0', 'https://creativecommons.org/publicdomain/zero/1.0/'];
+const credit = (by: string, [licence, licenceUrl]: string[], file: string): Credit => ({ by, licence, licenceUrl, source: `https://commons.wikimedia.org/wiki/File:${file}` });
+
 const plants = [
-  ['Epimedium', 'Heart-shaped leaves and spurred spring flowers. Copes with dry shade.', '£9.50', true],
-  ['Brunnera', 'Forget-me-not blue flowers over silver-veined leaves.', '£8.75', true],
-  ['Pulmonaria', 'Spotted leaves and early flowers that open pink and turn blue.', '£7.25', false],
-  ['Tiarella', 'Foamy white spikes in late spring; spreads by runners.', '£6.95', true],
-  ['Geranium macrorrhizum', 'Scented, evergreen ground cover with pink flowers.', '£5.50', true],
-  ['Polystichum', 'An evergreen shield fern for the back of a shady border.', '£12.00', false],
+  ['Epimedium', 'Heart-shaped leaves and spurred spring flowers. Copes with dry shade.', '£9.50', true, epimedium, credit('Lyonothamnus', BYSA4, 'Epimedium_pubigerum_flowers_and_foliage.jpg')],
+  ['Brunnera', 'Forget-me-not blue flowers over silver-veined leaves.', '£8.75', true, brunnera, credit('MartinThoma', CC0, 'Brunnera-macrophhylla-1.jpg')],
+  ['Pulmonaria', 'Spotted leaves and early flowers that open pink and turn blue.', '£7.25', false, pulmonaria, credit('Uoaei1', BYSA4, 'Pulmonaria_officinalis_20180402.jpg')],
+  ['Tiarella', 'Foamy white spikes in late spring; spreads by runners.', '£6.95', true, tiarella, credit('Cbaile19', CC0, 'Tiarella_cordifolia,_2024-05-02,_Bird_Park,_01.jpg')],
+  ['Geranium macrorrhizum', 'Scented, evergreen ground cover with pink flowers.', '£5.50', true, geranium, credit('GT1976', BYSA4, '2018-05-13_(129)_Geranium_macrorrhizum_(Rock_Crane%27s-bill)_at_Bichlh%C3%A4usl_in_Frankenfels,_Austria.jpg')],
+  ['Polystichum', 'An evergreen shield fern for the back of a shady border.', '£12.00', false, polystichum, credit('Ermell', BYSA4, 'Polystichum_setiferum-20210427-RM-165358.jpg')],
 ] as const;
 
-const plantCard = ([name, desc, price, inStock]: (typeof plants)[number]) => `
+const plantCard = ([name, desc, price, inStock, photo]: (typeof plants)[number]) => `
   <li>
     <article class="card h-full">
+      <div class="card__thumb"><img src="${photo}" alt="" loading="lazy" /></div>
       <header class="card__header">
         <h3 class="card__title subheading"><a href="#" class="link link--subtle link--plain link--stretched">${name}</a></h3>
       </header>
@@ -146,9 +159,19 @@ const plantCard = ([name, desc, price, inStock]: (typeof plants)[number]) => `
     </article>
   </li>`;
 
+const credits = `
+  <footer class="footer">
+    <div class="footer__bar">
+      <p class="small-text text-muted">Photos from Wikimedia Commons: ${plants
+    .map(([name, , , , , c]) => `${name} by <a href="${c.source}" class="link">${c.by}</a> (<a href="${c.licenceUrl}" class="link">${c.licence}</a>)`)
+    .join(', ')}.</p>
+    </div>
+  </footer>`;
+
 const skeletonCard = (w: string) => `
   <li>
     <article class="card h-full">
+      <div class="card__thumb"><span class="skeleton skeleton--media" style="--skeleton-width: 100%;" aria-hidden="true"></span></div>
       <header class="card__header"><div class="small-heading"><span class="skeleton skeleton--heading ${w}" aria-hidden="true"></span></div></header>
       <div class="card__body">
         <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true"></span><span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span></p>
@@ -177,7 +200,7 @@ const toolbar = (active: string[], count: string) => `
   </div>
   ${active.length ? `<ul class="cluster gap-xs" aria-label="Active filters">${active.map(chip).join('')}</ul>` : ''}`;
 
-const page = (side: string, results: string, drawerHtml: string) => `
+const page = (side: string, results: string, drawerHtml: string, foot = '') => `
   <a href="#main" class="skip-link">Skip to results</a>
   <header class="header">
     <div class="header__bar max-md:hide-labels">
@@ -187,7 +210,7 @@ const page = (side: string, results: string, drawerHtml: string) => `
   </header>
   <main id="main" class="wrapper py-lg stack">
     <h1 class="heading">Shade plants</h1>
-    <div class="split split--sm">
+    <div class="split split--sidebar">
       <div class="max-md:hide">${side}</div>
       <div class="stack">
         <h2 class="sr-only">Results</h2>
@@ -195,6 +218,7 @@ const page = (side: string, results: string, drawerHtml: string) => `
       </div>
     </div>
   </main>
+  ${foot}
   ${drawerHtml}`;
 
 const defaults: Selected = { light: ['part', 'shade'], colours: ['Blue', 'White'] };
@@ -204,8 +228,9 @@ export const Default: Story = {
     page(
       filters(defaults),
       `${toolbar(['Part shade', 'Full shade', 'Blue', 'White'], '6 plants')}
-      <ul class="grid grid--xs" role="list">${plants.map(plantCard).join('')}</ul>`,
+      <ul class="grid grid--xs" role="list" style="--card-thumb-aspect-ratio: 3 / 2;">${plants.map(plantCard).join('')}</ul>`,
       drawer(defaults, '6 plants'),
+      credits,
     ),
 };
 
