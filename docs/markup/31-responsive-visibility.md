@@ -94,7 +94,11 @@ Hide something, its labels, or everything but its accessible name, by a conditio
 | Class | Effect |
 | :--- | :--- |
 | `.sr-only` (`.visually-hidden`) | Hidden on screen; still read by screen readers, voice control and translation |
+<<<<<<< ours
 | `.hide-labels` | Sets `--ui-labels: hidden`. Buttons and Tabs inside show only their icon and keep the text as their accessible name; any `.ui-label` inside is visually hidden |
+=======
+| `.hide-labels` | Sets `--ui-labels: hidden`. Buttons and Tabs inside show only their icon and keep the text as their accessible name, a Brand shows only its Mark, and any `.ui-label` inside is visually hidden. It stops at a Popover or Dialog inside, so a menu opened from an icon-only bar keeps its labels |
+>>>>>>> theirs
 | `{condition}:hide` | `display: none` while the condition holds |
 | `{condition}:hide-labels` | `.hide-labels` while the condition holds |
 | `{condition}:sr-only` (`{condition}:visually-hidden`) | `.sr-only` while the condition holds |
