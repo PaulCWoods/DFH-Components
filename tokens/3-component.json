@@ -1029,6 +1029,24 @@
       "$value": "{panel.border-style}",
       "$type": "strokeStyle"
     },
+    "bordered-border-width": {
+      "$value": "{card.border-width}",
+      "$type": "dimension",
+      "$description": "The border --bordered draws; set it where cards or panels have none"
+    },
+    "bordered-border-color": {
+      "$value": "{card.border-color}",
+      "$type": "color"
+    },
+    "bordered-border-style": {
+      "$value": "{card.border-style}",
+      "$type": "strokeStyle"
+    },
+    "bordered-shadow": {
+      "$value": "{card.shadow}",
+      "$type": "shadow",
+      "$description": "Shadow of a bordered card; unset, it keeps its prominence's shadow"
+    },
     "radius": {
       "$value": "{radius}",
       "$type": "dimension"

@@ -107,7 +107,7 @@ const frostNotice = `
   </aside>`;
 
 const metric = (title: string, status: string, value: string, note: string, extra = '') => `
-  <article class="card card--compact">
+  <article class="card card--compact card--bordered card--plain">
     <header class="card__header">
       <h3 class="card__title small-heading">${title}</h3>
       ${status}

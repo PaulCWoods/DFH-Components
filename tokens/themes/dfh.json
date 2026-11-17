@@ -649,6 +649,7 @@
     "accordion.border-color": "{border.color.quiet}",
     "accordion.radius": "{radius}",
     "brand.font-weight": "{font-weight.bold}",
+    "card.bordered-border-width": "{border.width.thin}",
     "header.bg": "{surface.subtle}",
     "footer.bg": "{surface.subtle}",
     "sidebar.bg": "{surface.subtle}"

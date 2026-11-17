@@ -226,6 +226,8 @@
     --button-icon-size: 1.2;
     --button-radius: var(--radius-lg);
     --card-border-width: var(--border-width-none);
+    --card-bordered-border-width: var(--border-width-thin);
+    --card-bordered-shadow: var(--shadow-none);
     --card-shadow: var(--shadow-sm);
     --footer-bg: var(--surface-subtle);
     --footer-padding-block: var(--spacing-cushion-lg);
@@ -238,6 +240,7 @@
   }
 
   :where(.color-palette-inverted, .colors-inverted) {
+    --card-bordered-shadow: var(--shadow-none);
     --card-shadow: var(--shadow-sm);
     --footer-bg: var(--surface-subtle);
     --header-bg: var(--surface-subtle);
@@ -246,6 +249,7 @@
 
   * {
     @container style(--color-palette: inverted) {
+      --card-bordered-shadow: var(--shadow-none);
       --card-shadow: var(--shadow-sm);
       --footer-bg: var(--surface-subtle);
       --header-bg: var(--surface-subtle);

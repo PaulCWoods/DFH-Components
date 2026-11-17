@@ -634,7 +634,9 @@
     "poster.content-padding": "{spacing.cushion}",
     "footer.padding-block": "{spacing.cushion-lg}",
     "header.padding-block": "{spacing.breathe}",
-    "button.icon-size": "1.2"
+    "button.icon-size": "1.2",
+    "card.bordered-border-width": "{border.width.thin}",
+    "card.bordered-shadow": "{shadow.none}"
   },
   "mixes": {
     "color.muted": {

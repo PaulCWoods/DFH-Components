@@ -52,6 +52,14 @@
   --_card-edge: var(--card-border-width, var(--panel-border-width, 1px));
   --_card-no-edge: 0px;
   --_card-border-style: var(--card-border-style, var(--panel-border-style, solid));
+  /* The border --bordered draws has tokens of its own, each falling back
+     to the card's border, so a theme whose cards or panels have no border
+     can still border a card by setting card.bordered-border-width. Its
+     shadow falls back to the prominence's */
+  --_card-line: var(--card-bordered-border-width, var(--card-border-width, var(--panel-border-width, 1px)));
+  --_card-line-color: var(--card-bordered-border-color, var(--card-border-color, var(--panel-border-color, currentColor)));
+  --_card-line-style: var(--card-bordered-border-style, var(--_card-border-style));
+  --_card-line-shadow: var(--card-bordered-shadow, var(--_card-prominence-shadow));
   --_card-corners: var(--card-radius, var(--radius, 0.5rem));
   --_card-ring: 0px;
   --_card-self-padding: 0px;
@@ -78,13 +86,15 @@
   --_card-prominence-radius: var(--_card-corners);
   --_card-prominence-shadow: var(--card-shadow, var(--shadow-none, none));
   --_card-chrome-border-width: initial;
+  --_card-chrome-border-color: initial;
+  --_card-chrome-border-style: initial;
   --_card-chrome-radius: initial;
   --_card-chrome-shadow: initial;
   --_card-intent-color: initial;
   --_card-intent-border-width: initial;
   --_card-intent-shadow: initial;
   --_card-border-width: var(--_card-intent-border-width, var(--_card-chrome-border-width, var(--_card-prominence-border-width)));
-  --_card-border-color: var(--_card-intent-color, var(--card-border-color, var(--panel-border-color, currentColor)));
+  --_card-border-color: var(--_card-intent-color, var(--_card-chrome-border-color, var(--card-border-color, var(--panel-border-color, currentColor))));
   --_card-radius: var(--_card-chrome-radius, var(--_card-prominence-radius));
   --_card-shadow: var(--_card-chrome-shadow, var(--_card-prominence-shadow));
 
@@ -109,7 +119,6 @@
   @container style(--card-prominence: plain) {
     --_card-fill: transparent;
     --_card-prominence-border-width: 0px;
-    --_card-prominence-radius: 0px;
     --_card-prominence-shadow: none;
   }
 
@@ -121,7 +130,10 @@
   }
 
   @container style(--card-chrome: bordered) {
-    --_card-chrome-border-width: var(--_card-edge);
+    --_card-chrome-border-width: var(--_card-line);
+    --_card-chrome-border-color: var(--_card-line-color);
+    --_card-chrome-border-style: var(--_card-line-style);
+    --_card-chrome-shadow: var(--_card-line-shadow);
   }
 
   /* Intent flag: the border and ring in the intent colour, at any
@@ -183,7 +195,7 @@
   overflow: clip;
 
   background-color: var(--_card-bg);
-  border: var(--_card-border-width) var(--_card-border-style) var(--_card-border-color);
+  border: var(--_card-border-width) var(--_card-chrome-border-style, var(--_card-border-style)) var(--_card-border-color);
   border-radius: var(--_card-radius);
   box-shadow: var(--_card-shadow);
   color: var(--foreground, CanvasText);
@@ -230,7 +242,6 @@
 :where(.card--plain) {
   --_card-fill: transparent;
   --_card-prominence-border-width: 0px;
-  --_card-prominence-radius: 0px;
   --_card-prominence-shadow: none;
 }
 
@@ -249,7 +260,10 @@
 }
 
 :where(.card--bordered) {
-  --_card-chrome-border-width: var(--_card-edge);
+  --_card-chrome-border-width: var(--_card-line);
+  --_card-chrome-border-color: var(--_card-line-color);
+  --_card-chrome-border-style: var(--_card-line-style);
+  --_card-chrome-shadow: var(--_card-line-shadow);
 }
 
 /* Intent: the border and ring in the intent colour, at any prominence or
@@ -321,7 +335,6 @@
   :where(.\@max-2xl\:card--plain) {
     --_card-fill: transparent;
     --_card-prominence-border-width: 0px;
-    --_card-prominence-radius: 0px;
     --_card-prominence-shadow: none;
   }
 
@@ -332,7 +345,10 @@
   }
 
   :where(.\@max-2xl\:card--bordered) {
-    --_card-chrome-border-width: var(--_card-edge);
+    --_card-chrome-border-width: var(--_card-line);
+    --_card-chrome-border-color: var(--_card-line-color);
+    --_card-chrome-border-style: var(--_card-line-style);
+    --_card-chrome-shadow: var(--_card-line-shadow);
   }
 
   :where(.\@max-2xl\:card--flush) {
@@ -344,7 +360,6 @@
   :where(.\@max-md\:card--plain) {
     --_card-fill: transparent;
     --_card-prominence-border-width: 0px;
-    --_card-prominence-radius: 0px;
     --_card-prominence-shadow: none;
   }
 
@@ -355,7 +370,10 @@
   }
 
   :where(.\@max-md\:card--bordered) {
-    --_card-chrome-border-width: var(--_card-edge);
+    --_card-chrome-border-width: var(--_card-line);
+    --_card-chrome-border-color: var(--_card-line-color);
+    --_card-chrome-border-style: var(--_card-line-style);
+    --_card-chrome-shadow: var(--_card-line-shadow);
   }
 
   :where(.\@max-md\:card--flush) {
@@ -369,6 +387,7 @@
   :where(.card) {
     --_card-edge: var(--border-width-medium, 2px);
     --_card-no-edge: var(--border-width-medium, 2px);
+    --_card-line: max(var(--card-bordered-border-width, var(--card-border-width, var(--panel-border-width, 1px))), var(--border-width-medium, 2px));
     --_card-chrome-shadow: none;
   }
 }
@@ -433,14 +452,14 @@
 }
 
 /* A flush part has no padding to reach past */
-:where(.card__header--flush, .card__body--flush, .card__footer--flush) > :where(.card__bleed) {
+:where(.card__header--flush, .card__body--flush, .card__footer--flush)> :where(.card__bleed) {
   --_card-bleed: 0px;
 }
 
 /* Straight in the card: it reaches past the card's own padding (none
    beside parts, which pad themselves) and starts where the parts' content
    does, or the card's content where it has no parts */
-:where(.card) > :where(.card__bleed) {
+:where(.card)> :where(.card__bleed) {
   --_card-bleed: var(--_card-self-padding);
   --_card-bleed-inset: max(var(--_card-self-padding), var(--_card-padding));
 }

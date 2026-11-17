@@ -43,6 +43,7 @@ Parts (\`__thumb\`, \`__header\`, \`__band\`, \`__body\`, \`__footer\`) are dire
 - \`--ruled\` draws rules between parts; \`.card__band\` (\`--subtle\`) is a full-width strip between them.
 - Dialog and popover set \`--card-prominence: strong\` for the card they hold. A card resets the flag for cards nested inside it.
 - One modifier per axis: \`.card--plain.card--bordered\` is an outline, \`.card--subtle.card--flat\` a square tint, \`.card--plain.card--flush\` the content alone.
+- The border \`--bordered\` draws has its own tokens, \`--card-bordered-border-width\`, \`-color\` and \`-style\`, falling back to the Card's border; set the width where Cards or panels have none. \`--card-bordered-shadow\` sets its shadow (unset, the prominence's).
 - Intent marks a state (live, selected, at risk) and is never colour alone: the card says it in words too, usually with a status of the same intent. It draws the border at any prominence or chrome, and its ring sits outside the border, so a card changing state doesn't move its content. A strong card's shadow, and a linked card's hover shadow, take the intent colour.
 - \`@max-2xl:\` (below 42rem) and \`@max-md:\` (below 28rem) versions of \`--plain\`, \`--flat\`, \`--bordered\` and \`--flush\` apply while the nearest size container is narrow.
 
