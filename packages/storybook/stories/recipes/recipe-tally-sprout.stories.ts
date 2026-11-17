@@ -15,7 +15,7 @@ An admin dashboard for a community garden: plot occupancy at a glance, a registr
 **Decisions:**
 - **The frost warning** is a banner dock in the app shell, which puts it under the header, where a notice about the whole site belongs.
 - **The garden picker** sits beside the page heading, the garden's name, so it stays on a phone; the header keeps only the brand and the two actions, which show only their icons below 48rem.
-- **The four figures** are a grid of at most four columns at the smallest width (\`grid--2xs grid--4-col\`): four across on a wide screen, two on a phone.
+- **The four figures** are a grid of at most four columns at the smallest width (\`grid--2xs grid--4-col\`): four across on a wide screen, two on a phone. Each has a status in its header, so the four figures share a line.
 - **The registry is one card.** Its header holds the title and the view switch; a band holds the search and filters; the flush body holds the table, the card grid or the empty state. The result count is a \`role="status"\` line.
 - **The view switch** is a joined button group of native radios (§14 C): arrow keys work with no script.
 - **Selection** is a checkbox per row, named after the plot. While rows are selected, docked batch actions appear at the foot of the card, their summary a status.
@@ -83,7 +83,7 @@ const header = `
       <a href="#" class="brand"><span class="brand__name">Tally &amp; Sprout</span></a>
       <div class="cluster gap-xs">
         <button type="button" class="button button--subtle" commandfor="tool-locker" command="show-modal" aria-haspopup="dialog">
-          ${icon('cog')}<span>Tool locker</span><span class="sr-only">, 2 overdue</span>
+          ${icon('box')}<span>Tool locker</span><span class="sr-only">, 2 overdue</span>
           <span class="badge badge--danger badge--top-end" aria-hidden="true"><span class="badge__text">2</span></span>
         </button>
         <button type="button" class="button button--strong button--accent" commandfor="lease-dialog" command="show-modal" aria-haspopup="dialog">
@@ -113,7 +113,7 @@ const metric = (title: string, status: string, value: string, note: string, extr
       ${status}
     </header>
     <div class="card__body stack gap-xs">
-      <p class="heading font-mono">${value}</p>
+      <p class="heading">${value}</p>
       <p class="small-text text-muted">${note}</p>
       ${extra}
     </div>
@@ -123,10 +123,10 @@ const metrics = `
   <section aria-labelledby="metrics-title" class="stack">
     <h2 id="metrics-title" class="sr-only">This season</h2>
     <div class="grid grid--2xs grid--4-col">
-      ${metric('Occupancy', `<span class="status status--success"><span class="status__text">88% let</span></span>`, '42 / 48', '6 plots resting this season')}
+      ${metric('Occupancy', `<span class="status status--success">${icon('check')}<span class="status__text">88% let</span></span>`, '42 / 48', '6 plots resting this season')}
       ${metric('Renewals', `<span class="status status--warning">${icon('triangle-exclamation-point')}<span class="status__text">To check</span></span>`, '7', 'Requests waiting for a residency check')}
       ${metric('Tool locker', `<span class="status status--danger">${icon('circle-exclamation-point')}<span class="status__text">2 overdue</span></span>`, '5 out', '12 of 17 tools in the shed')}
-      ${metric('Rainwater', '', '7,850 L', '78% of 10,000 L, about 18 days', '<progress class="progress" value="78" max="100" aria-label="Rainwater tank"></progress>')}
+      ${metric('Rainwater', `<span class="status status--success">${icon('check')}<span class="status__text">78% full</span></span>`, '7,850 L', 'Of 10,000 L, about 18 days at this rate', '<progress class="progress" value="78" max="100" aria-label="Rainwater tank"></progress>')}
     </div>
   </section>`;
 

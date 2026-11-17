@@ -16,7 +16,8 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 
 `recipe-app-header.stories.ts`: a product header with primary navigation, search, notifications and an account Menu.
 
-- **Composes:** header, Tab List, Navigation Tree, Dialog drawer, Popover and Menu, Card, Avatar and Avatar Group, Breadcrumb, command palette (B).
+- **Composes:** header, Tab List, Navigation Tree, Dialog drawer, Popover and Menu, Card, Icon Box, Table, Avatar and Avatar Group, Breadcrumb, command palette (B).
+- **The page** under the Header is a real one: a title and lead, three section Cards each with an Icon Box, and a Card of recent changes as a Table.
 - **Narrow screens:** the Header is a container. Below `@3xl` the Tab List hides (`@max-3xl:hide`). A menu Button (`@3xl:hide`) opens the same navigation in a `.dialog--drawer.dialog--start`, and the bar hides its labels (`@max-3xl:hide-labels` on the `header__bar`): the actions show only their icons and the Brand its Mark, so the bar stays one row. The menus they open keep their labels.
 - **Stories:** Default, NavigationDrawer, Notifications, AccountMenu, Search, TwoRows.
 

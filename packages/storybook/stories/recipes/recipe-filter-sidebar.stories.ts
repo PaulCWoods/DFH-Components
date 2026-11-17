@@ -17,7 +17,7 @@ A catalogue page: filters in a side pane, results in a grid, with the active fil
 - **On a wide screen the filters are a side pane;** they come first in the source because they're read first. **Below 48rem they move into a start-side drawer** (\`.dialog--drawer.dialog--start\`), opened by a Filters Button beside the count that says how many are on, so the results come straight after the heading. The drawer's footer shows the results and closes it. The pane and the drawer are two copies of the form, so each has its own ids.
 - **The results have a heading** (\`sr-only\`, "Results"), so the Card titles sit under an \`h2\` at every width, with the pane hidden too.
 - **Active filters** are a list of removable chips, each remove button naming its value. The result count is a \`role="status"\` line, so a change is announced.
-- **Result cards** link from the title, stretched over the card (\`.link--stretched\`), and fill their grid cell (\`h-full\`), so a row's cards line up. Stock is a status with text, never colour alone.
+- **Result cards** link from the title, stretched over the card (\`.link--stretched\`), and fill their grid cell (\`h-full\`), so a row's cards line up. The title is a subtle link, so the accent is saved for actions. Stock is a status with text, never colour alone: \`status--plain\` for in stock, and the boxed status for the exception, Pre-order.
 - **No results** keeps the filters and the chips, and offers to clear them. **Loading** marks the grid \`aria-busy\` with skeleton cards and says so in the status line.
         `,
       },
@@ -48,7 +48,7 @@ const facet = (title: string, body: string, open = true) => `
 
 const colours = ['White', 'Blue', 'Pink', 'Purple', 'Yellow'];
 
-type Selected = { light: string[]; colours: string[] };
+type Selected = { light: string[]; colours: string[]; stock?: boolean };
 
 /* The facets, with ids prefixed for each copy of the form (p) */
 const facets = (selected: Selected, p: string) => `
@@ -90,7 +90,7 @@ const facets = (selected: Selected, p: string) => `
         ${facet(
   'Availability',
   `<div class="stack gap-xs">
-            <div class="switch"><label for="${p}filter-stock" class="switch__label label">In stock only</label><span class="switch__control"><input type="checkbox" role="switch" id="${p}filter-stock" name="stock" checked /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
+            <div class="switch"><label for="${p}filter-stock" class="switch__label label">In stock only</label><span class="switch__control"><input type="checkbox" role="switch" id="${p}filter-stock" name="stock"${selected.stock ? ' checked' : ''} /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
             <div class="switch"><label for="${p}filter-native" class="switch__label label">Native species</label><span class="switch__control"><input type="checkbox" role="switch" id="${p}filter-native" name="native" /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
           </div>`,
   false,
@@ -136,12 +136,12 @@ const plantCard = ([name, desc, price, inStock]: (typeof plants)[number]) => `
   <li>
     <article class="card h-full">
       <header class="card__header">
-        <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">${name}</a></h3>
+        <h3 class="card__title subheading"><a href="#" class="link link--subtle link--plain link--stretched">${name}</a></h3>
       </header>
       <div class="card__body"><p class="small-text">${desc}</p></div>
       <footer class="card__footer inline inline--between">
         <span class="small-text font-bold">${price}</span>
-        ${inStock ? '<span class="status status--success">' + icon('check') + '<span class="status__text">In stock</span></span>' : '<span class="status"><span class="status__text">Pre-order</span></span>'}
+        ${inStock ? '<span class="status status--plain status--success">' + icon('check') + '<span class="status__text">In stock</span></span>' : '<span class="status"><span class="status__text">Pre-order</span></span>'}
       </footer>
     </article>
   </li>`;
@@ -203,7 +203,7 @@ export const Default: Story = {
   render: () =>
     page(
       filters(defaults),
-      `${toolbar(['Part shade', 'Full shade', 'Blue', 'White', 'In stock'], '6 plants')}
+      `${toolbar(['Part shade', 'Full shade', 'Blue', 'White'], '6 plants')}
       <ul class="grid grid--xs" role="list">${plants.map(plantCard).join('')}</ul>`,
       drawer(defaults, '6 plants'),
     ),
@@ -213,7 +213,7 @@ export const NoResults: Story = {
   parameters: { docs: { description: { story: 'Nothing matches: the filters and chips stay, and the empty state offers to clear them.' } } },
   render: () =>
     page(
-      filters({ light: ['sun'], colours: ['Yellow'] }),
+      filters({ light: ['sun'], colours: ['Yellow'], stock: true }),
       `${toolbar(['Full sun', 'Yellow', 'In stock'], 'No plants')}
       <div class="card">
         <div class="card__body">
@@ -229,7 +229,7 @@ export const NoResults: Story = {
           </div>
         </div>
       </div>`,
-      drawer({ light: ['sun'], colours: ['Yellow'] }, 'no plants'),
+      drawer({ light: ['sun'], colours: ['Yellow'], stock: true }, 'no plants'),
     ),
 };
 
@@ -238,7 +238,7 @@ export const Loading: Story = {
   render: () =>
     page(
       filters(defaults),
-      `${toolbar(['Part shade', 'Full shade', 'Blue', 'White', 'In stock'], 'Loading plants…')}
+      `${toolbar(['Part shade', 'Full shade', 'Blue', 'White'], 'Loading plants…')}
       <ul class="grid grid--xs" role="list" aria-busy="true">${['skeleton--w-50', 'skeleton--w-75', 'skeleton--w-50', 'skeleton--w-90', 'skeleton--w-75', 'skeleton--w-50'].map(skeletonCard).join('')}</ul>`,
       drawer(defaults, 'plants'),
     ),

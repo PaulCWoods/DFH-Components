@@ -23,7 +23,8 @@ A radio station's live desk: an icon rail and a section menu, the station header
 - **The queue's columns** are the time, the item, its length and status: the type is in the item's second line beside its icon, and the deck is the Split's narrower side (\`split--xs\`), so the titles keep one line.
 - **The transport** is a button group of icon buttons, with play as a round, strong accent button; every button is named. The position slider says the time in \`aria-valuetext\`.
 - **The queue** is a card holding a sticky-head table; row details open under the row, as in Tally & Sprout.
-- **Levels** are \`<meter>\`s with low, high and optimum set, so the browser colours them, and each is named.
+- **Levels** are \`<meter>\`s with low, high and optimum set, so the browser colours them: green in the working range, amber when they run hot. Each is named.
+- **The station figures** are a plain Telemetry group, so they don't compete with the deck.
 - **Buffering** keeps the shell, puts the problem in a warning banner with a retry action, and marks the queue \`aria-busy\`.
         `,
       },
@@ -141,13 +142,13 @@ const stationHeader = (buffering: boolean) => `
         </select>
         ${buffering
     ? `<span class="status status--plain status--warning">${icon('triangle-exclamation-point')}<span class="status__text">Reconnecting</span></span>`
-    : `<span class="status status--plain status--success">${icon('Record')}<span class="status__text">Live, 320k AAC</span></span>`
+    : `<span class="status status--plain status--success">${icon('circle-filled')}<span class="status__text">Live, 320k AAC</span></span>`
   }
       </div>
       <dl class="telemetry-group @max-3xl:hide" aria-label="Station">
-        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">${icon('user')}Listeners</dt><dd class="small-heading">${buffering ? '—' : '14,820'}</dd></div>
-        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">Peak</dt><dd class="small-heading">28,450</dd></div>
-        <div class="telemetry telemetry--compact telemetry--inline "><dt class="small-text text-muted">Latency</dt><dd class="small-heading">${buffering ? '250' : '42'}<span class="small-text">ms</span></dd></div>
+        <div class="telemetry telemetry--compact telemetry--inline telemetry--plain"><dt class="small-text text-muted">${icon('user')}Listeners</dt><dd class="small-heading">${buffering ? '—' : '14,820'}</dd></div>
+        <div class="telemetry telemetry--compact telemetry--inline telemetry--plain"><dt class="small-text text-muted">Peak</dt><dd class="small-heading">28,450</dd></div>
+        <div class="telemetry telemetry--compact telemetry--inline telemetry--plain"><dt class="small-text text-muted">Latency</dt><dd class="small-heading">${buffering ? '250' : '42'}<span class="small-text">ms</span></dd></div>
       </dl>
       <div class="cluster gap-xs @max-6xl:hide-labels">
         <button type="button" class="button button--danger" aria-pressed="false">${icon('volume-x')}<span>Mute all</span></button>
@@ -180,10 +181,10 @@ const trackInfo = (id: string) => `
     </article>
   </div>`;
 
-const transport = (label: string, size = ' button--lg') => `
+const transport = (label: string, size = ' button--lg', playing = true) => `
   <div class="button-group justify-center" role="group" aria-label="${label}">
     <button type="button" class="button button--plain button--icon">${icon('chevron-first', 'icon icon--dir')}<span class="sr-only">Back to start</span></button>
-    <button type="button" class="button button--strong button--accent button--icon button--round${size}">${icon('pause')}<span class="sr-only">Pause</span></button>
+    <button type="button" class="button button--strong button--accent button--icon button--round${size}">${icon(playing ? 'pause' : 'play')}<span class="sr-only">${playing ? 'Pause' : 'Play'}</span></button>
     <button type="button" class="button button--plain button--icon">${icon('chevron-last', 'icon icon--dir')}<span class="sr-only">Next track</span></button>
   </div>`;
 
@@ -203,22 +204,22 @@ const volume = (id: string) => `
 const levels = (id: string) => `
   <div class="stack gap-xs" role="group" aria-labelledby="${id}-levels">
     <p id="${id}-levels" class="micro-heading text-muted">Output level</p>
-    <div class="inline"><span class="small-text font-mono" aria-hidden="true">L</span><meter class="meter meter--sm grow" min="0" max="100" low="65" high="90" optimum="50" value="82" aria-label="Left">−2.1 dB</meter></div>
-    <div class="inline"><span class="small-text font-mono" aria-hidden="true">R</span><meter class="meter meter--sm grow" min="0" max="100" low="65" high="90" optimum="50" value="79" aria-label="Right">−2.8 dB</meter></div>
+    <div class="inline"><span class="small-text font-mono" aria-hidden="true">L</span><meter class="meter meter--sm grow" min="0" max="100" low="40" high="90" optimum="70" value="82" aria-label="Left">−2.1 dB</meter></div>
+    <div class="inline"><span class="small-text font-mono" aria-hidden="true">R</span><meter class="meter meter--sm grow" min="0" max="100" low="40" high="90" optimum="70" value="79" aria-label="Right">−2.8 dB</meter></div>
   </div>`;
 
-const art = (spinning: boolean) =>
-  `<span class="thumbnail thumbnail--round deck__vinyl${spinning ? ' is-spinning' : ''}" aria-hidden="true"></span>`;
+const art = (spinning: boolean, size = '') =>
+  `<span class="thumbnail thumbnail--round deck__vinyl${spinning ? ' is-spinning' : ''}"${size ? ` style="--thumbnail-size: ${size};"` : ''} aria-hidden="true"></span>`;
 
 const deck = (id: string, name: string, state: 'on-air' | 'cue') => `
   <section class="card ${state === 'on-air' ? 'card--strong card--success' : 'card--strong card--warning'}" aria-labelledby="${id}-title">
     <header class="card__header">
       <div class="inline grow">
         ${state === 'on-air'
-    ? `<span class="status status--success">${icon('Record')}<span class="status__text">On air</span></span>`
+    ? `<span class="status status--success">${icon('circle-filled')}<span class="status__text">On air</span></span>`
     : `<span class="status status--warning">${icon('pause')}<span class="status__text">Cued</span></span>`
   }
-        <h2 id="${id}-title" class="micro-heading">${name}</h2>
+        <h2 id="${id}-title" class="micro-heading text-muted">${name}</h2>
       </div>
       ${trackInfo(id)}
     </header>
@@ -226,12 +227,12 @@ const deck = (id: string, name: string, state: 'on-air' | 'cue') => `
       <div class="inline">
         ${art(state === 'on-air')}
         <div class="lockup">
-          <span class="small-heading">${state === 'on-air' ? 'Celestial Horizon' : 'Midnight Resonator'}</span>
+          <span class="subheading">${state === 'on-air' ? 'Celestial Horizon' : 'Midnight Resonator'}</span>
           <span class="small-text text-muted">${state === 'on-air' ? 'Aura &amp; Tycho' : 'Solar Fields'}</span>
         </div>
       </div>
       ${position(id)}
-      ${transport(`${name} transport`)}
+      ${transport(`${name} transport`, ' button--lg', state === 'on-air')}
       ${volume(id)}
       ${levels(id)}
     </div>
@@ -264,7 +265,7 @@ const typeIcon = { Music: 'eighth-notes', 'Station ID': 'radio', Ad: 'star' } as
 
 const queueStatus = (s: Item['status']) =>
   s === 'On air'
-    ? `<span class="status status--success">${icon('Record')}<span class="status__text">On air</span></span>`
+    ? `<span class="status status--success">${icon('circle-filled')}<span class="status__text">On air</span></span>`
     : s === 'Next'
       ? `<span class="status status--accent"><span class="status__text">Next</span></span>`
       : `<span class="status"><span class="status__text">Queued</span></span>`;
@@ -363,13 +364,13 @@ const dock = (buffering: boolean) => `
       <input type="range" class="range range--sm" min="0" max="232" value="134" style="--value: 58%;" aria-label="Position" aria-valuetext="2 minutes 14 seconds of 3 minutes 52 seconds" />
       <div class="footer__bar bar">
         <div class="inline">
-          ${art(!buffering)}
+          ${art(!buffering, '2.5rem')}
           <div class="lockup">
             <span class="small-heading truncate">Celestial Horizon</span>
             <span class="small-text text-muted truncate">${buffering ? 'Paused, waiting to reconnect' : 'Aura &amp; Tycho'}</span>
           </div>
         </div>
-        ${transport('Player transport', '')}
+        ${transport('Player transport', '', !buffering)}
         <div class="inline">
           <span class="small-text font-mono text-muted whitespace-nowrap max-lg:hide" aria-hidden="true">2:14 / 3:52</span>
           ${volume('dock')}

@@ -106,30 +106,62 @@ const drawer = `
   </dialog>`;
 
 const sections = [
-  ['Components', 'Buttons, Cards, Dialogs, Tables and the rest, each with its rules and examples.'],
-  ['Tokens', 'Colour, type, spacing and shape, set once in a theme and shared with Figma.'],
-  ['Guidelines', 'Accessibility, writing and composition: how the parts fit into a screen.'],
+  ['box', 'Components', 'Buttons, Cards, Dialogs, Tables and the rest, each with its rules and examples.'],
+  ['contrast', 'Tokens', 'Colour, type, spacing and shape, set once in a theme and shared with Figma.'],
+  ['compass', 'Guidelines', 'Accessibility, writing and composition: how the parts fit into a screen.'],
+];
+
+const changes = [
+  ['Bar', 'New: one row with a start, a true centre and an end', '2026-11-17', '17 Nov'],
+  ['Stepper', 'A current step with errors shows as invalid', '2026-11-17', '17 Nov'],
+  ['Tab List', 'A docked bar leaves room for the end of the page', '2026-11-16', '16 Nov'],
+  ['Banner Dock', 'Sits under the Header in the app shell', '2026-11-15', '15 Nov'],
 ];
 
 const overview = `
   <main id="main" class="wrapper py-lg stack">
     <hgroup class="stack gap-xs">
-      <h1 class="heading">Overview</h1>
+      <h1 class="title">Overview</h1>
       <p class="large-text text-muted">An accessible component library built on web standards, with one set of tokens for code and Figma.</p>
     </hgroup>
     <ul class="grid grid--sm" role="list">
-      ${sections.map(([t, d]) => `
+      ${sections.map(([ic, t, d]) => `
       <li class="card">
-        <header class="card__header"><h2 class="card__title small-heading"><a href="#" class="link link--plain link--stretched">${t}</a></h2></header>
+        <header class="card__header">
+          <span class="icon-box icon-box--subtle" aria-hidden="true">${icon(ic)}</span>
+          <h2 class="card__title small-heading"><a href="#" class="link link--subtle link--plain link--stretched">${t}</a></h2>
+        </header>
         <div class="card__body"><p class="small-text text-muted">${d}</p></div>
       </li>`).join('')}
     </ul>
+    <section class="card" aria-labelledby="changes-title">
+      <header class="card__header">
+        <h2 id="changes-title" class="card__title subheading">Recently updated</h2>
+        <a href="#" class="link small-text">All changes</a>
+      </header>
+      <div class="card__body card__body--flush">
+        <div class="table-container">
+          <table class="table">
+            <caption class="sr-only">Recently updated pages</caption>
+            <thead><tr><th scope="col">Page</th><th scope="col">Change</th><th scope="col" class="table__cell--numeric">Updated</th></tr></thead>
+            <tbody>
+              ${changes.map(([page, change, iso, date]) => `
+              <tr>
+                <th scope="row" class="table__cell--nowrap"><a href="#" class="link">${page}</a></th>
+                <td class="small-text text-muted">${change}</td>
+                <td class="table__cell--numeric table__cell--nowrap"><time datetime="${iso}">${date}</time></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
   </main>`;
 
 const comboboxPage = `
   <main id="main" class="wrapper py-lg stack">
     <hgroup class="stack gap-xs">
-      <h1 class="heading">Combobox</h1>
+      <h1 class="title">Combobox</h1>
       <p class="large-text text-muted">A text field with a list of suggestions that narrows as you type.</p>
     </hgroup>
   </main>`;
