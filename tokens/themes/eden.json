@@ -673,7 +673,7 @@
         "transparent": 50
       },
       "dark": {
-        "color": "neutral.900",
+        "color": "black",
         "transparent": 50
       }
     },

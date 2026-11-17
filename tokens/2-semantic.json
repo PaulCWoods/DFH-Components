@@ -63,7 +63,7 @@
       "$description": "Low-contrast subtle tint for dividers and hair-lines"
     },
     "backdrop": {
-      "$value": "color-mix(in srgb, {color.neutral.900}, transparent {translucency.50})",
+      "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent {translucency.50}), color-mix(in srgb, {color.black}, transparent {translucency.50}))",
       "$description": "Overlay scrim background for modal dialogs"
     },
     "overlay": {
@@ -1767,7 +1767,7 @@
           "$value": "color-mix(in srgb, currentColor, transparent {translucency.50})"
         },
         "backdrop": {
-          "$value": "color-mix(in srgb, {color.neutral.900}, transparent {translucency.33})"
+          "$value": "light-dark(color-mix(in srgb, {color.neutral.900}, transparent {translucency.33}), color-mix(in srgb, {color.black}, transparent {translucency.33}))"
         },
         "overlay": {
           "$value": "light-dark(color-mix(in srgb, {color.neutral.000}, transparent {translucency.25}), color-mix(in srgb, {color.neutral.900}, transparent {translucency.25}))"
