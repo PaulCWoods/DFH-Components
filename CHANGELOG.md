@@ -12,6 +12,11 @@ The version number says how much checking an upgrade needs. What it covers is ev
 
 Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
 
+## Unreleased
+
+### Fixed
+- **Labels in a Popover or Dialog opened from an icon-only bar:** `hide-labels` no longer reaches into a Popover or Dialog inside the region, so a menu opened from a Header whose Buttons show only their icons keeps its labels.
+
 ## 1.3.3 (17 November 2026)
 
 ### Fixed
