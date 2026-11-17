@@ -18,6 +18,13 @@ Nothing picked yet.
 
 Picked from the planning sheet on 12 November 2026. Each needs its open questions settled before it's built.
 
+### Three-zone bar (M)
+A row with a start, a true centre and an end: the centre sits in the middle of the row whatever the ends hold. For an app or Dialog header (Back, the title, Close), a media player, an editor toolbar or a wizard footer. A `split--three`, a Header bar and a between-Cluster all let the middle drift towards the shorter end. Cadence uses its own `1fr auto 1fr` grid. *From the Cadence recipe; added to the plan 17 November 2026.*
+- **Layout:** a grid of `1fr auto 1fr`: the ends share what the centre leaves, so the centre stays centred. The start aligns to the start, the end to the end.
+- **Open questions:** a new primitive or a Split option (`split--three` with a centred middle)? Its name (`bar` is taken by `header__bar`)? What happens when it runs out of room: the centre truncates, an end wraps below, or it falls back to `split--three`'s behaviour? Should a Header bar and a Dialog's Card header use it?
+- **Rules to write:** a bar is never shorter than its targets; reading and focus order stay start, centre, end.
+- **Also:** markup doc, stories (a Dialog header, a player, a wizard footer, at several widths), `check:layout`, `check:targets`, Figma.
+
 ### Column layouts (S)
 Text and short items in newspaper columns with CSS multi-column, for long lists (a glossary, an index of links, a sitemap footer) and print. The Grid sets items in rows; this flows content down and across.
 - **Primitive:** `.columns` in `layout/`, with `--columns-width` (the narrowest a column gets; `column-width`, default about 18rem) and `--columns-count` (the most columns; default `auto`), and `--gap` for the gap between columns, stepping down under `--ui-sizing: compact` like the other primitives. A `--ruled` modifier draws `column-rule` from the rule tokens.
@@ -50,7 +57,6 @@ Things the library lacks or could do better. Each waits for a second use, or for
 
 ### Components and options
 - **Range scale labels (M):** start and end labels under a slider: elapsed and remaining time, a price range, 0 to 100. The Range Lockup shows one value only. *From the Cadence recipe.*
-- **Three-zone bar (M):** start, a true centre and end, for a media player, an editor toolbar or a wizard footer. Header bars and between-clusters don't centre the middle part. Cadence uses its own `1fr auto 1fr` grid. *From the Cadence recipe.*
 - **Tooltip typography (S):** the Tooltip sets its own type rather than taking a text atom. Decide whether it should. *Deferred from the component audit.*
 - **Badge, Status and Chip literals (S):** values in their CSS that could be tokens. *Deferred from the component audit.*
 - **A motion token for the press scale (S):** the 0.96 scale on press is a literal. *Deferred from the component audit.*

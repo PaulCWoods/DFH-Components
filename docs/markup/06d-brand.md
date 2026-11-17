@@ -35,6 +35,7 @@ The name stays in the markup on every screen. On the narrowest ones it gives way
 - **Give a Logo a Mark.** It's what shows where the Logo doesn't fit.
 - **Narrow containers:** at 20em and under, a Brand with a Mark shows the Mark alone, as big as a Button. The Logo is hidden and the Name hidden visually, still naming the Link. A Brand with no Mark always shows its Name.
 - **The Mark alone at a width you choose:** add a `hide-labels` condition, as for Buttons: `max-md:hide-labels` on the Brand, or on the Header around it. Don't hide the Name itself with `sr-only`: the Brand can't see that, so the Mark stays small.
+- **A wide Logo needs the Mark sooner.** The Mark stands in by itself only at 20em. A Logo and a Name that take more room than that need a container condition on the Brand, such as `@max-md:hide-labels`, so the Mark takes over before they overflow.
 - **Light and dark:** a single-colour SVG drawn in `currentColor` follows the Brand's colour in every scheme. A Logo or Mark in two files takes `dark:hide` on the light one and `light:hide` on the dark one ([responsive helpers](31-responsive-visibility.md)).
 
 ## A company's Logo beside a product's Name

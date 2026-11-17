@@ -85,7 +85,7 @@ const logo = `<img class="brand__logo dark:hide" src="${logoLight}" alt="" width
 export const LogoAndName: Story = {
   name: 'Logo and name',
   parameters: { docs: { description: { story: 'A company Logo beside the product\'s Name. The Mark is in the markup too, hidden until there\'s no room for the Logo.' } } },
-  render: () => `<a href="#" class="brand">${logo}<span class="brand__name">Plant Finder</span></a>`,
+  render: () => `<div class="container-inline"><a href="#" class="brand">${logo}<span class="brand__name">Plant Finder</span></a></div>`,
 };
 
 export const LogoOnly: Story = {
@@ -98,8 +98,8 @@ export const LightAndDark: Story = {
   parameters: { docs: { description: { story: '`dark:hide` on the light files and `light:hide` on the dark ones. A dark band (`.color-scheme-dark`) or an inverted palette shows the dark versions.' } } },
   render: () => `
     <div class="stack">
-      <div class="p-md"><a href="#light" class="brand">${logo}<span class="brand__name">Plant Finder</span></a></div>
-      <div class="color-scheme-dark bg-surface p-md"><a href="#dark" class="brand">${logo}<span class="brand__name">Plant Finder</span></a></div>
+      <div class="container-inline p-md"><a href="#light" class="brand">${logo}<span class="brand__name">Plant Finder</span></a></div>
+      <div class="container-inline color-scheme-dark bg-surface p-md"><a href="#dark" class="brand">${logo}<span class="brand__name">Plant Finder</span></a></div>
     </div>`,
 };
 
