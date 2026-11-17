@@ -7,7 +7,8 @@
    - .app places its direct children: a <header> or .header at the top, a
      <main>, .main or .app__workspace in the middle, a <footer> or .footer
      at the bottom. A .skip-link or .skip-links takes the first row, which
-     has no height until the link is focused.
+     has no height until the link is focused. A .banner-dock takes the row
+     under the header.
    - .app__workspace sets side panes (a .sidebar, an <aside>) beside the
      main; below 48rem they stack, side pane first. It and .main are
      inline-size containers, so container-prefixed classes work anywhere
@@ -41,10 +42,11 @@
     grid-template-areas:
         "skip-link"
         "header"
+        "notice"
         "main"
         "footer";
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
     min-block-size: 100dvb;
 
     /* Collapsed until focused, so its row has no height until then */
@@ -54,6 +56,12 @@
 
     > :where(header, .header) {
         grid-area: header;
+    }
+
+    /* A site notice sits under the header. A fixed one leaves the flow, and
+       its row has no height */
+    > :where(.banner-dock) {
+        grid-area: notice;
     }
 
     > :where(main, .main, .app__workspace) {

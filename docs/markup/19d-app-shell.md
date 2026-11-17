@@ -40,7 +40,7 @@ It decides nothing about small-screen navigation. Moving a Sidebar into a drawer
 - **Not for panes inside the content:** that is a [Split](19c-split.md).
 
 ## Rules
-- **Landmarks:** one shell per page. Its `<header>` is the Banner, its `<footer>` the contentinfo, and there is one `<main>`. The Skip Link comes first, in a row of its own that has no height until the link is focused.
+- **Landmarks:** one shell per page. Its `<header>` is the Banner, its `<footer>` the contentinfo, and there is one `<main>`. The Skip Link comes first, in a row of its own that has no height until the link is focused. A [Banner Dock](21-banner-dock.md) for a site notice takes the row under the Header.
 - **Small screens:** nothing becomes a drawer on its own. A Sidebar stacks above the main, or the product hides it (`max-md:hide`) and puts the same navigation in a `.dialog--drawer` opened from the Header; see [Sidebar](34-sidebar.md).
 - **Never clip a locked region.** The shell and workspace hide overflow because their rows and panes are sized to fit; anything holding content (the main, a pane) scrolls instead, so no screen size can strand content out of reach.
 - **Viewport:** in `.app--viewport` the main scrolls; give it `tabindex="-1"` if it holds nothing focusable near the top, so keyboard users can scroll it after the Skip Link.

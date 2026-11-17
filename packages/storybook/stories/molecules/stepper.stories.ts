@@ -34,7 +34,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 </ol>
 \`\`\`
 
-- **State:** \`aria-current="step"\` on the current item; \`.is-complete\` and \`.is-invalid\` on others. Never colour alone: the indicator shows a check or warning icon, and the title starts with the state in hidden text, since the indicator is hidden.
+- **State:** \`aria-current="step"\` on the current item; \`.is-complete\` and \`.is-invalid\` on others. A current step with errors takes both, and shows as invalid. Never colour alone: the indicator shows a check or warning icon, and the title starts with the state in hidden text, since the indicator is hidden.
 - **Steps** are a \`<div>\`, an \`<a>\` for a page the user may revisit, or a \`<button>\` in an in-page wizard. Wrap the list in a \`<nav>\` only when its steps are links.
 - **Options:** \`--vertical\`, \`--plain\` (the number or icon without its circle, coloured by state; flag \`--stepper-prominence: plain\`), \`--compact\`. In a narrow row (below 34rem) the descriptions hide; the titles keep the state.
         `,
@@ -46,7 +46,7 @@ The steps of one task: which are done, which is current, which are left. An orde
 export default meta;
 type Story = StoryObj;
 
-type Step = { title: string; description?: string; state?: 'complete' | 'current' | 'invalid' };
+type Step = { title: string; description?: string; state?: 'complete' | 'current' | 'invalid'; errors?: boolean };
 
 const icon = (name: string) =>
   `<svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#${name}"/></svg>`;
@@ -54,19 +54,20 @@ const icon = (name: string) =>
 const said = { complete: 'Completed: ', current: 'Current: ', invalid: 'Needs attention: ' };
 
 const indicator = (s: Step, n: number) =>
-  s.state === 'complete' ? `<span class="stepper__indicator" aria-hidden="true">${icon('check')}</span>`
+  s.errors ? `<span class="stepper__indicator" aria-hidden="true">${icon('triangle-exclamation-point')}</span>`
+  : s.state === 'complete' ? `<span class="stepper__indicator" aria-hidden="true">${icon('check')}</span>`
     : s.state === 'invalid' ? `<span class="stepper__indicator" aria-hidden="true">${icon('triangle-exclamation-point')}</span>`
       : `<span class="stepper__indicator micro-heading" aria-hidden="true">${n}</span>`;
 
 const item = (s: Step, n: number, tag = 'div', href = '') => {
-  const cls = s.state === 'complete' ? ' is-complete' : s.state === 'invalid' ? ' is-invalid' : '';
+  const cls = s.state === 'complete' ? ' is-complete' : s.state === 'invalid' || s.errors ? ' is-invalid' : '';
   const current = s.state === 'current' ? ' aria-current="step"' : '';
   const open = tag === 'a' ? `a href="${href}#step-${n}"` : tag === 'button' ? `button type="button"${!s.state ? ' disabled' : ''}` : tag;
   return `
     <li class="stepper__item${cls}"${current}>
       <${open} class="stepper__step">
         ${indicator(s, n)}
-        <span class="stepper__title small-heading">${s.state ? `<span class="sr-only">${said[s.state]}</span>` : ''}${s.title}</span>
+        <span class="stepper__title small-heading">${s.state ? `<span class="sr-only">${s.errors ? 'Current, needs attention: ' : said[s.state]}</span>` : ''}${s.title}</span>
         ${s.description ? `<span class="stepper__description small-text">${s.description}</span>` : ''}
       </${tag}>
     </li>`;
@@ -105,6 +106,19 @@ export const States: Story = {
         { title: 'Annual dues', description: 'In progress', state: 'current' },
         { title: 'Review' },
       ], '', 'Plot registration')}
+    </div>`,
+};
+
+export const CurrentWithErrors: Story = {
+  name: 'Current step with errors',
+  parameters: { docs: { description: { story: 'Back on a step whose answers need fixing: `aria-current="step"` and `.is-invalid` together. The invalid state wins, so the indicator is a danger ring and warning icon, not the accent fill.' } } },
+  render: () => `
+    <div class="max-w-lg">
+      ${stepper([
+        { title: 'Plot holder', description: 'Two answers to fix', state: 'current', errors: true },
+        { title: 'Agreement', description: 'Growing rules' },
+        { title: 'Fee', description: 'Sliding scale' },
+      ], '', 'Lease steps')}
     </div>`,
 };
 

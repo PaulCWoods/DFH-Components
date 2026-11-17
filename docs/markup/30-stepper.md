@@ -50,7 +50,7 @@ A step is only a Link or Button if someone can really go there. Most steps can't
 
 ## Rules
 - **Step element:** a `<div>`; an `<a>` when the step is a page the user may revisit; a `<button>` in an in-page wizard (disable steps not yet reachable). Wrap the list in a `<nav>` only when its steps are links. Interactive steps have the focus ring and at least a 48px target.
-- **State:** `aria-current="step"` on the current item; `.is-complete` and `.is-invalid` on others. No `.is-active`.
+- **State:** `aria-current="step"` on the current item; `.is-complete` and `.is-invalid` on others. A current step with errors takes both, and shows as invalid, with "Current, needs attention: " as its hidden text. No `.is-active`.
 - **Never colour alone (WCAG 1.4.1):** the indicator is `aria-hidden`, so each title starts with its state in hidden text ("Completed: ", "Current: ", "Needs attention: "). The indicator shows a check for complete and a warning icon for invalid; numbers otherwise, with `.micro-heading`.
 
 ## Keyboard and screen readers
