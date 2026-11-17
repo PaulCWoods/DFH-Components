@@ -81,6 +81,11 @@ const LISTS = {
   textTransform: ['none', 'uppercase', 'lowercase', 'capitalize'],
   hyphens: ['none', 'manual', 'auto'],
   hoverStyle: ['fill', 'tint'],
+  /* The type modes a container sets for the text inside it */
+  fontSizing: ['fixed', 'fluid', 'cq', 'compact'],
+  fontStyle: ['italic', 'normal'],
+  direction: ['column', 'row'],
+  align: ['flex-start', 'center', 'flex-end'],
 };
 const kindOf = (t) => {
   const key = t.key;
@@ -93,6 +98,17 @@ const kindOf = (t) => {
   if (t.type === 'fontFamily' || t.type === 'fontFamilies') return 'family';
   if (t.type === 'border') return 'border';
   if (/text-transform/.test(key)) return 'textTransform';
+  if (/font-sizing$/.test(key)) return 'fontSizing';
+  if (/font-style$/.test(key)) return 'fontStyle';
+  if (/(^|-)dir$/.test(key)) return 'direction';
+  if (/-align$/.test(key)) return 'align';
+  if (/translucency$/.test(key)) return 'translucency';
+  if (/filter$/.test(key)) return 'filter';
+  if (/letter-spacing/.test(key)) return 'letterSpacing';
+  /* A reference names what the value is, where the token's type doesn't */
+  if (/^\{duration\./.test(def) || /transition$/.test(key)) return 'duration';
+  if (/^\{shadow\./.test(def)) return 'shadow';
+  if (/^\{(surface|foreground|border\.color|color)\b/.test(def)) return 'color';
   if (/hyphens/.test(key)) return 'hyphens';
   if (/hover-style$/.test(key)) return 'hoverStyle';
   if (/line-height/.test(key)) return 'lineHeight';
@@ -104,7 +120,6 @@ const kindOf = (t) => {
   if (t.type === 'dimension') {
     if (/radius/.test(key)) return 'radius';
     if (/font-size/.test(key)) return 'fontSize';
-    if (/letter-spacing/.test(key)) return null;
     if (/^\{(border\.width|rule\.width|panel\.border-width|app\.border-width|control\.border-width)/.test(def) || /border-width|thickness/.test(key)) return 'borderWidth';
     return 'space';
   }
@@ -128,6 +143,12 @@ export const tokenOptions = (token, { semantic, global }) => {
     lineHeight: () => pick((r) => /\.line-height$/.test(r.path)),
     zIndex: () => pick((r) => /^z-index\./.test(r.path)),
     easing: () => pick((r) => /^ease\./.test(r.path)),
+    translucency: () => [
+      ...pick((r) => /^translucency\./.test(r.path)),
+      ...Object.keys(global?.translucency ?? {}).filter((k) => !k.startsWith('$')).map((k) => `{translucency.${k}}`),
+    ],
+    filter: () => ['none', '{surface-layer.filter}', ...pick((r) => /^blur\./.test(r.path))],
+    letterSpacing: () => Object.keys(global?.typography?.spacing ?? {}).filter((k) => !k.startsWith('$')).map((k) => `{typography.spacing.${k}}`),
     space: () => [
       ...pick((r) => /^spacing\./.test(r.path) && !/^spacing\.\d/.test(r.path)),
       /* App-level sizes: the sidebar column */
@@ -140,10 +161,12 @@ export const tokenOptions = (token, { semantic, global }) => {
   const options = kind && lists[kind] ? lists[kind]() : (LISTS[kind] ?? []);
   /* A default that no list holds (18rem, a calc) may need another typed value;
      a number is always typed */
-  const custom = kind !== 'number' && (!options.length || !isRef(token.value));
+  /* Letter spacing and filters also take a typed value: an em of your own,
+     an SVG filter's url() or a chain of filter functions */
+  const custom = kind === 'letterSpacing' || kind === 'filter' || (kind !== 'number' && (!options.length || (!isRef(token.value) && !(kind in LISTS && options.includes(String(token.value))))));
   /* Roles and Tier 1 steps are told apart where a list has both */
   const unique = [...new Set(options)];
-  const isTier1 = (v) => /^\{spacing\.\d/.test(v);
+  const isTier1 = (v) => /^\{(spacing\.\d|translucency\.\d|typography\.)/.test(v);
   const isRole = (v) => isRef(v) && !isTier1(v);
   const semanticOptions = unique.filter(isRole);
   const globalOptions = unique.filter(isTier1);

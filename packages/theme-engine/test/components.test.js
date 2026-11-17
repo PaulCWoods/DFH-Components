@@ -162,6 +162,27 @@ test('pairs the names miss are measured: Avatar text, and text on a fill', () =>
   assert.deepEqual(styles({ 'avatar.text': '{foreground}', 'badge.on-color': '{foreground.inverted-strong}' }), []);
 });
 
+test('tokens with a set of choices offer them, not only a typed value', () => {
+  const opts = (path) => tokenOptions(token(path), { semantic, global });
+  assert.deepEqual(opts('poster.font-sizing').options, ['fixed', 'fluid', 'cq', 'compact']);
+  assert.equal(opts('poster.font-sizing').custom, false);
+  assert.deepEqual(opts('input.placeholder-font-style').options, ['italic', 'normal']);
+  assert.deepEqual(opts('card.dir').options, ['column', 'row']);
+  /* Letter spacing: the Tier 1 steps, or a typed value */
+  assert.ok(opts('brand.letter-spacing').options.includes('{typography.spacing.normal}'));
+  assert.equal(opts('brand.letter-spacing').custom, true);
+  /* Translucency: the roles, then the steps */
+  assert.deepEqual(opts('card.translucency').groups.map((g) => g.label).filter(Boolean), ['Semantic', 'Global']);
+  assert.ok(opts('card.filter').options.includes('{blur.md}'));
+  assert.equal(opts('card.filter').custom, true);
+  assert.deepEqual(componentGate({ 'card.filter': 'url(#grain) blur(4px)' }, ctx).failures, []);
+  assert.equal(opts('switch.transition').kind, 'duration');
+  assert.equal(opts('table.inner-shadow').kind, 'shadow');
+  /* Colours whose type doesn't say so */
+  assert.equal(opts('navigation-tree.muted-color').kind, 'color');
+  assert.equal(opts('telemetry.fill-color').kind, 'color');
+});
+
 test('the hover style offers fill and tint', () => {
   assert.deepEqual(tokenOptions(token('button.hover-style'), { semantic, global }).options, ['fill', 'tint']);
 });
