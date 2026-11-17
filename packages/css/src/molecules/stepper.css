@@ -208,8 +208,12 @@
   --_stepper-step-track: var(--_stepper-complete-color);
 }
 
+/* Comes after the current step's map, so a current step with errors drops
+   the accent fill: a danger ring and icon on the plain fill */
 :where(.stepper__item.is-invalid) {
+  --_stepper-step-fill: var(--_stepper-indicator-bg);
   --_stepper-step-ring: var(--_stepper-invalid-color);
+  --_stepper-step-ring-width: var(--_stepper-current-ring-width);
   --_stepper-step-ink: var(--_stepper-invalid-color);
   --_stepper-step-title: var(--_stepper-invalid-color);
 }

@@ -24,6 +24,8 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 - **Break utilities:** `break-inside-avoid`, `break-after-avoid` and `column-span-all`, for Columns and for print.
 
 ### Fixed
+- **A current Stepper step with errors:** with `aria-current="step"` and `.is-invalid` together, the indicator kept the current step's accent fill under the danger ring and icon, so the two clashed. The invalid state now wins: a danger ring and warning icon on the plain fill. No markup changes.
+- **A Banner Dock in the app shell sits under the Header:** `.app` gave it no row, so it landed after the footer, at the foot of the page. It now takes a row of its own under the Header; a fixed Dock leaves the flow as before. No markup changes.
 - **Labels in a Popover or Dialog opened from an icon-only bar:** `hide-labels` no longer reaches into a Popover or Dialog inside the region, so a menu opened from a Header whose Buttons show only their icons keeps its labels.
 
 ## 1.3.3 (17 November 2026)
