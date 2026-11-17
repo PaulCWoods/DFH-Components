@@ -15,7 +15,7 @@ The band at the top of an app: brand, main navigation, search, notifications and
 
 **Decisions:**
 - **The navigation is a plain tab list of links** with \`aria-current="page"\`. It hides when the header is under 48rem wide (\`@max-3xl:hide\`, a container query on the header), and a menu button (\`@3xl:hide\`) opens the same links in a **start-side drawer** (\`.dialog--drawer.dialog--start\`), where navigation lives on a wide screen.
-- **The actions' labels hide at the same width** (\`@max-3xl:hide-labels\`); the buttons keep them as their names.
+- **One row at every width.** Below 48rem the bar hides its labels (\`@max-3xl:hide-labels\` on the \`header__bar\`): the actions show only their icons, keeping the labels as their names, and the Brand shows its Mark alone at a Button's size, with the name still its link's name.
 - **Search opens the shared command palette** with \`command="show-modal"\`; ⌘K opens it too.
 - **Notifications and the account menu are popovers** anchored to their buttons (\`popovertarget\`). Notifications is a card holding a menu of items; the account menu is a menu with the person's name as its heading. The unread count is a badge on the bell, hidden from assistive tech because the button's name says it.
 - **Two rows** are two \`.header__bar\`s in one \`<header>\`: one banner landmark.
@@ -105,19 +105,42 @@ const drawer = `
     </article>
   </dialog>`;
 
-const page = (title: string) => `
+const sections = [
+  ['Components', 'Buttons, Cards, Dialogs, Tables and the rest, each with its rules and examples.'],
+  ['Tokens', 'Colour, type, spacing and shape, set once in a theme and shared with Figma.'],
+  ['Guidelines', 'Accessibility, writing and composition: how the parts fit into a screen.'],
+];
+
+const overview = `
   <main id="main" class="wrapper py-lg stack">
-    <h1 class="heading">${title}</h1>
-    <p class="large-text text-muted">Press Tab to reach the skip link, ⌘K to search, or narrow the frame to swap the navigation for the menu button.</p>
+    <hgroup class="stack gap-xs">
+      <h1 class="heading">Overview</h1>
+      <p class="large-text text-muted">An accessible component library built on web standards, with one set of tokens for code and Figma.</p>
+    </hgroup>
+    <ul class="grid grid--sm" role="list">
+      ${sections.map(([t, d]) => `
+      <li class="card">
+        <header class="card__header"><h2 class="card__title small-heading"><a href="#" class="link link--plain link--stretched">${t}</a></h2></header>
+        <div class="card__body"><p class="small-text text-muted">${d}</p></div>
+      </li>`).join('')}
+    </ul>
+  </main>`;
+
+const comboboxPage = `
+  <main id="main" class="wrapper py-lg stack">
+    <hgroup class="stack gap-xs">
+      <h1 class="heading">Combobox</h1>
+      <p class="large-text text-muted">A text field with a list of suggestions that narrows as you type.</p>
+    </hgroup>
   </main>`;
 
 const header = (extraBar = '') => `
   <a href="#main" class="skip-link">Skip to content</a>
   <header class="header header--sticky header--translucent">
-    <div class="header__bar">
+    <div class="header__bar @max-3xl:hide-labels">
       <div class="inline">${menuButton}${brand}</div>
       ${tabNav}
-      <div class="cluster gap-xs @max-3xl:hide-labels">
+      <div class="cluster gap-xs">
         ${paletteOpener()}
         ${notifications}
         ${account}
@@ -140,8 +163,8 @@ const click = (selector: string): Story['play'] => async ({ canvasElement }) => 
 };
 
 export const Default: Story = {
-  parameters: { docs: { description: { story: 'Wide: the tab list shows. Narrow the frame below 48rem and the menu button replaces it.' } } },
-  render: render(`${header()}${page('Overview')}`),
+  parameters: { docs: { description: { story: 'Wide: the tab list shows. Below 48rem a menu button replaces it, and the Brand and the actions show only their icons.' } } },
+  render: render(`${header()}${overview}`),
 };
 
 export const NavigationDrawer: Story = {
@@ -149,7 +172,7 @@ export const NavigationDrawer: Story = {
     viewport: { defaultViewport: 'mobile1' },
     docs: { description: { story: 'The menu button opens the same links in a start-side drawer.' } },
   },
-  render: render(`${header()}${page('Overview')}`),
+  render: render(`${header()}${overview}`),
   play: async ({ canvasElement }) => {
     canvasElement.querySelector<HTMLDialogElement>('#nav-drawer')?.showModal();
   },
@@ -157,19 +180,19 @@ export const NavigationDrawer: Story = {
 
 export const Notifications: Story = {
   parameters: { docs: { description: { story: 'The bell opens a card of unread items, anchored to the button and aligned to its end edge.' } } },
-  render: render(`${header()}${page('Overview')}`),
+  render: render(`${header()}${overview}`),
   play: click('[popovertarget="notifications"]'),
 };
 
 export const AccountMenu: Story = {
   parameters: { docs: { description: { story: 'The avatar opens a menu headed by the person\'s name. Sign out is a danger button with an icon.' } } },
-  render: render(`${header()}${page('Overview')}`),
+  render: render(`${header()}${overview}`),
   play: click('[popovertarget="account"]'),
 };
 
 export const Search: Story = {
   parameters: { docs: { description: { story: 'Search opens the shared command palette.' } } },
-  render: render(`${header()}${page('Overview')}`),
+  render: render(`${header()}${overview}`),
   play: async ({ canvasElement }) => {
     canvasElement.querySelector<HTMLDialogElement>('#cmd-palette')?.showModal();
   },
@@ -198,6 +221,6 @@ export const TwoRows: Story = {
           <button type="button" class="button button--sm button--strong button--accent">${icon('download')}<span>Export</span></button>
         </div>
       </div>
-    </div>`)}${page('Combobox')}`,
+    </div>`)}${comboboxPage}`,
   ),
 };
