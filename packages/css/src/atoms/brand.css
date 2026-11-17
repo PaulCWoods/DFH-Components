@@ -8,14 +8,24 @@
    | ------- | ------------------------------------------ | -------------------- |
    | Density | default, a compact container steps it down | --ui-sizing: compact |
 
-   Parts (either can be left out):
-   - .brand__mark is the logo, an icon from the sprite.
-   - .brand__name is the name, in the display type. Beside a mark, on screens
-     20em and under, it is hidden visually only, so the link keeps its name.
+   Parts (any can be left out):
+   - .brand__logo is the full logo, an <img> or an <svg>, as tall as
+     --brand-mark-size and as wide as its shape.
+   - .brand__mark is the small logo, an icon from the sprite, an <img> or an
+     <svg>. Beside a Logo it is hidden, and stands in for the Logo where
+     there's no room. On its own it is a Button's size (--brand-mark-alone-size),
+     stepping down with Buttons in a compact container.
+   - .brand__name is the name, in the display type.
+   In a container 20em and under, or with labels hidden (hide-labels or a
+   condition's, as for Buttons), a Brand with a Mark shows the Mark alone:
+   the Logo is hidden and the Name visually hidden, so the link keeps its
+   name. Two versions of an image for light and dark take dark:hide and
+   light:hide (utilities/responsive-helpers.css).
 
    Accessibility:
-   - The name is the link's name, so the mark is aria-hidden. With no
-     .brand__name, name the link with .sr-only text.
+   - The name is the link's name, so the Logo and Mark are decorative:
+     alt="" on an <img>, aria-hidden on an <svg>. With no .brand__name,
+     name the link with .sr-only text.
    - On an <a>, it is at least the target size (the small target when
      compact), with hover and focus states. On a <button> (a mark that
      opens the app's menu) the same, named with .sr-only text for what it
@@ -27,6 +37,13 @@
      <svg class="brand__mark icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#brand-design-for-humans"/></svg>
      <span class="brand__name">Design For Humans</span>
    </a>
+   <a href="/" class="brand">
+     <img class="brand__logo dark:hide" src="logo.svg" alt="" width="271" height="32">
+     <img class="brand__logo light:hide" src="logo-dark.svg" alt="" width="271" height="32">
+     <img class="brand__mark dark:hide" src="mark.svg" alt="" width="32" height="32">
+     <img class="brand__mark light:hide" src="mark-dark.svg" alt="" width="32" height="32">
+     <span class="brand__name">Plant Finder</span>
+   </a>
    ========================================================================== */
 
 /* ==========================================================================
@@ -36,6 +53,7 @@
   /* Private manifest */
   --_brand-gap: var(--brand-gap, var(--spacing-md));
   --_brand-mark-size: var(--brand-mark-size, var(--spacing-24));
+  --_brand-mark-alone-size: var(--brand-mark-alone-size, var(--spacing-target, 3rem));
   --_brand-font-size: var(--brand-font-size, var(--typography-font-size-fluid-1));
   --_brand-min-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_brand-color: var(--brand-color, var(--foreground-accent, LinkText));
@@ -50,6 +68,7 @@
      ------------------------------------------------------------------------ */
   @container style(--ui-sizing: compact) {
     --_brand-font-size: var(--brand-compact-font-size, var(--typography-font-size-1));
+    --_brand-mark-alone-size: var(--brand-compact-mark-alone-size, var(--spacing-target-sm, 2rem));
   }
 
   align-items: center;
@@ -103,6 +122,16 @@
    ========================================================================== */
 :where(.brand__mark) {
   --icon-size: var(--_brand-mark-size);
+  flex: none;
+}
+
+/* An <img> or a full-colour <svg>: as tall as the mark size, as wide as its
+   shape */
+:where(.brand__logo, .brand__mark:not(.icon)) {
+  block-size: var(--_brand-mark-size);
+  flex: none;
+  inline-size: auto;
+  max-inline-size: none;
 }
 
 :where(.brand__name) {
@@ -110,14 +139,69 @@
   text-box: trim-both cap alphabetic;
 }
 
-/* Beside a mark, the name gives way in the narrowest containers. Visually hidden,
-   not display: none, so the link keeps its name */
+/* ==========================================================================
+   3. Arrangements
+   ========================================================================== */
+
+/* A Mark with no Name or Logo beside it fills the target */
+:where(.brand:not(:has(> .brand__name, > .brand__logo))) {
+  --_brand-mark-size: var(--_brand-mark-alone-size);
+}
+
+/* Beside a Logo, the Mark waits for the narrow containers below */
+:where(.brand:has(> .brand__logo)) > :where(.brand__mark) {
+  display: none;
+}
+
+/* In the narrowest containers (a phone, a Sidebar rail) the Mark stands alone:
+   the Logo gives way, and the Name is hidden visually, not with display:
+   none, so the link keeps its name */
 @container (inline-size <= 20em) {
-  :where(.brand__mark + .brand__name) {
-    block-size: 1px;
-    clip-path: inset(50%);
-    inline-size: 1px;
-    overflow: hidden;
-    position: absolute;
+  :where(.brand:has(> .brand__mark)) {
+    --_brand-mark-size: var(--_brand-mark-alone-size);
+
+    > :where(.brand__logo) {
+      display: none;
+    }
+
+    > :where(.brand__mark) {
+      display: block;
+    }
+
+    > :where(.brand__name) {
+      block-size: 1px;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      overflow: hidden;
+      position: absolute;
+    }
+  }
+}
+
+/* Labels hidden (.hide-labels, max-md:hide-labels … on the Brand or a
+   region around it, as Buttons show only their icons): the same, at any
+   width. The parts read the flag, so it works on the Brand itself */
+:where(.brand:has(> .brand__mark)) {
+  > :where(.brand__mark) {
+    @container style(--ui-labels: hidden) {
+      --_brand-mark-size: var(--_brand-mark-alone-size);
+      display: block;
+    }
+  }
+
+  > :where(.brand__logo) {
+    @container style(--ui-labels: hidden) {
+      display: none;
+    }
+  }
+
+  > :where(.brand__name) {
+    @container style(--ui-labels: hidden) {
+      block-size: 1px;
+      clip-path: inset(50%);
+      inline-size: 1px;
+      overflow: hidden;
+      position: absolute;
+    }
   }
 }

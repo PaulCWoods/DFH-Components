@@ -9,6 +9,8 @@
      @max-md:hide    in a size container narrower than 28rem
      short:hide      viewport under 36rem tall; tall:hide at 36rem and taller
      app-locked:hide while .app--viewport is locked to the viewport
+     dark:hide       where the region looks dark; light:hide where it looks
+                     light (hide only), for an image in two versions
    Actions: hide (display: none), hide-labels (sets --ui-labels: hidden, which
    buttons and tabs read, and visually hides .ui-label inside), visually-hidden
    (sr-only). To show something at a size, hide it at the other sizes.
@@ -883,5 +885,30 @@
         clip-path: inset(50%);
         white-space: nowrap;
         border: 0;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   6. Colour scheme
+   For an image in a light and a dark version (a Brand's Logo or Mark, a
+   screenshot): light:hide on the dark one, dark:hide on the light one. A
+   region looks dark in a dark scheme, or in a light one with the palette
+   inverted. --color-scheme mirrors color-scheme (utilities/color-scheme.css),
+   since CSS can't query color-scheme itself.
+   Without style queries the light version shows.
+   -------------------------------------------------------------------------- */
+
+:where(.light\:hide) {
+    display: none;
+}
+
+@container (style(--color-scheme: dark) and (not style(--color-palette: inverted))) or (style(--color-scheme: light) and style(--color-palette: inverted)) {
+    :where(.light\:hide) {
+        display: revert-layer;
+    }
+
+    :where(.dark\:hide) {
+        display: none;
     }
 }

@@ -202,7 +202,18 @@
     },
     "mark-size": {
       "$value": "{spacing.24}",
-      "$type": "dimension"
+      "$type": "dimension",
+      "$description": "The height of the Logo, and of the Mark beside a Name"
+    },
+    "mark-alone-size": {
+      "$value": "{spacing.target}",
+      "$type": "dimension",
+      "$description": "The Mark with no Name or Logo beside it, as big as a Button"
+    },
+    "compact-mark-alone-size": {
+      "$value": "{spacing.target-sm}",
+      "$type": "dimension",
+      "$description": "The Mark on its own in a compact container, as big as a Button there"
     },
     "font-family": {
       "$value": "{display-title.font-family}",

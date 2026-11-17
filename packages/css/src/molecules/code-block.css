@@ -53,6 +53,7 @@
   /* Fixed type and dark colours, whatever the page's */
   --font-sizing: fixed;
   color-scheme: dark;
+  --color-scheme: dark;
 
   display: block;
   box-sizing: border-box;
@@ -68,6 +69,7 @@
 
   @media print {
     color-scheme: light;
+    --color-scheme: light;
     color: inherit;
     background-color: transparent;
     border: var(--border-width, 1px) solid currentColor;

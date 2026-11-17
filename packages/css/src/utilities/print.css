@@ -44,15 +44,18 @@
 @media print {
     :where(:root, .color-scheme-dark, .color-scheme-light-dark) {
         color-scheme: light;
+        --color-scheme: light;
     }
 
     :where(.color-palette-inverted, .colors-inverted) {
         color-scheme: dark;
+        --color-scheme: dark;
     }
 
     * {
         @container style(--color-palette: inverted) {
             color-scheme: dark;
+            --color-scheme: dark;
         }
     }
 

@@ -1,7 +1,7 @@
 ---
 title: Responsive Helpers
 tier: utility
-summary: Hide something, its labels, or everything but its accessible name, by a condition, and choose what prints.
+summary: Hide something, its labels, or everything but its accessible name, by a condition, and choose what prints and which version of an image shows in light and dark.
 storybook: utilities-responsive-helpers
 related: [utilities, header, button, grid-grid-carousel]
 ---
@@ -26,6 +26,7 @@ There's one direction only: every class hides, and there is no `show`. To show s
 - **To shorten controls to their icons,** with `hide-labels`.
 - **To keep words for screen readers only,** with `sr-only`.
 - **To decide what prints,** with `print:hide` and `print:keep`.
+- **To show an image's light or dark version,** with `dark:hide` and `light:hide`.
 - **Not to rearrange things:** [Grids](19b-grid-grid-carousel.md), [Splits](19c-split.md) and [Clusters](22-stack-inline-cluster.md) reflow on their own.
 - **Not to hide the only way to do something.**
 
@@ -78,6 +79,23 @@ The library already prints well: light colours on any band, nothing sticky or cu
 - **`print:hide`** hides anything in print.
 - **`print:keep`** keeps something the library hides in print. It works only on the components listed above; on anything else there is nothing to cancel.
 
+## An image in light and dark versions
+A logo or a screenshot made in two versions takes `dark:hide` on the light one and `light:hide` on the dark one. The dark version shows wherever the region looks dark: a dark colour scheme, a `.color-scheme-dark` band, or a light one with the palette inverted.
+
+```html live
+<div class="cluster">
+  <img class="dark:hide" src="/examples/brand-logo.svg" alt="Woodland" width="271" height="32">
+  <img class="light:hide" src="/examples/brand-logo-dark.svg" alt="Woodland" width="271" height="32">
+  <div class="color-scheme-dark bg-surface p-sm rounded-md">
+    <img class="dark:hide" src="/examples/brand-logo.svg" alt="Woodland" width="271" height="32">
+    <img class="light:hide" src="/examples/brand-logo-dark.svg" alt="Woodland" width="271" height="32">
+  </div>
+</div>
+```
+- **One shows at a time,** so give both the same `alt` text.
+- **A single-colour SVG needs neither:** draw it in `currentColor` and it takes the text colour of wherever it is.
+- **Where the browser can't tell** (no container style queries), the light version shows.
+
 ## Do and don't
 | Do | Don't |
 | :--- | :--- |
@@ -94,7 +112,7 @@ Hide something, its labels, or everything but its accessible name, by a conditio
 | Class | Effect |
 | :--- | :--- |
 | `.sr-only` (`.visually-hidden`) | Hidden on screen; still read by screen readers, voice control and translation |
-| `.hide-labels` | Sets `--ui-labels: hidden`. Buttons and Tabs inside show only their icon and keep the text as their accessible name; any `.ui-label` inside is visually hidden |
+| `.hide-labels` | Sets `--ui-labels: hidden`. Buttons and Tabs inside show only their icon and keep the text as their accessible name, a Brand shows only its Mark, and any `.ui-label` inside is visually hidden |
 | `{condition}:hide` | `display: none` while the condition holds |
 | `{condition}:hide-labels` | `.hide-labels` while the condition holds |
 | `{condition}:sr-only` (`{condition}:visually-hidden`) | `.sr-only` while the condition holds |
@@ -116,5 +134,6 @@ Always hidden is the `hidden` attribute (or `.hidden`). The reset keeps `[hidden
 | `short:` / `tall:` | The viewport is under / at least 36rem tall |
 | `app-locked:` / `app-unlocked:` | `.app--viewport` is locked to the viewport (at least 48rem wide and 36rem tall) / scrolls as a page |
 | `print:` | The page is printed (`hide` and `keep` only) |
+| `light:` / `dark:` | The region looks light / dark: its colour scheme, flipped where the palette is inverted (`hide` only). `--color-scheme` mirrors the scheme for this, so a product that sets `color-scheme` itself sets `--color-scheme` beside it |
 
 Container sizes (Tailwind's container scale): `xs` 20rem, `sm` 24, `md` 28, `lg` 32, `xl` 36, `2xl` 42, `3xl` 48, `4xl` 56, `5xl` 64, `6xl` 72, `7xl` 80. The Grid's container column counts, a Stack's `@{size}:inline` and Card's `@max-*:card--plain` use the same scale.

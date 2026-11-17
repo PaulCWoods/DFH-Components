@@ -16,6 +16,10 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 
 ### Added
 - **Columns:** `.columns` sets a long list in newspaper columns, running down one and on into the next: a glossary, an index, a site map. As many columns fit as there's room for at the minimum width (16rem by default; `--2xs`, `--sm` and `--md` change it, from the Grid's block steps), down to one on a phone, with no breakpoints. `--2-col` … `--4-col` set a maximum (and `@xs:` … `@7xl:` from a container size, as on the Grid), `--ruled` draws a rule between columns, and each item stays whole in one column unless you add `--flow`. Hooks: `--gap`, `--columns-width`, `--columns-count`.
+- **Brand Logo:** `.brand__logo`, a full logo (an `<img>` or `<svg>`) beside the Name or on its own, as tall as `--brand-mark-size`. Beside a Logo the Mark is hidden, and in a container 20em wide or less (a phone, a Sidebar rail) it stands in for the Logo.
+- **A Mark on its own is a Button's size:** with no Name or Logo beside it, or where it stands alone in a narrow container, the Mark is as big as a Button: 48px, or 32px in a compact container, where Buttons step down too. The new `--brand-mark-alone-size` and `--brand-compact-mark-alone-size` set it. A Brand that was a Mark alone grows from 24px (32px when compact).
+- **A Brand follows `hide-labels`:** `hide-labels` or a condition's (`max-md:hide-labels`), on the Brand or a region around it, shows the Mark alone at a Button's size, as Buttons show only their icons.
+- **Light and dark images:** `dark:hide` and `light:hide` show the right version of an image in two versions (a Brand's Logo or Mark, a screenshot), following a dark band and an inverted palette as well as the page's scheme. `--color-scheme` mirrors the scheme for them; set it beside `color-scheme` if you set that yourself.
 - **Break utilities:** `break-inside-avoid`, `break-after-avoid` and `column-span-all`, for Columns and for print.
 
 ## 1.3.3 (17 November 2026)
