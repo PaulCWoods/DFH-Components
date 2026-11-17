@@ -111,7 +111,7 @@ DFH-Components/
 │   │   │   ├── atoms/         # Foundational indivisible primitives (text, list, button, tab, input, badge, avatar, thumbnail, icon, etc.)
 │   │   │   ├── molecules/     # Simple combined units (card, poster, field, lockup, tab-list, avatar-group, banner, telemetry, popover, code-block, etc.)
 │   │   │   ├── organisms/     # Complex composite assemblies (dialog, table, tabbed-content, header, footer, sidebar, etc.)
-│   │   │   ├── layout/        # 1D/2D spatial layout primitives (cluster, columns, grid, inline, split, stack, wrapper; app and main shell)
+│   │   │   ├── layout/        # 1D/2D spatial layout primitives (bar, cluster, columns, grid, inline, split, stack, wrapper; app and main shell)
 │   │   │   ├── utilities/     # Low-specificity utility classes (spacing, border, typography, accessibility, display, flex, layout-helpers)
 │   │   │   └── overrides.css  # Custom extension layer for project-specific overrides
 │   ├── docs/                  # @design-for-humans/docs: the docs site (components.designforhumans.blog), plan in docs/audit/docs-site.md
@@ -239,7 +239,7 @@ The blog and the course link the library; they hold no copy of it.
 - **Sub-elements:** BEM double-underscore syntax: `.card__header`, `.card__title`, `.card__body`, `.card__footer`, `.field__label`
 
 ### 3. Spatial Layout Primitives vs. Utilities Law
-- **Spatial Layout Primitives** (`.inline`, `.stack`, `.grid`, `.columns`, `.cluster`, `.split`, `.wrapper`, `.app`, `.app__workspace`, `.main`) are structural orchestration components managing geometry, gap, and child distribution. Their hooks (`--gap`, `--align-items`, `--justify-content`, `--grid-min`, `--columns-*`, `--split-*`) are registered with `inherits: false`, so they stay on the element they are set on, and their gaps step down under `--ui-sizing: compact`. `.sidebar` and `.footer` are organisms.
+- **Spatial Layout Primitives** (`.inline`, `.stack`, `.grid`, `.columns`, `.cluster`, `.split`, `.bar`, `.wrapper`, `.app`, `.app__workspace`, `.main`) are structural orchestration components managing geometry, gap, and child distribution. Their hooks (`--gap`, `--align-items`, `--justify-content`, `--grid-min`, `--columns-*`, `--split-*`) are registered with `inherits: false`, so they stay on the element they are set on, and their gaps step down under `--ui-sizing: compact`. `.sidebar` and `.footer` are organisms.
 - **Utilities** (§36) set one property each, on logical properties, from Tier 2 tokens. Each has at most two names: the verbose one (`.padding-inline-sm`, `.display-none`) and Tailwind's shorthand where it means the same (`.px-sm`, `.hidden`). Markup uses the shorthand: `.p-sm`, `.mx-auto`, `.ps-sm`, `.gap-sm`, `.border`, `.border-t`, `.rounded-md`, `.font-bold`, `.text-muted`, `.text-start`, `.truncate`, `.whitespace-nowrap`, `.z-sticky`, `.sr-only`. Spacing keeps Tailwind's prefixes with the library's step names. No left/right names (use `s`/`e`), no bare single letters, and `display: inline` is `.display-inline` only (`.inline` is the layout primitive). `npm run check:utilities` enforces the names.
 - **Not utilities:** type size (use a text atom), a row or column of things (use a layout primitive), a component's width or surface (set its token). Don't add `.items-center` to `.inline` or `.cluster` (they centre already) or `.justify-between` to `.inline` (use `.inline--between`).
 
@@ -352,6 +352,7 @@ The markup docs also feed the docs site (`packages/docs`, plan in `docs/audit/do
 | [Grid](docs/markup/19b-grid-grid-carousel.md) |
 | [Columns](docs/markup/19e-columns.md) |
 | [Split](docs/markup/19c-split.md) |
+| [Bar](docs/markup/19f-bar.md) |
 | [App Shell (`.app`, `.app__workspace`, `.main`)](docs/markup/19d-app-shell.md) |
 | [Text & Heading Primitives (Typography Presets)](docs/markup/20-text-heading.md) |
 | [Banner Dock (Site Announcements Pinned to the Page Edge)](docs/markup/21-banner-dock.md) |

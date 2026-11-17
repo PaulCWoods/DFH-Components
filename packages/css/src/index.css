@@ -95,6 +95,7 @@
    4. Layout Primitives
    -------------------------------------------------------------------------- */
 @import './layout/app.css' layer(layout);
+@import './layout/bar.css' layer(layout);
 @import './layout/cluster.css' layer(layout);
 @import './layout/grid.css' layer(layout);
 @import './layout/columns.css' layer(layout);

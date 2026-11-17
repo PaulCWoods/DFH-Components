@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Design For Humans: Bar Layout Primitive
+   --------------------------------------------------------------------------
+   One row in three zones: a start, a centre and an end, with the centre in
+   the middle of the row whatever the ends hold. For an app or Dialog header
+   (Back, the title, Close), a media player, an editor toolbar or a wizard's
+   footer. A Split or a Cluster lets the middle drift towards the shorter end.
+
+   - The ends share the room the centre leaves, so with room the centre is
+     centred. They never shrink below their content: when room runs short,
+     the centre moves off-centre only as far as it must, then its text wraps.
+     The centre is never narrower than its longest word, so nothing overlaps;
+     add .truncate to the centre to cut it short instead.
+   - The first child is the start, the last the end, any between the centre.
+     Two children are a start and an end. Leave a zone empty with an empty
+     element.
+   - Never shorter than its targets: at least --spacing-target-min tall.
+
+   Hooks (set on the bar itself; they don't reach nested layouts):
+   --gap, --align-items.
+
+   Density: under --ui-sizing: compact the gap steps down.
+
+   Usage:
+   <div class="bar">
+     <button type="button" class="button button--plain button--icon">…Back</button>
+     <h2 class="small-heading">Edit bed</h2>
+     <button type="button" class="button button--plain button--icon">…Close</button>
+   </div>
+   ========================================================================== */
+
+/* Settings stay on the element they are set on */
+@property --gap {
+    syntax: "*";
+    inherits: false;
+}
+
+@property --align-items {
+    syntax: "*";
+    inherits: false;
+}
+
+/* ==========================================================================
+   1. Base
+   ========================================================================== */
+:where(.bar) {
+    --_gap: var(--gap, var(--spacing, 1rem));
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--gap, var(--spacing-compact, 0.5rem));
+    }
+
+    align-items: var(--align-items, center);
+    column-gap: var(--_gap);
+    display: grid;
+    grid-template-columns: minmax(max-content, 1fr) minmax(min-content, auto) minmax(max-content, 1fr);
+    min-block-size: var(--spacing-target-min, var(--spacing-target, 3rem));
+
+    /* One row. Children keep their own minimum sizes: a Button stays as wide
+       as its target */
+    > :where(*) {
+        grid-row: 1;
+    }
+
+    > :where(:first-child) {
+        grid-column: 1;
+        justify-self: start;
+    }
+
+    > :where(:not(:first-child, :last-child)) {
+        grid-column: 2;
+        justify-self: center;
+        text-align: center;
+    }
+
+    > :where(:last-child:not(:first-child)) {
+        grid-column: 3;
+        justify-self: end;
+    }
+}

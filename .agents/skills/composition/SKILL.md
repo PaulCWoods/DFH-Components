@@ -46,6 +46,7 @@ Stop at the first answer that fits:
 | Things in a row that wrap (tags, actions) | `.cluster` |
 | A column that becomes a row when there's room | `.stack` with `.@{size}:inline` |
 | A main column beside a side column | `.split` (`--sidebar` keeps one row; `--end` puts the side last) |
+| A row with a true centre: Back, a title, Close; a player's controls; a wizard's footer | `.bar` (start, centre, end; the centre stays centred whatever the ends hold) |
 | Repeating items in columns | `.grid` (`grid--N-col` is a maximum that reflows); `.grid--carousel` scrolls sideways |
 | A long list read top to bottom (glossary, index, site map) | `.columns` (newspaper columns, `columns--N-col` a maximum); never for running prose on screen or form fields |
 | Page width and gutters | `.wrapper` |
