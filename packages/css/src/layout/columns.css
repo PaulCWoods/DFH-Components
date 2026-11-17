@@ -1,0 +1,287 @@
+/* ==========================================================================
+   Design For Humans: Columns Layout Primitive
+   --------------------------------------------------------------------------
+   Content in newspaper columns (CSS multi-column): it runs down one column
+   and on into the next. For long lists people scan (a glossary, an index of
+   links, a sitemap footer) and for print. The Grid sets items in rows.
+
+   - Default: as many columns as fit, each at least the minimum width
+     (--columns-width), down to one on a narrow screen. No breakpoints.
+   - --2xs … --md: the minimum column width, the Grid's block steps.
+   - --2-col … --4-col: at most that many columns. A container variant
+     (@xs: … @7xl:, Tailwind's container scale) applies once the nearest
+     container reaches the size.
+   - --ruled: a rule between columns, from the rule tokens.
+   - Each item stays whole in one column; --flow lets items run on from one
+     column into the next, as text does.
+
+   Reading order runs down each column, so it suits lists, not running prose
+   on a screen (readers would scroll back up), and never interactive rows
+   (focus would jump from the foot of one column to the top of the next).
+
+   Hooks (set on the columns themselves; they don't reach nested layouts):
+   --gap, --columns-width, --columns-count.
+
+   Density: under --ui-sizing: compact the gap steps down.
+
+   Usage:
+   <ul class="columns" role="list">…</ul>
+   <ul class="columns columns--2xs" role="list">…</ul>
+   <div class="columns columns--3-col columns--ruled">…</div>
+   ========================================================================== */
+
+/* Settings stay on the element they are set on */
+@property --gap {
+    syntax: "*";
+    inherits: false;
+}
+
+@property --columns-width {
+    syntax: "*";
+    inherits: false;
+}
+
+@property --columns-count {
+    syntax: "*";
+    inherits: false;
+}
+
+/* --------------------------------------------------------------------------
+   1. Base
+   -------------------------------------------------------------------------- */
+:where(.columns) {
+    --_gap: var(--gap, var(--spacing, 1rem));
+    --_columns-width: var(--columns-width, var(--spacing-block-xs, 16rem));
+    --_columns-count: var(--columns-count, auto);
+
+    @container style(--ui-sizing: compact) {
+        --_gap: var(--gap, var(--spacing-compact, 0.5rem));
+    }
+
+    /* A box narrower than this gets one column, as wide as the box */
+    column-width: var(--_columns-width);
+    column-count: var(--_columns-count);
+    column-gap: var(--_gap);
+
+    /* Each item stays whole in one column */
+    > * {
+        break-inside: avoid;
+    }
+}
+
+:where(.columns):where(ol, ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Minimum Column Width
+   The narrowest a column gets, from the block steps, as on the Grid: 2xs for
+   tags or single words, sm and md for entries with a line or two each.
+   -------------------------------------------------------------------------- */
+:where(.columns--2xs) {
+    --_columns-width: var(--spacing-block-2xs);
+}
+
+:where(.columns--xs) {
+    --_columns-width: var(--spacing-block-xs);
+}
+
+:where(.columns--sm) {
+    --_columns-width: var(--spacing-block-sm);
+}
+
+:where(.columns--md) {
+    --_columns-width: var(--spacing-block);
+}
+
+/* --------------------------------------------------------------------------
+   3. Maximum Column Count
+   Up to N columns; never narrower than the minimum width.
+   -------------------------------------------------------------------------- */
+:where(.columns--2-col) {
+    --_columns-count: 2;
+}
+
+:where(.columns--3-col) {
+    --_columns-count: 3;
+}
+
+:where(.columns--4-col) {
+    --_columns-count: 4;
+}
+
+/* --------------------------------------------------------------------------
+   4. Ruled: a rule between columns
+   -------------------------------------------------------------------------- */
+:where(.columns--ruled) {
+    column-rule: var(--rule-width, 1px) var(--rule-style, solid) var(--rule-color, currentColor);
+}
+
+/* --------------------------------------------------------------------------
+   5. Flow: items run on from one column into the next
+   -------------------------------------------------------------------------- */
+:where(.columns--flow) > * {
+    break-inside: auto;
+}
+
+/* --------------------------------------------------------------------------
+   6. Container Column Counts
+   Apply once the nearest container reaches the size (Tailwind's container
+   scale: xs 20rem, sm 24, md 28, lg 32, xl 36, 2xl 42, 3xl 48, 4xl 56, 5xl 64,
+   6xl 72, 7xl 80). Each count is a maximum, as on .columns--N-col.
+   -------------------------------------------------------------------------- */
+@container (width >=20rem) {
+    :where(.\@xs\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@xs\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@xs\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=24rem) {
+    :where(.\@sm\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@sm\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@sm\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=28rem) {
+    :where(.\@md\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@md\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@md\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=32rem) {
+    :where(.\@lg\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@lg\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@lg\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=36rem) {
+    :where(.\@xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=42rem) {
+    :where(.\@\32 xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@\32 xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@\32 xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=48rem) {
+    :where(.\@\33 xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@\33 xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@\33 xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=56rem) {
+    :where(.\@\34 xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@\34 xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@\34 xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=64rem) {
+    :where(.\@\35 xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@\35 xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@\35 xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=72rem) {
+    :where(.\@\36 xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@\36 xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@\36 xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}
+
+@container (width >=80rem) {
+    :where(.\@\37 xl\:columns--2-col) {
+        --_columns-count: 2;
+    }
+
+    :where(.\@\37 xl\:columns--3-col) {
+        --_columns-count: 3;
+    }
+
+    :where(.\@\37 xl\:columns--4-col) {
+        --_columns-count: 4;
+    }
+}

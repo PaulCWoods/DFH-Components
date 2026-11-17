@@ -12,6 +12,12 @@ The version number says how much checking an upgrade needs. What it covers is ev
 
 Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
 
+## Unreleased
+
+### Added
+- **Columns:** `.columns` sets a long list in newspaper columns, running down one and on into the next: a glossary, an index, a site map. As many columns fit as there's room for at the minimum width (16rem by default; `--2xs`, `--sm` and `--md` change it, from the Grid's block steps), down to one on a phone, with no breakpoints. `--2-col` … `--4-col` set a maximum (and `@xs:` … `@7xl:` from a container size, as on the Grid), `--ruled` draws a rule between columns, and each item stays whole in one column unless you add `--flow`. Hooks: `--gap`, `--columns-width`, `--columns-count`.
+- **Break utilities:** `break-inside-avoid`, `break-after-avoid` and `column-span-all`, for Columns and for print.
+
 ## 1.3.3 (17 November 2026)
 
 ### Fixed

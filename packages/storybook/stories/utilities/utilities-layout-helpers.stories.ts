@@ -8,7 +8,7 @@ const meta: Meta = {
     docs: {
       description: {
         component: `
-Positioning, overflow, overscroll, isolation and z-index. Defined in \`utilities/layout-helpers.css\`.
+Positioning, overflow, overscroll, isolation, z-index and breaks in columns and print. Defined in \`utilities/layout-helpers.css\`.
 
 | Verbose | Shorthand | Sets |
 | :--- | :--- | :--- |
@@ -21,10 +21,14 @@ Positioning, overflow, overscroll, isolation and z-index. Defined in \`utilities
 | \`.scrollbar-gutter-stable\`, \`-auto\` | – | \`scrollbar-gutter\` |
 | \`.isolation-isolate\` | \`.isolate\` | a new stacking context |
 | \`.z-base\`, \`-sticky\`, \`-overlay\`, \`-dialog\`, \`-popover\`, \`-toast\`, \`-tooltip\`, \`.z-auto\` | – | \`z-index\` by role |
+| \`.break-inside-avoid\` | – | keeps the element whole in one column or page |
+| \`.break-after-avoid\` | – | keeps the element with what follows (a heading with its text) |
+| \`.column-span-all\` | – | runs the element across every column |
 
 - **A z-index names a layer**, from \`--z-index-*\`. There are no numbers: an element belongs to the sticky layer or the popover layer, not to 40. Native \`<dialog>\` and \`[popover]\` sit in the top layer and need no z-index.
 - **A scrolling region must be reachable by keyboard** (WCAG 2.1.1): if nothing inside it can take focus, give it \`tabindex="0"\`, a \`role="region"\` and a label.
 - There are no inset utilities: a component that places itself (a corner badge, a popover, a sticky header) sets its own offsets.
+- **Breaks** work in Columns (Layout/Columns) and in print: a Columns keeps its own items whole already, so \`.break-inside-avoid\` is for something nested, or a block in a printed page.
 - \`.overscroll-contain\` stops a scrolling panel from scrolling the page behind it when it reaches its end.
         `,
       },
@@ -64,4 +68,20 @@ export const ScrollFade: Story = {
     <ul class="cluster scroll-fade max-inline-size-xs" role="list">
       ${LOG.map((l) => `<li class="whitespace-nowrap"><a href="#" class="link small-text">${l}</a></li>`).join('')}
     </ul>`,
+};
+
+export const Breaks: Story = {
+  parameters: { docs: { description: { story: '`.column-span-all` runs the heading across the columns, and `.break-after-avoid` keeps each season\'s heading with its list. There\'s no utility to force a new column: where only one fits, it would add a second and the page would scroll sideways.' } } },
+  render: () => `
+    <div class="columns columns--2-col">
+      <h2 class="small-heading column-span-all mb-sm">Jobs for the year</h2>
+      <h3 class="micro-heading break-after-avoid">Spring</h3>
+      <ul class="list small-text mb-sm"><li>Sow broad beans</li><li>Mulch the roses</li></ul>
+      <h3 class="micro-heading break-after-avoid">Summer</h3>
+      <ul class="list small-text mb-sm"><li>Net the brassicas</li><li>Deadhead the dahlias</li></ul>
+      <h3 class="micro-heading break-after-avoid">Autumn</h3>
+      <ul class="list small-text mb-sm"><li>Lift dahlia tubers</li><li>Rake the leaves</li></ul>
+      <h3 class="micro-heading break-after-avoid">Winter</h3>
+      <ul class="list small-text"><li>Prune the apple</li><li>Turn the compost</li></ul>
+    </div>`,
 };

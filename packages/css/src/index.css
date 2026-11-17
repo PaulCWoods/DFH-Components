@@ -97,6 +97,7 @@
 @import './layout/app.css' layer(layout);
 @import './layout/cluster.css' layer(layout);
 @import './layout/grid.css' layer(layout);
+@import './layout/columns.css' layer(layout);
 @import './layout/inline.css' layer(layout);
 @import './layout/main.css' layer(layout);
 @import './layout/split.css' layer(layout);

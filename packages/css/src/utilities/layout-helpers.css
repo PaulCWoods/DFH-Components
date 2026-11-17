@@ -1,7 +1,8 @@
 /* ==========================================================================
-   Design For Humans: Position, Overflow & Stacking Utilities
+   Design For Humans: Position, Overflow, Stacking & Break Utilities
    --------------------------------------------------------------------------
-   Positioning, overflow, overscroll, isolation and z-index by role.
+   Positioning, overflow, overscroll, isolation, z-index by role, and where
+   Columns (and printed pages) may break.
    A z-index names the layer an element belongs to; there are no numbers.
    ========================================================================== */
 
@@ -159,4 +160,27 @@
 
 :where(.z-tooltip) {
     z-index: var(--z-index-tooltip, 700);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Breaks
+   Where Columns, and printed pages, may break. A Columns layout already
+   keeps each of its items whole. Nothing forces a new column: where only one
+   fits, it would add a second and the page would scroll sideways.
+   -------------------------------------------------------------------------- */
+
+/* Keeps something nested whole in one column or page */
+:where(.break-inside-avoid) {
+    break-inside: avoid;
+}
+
+/* Keeps a heading with what follows it */
+:where(.break-after-avoid) {
+    break-after: avoid;
+}
+
+/* A heading across every column */
+:where(.column-span-all) {
+    column-span: all;
 }

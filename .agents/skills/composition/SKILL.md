@@ -47,6 +47,7 @@ Stop at the first answer that fits:
 | A column that becomes a row when there's room | `.stack` with `.@{size}:inline` |
 | A main column beside a side column | `.split` (`--sidebar` keeps one row; `--end` puts the side last) |
 | Repeating items in columns | `.grid` (`grid--N-col` is a maximum that reflows); `.grid--carousel` scrolls sideways |
+| A long list read top to bottom (glossary, index, site map) | `.columns` (newspaper columns, `columns--N-col` a maximum); never for running prose on screen or form fields |
 | Page width and gutters | `.wrapper` |
 | A whole app (Header, Sidebar, main) | `.app`, `.app__workspace`, `.main` |
 
