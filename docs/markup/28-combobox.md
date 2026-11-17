@@ -166,7 +166,7 @@ The browser provides focus, typing and Tab. Everything to do with the list is th
   </div>
 </div>
 ```
-Chips sit before the input and wrap. Each remove Button names its value. The list stays open while choosing.
+Chips sit before the input and wrap. When they leave the input too little room to type, the input and its Buttons move to a row of their own, the full width of the field. Each remove Button names its value. The list stays open while choosing.
 
 ## The product's script
 The library ships no script. The product's script must:

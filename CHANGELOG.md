@@ -12,6 +12,11 @@ The version number says how much checking an upgrade needs. What it covers is ev
 
 Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/blob/main/docs/ROADMAP.md).
 
+## Unreleased
+
+### Fixed
+- **A Combobox with many Chips keeps room to type:** the input used to shrink beside a growing set of Chips until it was too narrow to use. When the Chips leave it less than about 5rem, the input and its Buttons now move to a row of their own, the full width of the field. No markup changes.
+
 ## 1.3.2 (16 November 2026)
 
 ### Fixed

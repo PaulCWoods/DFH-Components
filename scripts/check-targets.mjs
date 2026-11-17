@@ -247,7 +247,8 @@ const forcedBefore = `(() => {
 
 /* Under high contrast and forced colours: every text field, or the control
    drawn around it (a combobox), has an edge. --flush is the exception, for
-   a container that draws the edge itself. */
+   a container that draws the edge itself. A combobox's control grows with
+   its Chips, so it counts at any height. */
 const edgeProbe = `(() => {
   ${helpers}
   ${boundary}
@@ -259,7 +260,7 @@ const edgeProbe = `(() => {
     let edged_ = hasBoundary(el);
     for (let a = el.parentElement, i = 0; !edged_ && a && i < 3; a = a.parentElement, i++) {
       const r = a.getBoundingClientRect();
-      if (r.height <= box.height + 32 && hasBoundary(a)) edged_ = true;
+      if ((r.height <= box.height + 32 || a.matches('.combobox__control')) && hasBoundary(a)) edged_ = true;
     }
     if (!edged_) out.push('edge ' + name(el) + ' "' + label(el) + '": a text field with no edge');
   }

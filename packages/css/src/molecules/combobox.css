@@ -125,12 +125,14 @@
 :where(.combobox__control) {
   anchor-name: --combobox;
   display: flex;
-  /* One row: Chips wrap inside .combobox__tags, so the field and its
-     buttons stay side by side (a wrapped row would sit under the field's
-     reach into the padding) */
-  flex-wrap: nowrap;
+  /* When the Chips leave the field too little room, the field and its
+     buttons move to a row of their own. The field reaches up past the
+     Chips' padding by the border's width; the rows sit that far apart and
+     half the gap more, room for a Chip's hit area. */
+  flex-wrap: wrap;
   align-items: center;
   column-gap: var(--_combobox-gap);
+  row-gap: calc(var(--_control-border-width, 0px) + var(--_combobox-gap) / 2);
   /* The field and the buttons beside it each take half the gap */
   --target-gap-inline: var(--_combobox-gap);
   inline-size: 100%;
@@ -146,11 +148,29 @@
   --button-sm-padding-block: calc(var(--spacing-target-sm) / var(--spacing-target) * var(--button-padding-block, var(--spacing-xs)));
   --button-sm-padding-inline: calc(var(--spacing-target-sm) / var(--spacing-target) * var(--button-padding-inline, var(--spacing-md)));
 
+  /* The buttons wrap with the field, never alone: the field's end margin
+     holds the room they take, and the first button steps back into it, so
+     the buttons add nothing to the row's length. */
+  --_combobox-button-end: calc((var(--_control-padding-inline) - var(--_control-padding-block)) * -1);
+  --_combobox-button-count: 0;
+  --_combobox-buttons-size: calc(var(--_combobox-button-count) * (var(--_combobox-button-size) + var(--_combobox-gap) + var(--_combobox-button-end)));
+
+  &:has(> :where(.button:not([hidden]))) {
+    --_combobox-button-count: 1;
+  }
+
+  &:has(> :where(.button:not([hidden])) ~ :where(.button:not([hidden]))) {
+    --_combobox-button-count: 2;
+  }
+
   > :where(.button) {
     flex: none;
     /* As far from the end as from the top and bottom */
-    margin-inline-end: calc((var(--_control-padding-inline) - var(--_control-padding-block)) * -1);
-    margin-inline-start: auto;
+    margin-inline-end: var(--_combobox-button-end);
+  }
+
+  > :where(.button:not([hidden]):not(.button:not([hidden]) ~ *)) {
+    margin-inline-start: calc(var(--_combobox-buttons-size) * -1);
   }
 }
 
@@ -169,7 +189,8 @@
     --_combobox-input-reach-end: var(--_control-padding-inline, 0px);
   }
 
-  flex: 1 1 5rem;
+  /* Room to type, or the whole row less the buttons in a narrow field */
+  flex: 1 1 min(5rem, 100% - var(--_combobox-buttons-size, 0px));
   /* The drawn control is the target: the field reaches under the
      control's padding and border, so a tap anywhere on it lands in the
      field. The control still draws the border. */
@@ -177,7 +198,8 @@
   min-inline-size: 3ch;
   min-block-size: 0;
   margin-block: calc((var(--_control-padding-block, 0px) + var(--_control-border-width, 0px)) * -1);
-  margin-inline: calc(var(--_combobox-input-reach-start) * -1) calc(var(--_combobox-input-reach-end) * -1);
+  /* The end margin also holds the buttons' room (see .combobox__control) */
+  margin-inline: calc(var(--_combobox-input-reach-start) * -1) calc(var(--_combobox-buttons-size, 0px) - var(--_combobox-input-reach-end));
   padding-block: calc(var(--_control-padding-block, 0px) + var(--_control-border-width, 0px));
   padding-inline: var(--_combobox-input-reach-start) var(--_combobox-input-reach-end);
   border: 0;
@@ -186,6 +208,8 @@
   color: inherit;
   font: inherit;
   appearance: none;
+  /* Above the last Chip's hit area, which reaches freely towards it */
+  position: relative;
 
   &::placeholder {
     color: var(--_control-placeholder-color);
@@ -427,8 +451,9 @@
     --target-gap-block-start: 100vmax;
   }
 
-  /* The last Chip meets the field halfway across the control's gap */
+  /* The last Chip reaches freely at its end: the field may sit beside it
+     or on the next row, and where it sits beside, the field is on top */
   > :where(:last-child) {
-    --target-gap-inline-end: var(--_combobox-gap);
+    --target-gap-inline-end: 100vmax;
   }
 }

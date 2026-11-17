@@ -160,6 +160,27 @@ export const MultiSelect: Story = {
     </div>`),
 };
 
+export const ManyChips: Story = {
+  name: 'Multi-select with many chips',
+  parameters: {
+    docs: {
+      description: {
+        story: 'When the chips leave the input too little room, the input and its button move to a row of their own, the full width of the field.',
+      },
+    },
+  },
+  render: story(`
+    <div style="max-inline-size: 28rem;">
+      ${field({
+        id: 'many',
+        label: 'Companion plants',
+        multi: true,
+        placeholder: 'Add a plant',
+        list: plants.map((p, i) => option(`many-${i}`, `<span>${p}</span>`, i < 6)).join(''),
+      })}
+    </div>`),
+};
+
 export const Groups: Story = {
   parameters: {
     docs: {
