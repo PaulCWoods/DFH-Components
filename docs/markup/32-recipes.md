@@ -33,9 +33,10 @@ A recipe is a whole screen or flow built only from library parts. Recipes live i
 
 `recipe-filter-sidebar.stories.ts`: a plant catalogue with facets in a side pane and results in a Grid.
 
-- **Composes:** header, Wrapper and split, Card, Accordion, Fieldset and choices, Combobox with Chips, range and switch, Chip and status, grid, Empty State, Skeleton.
+- **Composes:** header, Brand, Wrapper and split, Card, Accordion, Fieldset and choices, Combobox with Chips, range and switch, Chip, Badge and status, grid, Dialog drawer, Empty State, Skeleton.
 - **The filters are one compact, ruled form Card.** Each facet is a plain Accordion holding a Fieldset with an `sr-only` legend. Active filters are a list of removable Chips. The result count is a `role="status"` line.
-- **Stories:** Default, NoResults, Loading.
+- **Narrow screens:** below 48rem the side pane hides (`max-md:hide`) and a Filters Button (`md:hide`) beside the count, showing how many are on, opens the same form in a `.dialog--drawer.dialog--start`. Its footer clears the filters or shows the results (`method="dialog"`). The two copies of the form have their own ids. The results Cards fill their grid cells (`h-full`), so a row lines up.
+- **Stories:** Default, NoResults, Loading, FiltersDrawer.
 
 ## D. Tally & Sprout
 

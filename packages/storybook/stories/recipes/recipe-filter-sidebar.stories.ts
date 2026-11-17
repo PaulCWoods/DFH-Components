@@ -14,9 +14,10 @@ A catalogue page: filters in a side pane, results in a grid, with the active fil
 
 **Decisions:**
 - **The filters are one form** in a compact, ruled card, so its controls step down together (\`--ui-sizing: compact\`). Each facet is a plain accordion holding a fieldset; the summary is the visible label and the legend repeats it for screen readers (\`sr-only\`), so the group has a name.
-- **The split wraps on its own.** Filters come first in the source because they're read first; on a narrow screen they sit above the results.
+- **On a wide screen the filters are a side pane;** they come first in the source because they're read first. **Below 48rem they move into a start-side drawer** (\`.dialog--drawer.dialog--start\`), opened by a Filters Button beside the count that says how many are on, so the results come straight after the heading. The drawer's footer shows the results and closes it. The pane and the drawer are two copies of the form, so each has its own ids.
+- **The results have a heading** (\`sr-only\`, "Results"), so the Card titles sit under an \`h2\` at every width, with the pane hidden too.
 - **Active filters** are a list of removable chips, each remove button naming its value. The result count is a \`role="status"\` line, so a change is announced.
-- **Result cards** link from the title, stretched over the card (\`.link--stretched\`). Stock is a status with text, never colour alone.
+- **Result cards** link from the title, stretched over the card (\`.link--stretched\`), and fill their grid cell (\`h-full\`), so a row's cards line up. Stock is a status with text, never colour alone.
 - **No results** keeps the filters and the chips, and offers to clear them. **Loading** marks the grid \`aria-busy\` with skeleton cards and says so in the status line.
         `,
       },
@@ -47,78 +48,99 @@ const facet = (title: string, body: string, open = true) => `
 
 const colours = ['White', 'Blue', 'Pink', 'Purple', 'Yellow'];
 
-const filters = (selected: { light: string[]; colours: string[] }) => `
-  <form class="card card--compact card--ruled" aria-labelledby="filters-title">
-    <header class="card__header">
-      <h2 id="filters-title" class="card__title small-heading">Filters</h2>
-      <button type="reset" class="button button--plain button--sm">Clear</button>
-    </header>
-    <div class="card__body card__body--flush">
+type Selected = { light: string[]; colours: string[] };
+
+/* The facets, with ids prefixed for each copy of the form (p) */
+const facets = (selected: Selected, p: string) => `
       <div class="accordion-group">
         ${facet(
-          'Light',
-          `<div class="choices">
+  'Light',
+  `<div class="choices">
             ${choice('light', 'sun', 'Full sun', selected.light.includes('sun'))}
             ${choice('light', 'part', 'Part shade', selected.light.includes('part'))}
             ${choice('light', 'shade', 'Full shade', selected.light.includes('shade'))}
           </div>`,
-        )}
+)}
         ${facet(
-          'Flower colour',
-          `<div class="combobox">
+  'Flower colour',
+  `<div class="combobox">
             <div class="combobox__control">
               <span class="combobox__tags">
                 ${selected.colours.map((c) => `<span class="chip chip--subtle"><span class="chip__text">${c}</span><button type="button" class="chip__remove" aria-label="Remove ${c}">${icon('x')}</button></span>`).join('')}
               </span>
               <input class="combobox__input" role="combobox" aria-label="Flower colour" aria-expanded="false"
-                aria-controls="colour-list" aria-autocomplete="list" autocomplete="off" placeholder="Add a colour" />
+                aria-controls="${p}colour-list" aria-autocomplete="list" autocomplete="off" placeholder="Add a colour" />
             </div>
-            <ul id="colour-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Colours" aria-multiselectable="true">
-              ${colours.map((c, i) => `<li id="colour-${i}" class="combobox__option" role="option" aria-selected="${selected.colours.includes(c)}"><span>${c}</span>${icon('check').replace('class="icon"', 'class="icon combobox__check"')}</li>`).join('')}
+            <ul id="${p}colour-list" class="combobox__listbox" role="listbox" popover="manual" aria-label="Colours" aria-multiselectable="true">
+              ${colours.map((c, i) => `<li id="${p}colour-${i}" class="combobox__option" role="option" aria-selected="${selected.colours.includes(c)}"><span>${c}</span>${icon('check').replace('class="icon"', 'class="icon combobox__check"')}</li>`).join('')}
             </ul>
           </div>`,
-        )}
+)}
         ${facet(
-          'Height',
-          `<div class="field">
+  'Height',
+  `<div class="field">
             <div class="field__header">
-              <label for="height" class="field__label label">Up to</label>
-              <output for="height" class="small-text">60 cm</output>
+              <label for="${p}height" class="field__label label">Up to</label>
+              <output for="${p}height" class="small-text">60 cm</output>
             </div>
-            <input id="height" name="height" type="range" class="range" min="10" max="150" step="10" value="60" style="--value: 36%;" />
+            <input id="${p}height" name="height" type="range" class="range" min="10" max="150" step="10" value="60" style="--value: 36%;" />
           </div>`,
-          false,
-        )}
+  false,
+)}
         ${facet(
-          'Availability',
-          `<div class="stack gap-xs">
-            <div class="switch"><label for="filter-stock" class="switch__label label">In stock only</label><span class="switch__control"><input type="checkbox" role="switch" id="filter-stock" name="stock" checked /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
-            <div class="switch"><label for="filter-native" class="switch__label label">Native species</label><span class="switch__control"><input type="checkbox" role="switch" id="filter-native" name="native" /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
+  'Availability',
+  `<div class="stack gap-xs">
+            <div class="switch"><label for="${p}filter-stock" class="switch__label label">In stock only</label><span class="switch__control"><input type="checkbox" role="switch" id="${p}filter-stock" name="stock" checked /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
+            <div class="switch"><label for="${p}filter-native" class="switch__label label">Native species</label><span class="switch__control"><input type="checkbox" role="switch" id="${p}filter-native" name="native" /><span class="switch__option switch__option--off" aria-hidden="true">Off</span><span class="switch__option switch__option--on" aria-hidden="true">On</span></span></div>
           </div>`,
-          false,
-        )}
-      </div>
-    </div>
+  false,
+)}
+      </div>`;
+
+/* The side pane on a wide screen */
+const filters = (selected: Selected) => `
+  <form class="card card--compact card--ruled" aria-labelledby="filters-title">
+    <header class="card__header">
+      <h2 id="filters-title" class="card__title subheading">Filters</h2>
+      <button type="reset" class="button button--subtle button--sm">Clear</button>
+    </header>
+    <div class="card__body card__body--flush">${facets(selected, '')}</div>
   </form>`;
 
+/* The same form in a drawer on a narrow screen */
+const drawer = (selected: Selected, count: string) => `
+  <dialog id="filter-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="filter-drawer-title">
+    <form class="card card--compact card--ruled" method="dialog">
+      <header class="card__header">
+        <h2 id="filter-drawer-title" class="card__title subheading">Filters</h2>
+        <button type="button" class="button button--subtle button--icon" commandfor="filter-drawer" command="close">${icon('x')}<span class="sr-only">Close filters</span></button>
+      </header>
+      <div class="card__body card__body--flush card__body--scrollable">${facets(selected, 'drawer-')}</div>
+      <footer class="card__footer inline inline--between">
+        <button type="reset" class="button button--plain">Clear</button>
+        <button type="submit" class="button button--strong button--accent">Show ${count}</button>
+      </footer>
+    </form>
+  </dialog>`;
+
 const plants = [
-  ['Epimedium', 'Heart-shaped leaves and spurred spring flowers. Copes with dry shade.', true],
-  ['Brunnera', 'Forget-me-not blue flowers over silver-veined leaves.', true],
-  ['Pulmonaria', 'Spotted leaves and early flowers that open pink and turn blue.', false],
-  ['Tiarella', 'Foamy white spikes in late spring; spreads by runners.', true],
-  ['Geranium macrorrhizum', 'Scented, evergreen ground cover with pink flowers.', true],
-  ['Polystichum', 'An evergreen shield fern for the back of a shady border.', false],
+  ['Epimedium', 'Heart-shaped leaves and spurred spring flowers. Copes with dry shade.', '£9.50', true],
+  ['Brunnera', 'Forget-me-not blue flowers over silver-veined leaves.', '£8.75', true],
+  ['Pulmonaria', 'Spotted leaves and early flowers that open pink and turn blue.', '£7.25', false],
+  ['Tiarella', 'Foamy white spikes in late spring; spreads by runners.', '£6.95', true],
+  ['Geranium macrorrhizum', 'Scented, evergreen ground cover with pink flowers.', '£5.50', true],
+  ['Polystichum', 'An evergreen shield fern for the back of a shady border.', '£12.00', false],
 ] as const;
 
-const plantCard = ([name, desc, inStock]: (typeof plants)[number]) => `
+const plantCard = ([name, desc, price, inStock]: (typeof plants)[number]) => `
   <li>
-    <article class="card">
+    <article class="card h-full">
       <header class="card__header">
-        <h3 class="card__title small-heading"><a href="#" class="link link--plain link--stretched">${name}</a></h3>
+        <h3 class="card__title subheading"><a href="#" class="link link--plain link--stretched">${name}</a></h3>
       </header>
       <div class="card__body"><p class="small-text">${desc}</p></div>
       <footer class="card__footer inline inline--between">
-        <span class="small-text font-bold">£8.50</span>
+        <span class="small-text font-bold">${price}</span>
         ${inStock ? '<span class="status status--success">' + icon('check') + '<span class="status__text">In stock</span></span>' : '<span class="status"><span class="status__text">Pre-order</span></span>'}
       </footer>
     </article>
@@ -126,7 +148,7 @@ const plantCard = ([name, desc, inStock]: (typeof plants)[number]) => `
 
 const skeletonCard = (w: string) => `
   <li>
-    <article class="card">
+    <article class="card h-full">
       <header class="card__header"><div class="small-heading"><span class="skeleton skeleton--heading ${w}" aria-hidden="true"></span></div></header>
       <div class="card__body">
         <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true"></span><span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span></p>
@@ -140,7 +162,10 @@ const skeletonCard = (w: string) => `
 
 const toolbar = (active: string[], count: string) => `
   <div class="inline inline--between">
-    <p class="small-text text-muted" role="status">${count}</p>
+    <div class="inline gap-sm">
+      <button type="button" class="button button--sm md:hide" commandfor="filter-drawer" command="show-modal">${icon('Filter')}<span>Filters</span>${active.length ? `<span class="badge"><span class="badge__text">${active.length}</span></span><span class="sr-only">on</span>` : ''}</button>
+      <p class="small-text text-muted" role="status">${count}</p>
+    </div>
     <div class="field field--inline">
       <label for="sort" class="field__label label">Sort</label>
       <select id="sort" class="select select--sm">
@@ -152,22 +177,27 @@ const toolbar = (active: string[], count: string) => `
   </div>
   ${active.length ? `<ul class="cluster gap-xs" aria-label="Active filters">${active.map(chip).join('')}</ul>` : ''}`;
 
-const page = (side: string, results: string) => `
+const page = (side: string, results: string, drawerHtml: string) => `
   <a href="#main" class="skip-link">Skip to results</a>
   <header class="header">
-    <div class="header__bar">
-      <a href="#" class="link link--plain small-heading">Woodland Plants</a>
+    <div class="header__bar max-md:hide-labels">
+      <a href="#" class="brand"><span class="brand__name">Woodland Plants</span></a>
+      <a href="#" class="button button--plain">${icon('shopping-cart')}<span>Basket</span><span class="sr-only">, 2 items</span><span class="badge badge--top-end" aria-hidden="true"><span class="badge__text">2</span></span></a>
     </div>
   </header>
   <main id="main" class="wrapper py-lg stack">
     <h1 class="heading">Shade plants</h1>
     <div class="split split--sm">
-      <div>${side}</div>
-      <div class="stack">${results}</div>
+      <div class="max-md:hide">${side}</div>
+      <div class="stack">
+        <h2 class="sr-only">Results</h2>
+        ${results}
+      </div>
     </div>
-  </main>`;
+  </main>
+  ${drawerHtml}`;
 
-const defaults = { light: ['part', 'shade'], colours: ['Blue', 'White'] };
+const defaults: Selected = { light: ['part', 'shade'], colours: ['Blue', 'White'] };
 
 export const Default: Story = {
   render: () =>
@@ -175,6 +205,7 @@ export const Default: Story = {
       filters(defaults),
       `${toolbar(['Part shade', 'Full shade', 'Blue', 'White', 'In stock'], '6 plants')}
       <ul class="grid grid--xs" role="list">${plants.map(plantCard).join('')}</ul>`,
+      drawer(defaults, '6 plants'),
     ),
 };
 
@@ -189,7 +220,7 @@ export const NoResults: Story = {
           <div class="empty-state">
             <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('search')}</span></div>
             <div class="empty-state__content">
-              <h2 class="empty-state__title small-heading">No plants match these filters</h2>
+              <h2 class="empty-state__title subheading">No plants match these filters</h2>
               <p class="empty-state__description small-text">Few yellow-flowered shade plants like full sun. Remove a filter, or clear them all.</p>
             </div>
             <div class="empty-state__actions">
@@ -198,6 +229,7 @@ export const NoResults: Story = {
           </div>
         </div>
       </div>`,
+      drawer({ light: ['sun'], colours: ['Yellow'] }, 'no plants'),
     ),
 };
 
@@ -208,5 +240,17 @@ export const Loading: Story = {
       filters(defaults),
       `${toolbar(['Part shade', 'Full shade', 'Blue', 'White', 'In stock'], 'Loading plants…')}
       <ul class="grid grid--xs" role="list" aria-busy="true">${['skeleton--w-50', 'skeleton--w-75', 'skeleton--w-50', 'skeleton--w-90', 'skeleton--w-75', 'skeleton--w-50'].map(skeletonCard).join('')}</ul>`,
+      drawer(defaults, 'plants'),
     ),
+};
+
+export const FiltersDrawer: Story = {
+  parameters: {
+    viewport: { defaultViewport: 'mobile1' },
+    docs: { description: { story: 'Below 48rem the Filters Button opens the same form in a start-side drawer. Its footer clears the filters or shows the results.' } },
+  },
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    canvasElement.querySelector<HTMLDialogElement>('#filter-drawer')?.showModal();
+  },
 };
