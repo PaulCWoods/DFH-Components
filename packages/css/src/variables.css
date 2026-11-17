@@ -283,7 +283,7 @@
   --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-50));
   --color-focus: currentColor;
   --color-quiet: color-mix(in srgb, currentColor, transparent var(--translucency-70));
-  --color-backdrop: color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-50));
+  --color-backdrop: light-dark(color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-50)), color-mix(in srgb, var(--color-black), transparent var(--translucency-50)));
   --color-overlay: light-dark(color-mix(in srgb, var(--color-neutral-000), transparent var(--translucency-33)), color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-33)));
   --surface-layer-filter: var(--blur-lg);
   --surface-layer-translucency: var(--translucency-10);
@@ -689,7 +689,7 @@
   --border-color-control: color-mix(in srgb, currentColor, transparent var(--translucency-25));
   --color-muted: color-mix(in srgb, currentColor, transparent var(--translucency-33));
   --color-quiet: color-mix(in srgb, currentColor, transparent var(--translucency-50));
-  --color-backdrop: color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-33));
+  --color-backdrop: light-dark(color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-33)), color-mix(in srgb, var(--color-black), transparent var(--translucency-33)));
   --color-overlay: light-dark(color-mix(in srgb, var(--color-neutral-000), transparent var(--translucency-25)), color-mix(in srgb, var(--color-neutral-900), transparent var(--translucency-25)));
   --opacity-muted: var(--opacity-90);
   }
