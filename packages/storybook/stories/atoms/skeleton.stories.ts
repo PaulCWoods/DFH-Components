@@ -25,6 +25,7 @@ A placeholder that holds the space of content still loading, so nothing moves wh
 | Shape | \`.skeleton\` with \`--text\`, \`--heading\`, \`--avatar\`, \`--button\`, \`--input\`, \`--badge\` or \`--media\` |
 | Companion | \`.skeleton\` on \`.avatar\`, \`.button\`, \`.input\`, \`.textarea\`, \`.select\`, \`.badge\`, \`.chip\`, \`.status\` or \`.kbd\`: the atom keeps its box, the skeleton replaces the paint |
 | Width | \`--w-50\`, \`--w-75\`, \`--w-90\`; any other with \`--skeleton-width\` (and \`--skeleton-height\` on a bare \`.skeleton\`) |
+| Media proportions | \`--skeleton-media-aspect-ratio\` (default \`16 / 9\`); it inherits, so set it on a grid of Cards beside \`--card-thumb-aspect-ratio\` |
 | Motion | Shimmer (default), \`--pulse\`; \`--skeleton-motion: shimmer \\| pulse \\| none\` on a container |
 
 - **Text lines size from the text atom they sit in.** \`--text\` and \`--heading\` are one line box high with the bar at cap height, so a line inside \`.text\` or \`.heading\` is exactly one of its lines. Hold a heading's place with the atom class on a \`div\`, not a heading element, which would be an empty heading.
@@ -87,6 +88,20 @@ export const Shapes: Story = {
         </div>`
         )
         .join('')}
+    </div>
+  `,
+};
+
+export const MediaProportions: Story = {
+  name: 'Media proportions',
+  parameters: { docs: { description: { story: '`--skeleton-media-aspect-ratio` shapes `--media`: 16:9 by default, here 3:2 and 1:1. It inherits, so a grid of Cards can set it once beside `--card-thumb-aspect-ratio`.' } } },
+  render: () => `
+    <div class="sb-demo-stage grid grid--2xs" role="list" style="max-inline-size: 40rem;">
+      ${['16 / 9', '3 / 2', '1'].map((r) => `
+        <div class="stack" role="listitem" style="--gap: var(--spacing-8); --skeleton-media-aspect-ratio: ${r};">
+          <span class="sb-demo-tag">${r}</span>
+          <span class="skeleton skeleton--media" aria-hidden="true"></span>
+        </div>`).join('')}
     </div>
   `,
 };

@@ -46,7 +46,7 @@ const choice = (name: string, value: string, label: string, checked = false) =>
 const facet = (title: string, body: string, open = true) => `
   <details class="accordion accordion--plain"${open ? ' open' : ''}>
     <summary>${title}</summary>
-    <fieldset class="fieldset pb-sm">
+    <fieldset class="fieldset py-sm">
       <legend class="fieldset__legend sr-only">${title}</legend>
       ${body}
     </fieldset>
@@ -118,7 +118,7 @@ const drawer = (selected: Selected, count: string) => `
   <dialog id="filter-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="filter-drawer-title">
     <form class="card card--compact card--ruled" method="dialog">
       <header class="card__header">
-        <h2 id="filter-drawer-title" class="card__title subheading">Filters</h2>
+        <h2 id="filter-drawer-title" class="card__title heading">Filters</h2>
         <button type="button" class="button button--subtle button--icon" commandfor="filter-drawer" command="close">${icon('x')}<span class="sr-only">Close filters</span></button>
       </header>
       <div class="card__body card__body--flush card__body--scrollable">${facets(selected, 'drawer-')}</div>
@@ -171,8 +171,8 @@ const credits = `
 const skeletonCard = (w: string) => `
   <li>
     <article class="card h-full">
-      <div class="card__thumb"><span class="skeleton skeleton--media" style="--skeleton-width: 100%;" aria-hidden="true"></span></div>
-      <header class="card__header"><div class="small-heading"><span class="skeleton skeleton--heading ${w}" aria-hidden="true"></span></div></header>
+      <div class="card__thumb"><span class="skeleton skeleton--media" aria-hidden="true"></span></div>
+      <header class="card__header"><div class="subheading"><span class="skeleton skeleton--heading ${w}" aria-hidden="true"></span></div></header>
       <div class="card__body">
         <p class="small-text"><span class="skeleton skeleton--text" aria-hidden="true"></span><span class="skeleton skeleton--text skeleton--w-75" aria-hidden="true"></span></p>
       </div>
@@ -245,7 +245,7 @@ export const NoResults: Story = {
           <div class="empty-state">
             <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('search')}</span></div>
             <div class="empty-state__content">
-              <h2 class="empty-state__title subheading">No plants match these filters</h2>
+              <h2 class="empty-state__title heading">No plants match these filters</h2>
               <p class="empty-state__description small-text">Few yellow-flowered shade plants like full sun. Remove a filter, or clear them all.</p>
             </div>
             <div class="empty-state__actions">
@@ -264,7 +264,7 @@ export const Loading: Story = {
     page(
       filters(defaults),
       `${toolbar(['Part shade', 'Full shade', 'Blue', 'White'], 'Loading plants…')}
-      <ul class="grid grid--xs" role="list" aria-busy="true">${['skeleton--w-50', 'skeleton--w-75', 'skeleton--w-50', 'skeleton--w-90', 'skeleton--w-75', 'skeleton--w-50'].map(skeletonCard).join('')}</ul>`,
+      <ul class="grid grid--xs" role="list" style="--card-thumb-aspect-ratio: 3 / 2; --skeleton-media-aspect-ratio: 3 / 2;" aria-busy="true">${['skeleton--w-50', 'skeleton--w-75', 'skeleton--w-50', 'skeleton--w-90', 'skeleton--w-75', 'skeleton--w-50'].map(skeletonCard).join('')}</ul>`,
       drawer(defaults, 'plants'),
     ),
 };

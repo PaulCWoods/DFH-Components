@@ -108,6 +108,7 @@ A placeholder that holds the space of content still loading, so nothing moves wh
 | Shape | `.skeleton` with `--text`, `--heading`, `--avatar`, `--button`, `--input`, `--status` or `--media`. A bare `.skeleton` is a block sized by `--skeleton-width` and `--skeleton-height`. |
 | Companion | `.skeleton` on `.avatar`, `.thumbnail`, `.button`, `.input`, `.textarea`, `.select`, `.badge`, `.chip`, `.status` or `.kbd`. The atom keeps its own box; the Skeleton replaces the paint. |
 | Width | `--w-50`, `--w-75`, `--w-90`; any other with `--skeleton-width` (per element, not inherited) |
+| Media proportions | `--skeleton-media-aspect-ratio` (default `16 / 9`). It inherits, so set it once on a container, beside `--card-thumb-aspect-ratio` on a grid of Cards, and the placeholders match the thumbs they stand for |
 | Motion | Shimmer (default), `--pulse`; `--skeleton-motion: shimmer \| pulse \| none` on a container |
 
 ### Further rules

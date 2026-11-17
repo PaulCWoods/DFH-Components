@@ -3139,6 +3139,11 @@
       "$value": "{duration.xl}",
       "$type": "duration",
       "$description": "One cycle of the shimmer or pulse"
+    },
+    "media-aspect-ratio": {
+      "$value": "16 / 9",
+      "$type": "string",
+      "$description": "Width to height of a media placeholder; set it where it should match the media it stands for, such as a Card's thumb"
     }
   },
   "spinner": {

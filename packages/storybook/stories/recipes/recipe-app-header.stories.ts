@@ -54,7 +54,7 @@ const notifications = `
   </button>
   <div id="notifications" popover class="popover popover--end-aligned">
     <section class="card card--compact card--ruled" aria-labelledby="notifications-title">
-      <header class="card__header"><h2 id="notifications-title" class="card__title small-heading">Notifications</h2></header>
+      <header class="card__header"><h2 id="notifications-title" class="card__title subheading">Notifications</h2></header>
       <div class="card__body card__body--flush">
         <menu class="menu menu--plain" aria-label="Unread">
           <li><button type="button" class="button">${icon('upload')}<span class="lockup grow"><span class="small-heading">Figma variables exported</span><span class="small-text text-muted">547 variables, 2 minutes ago</span></span></button></li>
@@ -92,7 +92,7 @@ const drawer = `
   <dialog id="nav-drawer" class="dialog dialog--drawer dialog--start" aria-labelledby="nav-drawer-title">
     <article class="card">
       <header class="card__header">
-        <h2 id="nav-drawer-title" class="card__title small-heading">Design For Humans</h2>
+        <h2 id="nav-drawer-title" class="card__title heading">Design For Humans</h2>
         <button type="button" class="button button--plain button--icon" commandfor="nav-drawer" command="close"><span class="sr-only">Close menu</span>${icon('x')}</button>
       </header>
       <div class="card__body card__body--scrollable">
@@ -127,16 +127,16 @@ const overview = `
     <ul class="grid grid--sm" role="list">
       ${sections.map(([ic, t, d]) => `
       <li class="card">
-        <header class="card__header">
-          <span class="icon-box icon-box--subtle" aria-hidden="true">${icon(ic)}</span>
-          <h2 class="card__title small-heading"><a href="#" class="link link--subtle link--plain link--stretched">${t}</a></h2>
+        <header class="card__header gap-breathe">
+          <h2 class="card__title subheading"><a href="#" class="link link--subtle link--plain link--stretched">${t}</a></h2>
+          <span class="icon-box icon-box--subtle icon-box--accent" aria-hidden="true">${icon(ic, "icon icon--lg")}</span>
         </header>
         <div class="card__body"><p class="small-text text-muted">${d}</p></div>
       </li>`).join('')}
     </ul>
     <section class="card" aria-labelledby="changes-title">
       <header class="card__header">
-        <h2 id="changes-title" class="card__title subheading">Recently updated</h2>
+        <h2 id="changes-title" class="card__title heading">Recently updated</h2>
         <a href="#" class="link small-text">All changes</a>
       </header>
       <div class="card__body card__body--flush">

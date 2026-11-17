@@ -7,7 +7,8 @@
    Two ways to use it:
    - A shape: .skeleton with --text, --heading, --avatar, --button, --input,
      --status or --media. A bare .skeleton is a block sized by
-     --skeleton-width and --skeleton-height.
+     --skeleton-width and --skeleton-height. --skeleton-media-aspect-ratio
+     shapes --media (16 / 9 by default), and inherits.
    - A companion: .skeleton on another atom (.avatar, .thumbnail, .button,
      .input, .textarea, .select, .badge, .chip, .status, .kbd). The atom keeps its
      own box; the skeleton only replaces the paint.
@@ -157,8 +158,10 @@
     border-radius: var(--_skeleton-radius-round);
   }
 
+  /* Media: 16:9 unless --skeleton-media-aspect-ratio says otherwise. It
+     inherits, so a grid of Cards can match its thumbs in one place */
   &:where(.skeleton--media) {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: var(--skeleton-media-aspect-ratio, 16 / 9);
   }
 
   /* ------------------------------------------------------------------------

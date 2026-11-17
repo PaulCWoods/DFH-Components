@@ -135,7 +135,7 @@ const metrics = `
    -------------------------------------------------------------------------- */
 const viewSwitch = (view: 'table' | 'cards') => `
   <div class="button-group button-group--joined buttons-sm max-sm:hide-labels" role="radiogroup" aria-label="View">
-    <label class="button">${icon('list')}<input type="radio" name="view" value="table" class="sr-only"${view === 'table' ? ' checked' : ''} /><span>Table</span></label>
+    <label class="button">${icon('rows-2')}<input type="radio" name="view" value="table" class="sr-only"${view === 'table' ? ' checked' : ''} /><span>Table</span></label>
     <label class="button">${icon('grid-3x3')}<input type="radio" name="view" value="cards" class="sr-only"${view === 'cards' ? ' checked' : ''} /><span>Cards</span></label>
   </div>`;
 
@@ -218,9 +218,9 @@ const table = (body: string, busy = false) => `
 
 const plotCard = (p: Plot) => `
   <li>
-    <article class="card card--compact">
+    <article class="card card--compact card--bordered">
       <header class="card__header">
-        <h3 class="card__title small-heading"><a href="#" class="link link--plain link--stretched">Plot ${p.id}</a></h3>
+        <h3 class="card__title subheading"><a href="#" class="link link--subtle link--plain link--stretched">Plot ${p.id}</a></h3>
         ${feeStatus(p.fee)}
       </header>
       <div class="card__body stack gap-xs">
@@ -247,7 +247,7 @@ const emptyResults = (query: string) => `
   <div class="empty-state p-lg">
     <div class="empty-state__visual"><span class="icon-box" aria-hidden="true">${icon('search')}</span></div>
     <div class="empty-state__content">
-      <h3 class="empty-state__title small-heading">No plots match “${query}”</h3>
+      <h3 class="empty-state__title heading">No plots match “${query}”</h3>
       <p class="empty-state__description small-text">Check the plot number or name, or clear the search and filters.</p>
     </div>
     <div class="empty-state__actions"><button type="button" class="button">Clear search</button></div>
@@ -421,7 +421,7 @@ const leaseDialog = (step = 1, errors = false) => `
   <dialog id="lease-dialog" class="dialog" aria-labelledby="lease-title">
     <form method="dialog" class="card card--ruled" novalidate>
       <header class="card__header">
-        <h2 id="lease-title" class="card__title small-heading">New lease</h2>
+        <h2 id="lease-title" class="card__title heading">New lease</h2>
         <button type="button" class="button button--plain button--icon" commandfor="lease-dialog" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
       </header>
       <div class="card__band">${stepper(step, errors)}</div>
@@ -444,7 +444,7 @@ const leaseDialog = (step = 1, errors = false) => `
 const tool = (name: string, status: string, note: string, action = '') => `
   <li>
     <article class="card card--compact">
-      <header class="card__header"><h3 class="card__title small-heading">${name}</h3>${status}</header>
+      <header class="card__header"><h3 class="card__title subheading">${name}</h3>${status}</header>
       <div class="card__body"><p class="small-text text-muted">${note}</p></div>
       ${action ? `<footer class="card__footer justify-end">${action}</footer>` : ''}
     </article>
@@ -455,7 +455,7 @@ const toolLocker = `
     <article class="card">
       <header class="card__header">
         <hgroup class="card__hgroup">
-          <h2 id="tool-locker-title" class="card__title small-heading">Tool locker</h2>
+          <h2 id="tool-locker-title" class="card__title heading">Tool locker</h2>
           <p class="card__subtitle small-text text-muted">Shared tools and who has them</p>
         </hgroup>
         <button type="button" class="button button--plain button--icon" commandfor="tool-locker" command="close"><span class="sr-only">Close</span>${icon('x')}</button>

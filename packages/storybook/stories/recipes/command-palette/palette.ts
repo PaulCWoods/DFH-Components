@@ -114,7 +114,7 @@ export const palette = ({ id = 'cmd-palette', state = 'results' as PaletteState,
       : `${list(id, q)}
         <div class="empty-state empty-state--compact"${state === 'no-results' ? '' : ' hidden'}>
           <div class="empty-state__content">
-            <h2 class="empty-state__title small-heading">Nothing matches “<span data-query>${q}</span>”</h2>
+            <h2 class="empty-state__title heading">Nothing matches “<span data-query>${q}</span>”</h2>
             <p class="empty-state__description small-text">Try a component name, such as “button” or “table”.</p>
           </div>
         </div>`

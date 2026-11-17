@@ -164,7 +164,7 @@ const trackInfo = (id: string) => `
   <button type="button" class="button button--plain button--icon button--sm" popovertarget="${id}-info">${icon('info')}<span class="sr-only">Track details</span></button>
   <div id="${id}-info" popover class="popover popover--end-aligned">
     <article class="card card--compact">
-      <header class="card__header"><h3 class="card__title small-heading">Celestial Horizon</h3></header>
+      <header class="card__header"><h3 class="card__title subheading">Celestial Horizon</h3></header>
       <div class="card__body card__body--flush">
         <div class="table-container">
           <table class="table table--compact">
@@ -383,7 +383,7 @@ const settingsDialog = `
   <dialog id="settings" class="dialog" aria-labelledby="settings-title">
     <article class="card card--ruled">
       <header class="card__header">
-        <h2 id="settings-title" class="card__title small-heading">Stream settings</h2>
+        <h2 id="settings-title" class="card__title heading">Stream settings</h2>
         <button type="button" class="button button--plain button--icon" commandfor="settings" command="close"><span class="sr-only">Close</span>${icon('x')}</button>
       </header>
       <div class="card__body card__body--scrollable form" tabindex="0" aria-label="Settings">
