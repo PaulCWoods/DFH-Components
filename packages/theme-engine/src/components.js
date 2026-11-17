@@ -212,6 +212,34 @@ const exists = (ref, trees) =>
 const NOT_TEXT = /border|ring|rule|track|indicator|shadow|underline|backdrop|separator|shimmer|skeleton|^color-strong|rail|on-color|off-color|optimum|critical/;
 const isBg = (key) => /(^|-)(bg|background-color)$/.test(key) && !NOT_TEXT.test(key);
 const isText = (key) => /(^|-)color$/.test(key) && !isBg(key) && !NOT_TEXT.test(key);
+/* Pairs the names don't show, from where the CSS draws each text colour.
+   A text token lists what it sits on: Tier 3 tokens by path, or Tier 2
+   colours in braces (the intents a fill takes). Read both ways, so a
+   background is measured against the text it carries. */
+const INTENT_FILLS = ['{foreground.accent}', '{foreground.info}', '{foreground.success}', '{foreground.warning}', '{foreground.danger}'];
+export const TEXT_PAIRS = {
+  'avatar.text': ['avatar.bg'],
+  'avatar.count-text': ['avatar.bg'],
+  'avatar.accent-text': ['avatar.accent-bg'],
+  'thumbnail.text': ['thumbnail.bg'],
+  'badge.on-color': ['badge.color', ...INTENT_FILLS],
+  'status.on-color': ['status.color', ...INTENT_FILLS],
+  'button.on-color': ['button.color', 'button.color-hover', 'button.color-pressed', ...INTENT_FILLS],
+  'switch.on-color': ['switch.on-bg'],
+  'switch.off-color': ['switch.off-bg'],
+  'stepper.current-on-color': ['stepper.current-color'],
+  'stepper.complete-on-color': ['stepper.complete-color'],
+  'skip-link.text': ['skip-link.background-color'],
+  'prose.code-block-text': ['prose.code-block-bg'],
+  'card.subtitle-color': ['card.bg', 'card.subtle-bg'],
+  'menu.heading-color': ['menu.bg', 'menu.subtle-bg'],
+  'combobox.option-selected-color': ['combobox.listbox-bg'],
+};
+const TEXT_ON = Object.entries(TEXT_PAIRS).reduce((map, [text, bgs]) => {
+  for (const bg of bgs) if (!bg.startsWith('{')) map[bg] = [...(map[bg] ?? []), text];
+  return map;
+}, {});
+
 const siblings = (t, values, test) => {
   const prefix = t.key.replace(/(bg|background-color|color)$/, '');
   return ['color', 'text-color', 'bg', 'background-color'].map((s) => `${t.component}.${prefix}${s}`).filter((p) => p !== t.path && values.has(p) && test(p.slice(t.component.length + 1)));
@@ -219,9 +247,10 @@ const siblings = (t, values, test) => {
 
 /* Fails: a token that doesn't exist, a reference to nothing, a number that
    isn't a plain positive number, a value that could break out of its
-   declaration, a text and background pair of the same part
-   under 4.5:1. Warns: a colour measured only against the page's own text or
-   surface, since the real pairing isn't in the token's name. */
+   declaration, a text and background pair of the same part (by name, or
+   listed in TEXT_PAIRS) under 4.5:1. Warns: a colour measured only
+   against the page's own text or surface, since nothing says what it
+   really sits with. */
 export const componentGate = (overrides = {}, { component, semantic, global, palette } = {}) => {
   const failures = [];
   const warnings = [];
@@ -259,18 +288,27 @@ export const componentGate = (overrides = {}, { component, semantic, global, pal
     for (const [, ref] of text.matchAll(/\{([^{}]+)\}/g)) {
       if (!exists(ref, [semantic, global, component].filter(Boolean))) failures.push({ style: path, message: `reads {${ref}}, which doesn't exist` });
     }
-    if (!resolve || (!isBg(token.key) && !isText(token.key))) continue;
-    const bg = isBg(token.key);
-    /* A pair that isn't a plain colour (transparent) shows the page through */
-    const pairs = siblings(token, values, (k) => (bg ? isText(k) : isBg(k))).filter((p) => hex(values.get(p), 'light') !== null);
+    const listed = { on: TEXT_PAIRS[path] ?? [], under: TEXT_ON[path] ?? [] };
+    const textual = isText(token.key) || listed.on.length > 0;
+    if (!resolve || (!textual && !isBg(token.key) && !listed.under.length)) continue;
+    /* Each pair as what it is to this token (on it, or carrying it), a
+       label and a value. One that isn't a plain colour (transparent) shows
+       the page through, so it isn't measured. */
+    const named = isBg(token.key) ? siblings(token, values, isText).map((p) => ['with', p]) : isText(token.key) ? siblings(token, values, isBg).map((p) => ['on', p]) : [];
+    const seen = new Set();
+    const pairs = [...named, ...listed.on.map((p) => ['on', p]), ...listed.under.map((p) => ['with', p])]
+      .filter(([, p]) => !seen.has(p) && seen.add(p))
+      .map(([side, p]) => ({ side, label: tokenVar(p.replace(/^\{|\}$/g, '')), value: p.startsWith('{') ? p : values.get(p) }))
+      .filter((p) => p.value !== undefined && hex(p.value, 'light') !== null);
     for (const mode of ['light', 'dark']) {
-      if (pairs.length) {
-        for (const pair of pairs) {
-          const ratio = measure(value, values.get(pair), mode);
-          if (ratio !== null && ratio < 4.5) failures.push({ style: path, message: `on ${tokenVar(pair)} is ${ratio.toFixed(2)}:1 in ${mode} mode, under 4.5:1` });
-        }
-      } else {
-        const against = bg ? '{foreground}' : '{surface}';
+      for (const pair of pairs) {
+        const ratio = measure(value, pair.value, mode);
+        if (ratio !== null && ratio < 4.5) failures.push({ style: path, message: `${pair.side} ${pair.label} is ${ratio.toFixed(2)}:1 in ${mode} mode, under 4.5:1` });
+      }
+      /* A colour with nothing measured on its own side: the page's */
+      const alone = textual ? !pairs.some((p) => p.side === 'on') : !pairs.length;
+      if (alone) {
+        const against = textual ? '{surface}' : '{foreground}';
         const ratio = measure(value, against, mode);
         if (ratio !== null && ratio < 4.5) warnings.push({ style: path, message: `against ${against} is ${ratio.toFixed(2)}:1 in ${mode} mode. Check what it sits with.` });
       }

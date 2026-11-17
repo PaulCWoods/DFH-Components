@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applyComponents, buildPalette, COMPONENT_GROUPS, componentCss, componentGate, componentTokens, componentValue, tokenGroups, tokenOptions } from '../src/index.js';
+import { applyComponents, buildPalette, COMPONENT_GROUPS, TEXT_PAIRS, componentCss, componentGate, componentTokens, componentValue, tokenGroups, tokenOptions } from '../src/index.js';
 
 const read = (file) => JSON.parse(readFileSync(new URL(`../../../tokens/${file}`, import.meta.url)));
 const theme = read('themes/starter.json');
@@ -119,7 +119,7 @@ test("a part's text and background under 4.5:1 fail, in either order", () => {
 });
 
 test('a lone colour is only warned about', () => {
-  const { failures, warnings } = componentGate({ 'card.bg': '{foreground}' }, ctx);
+  const { failures, warnings } = componentGate({ 'header.bg': '{foreground}' }, ctx);
   assert.deepEqual(failures, []);
   assert.ok(warnings.length);
 });
@@ -137,8 +137,29 @@ test("the Button's resting background is measured against its colour, and a tran
   assert.ok(componentGate({ 'button.bg': '{foreground}' }, ctx).failures.some((f) => f.style === 'button.bg'));
   assert.deepEqual(componentGate({ 'button.bg': '{surface.muted}' }, ctx).failures, []);
   const { failures, warnings } = componentGate({ 'button.color': '{surface}' }, ctx);
-  assert.deepEqual(failures, []);
   assert.ok(warnings.some((w) => w.style === 'button.color'));
+  /* The neutral tone is also the strong Button's fill, under its text */
+  assert.ok(failures.some((f) => f.style === 'button.color' && /--button-on-color/.test(f.message)), JSON.stringify(failures));
+});
+
+test('every listed pair names tokens that exist', () => {
+  const paths = new Set(componentTokens(component).map((t) => t.path));
+  for (const [text, bgs] of Object.entries(TEXT_PAIRS)) {
+    assert.ok(paths.has(text), text);
+    for (const bg of bgs) assert.ok(bg.startsWith('{') ? semantic.foreground[bg.slice(1, -1).split('.')[1]] : paths.has(bg), `${text} on ${bg}`);
+  }
+});
+
+test('pairs the names miss are measured: Avatar text, and text on a fill', () => {
+  const styles = (o) => componentGate(o, ctx).failures.map((f) => f.style);
+  /* White initials on the Avatar's light grey */
+  assert.ok(styles({ 'avatar.text': '{foreground.inverted}' }).includes('avatar.text'));
+  assert.ok(styles({ 'avatar.bg': '{foreground}' }).includes('avatar.bg'));
+  assert.ok(styles({ 'thumbnail.text': '{surface.muted}' }).includes('thumbnail.text'));
+  /* A Badge's text on the danger fill, and on its own neutral one */
+  assert.ok(componentGate({ 'badge.on-color': '{foreground}' }, ctx).failures.some((f) => /--foreground-danger/.test(f.message)));
+  assert.ok(styles({ 'status.on-color': '{foreground}' }).includes('status.on-color'));
+  assert.deepEqual(styles({ 'avatar.text': '{foreground}', 'badge.on-color': '{foreground.inverted-strong}' }), []);
 });
 
 test('the hover style offers fill and tint', () => {

@@ -16,6 +16,7 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 
 ### Fixed
 - **A Combobox with many Chips keeps room to type:** the input used to shrink beside a growing set of Chips until it was too narrow to use. When the Chips leave it less than about 5rem, the input and its Buttons now move to a row of their own, the full width of the field. No markup changes.
+- **The component gate measures every text colour against what it sits on:** it used to pair only a `color` token with a `bg` of the same name, so Avatar text on the Avatar's background, Thumbnail text, a Badge, Status or Button's text on its fill (`on-color`, on the neutral tone and every intent), the Skip Link's text and a few others were never measured. A theme that sets one of them now fails `build:components`, `build:themes` and the Token Designer's check when the pair is under 4.5:1. Every published theme passes.
 
 ## 1.3.2 (16 November 2026)
 

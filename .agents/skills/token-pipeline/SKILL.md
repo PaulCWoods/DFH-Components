@@ -63,7 +63,7 @@ Every gate fails rather than writes. Fix the theme, never the generated value:
 - **Space:** roles growing in order, each target a Tier 1 step and at least 24px (the default target at least 44px), and the app sizes.
 - **Shape:** sizes on the Tier 1 spacing steps, roles in order, a focus ring of at least 2px.
 - **Motion:** durations in order, and curves CSS can run.
-- **Components:** a known token, a reference that resolves, and a part's own text and background at 4.5:1.
+- **Components:** a known token, a reference that resolves, and a part's own text and background at 4.5:1, paired by name or by `TEXT_PAIRS` in `components.js`. A new text colour whose name doesn't end in `color` beside a `bg` (a `text`, an `on-color`) needs its line in `TEXT_PAIRS`, or the gate never measures it.
 
 ## Tier 3 rules
 
