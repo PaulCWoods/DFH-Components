@@ -63,15 +63,14 @@ An error colour says something is wrong, and the message says what. The icon and
 
 ## Put Checkboxes and Radios in a label
 A Checkbox or radio goes in a `.choice` label, so the whole row is the target; a set of them is `.choices` in a [Fieldset](07b-form-composition.md).
-```html live width=md
+```html live native width=md
 <label class="choice">
   <input type="checkbox" class="checkbox-input" name="terms" />
   <span>I agree to the plot terms</span>
 </label>
 
-<!-- Large box -->
 <label class="choice">
-  <input type="radio" class="radio-input radio-input--lg" name="size" value="full" />
+  <input type="radio" class="radio-input" name="size" value="full" />
   <span>Full plot</span>
 </label>
 ```
@@ -117,6 +116,7 @@ A slider shows roughly where it is, and an `<output>` beside it gives the number
   <input id="volume-control" type="range" class="range" min="0" max="100" value="65" style="--value: 65%;" />
 </div>
 ```
+The fill comes from `--value`, the share of the range the value covers. The browser moves the thumb but doesn't tell the CSS where it is, so the product's script sets `--value` and updates the `<output>` on `input`. Firefox draws the fill itself.
 
 ## Show a password
 ```html live width=md

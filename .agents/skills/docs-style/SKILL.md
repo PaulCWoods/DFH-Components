@@ -68,7 +68,10 @@ The page's foot (In Storybook, See also) is generated.
   - Put `data-axes` after the class of the element that changes, and `data-label` on text a choice replaces.
   - Then a `---` line, and one line per axis: `Intent: Neutral, Danger=button--danger "Delete project"`.
   - `*` marks the starting choice where it isn't the first.
-- **Live and playground markup must be complete and valid, and pass axe:**
+- **`native`** after `live` or `playground` adds a line saying the browser draws those controls, with a link to Built on the platform. Use it once per page, on the first example showing checkboxes, radios or pickers.
+- **Examples work.** Where a behaviour is the product's script (a Range's fill, toggles, sorting, Combobox, Tabs), the page runs a script from `packages/docs/src/lib/demos/` on the example and notes it underneath; the code shows the markup only. A new behaviour adds its script and a selector to the `WORKS` map in `DocLayout.astro`.
+- **A demo follows an example that can't work in place** (a Banner that would dismiss itself, a Toast, Batch Actions with nothing to select): a ` ```html demo=name ` fence, rendered without code and captioned as the product's script. Give its markup ids of its own (`demo-…`).
+- **Live, playground and demo markup must be complete and valid, and pass axe:**
   - real text, never lorem ipsum;
   - unique ids;
   - icons as `href="#Name"`;

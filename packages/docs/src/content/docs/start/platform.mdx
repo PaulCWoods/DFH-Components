@@ -1,0 +1,40 @@
+---
+title: Built on the platform
+summary: Why some controls look a little different in each browser, why some examples need a script to work, and what the library leaves to the browser on purpose.
+order: 15
+---
+
+The library styles native HTML. Where the browser already draws a control and gives it behaviour, the library colours and sizes it and stops there. It doesn't replace it with a look-alike built from `<div>`s and script. So a few things look a little different in Safari, Firefox and Chrome, and a few examples need a script of the product's own before they do everything.
+
+## What the browser draws
+
+- **Checkboxes and radios.** The library sets their size, their colour (through `accent-color`) and their focus ring. The browser draws the box, the tick and the dot.
+- **A Select's list.** The closed Select is the library's. The open list is the browser's, and on a phone it's the phone's own picker. Where the browser supports a customisable select, `.select--custom` styles the list too; elsewhere it stays the browser's list, and still works.
+- **Date, time, colour and file pickers.** The field is the library's; the picker that opens is the browser's or the device's.
+- **A Range's thumb and track** are the library's in every browser. The fill is drawn by Firefox itself, and from `--value` everywhere else (see [examples and demos](#examples-and-demos)).
+- **Scrollbars and validation messages** are the browser's.
+
+## Why the library doesn't replace them
+
+- **People already know them.** A checkbox looks like the checkboxes on their own device, and a date field opens the picker they use every day. On a phone that is a picker built for thumbs.
+- **They work for everyone.** Native controls come with keyboard support, screen reader names and states, zoom, autofill and forced colours, in every browser. A replacement has to rebuild each of these in script, and each is a place to get it wrong.
+- **The library ships no JavaScript.** It works with any stack, from a WordPress theme to a React app. A control that needs a script to behave would tie it to one.
+- **They get better on their own.** When a browser improves its controls, every product built on the library gets the improvement, with nothing to update.
+
+A checkbox that looks slightly different in Safari is a fair price for one that works the same for everyone.
+
+## Newer features
+
+The library uses features that every current browser supports for everything a component needs to work. A few newer ones are used as extras, and products that need them everywhere add them:
+
+- **Tooltips** open with `interestfor`, which only Chromium browsers support for now. A Tooltip never holds the only copy of anything, so nothing is lost where it doesn't appear. See [Tooltip](/docs/components/molecules/tooltip/).
+- **Dialogs** open and close with `commandfor` and `command`. Every current browser supports them; for older ones, the [Dialog](/docs/components/organisms/modal-dialog/) page has a few lines of script that do the same.
+- **The customisable select** styles a Select's list where the browser supports it, and falls back to the browser's list everywhere else.
+
+## Examples and demos
+
+Each component page shows examples: real markup, rendered on the page, with its code. The code is the markup only, because the markup is what the library asks of you.
+
+Some components need the product to finish them. A Range's fill follows the thumb only when a script sets `--value`, a Combobox filters only when a script filters it, and Tabs move between panels only when a script moves them. So that the examples still work, the page runs a short script of the product's own on them, and says so under the example, with a link to the script you can read and adapt.
+
+Where an example can't work in place, such as a Banner that would dismiss itself off the page or a Toast that needs a stack to appear in, a working demo follows it, labelled the same way.

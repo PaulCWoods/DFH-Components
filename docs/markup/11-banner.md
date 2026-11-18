@@ -26,6 +26,21 @@ Density: Default, Compact=banner--compact
 Corners: Default, Round=banner--round
 ```
 
+Try dismissing it:
+```html demo=dismiss
+<div class="banner banner--info">
+  <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#info"/></svg></span>
+  <div class="banner__body">
+    <p class="text">Note: your changes are saved automatically.</p>
+  </div>
+  <button type="button" class="button button--icon banner__action">
+    <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
+    <span class="sr-only">Dismiss</span>
+  </button>
+</div>
+<button type="button" class="button" data-show-again hidden><span>Show the Banner again</span></button>
+```
+
 ## Purpose
 A page sometimes has to say something about itself: a problem, a change, something about to happen. A Banner says one such thing, in the flow of the page, where it can be read in context.
 

@@ -149,7 +149,7 @@ The browser provides all of this, given a real `<table>` and a focusable contain
 - A control doesn't make its row taller than the control. Name each row's Buttons uniquely (hidden text with the row's name).
 
 ## Select rows
-```html live
+```html live native
 <div class="table-container" tabindex="0" role="region" aria-label="Plants to order">
   <table class="table table--hover">
     <thead><tr><th scope="col" class="table__cell--fit"><span class="sr-only">Select</span></th><th scope="col">Plant</th><th scope="col" class="table__cell--numeric">In stock</th></tr></thead>

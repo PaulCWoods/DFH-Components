@@ -8,6 +8,17 @@
      "live" lay the examples out: "cluster" (side by side) or the default,
      a stack; "width=md" caps them with that .max-w-* utility, for parts
      that would otherwise fill the page (2xs to 2xl).
+   - "native" after "live" or "playground" adds a line under the example:
+     the browser draws these controls, so they differ between browsers, with
+     a link to the page that says why.
+   - Examples work: where a component's behaviour is the product's script
+     (a Range's fill, Tabs, sorting), the page runs a demo script from
+     lib/demos on the example and says so under it. The code shows the
+     markup only.
+   - A ```html demo=name fence is a working demo where the example can't
+     work in place (a Banner that would dismiss itself off the page, a
+     Toast that needs a stack): its markup without code, run by
+     lib/demos/name.ts and captioned as the product's script.
    - A ```html playground fence is one example with a control per axis: the
      markup (data-axes on the element that changes), then --- and a line per
      axis ("Size: Small=button--sm, Default*, Large=button--lg"). Without a
@@ -22,6 +33,7 @@
      reads better and makes sense to a screen reader out of context.
    Markdown only: MDX pages write their examples as components.
    ========================================================================== */
+import { existsSync } from 'node:fs';
 import { readMarkupIndex } from './markup.mjs';
 import { compose, toLive } from './playground.mjs';
 
@@ -56,8 +68,11 @@ const frame = (layout, width, html) => `<div class="${layout === 'cluster' ? 'cl
 ${html}
 </div>`;
 
-export const liveExample = (code, layout = 'stack', width) => `<figure class="card card--ruled" data-example>
-<div class="card__body prose-end">${frame(layout, width, toLive(code))}</div>
+/* Under an example of controls the browser draws */
+const NATIVE = `<p class="small-text text-muted mt-md">Your browser draws these controls, so they look a little different in each one. <a href="/docs/start/platform/">Why the library uses native controls</a></p>`;
+
+export const liveExample = (code, layout = 'stack', width, native = false) => `<figure class="card card--ruled" data-example>
+<div class="card__body prose-end" data-live>${frame(layout, width, toLive(code))}${native ? NATIVE : ''}</div>
 <div class="card__body card__body--flush bg-muted">${exampleCode(code)}</div>
 </figure>`;
 
@@ -78,7 +93,16 @@ const parseAxes = (block) => block.trim().split('\n').map((line) => {
 });
 
 let playgrounds = 0;
-export const playground = (value, layout, width) => {
+const SCRIPTS = 'https://github.com/PaulCWoods/DFH-Components/blob/main/packages/docs/src/lib/demos';
+export const demo = (code, layout = 'stack', width, name) => {
+  if (!existsSync(new URL(`./demos/${name}.ts`, import.meta.url))) throw new Error(`Demo: no script demos/${name}.ts`);
+  return `<figure class="card card--ruled" data-demo="${attr(name)}">
+<div class="card__body prose-end" data-live>${frame(layout, width, toLive(code))}</div>
+<figcaption class="card__body bg-muted mt-0"><p class="small-text text-muted">A working demo, run by a short script of the product's own: the library ships no JavaScript. <a href="${SCRIPTS}/${name}.ts">Read the script</a></p></figcaption>
+</figure>`;
+};
+
+export const playground = (value, layout, width, native = false) => {
   const [source, block] = value.split(/^---$/m);
   if (!block || !/data-axes/.test(source)) throw new Error('Playground: needs data-axes in its markup, then --- and its axes');
   const axes = parseAxes(block);
@@ -94,7 +118,7 @@ ${axis.choices.map((c) => `<label class="button button--subtle"><input type="rad
 </div>
 </fieldset>`).join('\n');
   return `<figure class="card card--ruled" data-playground data-source="${attr(source.trim())}">
-<div class="card__body prose-end">${frame(layout, width, `<div class="contents" data-preview>${toLive(code)}</div>`)}</div>
+<div class="card__body prose-end" data-live>${frame(layout, width, `<div class="contents" data-preview>${toLive(code)}</div>`)}${native ? NATIVE : ''}</div>
 <div class="card__body card__body--flush bg-muted prose-end" hidden data-controls><div class="cluster gap-thin rule">${controls}</div></div>
 <div class="card__body card__body--flush bg-muted">${exampleCode(code)}</div>
 </figure>`;
@@ -111,13 +135,17 @@ export default function remarkDocs() {
     if (reference !== -1) tree.children.length = reference;
 
     walk(tree, (node, parent, i) => {
-      if (node.type === 'code' && node.lang === 'html' && /(^|\s)(live|playground)(\s|$)/.test(node.meta ?? '')) {
+      if (node.type === 'code' && node.lang === 'html' && /(^|\s)(live|playground|demo=\S+)(\s|$)/.test(node.meta ?? '')) {
         const layout = /(^|\s)cluster(\s|$)/.test(node.meta) ? 'cluster' : 'stack';
         const width = node.meta.match(/(?:^|\s)width=(\S+)/)?.[1];
         /* A mistyped width would silently do nothing */
         if (width && !/^(2xs|xs|sm|md|lg|xl|2xl)$/.test(width)) throw new Error(`Live example: no width "${width}" (2xs to 2xl)`);
-        const render = /(^|\s)playground(\s|$)/.test(node.meta) ? playground : liveExample;
-        parent.children[i] = { type: 'html', value: render(node.value, layout, width) };
+        const native = /(^|\s)native(\s|$)/.test(node.meta);
+        const name = node.meta.match(/(?:^|\s)demo=(\S+)/)?.[1];
+        const value = name ? demo(node.value, layout, width, name)
+          : /(^|\s)playground(\s|$)/.test(node.meta) ? playground(node.value, layout, width, native)
+            : liveExample(node.value, layout, width, native);
+        parent.children[i] = { type: 'html', value };
       }
       else if (node.type === 'code' && !isMdx) parent.children[i] = { type: 'html', value: codeBlock(node.value, node.lang ?? '') };
       if (node.type === 'link' && /^\d+[a-z]?-[\w-]+\.md(#.*)?$/.test(node.url)) {

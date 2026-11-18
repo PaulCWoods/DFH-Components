@@ -23,6 +23,25 @@ related: [banner, banner-dock, popover, modal-dialog]
 </div>
 ```
 
+Try it: the Toast appears at the corner of the screen, stays for at least 5 seconds, and waits while you hover or focus it.
+```html demo=toast cluster
+<button type="button" class="button" data-raise><span>Save settings</span></button>
+<div class="toast-stack toast-stack--bottom-end" popover="manual" role="status" aria-label="Notifications"></div>
+<template>
+  <div class="banner banner--success banner--round toast">
+    <span class="icon-box" aria-hidden="true"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#check"/></svg></span>
+    <div class="banner__body">
+      <p class="text font-bold">Settings saved</p>
+      <p class="small-text">Your preferences have been updated.</p>
+    </div>
+    <button type="button" class="button button--icon banner__action">
+      <svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg>
+      <span class="sr-only">Dismiss</span>
+    </button>
+  </div>
+</template>
+```
+
 ## Purpose
 A Toast says that something just happened, without stopping what someone is doing. Its risks are that a screen reader never hears it and that it goes before it can be read, so most of what follows is about those two.
 
