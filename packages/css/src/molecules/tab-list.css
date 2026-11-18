@@ -151,7 +151,7 @@
   content: "";
   position: absolute;
   position-anchor: --tab-selected;
-  position-visibility: anchors-visible;
+  position-visibility: anchor-visible;
   z-index: 1;
   inset-block: auto anchor(end);
   inset-inline: anchor(start) anchor(end);

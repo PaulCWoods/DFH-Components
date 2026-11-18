@@ -18,6 +18,7 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 - **A Dialog's backdrop dims the page in dark mode:** it was mixed from the darkest neutral step, which in dark mode is lighter than the page, so it lifted the page instead of dimming it and a Dialog's shadow showed as a pale halo. In dark mode it is now mixed from the theme's black, in the starter, DFH and Eden themes. No markup changes.
 - **A current Stepper step with errors:** with `aria-current="step"` and `.is-invalid` together, the indicator kept the current step's accent fill under the danger ring and icon, so the two clashed. The invalid state now wins: a danger ring and warning icon on the plain fill. No markup changes.
 - **A Banner Dock in the app shell sits under the Header:** `.app` gave it no row, so it landed after the footer, at the foot of the page. It now takes a row of its own under the Header; a fixed Dock leaves the flow as before. No markup changes.
+- **Tab List indicator: `anchor-visible`, not `anchors-visible`:** Chrome renamed the `position-visibility` keyword and warned about the old one in the console. Browsers that don't know the new name fall back to the same behaviour. No markup changes.
 - **Labels in a Popover or Dialog opened from an icon-only bar:** `hide-labels` no longer reaches into a Popover or Dialog inside the region, so a menu opened from a Header whose Buttons show only their icons keeps its labels.
 
 ## 1.3.3 (17 November 2026)
