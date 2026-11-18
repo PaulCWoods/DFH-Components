@@ -40,9 +40,10 @@ A theme can add colour roles of its own (a second brand colour, a category colou
 
 ## Version 2.0
 
-Removals and renames that can need work on a site, so they wait for the next major version.
+Removals and renames that can need work on a site, so they wait for the next major version, and the features planned for it.
 
 - **Remove the old icon names (S):** the names from before 1.3.0 (`#Close`, `#ArrowRight` and the rest) still point at the Lucide names. Delete the aliases from the sprite and say so in the changelog. The [full list](audit/icon-names.md) is what sites search for.
+- **Syntax highlighting in the Code Block (M):** the Code Block sets the `--syntax-*` properties (keyword, string, comment and the rest) from Tier 3 tokens, checked by the component contrast gate. A product adds a highlighter built on the CSS Custom Highlight API, such as [MicroLighter](https://github.com/davatron5000/microlighter), and gets the theme's colours; without one, code stays plain. The library still ships no script; the docs site runs MicroLighter. First, read its source for how the properties reach the `::highlight()` names. *From feedback on the docs.*
 
 ## Library candidates
 
