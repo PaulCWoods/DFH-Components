@@ -2554,6 +2554,21 @@
       "$type": "dimension",
       "$description": "Font size for switch option labels"
     },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Off and On text"
+    },
+    "font-weight": {
+      "$value": "{font-weight.regular}",
+      "$type": "fontWeight",
+      "$description": "Weight of the side that isn't selected"
+    },
+    "selected-font-weight": {
+      "$value": "{font-weight.bold}",
+      "$type": "fontWeight",
+      "$description": "Weight of the selected side; the same as font-weight keeps the text from shifting"
+    },
     "off-bg": {
       "$value": "{surface.muted}",
       "$type": "color",

@@ -23,7 +23,11 @@
      The Off and On text is hidden, since the role already says the state.
    - 2.5.5 / 2.5.8: the checkbox fills the control and reaches
      --spacing-target-min, whatever the control's visual size.
-   - 1.4.1: the selected side is bold and filled, and says Off or On.
+   - 1.4.1: the selected side is filled, bold (by default) and says Off or On.
+
+   Type: --switch-font-family, --switch-font-weight (the unselected side) and
+   --switch-selected-font-weight. Set the two weights the same to stop the
+   text shifting as the bolder side changes.
 
    Usage:
    <div class="switch">
@@ -45,6 +49,12 @@
 :where(.switch) {
   --_switch-height: var(--switch-height, var(--button-min-size, var(--spacing-target)));
   --_switch-font-size: var(--switch-font-size, var(--control-font-size));
+  --_switch-font-family: var(--switch-font-family, var(--body-font-family, inherit));
+  /* The selected side is bold, the other regular. Bold is wider, so the
+     text moves slightly as it switches; the same weight for both keeps it
+     still, and the fill still marks the selected side */
+  --_switch-font-weight: var(--switch-font-weight, var(--font-weight-regular, 400));
+  --_switch-selected-font-weight: var(--switch-selected-font-weight, var(--font-weight-bold, 700));
   --_switch-padding-inline: var(--switch-padding-inline, var(--spacing-md));
   --_switch-option-min-inline-size: var(--switch-option-min-size, var(--spacing-target));
   --_switch-radius: var(--switch-radius, var(--radius, 0.25rem));
@@ -191,8 +201,9 @@
     justify-content: center;
     min-inline-size: var(--_switch-option-min-inline-size);
     padding-inline: var(--_switch-padding-inline);
+    font-family: var(--_switch-font-family);
     font-size: var(--_switch-font-size);
-    font-weight: var(--font-weight-regular, 400);
+    font-weight: var(--_switch-font-weight);
     line-height: 1;
     text-box: trim-both cap alphabetic;
     transition: color var(--_switch-transition) ease;
@@ -201,11 +212,11 @@
   /* ------------------------------------------------------------------------
      3. State: the selected option is bold on the indicator; the other is
      regular weight in the muted colour, so the state isn't colour alone
-     and survives forced colours
+     and survives forced colours (the weights are the theme's to change)
      ------------------------------------------------------------------------ */
   :where(.switch__option--off) {
     color: var(--_switch-off-color);
-    font-weight: var(--font-weight-bold, 700);
+    font-weight: var(--_switch-selected-font-weight);
   }
 
   :where(.switch__option--on) {
@@ -218,12 +229,12 @@
 
     :where(.switch__option--off) {
       color: var(--foreground-muted, currentColor);
-      font-weight: var(--font-weight-regular, 400);
+      font-weight: var(--_switch-font-weight);
     }
 
     :where(.switch__option--on) {
       color: var(--_switch-on-color);
-      font-weight: var(--font-weight-bold, 700);
+      font-weight: var(--_switch-selected-font-weight);
     }
   }
 

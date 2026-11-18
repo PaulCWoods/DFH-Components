@@ -15,6 +15,7 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 ## Unreleased
 
 ### Added
+- **Switch type tokens:** `--switch-font-family`, `--switch-font-weight` and `--switch-selected-font-weight`. The selected side stays bold by default; giving both sides the same weight stops the text shifting slightly as it switches.
 - **Columns:** `.columns` sets a long list in newspaper columns, running down one and on into the next: a glossary, an index, a site map. As many columns fit as there's room for at the minimum width (16rem by default; `--2xs`, `--sm` and `--md` change it, from the Grid's block steps), down to one on a phone, with no breakpoints. `--2-col` … `--4-col` set a maximum (and `@xs:` … `@7xl:` from a container size, as on the Grid), `--ruled` draws a rule between columns, and each item stays whole in one column unless you add `--flow`. Hooks: `--gap`, `--columns-width`, `--columns-count`.
 - **Brand Logo:** `.brand__logo`, a full logo (an `<img>` or `<svg>`) beside the Name or on its own, as tall as `--brand-mark-size`. Beside a Logo the Mark is hidden, and in a container 20em wide or less (a phone, a Sidebar rail) it stands in for the Logo.
 - **A Mark on its own is a Button's size:** with no Name or Logo beside it, or where it stands alone in a narrow container, the Mark is as big as a Button: 48px, or 32px in a compact container, where Buttons step down too. The new `--brand-mark-alone-size` and `--brand-compact-mark-alone-size` set it. A Brand that was a Mark alone grows from 24px (32px when compact).

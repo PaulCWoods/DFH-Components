@@ -53,6 +53,7 @@ A segmented Off / On toggle: a checkbox with \`role="switch"\` that fills the dr
 - A hint is linked with \`aria-describedby\`, so it isn't part of the name. The Off and On text is hidden: the role says the state.
 - The selected side is bold on the indicator and says Off or On, so the state isn't colour alone (WCAG 1.4.1), and it shows in forced colours.
 - Subtle has no border; it comes back in forced colours and high contrast.
+- Type: \`--switch-font-family\`, \`--switch-font-weight\` (the side not selected) and \`--switch-selected-font-weight\`. Bold is wider, so the text moves slightly as it switches; the same weight for both keeps it still.
 
 \`\`\`html
 <div class="switch">
@@ -141,6 +142,28 @@ export const States: Story = {
       ${switchEl('Notifications', [], 'checked')}
       ${switchEl('Two-step sign-in', [], 'disabled', 'Set up an authenticator first')}
       ${switchEl('Backups', [], 'disabled checked', 'Managed by your organisation')}
+    </div>
+  `,
+};
+
+/**
+ * The selected side is bold by default, which moves the text slightly as it
+ * switches. The same weight on both sides keeps it still; the fill still
+ * marks the selected side. --switch-font-family sets the typeface.
+ */
+export const Type: Story = {
+  render: () => `
+    <div class="sb-demo-stage sb-demo-constrained--md stack">
+      <span class="sb-demo-tag">Default: bold when selected</span>
+      ${switchEl('Autoplay', [], 'checked')}
+      <div class="stack" style="--switch-font-weight: var(--font-weight-medium); --switch-selected-font-weight: var(--font-weight-medium);">
+        <span class="sb-demo-tag">--switch-font-weight and --switch-selected-font-weight: medium</span>
+        ${switchEl('Captions', [], 'checked')}
+      </div>
+      <div class="stack" style="--switch-font-family: var(--code-font-family);">
+        <span class="sb-demo-tag">--switch-font-family: var(--code-font-family)</span>
+        ${switchEl('Line numbers')}
+      </div>
     </div>
   `,
 };
