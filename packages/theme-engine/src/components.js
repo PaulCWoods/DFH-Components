@@ -72,6 +72,9 @@ const isRef = (v) => typeof v === 'string' && /^\{[^{}]+\}$/.test(v);
 /* A plain number above 0, never a unit or a reference */
 const isNumber = (v) => /^\s*\d*\.?\d+\s*$/.test(String(v)) && Number(v) > 0;
 const NUMBER_REFS = ['{icon.base-size}'];
+/* Family tokens that choose from the basic families (sans, serif, mono,
+   display) rather than the text styles' families */
+const BASE_FAMILY_TOKENS = ['switch.font-family'];
 const refOf = (path) => `{${path.replace(/\.default$/, '')}}`;
 
 /* What a token can be set to. Each list holds Tier 2 roles, and Tier 1 steps
@@ -95,6 +98,7 @@ const kindOf = (t) => {
   if (t.type === 'shadow') return 'shadow';
   if (t.type === 'duration') return 'duration';
   if (t.type === 'fontWeight') return 'weight';
+  if ((t.type === 'fontFamily' || t.type === 'fontFamilies') && BASE_FAMILY_TOKENS.includes(t.path)) return 'baseFamily';
   if (t.type === 'fontFamily' || t.type === 'fontFamilies') return 'family';
   if (t.type === 'border') return 'border';
   if (/text-transform/.test(key)) return 'textTransform';
@@ -136,6 +140,7 @@ export const tokenOptions = (token, { semantic, global }) => {
     duration: () => pick((r) => r.type === 'duration'),
     weight: () => pick((r) => /^font-weight\./.test(r.path)),
     family: () => pick((r) => /\.font-family$/.test(r.path)),
+    baseFamily: () => Object.keys(global?.typography?.['font-family'] ?? {}).filter((k) => !k.startsWith('$')).map((k) => `{typography.font-family.${k}}`),
     border: () => pick((r) => r.type === 'border' && /^border\./.test(r.path)),
     radius: () => [...pick((r) => /^radius\./.test(r.path)), '{panel.radius}'],
     borderWidth: () => [...pick((r) => /^border\.width\./.test(r.path)), '{rule.width}', '{panel.border-width}', '{control.border-width}', '{app.border-width}'],

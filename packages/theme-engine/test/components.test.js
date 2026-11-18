@@ -204,3 +204,10 @@ test('tokenGroups: by kind, then sizes and density, keeping order', () => {
     ],
   );
 });
+
+test("the Switch's font choices are the basic families, not the text styles'", () => {
+  const { kind, options } = tokenOptions(token('switch.font-family'), { semantic, global });
+  assert.equal(kind, 'baseFamily');
+  assert.deepEqual(options, ['{typography.font-family.sans}', '{typography.font-family.serif}', '{typography.font-family.mono}', '{typography.font-family.display}']);
+  assert.equal(tokenOptions(token('button.font-family'), { semantic, global }).kind, 'family');
+});

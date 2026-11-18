@@ -160,8 +160,8 @@ export const Type: Story = {
         <span class="sb-demo-tag">--switch-font-weight and --switch-selected-font-weight: medium</span>
         ${switchEl('Captions', [], 'checked')}
       </div>
-      <div class="stack" style="--switch-font-family: var(--code-font-family);">
-        <span class="sb-demo-tag">--switch-font-family: var(--code-font-family)</span>
+      <div class="stack" style="--switch-font-family: var(--typography-font-family-mono);">
+        <span class="sb-demo-tag">--switch-font-family: var(--typography-font-family-mono)</span>
         ${switchEl('Line numbers')}
       </div>
     </div>
