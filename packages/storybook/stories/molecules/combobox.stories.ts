@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html';
-import { enhance } from '../../../docs/src/lib/combobox-demo';
+import { enhance } from '../../../docs/src/lib/demos/combobox';
 
 const meta: Meta = {
   title: 'Molecules/Combobox',

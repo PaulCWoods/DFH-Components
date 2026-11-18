@@ -97,11 +97,11 @@ const points = [
           <a href="/docs/" class="button button--strong button--accent"><span>Start here</span><Icon name="arrow-right" class="icon--dir" /></a>
         </div>
       </header>
-      <section id="features" aria-labelledby="features-heading">
+      <section id="features" aria-labelledby="features-heading" class="wrapper">
       <h2 class="sr-only" id="features-heading">Features</h2>
 
       
-      <ul class="grid grid--xl grid--carousel px-cushion py-xs focus-ring--inset" role="list" aria-label="Features" tabindex="0">
+      <ul class="stack" role="list" aria-label="Features">
         {features.map((f) => (
           <li>
             <article class="card min-h-stretch">

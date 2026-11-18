@@ -9,6 +9,9 @@ export const enhance = (root: HTMLElement) => {
     const empty = box.querySelector<HTMLElement>('.combobox__empty');
     const tags = box.querySelector<HTMLElement>('.combobox__tags');
     const multi = list.getAttribute('aria-multiselectable') === 'true';
+    /* Icons point at the sprite the page uses: in the page (Storybook) or
+       a file (the docs site), so new Chips take the same path */
+    const sprite = box.querySelector('use')?.getAttribute('href')?.split('#')[0] ?? '';
     const isStatic = list.classList.contains('combobox__listbox--static');
     const options = () => [...list.querySelectorAll<HTMLElement>('[role="option"]')];
     /* Disabled options stay reachable with the arrow keys, so people learn
@@ -67,7 +70,7 @@ export const enhance = (root: HTMLElement) => {
       const c = box.ownerDocument.createElement('span');
       c.className = 'chip chip--subtle';
       c.dataset.for = o.id;
-      c.innerHTML = `<span class="chip__text">${label(o)}</span><button type="button" class="chip__remove" aria-label="Remove ${label(o)}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>`;
+      c.innerHTML = `<span class="chip__text">${label(o)}</span><button type="button" class="chip__remove" aria-label="Remove ${label(o)}"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="${sprite}#x"/></svg></button>`;
       return c;
     };
     const select = (o: HTMLElement) => {

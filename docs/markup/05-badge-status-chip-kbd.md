@@ -78,6 +78,30 @@ A static tag, and a token someone can remove.
 <span class="chip chip--plain"><span class="chip__text">Lesson 04</span></span>
 ```
 
+Try removing some:
+```html demo=chips
+<ul class="cluster gap-xs" role="list" aria-label="Chosen plants" data-chips>
+  <li><span class="chip chip--subtle">
+    <span class="chip__text">Fern</span>
+    <button type="button" class="chip__remove" aria-label="Remove Fern"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>
+  </span></li>
+  <li><span class="chip chip--subtle">
+    <span class="chip__text">Hosta</span>
+    <button type="button" class="chip__remove" aria-label="Remove Hosta"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>
+  </span></li>
+  <li><span class="chip chip--subtle">
+    <span class="chip__text">Lavender</span>
+    <button type="button" class="chip__remove" aria-label="Remove Lavender"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>
+  </span></li>
+  <li><span class="chip chip--subtle">
+    <span class="chip__text">Foxglove</span>
+    <button type="button" class="chip__remove" aria-label="Remove Foxglove"><svg class="icon" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#x"/></svg></button>
+  </span></li>
+</ul>
+<p class="sr-only" role="status"></p>
+<button type="button" class="button" data-show-again hidden><span>Put them back</span></button>
+```
+
 ## A key to press
 A single key and a combination. Mirror the shortcut in `aria-keyshortcuts` on its control.
 ```html live cluster

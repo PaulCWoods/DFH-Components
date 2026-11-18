@@ -111,6 +111,29 @@ The browser handles the Buttons. Filling the status element is the product's scr
 </article>
 ```
 
+Choose some plants to try it:
+```html demo=batch width=md
+<p class="sr-only" role="status"></p>
+<article class="card">
+  <header class="card__header"><h3 class="card__title subheading">Plants</h3></header>
+  <div class="card__body">
+    <div class="choices" role="group" aria-label="Plants to choose">
+      <label class="choice"><input type="checkbox" class="checkbox-input" /><span>Fern</span></label>
+      <label class="choice"><input type="checkbox" class="checkbox-input" /><span>Foxglove</span></label>
+      <label class="choice"><input type="checkbox" class="checkbox-input" /><span>Hosta</span></label>
+      <label class="choice"><input type="checkbox" class="checkbox-input" /><span>Lavender</span></label>
+    </div>
+  </div>
+  <div class="batch-actions batch-actions--docked" role="group" aria-label="Selected plants" hidden>
+    <p class="batch-actions__summary small-heading">1 selected</p>
+    <div class="batch-actions__actions button-group">
+      <button type="button" class="button button--strong button--accent"><span>Archive</span></button>
+    </div>
+    <button type="button" class="button button--plain batch-actions__dismiss"><span>Clear selection</span></button>
+  </div>
+</article>
+```
+
 ## Do and don't
 | Do | Don't |
 | :--- | :--- |

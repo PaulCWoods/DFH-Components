@@ -66,16 +66,36 @@ const toc = headings.filter((h) => h.depth === 2);
 <script>
   import { compose, toLive } from '../lib/playground.mjs';
 
-  /* Examples of a component whose behaviour is the product's run a demo script */
-  const demo = (root: ParentNode) => {
-    if (root.querySelector('.combobox')) {
-      import('../lib/combobox-demo').then(({ enhance }) => enhance(root as HTMLElement));
-    }
-    if (root.querySelector('[role="tablist"]')) {
-      import('../lib/tabs-demo').then(({ enhance }) => enhance(root));
-    }
+  /* Examples work. Where a behaviour is the product's script, the page runs
+     a demo script (lib/demos) on the example and says so under it; the
+     code shows the markup only. A demo figure names its script. */
+  const scripts = import.meta.glob<{ enhance: (root: HTMLElement) => void }>('../lib/demos/*.ts');
+  const SOURCE = 'https://github.com/PaulCWoods/DFH-Components/blob/main/packages/docs/src/lib/demos';
+  const WORKS: Record<string, string> = {
+    range: 'input.range',
+    toggle: 'button[aria-pressed]:not(.input-frame *, .range-lockup *)',
+    password: '.input-frame button[aria-controls][aria-pressed]',
+    sort: '.table__sort-button',
+    copy: '.code-block__bar button',
+    combobox: '.combobox',
+    tabs: '[role="tablist"]',
   };
-  demo(document);
+  const run = (name: string, root: HTMLElement) => scripts[`../lib/demos/${name}.ts`]?.().then(({ enhance }) => enhance(root));
+  const enhance = (root: HTMLElement) => {
+    const names = Object.keys(WORKS).filter((name) => root.querySelector(WORKS[name]));
+    names.forEach((name) => run(name, root));
+    return names;
+  };
+  for (const live of document.querySelectorAll<HTMLElement>('[data-live]')) {
+    const demo = live.closest<HTMLElement>('[data-demo]');
+    if (demo) { run(demo.dataset.demo!, live); continue; }
+    const names = enhance(live);
+    if (!names.length) continue;
+    const note = document.createElement('p');
+    note.className = 'small-text text-muted mt-md';
+    note.innerHTML = `Works here with a short script of the product's own; the code shows the markup only. ${names.map((n) => `<a href="${SOURCE}/${n}.ts">Read the ${n} script</a>`).join(', ')}`;
+    live.append(note);
+  }
 
   /* Playgrounds: a choice rebuilds the example and its code */
   for (const figure of document.querySelectorAll<HTMLElement>('[data-playground]')) {
@@ -88,7 +108,7 @@ const toc = headings.filter((h) => h.depth === 2);
       const code = compose(figure.dataset.source!, classes, text);
       const preview = figure.querySelector<HTMLElement>('[data-preview]')!;
       preview.innerHTML = toLive(code);
-      demo(preview);
+      enhance(preview);
       figure.querySelector('.code-block code')!.textContent = code;
     });
   }

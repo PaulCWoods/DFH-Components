@@ -106,6 +106,15 @@ A 48px hit area is the default at every size, because a target that's easy to re
 - **`aria-disabled`, not `disabled`:** a second press is blocked, but the Button keeps its focus, so a keyboard user isn't thrown back to the top of the page. Ignore presses in your script while it's busy, since a keyboard can still press it.
 - **A `role="status"` line says what's happening,** then how it ended ("Saved", or what went wrong). The Spinner says nothing.
 
+Try it:
+```html demo=busy cluster
+<button type="button" class="button button--strong button--accent" data-busy="Saving your changes…" data-done="Saved">
+  <span>Save changes</span>
+  <svg class="icon spinner" width="1em" height="1em" aria-hidden="true" focusable="false"><use href="#loader-circle"/></svg>
+</button>
+<p class="small-text" role="status"></p>
+```
+
 ## A Link that looks like a Button
 ```html live cluster
 <a href="/start" class="button button--strong button--accent">

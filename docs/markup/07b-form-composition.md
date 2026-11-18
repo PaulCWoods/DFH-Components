@@ -8,7 +8,7 @@ related: [form-controls, button, button-group]
 ---
 
 # 7b. Form composition: Field, Fieldset, Choices & Form
-```html playground
+```html playground native
 <form class="form" data-axes>
   <div class="field">
     <label for="pg-name" class="field__label label">Your name</label>
