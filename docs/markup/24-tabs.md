@@ -8,28 +8,18 @@ related: [button, badge-status-chip-kbd, sidebar, card]
 ---
 
 # 24. Tabs (Tab atom, Tab List molecule & Tabbed Content organism)
-```html playground
-<div class="tabbed-content">
-  <div class="tab-list" data-axes role="tablist" aria-label="Plant details">
-    <button type="button" role="tab" id="default-tab-1" class="tab" aria-selected="true" aria-controls="default-panel-1">
-      <span class="tab__text">Care</span>
-    </button>
-    <button type="button" role="tab" id="default-tab-2" class="tab" aria-selected="false" aria-controls="default-panel-2" tabindex="-1">
-      <span class="tab__text">Planting</span>
-    </button>
-  </div>
-  <div id="default-panel-1" role="tabpanel" class="tab-panel" aria-labelledby="default-tab-1" tabindex="0">
-    <p>Water weekly in summer and keep out of full sun.</p>
-  </div>
-  <div id="default-panel-2" role="tabpanel" class="tab-panel" aria-labelledby="default-tab-2" tabindex="0" hidden>
-    <p>Plant in autumn, 40cm apart.</p>
-  </div>
-</div>
+```html playground width=md
+<nav class="tab-list" data-axes aria-label="Garden sections">
+  <a href="/beds" class="tab" aria-current="page"><span class="tab__text">Beds</span></a>
+  <a href="/plants" class="tab"><span class="tab__text">Plants</span></a>
+  <a href="/rota" class="tab"><span class="tab__text">Watering rota</span></a>
+</nav>
 ---
 Style: Underline, Segmented=tab-list--segmented
 Prominence: Default, Plain=tab-list--plain
 Size: Small=tab-list--sm, Default*
 Corners: Rounded, Round=tab-list--round
+Layout: Wrap, Fill=tab-list--fill, Vertical=tab-list--vertical, Floating=tab-list--floating
 ```
 
 ## Purpose
@@ -84,14 +74,18 @@ For `role="tablist"`, the product supplies the WAI-ARIA Tabs pattern. The exampl
 ```
 
 ## Tabbed Content
-```html live
-<div class="tabbed-content">
+Tabbed Content puts a Tab List above its panels, or beside them, where a list of settings or long labels would crowd a row. Beside the panels the list turns vertical on its own, so the Tabs stack in a column at the start or the end.
+```html playground
+<div class="tabbed-content" data-axes>
   <div class="tab-list" role="tablist" aria-label="Account settings">
     <button type="button" role="tab" id="tab-1" class="tab" aria-selected="true" aria-controls="panel-1">
       <span class="tab__text">Overview</span>
     </button>
     <button type="button" role="tab" id="tab-2" class="tab" aria-selected="false" aria-controls="panel-2" tabindex="-1">
       <span class="tab__text">Security</span>
+    </button>
+    <button type="button" role="tab" id="tab-3" class="tab" aria-selected="false" aria-controls="panel-3" tabindex="-1">
+      <span class="tab__text">Notifications</span>
     </button>
   </div>
   <div id="panel-1" role="tabpanel" class="tab-panel" aria-labelledby="tab-1" tabindex="0">
@@ -100,25 +94,12 @@ For `role="tablist"`, the product supplies the WAI-ARIA Tabs pattern. The exampl
   <div id="panel-2" role="tabpanel" class="tab-panel" aria-labelledby="tab-2" tabindex="0" hidden>
     <p>Your password and signed-in devices.</p>
   </div>
-</div>
-
-<!-- Beside the panels: the list becomes vertical -->
-<div class="tabbed-content tabbed-content--vertical">
-  <div class="tab-list" role="tablist" aria-label="Profile settings">
-    <button type="button" role="tab" id="side-tab-1" class="tab" aria-selected="true" aria-controls="side-panel-1">
-      <span class="tab__text">Profile</span>
-    </button>
-    <button type="button" role="tab" id="side-tab-2" class="tab" aria-selected="false" aria-controls="side-panel-2" tabindex="-1">
-      <span class="tab__text">Notifications</span>
-    </button>
-  </div>
-  <div id="side-panel-1" role="tabpanel" class="tab-panel" aria-labelledby="side-tab-1" tabindex="0">
-    <p>Your photo and a short bio.</p>
-  </div>
-  <div id="side-panel-2" role="tabpanel" class="tab-panel" aria-labelledby="side-tab-2" tabindex="0" hidden>
+  <div id="panel-3" role="tabpanel" class="tab-panel" aria-labelledby="tab-3" tabindex="0" hidden>
     <p>Which emails you receive.</p>
   </div>
 </div>
+---
+Layout: Above, Beside=tabbed-content--vertical, Beside at the end=tabbed-content--end
 ```
 
 ## Segmented
