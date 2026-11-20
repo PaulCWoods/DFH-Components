@@ -89,7 +89,7 @@
   --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
   --_button-font-weight: var(--button-font-weight, var(--font-weight-bold, 700));
   --_button-icon-size: var(--button-icon-size, var(--icon-base-size, 1));
-  --_button-inner-gap: var(--button-inner-gap, var(--spacing-12));
+  --_button-inner-gap: var(--button-inner-gap, var(--spacing-sm));
   --_button-line-height: var(--button-line-height, var(--control-line-height, 1.25));
   --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
   --_button-padding-block: var(--button-padding-block, var(--spacing-xs));
@@ -195,6 +195,7 @@
     --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
     --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
     --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
+    --_button-inner-gap: var(--button-sm-inner-gap, var(--spacing-6));
   }
 
   @container style(--button-size: lg) or style(--controls-size: lg) {
@@ -202,6 +203,7 @@
     --_button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24));
     --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
     --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
+    --_button-inner-gap: var(--button-lg-inner-gap, var(--spacing-12));
   }
 
   @container (style(--button-size: lg) or style(--controls-size: lg)) and style(--ui-sizing: compact) {
@@ -209,6 +211,7 @@
     --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
     --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
     --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
+    --_button-inner-gap: var(--button-inner-gap, var(--spacing-sm));
   }
 
   /* Type only: steps the label down without changing geometry */
@@ -450,6 +453,7 @@
   --_button-padding-inline: var(--button-sm-padding-inline, var(--spacing-10));
   --_button-min-size: var(--button-sm-min-size, var(--spacing-target-sm, 2rem));
   --_button-font-size: var(--button-sm-font-size, var(--control-sm-font-size, 0.875rem));
+  --_button-inner-gap: var(--button-sm-inner-gap, var(--spacing-6));
 }
 
 /* Large: 64px; steps down to the default size inside a compact container */
@@ -458,12 +462,14 @@
   --_button-padding-inline: var(--button-lg-padding-inline, var(--spacing-24));
   --_button-min-size: var(--button-lg-min-size, var(--spacing-target-lg, 4rem));
   --_button-font-size: var(--button-lg-font-size, var(--control-lg-font-size, 1.125rem));
+  --_button-inner-gap: var(--button-lg-inner-gap, var(--spacing-12));
 
   @container style(--ui-sizing: compact) {
     --_button-padding-block: var(--button-padding-block, var(--spacing-xs));
     --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
     --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
     --_button-font-size: var(--button-font-size, var(--control-font-size, 1rem));
+    --_button-inner-gap: var(--button-inner-gap, var(--spacing-sm));
   }
 }
 

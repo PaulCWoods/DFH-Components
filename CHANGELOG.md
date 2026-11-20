@@ -31,6 +31,7 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 
 ### Changed
 - **A Brand's Name reads the theme's display family itself:** its family and line height come from Tier 1 (`--typography-font-family-display`, the tightest line height) rather than following the Display Title style, so a theme can set its titles in another family without changing the Brand. It looks the same in the starter, DFH and Eden themes. `--brand-font-family` and `--brand-line-height` still override it. No markup changes.
+- **A Button's icon sits closer to its label, and the space follows its size:** the gap is 0.5rem by default (it was 0.75rem), 0.375rem on a small or compact Button and 0.75rem on a large one. New tokens `--button-sm-inner-gap` and `--button-lg-inner-gap` set the smaller and larger gaps; `--button-inner-gap` still sets the default. No markup changes.
 
 ### Fixed
 
