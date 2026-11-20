@@ -113,6 +113,19 @@ const toc = headings.filter((h) => h.depth === 2);
     });
   }
 
+  /* Examples link to pages that don't exist (/plants, /page/2), so their
+     links and forms go nowhere. A link to a place on the page (a Tab, a Skip
+     Link) still works, and a form that closes a Dialog still closes it. */
+  const inExample = (el: Element | null) => !!el?.closest('[data-frame]');
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest?.('a[href]');
+    if (link && inExample(link) && !link.getAttribute('href')!.startsWith('#')) event.preventDefault();
+  });
+  document.addEventListener('submit', (event) => {
+    const form = event.target as HTMLFormElement;
+    if (inExample(form) && form.method !== 'dialog') event.preventDefault();
+  });
+
   /* Copy buttons appear only where the clipboard works */
   if (navigator.clipboard) {
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
