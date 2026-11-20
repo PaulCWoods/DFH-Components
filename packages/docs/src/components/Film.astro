@@ -1,0 +1,107 @@
+---
+/* A short silent film from public/video, made by capture:video (the
+   Designer's tour), with its still (<name>-poster) as the poster.
+   It plays, muted and looping, only while it's on screen, and the Pause
+   button stops it for good (WCAG 2.2.2 Pause, Stop, Hide). With reduced
+   motion it waits on its still until Play is pressed. Nothing loads until
+   it plays. Without the script the browser's own controls show instead.
+   The caption is the slot, and says what happens in the film, since it has
+   no words of its own (WCAG 1.2.1, video only). */
+import Icon from './Icon.astro';
+
+interface Props { name: string; width: number; height: number; label: string }
+const { name, width, height, label } = Astro.props;
+const id = `film-${name}`;
+---
+<figure class="film" data-film>
+  <div class="film__stage">
+    <video
+      id={id}
+      class="border rounded-md"
+      width={width}
+      height={height}
+      poster={`/video/${name}-poster-1600.webp`}
+      preload="none"
+      muted
+      loop
+      playsinline
+      controls
+      aria-label={label}
+    >
+      <source src={`/video/${name}.webm`} type="video/webm" />
+      <source src={`/video/${name}.mp4`} type="video/mp4" />
+    </video>
+    <button type="button" class="button button--strong button--sm film__toggle" aria-controls={id} hidden>
+      <Icon name="pause" class="button__icon film__pause" />
+      <Icon name="play" class="button__icon film__play" />
+      <span>Pause</span><span class="sr-only"> the film</span>
+    </button>
+  </div>
+  {Astro.slots.has('default') && <figcaption><slot /></figcaption>}
+</figure>
+
+<style>
+  .film video {
+    block-size: auto;
+    display: block;
+    inline-size: 100%;
+  }
+
+  .film__stage {
+    position: relative;
+  }
+
+  .film__toggle {
+    inset-block-end: var(--spacing-sm);
+    inset-inline-end: var(--spacing-sm);
+    position: absolute;
+  }
+
+  /* The icons are drawn by Icon.astro, outside this component's scope */
+  .film__toggle[data-paused] :global(.film__pause),
+  .film__toggle:not([data-paused]) :global(.film__play) {
+    display: none;
+  }
+</style>
+
+<script>
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+
+  for (const film of document.querySelectorAll<HTMLElement>('[data-film]')) {
+    const video = film.querySelector('video')!;
+    const toggle = film.querySelector<HTMLButtonElement>('.film__toggle')!;
+    const word = toggle.querySelector('span')!;
+    /* Someone pressed Pause, or motion is reduced: it waits for Play */
+    let held = still.matches;
+    let seen = false;
+
+    const draw = () => {
+      const paused = video.paused;
+      toggle.toggleAttribute('data-paused', paused);
+      word.textContent = paused ? 'Play' : 'Pause';
+    };
+    const run = () => {
+      if (!held && seen) video.play().catch(() => {});
+      else video.pause();
+    };
+
+    video.controls = false;
+    toggle.hidden = false;
+    video.addEventListener('play', draw);
+    video.addEventListener('pause', draw);
+    toggle.addEventListener('click', () => {
+      held = !video.paused;
+      if (held) video.pause();
+      else video.play().catch(() => {});
+    });
+    still.addEventListener('change', () => {
+      held = still.matches || held;
+      run();
+    });
+    new IntersectionObserver(([entry]) => {
+      seen = entry.isIntersecting;
+      run();
+    }, { threshold: 0.4 }).observe(video);
+    draw();
+  }
+</script>
