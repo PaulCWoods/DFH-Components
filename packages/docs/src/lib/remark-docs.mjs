@@ -64,7 +64,7 @@ const exampleCode = (code) => `<details class="accordion accordion--plain accord
 ${codeBlock(code, 'html', ' code-block--flush')}
 </details>`;
 
-const frame = (layout, width, html) => `<div class="${layout === 'cluster' ? 'cluster' : 'stack'}${width ? ` max-w-${width}` : ''}">
+const frame = (layout, width, html) => `<div class="${layout === 'cluster' ? 'cluster' : 'stack'}${width ? ` max-w-${width}` : ''}" data-frame>
 ${html}
 </div>`;
 
