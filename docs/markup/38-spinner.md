@@ -13,7 +13,7 @@ related: [icon-icon-box, button, skeleton, progress-meter]
 <p class="text" role="status">Loading plants…</p>
 ---
 Size: Small=icon--sm, Default*, Large=icon--lg
-Intent: Default, Accent=icon--accent
+Intent: Default, Accent=icon--accent, Complementary=icon--complementary
 ```
 
 ## Purpose

@@ -15,7 +15,7 @@ related: [button, badge-status-chip-kbd, avatar, spinner]
 </span>
 ---
 Size: Small=icon--sm, Default*, Large=icon--lg
-Intent: Neutral, Accent=icon--accent "New rota reminder", Danger=icon--danger "Rota reminder failed to send", Warning=icon--warning "Rota reminder is late", Success=icon--success "Rota reminder sent", Info=icon--info "Rota reminder scheduled"
+Intent: Neutral, Accent=icon--accent "New rota reminder", Complementary=icon--complementary "Featured rota", Danger=icon--danger "Rota reminder failed to send", Warning=icon--warning "Rota reminder is late", Success=icon--success "Rota reminder sent", Info=icon--info "Rota reminder scheduled"
 ```
 
 ## Purpose
@@ -71,7 +71,7 @@ The box is decoration, so it's hidden, and the text beside it says what it means
 Prominence: Plain, Subtle=icon-box--subtle
 Size: Small=icon-box--sm, Default*, Large=icon-box--lg
 Corners: Rounded, Round=icon-box--round
-Intent: Neutral, Accent=icon-box--accent "New rota reminder", Danger=icon-box--danger "Rota reminder failed to send", Warning=icon-box--warning "Rota reminder is late", Success=icon-box--success "Rota reminder sent", Info=icon-box--info "Rota reminder scheduled"
+Intent: Neutral, Accent=icon-box--accent "New rota reminder", Complementary=icon-box--complementary "Featured rota", Danger=icon-box--danger "Rota reminder failed to send", Warning=icon-box--warning "Rota reminder is late", Success=icon-box--success "Rota reminder sent", Info=icon-box--info "Rota reminder scheduled"
 ```
 
 ## Do and don't
@@ -88,8 +88,8 @@ An icon is a glyph from the sprite (`icons/icons.svg`, one filled family), sized
 ## Options
 | Atom | Axes | Notes |
 | :--- | :--- | :--- |
-| `.icon` | Size (`--icon-base-size`, `--sm`, `--lg`, `--stretch` to fill its box); intent (`--accent`, `--info`, `--danger`, `--warning`, `--success`) | `--dir` mirrors in right-to-left text; `--disclosure` rotates with the nearest `[aria-expanded]`. Any other size: set `--icon-size` or the font size. `--icon-base-size` is the default size as a plain number of ems (`1`): adjust it for an icon set that sits small or large beside text. Chips, Statuses, Tabs and Buttons follow it. |
-| `.icon-box` | Size (48px, `--sm` 32px, `--lg` 64px); prominence (plain, `--subtle`); corners (`--round`); intent (`--accent`, `--info`, `--success`, `--warning`, `--danger`) | A fixed square frame that lines icons up with controls. Not interactive. Intent colours the icon, and a subtle box takes the intent's tint. Flags: `--icon-box-size`, `--icon-box-prominence`, `--icon-box-corners`, `--icon-box-intent`; a compact container steps each size down one (`--lg` to the default, the default to `--sm`). In forced colours a subtle box keeps an outline, and under more contrast it gets its edge back. |
+| `.icon` | Size (`--icon-base-size`, `--sm`, `--lg`, `--stretch` to fill its box); intent (`--accent`, `--complementary`, `--info`, `--danger`, `--warning`, `--success`) | `--dir` mirrors in right-to-left text; `--disclosure` rotates with the nearest `[aria-expanded]`. Any other size: set `--icon-size` or the font size. `--icon-base-size` is the default size as a plain number of ems (`1`): adjust it for an icon set that sits small or large beside text. Chips, Statuses, Tabs and Buttons follow it. |
+| `.icon-box` | Size (48px, `--sm` 32px, `--lg` 64px); prominence (plain, `--subtle`); corners (`--round`); intent (`--accent`, `--complementary`, `--info`, `--success`, `--warning`, `--danger`) | A fixed square frame that lines icons up with controls. Not interactive. Intent colours the icon, and a subtle box takes the intent's tint. Flags: `--icon-box-size`, `--icon-box-prominence`, `--icon-box-corners`, `--icon-box-intent`; a compact container steps each size down one (`--lg` to the default, the default to `--sm`). In forced colours a subtle box keeps an outline, and under more contrast it gets its edge back. |
 
 ## Icon Box
 ```html live cluster

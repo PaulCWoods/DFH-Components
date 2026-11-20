@@ -39,7 +39,7 @@
      -------------------------------------------------------------------------- */
   --_chip-bg: transparent;
   --_chip-text: var(--chip-color, var(--foreground, CanvasText));
-  --_chip-border-color: var(--chip-color-border, var(--border-color-muted, currentColor));
+  --_chip-border-color: var(--chip-color-border, var(--tag-border-color, currentColor));
   --_chip-remove-hover-bg: var(--surface-translucent-strong, transparent);
 
   /* --------------------------------------------------------------------------
@@ -53,8 +53,8 @@
   --_chip-padding-block: var(--chip-padding-block, var(--spacing-6));
   --_chip-padding-inline: var(--chip-padding-inline, var(--spacing-sm));
   --_chip-gap: var(--chip-gap, var(--spacing-xs));
-  --_chip-radius: var(--chip-radius, var(--radius-sm));
-  --_chip-border-width: var(--chip-border-width, var(--border-width-thin, 1px));
+  --_chip-radius: var(--chip-radius, var(--tag-radius, 0.25rem));
+  --_chip-border-width: var(--chip-border-width, var(--tag-border-width, 1px));
   --_chip-remove-target: var(--chip-remove-target, var(--spacing-target-min));
 
   /* ------------------------------------------------------------------------
@@ -122,7 +122,7 @@
 /* More contrast: a subtle chip gets its edge back, as a subtle Status does */
 @media (prefers-contrast: more) {
   :where(.chip--subtle) {
-    --_chip-border-color: var(--chip-color-border, var(--border-color-muted, currentColor));
+    --_chip-border-color: var(--chip-color-border, var(--tag-border-color, currentColor));
   }
 }
 

@@ -47,7 +47,7 @@ A variant exists only if it serves a different need, not a different taste. Vari
 | Density | Containers and layout | Default | `--compact` | Modifier on the container, which sets `--ui-sizing: compact` for its children |
 | Presentation | Everything | Normal (text + icon) | Minimal (icon only) | Container width or an explicit modifier |
 | Prominence | Everything with a surface | Default | `--strong`, `--subtle`, `--plain` | Explicit modifier |
-| Intent | Everything that can signal status or consequence | Neutral | `--accent`, `--danger`, `--warning`, `--success`, `--info` | Explicit modifier, mapped 1:1 to Tier-2 semantic roles |
+| Intent | Everything that can signal status or consequence | Neutral | `--accent`, `--complementary`, `--danger`, `--warning`, `--success`, `--info` (Button and Switch: `--accent` and `--danger` only) | Explicit modifier, mapped 1:1 to Tier-2 semantic roles |
 
 - A new variant must name the user need it serves and which existing axis it belongs to, or which option family below. If it fits none, the component is probably two components.
 

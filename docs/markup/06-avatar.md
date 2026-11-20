@@ -102,7 +102,7 @@ Who someone is: a photo, initials or an icon in a shape. The Avatar is an atom; 
 ## Options
 | Block | Options | Container flags |
 | :--- | :--- | :--- |
-| `.avatar` | `--sm`, `--lg`, `--square`, `--accent`, `--placeholder`, `--count` | `--avatar-size-step: sm \| lg`, `--avatar-corners: square` |
+| `.avatar` | `--sm`, `--lg`, `--square`, `--accent`, `--complementary`, `--placeholder`, `--count` | `--avatar-size-step: sm \| lg`, `--avatar-corners: square` |
 | `.avatar-group` | `--stacked` | `--avatar-group-overlap`, `--avatar-group-ring-color` |
 
 ### Further rules

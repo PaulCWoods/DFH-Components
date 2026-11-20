@@ -31,7 +31,7 @@ The block shown where content would be when there is none: a search or filter mi
 | :--- | :--- | :--- |
 | Prominence | default (no frame, no padding), \`--subtle\` (dashed, tinted, padded) | none |
 | Density | default, \`--compact\` | \`--ui-sizing: compact\` |
-| Intent | neutral, \`--accent\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--icon-box-intent\` |
+| Intent | neutral, \`--accent\`, \`--complementary\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--icon-box-intent\` |
 | Alignment | centred, \`--start\` | none |
 
 - **Not a landmark.** A \`<div>\`; a \`<section>\` only when it is the whole content of a page or panel. The heading level fits the outline; the class sets the size.
@@ -92,7 +92,7 @@ export const Playground: Story = {
     start: false,
   },
   argTypes: {
-    intent: { control: 'select', options: ['neutral', 'accent', 'info', 'success', 'warning', 'danger'] },
+    intent: { control: 'select', options: ['neutral', 'accent', 'complementary', 'info', 'success', 'warning', 'danger'] },
   },
   render: (args) => {
     const cls = [
@@ -103,7 +103,7 @@ export const Playground: Story = {
     ]
       .filter(Boolean)
       .join(' ');
-    const glyph = { neutral: 'search', accent: 'star', info: 'info', success: 'check', warning: 'triangle-exclamation-point', danger: 'circle-exclamation-point' }[args.intent as string];
+    const glyph = { neutral: 'search', accent: 'star', complementary: 'sparkles', info: 'info', success: 'check', warning: 'triangle-exclamation-point', danger: 'circle-exclamation-point' }[args.intent as string];
     return `<div class="max-w-md">${emptyState({
       cls,
       glyph,

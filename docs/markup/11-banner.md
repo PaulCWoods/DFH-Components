@@ -20,7 +20,7 @@ related: [banner-dock, toast, card, icon-icon-box]
   </button>
 </div>
 ---
-Intent: Neutral, Accent=banner--accent "New: your plan now includes shared beds.", Info=banner--info "Note: your changes are saved automatically.", Success=banner--success "Saved: every change is safe.", Warning=banner--warning "Warning: maintenance begins tonight at 22:00.", Danger=banner--danger "Failed: your payment did not go through."
+Intent: Neutral, Accent=banner--accent "New: your plan now includes shared beds.", Complementary=banner--complementary "Featured: this month's shade planting guide.", Info=banner--info "Note: your changes are saved automatically.", Success=banner--success "Saved: every change is safe.", Warning=banner--warning "Warning: maintenance begins tonight at 22:00.", Danger=banner--danger "Failed: your payment did not go through."
 Prominence: Default, Subtle=banner--subtle, Strong=banner--strong, Plain=banner--plain
 Density: Default, Compact=banner--compact
 Corners: Default, Round=banner--round
@@ -131,7 +131,7 @@ One message with an intent, in one row: an optional icon, the body and optional 
 | Axis | Values | Flag |
 | :--- | :--- | :--- |
 | Prominence | default (tint and intent border), `--subtle` (tint, no border), `--strong` (filled, inverted text), `--plain` (icon and text only, no padding) | `--banner-prominence` |
-| Intent | neutral, `--accent`, `--info`, `--success`, `--warning`, `--danger` | `--banner-intent` |
+| Intent | neutral, `--accent`, `--complementary`, `--info`, `--success`, `--warning`, `--danger` | `--banner-intent` |
 | Density | default, `--compact` | `--ui-sizing: compact` |
 | Corners | default, `--round` (round Buttons, frame concentric with them; never a pill) | `--banner-corners: round` |
 

@@ -205,9 +205,19 @@ test('tokenGroups: by kind, then sizes and density, keeping order', () => {
   );
 });
 
-test("the Switch's font choices are the basic families, not the text styles'", () => {
-  const { kind, options } = tokenOptions(token('switch.font-family'), { semantic, global });
-  assert.equal(kind, 'baseFamily');
-  assert.deepEqual(options, ['{typography.font-family.sans}', '{typography.font-family.serif}', '{typography.font-family.mono}', '{typography.font-family.display}']);
-  assert.equal(tokenOptions(token('button.font-family'), { semantic, global }).kind, 'family');
+test('type pickers offer the Tier 1 families and steps first, then the text styles', () => {
+  const opts = (path) => tokenOptions(token(path), { semantic, global });
+  const family = opts('brand.font-family');
+  assert.equal(family.kind, 'family');
+  assert.deepEqual(family.groups.map((g) => g.label), ['Families', 'Text styles']);
+  assert.deepEqual(family.groups[0].options, ['{typography.font-family.sans}', '{typography.font-family.serif}', '{typography.font-family.mono}', '{typography.font-family.display}']);
+  assert.ok(family.groups[1].options.includes('{code.font-family}'));
+  /* Steps in order, smallest first */
+  const lineHeight = opts('brand.line-height');
+  assert.deepEqual(lineHeight.groups.map((g) => g.label), ['Steps', 'Text styles']);
+  assert.equal(lineHeight.groups[0].options[0], '{typography.line-height.minus-5}');
+  const fontSize = opts('button.font-size');
+  assert.deepEqual(fontSize.groups.map((g) => g.label), ['Steps', 'Text styles']);
+  assert.deepEqual(fontSize.groups[0].options.slice(0, 3), ['{typography.font-size.minus-2}', '{typography.font-size.minus-1}', '{typography.font-size.0}']);
+  assert.ok(fontSize.groups[1].options.includes('{control.font-size}'));
 });

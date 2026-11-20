@@ -7,7 +7,7 @@
    | Axis   | Modifiers                                         | Container flag |
    | ------ | ------------------------------------------------- | -------------- |
    | Size   | (--icon-base-size) --sm --lg                       | none: set font-size or --icon-size |
-   | Intent | (text colour) --accent --info --danger --warning --success | none: set color |
+   | Intent | (text colour) --accent --complementary --info --danger --warning --success | none: set color |
 
    Also: --dir mirrors a directional glyph in right-to-left text;
    --disclosure rotates with the nearest [aria-expanded].
@@ -84,6 +84,10 @@
   color: var(--foreground-accent, currentColor);
 }
 
+:where(.icon--complementary) {
+  color: var(--foreground-complementary, currentColor);
+}
+
 :where(.icon--info) {
   color: var(--foreground-info, currentColor);
 }
@@ -141,7 +145,7 @@
    | Size       | (48px) --sm --lg  | --icon-box-size (--ui-sizing: compact steps to sm) |
    | Prominence | (plain) --subtle  | --icon-box-prominence           |
    | Corners    | --round           | --icon-box-corners              |
-   | Intent     | (text colour) --accent --info --success --warning --danger | --icon-box-intent |
+   | Intent     | (text colour) --accent --complementary --info --success --warning --danger | --icon-box-intent |
 
    Intent colours the icon, and a subtle box takes the intent's tint. The
    icon (and the text beside it) must still say what the intent means.
@@ -187,6 +191,11 @@
   @container style(--icon-box-intent: accent) {
     --_icon-box-tint: var(--surface-accent, transparent);
     --_icon-box-color: var(--foreground-accent, currentColor);
+  }
+
+  @container style(--icon-box-intent: complementary) {
+    --_icon-box-tint: var(--surface-complementary, transparent);
+    --_icon-box-color: var(--foreground-complementary, currentColor);
   }
 
   @container style(--icon-box-intent: info) {
@@ -256,6 +265,11 @@
 :where(.icon-box--accent) {
   --_icon-box-tint: var(--surface-accent, transparent);
   --_icon-box-color: var(--foreground-accent, currentColor);
+}
+
+:where(.icon-box--complementary) {
+  --_icon-box-tint: var(--surface-complementary, transparent);
+  --_icon-box-color: var(--foreground-complementary, currentColor);
 }
 
 :where(.icon-box--info) {

@@ -12,7 +12,9 @@
    layers (y, blur, spread) in the shadow colour; each level has a -light twin
    in the lighter colour. The inner level's layers are inset. Lines are the
    roles that compose those values into a job: rules, panels, the app shell,
-   control edges, underlines and the focus ring. border.width.none stays 0.
+   control edges, tags (Status labels and Chips), underlines and the focus
+   ring. A theme written before a line existed takes that line's default.
+   border.width.none stays 0.
    ========================================================================== */
 
 export const RADIUS_ROLES = ['sm', 'md', 'lg', 'xl'];
@@ -23,7 +25,7 @@ export const SHADOW_LEVELS = ['sm', 'md', 'lg'];
 
 export const LINE_WIDTHS = ['none', 'thin', 'medium', 'thick', 'default'];
 export const LINE_STYLES = ['solid', 'dashed', 'dotted', 'double'];
-export const LINE_RADII = [...RADIUS_DEFAULTS, 'default'];
+export const LINE_RADII = [...RADIUS_DEFAULTS, 'full', 'default'];
 export const LINE_COLORS = ['border.color.default', 'border.color.muted', 'border.color.quiet', 'border.color.control', 'border.color.accent', 'color.muted', 'color.quiet', 'color.focus'];
 
 /* Each line's fields, and the Tier 2 token each field writes */
@@ -32,9 +34,17 @@ export const LINES = {
   panel: { width: 'border-width', color: 'border-color', style: 'border-style', radius: 'radius' },
   app: { width: 'border-width', color: 'border-color', style: 'border-style' },
   control: { width: 'border-width', color: 'border-color' },
+  tag: { width: 'border-width', color: 'border-color', radius: 'radius' },
   underline: { width: 'thickness', color: 'color', offset: 'offset' },
   'focus-ring': { width: 'width', color: 'color', offset: 'offset' },
 };
+/* Lines added after version 1 of the theme format, as they first shipped,
+   so a theme that doesn't name them builds as it did before */
+export const LINE_DEFAULTS = {
+  tag: { width: 'thin', color: 'border.color.muted', radius: 'sm' },
+};
+export const lineOf = (shape, line) => shape.lines?.[line] ?? LINE_DEFAULTS[line];
+
 /* These have to show: a control's edge (WCAG 1.4.11), a link's underline
    (1.4.1) and the focus ring, which is at least 2px (2.4.13) */
 const MUST_SHOW = ['control', 'underline', 'focus-ring'];
@@ -84,7 +94,7 @@ export const applyShape = (semantic, shape) => {
   for (const r of BORDER_ROLES) out.border.width[r].$value = `{border.width.${shape.border[r]}}`;
   out.border.width.default.$value = `{border.width.${shape.border.default}}`;
   for (const [line, fields] of Object.entries(LINES)) {
-    for (const [field, key] of Object.entries(fields)) out[line][key].$value = lineValue(field, shape.lines[line][field]);
+    for (const [field, key] of Object.entries(fields)) out[line][key].$value = lineValue(field, lineOf(shape, line)[field]);
   }
   out.shadow.color.$value = shadowColor(shape.shadow.color);
   out.shadow['color-light'].$value = shadowColor(shape.shadow['color-light']);
@@ -118,9 +128,9 @@ export const shapeGate = (shape, { translucency, colors, steps } = {}) => {
   const allowed = { width: LINE_WIDTHS, offset: LINE_WIDTHS, color: LINE_COLORS, style: LINE_STYLES, radius: LINE_RADII };
   for (const [line, fields] of Object.entries(LINES)) {
     for (const field of Object.keys(fields)) {
-      if (!allowed[field].includes(shape.lines?.[line]?.[field])) fail(`${line} ${field}`, `${shape.lines?.[line]?.[field]} isn't one of ${allowed[field].join(', ')}`);
+      if (!allowed[field].includes(lineOf(shape, line)?.[field])) fail(`${line} ${field}`, `${lineOf(shape, line)?.[field]} isn't one of ${allowed[field].join(', ')}`);
     }
-    if (MUST_SHOW.includes(line) && shape.lines?.[line]?.width === 'none') fail(`${line} width`, "can't be none: it has to show");
+    if (MUST_SHOW.includes(line) && lineOf(shape, line)?.width === 'none') fail(`${line} width`, "can't be none: it has to show");
   }
   const ringWidth = shape.lines?.['focus-ring']?.width;
   if (ringWidth && ringWidth !== 'none' && shape.border[ringWidth === 'default' ? shape.border.default : ringWidth] < 2) fail('focus-ring width', 'under 2px');
@@ -165,7 +175,7 @@ export const shapeCssVars = (shape, hexOf) => {
   vars['--border-width'] = `var(--border-width-${shape.border.default})`;
   for (const [line, fields] of Object.entries(LINES)) {
     for (const [field, key] of Object.entries(fields)) {
-      const value = lineValue(field, shape.lines[line][field]);
+      const value = lineValue(field, lineOf(shape, line)[field]);
       vars[`--${line}-${key}`] = field === 'style' ? value : cssRef(value);
     }
   }

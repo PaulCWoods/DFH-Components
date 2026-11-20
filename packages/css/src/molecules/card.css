@@ -13,7 +13,7 @@
    card's edges (a row that scrolls sideways, with --scrollable).
 
    Axes: prominence (default, --strong, --subtle, --plain), chrome (the
-   frame's edge: default, --flat, --bordered), intent (neutral, --accent,
+   frame's edge: default, --flat, --bordered), intent (neutral, --accent, --complementary,
    --danger, --warning, --success, --info), padding (--flush), density
    (--compact). Flags: --card-prominence, --card-chrome and --card-intent
    (set on a container; a card resets them for cards nested inside),
@@ -145,6 +145,13 @@
     --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
   }
 
+  @container style(--card-intent: complementary) {
+    --_card-intent-color: var(--border-color-complementary, currentColor);
+    --_card-intent-border-width: var(--_card-edge);
+    --_card-intent-shadow: var(--_card-tinted-shadow);
+    --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
+  }
+
   @container style(--card-intent: danger) {
     --_card-intent-color: var(--border-color-danger, currentColor);
     --_card-intent-border-width: var(--_card-edge);
@@ -271,6 +278,13 @@
    so flat and plain cards stay shadowless. */
 :where(.card--accent) {
   --_card-intent-color: var(--border-color-accent, currentColor);
+  --_card-intent-border-width: var(--_card-edge);
+  --_card-intent-shadow: var(--_card-tinted-shadow);
+  --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));
+}
+
+:where(.card--complementary) {
+  --_card-intent-color: var(--border-color-complementary, currentColor);
   --_card-intent-border-width: var(--_card-edge);
   --_card-intent-shadow: var(--_card-tinted-shadow);
   --_card-ring: var(--card-intent-ring-width, var(--border-width-thin, 1px));

@@ -631,6 +631,11 @@
         "width": "default",
         "color": "border.color.control"
       },
+      "tag": {
+        "width": "thin",
+        "color": "border.color.muted",
+        "radius": "sm"
+      },
       "underline": {
         "width": "thin",
         "color": "color.muted",

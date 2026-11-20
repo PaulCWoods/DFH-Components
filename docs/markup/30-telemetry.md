@@ -116,7 +116,7 @@ A value that is a share of something ("1 in 5", "16%") can fill that much of its
   </div>
 </dl>
 ```
-The fill is accent by default. An intent (`--info`, `--success`, `--warning`, `--danger`) colours it by meaning, so say that meaning in the text or a status as well.
+The fill is accent by default. An intent (`--complementary`, `--info`, `--success`, `--warning`, `--danger`) colours it by meaning, so say that meaning in the text or a status as well.
 
 ## Do and don't
 | Do | Don't |

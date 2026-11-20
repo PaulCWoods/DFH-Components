@@ -20,7 +20,7 @@ Neutral has two steps beyond its ends: 000, lighter than 100, and 1000, darker t
 
 ## Roles
 
-Components never use a ramp step. They use roles: `--surface` and `--surface-card` for what things sit on, `--foreground` and `--foreground-muted` for text, `--border-color` for lines, and a set for each intent (accent, danger, warning, success, info). Each role is a pair, written with `light-dark()`, so one name serves both schemes:
+Components never use a ramp step. They use roles: `--surface` and `--surface-card` for what things sit on, `--foreground` and `--foreground-muted` for text, `--border-color` for lines, and a set for each intent (accent, complementary, danger, warning, success, info). Each role is a pair, written with `light-dark()`, so one name serves both schemes:
 
 ```css
 --foreground: light-dark(var(--color-neutral-800), var(--color-neutral-000));

@@ -45,6 +45,25 @@ test('lines write their roles, and none stays 0', () => {
   assert.equal(shapeCssVars(shape, () => '#000')['--rule-color'], 'var(--border-color)');
 });
 
+test('a theme with no tag line builds as it did before tags had one', () => {
+  const shape = structuredClone(theme.shape);
+  delete shape.lines.tag;
+  assert.deepEqual(shapeGate(shape).failures, []);
+  const out = applyShape(semantic, shape);
+  assert.equal(out.tag.radius.$value, '{radius.sm}');
+  assert.equal(out.tag['border-width'].$value, '{border.width.thin}');
+  assert.equal(out.tag['border-color'].$value, '{border.color.muted}');
+  assert.equal(shapeCssVars(shape, () => '#000')['--tag-radius'], 'var(--radius-sm)');
+});
+
+test('a tag can be a pill', () => {
+  const shape = structuredClone(theme.shape);
+  shape.lines.tag.radius = 'full';
+  assert.deepEqual(shapeGate(shape).failures, []);
+  assert.equal(applyShape(semantic, shape).tag.radius.$value, '{radius.full}');
+  assert.equal(shapeCssVars(shape, () => '#000')['--tag-radius'], 'var(--radius-full)');
+});
+
 test('the default radius can be none, and none stays 0', () => {
   const shape = structuredClone(theme.shape);
   shape.radius.default = 'none';

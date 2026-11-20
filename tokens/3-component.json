@@ -119,7 +119,15 @@
       "$value": "{surface.accent-strong}",
       "$type": "color"
     },
+    "complementary-bg": {
+      "$value": "{surface.complementary-strong}",
+      "$type": "color"
+    },
     "accent-text": {
+      "$value": "{foreground.inverted}",
+      "$type": "color"
+    },
+    "complementary-text": {
       "$value": "{foreground.inverted}",
       "$type": "color"
     },
@@ -216,7 +224,7 @@
       "$description": "The Mark on its own in a compact container, as big as a Button there"
     },
     "font-family": {
-      "$value": "{display-title.font-family}",
+      "$value": "{typography.font-family.display}",
       "$type": "fontFamily"
     },
     "font-weight": {
@@ -236,7 +244,7 @@
       "$type": "dimension"
     },
     "line-height": {
-      "$value": "{display-title.line-height}",
+      "$value": "{typography.line-height.minus-4}",
       "$type": "number"
     },
     "text-transform": {
@@ -347,11 +355,11 @@
       "$type": "dimension"
     },
     "radius": {
-      "$value": "{radius.sm}",
+      "$value": "{tag.radius}",
       "$type": "dimension"
     },
     "border-width": {
-      "$value": "{border.width.thin}",
+      "$value": "{tag.border-width}",
       "$type": "dimension"
     },
     "translucency": {
@@ -386,7 +394,7 @@
       "$description": "The neutral subtle Status's background"
     },
     "color-border": {
-      "$value": "{border.color.muted}",
+      "$value": "{tag.border-color}",
       "$type": "color",
       "$description": "The neutral Status's border"
     },
@@ -1294,11 +1302,11 @@
       "$type": "dimension"
     },
     "radius": {
-      "$value": "{radius.sm}",
+      "$value": "{tag.radius}",
       "$type": "dimension"
     },
     "border-width": {
-      "$value": "{border.width.thin}",
+      "$value": "{tag.border-width}",
       "$type": "dimension"
     },
     "remove-target": {
@@ -1324,7 +1332,7 @@
       "$description": "Text colour"
     },
     "color-border": {
-      "$value": "{border.color.muted}",
+      "$value": "{tag.border-color}",
       "$type": "color",
       "$description": "Border colour"
     }

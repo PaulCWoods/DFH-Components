@@ -8,7 +8,7 @@
 
    | Axis         | Modifiers                                        | Container flag |
    | ------------ | ------------------------------------------------ | -------------- |
-   | Intent       | (neutral) --accent --danger --warning --success --info | --badge-intent |
+   | Intent       | (neutral) --accent --complementary --danger --warning --success --info | --badge-intent |
    | Size         | --sm                                             | --badge-size   |
    | Density      | (none: --ui-sizing: compact steps to sm)          |                |
    | Presentation | --dot (no text)                                   |                |
@@ -63,6 +63,10 @@
      ------------------------------------------------------------------------ */
   @container style(--badge-intent: accent) {
     --_badge-tone: var(--foreground-accent, CanvasText);
+  }
+
+  @container style(--badge-intent: complementary) {
+    --_badge-tone: var(--foreground-complementary, CanvasText);
   }
 
   @container style(--badge-intent: info) {
@@ -126,6 +130,10 @@
    ========================================================================== */
 :where(.badge--accent) {
   --_badge-tone: var(--foreground-accent, CanvasText);
+}
+
+:where(.badge--complementary) {
+  --_badge-tone: var(--foreground-complementary, CanvasText);
 }
 
 :where(.badge--info) {

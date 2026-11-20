@@ -51,7 +51,7 @@ At the top of the base `:where(.component)` rule, declare every value the compon
   | Axis | Values |
   | :--- | :--- |
   | Prominence | default, `--strong`, `--subtle`, `--plain` |
-  | Intent | neutral, `--accent`, `--danger`, `--warning`, `--success`, `--info` |
+  | Intent | neutral, `--accent`, `--complementary`, `--danger`, `--warning`, `--success`, `--info` |
   | Size (atoms and controls only) | default, `--sm`, `--lg` |
   | Density (containers only) | `--compact` |
 

@@ -27,7 +27,7 @@ One message with an intent, in one row: an optional icon, the body and optional 
 | Axis | Values | Flag |
 | :--- | :--- | :--- |
 | Prominence | default (tint and intent border), \`--subtle\` (tint, no border), \`--strong\` (filled), \`--plain\` (icon and text only) | \`--banner-prominence\` |
-| Intent | neutral, \`--accent\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--banner-intent\` |
+| Intent | neutral, \`--accent\`, \`--complementary\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--banner-intent\` |
 | Density | default, \`--compact\` | \`--ui-sizing: compact\` |
 | Corners | default, \`--round\` (round buttons, concentric frame) | \`--banner-corners\` |
 
@@ -53,6 +53,7 @@ const iconBox = (name: string) => `<span class="icon-box" aria-hidden="true">${i
 
 const intentIcon: Record<string, string> = {
   accent: 'info',
+  complementary: 'sparkles',
   info: 'info',
   success: 'check',
   warning: 'triangle-exclamation-point',
@@ -84,7 +85,7 @@ export const Playground: Story = {
     action: 'dismiss',
   },
   argTypes: {
-    intent: { control: 'select', options: ['neutral', 'accent', 'info', 'success', 'warning', 'danger'] },
+    intent: { control: 'select', options: ['neutral', 'accent', 'complementary', 'info', 'success', 'warning', 'danger'] },
     prominence: { control: 'inline-radio', options: ['default', 'subtle', 'strong', 'plain'] },
     compact: { control: 'boolean' },
     round: { control: 'boolean' },
@@ -137,7 +138,7 @@ export const Intents: Story = {
   render: () => `
     <div class="stack" style="max-inline-size: 40rem;">
       ${banner('', '<p class="text">Neutral: a message with no intent, and no icon needed.</p>', { action: dismiss })}
-      ${['accent', 'info', 'success', 'warning', 'danger']
+      ${['accent', 'complementary', 'info', 'success', 'warning', 'danger']
       .map((i) => banner('', `<p class="text"><strong>${i[0].toUpperCase() + i.slice(1)}:</strong> the icon carries the intent as well as the colour.</p>`, { intent: i, action: dismiss }))
       .join('')}
     </div>

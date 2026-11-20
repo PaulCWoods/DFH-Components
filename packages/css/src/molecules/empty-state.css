@@ -11,7 +11,7 @@
    | :---------- | :--------------------------------------- | :------------------------- |
    | Prominence  | default (no frame), --subtle (dashed)    | none                       |
    | Density     | default, --compact                       | --ui-sizing: compact       |
-   | Intent      | neutral, --accent --info --success --warning --danger | --icon-box-intent |
+   | Intent      | neutral, --accent --complementary --info --success --warning --danger | --icon-box-intent |
    | Alignment   | centred, --start                         | none                       |
 
    Default has no padding or frame: it sits in something that has its own
@@ -155,6 +155,10 @@
 /* Intent: set on the icon box */
 :where(.empty-state--accent) {
   --icon-box-intent: accent;
+}
+
+:where(.empty-state--complementary) {
+  --icon-box-intent: complementary;
 }
 
 :where(.empty-state--info) {

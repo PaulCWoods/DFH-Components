@@ -3,12 +3,74 @@
    It holds only what the sub-brand changes. */
 @layer tokens {
   .theme-docs {
+    --color-aqua-100: #cefcf0;
+    --color-aqua-200: #b9f0e2;
+    --color-aqua-300: #8dd9c8;
+    --color-aqua-400: #55bba7;
+    --color-aqua-500: #119984;
+    --color-aqua-600: #007363;
+    --color-aqua-700: #005246;
+    --color-aqua-800: #003a31;
+    --color-aqua-900: #002e26;
+    --surface-complementary: light-dark(var(--color-aqua-100), var(--color-aqua-900));
+    --surface-complementary-dark: var(--color-aqua-900);
+    --surface-complementary-strong: light-dark(var(--color-aqua-700), var(--color-aqua-300));
+    --foreground-complementary: light-dark(var(--color-aqua-600), var(--color-aqua-300));
+    --foreground-complementary-hover: light-dark(var(--color-aqua-700), var(--color-aqua-200));
+    --foreground-complementary-pressed: light-dark(var(--color-aqua-800), var(--color-aqua-100));
+    --border-color-complementary: light-dark(var(--color-aqua-600), var(--color-aqua-500));
     --title-letter-spacing: var(--heading-letter-spacing);
     --title-text-transform: none;
+    --tag-radius: var(--radius-sm);
     --panel-border-width: var(--border-width-thin);
     --panel-radius: var(--radius);
     --radius: var(--radius-md);
     --radius-sm: var(--radius-2);
+  }
+  @media (prefers-contrast: more) {
+    .theme-docs {
+      --surface-complementary-strong: light-dark(var(--color-aqua-800), var(--color-aqua-200));
+      --foreground-complementary: light-dark(var(--color-aqua-700), var(--color-aqua-200));
+      --foreground-complementary-hover: light-dark(var(--color-aqua-800), var(--color-aqua-100));
+      --foreground-complementary-pressed: light-dark(var(--color-aqua-900), var(--color-aqua-100));
+      --border-color-complementary: light-dark(var(--color-aqua-700), var(--color-aqua-400));
+    }
+  }
+  :is(.theme-docs:is(:where(.color-palette-inverted, .colors-inverted)), .theme-docs :is(:where(.color-palette-inverted, .colors-inverted))) {
+    --surface-complementary: light-dark(var(--color-aqua-900), var(--color-aqua-100));
+    --surface-complementary-strong: light-dark(var(--color-aqua-300), var(--color-aqua-700));
+    --foreground-complementary: light-dark(var(--color-aqua-300), var(--color-aqua-600));
+    --foreground-complementary-hover: light-dark(var(--color-aqua-200), var(--color-aqua-700));
+    --foreground-complementary-pressed: light-dark(var(--color-aqua-100), var(--color-aqua-800));
+    --border-color-complementary: light-dark(var(--color-aqua-500), var(--color-aqua-600));
+  }
+  :is(.theme-docs, .theme-docs *) {
+    @container style(--color-palette: inverted) {
+      --surface-complementary: light-dark(var(--color-aqua-900), var(--color-aqua-100));
+      --surface-complementary-strong: light-dark(var(--color-aqua-300), var(--color-aqua-700));
+      --foreground-complementary: light-dark(var(--color-aqua-300), var(--color-aqua-600));
+      --foreground-complementary-hover: light-dark(var(--color-aqua-200), var(--color-aqua-700));
+      --foreground-complementary-pressed: light-dark(var(--color-aqua-100), var(--color-aqua-800));
+      --border-color-complementary: light-dark(var(--color-aqua-500), var(--color-aqua-600));
+    }
+  }
+  @media (prefers-contrast: more) {
+    :is(.theme-docs:is(:where(.color-palette-inverted, .colors-inverted)), .theme-docs :is(:where(.color-palette-inverted, .colors-inverted))) {
+      --surface-complementary-strong: light-dark(var(--color-aqua-200), var(--color-aqua-800));
+      --foreground-complementary: light-dark(var(--color-aqua-200), var(--color-aqua-700));
+      --foreground-complementary-hover: light-dark(var(--color-aqua-100), var(--color-aqua-800));
+      --foreground-complementary-pressed: light-dark(var(--color-aqua-100), var(--color-aqua-900));
+      --border-color-complementary: light-dark(var(--color-aqua-400), var(--color-aqua-700));
+    }
+    :is(.theme-docs, .theme-docs *) {
+      @container style(--color-palette: inverted) {
+        --surface-complementary-strong: light-dark(var(--color-aqua-200), var(--color-aqua-800));
+        --foreground-complementary: light-dark(var(--color-aqua-200), var(--color-aqua-700));
+        --foreground-complementary-hover: light-dark(var(--color-aqua-100), var(--color-aqua-800));
+        --foreground-complementary-pressed: light-dark(var(--color-aqua-100), var(--color-aqua-900));
+        --border-color-complementary: light-dark(var(--color-aqua-400), var(--color-aqua-700));
+      }
+    }
   }
 
   .theme-docs {

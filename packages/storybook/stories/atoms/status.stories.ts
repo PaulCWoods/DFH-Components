@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
 type Prominence = 'default' | 'strong' | 'subtle' | 'plain';
-type Intent = 'neutral' | 'accent' | 'info' | 'danger' | 'warning' | 'success';
+type Intent = 'neutral' | 'accent' | 'complementary' | 'info' | 'danger' | 'warning' | 'success';
 
 interface StatusArgs {
   label: string;
@@ -13,11 +13,12 @@ interface StatusArgs {
 }
 
 const PROMINENCES: Prominence[] = ['default', 'strong', 'subtle', 'plain'];
-const INTENTS: Intent[] = ['neutral', 'accent', 'info', 'success', 'warning', 'danger'];
+const INTENTS: Intent[] = ['neutral', 'accent', 'complementary', 'info', 'success', 'warning', 'danger'];
 
 const LABEL: Record<Intent, string> = {
   neutral: 'Draft',
   accent: 'New',
+  complementary: 'Featured',
   info: 'Scheduled',
   success: 'Passed',
   warning: 'Pending',
@@ -27,6 +28,7 @@ const LABEL: Record<Intent, string> = {
 const ICON: Record<Intent, string> = {
   neutral: 'square-pen',
   accent: 'star',
+  complementary: 'sparkles',
   info: 'info',
   success: 'check',
   warning: 'triangle-exclamation-point',
@@ -62,7 +64,7 @@ The **state of a thing**: text with an optional dot or icon, in tables, lists, c
 | Axis | Modifiers | Container flag |
 | :--- | :--- | :--- |
 | Prominence | default (outline pill), \`--strong\`, \`--subtle\`, \`--plain\` (dot and text) | \`--status-prominence\` |
-| Intent | neutral (default), \`--accent\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` | \`--status-intent\` |
+| Intent | neutral (default), \`--accent\`, \`--complementary\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` | \`--status-intent\` |
 | Size | default, \`--sm\` | \`--status-size\` |
 | Density | none on the status; a compact container steps it to \`--sm\` | \`--ui-sizing: compact\` |
 | Corners | \`--round\` | \`--status-corners\` |

@@ -17,7 +17,7 @@ related: [modal-dialog, popover, thumbnail]
 ---
 Prominence: Default, Strong=card--strong, Subtle=card--subtle, Plain=card--plain
 Chrome: Default, Flat=card--flat, Bordered=card--bordered
-Intent: Neutral, Accent=card--accent "Selected: ferns, hostas and hellebores.", Danger=card--danger "Failed: the ferns did not survive the frost.", Warning=card--warning "At risk: a late frost is forecast.", Success=card--success "Planted: every bed is finished.", Info=card--info "Note: this border faces north."
+Intent: Neutral, Accent=card--accent "Selected: ferns, hostas and hellebores.", Complementary=card--complementary "Featured: the shade border of the month.", Danger=card--danger "Failed: the ferns did not survive the frost.", Warning=card--warning "At risk: a late frost is forecast.", Success=card--success "Planted: every bed is finished.", Info=card--info "Note: this border faces north."
 Density: Default, Compact=card--compact
 ```
 
@@ -113,7 +113,7 @@ A surface with named parts. The Card draws its frame and the geometry of its par
 | :--- | :--- | :--- |
 | Prominence | default (Card surface and quiet border), `--strong` (raised: shadow, for floating Cards), `--subtle` (tint, no border), `--plain` (no surface, border or shadow; keeps padding) | `--card-prominence` |
 | Chrome | default (the prominence's own edge), `--flat` (no border, corners or shadow; keeps the fill), `--bordered` (a border at any prominence) | `--card-chrome` |
-| Intent | neutral (default), `--accent`, `--danger`, `--warning`, `--success`, `--info` (the whole border in the intent colour, with a ring outside it) | `--card-intent` |
+| Intent | neutral (default), `--accent`, `--complementary`, `--danger`, `--warning`, `--success`, `--info` (the whole border in the intent colour, with a ring outside it) | `--card-intent` |
 | Padding | default, `--flush` (no padding at the Card's edges) | |
 | Density | default, `--compact` | `--ui-sizing: compact` |
 

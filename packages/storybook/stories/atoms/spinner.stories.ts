@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html';
 
 interface SpinnerArgs {
   size: 'default' | 'sm' | 'lg';
-  intent: 'none' | 'accent' | 'info' | 'success' | 'warning' | 'danger';
+  intent: 'none' | 'accent' | 'complementary' | 'info' | 'success' | 'warning' | 'danger';
 }
 
 const spinner = (extra = '') =>
@@ -35,7 +35,7 @@ An Icon that turns, for work in progress whose result can't be shown yet.
     size: { control: 'select', options: ['default', 'sm', 'lg'], description: 'Icon size' },
     intent: {
       control: 'select',
-      options: ['none', 'accent', 'info', 'success', 'warning', 'danger'],
+      options: ['none', 'accent', 'complementary', 'info', 'success', 'warning', 'danger'],
       description: 'Icon intent (otherwise the text colour)',
     },
   },

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
 type Size = 'sm' | 'default' | 'lg';
-type Intent = 'accent' | 'info' | 'success' | 'warning' | 'danger';
+type Intent = 'accent' | 'complementary' | 'info' | 'success' | 'warning' | 'danger';
 
 interface RangeArgs {
   label: string;
@@ -12,7 +12,7 @@ interface RangeArgs {
 }
 
 const SIZES: Size[] = ['sm', 'default', 'lg'];
-const INTENTS: Intent[] = ['accent', 'info', 'success', 'warning', 'danger'];
+const INTENTS: Intent[] = ['accent', 'complementary', 'info', 'success', 'warning', 'danger'];
 
 /** Keeps --value (the Blink/WebKit fill) and the readout in step with the slider. */
 const SYNC = `oninput="this.style.setProperty('--value', ((this.value - this.min) / (this.max - this.min) * 100) + '%'); const o = document.querySelector('output[for=&quot;' + this.id + '&quot;]'); if (o) o.textContent = this.value + '%';"`;
@@ -45,7 +45,7 @@ An \`<input type="range">\` slider with a token-driven track, fill and thumb.
 | Axis | Modifiers | Container flags |
 | :--- | :--- | :--- |
 | Size | default, \`--sm\`, \`--lg\` | \`--range-size\`, \`--controls-size\` |
-| Intent | accent (default), \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--range-intent\` |
+| Intent | accent (default), \`--complementary\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--range-intent\` |
 
 - A compact container steps the range to \`--sm\`.
 - The slider is at least \`--spacing-target-min\` tall whatever its visual size, so even \`--sm\` meets the target size (WCAG 2.5.8).

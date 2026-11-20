@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
-type Intent = 'neutral' | 'accent' | 'info' | 'danger' | 'warning' | 'success';
+type Intent = 'neutral' | 'accent' | 'complementary' | 'info' | 'danger' | 'warning' | 'success';
 type Placement = 'inline' | 'top-end' | 'top-start' | 'bottom-end' | 'bottom-start';
 
 interface BadgeArgs {
@@ -11,7 +11,7 @@ interface BadgeArgs {
   placement: Placement;
 }
 
-const INTENTS: Intent[] = ['neutral', 'accent', 'info', 'danger', 'warning', 'success'];
+const INTENTS: Intent[] = ['neutral', 'accent', 'complementary', 'info', 'danger', 'warning', 'success'];
 
 const badgeClasses = (intent: Intent, small = false, dot = false, placement: Placement = 'inline') =>
   [
@@ -39,7 +39,7 @@ A count or dot **attached to a host**: a tab, button, nav item or icon. It sits 
 
 | Axis | Modifiers | Container flag |
 | :--- | :--- | :--- |
-| Intent | neutral (default), \`--accent\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` | \`--badge-intent\` |
+| Intent | neutral (default), \`--accent\`, \`--complementary\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` | \`--badge-intent\` |
 | Size | default, \`--sm\` | \`--badge-size\` |
 | Density | none on the badge; a compact container steps it to \`--sm\` | \`--ui-sizing: compact\` |
 | Presentation | \`--dot\` (no count) | |

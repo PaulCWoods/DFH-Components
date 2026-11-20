@@ -8,7 +8,7 @@
    | Axis       | Modifiers                                         | Container flag      |
    | ---------- | ------------------------------------------------- | ------------------- |
    | Prominence | (outline pill) --strong --subtle --plain           | --status-prominence |
-   | Intent     | (neutral) --accent --danger --warning --success --info | --status-intent |
+   | Intent     | (neutral) --accent --complementary --danger --warning --success --info | --status-intent |
    | Size       | --sm                                              | --status-size       |
    | Density    | (none: --ui-sizing: compact steps to sm)           |                     |
    | Corners    | --round                                           | --status-corners    |
@@ -37,7 +37,7 @@
      -------------------------------------------------------------------------- */
   --_status-tone: var(--status-color, var(--foreground, CanvasText));
   --_status-tint: var(--status-tint, var(--surface-translucent-strong, Canvas));
-  --_status-tone-border: var(--status-color-border, var(--border-color-muted, currentColor));
+  --_status-tone-border: var(--status-color-border, var(--tag-border-color, currentColor));
   --_status-on-tone: var(--status-on-color, var(--foreground-inverted-strong, Canvas));
 
   /* --------------------------------------------------------------------------
@@ -60,8 +60,8 @@
   --_status-padding-block: var(--status-padding-block, var(--spacing-6));
   --_status-padding-inline: var(--status-padding-inline, var(--spacing-sm));
   --_status-gap: var(--status-gap, var(--spacing-sm));
-  --_status-radius: var(--status-radius, var(--radius-sm));
-  --_status-border-width: var(--status-border-width, var(--border-width-thin, 1px));
+  --_status-radius: var(--status-radius, var(--tag-radius, 0.25rem));
+  --_status-border-width: var(--status-border-width, var(--tag-border-width, 1px));
   --_status-dot-size: var(--status-dot-size, var(--spacing-sm));
 
   /* ------------------------------------------------------------------------
@@ -75,6 +75,12 @@
     --_status-tone: var(--foreground-accent, CanvasText);
     --_status-tint: var(--surface-accent, Canvas);
     --_status-tone-border: var(--border-color-accent, currentColor);
+  }
+
+  @container style(--status-intent: complementary) {
+    --_status-tone: var(--foreground-complementary, CanvasText);
+    --_status-tint: var(--surface-complementary, Canvas);
+    --_status-tone-border: var(--border-color-complementary, currentColor);
   }
 
   @container style(--status-intent: info) {
@@ -208,6 +214,12 @@
   --_status-tone: var(--foreground-accent, CanvasText);
   --_status-tint: var(--surface-accent, Canvas);
   --_status-tone-border: var(--border-color-accent, currentColor);
+}
+
+:where(.status--complementary) {
+  --_status-tone: var(--foreground-complementary, CanvasText);
+  --_status-tint: var(--surface-complementary, Canvas);
+  --_status-tone-border: var(--border-color-complementary, currentColor);
 }
 
 :where(.status--info) {

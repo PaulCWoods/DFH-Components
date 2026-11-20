@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
 type Size = 'default' | 'sm' | 'lg';
-type Intent = 'neutral' | 'accent' | 'info' | 'success' | 'warning' | 'danger';
+type Intent = 'neutral' | 'accent' | 'complementary' | 'info' | 'success' | 'warning' | 'danger';
 
 interface IconArgs {
   glyph: string;
@@ -11,11 +11,12 @@ interface IconArgs {
 }
 
 const SIZES: Size[] = ['sm', 'default', 'lg'];
-const INTENTS: Intent[] = ['neutral', 'accent', 'info', 'success', 'warning', 'danger'];
+const INTENTS: Intent[] = ['neutral', 'accent', 'complementary', 'info', 'success', 'warning', 'danger'];
 
 const INTENT_ICON: Record<Intent, string> = {
   neutral: 'square-pen',
   accent: 'star',
+  complementary: 'sparkles',
   info: 'info',
   success: 'check',
   warning: 'triangle-exclamation-point',
@@ -51,7 +52,7 @@ A glyph from the sprite (\`icons/icons.svg\`, one filled family). It is sized in
 | Axis | Modifiers | Notes |
 | :--- | :--- | :--- |
 | Size | default (\`1em\`), \`--sm\`, \`--lg\` | Any other size: set \`--icon-size\` or the font size |
-| Intent | text colour (default), \`--accent\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | Sets \`color\`, so fills and strokes both follow |
+| Intent | text colour (default), \`--accent\`, \`--complementary\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | Sets \`color\`, so fills and strokes both follow |
 
 Also \`--dir\` (mirrors in right-to-left text) and \`--disclosure\` (rotates with the nearest \`[aria-expanded]\`).
 

@@ -6,8 +6,9 @@
 
    | Atom      | Axes                                             | Container flags                                 |
    | --------- | ------------------------------------------------ | ----------------------------------------------- |
-   | .progress | Size (--sm --lg); intent (accent, --info,        | --progress-size, --progress-intent,             |
-   |           | --success --warning --danger); corners (--round) | --progress-corners                              |
+   | .progress | Size (--sm --lg); intent (accent,                | --progress-size, --progress-intent,             |
+   |           | --complementary --info --success --warning       | --progress-corners                              |
+   |           | --danger); corners (--round)                     |                                                 |
    | .meter    | Size (--sm --lg); corners (--round)              | --meter-size, --meter-corners                   |
 
    A compact container (--ui-sizing: compact) steps both to --sm.
@@ -88,6 +89,10 @@
 
   @container style(--progress-intent: info) {
     --_progress-tone: var(--foreground-info, AccentColor);
+  }
+
+  @container style(--progress-intent: complementary) {
+    --_progress-tone: var(--foreground-complementary, AccentColor);
   }
 
   @container style(--progress-intent: success) {
@@ -279,6 +284,10 @@
 
 :where(.progress--info) {
   --_progress-tone: var(--foreground-info, AccentColor);
+}
+
+:where(.progress--complementary) {
+  --_progress-tone: var(--foreground-complementary, AccentColor);
 }
 
 :where(.progress--success) {

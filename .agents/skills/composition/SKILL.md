@@ -26,7 +26,7 @@ Stop at the first answer that fits:
    - A collapsible section is an Accordion.
    - A notification is a Banner, or a Toast for one that comes and goes.
    - Nothing yet is an Empty State.
-2. **An option sets it.** Each modifier sets one thing (one axis): prominence (`--strong`, `--subtle`, `--plain`), intent (`--accent`, `--danger`, `--warning`, `--success`, `--info`), size (`--sm`, `--lg`, for controls), density (`--compact`, for containers), and option families such as `--round`. Combine axes with two classes (`.button--subtle.button--danger`); never invent a fused one.
+2. **An option sets it.** Each modifier sets one thing (one axis): prominence (`--strong`, `--subtle`, `--plain`), intent (`--accent`, `--complementary`, `--danger`, `--warning`, `--success`, `--info`), size (`--sm`, `--lg`, for controls), density (`--compact`, for containers), and option families such as `--round`. Combine axes with two classes (`.button--subtle.button--danger`); never invent a fused one.
 3. **A container sets it for its children.** Set a flag once on the container, not a modifier on each child:
    - `--button-prominence: plain` or `--button-corners: round` on a toolbar.
    - `.buttons-sm` on a group of Buttons.

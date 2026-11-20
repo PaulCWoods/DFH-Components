@@ -10,7 +10,7 @@
    | ------- | --------------------------------- | ------------------------------ |
    | Size    | (48px) --sm (32px) --lg (64px)    | --avatar-size-step: sm, lg     |
    | Corners | (round) --square                  | --avatar-corners: square       |
-   | Look    | --accent, --placeholder, --count  |                                |
+   | Look    | --accent, --complementary, --placeholder, --count  |                                |
 
    A compact container (--ui-sizing: compact) steps each size down one. A
    one-off size (a 96px portrait) sets --avatar-size. A custom colour sets
@@ -177,6 +177,12 @@
   --_avatar-bg: var(--avatar-accent-bg, var(--surface-accent-strong, Highlight));
   --_avatar-border-color: var(--avatar-accent-bg, var(--surface-accent-strong, Highlight));
   --_avatar-text: var(--avatar-accent-text, var(--foreground-inverted, HighlightText));
+}
+
+:where(.avatar--complementary) {
+  --_avatar-bg: var(--avatar-complementary-bg, var(--surface-complementary-strong, Highlight));
+  --_avatar-border-color: var(--avatar-complementary-bg, var(--surface-complementary-strong, Highlight));
+  --_avatar-text: var(--avatar-complementary-text, var(--foreground-inverted, HighlightText));
 }
 
 /* An empty slot: "add a member" */

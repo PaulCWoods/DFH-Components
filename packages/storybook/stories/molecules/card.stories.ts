@@ -35,7 +35,7 @@ Parts (\`__thumb\`, \`__header\`, \`__band\`, \`__body\`, \`__footer\`) are dire
 | :--- | :--- | :--- |
 | Prominence | default (surface and quiet border), \`--strong\` (raised, for floating cards), \`--subtle\` (tint, no border), \`--plain\` (no surface, border or shadow) | \`--card-prominence\` |
 | Chrome | default (the prominence's edge), \`--flat\` (no border, corners or shadow; keeps the fill), \`--bordered\` (a border at any prominence) | \`--card-chrome\` |
-| Intent | neutral (default), \`--accent\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` (the whole border in the intent colour, with a ring outside it) | \`--card-intent\` |
+| Intent | neutral (default), \`--accent\`, \`--complementary\`, \`--danger\`, \`--warning\`, \`--success\`, \`--info\` (the whole border in the intent colour, with a ring outside it) | \`--card-intent\` |
 | Padding | default, \`--flush\` (no padding at the card's edges) | |
 | Density | default, \`--compact\` | \`--ui-sizing: compact\` |
 
@@ -81,7 +81,7 @@ export const Playground: Story = {
   argTypes: {
     prominence: { control: 'inline-radio', options: ['default', 'strong', 'subtle', 'plain'] },
     chrome: { control: 'inline-radio', options: ['default', 'flat', 'bordered'] },
-    intent: { control: 'inline-radio', options: ['neutral', 'accent', 'danger', 'warning', 'success', 'info'] },
+    intent: { control: 'inline-radio', options: ['neutral', 'accent', 'complementary', 'danger', 'warning', 'success', 'info'] },
     flush: { control: 'boolean' },
     compact: { control: 'boolean' },
     ruled: { control: 'boolean' },
@@ -217,6 +217,7 @@ export const Intent: Story = {
   render: () => `
     <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); gap: var(--spacing-24);">
       ${intentCard('card--accent', 'Deck A', 'On air', 'accent')}
+      ${intentCard('card--complementary', 'Deck C', 'Featured', 'complementary')}
       ${intentCard('card--warning', 'Deck B', 'Cued', 'warning')}
       ${intentCard('card--danger', 'Payments', 'Failing', 'danger')}
       ${intentCard('card--success', 'Backups', 'Healthy', 'success')}

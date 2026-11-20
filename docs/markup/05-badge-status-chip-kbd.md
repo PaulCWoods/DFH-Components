@@ -60,7 +60,7 @@ The text carries the state, and intent backs it up. Choose the prominence for ho
 <span class="status" data-axes><span class="status__text" data-label>Queued</span></span>
 ---
 Prominence: Default, Strong=status--strong, Subtle=status--subtle, Plain=status--plain
-Intent: Neutral, Accent=status--accent "New", Danger=status--danger "Failed", Warning=status--warning "Degraded", Success=status--success "Passed", Info=status--info "Scheduled"
+Intent: Neutral, Accent=status--accent "New", Complementary=status--complementary "Featured", Danger=status--danger "Failed", Warning=status--warning "Degraded", Success=status--success "Passed", Info=status--info "Scheduled"
 Size: Default, Small=status--sm
 Corners: Rounded, Round=status--round
 ```
@@ -130,9 +130,10 @@ Four atoms, chosen by **job**, not by look. If it's attached to something, it's 
 | `.kbd` | Keyboard key or shortcut | Size; prominence (`--subtle`, a thinner lower edge) |
 
 ### Further rules
-- Intents: `--accent`, `--info`, `--danger`, `--warning` and `--success`. Info is aqua, with its own Tier 2 roles.
+- Intents: `--accent`, `--complementary`, `--info`, `--danger`, `--warning` and `--success`. Info is aqua, with its own Tier 2 roles.
 - Container flags: `--badge-intent`, `--badge-size`; `--status-prominence`, `--status-intent`, `--status-size`, `--status-corners`; `--chip-prominence`, `--chip-size`, `--chip-corners`; `--kbd-size`.
 - A compact container (`--ui-sizing: compact`) steps all four to `--sm`.
+- **Edges from the theme's tag line:** Status and Chip take their border width, border colour and corner radius from `--tag-border-width`, `--tag-border-color` and `--tag-radius`, so a theme sets both at once (pills, for example). `--status-*` and `--chip-*` still set one alone. Kbd and Badge keep their own.
 - **Height:** a default status or Chip is at least as tall as a small Button (`--status-min-size`, `--chip-min-size`, both `spacing.target-sm`, 32px), so they line up side by side. Plain, `--sm` and compact ones take their content's height.
 - Wrap the text in `.badge__text`, `.status__text` or `.chip__text`. It trims the text box to cap height (`text-box: trim-both cap alphabetic`) so the text centres optically; padding-block is sized for trimmed text. Bare text still renders, just slightly off-centre and shorter. Scripts that change the text must update the `__text` span, not the parent.
 - **Corner Badges follow the host's shape.** A corner Badge goes inside its host. An Avatar, Thumbnail or Button hands the Badge its corner radius, and the Badge moves in to sit on the curve: on the rim of a round host, barely in from the corner of a square one. Avatars and Thumbnails also ring it in the surface colour; see [Avatar](06-avatar.md). Another rounded host can do the same by setting `--badge-host-radius` and `--badge-host-size` (its height) on the Badge.

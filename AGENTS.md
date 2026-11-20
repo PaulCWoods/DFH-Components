@@ -22,7 +22,7 @@ Each modifier sets exactly **one** axis. Never fuse two axes into one class (`.b
 | Density | Containers & layout only | default, `--compact` (sets `--ui-sizing: compact`; nested gaps, type and controls step down). `.ui-compact` sets it on any region; `.fine:ui-compact` sets it only where the primary pointer is fine |
 | Presentation | Everything | Normal (text + icon), minimal (icon only) |
 | Prominence | Everything with a surface | default, `--strong`, `--subtle`, `--plain` |
-| Intent | Status or consequence | neutral (default), `--accent`, `--danger`, `--warning`, `--success`, `--info` |
+| Intent | Status or consequence | neutral (default), `--accent`, `--complementary`, `--danger`, `--warning`, `--success`, `--info`. Button and Switch take only `--accent` and `--danger` |
 
 - **Intent never relies on colour alone** (WCAG 1.4.1): pair every non-neutral intent with an icon, a role (`role="alert"`, `role="status"`) or descriptive text.
 - **A bar is never shorter than its targets:** a container that holds a row of controls (a Header bar, a tab list, batch actions, pagination) is at least `--spacing-target-min` tall, so on touch a compact one tightens its padding and type and keeps 48px. Only fine-pointer targets make it shorter.

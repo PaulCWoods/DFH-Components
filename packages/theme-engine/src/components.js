@@ -72,9 +72,16 @@ const isRef = (v) => typeof v === 'string' && /^\{[^{}]+\}$/.test(v);
 /* A plain number above 0, never a unit or a reference */
 const isNumber = (v) => /^\s*\d*\.?\d+\s*$/.test(String(v)) && Number(v) > 0;
 const NUMBER_REFS = ['{icon.base-size}'];
-/* Family tokens that choose from the basic families (sans, serif, mono,
-   display) rather than the text styles' families */
-const BASE_FAMILY_TOKENS = ['switch.font-family'];
+/* Tier 1 type steps, in order: minus-2, minus-1, 0, 1 … */
+const stepOrder = (k) => (k.startsWith('minus-') ? -Number(k.slice(6)) : Number(k));
+const typeSteps = (global, group) =>
+  Object.keys(global?.typography?.[group] ?? {})
+    .filter((k) => !k.startsWith('$'))
+    .sort((a, b) => (Number.isNaN(stepOrder(a)) || Number.isNaN(stepOrder(b)) ? 0 : stepOrder(a) - stepOrder(b)))
+    .map((k) => `{typography.${group}.${k}}`);
+/* Type pickers offer the Tier 1 families and steps first, then what the
+   text styles use, for a token that should follow a style */
+const TYPE_GROUPS = { family: 'Families', lineHeight: 'Steps', fontSize: 'Steps' };
 const refOf = (path) => `{${path.replace(/\.default$/, '')}}`;
 
 /* What a token can be set to. Each list holds Tier 2 roles, and Tier 1 steps
@@ -98,7 +105,6 @@ const kindOf = (t) => {
   if (t.type === 'shadow') return 'shadow';
   if (t.type === 'duration') return 'duration';
   if (t.type === 'fontWeight') return 'weight';
-  if ((t.type === 'fontFamily' || t.type === 'fontFamilies') && BASE_FAMILY_TOKENS.includes(t.path)) return 'baseFamily';
   if (t.type === 'fontFamily' || t.type === 'fontFamilies') return 'family';
   if (t.type === 'border') return 'border';
   if (/text-transform/.test(key)) return 'textTransform';
@@ -139,13 +145,12 @@ export const tokenOptions = (token, { semantic, global }) => {
     shadow: () => pick((r) => /^shadow\.(none|sm|md|lg|inner|sm-light|md-light|lg-light|inner-light|raised)$/.test(r.path)),
     duration: () => pick((r) => r.type === 'duration'),
     weight: () => pick((r) => /^font-weight\./.test(r.path)),
-    family: () => pick((r) => /\.font-family$/.test(r.path)),
-    baseFamily: () => Object.keys(global?.typography?.['font-family'] ?? {}).filter((k) => !k.startsWith('$')).map((k) => `{typography.font-family.${k}}`),
+    family: () => [...typeSteps(global, 'font-family'), ...pick((r) => /\.font-family$/.test(r.path))],
     border: () => pick((r) => r.type === 'border' && /^border\./.test(r.path)),
     radius: () => [...pick((r) => /^radius\./.test(r.path)), '{panel.radius}'],
     borderWidth: () => [...pick((r) => /^border\.width\./.test(r.path)), '{rule.width}', '{panel.border-width}', '{control.border-width}', '{app.border-width}'],
-    fontSize: () => pick((r) => /(-fixed|^label|^control(-sm|-lg)?)\b.*\.font-size$/.test(r.path)),
-    lineHeight: () => pick((r) => /\.line-height$/.test(r.path)),
+    fontSize: () => [...typeSteps(global, 'font-size'), ...pick((r) => /(-fixed|^label|^control(-sm|-lg)?)\b.*\.font-size$/.test(r.path))],
+    lineHeight: () => [...typeSteps(global, 'line-height'), ...pick((r) => /\.line-height$/.test(r.path))],
     zIndex: () => pick((r) => /^z-index\./.test(r.path)),
     easing: () => pick((r) => /^ease\./.test(r.path)),
     translucency: () => [
@@ -176,7 +181,11 @@ export const tokenOptions = (token, { semantic, global }) => {
   const semanticOptions = unique.filter(isRole);
   const globalOptions = unique.filter(isTier1);
   const keywords = unique.filter((v) => !isRef(v));
-  const groups = kind === 'color' ? colorGroups(token, unique) : semanticOptions.length && globalOptions.length ? [{ label: 'Semantic', options: semanticOptions }, { label: 'Global', options: globalOptions }, { label: '', options: keywords }] : [{ label: '', options: unique }];
+  const groups = kind === 'color'
+    ? colorGroups(token, unique)
+    : kind in TYPE_GROUPS && globalOptions.length
+      ? [{ label: TYPE_GROUPS[kind], options: globalOptions }, { label: 'Text styles', options: semanticOptions }, { label: '', options: keywords }].filter((g) => g.options.length)
+      : semanticOptions.length && globalOptions.length ? [{ label: 'Semantic', options: semanticOptions }, { label: 'Global', options: globalOptions }, { label: '', options: keywords }] : [{ label: '', options: unique }];
   return { kind, options: unique, custom, semanticOptions, globalOptions, keywords, groups };
 };
 
@@ -185,7 +194,7 @@ export const tokenOptions = (token, { semantic, global }) => {
 const COLOR_FAMILIES = [
   { label: 'Text', test: (v) => /^\{foreground\./.test(v) },
   { label: 'Surfaces', test: (v) => /^\{surface\./.test(v) },
-  { label: 'Borders and lines', test: (v) => /^\{(border|control|app|panel|rule|underline)\./.test(v) },
+  { label: 'Borders and lines', test: (v) => /^\{(border|control|app|panel|tag|rule|underline)\./.test(v) },
   { label: 'Other colours', test: (v) => /^\{color\./.test(v) },
 ];
 const colorGroups = (token, options) => {
@@ -244,15 +253,18 @@ const isText = (key) => /(^|-)color$/.test(key) && !isBg(key) && !NOT_TEXT.test(
    A text token lists what it sits on: Tier 3 tokens by path, or Tier 2
    colours in braces (the intents a fill takes). Read both ways, so a
    background is measured against the text it carries. */
-const INTENT_FILLS = ['{foreground.accent}', '{foreground.info}', '{foreground.success}', '{foreground.warning}', '{foreground.danger}'];
+const INTENT_FILLS = ['{foreground.accent}', '{foreground.complementary}', '{foreground.info}', '{foreground.success}', '{foreground.warning}', '{foreground.danger}'];
+/* A Button's intents are accent and danger only */
+const BUTTON_FILLS = ['{foreground.accent}', '{foreground.danger}'];
 export const TEXT_PAIRS = {
   'avatar.text': ['avatar.bg'],
   'avatar.count-text': ['avatar.bg'],
   'avatar.accent-text': ['avatar.accent-bg'],
+  'avatar.complementary-text': ['avatar.complementary-bg'],
   'thumbnail.text': ['thumbnail.bg'],
   'badge.on-color': ['badge.color', ...INTENT_FILLS],
   'status.on-color': ['status.color', ...INTENT_FILLS],
-  'button.on-color': ['button.color', 'button.color-hover', 'button.color-pressed', ...INTENT_FILLS],
+  'button.on-color': ['button.color', 'button.color-hover', 'button.color-pressed', ...BUTTON_FILLS],
   'switch.on-color': ['switch.on-bg'],
   'switch.off-color': ['switch.off-bg'],
   'stepper.current-on-color': ['stepper.current-color'],

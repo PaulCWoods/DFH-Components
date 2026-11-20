@@ -26,7 +26,7 @@ Who someone is: a photo, initials or an icon in a shape. An avatar is never inte
 
 - **Size:** default 48px, \`--sm\` 32px, \`--lg\` 64px (flag \`--avatar-size-step\`). A compact container steps each down one. A one-off size sets \`--avatar-size\`.
 - **Corners:** round by default, \`--square\` (flag \`--avatar-corners: square\`).
-- **Looks:** \`--accent\`, \`--placeholder\` (an empty slot), \`--count\` ("+3").
+- **Looks:** \`--accent\`, \`--complementary\`, \`--placeholder\` (an empty slot), \`--count\` ("+3").
 - **Colour:** set \`--avatar-bg\` and \`--avatar-text\` together. Where \`contrast-color()\` is supported, a background alone picks its own text colour.
 - **Presence** is a dot badge hidden from screen readers, with the state in the name or in visible text, so it is never colour alone.
 - **As a control:** \`<button class="avatar">\` or \`<a class="avatar">\`, named in \`.sr-only\` text ("Account, Sam Rivera") with the initials \`aria-hidden\`. It takes a focus ring and a 48px hit area, and no hover look. With the name shown beside it, a button holds both.
@@ -51,7 +51,7 @@ export const Playground: Story = {
   argTypes: {
     content: { control: 'inline-radio', options: ['initials', 'photo', 'icon'] },
     size: { control: 'inline-radio', options: ['sm', 'default', 'lg'] },
-    look: { control: 'inline-radio', options: ['default', 'accent', 'placeholder', 'count'] },
+    look: { control: 'inline-radio', options: ['default', 'accent', 'complementary', 'placeholder', 'count'] },
     presence: { control: 'inline-radio', options: ['none', 'online', 'away', 'busy', 'offline'] },
   },
   render: (args) => {

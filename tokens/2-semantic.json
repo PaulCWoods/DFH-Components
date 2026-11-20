@@ -1077,6 +1077,23 @@
       "$description": "A control's edge colour: 3:1 against its background (WCAG 1.4.11)"
     }
   },
+  "tag": {
+    "border-width": {
+      "$value": "{border.width.thin}",
+      "$type": "dimension",
+      "$description": "Edge width of tags: Status labels and Chips"
+    },
+    "border-color": {
+      "$value": "{border.color.muted}",
+      "$type": "color",
+      "$description": "Edge colour of tags: Status labels and Chips"
+    },
+    "radius": {
+      "$value": "{radius.sm}",
+      "$type": "dimension",
+      "$description": "Corner radius of tags: Status labels and Chips"
+    }
+  },
   "control-sm": {
     "font-size": {
       "$value": "{typography.font-size.minus-1}",

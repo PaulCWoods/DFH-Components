@@ -25,7 +25,7 @@ related: [card, banner, icon-icon-box, button]
 </div>
 ---
 Prominence: Default, Subtle=empty-state--subtle
-Intent: Neutral, Accent=empty-state--accent "Start here: the catalogue has 40 plants to choose from.", Info=empty-state--info "Note: plants you save on another device appear here too.", Success=empty-state--success "Done: you've planted everything you saved.", Warning=empty-state--warning "Saving is paused while the catalogue is updated.", Danger=empty-state--danger "Failed: your saved plants didn't load."
+Intent: Neutral, Accent=empty-state--accent "Start here: the catalogue has 40 plants to choose from.", Complementary=empty-state--complementary "Featured: this month's shade plants are in the catalogue.", Info=empty-state--info "Note: plants you save on another device appear here too.", Success=empty-state--success "Done: you've planted everything you saved.", Warning=empty-state--warning "Saving is paused while the catalogue is updated.", Danger=empty-state--danger "Failed: your saved plants didn't load."
 Density: Default, Compact=empty-state--compact
 Alignment: Centred, Start=empty-state--start
 ```
@@ -145,7 +145,7 @@ The block shown where content would be when there is none: a search or filter mi
 | :--- | :--- | :--- |
 | Prominence | default (no frame, no padding), `--subtle` (dashed, tinted, padded) | none |
 | Density | default, `--compact` | `--ui-sizing: compact` (`.ui-compact`) |
-| Intent | neutral, `--accent`, `--info`, `--success`, `--warning`, `--danger` | `--icon-box-intent` |
+| Intent | neutral, `--accent`, `--complementary`, `--info`, `--success`, `--warning`, `--danger` | `--icon-box-intent` |
 | Alignment | centred, `--start` | none |
 
 ### Further rules

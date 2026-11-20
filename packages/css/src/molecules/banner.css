@@ -6,7 +6,7 @@
    message is a card.
 
    Axes: prominence (default, --subtle, --strong, --plain), intent (neutral,
-   --accent, --info, --success, --warning, --danger), density (--compact),
+   --accent, --complementary, --info, --success, --warning, --danger), density (--compact),
    corners (--round). Flags: --banner-prominence, --banner-intent,
    --banner-corners, --banner-dock (set by .banner-dock).
 
@@ -78,6 +78,15 @@
     --_banner-subtle-tint: var(--surface-accent, Canvas);
     --_banner-tone-border: var(--border-color-accent, currentColor);
     --_banner-solid: var(--surface-accent-strong, var(--foreground-accent, CanvasText));
+    --link-color: var(--_banner-tone);
+  }
+
+  @container style(--banner-intent: complementary) {
+    --_banner-tone: var(--foreground-complementary, CanvasText);
+    --_banner-tint: var(--surface-complementary, Canvas);
+    --_banner-subtle-tint: var(--surface-complementary, Canvas);
+    --_banner-tone-border: var(--border-color-complementary, currentColor);
+    --_banner-solid: var(--surface-complementary-strong, var(--foreground-complementary, CanvasText));
     --link-color: var(--_banner-tone);
   }
 
@@ -232,6 +241,14 @@
   --_banner-solid: var(--surface-accent-strong, var(--foreground-accent, CanvasText));
 }
 
+:where(.banner--complementary) {
+  --_banner-tone: var(--foreground-complementary, CanvasText);
+  --_banner-tint: var(--surface-complementary, Canvas);
+  --_banner-subtle-tint: var(--surface-complementary, Canvas);
+  --_banner-tone-border: var(--border-color-complementary, currentColor);
+  --_banner-solid: var(--surface-complementary-strong, var(--foreground-complementary, CanvasText));
+}
+
 :where(.banner--info) {
   --_banner-tone: var(--foreground-info, CanvasText);
   --_banner-tint: var(--surface-info, Canvas);
@@ -265,7 +282,7 @@
 }
 
 /* An intent colours the links inside a banner that has a surface */
-:where(.banner--accent, .banner--info, .banner--success, .banner--warning, .banner--danger) {
+:where(.banner--accent, .banner--complementary, .banner--info, .banner--success, .banner--warning, .banner--danger) {
   --link-color: var(--_banner-tone);
 }
 

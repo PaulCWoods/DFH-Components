@@ -1,0 +1,316 @@
+/* twenty-six: generated from tokens/themes/twenty-six.json by npm run build:themes. Do not edit.
+   Link it after the library's CSS. It holds only what the theme changes.
+   Its fonts also need, in the page head:
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Instrument+Serif:ital,wght@0,400;1,400&family=Libre+Baskerville:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Instrument+Serif:ital,wght@0,400;1,400&family=Libre+Baskerville:wght@400;700&display=swap" /></noscript> */
+@layer tokens {
+  :root {
+    --color-neutral-100: #f6f3f0;
+    --color-neutral-200: #e9e4e1;
+    --color-neutral-300: #cfc9c5;
+    --color-neutral-400: #aea7a2;
+    --color-neutral-500: #8b847f;
+    --color-neutral-600: #69625e;
+    --color-neutral-700: #4b4542;
+    --color-neutral-800: #34302d;
+    --color-neutral-900: #292623;
+    --color-neutral-1000: #201c19;
+    --color-neutral-000: #fdf9f7;
+    --color-copper-100: #ffece3;
+    --color-copper-200: #ffd9c8;
+    --color-copper-300: #ffb390;
+    --color-copper-400: #e98b5d;
+    --color-copper-500: #c7642f;
+    --color-copper-600: #9e440a;
+    --color-copper-700: #742e00;
+    --color-copper-800: #531f00;
+    --color-copper-900: #431700;
+    --color-sage-100: #edf2e7;
+    --color-sage-200: #dee5d7;
+    --color-sage-300: #c3cbb9;
+    --color-sage-400: #a1ab94;
+    --color-sage-500: #7e8871;
+    --color-sage-600: #5d6751;
+    --color-sage-700: #414938;
+    --color-sage-800: #2d3325;
+    --color-sage-900: #23291c;
+    --color-amber-100: #ffeed1;
+    --color-amber-200: #fedda7;
+    --color-amber-300: #ebc174;
+    --color-amber-400: #d29d30;
+    --color-amber-500: #ab7a00;
+    --color-amber-600: #805b00;
+    --color-amber-700: #5c4000;
+    --color-green-100: #ddf9e1;
+    --color-green-200: #ccecd0;
+    --color-green-300: #a9d5b0;
+    --color-green-400: #80b689;
+    --color-green-500: #599464;
+    --color-green-600: #3a7146;
+    --color-green-700: #23512e;
+    --color-green-800: #143a1d;
+    --color-green-900: #0b2e15;
+    --color-red-200: #ffd8d2;
+    --color-red-300: #ffb1a6;
+    --color-red-400: #fc796b;
+    --color-red-500: #da4e43;
+    --color-red-600: #ae2c25;
+    --color-red-700: #831210;
+    --color-red-800: #610204;
+    --color-red-900: #500002;
+    --color-teal-100: #def4ff;
+    --color-teal-200: #cde7f4;
+    --color-teal-300: #aacedf;
+    --color-teal-400: #82aec3;
+    --color-teal-500: #5b8ba2;
+    --color-teal-600: #3d697d;
+    --color-teal-700: #264b5c;
+    --color-teal-800: #163542;
+    --color-teal-900: #0e2a36;
+    --typography-font-family-display: Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-geist: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --typography-font-family-geist-mono: "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    --typography-font-family-instrument-serif: "Instrument Serif", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-libre-baskerville: "Libre Baskerville", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-size-max-large: 7.25rem;
+    --radius-16: 16px;
+    --duration-12: 1.2s;
+    --duration-015: 0.15s;
+    --duration-03: 0.3s;
+    --duration-06: 0.6s;
+    --fluid-typography-font-size-7: clamp(3rem, 1.11rem + 7.55vi, 7.1526rem);
+    --fluid-typography-font-size-8: clamp(3rem, 1.07rem + 7.73vi, 7.25rem);
+    --typography-font-size-fluid-7: clamp(3rem, 1.11rem + 7.55vi, 7.1526rem);
+    --typography-font-size-fluid-8: clamp(3rem, 1.07rem + 7.73vi, 7.25rem);
+    --typography-font-size-cq-7: clamp(3rem, 1.11rem + 7.55cqi, 7.1526rem);
+    --typography-font-size-cq-8: clamp(3rem, 1.07rem + 7.73cqi, 7.25rem);
+    --surface-accent: light-dark(var(--color-copper-200), var(--color-copper-800));
+    --surface-accent-dark: var(--color-copper-800);
+    --surface-accent-strong: light-dark(var(--color-copper-700), var(--color-copper-300));
+    --surface-complementary: light-dark(var(--color-sage-200), var(--color-sage-800));
+    --surface-complementary-dark: var(--color-sage-800);
+    --surface-complementary-strong: light-dark(var(--color-sage-700), var(--color-sage-300));
+    --foreground-accent: light-dark(var(--color-copper-600), var(--color-copper-300));
+    --foreground-accent-hover: light-dark(var(--color-copper-700), var(--color-copper-200));
+    --foreground-accent-pressed: light-dark(var(--color-copper-800), var(--color-copper-100));
+    --foreground-complementary: light-dark(var(--color-sage-700), var(--color-sage-300));
+    --foreground-complementary-hover: light-dark(var(--color-sage-600), var(--color-sage-200));
+    --foreground-complementary-pressed: light-dark(var(--color-sage-800), var(--color-sage-100));
+    --border-color-accent: var(--color-copper-500);
+    --border-color-complementary: light-dark(var(--color-sage-600), var(--color-sage-500));
+    --border-width: var(--border-width-thin);
+    --heading-font-weight: var(--font-weight-medium);
+    --heading-letter-spacing: var(--typography-spacing-compact);
+    --subheading-letter-spacing: var(--typography-spacing-normal);
+    --small-heading-font-weight: var(--font-weight-semibold);
+    --small-heading-letter-spacing: var(--typography-spacing-normal);
+    --micro-heading-font-family: var(--typography-font-family-mono);
+    --micro-heading-font-weight: var(--font-weight-medium);
+    --micro-heading-letter-spacing: var(--typography-spacing-loose);
+    --title-font-weight: var(--font-weight-regular);
+    --title-line-height: var(--typography-line-height--3);
+    --display-title-font-weight: var(--font-weight-regular);
+    --display-title-letter-spacing: var(--typography-spacing-normal);
+    --display-title-fixed-font-size: var(--typography-font-size-6);
+    --display-title-compact-font-size: var(--typography-font-size-5);
+    --display-title-fluid-font-size: var(--typography-font-size-fluid-6);
+    --display-title-cq-font-size: var(--typography-font-size-cq-6);
+    --control-line-height: var(--typography-line-height--2);
+    --tag-radius: var(--radius-full);
+    --control-sm-line-height: var(--typography-line-height--2);
+    --app-border-width: var(--border-width-thin);
+    --radius: var(--radius-lg);
+    --radius-sm: var(--radius-4);
+    --radius-md: var(--radius-8);
+    --radius-lg: var(--radius-12);
+    --radius-xl: var(--radius-16);
+    --duration-sm: var(--duration-015);
+    --duration-md: var(--duration-03);
+    --duration-lg: var(--duration-06);
+    --duration-xl: var(--duration-12);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --body-lg-line-height: var(--typography-line-height--1);
+  }
+  @media (prefers-contrast: more) {
+    :root {
+      --surface-accent: light-dark(var(--color-copper-100), var(--color-copper-900));
+      --surface-accent-dark: var(--color-copper-900);
+      --surface-accent-strong: light-dark(var(--color-copper-800), var(--color-copper-200));
+      --surface-complementary: light-dark(var(--color-sage-100), var(--color-sage-900));
+      --surface-complementary-dark: var(--color-sage-900);
+      --surface-complementary-strong: light-dark(var(--color-sage-800), var(--color-sage-200));
+      --foreground-accent: light-dark(var(--color-copper-700), var(--color-copper-200));
+      --foreground-accent-hover: light-dark(var(--color-copper-800), var(--color-copper-100));
+      --foreground-accent-pressed: light-dark(var(--color-copper-900), var(--color-copper-100));
+      --foreground-complementary: light-dark(var(--color-sage-800), var(--color-sage-200));
+      --foreground-complementary-hover: light-dark(var(--color-sage-700), var(--color-sage-100));
+      --foreground-complementary-pressed: light-dark(var(--color-sage-900), var(--color-sage-100));
+      --border-color-accent: light-dark(var(--color-copper-600), var(--color-copper-400));
+      --border-color-complementary: light-dark(var(--color-sage-700), var(--color-sage-400));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --duration-sm: var(--duration-0);
+      --duration-md: var(--duration-0);
+      --duration-lg: var(--duration-0);
+      --duration-xl: var(--duration-0);
+    }
+  }
+  @supports (opacity: progress(1px, 0px, 1px)) {
+    :root {
+      --typography-font-size-fluid-7: round(3rem + var(--_progress) * (7.1526rem - 3rem), var(--_interval));
+      --typography-font-size-fluid-8: round(3rem + var(--_progress) * (7.25rem - 3rem), var(--_interval));
+      --typography-font-size-cq-7: round(3rem + var(--_progress-cq) * (7.1526rem - 3rem), var(--_interval));
+      --typography-font-size-cq-8: round(3rem + var(--_progress-cq) * (7.25rem - 3rem), var(--_interval));
+    }
+  }
+  @supports at-rule(@function) and (opacity: progress(1px, 0px, 1px)) {
+    :root {
+      --typography-font-size-fluid-7: --type-size-fluid(7);
+      --typography-font-size-fluid-8: --type-size-fluid(8);
+      --typography-font-size-cq-7: --type-size-cq(7);
+      --typography-font-size-cq-8: --type-size-cq(8);
+    }
+  }
+  :where(.color-palette-inverted, .colors-inverted) {
+    --surface-accent: light-dark(var(--color-copper-800), var(--color-copper-200));
+    --surface-accent-strong: light-dark(var(--color-copper-300), var(--color-copper-700));
+    --surface-complementary: light-dark(var(--color-sage-800), var(--color-sage-200));
+    --surface-complementary-strong: light-dark(var(--color-sage-300), var(--color-sage-700));
+    --foreground-accent: light-dark(var(--color-copper-300), var(--color-copper-600));
+    --foreground-accent-hover: light-dark(var(--color-copper-200), var(--color-copper-700));
+    --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-800));
+    --foreground-complementary: light-dark(var(--color-sage-300), var(--color-sage-700));
+    --foreground-complementary-hover: light-dark(var(--color-sage-200), var(--color-sage-600));
+    --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-800));
+    --border-color-complementary: light-dark(var(--color-sage-500), var(--color-sage-600));
+  }
+  * {
+    @container style(--color-palette: inverted) {
+      --surface-accent: light-dark(var(--color-copper-800), var(--color-copper-200));
+      --surface-accent-strong: light-dark(var(--color-copper-300), var(--color-copper-700));
+      --surface-complementary: light-dark(var(--color-sage-800), var(--color-sage-200));
+      --surface-complementary-strong: light-dark(var(--color-sage-300), var(--color-sage-700));
+      --foreground-accent: light-dark(var(--color-copper-300), var(--color-copper-600));
+      --foreground-accent-hover: light-dark(var(--color-copper-200), var(--color-copper-700));
+      --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-800));
+      --foreground-complementary: light-dark(var(--color-sage-300), var(--color-sage-700));
+      --foreground-complementary-hover: light-dark(var(--color-sage-200), var(--color-sage-600));
+      --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-800));
+      --border-color-complementary: light-dark(var(--color-sage-500), var(--color-sage-600));
+    }
+  }
+  @media (prefers-contrast: more) {
+    :where(.color-palette-inverted, .colors-inverted) {
+      --surface-accent: light-dark(var(--color-copper-900), var(--color-copper-100));
+      --surface-accent-strong: light-dark(var(--color-copper-200), var(--color-copper-800));
+      --surface-complementary: light-dark(var(--color-sage-900), var(--color-sage-100));
+      --surface-complementary-strong: light-dark(var(--color-sage-200), var(--color-sage-800));
+      --foreground-accent: light-dark(var(--color-copper-200), var(--color-copper-700));
+      --foreground-accent-hover: light-dark(var(--color-copper-100), var(--color-copper-800));
+      --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-900));
+      --foreground-complementary: light-dark(var(--color-sage-200), var(--color-sage-800));
+      --foreground-complementary-hover: light-dark(var(--color-sage-100), var(--color-sage-700));
+      --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-900));
+      --border-color-accent: light-dark(var(--color-copper-400), var(--color-copper-600));
+      --border-color-complementary: light-dark(var(--color-sage-400), var(--color-sage-700));
+    }
+    * {
+      @container style(--color-palette: inverted) {
+        --surface-accent: light-dark(var(--color-copper-900), var(--color-copper-100));
+        --surface-accent-strong: light-dark(var(--color-copper-200), var(--color-copper-800));
+        --surface-complementary: light-dark(var(--color-sage-900), var(--color-sage-100));
+        --surface-complementary-strong: light-dark(var(--color-sage-200), var(--color-sage-800));
+        --foreground-accent: light-dark(var(--color-copper-200), var(--color-copper-700));
+        --foreground-accent-hover: light-dark(var(--color-copper-100), var(--color-copper-800));
+        --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-900));
+        --foreground-complementary: light-dark(var(--color-sage-200), var(--color-sage-800));
+        --foreground-complementary-hover: light-dark(var(--color-sage-100), var(--color-sage-700));
+        --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-900));
+        --border-color-accent: light-dark(var(--color-copper-400), var(--color-copper-600));
+        --border-color-complementary: light-dark(var(--color-sage-400), var(--color-sage-700));
+      }
+    }
+  }
+
+  :root {
+    --typography-font-family-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --typography-font-family-serif: "Libre Baskerville", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-mono: "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    --typography-font-family-display: "Instrument Serif", Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+
+  :root {
+    --badge-padding-inline: var(--spacing-6);
+    --brand-font-family: var(--typography-font-family-sans);
+    --brand-font-size: var(--typography-font-size-1);
+    --brand-font-weight: var(--font-weight-medium);
+    --brand-letter-spacing: var(--typography-spacing-normal);
+    --brand-mark-size: var(--spacing-32);
+    --button-padding-inline: var(--spacing-20);
+    --button-radius: var(--radius-full);
+    --button-sm-padding-inline: var(--spacing-12);
+    --card-radius: var(--radius-xl);
+    --chip-padding-inline: var(--spacing-10);
+    --chip-radius: var(--radius-full);
+    --dialog-radius: var(--radius-xl);
+    --footer-bg: var(--surface-subtle);
+    --footer-padding-block: var(--spacing-cushion-lg);
+    --header-bg: var(--surface-subtle);
+    --header-padding-block: var(--spacing-breathe);
+    --poster-content-padding: var(--spacing-cushion);
+    --poster-content-radius: var(--radius-xl);
+    --poster-font-sizing: fluid;
+    --sidebar-bg: var(--surface-subtle);
+    --status-padding-inline: var(--spacing-10);
+    --status-radius: var(--radius-full);
+  }
+
+  :where(.color-palette-inverted, .colors-inverted) {
+    --footer-bg: var(--surface-subtle);
+    --header-bg: var(--surface-subtle);
+    --sidebar-bg: var(--surface-subtle);
+  }
+
+  * {
+    @container style(--color-palette: inverted) {
+      --footer-bg: var(--surface-subtle);
+      --header-bg: var(--surface-subtle);
+      --sidebar-bg: var(--surface-subtle);
+    }
+  }
+
+  :where(.ui-compact, .fine\:ui-compact) {
+    --badge-padding-inline: var(--spacing-6);
+    --brand-mark-size: var(--spacing-32);
+    --button-padding-inline: var(--spacing-20);
+    --button-sm-padding-inline: var(--spacing-12);
+    --chip-padding-inline: var(--spacing-10);
+    --footer-padding-block: var(--spacing-cushion-lg);
+    --header-padding-block: var(--spacing-breathe);
+    --poster-content-padding: var(--spacing-cushion);
+    --status-padding-inline: var(--spacing-10);
+  }
+
+  * {
+    @container style(--ui-sizing: compact) {
+      --badge-padding-inline: var(--spacing-6);
+      --brand-mark-size: var(--spacing-32);
+      --button-padding-inline: var(--spacing-20);
+      --button-sm-padding-inline: var(--spacing-12);
+      --chip-padding-inline: var(--spacing-10);
+      --footer-padding-block: var(--spacing-cushion-lg);
+      --header-padding-block: var(--spacing-breathe);
+      --poster-content-padding: var(--spacing-cushion);
+      --status-padding-inline: var(--spacing-10);
+    }
+  }
+
+}

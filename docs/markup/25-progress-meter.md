@@ -93,7 +93,7 @@ A bar never works alone. It backs up the name and value in the text beside it, s
 ## Options
 | Atom | Axes | Container flags |
 | :--- | :--- | :--- |
-| `.progress` | Size (8px, `--sm` 4px, `--lg` 16px); intent (accent default, `--info`, `--success`, `--warning`, `--danger`); corners (`--round`) | `--progress-size`, `--progress-intent`, `--progress-corners` |
+| `.progress` | Size (8px, `--sm` 4px, `--lg` 16px); intent (accent default, `--complementary`, `--info`, `--success`, `--warning`, `--danger`); corners (`--round`) | `--progress-size`, `--progress-intent`, `--progress-corners` |
 | `.meter` | Size (as progress); corners (`--round`) | `--meter-size`, `--meter-corners` |
 
 ### Further rules

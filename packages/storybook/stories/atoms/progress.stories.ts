@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/html';
 
 type Size = 'sm' | 'default' | 'lg';
-type Intent = 'accent' | 'info' | 'success' | 'warning' | 'danger';
+type Intent = 'accent' | 'complementary' | 'info' | 'success' | 'warning' | 'danger';
 
 interface ProgressArgs {
   label: string;
@@ -13,7 +13,7 @@ interface ProgressArgs {
 }
 
 const SIZES: Size[] = ['sm', 'default', 'lg'];
-const INTENTS: Intent[] = ['accent', 'info', 'success', 'warning', 'danger'];
+const INTENTS: Intent[] = ['accent', 'complementary', 'info', 'success', 'warning', 'danger'];
 
 const progressClasses = (size: Size = 'default', intent: Intent = 'accent', round = false) =>
   [
@@ -51,7 +51,7 @@ A native \`<progress>\` showing how far a task has got. Leave out \`value\` for 
 | Axis | Modifiers | Container flags |
 | :--- | :--- | :--- |
 | Size | default (8px), \`--sm\` (4px), \`--lg\` (16px) | \`--progress-size\` |
-| Intent | accent (default), \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--progress-intent\` |
+| Intent | accent (default), \`--complementary\`, \`--info\`, \`--success\`, \`--warning\`, \`--danger\` | \`--progress-intent\` |
 | Corners | \`--round\` | \`--progress-corners\` |
 
 - A compact container steps the bar to \`--sm\`.

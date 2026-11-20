@@ -7,7 +7,7 @@
    | Axis   | Modifiers                                   | Container flags              |
    | ------ | ------------------------------------------- | ---------------------------- |
    | Size   | (default) --sm --lg                         | --range-size, --controls-size |
-   | Intent | (accent) --info --success --warning --danger | --range-intent               |
+   | Intent | (accent) --complementary --info --success --warning --danger | --range-intent               |
 
    A compact container (--ui-sizing: compact) steps the range to --sm.
 
@@ -60,6 +60,11 @@
   @container style(--range-intent: info) {
     --_range-tone: var(--foreground-info, AccentColor);
     --_range-tone-pressed: var(--foreground-info-pressed, var(--_range-tone));
+  }
+
+  @container style(--range-intent: complementary) {
+    --_range-tone: var(--foreground-complementary, AccentColor);
+    --_range-tone-pressed: var(--foreground-complementary-pressed, var(--_range-tone));
   }
 
   @container style(--range-intent: success) {
@@ -282,6 +287,11 @@
 :where(.range--info) {
   --_range-tone: var(--foreground-info, AccentColor);
   --_range-tone-pressed: var(--foreground-info-pressed, var(--_range-tone));
+}
+
+:where(.range--complementary) {
+  --_range-tone: var(--foreground-complementary, AccentColor);
+  --_range-tone-pressed: var(--foreground-complementary-pressed, var(--_range-tone));
 }
 
 :where(.range--success) {

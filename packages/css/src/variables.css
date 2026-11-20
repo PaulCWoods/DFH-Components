@@ -478,6 +478,9 @@
   --control-line-height: var(--typography-line-height--1);
   --control-border-width: var(--border-width);
   --control-border-color: var(--border-color-control);
+  --tag-border-width: var(--border-width-thin);
+  --tag-border-color: var(--border-color-muted);
+  --tag-radius: var(--radius-sm);
   --control-sm-font-size: var(--typography-font-size--1);
   --control-sm-line-height: var(--typography-line-height--1);
   --control-lg-font-size: var(--typography-font-size-2);

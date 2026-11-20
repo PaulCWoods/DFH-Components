@@ -155,7 +155,7 @@ Six atoms: input (with colour and file), select, textarea, checkbox and radio, s
 | `.checkbox-input`, `.radio-input` | Size (20px, `--lg` 24px) | `--check-size: lg` |
 | `.switch` | Size (`--sm`, `--lg`), prominence (`--subtle`, no border until high contrast or forced colours), intent (`--danger`), corners | `--switch-size`, `--switch-prominence`, `--switch-intent`, `--switch-corners` |
 | `.color-input` | Size (`--sm`, `--lg`, `--stretch` to fill its container) | |
-| `.range` | Size, intent (`--info`, `--success`, `--warning`, `--danger`) | `--range-size`, `--range-intent` |
+| `.range` | Size, intent (`--complementary`, `--info`, `--success`, `--warning`, `--danger`) | `--range-size`, `--range-intent` |
 | `.input-frame` (a molecule: `.input-frame__input` and plain icon Buttons) | The Input's: size, prominence, corners, `--flush` | `--input-*`, `--controls-*` |
 | `.range-lockup` | Size from `.controls-sm` or `.controls-lg` on it; `--fill` to take the full width | `--range-size`, `--controls-size` |
 

@@ -9,7 +9,7 @@
    | Axis       | Modifiers         | Container flag                     |
    | ---------- | ----------------- | ---------------------------------- |
    | Prominence | (bordered) --subtle --plain | --telemetry-prominence |
-   | Intent     | (accent) --info --success --warning --danger | --telemetry-intent |
+   | Intent     | (accent) --complementary --info --success --warning --danger | --telemetry-intent |
    | Corners    | --round           | --telemetry-corners: round         |
    | Density    | --compact         | --ui-sizing: compact               |
    | Layout     | (label above) --inline (label beside the value)        |
@@ -81,6 +81,10 @@
 
   @container style(--telemetry-intent: info) {
     --_telemetry-fill: var(--surface-info, transparent);
+  }
+
+  @container style(--telemetry-intent: complementary) {
+    --_telemetry-fill: var(--surface-complementary, transparent);
   }
 
   @container style(--telemetry-intent: success) {
@@ -202,6 +206,10 @@
 
 :where(.telemetry--info) {
   --_telemetry-fill: var(--surface-info, transparent);
+}
+
+:where(.telemetry--complementary) {
+  --_telemetry-fill: var(--surface-complementary, transparent);
 }
 
 :where(.telemetry--success) {
