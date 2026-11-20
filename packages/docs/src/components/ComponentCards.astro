@@ -1,0 +1,125 @@
+---
+/* The component pages of one tier, as Cards with a preview in each canvas.
+   A preview is real library markup, made inert so the Card's link is its one
+   focus stop and nothing in it is announced twice (aria-hidden says the
+   same, so a part the stage crops isn't content out of reach). A layout
+   shows what it does with plain tiles (src/lib/previews.ts). Pagefind skips
+   the previews. */
+import { getComponents } from '../lib/nav';
+import { PREVIEWS } from '../lib/previews';
+interface Props { tier: string }
+const { tier } = Astro.props;
+const pages = (await getComponents()).filter((c) => c.tier === tier);
+---
+{pages.length > 0 ? (
+  <ul class="grid grid--xs prose-end p-0" role="list">
+    {pages.map((p) => (
+      <li class="card component-card">
+        {PREVIEWS[p.slug] && <div class="card__canvas component-card__preview" inert aria-hidden="true" data-pagefind-ignore set:html={PREVIEWS[p.slug]} />}
+        <div class="card__body lockup gap-sm p-md justify-start">
+          <h3 class="subheading"><a href={p.href} class="link link--plain link--stretched">{p.title}</a></h3>
+          <p class="small-text text-muted">{p.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p class="text-muted">Pages for these are on their way.</p>
+)}
+
+<style>
+  /* The stage: one shape for every preview, the component centred on a
+     quieter surface than the Card, so it reads as a specimen */
+  .component-card__preview {
+    aspect-ratio: 16 / 9;
+    background-color: var(--surface-muted, transparent);
+    display: grid;
+    overflow: clip;
+    place-items: center;
+  }
+
+  /* Previews arrive through set:html, so the rules below are global, under
+     the preview. A preview with no width of its own (a Card, a layout)
+     takes most of the stage rather than shrinking to nothing */
+  .component-card__preview :global(.component-card__fill) {
+    inline-size: 100%;
+  }
+
+  /* A bar that would wrap or drop parts in a narrow stage keeps a real
+     width, starts where a filled preview does, and runs off the end */
+  .component-card__preview :global(.component-card__crop) {
+    inline-size: max(80%, 24rem);
+    min-inline-size: max-content;
+    justify-self: start;
+    margin-inline-start: 10%;
+  }
+
+  /* A page in miniature, for parts that only make sense on one (a Dialog,
+     a Banner Dock, a Skip Link) */
+  .component-card__preview :global(.component-card__frame) {
+    background-color: var(--surface, Canvas);
+    border: var(--border-width, 1px) solid var(--border-color-muted, currentColor);
+    border-radius: var(--radius-md, 0);
+  }
+
+  .component-card__preview :global(.component-card__backdrop) {
+    background-color: var(--color-backdrop, var(--surface-muted, Canvas));
+    display: grid;
+    padding: var(--spacing-md);
+    place-items: center;
+  }
+
+  /* A Skip Link hides until it has focus: the preview shows it open */
+  .component-card__preview :global(.skip-link) {
+    block-size: auto;
+    position: static;
+    translate: none;
+  }
+
+  /* A Tooltip is drawn above its button, not opened */
+  .component-card__preview :global(.component-card__tooltip) {
+    justify-items: center;
+
+    :global(.tooltip) {
+      display: block;
+      opacity: 1;
+      position: static;
+      scale: 1;
+    }
+  }
+
+  /* A Wrapper caps the width and centres it */
+  .component-card__preview :global(.component-card__wrapper) {
+    inline-size: 60%;
+    margin-inline: auto;
+  }
+
+  /* A layout's preview: plain tiles, so the arrangement is what shows */
+  .component-card__preview :global(.component-card__tile) {
+    aspect-ratio: 3 / 2;
+    background-color: var(--surface-accent, Canvas);
+    border: var(--border-width, 1px) dashed var(--border-color-accent, currentColor);
+    border-radius: var(--radius-sm, 0);
+  }
+
+  .component-card__preview :global(.component-card__tile--bar) {
+    aspect-ratio: auto;
+    block-size: var(--spacing-lg);
+  }
+
+  .component-card__preview :global(.component-card__tile--chip) {
+    aspect-ratio: auto;
+    block-size: var(--spacing-lg);
+    inline-size: var(--spacing-xl);
+  }
+
+  .component-card__preview :global(.component-card__tile--side) {
+    aspect-ratio: auto;
+    inline-size: 25%;
+  }
+
+  .component-card__preview :global(.component-card__tile--main) {
+    aspect-ratio: auto;
+    min-block-size: var(--spacing-2xl);
+  }
+</style>

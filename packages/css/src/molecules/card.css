@@ -683,9 +683,11 @@
    --------------------------------------------------------------------------
    A link with .link--stretched (usually in the title) makes the whole card
    its target. The focus ring is drawn on the card's perimeter, and other
-   controls are lifted above the link's overlay.
+   controls are lifted above the link's overlay. A card whose link belongs
+   to a card inside it isn't linked itself; a linked card may still hold a
+   plain one (a preview, a demo).
    ========================================================================== */
-:where(.card:not(:has(.card)):has(.link--stretched)) {
+:where(.card:has(.link--stretched):not(:has(.card .link--stretched))) {
   transition: box-shadow var(--_card-transition) ease;
 
   @media (hover: hover) {
@@ -694,7 +696,10 @@
     }
   }
 
-  :where(button, a:not(.link--stretched), [role="button"], input, select, textarea, summary, label) {
+  /* A Switch's checkbox is left alone: it is already placed over its
+     control, above the overlay, and made relative it took a column of the
+     control and pushed Off aside */
+  :where(button, a:not(.link--stretched), [role="button"], input:not(.switch__control > input), select, textarea, summary, label) {
     position: relative;
     z-index: 2;
   }
