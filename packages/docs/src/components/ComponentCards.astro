@@ -48,7 +48,7 @@ const pages = (await getComponents()).filter((c) => c.tier === tier);
   /* A bar that would wrap or drop parts in a narrow stage keeps a real
      width, starts where a filled preview does, and runs off the end */
   .component-card__preview :global(.component-card__crop) {
-    inline-size: max(80%, 24rem);
+    inline-size: max(100%, 24rem);
     min-inline-size: max-content;
     justify-self: start;
     margin-inline-start: 10%;
