@@ -738,6 +738,53 @@
             }
           },
           "additionalProperties": false
+        },
+        "steps": {
+          "type": "object",
+          "properties": {
+            "2xs": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "xs": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "sm": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "md": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "lg": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "xl": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "2xl": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "3xl": {
+              "type": "number",
+              "description": "px, a Tier 1 spacing step"
+            },
+            "default": {
+              "type": "string",
+              "description": "the step --spacing takes, such as md"
+            },
+            "compact": {
+              "type": "string",
+              "description": "the step --spacing-compact takes, such as sm"
+            }
+          },
+          "additionalProperties": false,
+          "description": "the fixed spacing steps"
         }
       },
       "additionalProperties": false

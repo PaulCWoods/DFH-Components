@@ -12,6 +12,8 @@ Space comes in two kinds. Inside a component (the padding of a Button, the gap i
 
 Components, gaps and padding utilities (`.p-sm`, `.gap-md`) use these. The default gap of the layout primitives is `--spacing`, 16px.
 
+A theme can move each step, and choose which one `--spacing` takes and which `--spacing-compact` takes in a compact region. Each step must be on the spacing scale and at least as large as the one before, and compact can't be larger than the default: the build fails a theme that breaks either rule.
+
 <SpaceScale />
 
 ## Fluid roles

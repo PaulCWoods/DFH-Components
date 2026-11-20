@@ -170,6 +170,14 @@ export const themeSchema = {
         'sidebar-width': { type: 'number', description: 'px' },
         'sidebar-compact-width': { type: 'number', description: 'px' },
       }),
+      steps: shut(
+        {
+          ...Object.fromEntries(['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].map((k) => [k, { type: 'number', description: 'px, a Tier 1 spacing step' }])),
+          default: { type: 'string', description: 'the step --spacing takes, such as md' },
+          compact: { type: 'string', description: 'the step --spacing-compact takes, such as sm' },
+        },
+        { description: 'the fixed spacing steps' },
+      ),
     }),
 
     line: shut({

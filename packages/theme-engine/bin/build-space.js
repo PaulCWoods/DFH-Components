@@ -5,14 +5,14 @@
    the default theme (tokens/themes.json), prints each role at both ends of the fluid range and
    runs the space gate. --write (only when nothing fails) replaces
    fluid.spacing in tokens/1-global.json and points the spacing roles of
-   tokens/2-semantic.json at it, with the site width, target sizes and the
-   app's sizes (landmark padding, sidebar column).
+   tokens/2-semantic.json at it, with the site width, target sizes, the
+   app's sizes (landmark padding, sidebar column) and the fixed steps.
    ========================================================================== */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applySpaceRoles, spaceFluidBlock, spaceGate, spaceSteps, spacingSteps } from '../src/index.js';
+import { SPACE_STEPS, applySpaceRoles, spaceFluidBlock, spaceGate, spaceSteps, spacingSteps, stepsOf } from '../src/index.js';
 import { readTheme } from '../src/theme-files.js';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -36,6 +36,10 @@ for (const [role, [min, max]] of Object.entries(spaceSteps(space))) console.log(
 if (space['site-width']) console.log(`\nSite width: ${space['site-width']}`);
 if (space.targets) console.log(`Targets: ${Object.entries(space.targets).map(([k, v]) => `${k} ${v}px`).join(', ')}`);
 if (space.app) console.log(`App: ${Object.entries(space.app).map(([k, v]) => `${k} ${typeof v === 'number' ? `${v}px` : v}`).join(', ')}`);
+if (space.steps) {
+  const steps = stepsOf(space);
+  console.log(`Steps: ${SPACE_STEPS.map((k) => `${k} ${steps[k]}px`).join(', ')}; default ${steps.default}, compact ${steps.compact}`);
+}
 
 const { failures } = spaceGate(space, { steps: spacingSteps(global) });
 if (failures.length) {
@@ -51,6 +55,6 @@ if (process.argv.includes('--write')) {
   global.fluid = { ...global.fluid, spacing: spaceFluidBlock(space) };
   writeFileSync(resolve(root, 'tokens/1-global.json'), JSON.stringify(global, null, 2));
   writeFileSync(resolve(root, 'tokens/2-semantic.json'), JSON.stringify(applySpaceRoles(semantic, space), null, 2));
-  console.log('\nWrote fluid.spacing in tokens/1-global.json and the spacing roles, site width, targets and app sizes in tokens/2-semantic.json. Run npm run build:tokens.');
+  console.log('\nWrote fluid.spacing in tokens/1-global.json and the spacing roles, site width, targets, app sizes and fixed steps in tokens/2-semantic.json. Run npm run build:tokens.');
 }
 process.exit(failures.length ? 1 : 0);

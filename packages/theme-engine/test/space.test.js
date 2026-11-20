@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { applySpaceRoles, spaceCssVars, spaceFluidBlock, spaceGate, spaceSteps } from '../src/index.js';
+import { applySpaceRoles, spaceCssVars, spaceFluidBlock, spaceGate, spaceSteps, spacingSteps } from '../src/index.js';
 
 const theme = JSON.parse(readFileSync(new URL('../../../tokens/themes/starter.json', import.meta.url)));
 const semantic = JSON.parse(readFileSync(new URL('../../../tokens/2-semantic.json', import.meta.url)));
@@ -92,4 +92,30 @@ test('app sizes off the scale, a compact column wider than the sidebar, or paddi
   assert.deepEqual(rules({ 'padding-inline': 'roomy' }), ['padding-inline']);
   assert.deepEqual(rules({ 'padding-inline': 64 }), ['padding-inline']);
   assert.deepEqual(rules({ 'padding-inline': 24 }), []);
+});
+
+test('the fixed steps: the defaults write today\'s tokens; a theme moves them', () => {
+  const same = applySpaceRoles(semantic, { ...theme.space, steps: {} });
+  for (const k of ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'default', 'compact']) assert.equal(same.spacing[k].$value, semantic.spacing[k].$value, k);
+  const space = { ...theme.space, steps: { md: 24, lg: 32, default: 'lg', compact: 'md' } };
+  const out = applySpaceRoles(semantic, space);
+  assert.equal(out.spacing.md.$value, '{spacing.24}');
+  assert.equal(out.spacing.default.$value, '{spacing.32}');
+  assert.equal(out.spacing.compact.$value, '{spacing.24}');
+  assert.equal(out.spacing.md.$description, semantic.spacing.md.$description);
+  const vars = spaceCssVars(space);
+  assert.equal(vars['--spacing-md'], '1.5rem');
+  assert.equal(vars['--spacing'], '2rem');
+  assert.equal(vars['--spacing-compact'], '1.5rem');
+  assert.equal(applySpaceRoles(semantic, theme.space).spacing.md.$value, semantic.spacing.md.$value, 'no steps, no change');
+});
+
+test('the fixed steps: on the scale, in order, compact no larger than default', () => {
+  const scale = spacingSteps(JSON.parse(readFileSync(new URL('../../../tokens/1-global.json', import.meta.url))));
+  const gate = (steps) => spaceGate({ ...theme.space, steps }, { steps: scale }).failures.map((f) => f.message);
+  assert.deepEqual(gate({}), []);
+  assert.match(gate({ md: 17 })[0], /isn't a spacing step/);
+  assert.match(gate({ sm: 24 })[0], /smaller than sm/);
+  assert.match(gate({ default: 'huge' })[0], /isn't a step's name/);
+  assert.match(gate({ default: 'sm', compact: 'md' })[0], /larger than the default/);
 });

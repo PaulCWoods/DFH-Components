@@ -26,6 +26,12 @@
      and a compact page takes it to --spacing) or a Tier 1 step in pixels.
    - `app.sidebar-width`, `app.sidebar-compact-width`: the sidebar column,
      and its width in a compact region (Tier 1 steps in pixels).
+
+   And the fixed spacing steps (spacing.2xs to spacing.3xl), optional too:
+   - `steps`: each named step a Tier 1 spacing step in pixels, in order,
+     plus `default` (--spacing, the space most components start from) and
+     `compact` (--spacing-compact, its step down in a compact region), each
+     the name of a step. A theme without them keeps STEP_DEFAULTS.
    ========================================================================== */
 
 import { fluidClamp } from './type.js';
@@ -36,6 +42,13 @@ export const SPACE_ROLES = ['breathe-sm', 'breathe', 'cushion', 'cushion-lg'];
 export const TARGETS = { sm: 'target-sm', default: 'target', lg: 'target-lg' };
 /* The app's sizes and the token each writes in the app group */
 export const APP = { 'padding-inline': 'padding-inline', 'sidebar-width': 'sidebar-width', 'sidebar-compact-width': 'sidebar-compact-width' };
+/* The fixed steps, smallest first, and the library's own values */
+export const SPACE_STEPS = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'];
+export const STEP_DEFAULTS = { '2xs': 2, xs: 4, sm: 8, md: 16, lg: 32, xl: 48, '2xl': 64, '3xl': 128, default: 'md', compact: 'sm' };
+/* default and compact name a step; the tokens they write */
+export const STEP_ROLES = { default: 'default', compact: 'compact' };
+/* A theme's steps over the defaults */
+export const stepsOf = (space) => ({ ...STEP_DEFAULTS, ...(space?.steps ?? {}) });
 /* A spacing role's name, or a Tier 1 step in pixels */
 const appValue = (v) => `{spacing.${v}}`;
 /* A length a page width can be: a positive number and a unit */
@@ -89,6 +102,11 @@ export const applySpaceRoles = (semantic, space) => {
   }
   if (space['site-width']) set('site-width', space['site-width'], "The page's content width: the Wrapper's cap, and the Header and Footer bars'");
   for (const [k, token] of Object.entries(TARGETS)) if (space.targets?.[k] !== undefined) set(token, `{spacing.${space.targets[k]}}`, `Target size ${k}`);
+  if (space.steps) {
+    const steps = stepsOf(space);
+    for (const k of SPACE_STEPS) set(k, `{spacing.${steps[k]}}`, `Spacing step ${k}`);
+    for (const [k, token] of Object.entries(STEP_ROLES)) set(token, `{spacing.${steps[steps[k]]}}`, `The ${k} space`);
+  }
   out.app = out.app ?? {};
   for (const [k, token] of Object.entries(APP)) {
     if (space.app?.[k] === undefined) continue;
@@ -129,6 +147,18 @@ export const spaceGate = (space, { steps: scale } = {}) => {
     if (space.targets.default < 44) fail('target default', `${space.targets.default}px is under 44px (WCAG 2.5.5); controls keep it on touch screens`);
     sizes.slice(1).forEach(([k, v], i) => v < sizes[i][1] && fail(`target ${k}`, `smaller than ${sizes[i][0]}`));
   }
+  if (space.steps) {
+    const steps = stepsOf(space);
+    for (const k of SPACE_STEPS) {
+      const v = steps[k];
+      if (!Number.isInteger(v) || v <= 0) fail(`step ${k}`, `${v}px isn't a whole number of pixels`);
+      else if (scale && !scale.includes(v)) fail(`step ${k}`, `${v}px isn't a spacing step`);
+    }
+    SPACE_STEPS.slice(1).forEach((k, i) => steps[k] < steps[SPACE_STEPS[i]] && fail(`step ${k}`, `${steps[k]}px is smaller than ${SPACE_STEPS[i]} (${steps[SPACE_STEPS[i]]}px)`));
+    for (const k of Object.keys(STEP_ROLES)) if (!SPACE_STEPS.includes(steps[k])) fail(`step ${k}`, `${steps[k]} isn't a step's name`);
+    const [d, c] = [steps[steps.default], steps[steps.compact]];
+    if (d !== undefined && c !== undefined && c > d) fail('step compact', `${steps.compact} (${c}px) is larger than the default, ${steps.default} (${d}px)`);
+  }
   if (space.app) {
     const { 'padding-inline': pad, 'sidebar-width': wide, 'sidebar-compact-width': narrow } = space.app;
     for (const [k, v] of [['sidebar-width', wide], ['sidebar-compact-width', narrow]]) {
@@ -166,6 +196,12 @@ export const spaceCssVars = (space, viewports = ['25rem', '80rem']) => {
   }
   if (space['site-width']) vars['--spacing-site-width'] = space['site-width'];
   for (const [k, token] of Object.entries(TARGETS)) if (space.targets?.[k] !== undefined) vars[`--spacing-${token}`] = `${space.targets[k] / 16}rem`;
+  if (space.steps) {
+    const steps = stepsOf(space);
+    for (const k of SPACE_STEPS) vars[`--spacing-${k}`] = `${steps[k] / 16}rem`;
+    vars['--spacing'] = `${steps[steps.default] / 16}rem`;
+    vars['--spacing-compact'] = `${steps[steps.compact] / 16}rem`;
+  }
   for (const [k, token] of Object.entries(APP)) {
     const v = space.app?.[k];
     if (v !== undefined) vars[`--app-${token}`] = typeof v === 'number' ? `${v / 16}rem` : `var(--spacing-${v})`;
