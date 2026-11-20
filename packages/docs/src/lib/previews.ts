@@ -401,6 +401,24 @@ export const PREVIEWS: Record<string, string> = {
       </div>
     </div>`,
 
+  bar: `
+    <div class="component-card__frame component-card__fill p-xs">
+      <div class="bar">
+        <div class="cluster gap-xs">
+          ${tile('component-card__tile--chip')}
+          ${tile('component-card__tile--chip')}
+        </div>
+        ${tile('component-card__tile--chip')}
+        ${tile('component-card__tile--chip')}
+      </div>
+    </div>`,
+
+  columns: `
+    <ul class="columns columns--2xs columns--3-col columns--ruled component-card__fill" role="list">
+      ${['Astrantia', 'Brunnera', 'Campanula', 'Digitalis', 'Epimedium', 'Geranium', 'Hellebore', 'Hosta', 'Pulmonaria']
+        .map((name) => `<li class="small-text">${name}</li>`).join('')}
+    </ul>`,
+
   'grid-grid-carousel': `
     <ul class="grid grid--3-col gap-xs component-card__fill" style="--grid-min: 3rem;">
       ${tiles(6)}
