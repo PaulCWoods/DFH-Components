@@ -1,7 +1,7 @@
 {
   "$schema": "https://components.designforhumans.blog/schema/theme-v1.schema.json",
   "version": 1,
-  "$description": "Twenty-six: warm paper and ink, a copper accent, Geist with Instrument Serif titles, pill Buttons and bordered Cards. Link themes/twenty-six.css after the library.",
+  "$description": "Twenty-six: cloud, teal and sage are this year's colour with gently rounded buttons and subtle boundaries. Link themes/twenty-six.css after the library.",
   "curve": "soft-s",
   "ends": {
     "light": 0.955,
