@@ -172,7 +172,7 @@ DFH-Components/
 | `npm run docs` | `@design-for-humans/docs` | Starts the docs dev server on `http://localhost:4321` (search needs a build). It caches each page's rendering by the page's text, so after changing the markdown plugins (`packages/docs/src/lib/remark-docs.mjs`, `rehype-docs.mjs`) restart it with `npm run dev --workspace=@design-for-humans/docs -- --force`. |
 | `npm run build:docs` | `@design-for-humans/docs` | Builds the docs site into `packages/docs/dist/` and its Pagefind search index. |
 | `npm run build:site` | Root | Builds the docs and Storybook, with Storybook at `/storybook/` in `packages/docs/dist`: the whole public site. |
-| `npm run check:docs` | Root | The docs gate: on every built page, internal links and anchors resolve, axe passes in light and dark, and nothing is out of reach at 10 screen sizes. Run `build:docs` first. |
+| `npm run check:docs` | Root | The docs gate: on every built page, internal links and anchors resolve, axe passes in light and dark, and nothing is out of reach at 10 screen sizes. A tab that stalls is replaced and its page checked again (three tries). `ONLY='<pattern>'` checks just the matching pages, without the link check. Run `build:docs` first. |
 
 ### 2. Tokens & Assets Pipeline
 | Command | Workspace / Context | Description |
