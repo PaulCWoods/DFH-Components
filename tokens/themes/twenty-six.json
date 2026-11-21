@@ -17,7 +17,7 @@
   },
   "hues": {
     "neutral": {
-      "seed": "#78716c",
+      "seed": "#f0efeb",
       "outside": {
         "1000": 0.04,
         "000": 0.02
@@ -26,8 +26,8 @@
         "light": 0.965
       }
     },
-    "copper": {
-      "seed": "#c4612c"
+    "teal": {
+      "seed": "#2e6364"
     },
     "sage": {
       "seed": "#7f8a72"
@@ -41,7 +41,7 @@
     "red": {
       "seed": "#d1453b"
     },
-    "teal": {
+    "blue": {
       "seed": "#4f7f95"
     }
   },
@@ -79,16 +79,16 @@
       "dark": "black"
     },
     "surface.accent": {
-      "light": "copper.200",
-      "dark": "copper.800"
+      "light": "teal.200",
+      "dark": "teal.800"
     },
     "surface.accent-dark": {
-      "light": "copper.800",
-      "dark": "copper.800"
+      "light": "teal.800",
+      "dark": "teal.800"
     },
     "surface.accent-strong": {
-      "light": "copper.700",
-      "dark": "copper.300"
+      "light": "teal.700",
+      "dark": "teal.300"
     },
     "surface.complementary": {
       "light": "sage.200",
@@ -115,16 +115,16 @@
       "dark": "amber.900"
     },
     "surface.info": {
-      "light": "teal.100",
-      "dark": "teal.900"
+      "light": "blue.100",
+      "dark": "blue.900"
     },
     "surface.warning-strong": {
       "light": "amber.700",
       "dark": "amber.300"
     },
     "surface.info-strong": {
-      "light": "teal.700",
-      "dark": "teal.300"
+      "light": "blue.700",
+      "dark": "blue.300"
     },
     "surface.success": {
       "light": "green.100",
@@ -163,16 +163,16 @@
       "dark": "neutral.400"
     },
     "foreground.accent": {
-      "light": "copper.600",
-      "dark": "copper.300"
+      "light": "teal.600",
+      "dark": "teal.300"
     },
     "foreground.accent-hover": {
-      "light": "copper.700",
-      "dark": "copper.200"
+      "light": "teal.700",
+      "dark": "teal.200"
     },
     "foreground.accent-pressed": {
-      "light": "copper.800",
-      "dark": "copper.100"
+      "light": "teal.800",
+      "dark": "teal.100"
     },
     "foreground.complementary": {
       "light": "sage.700",
@@ -215,28 +215,28 @@
       "dark": "amber.300"
     },
     "foreground.info": {
-      "light": "teal.600",
-      "dark": "teal.300"
+      "light": "blue.600",
+      "dark": "blue.300"
     },
     "foreground.warning-hover": {
       "light": "amber.700",
       "dark": "amber.200"
     },
     "foreground.info-hover": {
-      "light": "teal.700",
-      "dark": "teal.200"
+      "light": "blue.700",
+      "dark": "blue.200"
     },
     "foreground.warning-pressed": {
       "light": "amber.800",
       "dark": "amber.100"
     },
     "foreground.info-pressed": {
-      "light": "teal.800",
-      "dark": "teal.100"
+      "light": "blue.800",
+      "dark": "blue.100"
     },
     "border.color.accent": {
-      "light": "copper.500",
-      "dark": "copper.500"
+      "light": "teal.500",
+      "dark": "teal.500"
     },
     "border.color.complementary": {
       "light": "sage.600",
@@ -251,8 +251,8 @@
       "dark": "amber.500"
     },
     "border.color.info": {
-      "light": "teal.500",
-      "dark": "teal.500"
+      "light": "blue.500",
+      "dark": "blue.500"
     },
     "border.color.success": {
       "light": "green.500",
@@ -261,18 +261,6 @@
   },
   "type": {
     "fonts": {
-      "geist": {
-        "source": "google",
-        "family": "Geist",
-        "axes": {
-          "wght": [
-            100,
-            900
-          ]
-        },
-        "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
-        "figma": "Geist"
-      },
       "geist-mono": {
         "source": "google",
         "family": "Geist Mono",
@@ -285,38 +273,38 @@
         "fallback": "ui-monospace, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace",
         "figma": "Geist Mono"
       },
-      "instrument-serif": {
+      "quattrocento": {
         "source": "google",
-        "family": "Instrument Serif",
-        "weights": [
-          400
-        ],
-        "italic": true,
-        "fallback": "Georgia, Cambria, \"Times New Roman\", Times, serif",
-        "figma": "Instrument Serif"
-      },
-      "libre-baskerville": {
-        "source": "google",
-        "family": "Libre Baskerville",
+        "family": "Quattrocento",
         "weights": [
           400,
           700
         ],
         "fallback": "Georgia, Cambria, \"Times New Roman\", Times, serif"
+      },
+      "libre-franklin": {
+        "source": "google",
+        "family": "Libre Franklin",
+        "weights": [
+          400,
+          600,
+          700
+        ],
+        "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif"
       }
     },
     "families": {
       "sans": {
-        "font": "geist"
+        "font": "libre-franklin"
       },
       "serif": {
-        "font": "libre-baskerville"
+        "font": "quattrocento"
       },
       "mono": {
         "font": "geist-mono"
       },
       "display": {
-        "font": "instrument-serif"
+        "font": "quattrocento"
       }
     },
     "scale": {
@@ -361,7 +349,7 @@
       },
       "title": {
         "family": "display",
-        "weight": "regular",
+        "weight": "bold",
         "letterSpacing": "normal",
         "case": "none",
         "size": 5,
@@ -370,7 +358,7 @@
       },
       "heading": {
         "family": "sans",
-        "weight": "medium",
+        "weight": "bold",
         "letterSpacing": "compact",
         "case": "none",
         "size": 2,
@@ -379,7 +367,7 @@
       },
       "subheading": {
         "family": "sans",
-        "weight": "medium",
+        "weight": "bold",
         "letterSpacing": "normal",
         "size": 1,
         "compact": 0,
@@ -387,7 +375,7 @@
       },
       "small-heading": {
         "family": "sans",
-        "weight": "semibold",
+        "weight": "bold",
         "letterSpacing": "normal",
         "case": "none",
         "size": 0,
@@ -395,7 +383,7 @@
         "leading": -1
       },
       "micro-heading": {
-        "family": "mono",
+        "family": "sans",
         "weight": "medium",
         "letterSpacing": "loose",
         "case": "uppercase",
@@ -612,13 +600,13 @@
         "style": "solid"
       },
       "panel": {
-        "width": "thin",
+        "width": "none",
         "color": "border.color.quiet",
         "style": "solid",
         "radius": "md"
       },
       "app": {
-        "width": "thin",
+        "width": "none",
         "color": "border.color.quiet",
         "style": "solid"
       },
@@ -644,7 +632,7 @@
     }
   },
   "components": {
-    "button.radius": "{radius.full}",
+    "button.radius": "{radius.lg}",
     "card.radius": "{radius.xl}",
     "dialog.radius": "{radius.xl}",
     "poster.content-radius": "{radius.xl}",
@@ -655,18 +643,22 @@
     "footer.padding-block": "{spacing.cushion-lg}",
     "header.padding-block": "{spacing.breathe}",
     "brand.letter-spacing": "{typography.spacing.normal}",
-    "brand.font-weight": "{font-weight.medium}",
+    "brand.font-weight": "{font-weight.semibold}",
     "chip.radius": "{radius.full}",
     "status.radius": "{radius.full}",
-    "brand.font-family": "{typography.font-family.sans}",
+    "brand.font-family": "{typography.font-family.serif}",
     "brand.font-size": "{typography.font-size.1}",
     "brand.mark-size": "{spacing.32}",
-    "poster.font-sizing": "fluid",
+    "poster.font-sizing": "cq",
     "button.padding-inline": "{spacing.20}",
     "badge.padding-inline": "{spacing.6}",
     "status.padding-inline": "{spacing.10}",
     "chip.padding-inline": "{spacing.10}",
-    "button.sm.padding-inline": "{spacing.12}"
+    "button.sm.padding-inline": "{spacing.12}",
+    "banner.border-width": "{border.width.none}",
+    "telemetry.radius": "{radius.md}",
+    "telemetry.border-width": "{border.width.none}",
+    "telemetry.bg": "{surface.muted}"
   },
   "mixes": {
     "color.muted": {

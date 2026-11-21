@@ -3,30 +3,30 @@
    Its fonts also need, in the page head:
    <link rel="preconnect" href="https://fonts.googleapis.com" />
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Instrument+Serif:ital,wght@0,400;1,400&family=Libre+Baskerville:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Instrument+Serif:ital,wght@0,400;1,400&family=Libre+Baskerville:wght@400;700&display=swap" /></noscript> */
+   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Quattrocento:wght@400;700&family=Libre+Franklin:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Quattrocento:wght@400;700&family=Libre+Franklin:wght@400;600;700&display=swap" /></noscript> */
 @layer tokens {
   :root {
-    --color-neutral-100: #f6f3f0;
-    --color-neutral-200: #e9e4e1;
-    --color-neutral-300: #cfc9c5;
-    --color-neutral-400: #aea7a2;
-    --color-neutral-500: #8b847f;
-    --color-neutral-600: #69625e;
-    --color-neutral-700: #4b4542;
-    --color-neutral-800: #34302d;
-    --color-neutral-900: #292623;
-    --color-neutral-1000: #201c19;
-    --color-neutral-000: #fdf9f7;
-    --color-copper-100: #ffece3;
-    --color-copper-200: #ffd9c8;
-    --color-copper-300: #ffb390;
-    --color-copper-400: #e98b5d;
-    --color-copper-500: #c7642f;
-    --color-copper-600: #9e440a;
-    --color-copper-700: #742e00;
-    --color-copper-800: #531f00;
-    --color-copper-900: #431700;
+    --color-neutral-100: #f4f3f2;
+    --color-neutral-200: #e6e5e3;
+    --color-neutral-300: #cbcac7;
+    --color-neutral-400: #aaa9a5;
+    --color-neutral-500: #868582;
+    --color-neutral-600: #646460;
+    --color-neutral-700: #474644;
+    --color-neutral-800: #31312f;
+    --color-neutral-900: #272624;
+    --color-neutral-1000: #1d1d1b;
+    --color-neutral-000: #fafaf8;
+    --color-teal-100: #def6f6;
+    --color-teal-200: #cce9e9;
+    --color-teal-300: #aad0d1;
+    --color-teal-400: #81b1b2;
+    --color-teal-500: #5a8f90;
+    --color-teal-600: #3b6c6d;
+    --color-teal-700: #244e4f;
+    --color-teal-800: #153738;
+    --color-teal-900: #0c2c2d;
     --color-sage-100: #edf2e7;
     --color-sage-200: #dee5d7;
     --color-sage-300: #c3cbb9;
@@ -60,20 +60,19 @@
     --color-red-700: #831210;
     --color-red-800: #610204;
     --color-red-900: #500002;
-    --color-teal-100: #def4ff;
-    --color-teal-200: #cde7f4;
-    --color-teal-300: #aacedf;
-    --color-teal-400: #82aec3;
-    --color-teal-500: #5b8ba2;
-    --color-teal-600: #3d697d;
-    --color-teal-700: #264b5c;
-    --color-teal-800: #163542;
-    --color-teal-900: #0e2a36;
+    --color-blue-100: #def4ff;
+    --color-blue-200: #cde7f4;
+    --color-blue-300: #aacedf;
+    --color-blue-400: #82aec3;
+    --color-blue-500: #5b8ba2;
+    --color-blue-600: #3d697d;
+    --color-blue-700: #264b5c;
+    --color-blue-800: #163542;
+    --color-blue-900: #0e2a36;
     --typography-font-family-display: Georgia, Cambria, "Times New Roman", Times, serif;
-    --typography-font-family-geist: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --typography-font-family-geist-mono: "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    --typography-font-family-instrument-serif: "Instrument Serif", Georgia, Cambria, "Times New Roman", Times, serif;
-    --typography-font-family-libre-baskerville: "Libre Baskerville", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-quattrocento: "Quattrocento", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-libre-franklin: "Libre Franklin", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --typography-font-size-max-large: 7.25rem;
     --radius-16: 16px;
     --duration-12: 1.2s;
@@ -86,30 +85,33 @@
     --typography-font-size-fluid-8: clamp(3rem, 1.07rem + 7.73vi, 7.25rem);
     --typography-font-size-cq-7: clamp(3rem, 1.11rem + 7.55cqi, 7.1526rem);
     --typography-font-size-cq-8: clamp(3rem, 1.07rem + 7.73cqi, 7.25rem);
-    --surface-accent: light-dark(var(--color-copper-200), var(--color-copper-800));
-    --surface-accent-dark: var(--color-copper-800);
-    --surface-accent-strong: light-dark(var(--color-copper-700), var(--color-copper-300));
+    --surface-accent: light-dark(var(--color-teal-200), var(--color-teal-800));
+    --surface-accent-dark: var(--color-teal-800);
+    --surface-accent-strong: light-dark(var(--color-teal-700), var(--color-teal-300));
     --surface-complementary: light-dark(var(--color-sage-200), var(--color-sage-800));
     --surface-complementary-dark: var(--color-sage-800);
     --surface-complementary-strong: light-dark(var(--color-sage-700), var(--color-sage-300));
-    --foreground-accent: light-dark(var(--color-copper-600), var(--color-copper-300));
-    --foreground-accent-hover: light-dark(var(--color-copper-700), var(--color-copper-200));
-    --foreground-accent-pressed: light-dark(var(--color-copper-800), var(--color-copper-100));
+    --surface-info: light-dark(var(--color-blue-100), var(--color-blue-900));
+    --surface-info-strong: light-dark(var(--color-blue-700), var(--color-blue-300));
+    --foreground-accent: light-dark(var(--color-teal-600), var(--color-teal-300));
+    --foreground-accent-hover: light-dark(var(--color-teal-700), var(--color-teal-200));
+    --foreground-accent-pressed: light-dark(var(--color-teal-800), var(--color-teal-100));
     --foreground-complementary: light-dark(var(--color-sage-700), var(--color-sage-300));
     --foreground-complementary-hover: light-dark(var(--color-sage-600), var(--color-sage-200));
     --foreground-complementary-pressed: light-dark(var(--color-sage-800), var(--color-sage-100));
-    --border-color-accent: var(--color-copper-500);
+    --foreground-info: light-dark(var(--color-blue-600), var(--color-blue-300));
+    --foreground-info-hover: light-dark(var(--color-blue-700), var(--color-blue-200));
+    --foreground-info-pressed: light-dark(var(--color-blue-800), var(--color-blue-100));
+    --border-color-accent: var(--color-teal-500);
     --border-color-complementary: light-dark(var(--color-sage-600), var(--color-sage-500));
+    --border-color-info: var(--color-blue-500);
     --border-width: var(--border-width-thin);
-    --heading-font-weight: var(--font-weight-medium);
     --heading-letter-spacing: var(--typography-spacing-compact);
     --subheading-letter-spacing: var(--typography-spacing-normal);
-    --small-heading-font-weight: var(--font-weight-semibold);
     --small-heading-letter-spacing: var(--typography-spacing-normal);
-    --micro-heading-font-family: var(--typography-font-family-mono);
     --micro-heading-font-weight: var(--font-weight-medium);
     --micro-heading-letter-spacing: var(--typography-spacing-loose);
-    --title-font-weight: var(--font-weight-regular);
+    --title-font-weight: var(--font-weight-bold);
     --title-line-height: var(--typography-line-height--3);
     --display-title-font-weight: var(--font-weight-regular);
     --display-title-letter-spacing: var(--typography-spacing-normal);
@@ -120,7 +122,8 @@
     --control-line-height: var(--typography-line-height--2);
     --tag-radius: var(--radius-full);
     --control-sm-line-height: var(--typography-line-height--2);
-    --app-border-width: var(--border-width-thin);
+    --app-border-width: var(--border-width-none);
+    --panel-border-width: var(--border-width-none);
     --radius: var(--radius-lg);
     --radius-sm: var(--radius-4);
     --radius-md: var(--radius-8);
@@ -138,20 +141,25 @@
   }
   @media (prefers-contrast: more) {
     :root {
-      --surface-accent: light-dark(var(--color-copper-100), var(--color-copper-900));
-      --surface-accent-dark: var(--color-copper-900);
-      --surface-accent-strong: light-dark(var(--color-copper-800), var(--color-copper-200));
+      --surface-accent: light-dark(var(--color-teal-100), var(--color-teal-900));
+      --surface-accent-dark: var(--color-teal-900);
+      --surface-accent-strong: light-dark(var(--color-teal-800), var(--color-teal-200));
       --surface-complementary: light-dark(var(--color-sage-100), var(--color-sage-900));
       --surface-complementary-dark: var(--color-sage-900);
       --surface-complementary-strong: light-dark(var(--color-sage-800), var(--color-sage-200));
-      --foreground-accent: light-dark(var(--color-copper-700), var(--color-copper-200));
-      --foreground-accent-hover: light-dark(var(--color-copper-800), var(--color-copper-100));
-      --foreground-accent-pressed: light-dark(var(--color-copper-900), var(--color-copper-100));
+      --surface-info-strong: light-dark(var(--color-blue-800), var(--color-blue-200));
+      --foreground-accent: light-dark(var(--color-teal-700), var(--color-teal-200));
+      --foreground-accent-hover: light-dark(var(--color-teal-800), var(--color-teal-100));
+      --foreground-accent-pressed: light-dark(var(--color-teal-900), var(--color-teal-100));
       --foreground-complementary: light-dark(var(--color-sage-800), var(--color-sage-200));
       --foreground-complementary-hover: light-dark(var(--color-sage-700), var(--color-sage-100));
       --foreground-complementary-pressed: light-dark(var(--color-sage-900), var(--color-sage-100));
-      --border-color-accent: light-dark(var(--color-copper-600), var(--color-copper-400));
+      --foreground-info: light-dark(var(--color-blue-700), var(--color-blue-200));
+      --foreground-info-hover: light-dark(var(--color-blue-800), var(--color-blue-100));
+      --foreground-info-pressed: light-dark(var(--color-blue-900), var(--color-blue-100));
+      --border-color-accent: light-dark(var(--color-teal-600), var(--color-teal-400));
       --border-color-complementary: light-dark(var(--color-sage-700), var(--color-sage-400));
+      --border-color-info: light-dark(var(--color-blue-600), var(--color-blue-400));
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -179,83 +187,104 @@
     }
   }
   :where(.color-palette-inverted, .colors-inverted) {
-    --surface-accent: light-dark(var(--color-copper-800), var(--color-copper-200));
-    --surface-accent-strong: light-dark(var(--color-copper-300), var(--color-copper-700));
+    --surface-accent: light-dark(var(--color-teal-800), var(--color-teal-200));
+    --surface-accent-strong: light-dark(var(--color-teal-300), var(--color-teal-700));
     --surface-complementary: light-dark(var(--color-sage-800), var(--color-sage-200));
     --surface-complementary-strong: light-dark(var(--color-sage-300), var(--color-sage-700));
-    --foreground-accent: light-dark(var(--color-copper-300), var(--color-copper-600));
-    --foreground-accent-hover: light-dark(var(--color-copper-200), var(--color-copper-700));
-    --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-800));
+    --surface-info: light-dark(var(--color-blue-900), var(--color-blue-100));
+    --surface-info-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+    --foreground-accent: light-dark(var(--color-teal-300), var(--color-teal-600));
+    --foreground-accent-hover: light-dark(var(--color-teal-200), var(--color-teal-700));
+    --foreground-accent-pressed: light-dark(var(--color-teal-100), var(--color-teal-800));
     --foreground-complementary: light-dark(var(--color-sage-300), var(--color-sage-700));
     --foreground-complementary-hover: light-dark(var(--color-sage-200), var(--color-sage-600));
     --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-800));
+    --foreground-info: light-dark(var(--color-blue-300), var(--color-blue-600));
+    --foreground-info-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
+    --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
     --border-color-complementary: light-dark(var(--color-sage-500), var(--color-sage-600));
   }
   * {
     @container style(--color-palette: inverted) {
-      --surface-accent: light-dark(var(--color-copper-800), var(--color-copper-200));
-      --surface-accent-strong: light-dark(var(--color-copper-300), var(--color-copper-700));
+      --surface-accent: light-dark(var(--color-teal-800), var(--color-teal-200));
+      --surface-accent-strong: light-dark(var(--color-teal-300), var(--color-teal-700));
       --surface-complementary: light-dark(var(--color-sage-800), var(--color-sage-200));
       --surface-complementary-strong: light-dark(var(--color-sage-300), var(--color-sage-700));
-      --foreground-accent: light-dark(var(--color-copper-300), var(--color-copper-600));
-      --foreground-accent-hover: light-dark(var(--color-copper-200), var(--color-copper-700));
-      --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-800));
+      --surface-info: light-dark(var(--color-blue-900), var(--color-blue-100));
+      --surface-info-strong: light-dark(var(--color-blue-300), var(--color-blue-700));
+      --foreground-accent: light-dark(var(--color-teal-300), var(--color-teal-600));
+      --foreground-accent-hover: light-dark(var(--color-teal-200), var(--color-teal-700));
+      --foreground-accent-pressed: light-dark(var(--color-teal-100), var(--color-teal-800));
       --foreground-complementary: light-dark(var(--color-sage-300), var(--color-sage-700));
       --foreground-complementary-hover: light-dark(var(--color-sage-200), var(--color-sage-600));
       --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-800));
+      --foreground-info: light-dark(var(--color-blue-300), var(--color-blue-600));
+      --foreground-info-hover: light-dark(var(--color-blue-200), var(--color-blue-700));
+      --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-800));
       --border-color-complementary: light-dark(var(--color-sage-500), var(--color-sage-600));
     }
   }
   @media (prefers-contrast: more) {
     :where(.color-palette-inverted, .colors-inverted) {
-      --surface-accent: light-dark(var(--color-copper-900), var(--color-copper-100));
-      --surface-accent-strong: light-dark(var(--color-copper-200), var(--color-copper-800));
+      --surface-accent: light-dark(var(--color-teal-900), var(--color-teal-100));
+      --surface-accent-strong: light-dark(var(--color-teal-200), var(--color-teal-800));
       --surface-complementary: light-dark(var(--color-sage-900), var(--color-sage-100));
       --surface-complementary-strong: light-dark(var(--color-sage-200), var(--color-sage-800));
-      --foreground-accent: light-dark(var(--color-copper-200), var(--color-copper-700));
-      --foreground-accent-hover: light-dark(var(--color-copper-100), var(--color-copper-800));
-      --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-900));
+      --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+      --foreground-accent: light-dark(var(--color-teal-200), var(--color-teal-700));
+      --foreground-accent-hover: light-dark(var(--color-teal-100), var(--color-teal-800));
+      --foreground-accent-pressed: light-dark(var(--color-teal-100), var(--color-teal-900));
       --foreground-complementary: light-dark(var(--color-sage-200), var(--color-sage-800));
       --foreground-complementary-hover: light-dark(var(--color-sage-100), var(--color-sage-700));
       --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-900));
-      --border-color-accent: light-dark(var(--color-copper-400), var(--color-copper-600));
+      --foreground-info: light-dark(var(--color-blue-200), var(--color-blue-700));
+      --foreground-info-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+      --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+      --border-color-accent: light-dark(var(--color-teal-400), var(--color-teal-600));
       --border-color-complementary: light-dark(var(--color-sage-400), var(--color-sage-700));
+      --border-color-info: light-dark(var(--color-blue-400), var(--color-blue-600));
     }
     * {
       @container style(--color-palette: inverted) {
-        --surface-accent: light-dark(var(--color-copper-900), var(--color-copper-100));
-        --surface-accent-strong: light-dark(var(--color-copper-200), var(--color-copper-800));
+        --surface-accent: light-dark(var(--color-teal-900), var(--color-teal-100));
+        --surface-accent-strong: light-dark(var(--color-teal-200), var(--color-teal-800));
         --surface-complementary: light-dark(var(--color-sage-900), var(--color-sage-100));
         --surface-complementary-strong: light-dark(var(--color-sage-200), var(--color-sage-800));
-        --foreground-accent: light-dark(var(--color-copper-200), var(--color-copper-700));
-        --foreground-accent-hover: light-dark(var(--color-copper-100), var(--color-copper-800));
-        --foreground-accent-pressed: light-dark(var(--color-copper-100), var(--color-copper-900));
+        --surface-info-strong: light-dark(var(--color-blue-200), var(--color-blue-800));
+        --foreground-accent: light-dark(var(--color-teal-200), var(--color-teal-700));
+        --foreground-accent-hover: light-dark(var(--color-teal-100), var(--color-teal-800));
+        --foreground-accent-pressed: light-dark(var(--color-teal-100), var(--color-teal-900));
         --foreground-complementary: light-dark(var(--color-sage-200), var(--color-sage-800));
         --foreground-complementary-hover: light-dark(var(--color-sage-100), var(--color-sage-700));
         --foreground-complementary-pressed: light-dark(var(--color-sage-100), var(--color-sage-900));
-        --border-color-accent: light-dark(var(--color-copper-400), var(--color-copper-600));
+        --foreground-info: light-dark(var(--color-blue-200), var(--color-blue-700));
+        --foreground-info-hover: light-dark(var(--color-blue-100), var(--color-blue-800));
+        --foreground-info-pressed: light-dark(var(--color-blue-100), var(--color-blue-900));
+        --border-color-accent: light-dark(var(--color-teal-400), var(--color-teal-600));
         --border-color-complementary: light-dark(var(--color-sage-400), var(--color-sage-700));
+        --border-color-info: light-dark(var(--color-blue-400), var(--color-blue-600));
       }
     }
   }
 
   :root {
-    --typography-font-family-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --typography-font-family-serif: "Libre Baskerville", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-sans: "Libre Franklin", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --typography-font-family-serif: "Quattrocento", Georgia, Cambria, "Times New Roman", Times, serif;
     --typography-font-family-mono: "Geist Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    --typography-font-family-display: "Instrument Serif", Georgia, Cambria, "Times New Roman", Times, serif;
+    --typography-font-family-display: "Quattrocento", Georgia, Cambria, "Times New Roman", Times, serif;
   }
 
 
   :root {
     --badge-padding-inline: var(--spacing-6);
-    --brand-font-family: var(--typography-font-family-sans);
+    --banner-border-width: var(--border-width-none);
+    --brand-font-family: var(--typography-font-family-serif);
     --brand-font-size: var(--typography-font-size-1);
-    --brand-font-weight: var(--font-weight-medium);
+    --brand-font-weight: var(--font-weight-semibold);
     --brand-letter-spacing: var(--typography-spacing-normal);
     --brand-mark-size: var(--spacing-32);
     --button-padding-inline: var(--spacing-20);
-    --button-radius: var(--radius-full);
+    --button-radius: var(--radius-lg);
     --button-sm-padding-inline: var(--spacing-12);
     --card-radius: var(--radius-xl);
     --chip-padding-inline: var(--spacing-10);
@@ -267,16 +296,20 @@
     --header-padding-block: var(--spacing-breathe);
     --poster-content-padding: var(--spacing-cushion);
     --poster-content-radius: var(--radius-xl);
-    --poster-font-sizing: fluid;
+    --poster-font-sizing: cq;
     --sidebar-bg: var(--surface-subtle);
     --status-padding-inline: var(--spacing-10);
     --status-radius: var(--radius-full);
+    --telemetry-bg: var(--surface-muted);
+    --telemetry-border-width: var(--border-width-none);
+    --telemetry-radius: var(--radius-md);
   }
 
   :where(.color-palette-inverted, .colors-inverted) {
     --footer-bg: var(--surface-subtle);
     --header-bg: var(--surface-subtle);
     --sidebar-bg: var(--surface-subtle);
+    --telemetry-bg: var(--surface-muted);
   }
 
   * {
@@ -284,6 +317,7 @@
       --footer-bg: var(--surface-subtle);
       --header-bg: var(--surface-subtle);
       --sidebar-bg: var(--surface-subtle);
+      --telemetry-bg: var(--surface-muted);
     }
   }
 
