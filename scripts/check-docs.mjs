@@ -41,7 +41,9 @@ const walk = (dir) => readdirSync(dir).flatMap((f) => {
   const p = join(dir, f);
   return statSync(p).isDirectory() ? (f === 'pagefind' || f === 'storybook' ? [] : walk(p)) : f === 'index.html' ? [p] : [];
 });
-const pages = walk(root).map((f) => `/${relative(root, f).replace(/index\.html$/, '')}`);
+/* ONLY='<pattern>' checks just the pages it matches, without the link check */
+const only = process.env.ONLY ? new RegExp(process.env.ONLY) : null;
+const pages = walk(root).map((f) => `/${relative(root, f).replace(/index\.html$/, '')}`).filter((p) => !only || only.test(p));
 
 /* Static server for dist */
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2', '.wasm': 'application/wasm' };
@@ -65,17 +67,34 @@ for (let i = 0; i < 40 && !targets; i++) {
   await new Promise((r) => setTimeout(r, 250));
   targets = await fetch(`http://127.0.0.1:${port}/json`).then((r) => r.json()).catch(() => undefined);
 }
-const ws = new WebSocket(targets.find((t) => t.type === 'page').webSocketDebuggerUrl);
-await new Promise((r) => (ws.onopen = r));
+/* One tab at a time. A tab whose renderer stalls is closed and the page is
+   checked again in a fresh one, so one lost reply doesn't stall the run */
+let ws;
+let tabId;
 let seq = 0;
 const pending = {};
-ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending[m.id]) { pending[m.id](m); delete pending[m.id]; } };
-/* A reply that never comes (a lost message, a stalled renderer) fails the
-   page after a minute instead of hanging the run */
+const openTab = async (old) => {
+  if (old) {
+    ws.onmessage = null;
+    ws.close();
+    await fetch(`http://127.0.0.1:${port}/json/close/${old}`).catch(() => {});
+  }
+  const tab = old ? await fetch(`http://127.0.0.1:${port}/json/new?about:blank`, { method: 'PUT' }).then((r) => r.json()) : targets.find((t) => t.type === 'page');
+  tabId = tab.id;
+  ws = new WebSocket(tab.webSocketDebuggerUrl);
+  await new Promise((r) => (ws.onopen = r));
+  ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.id && pending[m.id]) { pending[m.id](m); delete pending[m.id]; } };
+};
+await openTab();
+/* A reply that never comes (a lost message, a stalled renderer) marks the
+   tab stalled after a minute; until the page ends, every other call on it
+   returns at once */
 let current = '';
+let stalled = false;
 const send = (method, params = {}) => new Promise((r) => {
+  if (stalled) return r({});
   const id = ++seq;
-  const timer = setTimeout(() => { delete pending[id]; report(`${current}: ${method} got no reply in 60s`); r({}); }, 60000);
+  const timer = setTimeout(() => { delete pending[id]; stalled = true; report(`${current}: ${method} got no reply in 60s`); r({}); }, 60000);
   pending[id] = (m) => { clearTimeout(timer); r(m); };
   ws.send(JSON.stringify({ id, method, params }));
 });
@@ -133,9 +152,7 @@ const report = (line) => { problems.push(line); console.log(line); };
 const found = {};
 const started = Date.now();
 
-for (const [n, page] of pages.entries()) {
-  current = page;
-  if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write(`\r${n + 1}/${pages.length} ${page}`.padEnd(80));
+const checkPage = async (page) => {
   await send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 900, deviceScaleFactor: 1, mobile: false });
   await send('Page.navigate', { url: base + page });
   await wait(800);
@@ -149,12 +166,12 @@ for (const [n, page] of pages.entries()) {
     for (const v of (await evaluate(axeRun)) || []) report(`${page} axe ${scheme}: ${v}`);
     /* Each playground choice once, with the others at their start */
     const choices = await evaluate(`document.querySelectorAll('[data-controls] input').length`);
-    for (let i = 0; i < choices; i++) {
+    for (let i = 0; i < choices && !stalled; i++) {
       await evaluate(`document.querySelectorAll('[data-controls] input')[${i}].click()`);
       await evaluate(settled);
       for (const v of (await evaluate(axeRun)) || []) report(`${page} axe ${scheme}, choice ${i + 1}: ${v}`);
       /* The code says what the choice did, and nothing of the playground's own */
-      if (!(await evaluate(`(() => { const input = document.querySelectorAll('[data-controls] input')[${i}]; const code = input.closest('[data-playground]').querySelector('.code-block code').textContent; return input.dataset.classes.split(' ').every((c) => code.includes(c)) && !/data-(axes|label)/.test(code); })()`))) report(`${page} choice ${i + 1}: the code doesn't match`);
+      if ((await evaluate(`(() => { const input = document.querySelectorAll('[data-controls] input')[${i}]; const code = input.closest('[data-playground]').querySelector('.code-block code').textContent; return input.dataset.classes.split(' ').every((c) => code.includes(c)) && !/data-(axes|label)/.test(code); })()`)) === false) report(`${page} choice ${i + 1}: the code doesn't match`);
       await evaluate(`document.querySelectorAll('[data-controls] input')[${i}].closest('fieldset').querySelector('input[checked]').click()`);
     }
   }
@@ -167,12 +184,30 @@ for (const [n, page] of pages.entries()) {
       for (const p of (await evaluate(layoutProbe)) || []) report(`${page} @ ${w}x${h}: ${p}`);
     }
   }
+};
+
+for (const [n, page] of pages.entries()) {
+  current = page;
+  if (process.stderr.isTTY || process.env.PROGRESS) process.stderr.write(`\r${n + 1}/${pages.length} ${page}`.padEnd(80));
+  /* A stalled tab: a fresh one, and the page once more from the start */
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const before = problems.length;
+    stalled = false;
+    await checkPage(page);
+    if (!stalled) break;
+    await openTab(tabId);
+    stalled = false;
+    if (attempt < 3) {
+      problems.length = before;
+      console.log(`${page}: the tab stalled; checking it again in a fresh one`);
+    }
+  }
 }
 
 /* Links: each internal target is a page, and each #anchor an id on it */
 const storyIndex = new URL('../packages/storybook/storybook-static/index.json', import.meta.url);
 const stories = existsSync(storyIndex) ? JSON.parse(readFileSync(storyIndex, 'utf8')).entries : {};
-for (const [page, { links }] of Object.entries(found)) {
+for (const [page, { links }] of only ? [] : Object.entries(found)) {
   for (const href of new Set(links)) {
     const url = new URL(href, base + page);
     /* Into Storybook: the story has to exist */
@@ -203,4 +238,4 @@ if (problems.length) {
   console.log(`\ncheck:docs: ${problems.length} problem(s) in ${pages.length} pages (${took}s).`);
   process.exit(1);
 }
-console.log(`check:docs: ${pages.length} pages: links resolve, axe clean in light and dark, nothing out of reach at ${widths.length * heights.length} sizes (${took}s).`);
+console.log(`check:docs: ${pages.length} pages: ${only ? 'links not checked (ONLY)' : 'links resolve'}, axe clean in light and dark, nothing out of reach at ${widths.length * heights.length} sizes (${took}s).`);
