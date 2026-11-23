@@ -62,7 +62,8 @@ Opt-in custom elements for the few components the platform can't do alone, publi
 - **Docs: the CSS comes first.** The library is still a CSS library, so a component's page stays about its markup. Straight after its main example, a link leads to its web component's own page (the Combobox page links to `cmp-combobox`), which has the working examples and the element's attributes and events.
 - **Shared tooling:** Storybook stories run the same targets, focus and axe gates, and each pattern gets keyboard tests.
 - **Relation to suggested scripts:** small snippets (scrolling to the current Tab, making the page inert behind a Dialog) stay as suggestions in the docs; high-level behaviour becomes an element.
-- **Open questions:** the licence (MIT, like the theme engine?); which candidates are worth an element rather than a suggestion.
+- **Licence:** MIT, like the theme engine.
+- **Open questions:** which candidates are worth an element rather than a suggestion.
 
 ## Library candidates
 
