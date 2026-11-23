@@ -45,6 +45,17 @@ Removals and renames that can need work on a site, so they wait for the next maj
 - **Remove the old icon names (S):** the names from before 1.3.0 (`#Close`, `#ArrowRight` and the rest) still point at the Lucide names. Delete the aliases from the sprite and say so in the changelog. The [full list](audit/icon-names.md) is what sites search for.
 - **Syntax highlighting in the Code Block (M):** the Code Block sets the `--syntax-*` properties (keyword, string, comment and the rest) from Tier 3 tokens, checked by the component contrast gate. A product adds a highlighter built on the CSS Custom Highlight API, such as [MicroLighter](https://github.com/davatron5000/microlighter), and gets the theme's colours; without one, code stays plain. The library still ships no script; the docs site runs MicroLighter. First, read its source for how the properties reach the `::highlight()` names. *From feedback on the docs.*
 
+### Web components (L)
+Opt-in custom elements for the few components the platform can't do alone, published as a package in this monorepo (`@design-for-humans/elements`) and released with the CSS whose markup they depend on. *Raised by users, 23 November 2026.*
+- **First:** the Combobox. **Candidates after it:** Tabs (roving focus and arrow keys), a sortable Table, the Toast stack, Batch Actions' selection count, a Range's fill.
+- **Light DOM, no shadow DOM,** so the library's CSS and tokens style them: themes, sub-brands, density and forced colours keep working, and the elements have no CSS of their own.
+- **They enhance the library's markup.** An element wraps the markup its docs page already shows, so the page works, more simply, before the script runs. Its API is attributes and events.
+- **Autonomous elements** (`<dfh-combobox>`), not customised built-ins: Safari doesn't support `is=`.
+- **The CSS stays script-free.** The elements are optional. Where one ships the keyboard behaviour, its pattern may take the ARIA roles the library avoids today (a toolbar or menu with arrow keys).
+- **Shared tooling:** the markup docs get working examples, Storybook stories run the same targets, focus and axe gates, and each pattern gets keyboard tests.
+- **Relation to suggested scripts:** small snippets (scrolling to the current Tab, making the page inert behind a Dialog) stay as suggestions in the docs; high-level behaviour becomes an element.
+- **Open questions:** the licence (MIT, like the theme engine?); the element prefix; which candidates are worth an element rather than a suggestion.
+
 ## Library candidates
 
 Things the library lacks or could do better. Each waits for a second use, or for its component's next pass.
