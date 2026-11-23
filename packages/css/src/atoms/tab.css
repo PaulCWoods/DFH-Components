@@ -149,6 +149,7 @@
   /* Segmented, plain: no border or fill. The selected tab sits on a tint,
      where the rest accent falls under 4.5:1, so it takes the pressed tone. */
   @container style(--tab-list-style: segmented) and (style(--tab-list-prominence: plain) or style(--elements-prominence: plain)) {
+    --_tab-bg: transparent;
     --_tab-border-color: transparent;
     --_tab-indicator: var(--surface-translucent-strong, transparent);
     --_tab-selected-text: var(--foreground-accent-pressed, var(--foreground-accent, LinkText));
