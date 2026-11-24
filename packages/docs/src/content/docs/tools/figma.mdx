@@ -41,7 +41,7 @@ There are two ways in. Pick one per file:
 
 ## 1. Get the files
 
-In the [Token Designer](/docs/tools/designer/), open your theme and choose **Export**, then **Figma**. It builds the files from the theme as it is, saved or not, and lists them to download one at a time, or all together with **Download all (.zip)**. The zip keeps the folders below, with a README that says what each set is for, which Figma plan it needs, and which fonts to check after importing. The export needs a Pro licence key.
+In the [Token Designer](/docs/tools/designer/), open your theme and choose **Export**, then **Figma**. It builds the files from the theme as it is, saved or not, and lists them to download one at a time, or all together with **Download all (.zip)**. The zip keeps the folders below, with a README that says what each set is for, which Figma plan it needs, and which fonts to set before importing. The export needs a Pro licence key.
 
 <Screenshot name="designer-figma" alt="The Export dialog on its Figma tab: Build the Figma files and Download all (.zip) buttons, when it was last built, and the files to download, grouped as Tokens Studio, Variables in one collection and Variables in five collections." />
 
@@ -69,8 +69,8 @@ The `-modes` README counts the modes in each collection and names the smallest p
 
 ## 4a. Import as variables
 
-1. Open the Figma file, then **Plugins** and **Export/Import Variables**.
-2. Go to the **Import** tab.
+1. **Set the fonts first,** when the file already has these variables (the kit does). The importer can't load fonts, so it stops at a font the file doesn't use yet, and the rest of that collection isn't imported. Open **Local variables**, and under Structure type each name the Token Designer's Figma tab lists into its `typography/font-family` variable, replacing the old font or a link to another variable. Figma loads the font itself, and the text styles follow.
+2. Open **Plugins** and **Export/Import Variables**, and go to the **Import** tab.
 3. Import the files from the `native-variables/` folder of your choice:
    - For one collection, choose `dfh-unified.json`. It makes a collection called Design For Humans with one mode: light colours, fixed type, and spacing at the large end of its range.
    - For five collections, import `01-color.json`, `02-structure.json`, `03-font-sizing.json`, `04-spacing.json` and `05-pointer.json`, in that order, as each one points at variables in the ones before it.
@@ -144,5 +144,5 @@ Re-import after a change, with the same plugin and the same files. Variables wit
 - **A theme is missing from `themes/`.** It hasn't been built: a theme that fails a check isn't exported, and the export names any theme it skipped.
 - **An import stops part way.** The plan may not allow that many modes. Use the unified file, or each brand's own folder.
 - **Text styles show the wrong font.** Figma doesn't know the font by that name, or it isn't installed. Set its **Name in Figma** in the Token Designer, and install it.
-- **An import stops on an unloaded font.** The importer changes a font family without loading the new font, which Figma needs before it can redraw the text that uses it, so a font your file doesn't use yet keeps its old name. Everything else imports. In the Variables panel, under Structure, type the new name into each `font-family` variable that still shows the old one: Figma loads the font itself. The Token Designer's Figma tab lists the names to check. It only happens the first time a font reaches a file.
+- **An import stops on an unloaded font.** The importer changes a font family without loading the new font, which Figma needs before it can redraw the text that uses it, so it stops there and the rest of the collection isn't imported. In the Variables panel, under Structure, type the new name into each `font-family` variable that still shows the old one: Figma loads the font itself. Then import the collection again. The Token Designer's Figma tab lists the names. It only happens the first time a font reaches a file, and setting the fonts before importing avoids it.
 - **A weight looks wrong.** Weights export as numbers (400, 700) bound to font weight, so Figma picks each font's own style for them, whatever the font calls it. A weight the font doesn't have shows the nearest it does, as a browser would.

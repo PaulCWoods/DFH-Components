@@ -277,9 +277,10 @@
   }
 
   /* ------------------------------------------------------------------------
-     Disabled State Handling (Native :disabled & aria-disabled="true")
+     Disabled State Handling (Native :disabled, aria-disabled="true" and a
+     toggle whose input is disabled)
      ------------------------------------------------------------------------ */
-  &:where(:disabled, [disabled], [aria-disabled="true"]) {
+  &:where(:disabled, [disabled], [aria-disabled="true"], label:has(> input:disabled)) {
     opacity: var(--opacity-disabled, 0.5);
     cursor: not-allowed;
     pointer-events: none;
@@ -733,7 +734,7 @@
     color: HighlightText;
   }
 
-  :where(.button):where(:disabled, [disabled], [aria-disabled="true"]) {
+  :where(.button):where(:disabled, [disabled], [aria-disabled="true"], label:has(> input:disabled)) {
     border-color: GrayText;
     color: GrayText;
   }
