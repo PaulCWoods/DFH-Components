@@ -15,6 +15,7 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 ## Unreleased
 
 ### Fixed
+- **A toggle with a disabled input looks disabled:** a `label.button` whose checkbox or radio is `disabled` now fades and stops responding to the pointer like a disabled Button, and shows GrayText in forced colours. It used to look as available as the rest. No markup changes.
 - **Plain segmented Tabs have no fill:** a segmented Tab List set to plain (`.tab-list--plain`, or plain from its container) still gave each Tab the segmented fill. Now the Tabs are transparent and only the selected one sits on a tint. No markup changes.
 - **A Dialog's backdrop dims the page in dark mode:** it was mixed from the darkest neutral step, which in dark mode is lighter than the page, so it lifted the page instead of dimming it and a Dialog's shadow showed as a pale halo. In dark mode it is now mixed from the theme's black, in the starter, DFH and Eden themes. No markup changes.
 - **A current Stepper step with errors:** with `aria-current="step"` and `.is-invalid` together, the indicator kept the current step's accent fill under the danger ring and icon, so the two clashed. The invalid state now wins: a danger ring and warning icon on the plain fill. No markup changes.
