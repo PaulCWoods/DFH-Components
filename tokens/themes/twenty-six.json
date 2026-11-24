@@ -270,8 +270,8 @@
             900
           ]
         },
-        "fallback": "ui-monospace, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace",
-        "figma": "Geist Mono"
+        "italic": true,
+        "fallback": "ui-monospace, Menlo, Monaco, Consolas, \"Liberation Mono\", monospace"
       },
       "quattrocento": {
         "source": "google",
@@ -290,6 +290,7 @@
           600,
           700
         ],
+        "italic": true,
         "fallback": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif"
       }
     },
@@ -476,6 +477,18 @@
       "padding-inline": "cushion",
       "sidebar-width": 288,
       "sidebar-compact-width": 192
+    },
+    "steps": {
+      "2xs": 2,
+      "xs": 4,
+      "sm": 8,
+      "md": 16,
+      "lg": 32,
+      "xl": 48,
+      "2xl": 64,
+      "3xl": 128,
+      "default": "md",
+      "compact": "sm"
     }
   },
   "shape": {
