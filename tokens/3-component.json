@@ -280,6 +280,16 @@
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
     },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Font family of a badge's text"
+    },
+    "text-transform": {
+      "$value": "none",
+      "$type": "other",
+      "$description": "Case of a badge's text: uppercase for a label look"
+    },
     "size": {
       "$value": "{spacing.20}",
       "$type": "dimension",
@@ -327,6 +337,11 @@
     "font-weight": {
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
+    },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Font family of a status's text"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-2}",
@@ -805,6 +820,16 @@
       "$value": "{foreground.muted}",
       "$description": "Items that aren't links: text in the list, or an unavailable link (aria-disabled)."
     },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Font family of the tree's items, apart from the Button's"
+    },
+    "text-transform": {
+      "$value": "none",
+      "$type": "other",
+      "$description": "Case of the tree's items, apart from the Button's"
+    },
     "rule-width": {
       "$value": "{rule.width}",
       "$type": "dimension",
@@ -994,6 +1019,11 @@
       "$value": "{body.font-family}",
       "$type": "fontFamilies",
       "$description": "Font family"
+    },
+    "text-transform": {
+      "$value": "none",
+      "$type": "other",
+      "$description": "Case of a button's text: uppercase for a label look"
     }
   },
   "button-group": {
@@ -1284,6 +1314,11 @@
     "font-weight": {
       "$value": "{font-weight.bold}",
       "$type": "fontWeight"
+    },
+    "font-family": {
+      "$value": "{body.font-family}",
+      "$type": "fontFamilies",
+      "$description": "Font family of a chip's text"
     },
     "line-height": {
       "$value": "{typography.line-height.minus-2}",

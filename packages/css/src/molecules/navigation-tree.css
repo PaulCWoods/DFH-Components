@@ -68,10 +68,13 @@
   --_navigation-tree-color: var(--navigation-tree-color, var(--foreground, CanvasText));
   --_navigation-tree-muted-color: var(--navigation-tree-muted-color, var(--foreground-muted, currentColor));
 
-  /* Items are plain buttons in regular weight; the current item stands
-     out in weight, tint and rail */
+  /* Items are plain buttons in regular weight, in the tree's own font and
+     case, so a theme's Button type doesn't reach the links; the current
+     item stands out in weight, tint and rail */
   --button-prominence: plain;
   --button-font-weight: var(--font-weight-regular, 400);
+  --button-font-family: var(--navigation-tree-font-family, var(--body-font-family, inherit));
+  --button-text-transform: var(--navigation-tree-text-transform, none);
   --font-sizing: fixed;
 
   /* Hit areas reach at most halfway to the next item, and not across the

@@ -94,6 +94,7 @@
   --_button-min-size: var(--button-min-size, var(--spacing-target, 3rem));
   --_button-padding-block: var(--button-padding-block, var(--spacing-xs));
   --_button-padding-inline: var(--button-padding-inline, var(--spacing-md));
+  --_button-text-transform: var(--button-text-transform, none);
   --_button-radius: var(--button-radius, var(--radius, 0.25rem));
   --_button-target-size: var(--spacing-target-min, var(--spacing-target, 3rem));
   --_button-timefunc: var(--button-timefunc, var(--ease-in-out, ease-in-out));
@@ -247,6 +248,7 @@
   font-size: var(--_button-font-size);
   font-weight: var(--_button-font-weight);
   line-height: var(--_button-line-height);
+  text-transform: var(--_button-text-transform);
   text-decoration: none;
   text-box: trim-both cap alphabetic;
 

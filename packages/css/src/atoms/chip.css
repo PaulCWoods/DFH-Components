@@ -45,6 +45,7 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
+  --_chip-font-family: var(--chip-font-family, var(--body-font-family, inherit));
   --_chip-font-size: var(--chip-font-size, var(--body-sm-fixed-font-size));
   --_chip-font-weight: var(--chip-font-weight, var(--font-weight-bold));
   --_chip-line-height: var(--chip-line-height, var(--typography-line-height--2));
@@ -96,6 +97,7 @@
   white-space: nowrap;
 
   /* Typography */
+  font-family: var(--_chip-font-family);
   font-size: var(--_chip-font-size);
   font-weight: var(--_chip-font-weight);
   line-height: var(--_chip-line-height);

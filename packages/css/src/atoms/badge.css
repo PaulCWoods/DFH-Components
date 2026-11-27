@@ -49,8 +49,10 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
+  --_badge-font-family: var(--badge-font-family, var(--body-font-family, inherit));
   --_badge-font-size: var(--badge-font-size, var(--body-sm-fixed-font-size));
   --_badge-font-weight: var(--badge-font-weight, var(--font-weight-bold));
+  --_badge-text-transform: var(--badge-text-transform, none);
   --_badge-size: var(--badge-size, var(--spacing-20));
   --_badge-padding-inline: var(--badge-padding-inline, var(--spacing-xs));
   --_badge-text-padding-inline: var(--badge-text-padding-inline, 0.1em);
@@ -104,10 +106,12 @@
   white-space: nowrap;
 
   /* Typography */
+  font-family: var(--_badge-font-family);
   font-size: var(--_badge-font-size);
   font-weight: var(--_badge-font-weight);
   font-variant-numeric: tabular-nums;
   line-height: 1;
+  text-transform: var(--_badge-text-transform);
 
   /* Surface */
   border-radius: var(--_badge-radius);

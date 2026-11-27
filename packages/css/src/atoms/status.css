@@ -52,6 +52,7 @@
   /* --------------------------------------------------------------------------
      Geometry (Tier 3 tokens, terminating in literal fallbacks)
      -------------------------------------------------------------------------- */
+  --_status-font-family: var(--status-font-family, var(--body-font-family, inherit));
   --_status-font-size: var(--status-font-size, var(--body-sm-fixed-font-size));
   --_status-font-weight: var(--status-font-weight, var(--font-weight-bold));
   --_status-line-height: var(--status-line-height, var(--typography-line-height--2));
@@ -153,6 +154,7 @@
   white-space: nowrap;
 
   /* Typography */
+  font-family: var(--_status-font-family);
   font-size: var(--_status-font-size);
   font-weight: var(--_status-font-weight);
   line-height: var(--_status-line-height);
