@@ -131,6 +131,10 @@ test('a colour list puts the family its name asks for first', () => {
   assert.equal(first('card.subtitle-color'), 'Text');
   const all = tokenOptions(token('card.bg'), { semantic, global });
   assert.deepEqual(all.groups.flatMap((g) => g.options).sort(), [...all.options].sort());
+  /* The default roles sit in their families, not with the keywords */
+  const group = (v) => all.groups.find((g) => g.options.includes(v)).label;
+  assert.equal(group('{surface}'), 'Surfaces');
+  assert.equal(group('{foreground}'), 'Text');
 });
 
 test("the Button's resting background is measured against its colour, and a transparent one against the page", () => {
