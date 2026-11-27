@@ -192,8 +192,8 @@ export const tokenOptions = (token, { semantic, global }) => {
 /* Colour roles by family, the family the token's name asks for first: a
    border's lines, a background's surfaces, everything else's text */
 const COLOR_FAMILIES = [
-  { label: 'Text', test: (v) => /^\{foreground\./.test(v) },
-  { label: 'Surfaces', test: (v) => /^\{surface\./.test(v) },
+  { label: 'Text', test: (v) => /^\{foreground[.}]/.test(v) },
+  { label: 'Surfaces', test: (v) => /^\{surface[.}]/.test(v) },
   { label: 'Borders and lines', test: (v) => /^\{(border|control|app|panel|tag|rule|underline)\./.test(v) },
   { label: 'Other colours', test: (v) => /^\{color\./.test(v) },
 ];
