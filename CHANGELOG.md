@@ -15,6 +15,7 @@ Planned work is in the [roadmap](https://github.com/PaulCWoods/DFH-Components/bl
 ## Unreleased
 
 ### Fixed
+- **Menu items fit the Menu's corners:** items kept the Button's radius on every corner, so a tinted or current item showed rounded corners where it met the next item, and its outer corners didn't follow the Menu's. Now items are square where they meet, and the first and last take the Menu's radius less its padding and border, so they sit concentric inside it. A plain Menu has no edge to follow, so its outer corners keep the Button's radius. The current item's rail follows the curve too. No markup changes.
 - **A toggle with a disabled input looks disabled:** a `label.button` whose checkbox or radio is `disabled` now fades and stops responding to the pointer like a disabled Button, and shows GrayText in forced colours. It used to look as available as the rest. No markup changes.
 - **Plain segmented Tabs have no fill:** a segmented Tab List set to plain (`.tab-list--plain`, or plain from its container) still gave each Tab the segmented fill. Now the Tabs are transparent and only the selected one sits on a tint. No markup changes.
 - **A Dialog's backdrop dims the page in dark mode:** it was mixed from the darkest neutral step, which in dark mode is lighter than the page, so it lifted the page instead of dimming it and a Dialog's shadow showed as a pale halo. In dark mode it is now mixed from the theme's black, in the starter, DFH and Eden themes. No markup changes.
