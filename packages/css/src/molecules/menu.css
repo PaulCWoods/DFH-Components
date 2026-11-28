@@ -46,6 +46,9 @@
   --_menu-heading-color: var(--menu-heading-color, var(--foreground-muted, currentColor));
   --_menu-heading-padding-inline: var(--button-padding-inline, var(--spacing-md));
   --_menu-rail-width: var(--menu-rail-width, var(--spacing-xs));
+  /* Items' outer corners, concentric with the menu's: its radius less the
+     padding and border between them */
+  --_menu-item-radius: max(0px, var(--_menu-radius) - var(--_menu-padding) - var(--_menu-border-width));
   --_menu-rail-color: var(--menu-rail-color, var(--foreground-accent, currentColor));
   --_menu-rule: var(--menu-rule-width, var(--rule-width, 1px)) var(--menu-rule-style, var(--rule-style, solid)) var(--menu-rule-color, var(--rule-color, currentColor));
 
@@ -72,6 +75,7 @@
     --_menu-border-width: 0px;
     --_menu-padding: 0px;
     --_menu-radius: 0;
+    --_menu-item-radius: initial;
   }
 
   /* Density: headings line up with the compact items */
@@ -120,6 +124,7 @@
   --_menu-border-width: 0px;
   --_menu-padding: 0px;
   --_menu-radius: 0;
+  --_menu-item-radius: initial;
   --_menu-shadow: none;
 }
 
@@ -173,6 +178,10 @@
    3. Items: buttons, full width, content at the start
    ========================================================================== */
 :where(.menu) > :where(li) > :where(.button) {
+  /* Square where items meet; rounded only against the menu's edge. A plain
+     menu has no edge to follow, so its items keep the button's corners */
+  --_menu-item-corner: var(--_menu-item-radius, var(--_button-radius));
+  border-radius: 0;
   inline-size: 100%;
   justify-content: flex-start;
   text-align: start;
@@ -211,17 +220,28 @@
     --_button-hover-color-palette: initial;
     --_button-active-color-palette: initial;
 
+    /* The rail is the start border of a layer the item's size and shape,
+       so at a rounded corner it follows the curve with the tint */
     &::before {
-      background-color: var(--_menu-rail-color);
-      border-end-start-radius: var(--_button-radius);
-      border-start-start-radius: var(--_button-radius);
+      border-inline-start: var(--_menu-rail-width) solid var(--_menu-rail-color);
+      border-radius: inherit;
       content: "";
-      inline-size: var(--_menu-rail-width);
-      inset-block: calc(var(--_button-border-width) * -1);
-      inset-inline-start: calc(var(--_button-border-width) * -1);
+      inset: calc(var(--_button-border-width) * -1);
+      pointer-events: none;
       position: absolute;
     }
   }
+}
+
+/* The first and last items round the corners they share with the menu */
+:where(.menu) > :where(li:first-child) > :where(.button) {
+  border-start-end-radius: var(--_menu-item-corner);
+  border-start-start-radius: var(--_menu-item-corner);
+}
+
+:where(.menu) > :where(li:last-child) > :where(.button) {
+  border-end-end-radius: var(--_menu-item-corner);
+  border-end-start-radius: var(--_menu-item-corner);
 }
 
 /* ==========================================================================
@@ -254,7 +274,7 @@
    ========================================================================== */
 @media (forced-colors: active) {
   :where(.menu) > :where(li) > :where(.button[aria-current]:not([aria-current="false"]))::before {
-    background-color: Highlight;
+    border-inline-start-color: Highlight;
   }
 }
 
